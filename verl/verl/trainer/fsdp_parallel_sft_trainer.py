@@ -303,7 +303,7 @@ class FSDPParallelThinkingSFTTrainer:
         else:
             raise ValueError(f"Unknown lr scheduler: {self.config.optim.lr_scheduler}")
 
-    def _compute_loss_and_backward(self, batch, do_backward=True):
+    def _compute_loss_and_backward(self, batch, n_tokens=None, do_backward=True):
         """Compute loss with optional sequence parallelism and remove padding features"""
         use_sp = self.use_remove_padding and self.config.ulysses_sequence_parallel_size > 1
 
@@ -380,8 +380,8 @@ class FSDPParallelThinkingSFTTrainer:
                 full_loss = pad_input(hidden_states=loss.unsqueeze(-1), indices=indices, batch=batch_size, seqlen=seqlen)
                 loss = full_loss.squeeze(-1)[:, :-1]  # Remove last token's loss
 
-            # Token mean within each sample, then mean over samples: same objective as micro batch 1
-            loss = ((loss * loss_mask).sum(-1) / loss_mask.sum(-1)).mean()
+            # Token mean over the whole batch: every response token has the same weight
+            loss = (loss * loss_mask).sum() / (loss_mask.sum() if n_tokens is None else n_tokens)
 
             if do_backward:
                 loss.backward()
@@ -397,10 +397,13 @@ class FSDPParallelThinkingSFTTrainer:
         log_gpu_memory_usage("After optimizer zero_grad", logger=logger)
 
         micro_batches = batch.split(self.config.data.micro_batch_size_per_gpu)
-        n_micro_batches = len(micro_batches)
+        # Response tokens per GPU in the global batch; FSDP averages the gradients over GPUs
+        n_tokens = batch["loss_mask"][:, :-1].sum()
+        torch.distributed.all_reduce(n_tokens)
+        n_tokens = n_tokens / torch.distributed.get_world_size()
         step_loss = 0
         for micro_batch in micro_batches:
-            loss = self._compute_loss_and_backward(batch=micro_batch) / n_micro_batches
+            loss = self._compute_loss_and_backward(batch=micro_batch, n_tokens=n_tokens)
             step_loss += loss.item()
 
         if self.config.model.strategy == 'fsdp':
@@ -434,7 +437,7 @@ class FSDPParallelThinkingSFTTrainer:
         elif is_npu_available:
             torch.distributed.all_reduce(step_loss)
             step_loss /= self.ulysses_device_mesh.size(0)
-        return {'train/loss': step_loss.detach().item(), 'train/lr(1e-3)': lr * 1e3}
+        return {'train/loss': step_loss.detach().item(), 'train/lr(1e-3)': lr * 1e3, 'train/grad_norm': grad_norm.item()}
 
     def validation_step(self, batch: TensorDict):
         self.fsdp_model.eval()

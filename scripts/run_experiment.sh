@@ -10,7 +10,7 @@ data=$repo/verl/data_preprocess_scripts/data
 mkdir -p "$run/results"
 
 bash "$repo/scripts/sft_qwen3_0.6b.sh" /home/jovyan/assets/Qwen3-0.6B-Base-add-special-token "$run/ckpt" > "$run/train.log" 2>&1
-grep -a -o "step:[0-9]* - [a-z/]*loss:[0-9.]*" "$run/train.log" > "$run/results/sft_metrics.txt"
+grep -a -o "step:[0-9]* - [a-z/]*loss:[0-9.]*\|train/grad_norm:[0-9.e+-]*" "$run/train.log" > "$run/results/sft_metrics.txt"
 
 evaluate() {
     bash "$repo/scripts/eval_qwen3_0.6b.sh" "$run/ckpt/global_step_230" "$run/eval_$1" "$2" > "$run/eval_$1.log" 2>&1
