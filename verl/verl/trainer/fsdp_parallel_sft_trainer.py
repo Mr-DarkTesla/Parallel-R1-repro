@@ -42,6 +42,7 @@ from transformers import AutoConfig, AutoModelForCausalLM, PreTrainedModel
 
 import verl.utils.hdfs_io as hdfs_io
 from verl.utils.dataset import SFTDataset, ParallelThinkingSFTDataset
+from verl.utils.dataset.parallel_thinking_sft_dataset import collate_cropped, crop_padding
 from verl.utils.dataset.multiturn_sft_dataset import MultiTurnSFTDataset
 from verl.utils.debug import log_gpu_memory_usage
 from verl.utils.distributed import initialize_global_process_group
@@ -153,6 +154,7 @@ class FSDPParallelThinkingSFTTrainer:
             num_workers=8,
             pin_memory=True,
             drop_last=True,
+            collate_fn=collate_cropped,
         )
 
         self.val_sampler = DistributedSampler(self.val_dataset, shuffle=False, num_replicas=world_size, rank=rank, drop_last=True)
@@ -163,6 +165,7 @@ class FSDPParallelThinkingSFTTrainer:
             num_workers=8,
             pin_memory=True,
             drop_last=True,
+            collate_fn=collate_cropped,
         )
 
     def _build_model_optimizer(self):
@@ -304,11 +307,13 @@ class FSDPParallelThinkingSFTTrainer:
         """Compute loss with optional sequence parallelism and remove padding features"""
         use_sp = self.use_remove_padding and self.config.ulysses_sequence_parallel_size > 1
 
+        batch = crop_padding(batch, int(batch["length"].max()))
+
         # Move inputs to GPU and prepare loss mask
         input_ids = batch["input_ids"].to(self.device_name)
         attention_mask = batch["attention_mask"].to(self.device_name)
         position_ids = batch["position_ids"].to(self.device_name)
-        loss_mask = batch.pop("loss_mask")[:, :-1].reshape(-1).to(self.device_name)
+        loss_mask = batch.pop("loss_mask")[:, :-1].to(self.device_name)
         loss_fct = nn.CrossEntropyLoss(reduction="none")
 
         # print(loss_mask.shape)
@@ -333,8 +338,7 @@ class FSDPParallelThinkingSFTTrainer:
                 shift_labels = shift_labels.view(-1)
                 # Enable model parallelism
                 shift_labels = shift_labels.to(shift_logits.device)
-                loss = loss_fct(shift_logits, shift_labels)
-                loss = loss * loss_mask.to(loss.device)
+                loss = loss_fct(shift_logits, shift_labels).view_as(loss_mask)
             else:
                 # IMPORTANT: We have a big assumption here, so we can shard the SAME sequence across SP ranks
                 # i.e., each GPU has <1 sequence, and each SP group has 1 sequence
@@ -374,20 +378,10 @@ class FSDPParallelThinkingSFTTrainer:
 
                 # This is the loss collected from all ulysses ranks
                 full_loss = pad_input(hidden_states=loss.unsqueeze(-1), indices=indices, batch=batch_size, seqlen=seqlen)
-                full_loss = full_loss.squeeze(-1)[:, :-1]  # Remove last token's loss
-                full_loss = full_loss.reshape(-1)
-                loss_mask = loss_mask.to(full_loss.device)
-                loss = full_loss * loss_mask
+                loss = full_loss.squeeze(-1)[:, :-1]  # Remove last token's loss
 
-            valid_token_this_rank = torch.sum(loss_mask)
-
-            if self.config.data.balance_dp_token:
-                torch.distributed.all_reduce(valid_token_this_rank)
-                dp_size = self.ulysses_device_mesh.size("dp") if use_sp else torch.distributed.get_world_size()
-            else:
-                dp_size = 1
-
-            loss = torch.sum(loss) / (valid_token_this_rank + 1e-8) * dp_size
+            # Token mean within each sample, then mean over samples: same objective as micro batch 1
+            loss = ((loss * loss_mask).sum(-1) / loss_mask.sum(-1)).mean()
 
             if do_backward:
                 loss.backward()

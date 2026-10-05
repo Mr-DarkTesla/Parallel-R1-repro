@@ -22,7 +22,7 @@ from typing import List, Union
 
 import pandas as pd
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, default_collate
 from transformers import PreTrainedTokenizer
 import numpy as np
 import matplotlib.pyplot as plt
@@ -454,7 +454,26 @@ class ParallelThinkingSFTDataset(Dataset):
             "bool_attention_mask": attention_mask,
             "position_ids": position_ids,
             "loss_mask": loss_mask,
+            "length": torch.tensor(min(sequence_length, self.max_length)),
         }
+
+
+def crop_padding(tensors, length):
+    """Drop padding after the first `length` tokens of a sample or a stacked batch."""
+    return {
+        "input_ids": tensors["input_ids"][..., :length],
+        "position_ids": tensors["position_ids"][..., :length],
+        "loss_mask": tensors["loss_mask"][..., :length],
+        "attention_mask": tensors["attention_mask"][..., :length, :length],
+        "length": tensors["length"],
+    }
+
+
+def collate_cropped(samples):
+    """Stack samples padded only up to the longest sample in the batch."""
+    length = max(int(sample["length"]) for sample in samples)
+    return default_collate([crop_padding(sample, length) for sample in samples])
+
 
 def main():
     from transformers import AutoTokenizer
