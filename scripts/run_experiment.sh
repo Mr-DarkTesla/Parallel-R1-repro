@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 # One SFT experiment on the pod: SFT, authors' eval, LIMO eval, tag validator on every epoch checkpoint.
-# Usage (venv active): bash scripts/run_experiment.sh <name>   ->  /work/runs/<name>/results
+# Usage (venv active): bash scripts/run_experiment.sh <name> [SFT hydra overrides...]   ->  /work/runs/<name>/results
 set -euo pipefail
 
 name=$1
+shift
 repo=$(cd "$(dirname "$0")/.." && pwd)
 run=/work/runs/$name
 data=$repo/verl/data_preprocess_scripts/data
 mkdir -p "$run/results"
 
-bash "$repo/scripts/sft_qwen3_0.6b.sh" /work/assets/Qwen3-0.6B-Base-add-special-token "$run/ckpt" > "$run/train.log" 2>&1
+bash "$repo/scripts/sft_qwen3_0.6b.sh" /work/assets/Qwen3-0.6B-Base-add-special-token "$run/ckpt" "$@" > "$run/train.log" 2>&1
 grep -a -o "step:[0-9]* - [a-z/]*loss:[0-9.]*" "$run/train.log" > "$run/results/sft_metrics.txt"
 
 evaluate() {
@@ -21,5 +22,5 @@ evaluate limo "$data/limo/test.parquet"
 
 cd "$repo/verl"
 for checkpoint in "$run"/ckpt/global_step_*; do
-    python ../scripts/check_tags.py "$checkpoint" 2> /dev/null | grep "^{"
+    python ../scripts/check_tags.py "$checkpoint" "$run/check_tags" 2> /dev/null | grep "^{"
 done > "$run/results/free_generation_tags.jsonl"
