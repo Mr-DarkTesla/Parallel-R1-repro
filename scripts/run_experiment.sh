@@ -12,9 +12,10 @@ mkdir -p "$run/results"
 
 bash "$repo/scripts/sft_qwen3_0.6b.sh" /work/assets/Qwen3-0.6B-Base-add-special-token "$run/ckpt" "$@" > "$run/train.log" 2>&1
 grep -a -o "step:[0-9]* - [a-z/]*loss:[0-9.]*" "$run/train.log" > "$run/results/sft_metrics.txt"
+final=$(ls -d "$run"/ckpt/global_step_* | sort -V | tail -1)
 
 evaluate() {
-    bash "$repo/scripts/eval_qwen3_0.6b.sh" "$run/ckpt/global_step_230" "$run/eval_$1" "$2" > "$run/eval_$1.log" 2>&1
+    bash "$repo/scripts/eval_qwen3_0.6b.sh" "$final" "$run/eval_$1" "$2" > "$run/eval_$1.log" 2>&1
     (cd "$repo/verl" && python ../scripts/summarize_eval.py "$run/eval_$1/generations/0.jsonl" "$2") > "$run/results/eval_$1.txt"
 }
 evaluate apo "$data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet"
