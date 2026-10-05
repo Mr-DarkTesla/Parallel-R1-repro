@@ -364,6 +364,7 @@ def process_validation_metrics(
 
         Where metric_name includes:
         - "mean@N": Mean value across N samples
+        - "pass@N": Fraction of prompts with a correct answer among N observed samples (for "acc")
         - "std@N": Standard deviation across N samples
         - "best@N/mean": Mean of the best values in bootstrap samples of size N
         - "best@N/std": Standard deviation of the best values in bootstrap samples
@@ -398,6 +399,9 @@ def process_validation_metrics(
                 metric = {}
                 n_resps = len(var_vals)
                 metric[f"mean@{n_resps}"] = np.mean(var_vals)
+                # Observed pass@N; best@N below is a bootstrap estimate.
+                if var_name == "acc":
+                    metric[f"pass@{n_resps}"] = np.max(var_vals)
 
                 if n_resps > 1:
                     metric[f"std@{n_resps}"] = np.std(var_vals)
