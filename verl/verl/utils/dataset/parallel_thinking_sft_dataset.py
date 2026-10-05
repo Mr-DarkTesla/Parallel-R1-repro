@@ -110,7 +110,6 @@ class ParallelThinkingSFTDataset(Dataset):
         if isinstance(self.prompts, pd.DataFrame):
             self.prompts = self.prompts.squeeze()
         self.prompts = self.prompts.tolist()
-        print(self.prompts)
         self.responses = self.dataframe[self.response_key]
         for key in self.response_dict_keys:
             try:

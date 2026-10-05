@@ -25,6 +25,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
 import logging
 import re
+import shutil
 from contextlib import nullcontext
 
 import hydra
@@ -150,7 +151,7 @@ class FSDPParallelThinkingSFTTrainer:
             dataset=self.train_dataset,
             batch_size=config.data.train_batch_size,
             sampler=self.train_sampler,
-            num_workers=8,
+            num_workers=config.data.get("num_workers", 8),
             pin_memory=True,
             drop_last=True,
         )
@@ -160,7 +161,7 @@ class FSDPParallelThinkingSFTTrainer:
             dataset=self.val_dataset,
             batch_size=config.data.micro_batch_size_per_gpu,
             sampler=self.val_sampler,
-            num_workers=8,
+            num_workers=config.data.get("num_workers", 8),
             pin_memory=True,
             drop_last=True,
         )
@@ -453,7 +454,7 @@ class FSDPParallelThinkingSFTTrainer:
                 loss /= self.ulysses_device_mesh.size(0)
         return loss
 
-    def save_checkpoint(self, step):
+    def save_checkpoint(self, step, final=False):
         # save checkpoint
         path = os.path.join(self.config.trainer.default_local_dir, f"global_step_{step}")
 
@@ -466,11 +467,6 @@ class FSDPParallelThinkingSFTTrainer:
             with FSDP.state_dict_type(self.fsdp_model, StateDictType.FULL_STATE_DICT, cfg):
                 state_dict = self.fsdp_model.state_dict()
 
-            # save huggingface model
-            if self.device_mesh.get_rank() == 0:
-                os.makedirs(path, exist_ok=True)
-                self.model.save_pretrained(path, state_dict=state_dict)
-                self.tokenizer.save_pretrained(path)
         elif fsdp_strategy == "fsdp2":
             # FSDP2 checkpoint saving
             from torch.distributed.checkpoint.state_dict import StateDictOptions, get_model_state_dict
@@ -479,14 +475,20 @@ class FSDPParallelThinkingSFTTrainer:
             options = StateDictOptions(full_state_dict=True, cpu_offload=True)
             state_dict = get_model_state_dict(self.fsdp_model, options=options)
 
-            # save huggingface model
-            if self.device_mesh.get_rank() == 0:
-                os.makedirs(path, exist_ok=True)
-                self.model.save_pretrained(path, state_dict=state_dict)
-                self.model_config.save_pretrained(path)
-                self.tokenizer.save_pretrained(path)
         else:
             raise NotImplementedError(f"not implement {fsdp_strategy}")
+
+        if self.device_mesh.get_rank() == 0:
+            os.makedirs(path, exist_ok=True)
+            state_dict = {key: value.bfloat16() if value.is_floating_point() else value for key, value in state_dict.items()}
+            if self.model_config.tie_word_embeddings:
+                state_dict.pop("lm_head.weight", None)
+            self.model.save_pretrained(path, state_dict=state_dict)
+            self.model_config.torch_dtype = torch.bfloat16
+            self.model_config.save_pretrained(path)
+            self.tokenizer.save_pretrained(path)
+            if final and self.config.trainer.get("final_dir"):
+                shutil.copytree(path, self.config.trainer.final_dir, dirs_exist_ok=True)
 
         # Copy to HDFS if configured
         if self.device_mesh.get_rank() == 0 and self.config.trainer.default_hdfs_dir:
@@ -549,7 +551,7 @@ class FSDPParallelThinkingSFTTrainer:
                     torch.distributed.barrier()
 
                     # Save final checkpoint
-                    self.save_checkpoint(step=global_step)
+                    self.save_checkpoint(step=global_step, final=True)
                     return
 
             # validation
@@ -602,7 +604,7 @@ def create_sft_dataset(data_paths, data_config, tokenizer):
         dataset_cls = MultiTurnSFTDataset
     # Default to single-turn dataset
     else:
-        dataset_cls = ParallelThinkingSFTDataset
+        dataset_cls = ParallelThinkingSFTDataset if data_config.get("parallel_attention", True) else SFTDataset
 
     # Create datasets based on the selected class
     dataset = dataset_cls(parquet_files=data_paths, tokenizer=tokenizer, config=data_config)

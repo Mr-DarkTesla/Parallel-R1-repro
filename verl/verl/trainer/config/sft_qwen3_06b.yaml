@@ -1,0 +1,31 @@
+defaults:
+  - sft_trainer
+  - _self_
+
+data:
+  train_files: data_preprocess_scripts/data/gsm8k/adaptive_parallel_thinking_final_with_prompt_v3/sft_all_accuracy_times_parallel_reward/train.parquet
+  val_files: data_preprocess_scripts/data/gsm8k/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_times_parallel_reward/test.parquet
+  prompt_key: extra_info
+  response_key: extra_info
+  prompt_dict_keys: [question]
+  response_dict_keys: [answer]
+  max_length: 4096
+  train_batch_size: 128
+  micro_batch_size_per_gpu: 1
+  num_workers: 2
+  parallel_attention: true
+
+model:
+  partial_pretrain: ${oc.env:R1_MODEL_PATH,/dev/shm/r1/Qwen3-0.6B-Base-special}
+
+trainer:
+  project_name: Parallel-R1
+  experiment_name: Parallel-SFT-Unseen-Qwen3-0.6B
+  total_epochs: 5
+  logger: [console]
+  default_local_dir: ${oc.env:R1_SCRATCH_ROOT,/dev/shm/r1}/${trainer.experiment_name}
+  final_dir: ${oc.env:R1_OUTPUT_ROOT,checkpoints}/${trainer.experiment_name}/final
+
+hydra:
+  run:
+    dir: ${oc.env:R1_SCRATCH_ROOT,/dev/shm/r1}/hydra/${trainer.experiment_name}

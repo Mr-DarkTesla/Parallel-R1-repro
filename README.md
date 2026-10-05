@@ -75,6 +75,26 @@ cd verl
 sh training_scripts/sft_exp.sh
 ```
 
+For Qwen3-0.6B-Base, use the shared configs and launcher:
+
+```bash
+cd verl  # from the repository root
+pip install -r requirements-sft.txt  # CUDA PyTorch and FlashAttention must already be installed
+bash training_scripts/sft_qwen3_06b.sh unseen
+bash training_scripts/sft_qwen3_06b.sh seen
+```
+
+Both variants use the same Parallel-GSM8K data, batch 128, length 4096, LR 1e-5,
+and five epochs. Unseen isolates parallel paths; Seen uses ordinary causal
+attention. The launcher prepares the six control tokens once and defaults to
+eight GPUs. Override `NPROC_PER_NODE` for another GPU count and pass Hydra
+overrides after the variant. `R1_SCRATCH_ROOT` defaults to `/dev/shm/r1` for the
+prepared model, HF cache, and all five epoch checkpoints in BF16 (about 6 GB per
+variant), so they can be scored separately. Only the final HF checkpoint is
+copied to `R1_OUTPUT_ROOT` (default: `verl/checkpoints`). Optimizer
+states are not saved. Weight-only checkpoints do not resume optimizer/scheduler
+state. Kaggle-specific changes are deferred.
+
 ### **2️⃣ Perform RL**
 To train Parallel-R1-Unseen (S1) from scratch 
 ```bash
@@ -105,4 +125,3 @@ If you think this work is useful, please cite our paper.
   journal={arXiv preprint arXiv:2509.07980},
   year={2025}
 }
-
