@@ -45,6 +45,8 @@ class ParallelThinkingSFTDataset(Dataset):
         response_key = config.get("response_key", "response")
         response_dict_keys = config.get("response_dict_keys", None)
         max_length = config.get("max_length", 1024)
+        # False: plain causal mask and positions, the authors' "Seen" variant
+        self.parallel_structure = config.get("parallel_structure", True)
         truncation = config.get("truncation", "error")
         use_shm = config.get('use_shm', False)
 
@@ -422,7 +424,7 @@ class ParallelThinkingSFTDataset(Dataset):
             else:
                 raise NotImplementedError(f"Unknown truncation method {self.truncation}")
 
-        attention_mask = self.generate_parallel_thinking_reasponse_mask(input_ids)
+        attention_mask = self.generate_parallel_thinking_reasponse_mask(input_ids) if self.parallel_structure else torch.tril(torch.ones(len(input_ids), len(input_ids), dtype=torch.bool))
         # print(attention_mask)
 
         if sequence_length < self.max_length:
@@ -437,7 +439,7 @@ class ParallelThinkingSFTDataset(Dataset):
 
         # The prompt mentions the tags in its instruction: only the response has parallel structure
         response_position_ids = self.compute_structured_position_ids(input_ids[prompt_length:])
-        position_ids = torch.cat((torch.arange(prompt_length), prompt_length + response_position_ids))
+        position_ids = torch.cat((torch.arange(prompt_length), prompt_length + response_position_ids)) if self.parallel_structure else torch.arange(len(input_ids))
 
         loss_mask = attention_mask_1d.clone()
         if prompt_length > 1:
