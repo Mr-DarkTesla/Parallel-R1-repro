@@ -21,6 +21,16 @@ Verification:
   A token mean over the micro batch (verl default) gives a gradient difference of 1.7e-2, so the per-sample mean is required.
 - GPU: `scripts/check_sft_parity.sh` runs 10 steps of the authors' code and of ours on the same data order and init.
 
+## Special tokens (`scripts/add_special_tokens.py`)
+
+The authors add the six tags with `add_special_tokens` + `resize_token_embeddings(151675)`, which gives the tags
+the existing unused embedding rows 151669-151674. In Qwen3-4B-Base those rows differ; in Qwen3-0.6B-Base all of them
+are the same vector (norm 0.35). With tied embeddings the 0.6B model then cannot tell the tags apart: after SFT the tags
+were still nearly identical (cosine 0.999) and only 0.2% of parallel answers had a valid tag structure
+(`results/eval_sft_identical_tags`). We initialise each tag with the mean embedding of the pieces of its text
+(`<`, `Path`, `>`). The authors' 4B rows match neither this init (cosine 0.40-0.56) nor the unused rows, so their exact
+init is unknown; what matters is that their tags are distinct.
+
 ## Pod
 
 - StatefulSet `vcharkin-shared-vm`: `/dev/shm` is an in-memory `emptyDir` of 32Gi (was 64M), needed by the DataLoader workers.
