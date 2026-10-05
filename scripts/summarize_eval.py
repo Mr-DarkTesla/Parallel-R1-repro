@@ -24,7 +24,7 @@ generations["source"] = generations["input"].map(
 generations["parallel"] = generations["output"].str.contains("<Parallel>")
 generations[["tags", "correct_tags"]] = generations["output"].map(validate).tolist()
 generations["valid"] = (generations["tags"] > 0) & (generations["tags"] == generations["correct_tags"])
-generations["no_final_answer"] = ~generations["output"].str.contains("Final Answer:")
+generations["no_final_answer"] = ~generations["output"].str.contains(r"(?i)Final Answer\s*:")  # same pattern as math_dapo
 tagged = generations[generations["tags"] > 0]
 
 per_prompt = generations.groupby(["source", "input"]).agg(mean=("acc", "mean"), passed=("acc", "max"), n=("acc", "size"))
@@ -45,4 +45,4 @@ summary = {
     "responses": len(generations),
 }
 print((table * [100, 100, 1, 1, 100, 100, 100, 100]).round(1).to_string())
-print(json.dumps({key: round(float(value), 4) for key, value in summary.items()}))
+print(json.dumps({key: None if pd.isna(value) else round(float(value), 4) for key, value in summary.items()}, allow_nan=False))

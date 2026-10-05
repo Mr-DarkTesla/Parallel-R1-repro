@@ -55,9 +55,14 @@ def run_ppo(config) -> None:
         # Set environment variables in the runtime environment to control tokenizer parallelism,
         # NCCL debug level, VLLM logging level, and allow runtime LoRA updating
         # `num_cpus` specifies the number of CPU cores Ray can use, obtained from the configuration
+        # A private local cluster per run, so that several evals can run on one pod (one GPU each)
         ray.init(
+            address="local",
             runtime_env=PPO_RAY_RUNTIME_ENV,
             num_cpus=config.ray_init.num_cpus,
+            include_dashboard=False,
+            object_store_memory=8 * 1024**3,
+            _temp_dir=os.environ.get("RAY_TMPDIR"),
         )
 
     # Create a remote instance of the TaskRunner class, and
