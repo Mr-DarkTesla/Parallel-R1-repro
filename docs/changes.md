@@ -31,6 +31,13 @@ were still nearly identical (cosine 0.999) and only 0.2% of parallel answers had
 (`<`, `Path`, `>`). The authors' 4B rows match neither this init (cosine 0.40-0.56) nor the unused rows, so their exact
 init is unknown; what matters is that their tags are distinct.
 
+## Experiments after 01
+
+- exp02 (`verl/verl/utils/dataset/parallel_thinking_sft_dataset.py`): structured position ids only for the response, the prompt
+  is numbered 0..P-1. The authors' parser treated the tags in the instruction prompt as a parallel block. `results/02-sft-prompt-positions`.
+- exp03 (`verl/verl/trainer/fsdp_parallel_sft_trainer.py`): loss is the token mean over the global batch, divided before `backward()`;
+  the authors summed micro-batch gradients. Logs `train/grad_norm`. `results/03-sft-token-mean`.
+
 ## Pod
 
 - StatefulSet `vcharkin-shared-vm`: `/dev/shm` is an in-memory `emptyDir` of 32Gi (was 64M), needed by the DataLoader workers.
