@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 # Authors' validation from verl/training_scripts/rl_exp_s1.sh, run once without training, on 1 GPU.
 # Test set: AIME24/AIME25/AMC23 repeated 16 times (mean@16, best@16) and MATH300, parallel thinking rollout.
-# Usage: bash scripts/eval_qwen3_0.6b.sh <model> <output_dir> [hydra overrides...]
+# Usage: bash scripts/eval_qwen3_0.6b.sh <model> <output_dir> [test_parquet]
 set -euo pipefail
 
 model=$1
 output_dir=$2
-shift 2
-
 data=./data_preprocess_scripts/data
+test=${3:-$data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet}
 max_length=3000
 max_prompt_len=2000
 
@@ -17,7 +16,7 @@ export VLLM_USE_V1=1
 python -m verl.trainer.main_ppo \
     algorithm.adv_estimator=grpo \
     data.train_files="['$data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/train.parquet']" \
-    data.val_files="['$data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet']" \
+    data.val_files="['$test']" \
     data.train_batch_size=256 \
     data.return_raw_chat=True \
     data.max_prompt_length=$max_prompt_len \
@@ -52,4 +51,4 @@ python -m verl.trainer.main_ppo \
     trainer.val_before_train=True \
     trainer.val_only=True \
     trainer.validation_data_dir="$output_dir/generations" \
-    trainer.default_local_dir="$output_dir" "$@"
+    trainer.default_local_dir="$output_dir"
