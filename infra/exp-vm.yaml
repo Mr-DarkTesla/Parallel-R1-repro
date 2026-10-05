@@ -1,0 +1,41 @@
+# GPU pod for parallel experiments. Project data lives on the PVC at /work; the rest of the disk is ephemeral.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vcharkin-exp-vm
+  namespace: shared-dzen-ml
+spec:
+  replicas: 1
+  serviceName: vcharkin-exp-vm
+  selector:
+    matchLabels:
+      app: vcharkin-exp-vm
+  template:
+    metadata:
+      labels:
+        app: vcharkin-exp-vm
+        repository/git: "true"
+    spec:
+      containers:
+      - name: vcharkin-exp-vm
+        image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
+        resources:
+          limits:
+            cpu: "81"
+            memory: 366Gi
+            nvidia.com/gpu.h100.pa: "3"
+        volumeMounts:
+        - mountPath: /dev/shm
+          name: dshm
+        - mountPath: /work
+          name: work
+      securityContext:
+        fsGroup: 100
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 96Gi
+      - name: work
+        persistentVolumeClaim:
+          claimName: vcharkin-parallel-r1-pvc

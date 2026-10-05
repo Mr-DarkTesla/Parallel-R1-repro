@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 # One SFT experiment on the pod: SFT, authors' eval, LIMO eval, tag validator on every epoch checkpoint.
-# Usage (venv active): bash scripts/run_experiment.sh <name>   ->  /home/jovyan/runs/<name>/results
+# Usage (venv active): bash scripts/run_experiment.sh <name>   ->  /work/runs/<name>/results
 set -euo pipefail
 
 name=$1
 repo=$(cd "$(dirname "$0")/.." && pwd)
-run=/home/jovyan/runs/$name
+run=/work/runs/$name
 data=$repo/verl/data_preprocess_scripts/data
 mkdir -p "$run/results"
 
-bash "$repo/scripts/sft_qwen3_0.6b.sh" /home/jovyan/assets/Qwen3-0.6B-Base-add-special-token "$run/ckpt" > "$run/train.log" 2>&1
+bash "$repo/scripts/sft_qwen3_0.6b.sh" /work/assets/Qwen3-0.6B-Base-add-special-token "$run/ckpt" > "$run/train.log" 2>&1
 grep -a -o "step:[0-9]* - [a-z/]*loss:[0-9.]*" "$run/train.log" > "$run/results/sft_metrics.txt"
 
 evaluate() {
