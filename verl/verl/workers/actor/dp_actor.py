@@ -241,7 +241,7 @@ class DataParallelPPOActor(BasePPOActor):
                 trim_left = 0
                 if (self.config.get("trim_parallel_padding", False)
                         and "position_required_masks" in micro_batch
-                        and not multi_modal_inputs and not self.use_fused_kernels):
+                        and not multi_modal_inputs):
                     # Keep absolute RoPE positions and the custom path mask. Only
                     # columns padded in every sequence may be removed.
                     prompt_length = seqlen - response_length
@@ -331,8 +331,8 @@ class DataParallelPPOActor(BasePPOActor):
                 )  # prevent model thinks we are generating
 
                 if self.use_fused_kernels:
-                    log_probs = output.log_probs[:, -response_length - 1 : -1]
-                    entropy = output.entropy[:, -response_length - 1 : -1]  # (bsz, response_length)
+                    log_probs = output.log_probs.reshape(batch_size, -1)[:, -response_length - 1 : -1]
+                    entropy = output.entropy.reshape(batch_size, -1)[:, -response_length - 1 : -1]
 
                 else:
                     logits = output.logits
