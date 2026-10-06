@@ -83,37 +83,71 @@ uv venv --python 3.12 ../.venv
 source ../.venv/bin/activate
 uv pip install -r requirements-qwen3.txt setuptools ninja
 uv pip install --no-build-isolation flash-attn==2.7.4.post1
+bash training_scripts/sft_qwen3_06b.sh  # Seen is the default
+# Optional Unseen comparison:
 bash training_scripts/sft_qwen3_06b.sh unseen
-bash training_scripts/sft_qwen3_06b.sh seen
 ```
 
 The same environment runs SFT and evaluation: PyTorch 2.6, vLLM 0.8.5.post1,
-and FlashAttention 2.7.4.post1. The environment lives in the project; keep the
-uv cache on local disk (`UV_CACHE_DIR=/tmp/r1-uv-cache` on shared-storage hosts).
+and FlashAttention 2.7.4.post1. The environment lives in the project.
 
-Both variants use the same Parallel-GSM8K data, batch 128, length 4096, LR 1e-5,
-and five epochs. Unseen isolates parallel paths; Seen uses ordinary causal
-attention. The launcher prepares the six control tokens once and defaults to
-eight GPUs. Override `NPROC_PER_NODE` for another GPU count and pass Hydra
-overrides after the variant. `R1_SCRATCH_ROOT` defaults to `/dev/shm/r1` for the
-prepared model, HF cache, and all five epoch checkpoints in BF16 (about 6 GB per
-variant), so they can be scored separately. Only the final HF checkpoint is
-copied to `R1_OUTPUT_ROOT` (default: `verl/checkpoints`). Optimizer
+The Qwen3-0.6B profile uses Parallel-GSM8K, global batch 128, microbatch 4,
+length 3072, LR 1e-5, and five epochs. Seen uses ordinary causal attention;
+Unseen isolates response paths. Prompt instructions always retain ordinary
+positions and causal attention. The selected profile was checked on 8 A100 80GB;
+use Hydra overrides for other GPU memory limits.
+
+The launcher prepares six control tokens once, explicitly initializes their
+embeddings, and uses `Qwen3-0.6B-Base-special-v2`. Existing checkpoints from the
+old token initialization need retraining. Right padding is trimmed before forward;
+tokens, positions and the attention mask are preserved. Gradient checkpointing
+is disabled. Microbatch 8 ran out of memory on the longest examples.
+
+Training averages token loss within each response and then across examples,
+with accumulation scaling applied before backward. Validation covers every
+example once, excluding duplicated sampler padding. Weighted token loss is an
+experiment only and is not part of the shared trainer.
+Override `NPROC_PER_NODE` for another GPU count and pass Hydra
+overrides after the variant. By default, the prepared model, HF cache, and all
+five epoch checkpoints are stored under `verl/checkpoints/` in the project.
+The epoch weights use BF16 (about 6 GB per variant) and can be scored separately.
+A final HF checkpoint is also copied to
+`verl/checkpoints/<experiment>/final`. Set `PARALLEL_R1_SCRATCH_ROOT` and
+`PARALLEL_R1_OUTPUT_ROOT` to use different storage locations; absolute paths
+are recommended. Optimizer
 states are not saved. Weight-only checkpoints do not resume optimizer/scheduler
 state. Kaggle-specific changes are deferred.
 
 To evaluate an epoch checkpoint in the same environment:
 
 ```bash
-bash training_scripts/eval_qwen3_06b.sh /dev/shm/r1/Parallel-SFT-Unseen-Qwen3-0.6B/global_step_92
+bash training_scripts/eval_qwen3_06b.sh checkpoints/Parallel-SFT-Seen-Qwen3-0.6B/final
 ```
 
-The launcher runs validation only through the original parallel-generation loop.
+The launcher runs validation only through the parallel-generation loop, with
+batch 1024 in eager mode (CUDA Graphs disabled). The response budget includes
+all paths, injected tags and the summary. On two A100s, measured full eval time
+was 6.9 min with this profile versus 12.3 min at batch 256 and 7.8 min with
+batch 1024 and CUDA Graphs. One stochastic pass does not establish a quality
+advantage for either engine configuration; eager is selected for measured speed.
+
+Use `actor_rollout_ref.rollout.mode=sync` for ordinary autoregressive decoding
+and `actor_rollout_ref.rollout.enforce_eager=false` to enable CUDA Graphs.
+The parallel vLLM loop does not apply Unseen's custom summary positions/mask;
+Unseen train/inference alignment remains an open limitation.
 The default benchmark file contains 30 AIME24, 30 AIME25, and 40 AMC23 questions,
 each repeated 16 times, plus 316 MATH questions once. Keep `val_kwargs.n=1` for
 this file. Metrics include accuracy, observed `pass@N`, parallel ratio, and tag
 format validity, using the original answer verifiers. Logs and per-response
-JSONL are saved under `R1_OUTPUT_ROOT/eval` (default: `verl/checkpoints/eval`).
+JSONL are saved under `PARALLEL_R1_OUTPUT_ROOT/eval` (default: `verl/checkpoints/eval`).
+The format sanity metrics are `parallel_format` (control tags are balanced and
+properly nested), `format_error` (unmatched or misnested tags), and `no_tags`
+(no control tags); their fractions sum to one. The sanity check imposes no
+minimum number of paths and does not require a summary. The separate `format`
+metric retains the original author checker, which requires at least two paths
+and a summary after each parallel block. They check the assembled response, including tags inserted by the
+parallel agent, and do not change accuracy or reward. Bootstrap best/worst/majority metrics
+are omitted for these auxiliary format flags; accuracy statistics are retained.
 Override `data.val_files` for another Parquet dataset and `NPROC_PER_NODE` for
 another GPU count.
 

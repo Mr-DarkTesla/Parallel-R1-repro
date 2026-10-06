@@ -121,7 +121,7 @@ class ParallelThinkingSFTDataset(Dataset):
             self.responses = self.responses.squeeze()
         self.responses = self.responses.tolist()
 
-    def generate_parallel_thinking_reasponse_mask(self, response_ids: torch.Tensor) -> torch.Tensor:
+    def generate_parallel_thinking_reasponse_mask(self, response_ids: torch.Tensor, start: int = 0) -> torch.Tensor:
         """
         Generate a structure-aware causal mask for parallel thinking:
         - Normal causal mask before <Parallel>
@@ -144,7 +144,7 @@ class ParallelThinkingSFTDataset(Dataset):
 
         path_ranges = []
         in_parallel = False
-        i = 0
+        i = start
         while i < seq_len:
             tok = response_ids[i].item()
 
@@ -293,7 +293,7 @@ class ParallelThinkingSFTDataset(Dataset):
         # print(bool_attention_mask)
         return bool_attention_mask
 
-    def compute_structured_position_ids(self, response_ids: torch.Tensor) -> torch.Tensor:
+    def compute_structured_position_ids(self, response_ids: torch.Tensor, start: int = 0) -> torch.Tensor:
         """
         Generate position_ids with left-padding and structural awareness:
         - Left padding is skipped
@@ -308,9 +308,11 @@ class ParallelThinkingSFTDataset(Dataset):
         seq_len = response_ids.size(0)
         pos_ids = torch.zeros(seq_len, dtype=torch.long)
         nonpad_mask = (response_ids != pad_token_id)
+        pos_ids[nonpad_mask] = start
+        pos_ids[:start] = torch.arange(start)
 
-        curr_pos = 0
-        i = 0
+        curr_pos = start
+        i = start
         while i < seq_len:
             if not nonpad_mask[i]:
                 i += 1
@@ -421,7 +423,7 @@ class ParallelThinkingSFTDataset(Dataset):
             else:
                 raise NotImplementedError(f"Unknown truncation method {self.truncation}")
 
-        attention_mask = self.generate_parallel_thinking_reasponse_mask(input_ids)
+        attention_mask = self.generate_parallel_thinking_reasponse_mask(input_ids, start=prompt_length)
         # print(attention_mask)
 
         if sequence_length < self.max_length:
@@ -434,7 +436,7 @@ class ParallelThinkingSFTDataset(Dataset):
         float_attention_mask = torch.full_like(attention_mask, -torch.inf, dtype=torch.float)
         float_attention_mask = float_attention_mask.masked_fill(attention_mask, 0.0)
 
-        position_ids = self.compute_structured_position_ids(input_ids)
+        position_ids = self.compute_structured_position_ids(input_ids, start=prompt_length)
 
         loss_mask = attention_mask_1d.clone()
         if prompt_length > 1:

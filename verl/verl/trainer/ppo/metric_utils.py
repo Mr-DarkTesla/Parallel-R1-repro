@@ -406,6 +406,10 @@ def process_validation_metrics(
                 if n_resps > 1:
                     metric[f"std@{n_resps}"] = np.std(var_vals)
 
+                    if var_name in {"parallel", "format", "parallel_format", "format_error", "no_tags"}:
+                        data_src2prompt2var2metric[data_source][prompt][var_name] = metric
+                        continue
+
                     ns = []
                     n = 2
                     while n < n_resps:

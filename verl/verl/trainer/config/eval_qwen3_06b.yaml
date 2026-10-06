@@ -6,7 +6,7 @@ data:
   val_files: data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet
   train_files: ${data.val_files}
   train_batch_size: 8
-  val_batch_size: 64
+  val_batch_size: 1024
   return_raw_chat: true
   max_prompt_length: 2000
   max_response_length: 3000
@@ -15,7 +15,7 @@ data:
 
 actor_rollout_ref:
   model:
-    path: ${oc.env:R1_EVAL_MODEL}
+    path: ${oc.env:PARALLEL_R1_EVAL_MODEL}
     use_remove_padding: false
     enable_gradient_checkpointing: false
   actor:
@@ -25,6 +25,8 @@ actor_rollout_ref:
   rollout:
     name: vllm
     mode: async
+    enforce_eager: true
+    gpu_memory_utilization: 0.7
     tensor_model_parallel_size: 1
     log_prob_micro_batch_size_per_gpu: 1
     agent:
@@ -46,7 +48,7 @@ custom_reward_function:
 
 trainer:
   project_name: Parallel-R1
-  experiment_name: ${oc.env:R1_EVAL_NAME}
+  experiment_name: ${oc.env:PARALLEL_R1_EVAL_NAME}
   n_gpus_per_node: 8
   nnodes: 1
   logger: [console]
@@ -54,7 +56,7 @@ trainer:
   val_only: true
   resume_mode: disable
   total_epochs: 1
-  default_local_dir: ${oc.env:R1_OUTPUT_ROOT,checkpoints}/eval/${trainer.experiment_name}
+  default_local_dir: ${oc.env:PARALLEL_R1_OUTPUT_ROOT,checkpoints}/eval/${trainer.experiment_name}
   validation_data_dir: ${trainer.default_local_dir}
 
 ray_init:
@@ -62,4 +64,4 @@ ray_init:
 
 hydra:
   run:
-    dir: ${oc.env:R1_SCRATCH_ROOT,/dev/shm/r1}/hydra/${trainer.experiment_name}
+    dir: ${oc.env:PARALLEL_R1_SCRATCH_ROOT,checkpoints}/hydra/${trainer.experiment_name}

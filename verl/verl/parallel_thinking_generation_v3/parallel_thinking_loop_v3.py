@@ -187,7 +187,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             #     p_rel = new_ids.index(self.end_parallel_token)   # first find relative pos of </Parallel> in  new_ids 
             # except ValueError:
             #     raise RuntimeError("append_tokens(is_parallel=True) 找不到 </Parallel> 标记")
-            s2, e2 = path_spans[1]
+            s2, e2 = path_spans[-1]
 
             p_end_abs   = start + e2
             
@@ -253,7 +253,9 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
 
         
         while True:
-            sp_main = {**sampling_params, "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
+            remaining = self.response_length - (len(prompt_ids) - init_len)
+            sp_main = {**sampling_params, "max_tokens": remaining,
+                       "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
             ids = await self.server_manager.generate(
                 request_id=request_id,
                 prompt_ids=prompt_ids,
@@ -265,12 +267,17 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
 
             assert ids[-1] != self.eos_token_id
 
+            remaining = self.response_length - (len(prompt_ids) - init_len)
+            # Reserve the injected path/parallel/summary tags and newline.
+            if remaining < 2 * self.num_paths + 3 + len(self.new_line_token):
+                break
+
             # elict parallel thinking 
             base_pos = position_ids[-1].item() + 1 # the position of the <Path> token
             parallel_stack.append({"base": base_pos, "longest": 0})
 
             parallel_ids, path_spans, manual_mask_positions = await self._call_parallel_thinking(
-                prompt_ids, sampling_params
+                prompt_ids, sampling_params, remaining
             )
             append_tokens(parallel_ids, is_parallel=True, path_spans=path_spans, manual_mask_positions=manual_mask_positions)
 
@@ -278,8 +285,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             if should_stop():
                 break
 
-        response_ids = prompt_ids[-len(response_mask) :]
-        prompt_ids = prompt_ids[: len(prompt_ids) - len(response_mask)]
+        response_ids = prompt_ids[init_len:]
+        prompt_ids = prompt_ids[:init_len]
         assert init_len == (len(prompt_ids))
         
         if left_pad_len > 0:
@@ -314,7 +321,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         """
         check whether need to conduct parallel thinking
         """
-        if response_ids[-1] == self.start_parallel_token:
+        if response_ids and response_ids[-1] == self.start_parallel_token:
             return True
         else:
             return False
@@ -323,10 +330,13 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         self,
         prompt_ids: list[int],
         sampling_params: dict[str, Any],
+        remaining: int,
     ):
         print("Conducting parallel thinking...")
         num_paths = self.num_paths
-        max_len   = self.max_path_response_length
+        overhead = 2 * num_paths + 3 + len(self.new_line_token)
+        path_budget = (remaining - overhead) // num_paths
+        max_len = min(self.max_path_response_length or path_budget, path_budget)
         PATH_OPEN, PATH_CLOSE = self.start_path_token, self.end_path_token
         manual_mask_positions = []
 
@@ -334,7 +344,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         async def _gen_single_path(seed_i: int, prompt_i: list[int]):
             sp = copy.deepcopy(sampling_params)
             sp.update({"seed": seed_i, "n": 1, "stop_token_ids": [PATH_CLOSE, self.eos_token_id],
-                    "temperature": 1.0})
+                    "temperature": 1.0, "max_tokens": max_len})
             # sp.update({"n": 1, "stop_token_ids": [PATH_CLOSE, self.eos_token_id],
             #         "temperature": 1.0})
             manual_append = False
@@ -346,8 +356,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             if max_len and len(ids) > max_len:
                 ids = ids[:max_len]
             
-            if ids[-1] != PATH_CLOSE:
-                if ids[-1] == self.eos_token_id:
+            if not ids or ids[-1] != PATH_CLOSE:
+                if ids and ids[-1] == self.eos_token_id:
                     ids[-1] = PATH_CLOSE
                 else:
                     ids.append(PATH_CLOSE)
@@ -397,18 +407,19 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cursor += 1
         
         # if exploration stage alos superass the max length, we will not generate summary
-        if len(prompt_ids) + 2 + len(parallel_ids) + 1 < self.prompt_length + self.response_length:
+        if len(parallel_ids) < remaining:
             print("Conducting Summary...")
             manual_append_summary = False
             sp_sum = copy.deepcopy(sampling_params)
-            sp_sum.update({"n": 1, "stop_token_ids": [self.end_summary_token, self.eos_token_id]})
+            sp_sum.update({"n": 1, "max_tokens": remaining - len(parallel_ids) - 1,
+                           "stop_token_ids": [self.end_summary_token, self.eos_token_id]})
             summary_ids = await self.server_manager.generate(
                 request_id=uuid4().hex,
                 prompt_ids=prompt_ids + parallel_ids,   # 现在的完整 prompt
                 sampling_params=sp_sum,
             )
-            if summary_ids[-1] != self.end_summary_token:
-                if summary_ids[-1] == self.eos_token_id:
+            if not summary_ids or summary_ids[-1] != self.end_summary_token:
+                if summary_ids and summary_ids[-1] == self.eos_token_id:
                     summary_ids[-1] = self.end_summary_token
                 else:
                     summary_ids.append(self.end_summary_token)
