@@ -29,6 +29,7 @@ from vllm.entrypoints.openai.serving_chat import OpenAIServingChat
 from vllm.entrypoints.openai.serving_models import BaseModelPath, OpenAIServingModels
 from vllm.inputs import TokensPrompt
 from vllm.outputs import RequestOutput
+from vllm.sampling_params import RequestOutputKind
 from vllm.v1.engine.async_llm import AsyncLLM
 from vllm.v1.executor.abstract import Executor
 from vllm.worker.worker_base import WorkerWrapperBase
@@ -320,6 +321,8 @@ class AsyncvLLMServer(AsyncServerBase):
         max_tokens = min(context_left, sampling_params.pop("max_tokens", context_left))
         if max_tokens <= 0:
             return []
+        # This internal API consumes only the final token list, never streaming deltas.
+        sampling_params["output_kind"] = RequestOutputKind.FINAL_ONLY
         sampling_params = SamplingParams(max_tokens=max_tokens, **sampling_params)
         prompt = TokensPrompt(prompt_token_ids=prompt_ids)
         generator = self.engine.generate(prompt=prompt, sampling_params=sampling_params, request_id=request_id)
