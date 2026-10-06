@@ -1,0 +1,18 @@
+bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+score.py rows: ok
+seeded outcomes of rows (22, 511): [('True', 'True'), ('True', 'True')]
+score.py SCORE_IFEVAL_SEED: ok
+rejected reordered rows: ValueError: /tmp/tmp4ab08dwb/bad_reordered rows math_dev: problem_id differs in 8 rows, first row 0
+rejected unequal samples: ValueError: /tmp/tmp4ab08dwb/bad_unequal samples math_dev: unequal samples per problem in ['MATH_DEV']: {2: 3, 1: 1}
+rejected unequal samples in one source: ValueError: /tmp/tmp4ab08dwb/bad_unequal samples in one source math_dev: unequal samples per problem in ['AIME']: {1: 2, 4: 1, 3: 1}
+rejected other cohort: ValueError: /tmp/tmp4ab08dwb/bad_other cohort math_dev: problem_id differs in 2 rows, first row 6
+rejected missing benchmark: ValueError: /tmp/tmp4ab08dwb/a: benchmarks ['math_dev'] vs base ['arc_dev', 'math_dev']
+rejected other budget: ValueError: /tmp/tmp4ab08dwb/bad_other budget: protocol differs {'budget': (16384, 3000)}
+rejected other scorer seed: ValueError: /tmp/tmp4ab08dwb/bad_other scorer seed: protocol differs {'ifeval_scorer_seed': (0, 1)}
+rejected unseeded scorer: ValueError: /tmp/tmp4ab08dwb/bad_unseeded scorer: protocol differs {'ifeval_scorer_seed': (0, None)}
+paired_compare.py: ok
+== mutation: score.py ignoring SCORE_IFEVAL_SEED (pod /tmp copy only), 3 attempts
+1
+AssertionError: seeded per-prompt outcomes differ between scorings
+AssertionError: seeded per-prompt outcomes differ between scorings
+AssertionError: seeded per-prompt outcomes differ between scorings

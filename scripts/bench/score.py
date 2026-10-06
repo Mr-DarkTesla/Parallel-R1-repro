@@ -6,9 +6,14 @@ math_verify; options also as "answer is X" / "Correct Answer: X" or as the optio
 IFEval: the official lm-eval checker on the answer with any <think> block removed (prompt- and instruction-level, strict and loose).
 Also: share of answers with <Parallel>, tag validity (scripts/tag_validator.py), answers without "Final Answer", mean length in characters.
 
-Usage (from verl/, PYTHONPATH with the IFEval checker): python ../scripts/bench/score.py <generations.jsonl> <test.parquet> <output.json>
+Usage (from verl/, PYTHONPATH with the IFEval checker): python ../scripts/bench/score.py <generations.jsonl> <test.parquet> <output.json> [<rows.jsonl>]
+The optional rows.jsonl gets one outcome per answer for paired comparisons; the summary JSON does not depend on it.
+Optional env SCORE_IFEVAL_SEED=<int> (set by scripts/instruct4b_eval/run_eval.sh): the IFEval checker's random fallbacks (e.g. a random
+letter when the doc's letter is "!") are seeded per prompt from "<seed>/<doc key>", langdetect with <seed>. Unset: unseeded, as before.
 """
 import json
+import os
+import random
 import re
 import sys
 
@@ -20,7 +25,7 @@ from tag_validator import validate  # noqa: E402
 from math_verify import parse, verify  # noqa: E402
 from verl.utils.reward_score.math_dapo import compute_score, last_boxed_only_string, remove_boxed  # noqa: E402
 
-generations_path, test_path, output_path = sys.argv[1], sys.argv[2], sys.argv[3]
+generations_path, test_path, output_path, *rows_path = sys.argv[1:]
 generations = pd.read_json(generations_path, lines=True)
 test = pd.read_parquet(test_path)
 assert len(generations) == len(test), (len(generations), len(test))
@@ -37,7 +42,12 @@ truths = [reward["ground_truth"] for reward in test["reward_model"]]
 def correct(source, answer, truth, info):
     if source == "IFEVAL":
         from lm_eval.tasks.ifeval import utils
-        return utils.process_results(json.loads(info["doc"]), [answer])
+        doc, seed = json.loads(info["doc"]), os.environ.get("SCORE_IFEVAL_SEED")
+        if seed is not None:
+            from langdetect import DetectorFactory
+            random.seed(f"{int(seed)}/{doc['key']}")
+            DetectorFactory.seed = int(seed)
+        return utils.process_results(doc, [answer])
     if source in ("ARC", "MMLUPRO"):
         letters = re.findall(r"(?i)Final Answer\s*:\s*\**\(?([A-J])\b", answer)
         return bool(letters) and letters[-1].upper() == truth
@@ -95,3 +105,18 @@ for source, group in frame.groupby("source"):
     }
 json.dump(summary, open(output_path, "w"), indent=1)
 print(json.dumps(summary))
+
+if rows_path:  # problem_id: extra_info "id" if the parquet has it, else source/<order of first appearance of the prompt>
+    order = {problem: n for n, problem in enumerate(dict.fromkeys(frame["problem"]))}
+    rows = frame.drop(columns=["answer"]).assign(
+        row=range(len(frame)), input=generations["input"],
+        problem_id=[info.get("id") or f"{s}/{order[p]}" for info, s, p in zip(test["extra_info"], sources, frame["problem"])],
+        sample=frame.groupby("problem").cumcount(),
+        valid_tags=(frame["tags"] > 0) & (frame["tags"] == frame["correct_tags"]),
+        tokens=generations["tokens"] if "tokens" in generations else None,
+        truncated=frame["truncated"] if "truncated" in frame else None)
+    if (sources == "IFEVAL").all():
+        rows["instruction_id_list"] = [json.loads(info["doc"])["instruction_id_list"] for info in test["extra_info"]]
+        for key in ("inst_level_strict_acc", "inst_level_loose_acc"):
+            rows[key] = [r[key] for r in results]
+    rows.to_json(rows_path[0], orient="records", lines=True)
