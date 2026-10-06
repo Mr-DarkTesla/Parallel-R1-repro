@@ -1,6 +1,8 @@
 """Scores a generation dump (authors' rollout dump or scripts/bench/generate_plain.py) against its benchmark parquet; rows are in parquet order.
 
 Math (authors' set, LIMO): the authors' math_dapo check of "Final Answer:". ARC / MMLU-Pro: the letter after the last "Final Answer:".
+accuracy_robust also accepts other answer layouts: math from the last \\boxed{} or the line after the last "Final Answer:", checked with
+math_verify; options also as "answer is X" / "Correct Answer: X" or as the option number (1 = A).
 IFEval: the official lm-eval checker on the answer with any <think> block removed (prompt- and instruction-level, strict and loose).
 Also: share of answers with <Parallel>, tag validity (scripts/tag_validator.py), answers without "Final Answer", mean length in characters.
 
@@ -15,7 +17,8 @@ import pandas as pd
 
 sys.path.insert(0, __file__.rsplit("/", 2)[0])
 from tag_validator import validate  # noqa: E402
-from verl.utils.reward_score.math_dapo import compute_score  # noqa: E402
+from math_verify import parse, verify  # noqa: E402
+from verl.utils.reward_score.math_dapo import compute_score, last_boxed_only_string, remove_boxed  # noqa: E402
 
 generations_path, test_path, output_path = sys.argv[1], sys.argv[2], sys.argv[3]
 generations = pd.read_json(generations_path, lines=True)
@@ -41,6 +44,21 @@ def correct(source, answer, truth, info):
     return compute_score(answer, truth)["acc"]
 
 
+def correct_robust(source, answer, truth):
+    if source in ("ARC", "MMLUPRO"):
+        choices = re.findall(r"(?i)(?:final answer|correct answer|answer is|answer)\s*:?\s*\**\(?([A-J]|10|[1-9])\b", answer)
+        return bool(choices) and (choices[-1].upper() if choices[-1].isalpha() else "ABCDEFGHIJ"[int(choices[-1]) - 1]) == truth
+    boxed = last_boxed_only_string(answer)
+    if boxed:
+        candidate = remove_boxed(boxed)
+    else:
+        parts = re.split(r"(?i)final answer\s*:", answer)
+        lines = [line for line in parts[-1].splitlines() if line.strip()] if len(parts) > 1 else []
+        candidate = lines[0] if lines else ""
+    candidate = candidate.strip().strip("$").strip().rstrip(".")
+    return bool(candidate) and (verify(parse(f"${truth}$"), parse(f"${candidate}$")) or compute_score(f"Final Answer: {candidate}", truth)["acc"])
+
+
 results = [correct(s, a, t, i) for s, a, t, i in zip(sources, final, truths, test["extra_info"])]
 frame = pd.DataFrame({"source": sources, "problem": [p[0]["content"] for p in test["prompt"]], "answer": answers})
 if (sources == "IFEVAL").all():
@@ -50,6 +68,7 @@ if (sources == "IFEVAL").all():
     frame["acc"] = frame["prompt_level_strict_acc"]
 else:
     frame["acc"] = results
+    frame["acc_robust"] = [correct_robust(s, a, t) for s, a, t in zip(sources, final, truths)]
 frame["parallel"] = answers.str.contains("<Parallel>")
 frame[["tags", "correct_tags"]] = answers.map(validate).tolist()
 frame["no_final_answer"] = ~final.str.contains(r"(?i)Final Answer\s*:")
@@ -63,6 +82,7 @@ for source, group in frame.groupby("source"):
     tagged = group[group["tags"] > 0]
     summary[source] = {
         "accuracy": round(100 * group["acc"].mean(), 2),
+        **({"accuracy_robust": round(100 * group["acc_robust"].mean(), 2)} if "acc_robust" in group else {}),
         f"pass@{per_problem.size().iloc[0]}": round(100 * per_problem.max().mean(), 2),
         "problems": int(per_problem.ngroups),
         "with_parallel": round(100 * group["parallel"].mean(), 1),
