@@ -711,6 +711,8 @@ class RayPPOTrainer:
                 non_tensor_batch_keys_to_pop.append("multi_modal_data")
             if "raw_prompt" in test_batch.non_tensor_batch:
                 non_tensor_batch_keys_to_pop.append("raw_prompt")
+            if "index" in test_batch.non_tensor_batch:
+                non_tensor_batch_keys_to_pop.append("index")
             if "tools_kwargs" in test_batch.non_tensor_batch:
                 non_tensor_batch_keys_to_pop.append("tools_kwargs")
             if "interaction_kwargs" in test_batch.non_tensor_batch:
@@ -980,8 +982,12 @@ class RayPPOTrainer:
         local_latest_checkpointed_iteration = os.path.join(
             self.config.trainer.default_local_dir, "latest_checkpointed_iteration.txt"
         )
-        with open(local_latest_checkpointed_iteration, "w") as f:
+        tracker_tmp = local_latest_checkpointed_iteration + ".tmp"
+        with open(tracker_tmp, "w") as f:
             f.write(str(self.global_steps))
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tracker_tmp, local_latest_checkpointed_iteration)
 
     def _load_checkpoint(self):
         if self.config.trainer.resume_mode == "disable":
@@ -1112,6 +1118,10 @@ class RayPPOTrainer:
             if self.config.trainer.get("val_only", False):
                 return
 
+        if self.global_steps >= self.total_training_steps:
+            print("Requested training steps already completed; no further optimizer update.")
+            return
+
         # add tqdm
         progress_bar = tqdm(total=self.total_training_steps, initial=self.global_steps, desc="Training Progress")
 
@@ -1156,7 +1166,8 @@ class RayPPOTrainer:
                     non_tensor_batch_keys=non_tensor_batch_keys_to_pop,
                 )
 
-                # pass global_steps to trace
+                # pass global_steps to trace before dispatch, not after generation
+                gen_batch.meta_info["global_steps"] = self.global_steps
                 
                 gen_batch = gen_batch.repeat(repeat_times=self.config.actor_rollout_ref.rollout.n, interleave=True)
 
@@ -1172,6 +1183,17 @@ class RayPPOTrainer:
                         timing_raw.update(gen_batch_output.meta_info["timing"])
                         gen_batch_output.meta_info.pop("timing", None)
                         gen_batch_output.meta_info["global_steps"] = self.global_steps
+                        parallel_stats = gen_batch_output.non_tensor_batch.get('parallel_stats', [])
+                        if len(parallel_stats):
+                            positions = [p for item in parallel_stats for p in item['positions']]
+                            metrics['parallel/ratio'] = float(np.mean([bool(item['positions']) for item in parallel_stats]))
+                            metrics['parallel/forks_mean'] = float(np.mean([item['forks'] for item in parallel_stats]))
+                            metrics['parallel/generation_calls_mean'] = float(np.mean([item['generation_calls'] for item in parallel_stats]))
+                            metrics['parallel/generated_tokens_mean'] = float(np.mean([item['generated_tokens'] for item in parallel_stats]))
+                            metrics['parallel/truncated_ratio'] = float(np.mean([item['truncated'] for item in parallel_stats]))
+                            metrics['parallel/blocks'] = len(positions)
+                            if positions:
+                                metrics['parallel/relative_position_mean'] = float(np.mean(positions))
 
                     if self.config.algorithm.adv_estimator == AdvantageEstimator.REMAX:
                         with marked_timer("gen_max", timing_raw, color="purple"):
@@ -1340,18 +1362,6 @@ class RayPPOTrainer:
                                 dump_path=rollout_data_dir,
                             )
 
-                    # validate
-                    if (
-                        self.val_reward_fn is not None
-                        and self.config.trainer.test_freq > 0
-                        and (is_last_step or self.global_steps % self.config.trainer.test_freq == 0)
-                    ):
-                        with marked_timer("testing", timing_raw, color="green"):
-                            val_metrics: dict = self._validate()
-                            if is_last_step:
-                                last_val_metrics = val_metrics
-                        metrics.update(val_metrics)
-
                     # Check if the ESI (Elastic Server Instance)/training plan is close to expiration.
                     esi_close_to_expiration = should_save_ckpt_esi(
                         max_steps_duration=self.max_steps_duration,
@@ -1373,6 +1383,18 @@ class RayPPOTrainer:
                             print("Force saving checkpoint: ESI instance expiration approaching.")
                         with marked_timer("save_checkpoint", timing_raw, color="green"):
                             self._save_checkpoint()
+
+                    # Persist the update before lengthy validation on interruptible VMs.
+                    if (
+                        self.val_reward_fn is not None
+                        and self.config.trainer.test_freq > 0
+                        and (is_last_step or self.global_steps % self.config.trainer.test_freq == 0)
+                    ):
+                        with marked_timer("testing", timing_raw, color="green"):
+                            val_metrics: dict = self._validate()
+                            if is_last_step:
+                                last_val_metrics = val_metrics
+                        metrics.update(val_metrics)
 
                 with marked_timer("stop_profile", timing_raw):
                     self._stop_profiling(do_profile)
