@@ -2,8 +2,6 @@
 # **Parallel-R1**
 The official repository for "**Parallel-R1: Towards Parallel Thinking via Reinforcement Learning**".
 
-Qwen3-0.6B reproduction profile: [setup, S1/S2 runs, telemetry and trace analysis](experiments/qwen06/README.md). Paper/code differences are documented in the [implementation audit](experiments/qwen06/PAPER_CODE_AUDIT.md).
-
 ## **Updates**
 * **2026-1-26**: 🎉Parallel-R1 was accepted at ICLR2026.
 * **2025-10-15**: 🎉Parallel-R1 was accepted at [Neurips 2025 Efficient Reasoning workshop (Spotlight)](https://efficient-reasoning.github.io/).
@@ -77,7 +75,44 @@ cd verl
 sh training_scripts/sft_exp.sh
 ```
 
-For Qwen3-0.6B-Base, use the shared configs and launcher:
+For Qwen3-0.6B, all stages have one entry point (run from the repository root
+in the active Python environment):
+
+```bash
+NPROC_PER_NODE=8 bash scripts/qwen3.sh sft seen
+NPROC_PER_NODE=2 bash scripts/qwen3.sh eval verl/checkpoints/Parallel-SFT-Seen-Qwen3-0.6B/final
+NPROC_PER_NODE=1 bash scripts/qwen3.sh rl s1 verl/checkpoints/Parallel-SFT-Seen-Qwen3-0.6B/final
+NPROC_PER_NODE=1 bash scripts/qwen3.sh rl s2 verl/checkpoints/Parallel-SFT-Seen-Qwen3-0.6B/final
+```
+
+Arguments after the stage/model are ordinary Hydra overrides. All stages use
+`NPROC_PER_NODE`, `PARALLEL_R1_OUTPUT_ROOT` and `PARALLEL_R1_SCRATCH_ROOT`.
+The existing SFT/eval launchers remain available. SFT/eval default to 8 GPUs;
+the RL profile defaults to 1 A100 80 GB. Select the count explicitly when switching stages.
+
+RL uses `rl_qwen3_06b.yaml`: batch 32, rollout n=8, microbatch 1, LR 1e-6,
+300 steps, save/validation every 10 steps, offline W&B and rollout telemetry.
+S1 and S2 start independently from the same SFT. Existing repository Parquets
+have identical questions/order (17,917 train, 1,916 validation); only the S2
+train reward differs. Validation always uses accuracy. No dataset copying is needed.
+Results go to `<output>/rl/<PARALLEL_R1_RL_NAME>` (default name `qwen06-s1-seed1`
+or `qwen06-s2-seed1`); set a new name for each independent run. Continue an
+existing run by passing `trainer.resume_mode=auto trainer.val_before_train=true`.
+RL saves optimizer state; SFT does not. The old `experiments/qwen06/run_rl.sh`
+command is a compatibility adapter for the previous environment variables.
+
+The shared dependency file remains `verl/requirements-qwen3.txt`. It uses
+Transformers 4.53.2, Ray 2.48.0 and TensorDict 0.8.3; the earlier RL environment
+used 4.51.3/2.43.0/0.6.2. The integrated interface and generation loop have CPU
+checks; a GPU smoke of the combined version is still required. RL retains the
+upstream structured actor mask/positions and loss on runtime-inserted tags;
+its inference/training mismatch is unchanged. Our bounded total response budget
+also differs from the original RL branch, so old runs are not protocol-identical.
+
+One-off VM provisioning, queues, plots, reports and smoke experiments remain on
+`qwen3-0.6b-rl`; no `exp/*` branch is merged here.
+
+For SFT setup:
 
 ```bash
 cd verl  # from the repository root

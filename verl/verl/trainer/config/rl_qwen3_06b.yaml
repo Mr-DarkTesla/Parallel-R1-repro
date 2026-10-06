@@ -3,8 +3,8 @@ defaults:
   - _self_
 
 data:
-  train_files: ${oc.env:PARALLEL_R1_DATA_DIR}/${oc.env:PARALLEL_R1_RL_STAGE}_train.parquet
-  val_files: ${oc.env:PARALLEL_R1_DATA_DIR}/${oc.env:PARALLEL_R1_RL_STAGE}_val.parquet
+  train_files: data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_${oc.env:PARALLEL_R1_RL_REWARD}/train.parquet
+  val_files: data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet
   train_batch_size: 32
   return_raw_chat: true
   max_prompt_length: 2000
@@ -59,7 +59,7 @@ algorithm:
 trainer:
   logger: [console, wandb]
   project_name: Parallel-R1
-  experiment_name: qwen06-${oc.env:PARALLEL_R1_RL_STAGE}-seed1
+  experiment_name: ${oc.env:PARALLEL_R1_RL_NAME}
   n_gpus_per_node: 1
   nnodes: 1
   save_freq: 10
@@ -69,6 +69,13 @@ trainer:
   val_before_train: false
   max_actor_ckpt_to_keep: 3
   resume_mode: disable
+  default_local_dir: ${oc.env:PARALLEL_R1_RL_DIR}/checkpoints
+  rollout_data_dir: ${oc.env:PARALLEL_R1_RL_DIR}/rollouts
+  validation_data_dir: ${oc.env:PARALLEL_R1_RL_DIR}/validation
 
 ray_init:
   num_cpus: 8
+
+hydra:
+  run:
+    dir: ${oc.env:PARALLEL_R1_RL_DIR}/hydra
