@@ -475,6 +475,8 @@ class DataParallelPPOActor(BasePPOActor):
         metrics = {}
         for _ in range(self.config.ppo_epochs):
             for batch_idx, mini_batch in enumerate(mini_batches):
+                if self.config.get("sort_microbatches_by_length", False):
+                    mini_batch.reorder(torch.argsort(mini_batch.batch["attention_mask"].sum(-1)).cpu())
                 if self.config.use_dynamic_bsz:
                     max_token_len = self.config.ppo_max_token_len_per_gpu * self.ulysses_sequence_parallel_size
                     micro_batches, _ = prepare_dynamic_batch(mini_batch, max_token_len=max_token_len)

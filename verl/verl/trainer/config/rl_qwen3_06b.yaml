@@ -25,7 +25,10 @@ actor_rollout_ref:
       lr: 1e-6
     clip_ratio_high: 0.28
     ppo_mini_batch_size: 32
-    ppo_micro_batch_size_per_gpu: 1
+    ppo_micro_batch_size_per_gpu: 4
+    # Preserve the equal per-response weighting of microbatch 1.
+    loss_agg_mode: seq-mean-token-mean
+    sort_microbatches_by_length: true
     use_dynamic_bsz: false
     use_kl_loss: false
     use_torch_compile: false

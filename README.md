@@ -90,9 +90,10 @@ Arguments after the stage/model are ordinary Hydra overrides. All stages use
 The existing SFT/eval launchers remain available. SFT/eval default to 8 GPUs;
 the RL profile defaults to 1 A100 80 GB. Select the count explicitly when switching stages.
 
-RL uses `rl_qwen3_06b.yaml`: batch 32, rollout n=8, microbatch 1, LR 1e-6,
+RL uses `rl_qwen3_06b.yaml`: batch 32, rollout n=8, microbatch 4, LR 1e-6,
 300 steps, save/validation every 10 steps, offline W&B and rollout telemetry.
 It uses CUDA graphs and trims padding while retaining the parallel attention mask.
+Microbatches are grouped by length and the loss keeps the original equal weight per response.
 Activation checkpointing is disabled for A100 80 GB. For an 8-GPU run, use
 `NPROC_PER_NODE=8` with overrides `ray_init.num_cpus=32 actor_rollout_ref.rollout.agent.num_workers=8`.
 Per-token forward counting is opt-in: set `PARALLEL_R1_FORWARD_PROBE=1` and
