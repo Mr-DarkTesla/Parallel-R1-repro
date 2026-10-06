@@ -1,0 +1,10 @@
+KILLED: problem text: split()[-1] (reviewer's suggestion): ValueError: /tmp/eval_repair_local/tmp5iubb7ww/tmp27o3nujz/par_inner math_dev: problems are not '<one header>Problem: <problem>'
+KILLED: no mode-set check: AssertionError: cross-prompt parallel vs thinking (headers alone would pass) was not rejected: math_dev               cross_parallel vs thinking (head
+KILLED: no problem-text check: AssertionError: cross-prompt other problems at the same ids was not rejected: math_dev               cross_other problems at the same ids base  62.50
+KILLED: no header check: AssertionError: cross-prompt another parallel header was not rejected: math_dev               cross_another parallel header base  62.50 cand  50.00 de
+KILLED: no empty-common check: AssertionError: cross-prompt no common benchmark was not rejected:
+KILLED: no name check: AssertionError: equal candidate names was not rejected
+KILLED: meta file optional (old silent skip): AssertionError: meta dir without the benchmark was not rejected
+SURVIVED: meta check after the skip:
+KILLED: unversioned accepted: AssertionError: unversioned test-only run was not rejected
+KILLED: blend only printed: AssertionError: math_dev               mixed                    base  31.25 cand  31.25 delta  +0.00 [+0.00, +0.00] problems 4 samples {'AIME': 4, 'MA

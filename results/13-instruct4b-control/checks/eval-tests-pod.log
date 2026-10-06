@@ -1,0 +1,25 @@
+score.py rows: ok
+seeded outcomes of rows (22, 511): [('True', 'True'), ('True', 'True')]
+score.py SCORE_IFEVAL_SEED: ok
+rejected reordered rows: ValueError: /tmp/tmpvvatenp5/bad_reordered rows math_dev: problem_id differs in 8 rows, first row 0
+rejected unequal samples: ValueError: /tmp/tmpvvatenp5/bad_unequal samples math_dev: unequal samples per problem in ['MATH_DEV']: {2: 3, 1: 1}
+rejected unequal samples in one source: ValueError: /tmp/tmpvvatenp5/bad_unequal samples in one source math_dev: unequal samples per problem in ['AIME']: {1: 2, 4: 1, 3: 1}
+rejected other cohort: ValueError: /tmp/tmpvvatenp5/bad_other cohort math_dev: problem_id differs in 2 rows, first row 6
+rejected missing benchmark: ValueError: /tmp/tmpvvatenp5/a: benchmarks ['math_dev'] vs base ['arc_dev', 'math_dev']
+rejected other budget: ValueError: /tmp/tmpvvatenp5/bad_other budget: protocol differs {'budget': (16384, 3000)}
+rejected other scorer seed: ValueError: /tmp/tmpvvatenp5/bad_other scorer seed: protocol differs {'ifeval_scorer_seed': (0, 1)}
+rejected unseeded scorer: ValueError: /tmp/tmpvvatenp5/bad_unseeded scorer: protocol differs {'ifeval_scorer_seed': (0, None)}
+rejected cross-prompt thinking vs no-thinking: ValueError: /tmp/tmpvvatenp5/cross_thinking vs no-thinking: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>/parallel: ('
+rejected cross-prompt parallel vs thinking (headers alone would pass): ValueError: /tmp/tmpvvatenp5/cross_parallel vs thinking (headers alone would pass): --cross-prompt needs one no-thinking run on <data>/plain and one parallel ru
+rejected cross-prompt parallel vs parallel: ValueError: /tmp/tmpvvatenp5/cross_parallel vs parallel: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>/parallel: ('par
+rejected cross-prompt parallel prompts of another data dir: ValueError: /tmp/tmpvvatenp5/cross_parallel prompts of another data dir: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>
+rejected cross-prompt other problems at the same ids: ValueError: /tmp/tmpvvatenp5/cross_other problems at the same ids math_dev: problem text differs in 2 rows, first row 4
+rejected cross-prompt other text before an inner Problem:: ValueError: /tmp/tmpvvatenp5/cross_other text before an inner Problem: math_dev: problem text differs in 2 rows, first row 0
+rejected cross-prompt another parallel header: ValueError: /tmp/tmpvvatenp5/cross_another parallel header math_dev: headers are not the plain and the parallel version of one header
+rejected cross-prompt plain header in the parallel run: ValueError: /tmp/tmpvvatenp5/cross_plain header in the parallel run math_dev: headers are not the plain and the parallel version of one header
+rejected cross-prompt no common benchmark: ValueError: no common benchmarks: base ['math_dev'], cands [['gsm8k_dev']]
+rejected equal candidate names: ValueError: candidate run names must differ (one result per name): ['a', 'a']
+rejected meta dir without the benchmark: ValueError: /tmp/tmpvvatenp5/s1/math_dev.jsonl not found (other suite's meta dir?)
+rejected unversioned test-only run: ValueError: /tmp/tmpvvatenp5/unversioned: unversioned test-only run (meta.json commit null)
+paired_compare.py: ok
+exit=0
