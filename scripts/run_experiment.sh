@@ -7,6 +7,13 @@ set -euo pipefail
 name=$1
 shift
 repo=$(cd "$(dirname "$0")/.." && pwd)
+case "$name" in
+    13-control|14-filtered|15-random-control)
+        # Native instruct SFT; its evaluation uses the separate broad benchmark protocol.
+        export RUN_NAME=$name
+        exec bash "$repo/scripts/instruct4b/sft.sh" "$@"
+        ;;
+esac
 run=/work/runs/$name
 data=$repo/verl/data_preprocess_scripts/data
 mkdir -p "$run/results"
