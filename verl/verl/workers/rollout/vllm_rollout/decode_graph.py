@@ -15,6 +15,7 @@ def enable_decode_graph(runner, check_replays=False):
 
     original = runner.model.forward
     graphs = {}
+    pool = torch.cuda.graph_pool_handle()
     stats = {"captures": 0, "replays": 0}
     runner._decode_graph_stats = stats
     runner._decode_graph_check = check_replays
@@ -29,10 +30,13 @@ def enable_decode_graph(runner, check_replays=False):
             return original(*args, **kwargs)
         ids, positions = kwargs["input_ids"], kwargs["positions"]
         count, size = metadata.num_actual_tokens, ids.shape[0]
-        key = (count, size)
+        # Preserve FlashAttention's KV block count and split-reduction order.
+        # A model-wide upper bound changes BF16 results on long contexts.
+        context_bound = min(((int(metadata.max_seq_len) + 63) // 64) * 64, runner.max_model_len)
+        key = (count, size, context_bound)
         if key not in graphs:
             static = copy.copy(metadata)
-            static.max_seq_len = runner.max_model_len
+            static.max_seq_len = context_bound
             static.query_start_loc = metadata.query_start_loc.clone()
             static.seq_lens = metadata.seq_lens.clone()
             static.slot_mapping = metadata.slot_mapping.clone()
@@ -69,7 +73,8 @@ def enable_decode_graph(runner, check_replays=False):
                 # PyTorch disallows nested replay. Capture the same compiled
                 # kernels directly, including attention, in one outer graph.
                 PiecewiseBackend.__call__ = compiled_piece
-                with torch.cuda.graph(graph):
+                # Replays are serial; share scratch allocations across shapes.
+                with torch.cuda.graph(graph, pool=pool):
                     output = original(**graph_kwargs)
                 PiecewiseBackend.__call__ = piece_call
                 graph.replay()

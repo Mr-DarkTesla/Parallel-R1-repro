@@ -16,7 +16,8 @@ class DecodeGraphTest(unittest.TestCase):
                     gpu_memory_utilization=.45, enable_sleep_mode=True,
                     enable_prefix_caching=False, enforce_eager=False,
                     compilation_config={'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32]})
-        prompts = ['Calculate the sum from 1 to ' + str(i + 100) + '.' for i in range(32)]
+        prompts = [' x' * (800 + 64*i) + '\nCalculate the sum from 1 to ' + str(i + 100) + '.'
+                   for i in range(32)]
         parameters = [SamplingParams(temperature=0, max_tokens=4 + 4*i, ignore_eos=True) for i in range(32)]
 
         def generate():
