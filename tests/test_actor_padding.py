@@ -50,8 +50,9 @@ class PaddingTest(unittest.TestCase):
                              position_required_masks=[[[left, 8, 10, 10, 12]] if paths else [] for left in lefts])
                 valid = mask[:, 8:].bool()
                 outputs = []
-                for trim in (False, True):
+                for trim, trim_logits in ((False, False), (False, True), (True, True)):
                     actor.config['trim_parallel_padding'] = trim
+                    actor.config['trim_prompt_logits'] = trim_logits
                     model.zero_grad(set_to_none=True)
                     # Float32 isolates indexing/mask equivalence from bf16 rounding.
                     with patch.object(torch, 'autocast', lambda **kw: contextlib.nullcontext()):
@@ -59,8 +60,9 @@ class PaddingTest(unittest.TestCase):
                         (logp[valid].sum() + .01 * entropy[valid].sum()).backward()
                     outputs.append((logp.detach()[valid], entropy.detach()[valid],
                                     torch.cat([p.grad.flatten() for p in model.parameters() if p.grad is not None])))
-                for padded, trimmed in zip(*outputs):
-                    torch.testing.assert_close(padded, trimmed, atol=2e-6, rtol=2e-5)
+                for candidate in outputs[1:]:
+                    for reference, actual in zip(outputs[0], candidate):
+                        torch.testing.assert_close(reference, actual, atol=2e-6, rtol=2e-5)
 
 
 if __name__ == '__main__':

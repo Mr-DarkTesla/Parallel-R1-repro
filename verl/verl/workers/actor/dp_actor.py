@@ -255,6 +255,10 @@ class DataParallelPPOActor(BasePPOActor):
                 if self.use_fused_kernels:
                     extra_args["temperature"] = temperature
                     extra_args["return_dict"] = True
+                elif (self.config.get("trim_prompt_logits", True)
+                      and getattr(self.actor_module.config, "model_type", None) == "qwen3"):
+                    # Prefix tokens still enter attention; only their unused vocabulary projection is skipped.
+                    extra_args["logits_to_keep"] = response_length + 1
                 # if "position_required_masks" in micro_batch.keys(): so we need to construct the attention mask
                 # otherwise, we can use the attention_mask directly
                 if "position_required_masks" in micro_batch.keys():
