@@ -1191,8 +1191,6 @@ class RayPPOTrainer:
                             metrics['parallel/generation_calls_mean'] = float(np.mean([item['generation_calls'] for item in parallel_stats]))
                             metrics['parallel/generated_tokens_mean'] = float(np.mean([item['generated_tokens'] for item in parallel_stats]))
                             metrics['parallel/truncated_ratio'] = float(np.mean([item['truncated'] for item in parallel_stats]))
-                            metrics['parallel/forced_tokens_mean'] = float(np.mean([item.get('forced_tokens', 0) for item in parallel_stats]))
-                            metrics['parallel/sampled_tokens_mean'] = float(np.mean([item.get('sampled_tokens', 0) for item in parallel_stats]))
                             metrics['parallel/blocks'] = len(positions)
                             if positions:
                                 metrics['parallel/relative_position_mean'] = float(np.mean(positions))

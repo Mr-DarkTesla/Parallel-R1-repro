@@ -75,7 +75,6 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cls.add_diverse_prefix = config.actor_rollout_ref.rollout.agent.add_diverse_prefix
         cls.max_iterations_for_parallel_thinking = config.actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking
         cls.num_paths = config.actor_rollout_ref.rollout.agent.num_paths
-        cls.record_policy_calls = getattr(config.actor_rollout_ref.rollout.agent, 'record_policy_calls', False)
         cls.max_path_response_length = config.actor_rollout_ref.rollout.agent.max_path_response_length
 
         cls.eos_token_id = cls.tokenizer.eos_token_id
@@ -114,7 +113,6 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         position_ids  = torch.arange(init_len, dtype=torch.long)
 
         response_mask = []                                     
-        self.policy_calls = []
         iterations    = 0
         request_id    = uuid4().hex
 
@@ -273,10 +271,6 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 prompt_ids=prompt_ids,
                 sampling_params=sp_main,
             )
-            if self.record_policy_calls:
-                self.policy_calls.append(dict(prompt_ids=list(prompt_ids), generated_ids=list(ids),
-                                              response_start=len(prompt_ids) - init_len, phase='main',
-                                              temperature=sp_main.get('temperature', 1.0)))
             append_tokens(ids)
             if should_stop() or not await self.check_parallel(ids):
                 break
@@ -324,26 +318,11 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             response_ids = response_ids[: self.response_length]
             response_mask = response_mask[: self.response_length]
 
-        if self.record_policy_calls:
-            # A response slot can represent a sampled EOS replaced by a closing tag.
-            # Its policy label remains the original EOS in generated_ids.
-            response_mask = [0] * len(response_ids)
-            retained_calls = []
-            for call in self.policy_calls:
-                start = call['response_start']
-                ids = call['generated_ids'][:max(0, len(response_ids) - start)]
-                if ids:
-                    assert not any(response_mask[start:start + len(ids)]), 'Overlapping policy calls'
-                    response_mask[start:start + len(ids)] = [1] * len(ids)
-                    retained_calls.append({**call, 'generated_ids': ids})
-            self.policy_calls = retained_calls
-            self.trace.record['policy_calls'] = self.policy_calls
         self.trace.finish(self.tokenizer, response_ids, response_mask, position_ids, position_required_masks, untruncated_length)
         return AgentLoopOutput(
             prompt_ids          = prompt_ids,
             response_ids        = response_ids,
             response_mask       = response_mask,
-            rollout_calls       = self.policy_calls if self.record_policy_calls else None,
             position_required_mask       = position_required_masks,
             multiverse_pos_ids  = position_ids.cpu(),        # 1-D
             num_turns           = iterations + 1,
@@ -354,8 +333,6 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 'generation_calls': self.trace.record['generation_calls'],
                 'generated_tokens': self.trace.record['generated_tokens_total'],
                 'truncated': self.trace.record['truncated'],
-                'sampled_tokens': sum(response_mask),
-                'forced_tokens': len(response_mask) - sum(response_mask),
             },
         )
 
@@ -399,8 +376,6 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             )
             if max_len and len(ids) > max_len:
                 ids = ids[:max_len]
-            call = dict(prompt_ids=list(prompt_i) + [PATH_OPEN], generated_ids=list(ids), phase='path',
-                        temperature=sp['temperature'])
             
             if not ids or ids[-1] != PATH_CLOSE:
                 if ids and ids[-1] == self.eos_token_id:
@@ -408,7 +383,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 else:
                     ids.append(PATH_CLOSE)
                 manual_append = True
-            return [PATH_OPEN] + ids, manual_append, call
+            return [PATH_OPEN] + ids, manual_append
 
         tasks = []
         for i in range(num_paths):
@@ -427,12 +402,10 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cursor       = 0              
 
         #### <Path> </Path><Path> </Path> -> path_spans (0, len(path_1)) (len(path_1), len(path_1) + len(path_2))
-        for (ids, manual_append_flag, call) in path_token_lists:
+        for (ids, manual_append_flag) in path_token_lists:
             assert ids[0] == PATH_OPEN and ids[-1] == PATH_CLOSE, \
                 f"Path tokens must start with {PATH_OPEN} and end with {PATH_CLOSE}, got {ids}"
             span_start = cursor 
-            if self.record_policy_calls:
-                self.policy_calls.append({**call, 'response_start': self.response_length - remaining + cursor + 1})
             parallel_ids.extend(ids)
             cursor     += len(ids)
             span_end   = cursor
@@ -466,11 +439,6 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 prompt_ids=prompt_ids + parallel_ids,   # 现在的完整 prompt
                 sampling_params=sp_sum,
             )
-            if self.record_policy_calls:
-                self.policy_calls.append(dict(prompt_ids=list(prompt_ids) + list(parallel_ids),
-                                              generated_ids=list(summary_ids), phase='summary',
-                                              temperature=sp_sum.get('temperature', 1.0),
-                                              response_start=self.response_length - remaining + len(parallel_ids)))
             if not summary_ids or summary_ids[-1] != self.end_summary_token:
                 if summary_ids and summary_ids[-1] == self.eos_token_id:
                     summary_ids[-1] = self.end_summary_token
@@ -486,5 +454,4 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             assert parallel_ids[-1] == self.end_summary_token, \
                 f"Parallel thinking did not end with {self.end_summary_token}, got {parallel_ids[-1]}"
         # print(self.tokenizer.decode(parallel_ids, skip_special_tokens=False))
-        return parallel_ids, path_spans, manual_mask_positions        # path_spans 已是相对 parallel_ids       
-        
+        return parallel_ids, path_spans, manual_mask_positions        # path_spans 已是相对 parallel_ids

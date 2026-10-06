@@ -128,7 +128,6 @@ class AgentLoopOutput(BaseModel):
     """Auxiliary performance metrics"""
     multiverse_pos_ids: torch.Tensor
     repro_stats: dict[str, Any] = {}
-    rollout_calls: list[dict[str, Any]] | None = None
     # multiverse_attn_bool: torch.Tensor
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -431,14 +430,7 @@ class AgentLoopWorker:
         repro_stats = np.empty(batch_size, dtype=object)
         for i, item in enumerate(inputs):
             repro_stats[i] = item.repro_stats
-        non_tensor_batch = {"__num_turns__": num_turns, "position_required_masks": position_required_masks_all,
-                            "left_pad_lens": left_pad_lens, "parallel_stats": repro_stats}
-        if all(item.rollout_calls is not None for item in inputs):
-            calls = np.empty(batch_size, dtype=object)
-            for i, item in enumerate(inputs):
-                calls[i] = item.rollout_calls
-            non_tensor_batch['rollout_calls'] = calls
-        return DataProto(batch=batch, non_tensor_batch=non_tensor_batch, meta_info={"metrics": metrics})
+        return DataProto(batch=batch, non_tensor_batch={"__num_turns__": num_turns, "position_required_masks": position_required_masks_all, "left_pad_lens": left_pad_lens, "parallel_stats": repro_stats}, meta_info={"metrics": metrics})
 
 
 async def get_trajectory_info(step, index, validate):

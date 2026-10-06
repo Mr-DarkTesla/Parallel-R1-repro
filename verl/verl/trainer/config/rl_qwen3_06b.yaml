@@ -17,7 +17,7 @@ actor_rollout_ref:
   model:
     path: ${oc.env:PARALLEL_R1_MODEL_PATH}
     use_remove_padding: false
-    enable_gradient_checkpointing: true
+    enable_gradient_checkpointing: false
     override_config:
       _attn_implementation: sdpa
   actor:
@@ -25,7 +25,7 @@ actor_rollout_ref:
       lr: 1e-6
     clip_ratio_high: 0.28
     ppo_mini_batch_size: 32
-    ppo_micro_batch_size_per_gpu: 1
+    ppo_micro_batch_size_per_gpu: 4
     # Preserve the equal per-response weighting of microbatch 1.
     loss_agg_mode: seq-mean-token-mean
     sort_microbatches_by_length: true
@@ -47,7 +47,6 @@ actor_rollout_ref:
     max_num_seqs: 64
     temperature: 1.0
     agent:
-      record_policy_calls: true
       num_workers: 4
       max_path_response_length: ${data.max_response_length}
       max_iterations_for_parallel_thinking: 4
