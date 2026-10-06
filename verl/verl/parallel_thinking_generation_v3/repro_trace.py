@@ -56,7 +56,8 @@ def install_forward_probe():
     Shared batches count once globally; each participating request receives one
     participation. These are different measures, and must not be conflated.
     """
-    if not os.getenv('PARALLEL_R1_TRACE_DIR'):
+    # Per-token hooks and disk writes are expensive; enable only for eager profiling.
+    if os.getenv('PARALLEL_R1_FORWARD_PROBE') != '1' or not os.getenv('PARALLEL_R1_TRACE_DIR'):
         return
     from vllm.v1.worker.gpu_model_runner import GPUModelRunner
     from vllm.v1.worker.gpu_worker import Worker
