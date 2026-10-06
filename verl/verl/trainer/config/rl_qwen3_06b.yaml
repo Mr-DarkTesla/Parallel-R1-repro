@@ -1,0 +1,74 @@
+defaults:
+  - _generated_ppo_trainer
+  - _self_
+
+data:
+  train_files: ${oc.env:PARALLEL_R1_DATA_DIR}/${oc.env:PARALLEL_R1_RL_STAGE}_train.parquet
+  val_files: ${oc.env:PARALLEL_R1_DATA_DIR}/${oc.env:PARALLEL_R1_RL_STAGE}_val.parquet
+  train_batch_size: 32
+  return_raw_chat: true
+  max_prompt_length: 2000
+  max_response_length: 3000
+  filter_overlong_prompts: true
+  truncation: error
+  dataloader_num_workers: 2
+
+actor_rollout_ref:
+  model:
+    path: ${oc.env:PARALLEL_R1_MODEL_PATH}
+    use_remove_padding: false
+    enable_gradient_checkpointing: true
+    override_config:
+      _attn_implementation: sdpa
+  actor:
+    optim:
+      lr: 1e-6
+    clip_ratio_high: 0.28
+    ppo_mini_batch_size: 32
+    ppo_micro_batch_size_per_gpu: 1
+    use_dynamic_bsz: false
+    use_kl_loss: false
+    use_torch_compile: false
+    fsdp_config:
+      param_offload: false
+      optimizer_offload: false
+  rollout:
+    n: 8
+    name: vllm
+    mode: async
+    tensor_model_parallel_size: 1
+    log_prob_micro_batch_size_per_gpu: 1
+    gpu_memory_utilization: 0.45
+    enforce_eager: true
+    max_num_seqs: 64
+    temperature: 1.0
+    agent:
+      num_workers: 4
+      max_path_response_length: ${data.max_response_length}
+      max_iterations_for_parallel_thinking: 4
+      num_paths: 2
+    val_kwargs:
+      temperature: 1.0
+      do_sample: true
+      n: 1
+
+algorithm:
+  adv_estimator: grpo
+  use_kl_in_reward: false
+
+trainer:
+  logger: [console, wandb]
+  project_name: Parallel-R1
+  experiment_name: qwen06-${oc.env:PARALLEL_R1_RL_STAGE}-seed1
+  n_gpus_per_node: 1
+  nnodes: 1
+  save_freq: 10
+  test_freq: 10
+  total_epochs: 100
+  total_training_steps: 300
+  val_before_train: false
+  max_actor_ckpt_to_keep: 3
+  resume_mode: disable
+
+ray_init:
+  num_cpus: 8

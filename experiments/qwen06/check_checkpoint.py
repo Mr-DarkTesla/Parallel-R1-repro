@@ -40,6 +40,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('checkpoint', type=Path)
     parser.add_argument('--extract-to', type=Path)
+    parser.add_argument('--read-only', action='store_true', help='Validate without writing into the model directory')
     args = parser.parse_args()
     path = args.checkpoint.resolve()
     if path.is_file():
@@ -68,7 +69,8 @@ def main():
                 digest.update(block)
         (destination / 'archive.sha256').write_text(digest.hexdigest() + '\n')
     report = validate(path)
-    (path / 'checkpoint_validation.json').write_text(json.dumps(report, indent=2))
+    if not args.read_only:
+        (path / 'checkpoint_validation.json').write_text(json.dumps(report, indent=2))
 
 
 if __name__ == '__main__':
