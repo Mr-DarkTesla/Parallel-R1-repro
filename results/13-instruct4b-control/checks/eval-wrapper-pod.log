@@ -1,0 +1,99 @@
+== F3 import guard (outside the repo cwd, same PYTHONPATH as run_eval.sh)
+verl without PYTHONPATH from /: /work/setup-src/verl/verl/__init__.py
+ok accepted: old guard passes even without PYTHONPATH (vacuous, review F3)
+ok accepted: new guard with run_eval PYTHONPATH
+ok rejected: new guard without PYTHONPATH (editable install would be used) | AssertionError: /work/setup-src/verl/verl/__init__.py
+== F4 REUSE allowlist, rejected before any scoring (no run directory is created)
+ok rejected: thinking-with-nothinking-dump | REUSE only /work/bench/qwen3-4b-nothinking-16k (no-thinking) or /work/bench/qwen3-4b-thinking-16k (thinking)
+ok: no run dir for thinking-with-nothinking-dump
+ok rejected: nothinking-with-thinking-dump | REUSE only /work/bench/qwen3-4b-nothinking-16k (no-thinking) or /work/bench/qwen3-4b-thinking-16k (thinking)
+ok: no run dir for nothinking-with-thinking-dump
+ok rejected: 3k-dump | REUSE only /work/bench/qwen3-4b-nothinking-16k (no-thinking) or /work/bench/qwen3-4b-thinking-16k (thinking)
+ok: no run dir for 3k-dump
+ok rejected: 8k-path | REUSE only /work/bench/qwen3-4b-nothinking-16k (no-thinking) or /work/bench/qwen3-4b-thinking-16k (thinking)
+ok: no run dir for 8k-path
+ok rejected: budget-8192 | REUSE only for frozen /work/assets/models/Qwen3-4B 16384
+ok: no run dir for budget-8192
+ok rejected: other-model | REUSE only for frozen /work/assets/models/Qwen3-4B 16384
+ok: no run dir for other-model
+ok rejected: dev-suite | REUSE only for frozen /work/assets/models/Qwen3-4B 16384
+ok: no run dir for dev-suite
+ok rejected: parallel-mode | REUSE only /work/bench/qwen3-4b-nothinking-16k (no-thinking) or /work/bench/qwen3-4b-thinking-16k (thinking)
+ok: no run dir for parallel-mode
+ok rejected: trailing-slash | REUSE only /work/bench/qwen3-4b-nothinking-16k (no-thinking) or /work/bench/qwen3-4b-thinking-16k (thinking)
+ok: no run dir for trailing-slash
+== F6 git: unversioned copy
+ok rejected: no git, no flag | /tmp/eval_repair_vk1007/src_nogit: no git commit; EVAL_ALLOW_UNVERSIONED=1 is only for CPU tests with REUSE
+ok: nothing scored
+ok rejected: no git, flag but no REUSE (GPU run) | /tmp/eval_repair_vk1007/src_nogit: no git commit; EVAL_ALLOW_UNVERSIONED=1 is only for CPU tests with REUSE
+ok: stopped before generation
+ok accepted: no git, flag and REUSE (CPU test)
+ok: meta commit null + unversioned_test_only
+ok rejected: paired_compare refuses the unversioned run | ValueError: /tmp/eval_repair_vk1007/runs/nogit-c: unversioned test-only run (meta.json commit null)
+== F6 versioned copy: two BENCHES processes of one name started together, then a sequential run
+ok: both concurrent processes exit 0
+ok: one meta.json with the commit and REUSE provenance
+ok: no *.tmp left
+ok: bench log has commit and source log
+meta.json:
+{
+ "model": "/work/assets/models/Qwen3-4B",
+ "suite": "frozen",
+ "mode": "no-thinking",
+ "budget": 16384,
+ "temperature": 1.0,
+ "top_p": 1.0,
+ "generator": "scripts/bench/generate_plain.py",
+ "prompts": "/work/bench_data/plain",
+ "reused_from": "/work/bench/qwen3-4b-nothinking-16k",
+ "reuse_provenance": "queue gpu3 2026-10-06 15:01:10-15:38:17 exit=0: cd /work/bench-src && bash scripts/bench/run_bench.sh qwen3-4b-nothinking-16k /work/assets/models/Qwen3-4B no-thinking 16384",
+ "reuse_source_logs": "/work/bench/qwen3-4b-nothinking-16k/<bench>.log",
+ "ifeval_scorer_seed": 0,
+ "seeds": "0 for every row",
+ "commit": "5f4537bf97a5020d69eb7574ee61865eaefd9981"
+}
+arc.log head:
+commit 5f4537bf97a5020d69eb7574ee61865eaefd9981, c0a /work/assets/models/Qwen3-4B frozen no-thinking 16384 arc
+reused /work/bench/qwen3-4b-nothinking-16k/arc.jsonl; queue gpu3 2026-10-06 15:01:10-15:38:17 exit=0: cd /work/bench-src && bash scripts/bench/run_bench.sh qwen3-4b-nothinking-16k /work/assets/models/Qwen3-4B no-thinking 16384; source log /work/bench/qwen3-4b-nothinking-16k/arc.log
+ok accepted: sequential run c0b
+ok accepted: thinking C0 REUSE (provenance log check on thinking dumps)
+ "reuse_provenance": "queue gpu0 2026-10-06 15:54:08-22:04:09 exit=0: cd /work/bench-src && bash scripts/bench/run_bench.sh qwen3-4b-thinking-16k /work/assets/models/Qwen3-4B thinking 16384",
+== resume: finished benchmarks are checked against the test and skipped
+ok accepted: rerun c0a (all three)
+ok: rows untouched by the resume
+ok rejected: rerun c0a with other settings (thinking dump via other mode) | /tmp/eval_repair_vk1007/runs/c0a/meta.json has other settings or code (old, now): {'mode': ('no-thinking', 'thinking'), 'reuse_source_logs': ('/work/bench/qwen3-4b-nothinking-16k/<bench>.log', '/work/bench/qwen3-4b-think
+== F2/F5 paired_compare on the real rescored rows
+ok accepted: c0a vs c0b with frozen meta
+apo                    c0b                      base  70.16 cand  70.16 delta  +0.00 [+0.00, +0.00] problems 416 samples {'AIME24': 16, 'AIME25': 16, 'AMC23': 16, 'MATH300': 1} blend, descriptive: see sources
+apo/AIME24             c0b                      base  16.04 cand  16.04 delta  +0.00 [+0.00, +0.00] problems 30 samples 16 vs -2 pp (proposed): within
+apo/AIME25             c0b                      base  23.54 cand  23.54 delta  +0.00 [+0.00, +0.00] problems 30 samples 16 vs -2 pp (proposed): within
+apo/AMC23              c0b                      base  62.50 cand  62.50 delta  +0.00 [+0.00, +0.00] problems 40 samples 16 vs -2 pp (proposed): within
+apo/MATH300            c0b                      base  80.70 cand  80.70 delta  +0.00 [+0.00, +0.00] problems 316 samples 1 vs -2 pp (proposed): within
+arc                    c0b                      base  90.27 cand  90.27 delta  +0.00 [+0.00, +0.00] problems 1172 samples {'ARC': 1} vs -2 pp (proposed): within
+ifeval                 c0b                      base  79.85 cand  79.85 delta  +0.00 [+0.00, +0.00] problems 541 samples {'IFEVAL': 1} vs -2 pp (proposed): within
+64 deltas, all 0
+ok: every delta 0 (same dumps, seeded scorer)
+ok rejected: dev meta dir for frozen runs | ValueError: /tmp/eval_repair_vk1007/meta/dev/apo.jsonl not found (other suite's meta dir?)
+ok rejected: duplicate candidate basename | ValueError: candidate run names must differ (one result per name): ['c0b', 'c0b']
+ok rejected: thinking vs no-thinking without --cross-prompt | ValueError: /tmp/eval_repair_vk1007/runs/c0t: protocol differs {'mode': ('no-thinking', 'thinking')}
+ok rejected: thinking vs no-thinking with --cross-prompt | ValueError: /tmp/eval_repair_vk1007/runs/c0t: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>/parallel: ('no-thinking', '/work/bench_data/plain') vs ('thinking', '/work/bench_data/
+== stale or foreign rows are rejected with a recovery instruction, nothing else touched
+ok rejected: truncated rows file | /tmp/eval_repair_vk1007/runs/c0b/rows/arc.jsonl is not a finished scoring of /work/bench_data/plain/arc.parquet. Recover: move it and /tmp/eval_repair_vk1007/runs/c0b/results/arc.json aside (mv <file> <file>.stale-<date>
+ok rejected: rows with one other problem at the same position | /tmp/eval_repair_vk1007/runs/c0b/rows/arc.jsonl is not a finished scoring of /work/bench_data/plain/arc.parquet. Recover: move it and /tmp/eval_repair_vk1007/runs/c0b/results/arc.json aside (mv <file> <file>.stale-<date>
+ok: other benchmarks' rows and results kept
+ok accepted: recovery as instructed: move aside, rerun
+ok: arc rescored, the old arc.log kept as incomplete
+== killed while scoring: no finished rows, rerun archives the log and completes
+files at kill: /tmp/eval_repair_vk1007/runs/c0k/results:  /tmp/eval_repair_vk1007/runs/c0k/rows: ; after kill: /tmp/eval_repair_vk1007/runs/c0k/results:  /tmp/eval_repair_vk1007/runs/c0k/rows:
+ok: killed during scoring (no rows/apo.jsonl)
+ok accepted: rerun after kill
+ok: finished, previous log archived
+== code changes: uncommitted or another commit are refused for an existing run
+ok rejected: uncommitted tracked change |  M scripts/bench/score.py
+ok rejected: resume at another commit | /tmp/eval_repair_vk1007/runs/c0a/meta.json has other settings or code (old, now): {'commit': ('5f4537bf97a5020d69eb7574ee61865eaefd9981', 'e244bbeb82985c755ac63985608bd85caeee204a')}
+ok: c0a has no limo rows
+ok accepted: back at the run's commit: resume ok
+== private Ray dir: a name too long for Ray sockets stops before anything else
+ok rejected: parallel mode, long name | RAY_TMPDIR /tmp/ray_x-very-long-arm-name-for-ray-socket-test-par_40840 too long for Ray sockets: use a shorter name
+ok: no meta for it
+FAILS=0

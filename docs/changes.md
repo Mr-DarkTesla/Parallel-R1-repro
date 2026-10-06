@@ -64,3 +64,7 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
    the lr schedule spans these steps (before, its length was steps per epoch x epochs, so arms of different size had
    different lr curves for the same number of updates), and no validation or checkpoint at the end of an earlier epoch
    (each is a 16 GB fp32 checkpoint). `train/target_tokens` (target tokens of the global batch) is logged every step.
+7. `scripts/bench/score.py` (our script, not the authors' code): optional 4th argument writes one outcome row per answer for paired
+   comparisons; with `SCORE_IFEVAL_SEED=<int>` the IFEval checker's random fallbacks are seeded per prompt key (unset = old behaviour,
+   same summary). Used by `scripts/instruct4b_eval/` (run_eval.sh always sets 0); verified by CPU tests in
+   `results/13-instruct4b-control/checks/eval-*.log`, details in `results/13-instruct4b-control/evaluation.md`. Training code unchanged.

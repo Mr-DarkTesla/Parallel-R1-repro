@@ -1,0 +1,18 @@
+0  VALID nt vs par --cross-prompt (expect 0):
+0  VALID par vs nt --cross-prompt (expect 0):
+0  VALID nt vs nt2 plain (expect 0):
+1  thinking vs nt --cross-prompt: ValueError: th: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>/parallel: ('no-thinking', '/work/bench_data/instruct4b/eval/dev/pl
+1  thinking vs nt no flag: ValueError: th: protocol differs {'mode': ('no-thinking', 'thinking')}
+1  par vs par other dir --cross-prompt: ValueError: par2: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>/parallel: ('parallel', '/work/bench_data/instruct4b/eval/dev/par
+1  nt vs par other dir --cross-prompt: ValueError: par2: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>/parallel: ('no-thinking', '/work/bench_data/instruct4b/eval/dev/
+1  shuffled problems same ids --cross-prompt: ValueError: par_shuf gsm8k_dev: problem text differs in 1184 rows, first row 0
+1  no common bench --cross-prompt: ValueError: no common benchmarks: base ['arc_dev'], cands [['gsm8k_dev', 'math_dev']]
+1  duplicate basename: ValueError: candidate run names must differ (one result per name): ['X', 'X']
+1  meta-dir missing bench (frozen dir): ValueError: /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/eval_finalize/data/meta/frozen/arc_dev.jsonl not found (other suite's meta dir?)
+1  unversioned cand: ValueError: nt_unv: unversioned test-only run (meta.json commit null)
+gsm8k_dev              par                      base  59.04 cand  58.53 delta  -0.51 [-4.65, +3.63] problems 296 samples {'APO_GSM8K_DEV': 4}
+math_dev               par                      base  60.79 cand  61.72 delta  +0.93 [-3.53, +5.29] problems 482 samples {'APO_MATH_DEV': 2}
+
+arc_dev                nt2                      base  60.62 cand  60.03 delta  -0.59 [-4.77, +3.60] problems 299 samples {'APO_ARC': 4} vs -2 pp (proposed): inconclusive
+gsm8k_dev              nt2                      base  59.04 cand  59.88 delta  +0.84 [-3.38, +5.07] problems 296 samples {'APO_GSM8K_DEV': 4} vs -2 pp (proposed): inconclusive
+math_dev               nt2                      base  60.79 cand  60.58 delta  -0.21 [-4.56, +4.05] problems 482 samples {'APO_MATH_DEV': 2} vs -2 pp (proposed): inconclusive
