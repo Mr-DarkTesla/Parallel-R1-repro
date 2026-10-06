@@ -32,7 +32,8 @@ for index in range(8):
     sample = dataset[index]
     total = int(sample["length"])
     ids = sample["input_ids"][:total]
-    views = logits(ids, attention_mask=sample["attention_mask"][None, :, :total, :total], position_ids=sample["position_ids"][None, :total])
+    # the forward may change mask and positions in place, so it gets copies
+    views = logits(ids, attention_mask=sample["attention_mask"][None, :, :total, :total].clone(), position_ids=sample["position_ids"][None, :total].clone())
     positions = sample["position_ids"][:total]
     drops = (positions[1:] <= positions[:-1]).nonzero()
     main_length = int(drops[0]) + 1 if len(drops) else total
