@@ -41,7 +41,7 @@ for index in range(8):
     while cursor < total:
         start_position = int(positions[cursor])
         end = cursor + 1
-        while end < total and positions[end] == positions[end - 1] + 1:
+        while end < total and sample["attention_mask"][0, end, end - 1] == 0:  # next token of the same copy
             end += 1
         rollout_ids = torch.cat((ids[:start_position], ids[cursor:end]))
         worst = max(worst, (views[cursor:end] - logits(rollout_ids)[start_position:]).abs().max().item())
