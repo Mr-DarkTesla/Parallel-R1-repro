@@ -47,6 +47,8 @@ class ParallelThinkingSFTDataset(Dataset):
         max_length = config.get("max_length", 1024)
         # False: plain causal mask and positions, the authors' "Seen" variant
         self.parallel_structure = config.get("parallel_structure", True)
+        # True (with parallel_structure=False): train later paths in the views the rollout generates them in
+        self.rollout_path_views = config.get("rollout_path_views", False)
         truncation = config.get("truncation", "error")
         use_shm = config.get('use_shm', False)
 
@@ -455,6 +457,8 @@ class ParallelThinkingSFTDataset(Dataset):
         # print(loss_mask.shape)
         # print(position_ids.shape)
 
+        if self.rollout_path_views:
+            return self.add_rollout_path_views(input_ids, loss_mask, sequence_length, prompt_length)
         return {
             "input_ids": input_ids,
             "attention_mask": float_attention_mask,
@@ -462,6 +466,57 @@ class ParallelThinkingSFTDataset(Dataset):
             "position_ids": position_ids,
             "loss_mask": loss_mask,
             "length": torch.tensor(min(sequence_length, self.max_length)),
+        }
+
+    def add_rollout_path_views(self, input_ids, loss_mask, n, prompt_length):
+        """Causal sample plus a copy of every path after the first one in each <Parallel> block.
+
+        The rollout generates each path from the prefix ending at <Parallel>, without its sibling paths, and then
+        prefills the summary causally over all paths. The causal main sequence matches the prefill. Each later path is
+        appended again, attending only to the prefix up to its <Parallel> and to itself, with positions continuing from
+        <Parallel>; its loss moves from the main sequence to the copy. loss_mask[i] is the loss of predicting token i + 1.
+        """
+        ids = input_ids[:n]
+        views, parallel_start, path_start, path_number = [], None, None, 0
+        for i in range(prompt_length, n):
+            token = ids[i].item()
+            if token == self.start_parallel_token:
+                parallel_start, path_number = i, 0
+            elif token == self.start_path_token and parallel_start is not None:
+                path_start = i
+            elif token == self.end_path_token and path_start is not None:
+                if path_number > 0:
+                    views.append((parallel_start, path_start, i + 1))
+                path_start, path_number = None, path_number + 1
+            elif token == self.end_parallel_token:
+                parallel_start = None
+
+        total = n + sum(end - start for _, start, end in views)
+        assert total <= self.max_length, f"{total=} > {self.max_length=}"
+        new_ids = torch.full((self.max_length,), self.tokenizer.pad_token_id, dtype=input_ids.dtype)
+        mask = torch.zeros(self.max_length, self.max_length, dtype=torch.bool)
+        position_ids = torch.zeros(self.max_length, dtype=torch.long)
+        new_loss_mask = torch.zeros(self.max_length, dtype=loss_mask.dtype)
+        new_ids[:n], mask[:n, :n], position_ids[:n], new_loss_mask[:n] = ids, torch.tril(torch.ones(n, n, dtype=torch.bool)), torch.arange(n), loss_mask[:n]
+        cursor = n
+        for parallel_start, start, end in views:
+            length = end - start
+            copy = slice(cursor, cursor + length)
+            new_ids[copy] = ids[start:end]
+            mask[copy, : parallel_start + 1] = True
+            mask[copy, copy] = torch.tril(torch.ones(length, length, dtype=torch.bool))
+            position_ids[copy] = torch.arange(parallel_start + 1, parallel_start + 1 + length)
+            new_loss_mask[start - 1 : end - 1] = 0
+            new_loss_mask[cursor : cursor + length - 1] = 1
+            cursor += length
+
+        float_mask = torch.full((1, self.max_length, self.max_length), -torch.inf).masked_fill(mask.unsqueeze(0), 0.0)
+        return {
+            "input_ids": new_ids,
+            "attention_mask": float_mask,
+            "position_ids": position_ids,
+            "loss_mask": new_loss_mask,
+            "length": torch.tensor(total),
         }
 
 
