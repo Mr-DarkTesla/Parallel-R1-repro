@@ -412,6 +412,12 @@ class DataParallelPPOActor(BasePPOActor):
             non_tensor_select_keys.append("left_pad_lens")
         data = data.select(batch_keys=select_keys, non_tensor_batch_keys=non_tensor_select_keys)
 
+        restore_order = None
+        if not use_dynamic_bsz and self.config.get("sort_logprob_rows_by_length", False):
+            order = torch.argsort(data.batch["attention_mask"].sum(-1)).cpu()
+            data.reorder(order)
+            restore_order = torch.argsort(order)
+
         if use_dynamic_bsz:
             max_token_len = data.meta_info["max_token_len"] * self.ulysses_sequence_parallel_size
             micro_batches, batch_idx_list = prepare_dynamic_batch(data, max_token_len=max_token_len)
@@ -440,6 +446,10 @@ class DataParallelPPOActor(BasePPOActor):
             if calculate_entropy:
                 entropys = restore_dynamic_batch(entropys, batch_idx_list)
 
+        if restore_order is not None:
+            log_probs = log_probs[restore_order]
+            if calculate_entropy:
+                entropys = entropys[restore_order]
         return log_probs, entropys
 
     @GPUMemoryLogger(role="dp actor", logger=logger)
@@ -490,6 +500,9 @@ class DataParallelPPOActor(BasePPOActor):
                     )
                     micro_batches = mini_batch.split(self.config.ppo_micro_batch_size_per_gpu)
 
+                if self.config.get("sort_microbatch_groups_by_length", False):
+                    # Keep the original token-mean groups intact; only change accumulation order.
+                    micro_batches = sorted(micro_batches, key=lambda b: b.batch["attention_mask"].sum(-1).max().item())
                 self.actor_optimizer.zero_grad()
 
                 for micro_batch in micro_batches:
