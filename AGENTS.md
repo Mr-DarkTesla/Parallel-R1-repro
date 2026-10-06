@@ -18,7 +18,7 @@ Goal: reproduce Parallel-R1 and test the mid-training exploration scaffold hypot
 
 ## Runs
 
-- GPU: pod `vcharkin-exp-vm-0` (1x H100, `infra/exp-vm.yaml`), namespace `shared-dzen-ml`. Use only 1 GPU (user's decision).
+- GPU: pod `vcharkin-exp-vm-0` (4x H100 allowed since 2026-10-06, `infra/exp-vm.yaml`), namespace `shared-dzen-ml`.
   Experiments run one at a time from `/work/queue/gpu0.txt` (`scripts/queue_runner.sh 0`). An idle GPU pod is scaled to 0
   by cluster automation after ~1.5-2 h; do uploads and installs on the CPU pod `infra/setup-vm.yaml`.
   Pods have no internet and no PyPI mirror: install from the offline wheelhouse (`env/`).

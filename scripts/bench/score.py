@@ -1,0 +1,76 @@
+"""Scores a generation dump (authors' rollout dump or scripts/bench/generate_plain.py) against its benchmark parquet; rows are in parquet order.
+
+Math (authors' set, LIMO): the authors' math_dapo check of "Final Answer:". ARC / MMLU-Pro: the letter after the last "Final Answer:".
+IFEval: the official lm-eval checker on the answer with any <think> block removed (prompt- and instruction-level, strict and loose).
+Also: share of answers with <Parallel>, tag validity (scripts/tag_validator.py), answers without "Final Answer", mean length in characters.
+
+Usage (from verl/, PYTHONPATH with the IFEval checker): python ../scripts/bench/score.py <generations.jsonl> <test.parquet> <output.json>
+"""
+import json
+import re
+import sys
+
+import numpy as np
+import pandas as pd
+
+sys.path.insert(0, __file__.rsplit("/", 2)[0])
+from tag_validator import validate  # noqa: E402
+from verl.utils.reward_score.math_dapo import compute_score  # noqa: E402
+
+generations_path, test_path, output_path = sys.argv[1], sys.argv[2], sys.argv[3]
+generations = pd.read_json(generations_path, lines=True)
+test = pd.read_parquet(test_path)
+assert len(generations) == len(test), (len(generations), len(test))
+tags = re.compile(r"</?(?:Parallel|Path|Summary)>")
+for row, (prompt, generated) in enumerate(zip(test["prompt"], generations["input"])):  # rows must line up
+    assert tags.sub("", prompt[0]["content"])[-200:] in tags.sub("", generated), f"row {row} does not match its prompt"
+
+answers = generations["output"].str.replace("<|endoftext|>", "", regex=False).str.replace("<|im_end|>", "", regex=False)
+final = answers.map(lambda text: text.split("</think>")[-1])  # the answer after any thinking block
+sources = test["data_source"].str.removeprefix("APO_")
+truths = [reward["ground_truth"] for reward in test["reward_model"]]
+
+
+def correct(source, answer, truth, info):
+    if source == "IFEVAL":
+        from lm_eval.tasks.ifeval import utils
+        return utils.process_results(json.loads(info["doc"]), [answer])
+    if source in ("ARC", "MMLUPRO"):
+        letters = re.findall(r"(?i)Final Answer\s*:\s*\**\(?([A-J])\b", answer)
+        return bool(letters) and letters[-1].upper() == truth
+    return compute_score(answer, truth)["acc"]
+
+
+results = [correct(s, a, t, i) for s, a, t, i in zip(sources, final, truths, test["extra_info"])]
+frame = pd.DataFrame({"source": sources, "problem": [p[0]["content"] for p in test["prompt"]], "answer": answers})
+if (sources == "IFEVAL").all():
+    for key in ("prompt_level_strict_acc", "prompt_level_loose_acc"):
+        frame[key] = [r[key] for r in results]
+    frame["inst_level_strict_acc"] = [np.mean(r["inst_level_strict_acc"]) for r in results]
+    frame["acc"] = frame["prompt_level_strict_acc"]
+else:
+    frame["acc"] = results
+frame["parallel"] = answers.str.contains("<Parallel>")
+frame[["tags", "correct_tags"]] = answers.map(validate).tolist()
+frame["no_final_answer"] = ~final.str.contains(r"(?i)Final Answer\s*:")
+frame["chars"] = answers.str.len()
+if "truncated" in generations:
+    frame["truncated"] = generations["truncated"]
+
+summary = {}
+for source, group in frame.groupby("source"):
+    per_problem = group.groupby("problem")["acc"]
+    tagged = group[group["tags"] > 0]
+    summary[source] = {
+        "accuracy": round(100 * group["acc"].mean(), 2),
+        f"pass@{per_problem.size().iloc[0]}": round(100 * per_problem.max().mean(), 2),
+        "problems": int(per_problem.ngroups),
+        "with_parallel": round(100 * group["parallel"].mean(), 1),
+        "valid_tagged_responses": round(100 * (tagged["tags"] == tagged["correct_tags"]).mean(), 1) if len(tagged) else None,
+        "no_final_answer": round(100 * group["no_final_answer"].mean(), 1),
+        "mean_chars": int(group["chars"].mean()),
+        **({"truncated": round(100 * group["truncated"].mean(), 1)} if "truncated" in group else {}),
+        **({key: round(100 * group[key].mean(), 2) for key in ("prompt_level_loose_acc", "inst_level_strict_acc")} if source == "IFEVAL" else {}),
+    }
+json.dump(summary, open(output_path, "w"), indent=1)
+print(json.dumps(summary))
