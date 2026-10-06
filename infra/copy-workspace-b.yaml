@@ -34,7 +34,8 @@ spec:
           git -C /work/parallel-r1 fetch /source/parallel-r1 '+refs/heads/*:refs/heads/*'
           git -C /work/parallel-r1 checkout -q --detach "$(git -C /source/parallel-r1 rev-parse HEAD)"
           for dir in setup-src bench-src runner-src; do
-            commit=$(git -C "/source/$dir" rev-parse HEAD)
+            # /source/$dir/.git points to /work/parallel-r1, which is the target here.
+            commit=$(git --git-dir="/source/parallel-r1/.git/worktrees/$dir" rev-parse HEAD)
             git -C /work/parallel-r1 worktree add -q --detach "/work/$dir" "$commit"
             if [ -d "/source/$dir/verl/data_preprocess_scripts/data" ]; then
               cp -a "/source/$dir/verl/data_preprocess_scripts/data/." "/work/$dir/verl/data_preprocess_scripts/data/"
