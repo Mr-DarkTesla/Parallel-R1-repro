@@ -445,6 +445,14 @@ class ParallelThinkingSFTDataset(Dataset):
             loss_mask[: min(prompt_length, loss_mask.size(0)) - 1] = 0
         # mask out the last token in response
         loss_mask[min(prompt_length + response_length, loss_mask.size(0)) - 1] = 0
+        # The rollout inserts <Path>, </Parallel>, the gap and <Summary> itself: do not train to predict them.
+        # loss_mask[i] is the loss of predicting token i + 1.
+        in_gap = False
+        for i in range(prompt_length, prompt_length + response_length):
+            token = input_ids[i].item()
+            in_gap = (in_gap or token == self.end_parallel_token) and token != self.start_summary_token
+            if in_gap or token in (self.start_path_token, self.start_summary_token):
+                loss_mask[i - 1] = 0
 
         # print(float_attention_mask.shape)
         # print(loss_mask.shape)
