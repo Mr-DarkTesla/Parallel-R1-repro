@@ -1,7 +1,7 @@
 """Checks exp10 rollout views on a tiny random Qwen3: the copy of a later path must get the same logits as a plain causal
 forward over (prefix up to its <Parallel>) + path, and the main sequence the same logits as a plain causal forward.
 
-Usage (from verl/): python ../scripts/check_rollout_views.py <tokenizer_dir> <train.parquet>
+Usage (from verl/): PYTHONPATH=. python ../scripts/check_rollout_views.py <tokenizer_dir> <train.parquet>
 """
 import contextlib
 import io
