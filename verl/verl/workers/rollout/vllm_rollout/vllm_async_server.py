@@ -323,6 +323,8 @@ class AsyncvLLMServer(AsyncServerBase):
             return []
         # This internal API consumes only the final token list, never streaming deltas.
         sampling_params["output_kind"] = RequestOutputKind.FINAL_ONLY
+        # String stops need the detokenizer; token-ID stops and EOS do not.
+        sampling_params.setdefault("detokenize", bool(sampling_params.get("stop")))
         sampling_params = SamplingParams(max_tokens=max_tokens, **sampling_params)
         prompt = TokensPrompt(prompt_token_ids=prompt_ids)
         generator = self.engine.generate(prompt=prompt, sampling_params=sampling_params, request_id=request_id)
