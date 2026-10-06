@@ -1,0 +1,34 @@
+# CPU-only pod for uploads and installs into the project PVC; the GPU pod is scaled down meanwhile (the PVC is ReadWriteOnce).
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vcharkin-setup-vm
+  namespace: shared-dzen-ml
+spec:
+  replicas: 1
+  serviceName: vcharkin-setup-vm
+  selector:
+    matchLabels:
+      app: vcharkin-setup-vm
+  template:
+    metadata:
+      labels:
+        app: vcharkin-setup-vm
+    spec:
+      containers:
+      - name: vcharkin-setup-vm
+        image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
+        resources:
+          limits:
+            cpu: "8"
+            memory: 32Gi
+            vk.team/cpu.slots: "1"
+        volumeMounts:
+        - mountPath: /work
+          name: work
+      securityContext:
+        fsGroup: 100
+      volumes:
+      - name: work
+        persistentVolumeClaim:
+          claimName: vcharkin-parallel-r1-pvc
