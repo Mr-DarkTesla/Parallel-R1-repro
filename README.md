@@ -98,6 +98,12 @@ Activation checkpointing is disabled for A100 80 GB. For an 8-GPU run, use
 `NPROC_PER_NODE=8` with overrides `ray_init.num_cpus=32 actor_rollout_ref.rollout.agent.num_workers=8`.
 Per-token forward counting is opt-in: set `PARALLEL_R1_FORWARD_PROBE=1` and
 `actor_rollout_ref.rollout.enforce_eager=true` when profiling.
+On vLLM 0.8.5.post1, Qwen3 and rollout TP=1, full decode graphs can be enabled with
+`PARALLEL_R1_FULL_DECODE_GRAPH=1 VLLM_ATTENTION_BACKEND=FLASH_ATTN`.
+They retain the compiled kernels and exact batch shapes, check each new graph
+against the original forward, and use the existing path for prefill.
+Run `PARALLEL_R1_TEST_MODEL=/path/to/qwen3 python tests/test_vllm_decode_graph.py`
+with `PYTHONPATH=verl` for the GPU check, including variable batches and sleep/wake.
 S1 and S2 start independently from the same SFT. Existing repository Parquets
 have identical questions/order (17,917 train, 1,916 validation); only the S2
 train reward differs. Validation always uses accuracy. No dataset copying is needed.
