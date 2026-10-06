@@ -1,0 +1,12 @@
+# Persistent storage for the Parallel-R1 project: venv, wheelhouse, models, checkpoints.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vcharkin-parallel-r1-b-pvc
+  namespace: shared-dzen-ml
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: openebs-remote-multi-dc
+  resources:
+    requests:
+      storage: 200Gi

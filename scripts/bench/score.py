@@ -9,6 +9,7 @@ Also: share of answers with <Parallel>, tag validity (scripts/tag_validator.py),
 Usage (from verl/, PYTHONPATH with the IFEval checker): python ../scripts/bench/score.py <generations.jsonl> <test.parquet> <output.json>
 """
 import json
+import os
 import re
 import sys
 
@@ -93,5 +94,7 @@ for source, group in frame.groupby("source"):
         **({"truncated": round(100 * group["truncated"].mean(), 1)} if "truncated" in group else {}),
         **({key: round(100 * group[key].mean(), 2) for key in ("prompt_level_loose_acc", "inst_level_strict_acc")} if source == "IFEVAL" else {}),
     }
-json.dump(summary, open(output_path, "w"), indent=1)
+with open(output_path + ".tmp", "w") as output:
+    json.dump(summary, output, indent=1)
+os.replace(output_path + ".tmp", output_path)
 print(json.dumps(summary))

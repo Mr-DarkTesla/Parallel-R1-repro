@@ -1,0 +1,51 @@
+# Optional split pool. Keep at zero until the existing runs finish and migration is verified.
+# GPU pod for parallel experiments. Project data lives on the PVC at /work; the rest of the disk is ephemeral.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vcharkin-exp-vm-a
+  namespace: shared-dzen-ml
+spec:
+  replicas: 0
+  serviceName: vcharkin-exp-vm-a
+  selector:
+    matchLabels:
+      app: vcharkin-exp-vm-a
+  template:
+    metadata:
+      labels:
+        app: vcharkin-exp-vm-a
+        parallel-r1-gpu-pool: split
+        repository/git: "true"
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                parallel-r1-gpu-pool: split
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: vcharkin-exp-vm-a
+        image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
+        command: ["bash", "/work/runner-src/scripts/run_gpu_queues.sh", "2"]
+        resources:
+          limits:
+            cpu: "54"
+            memory: 244Gi
+            nvidia.com/gpu.h100.pa: "2"
+        volumeMounts:
+        - mountPath: /dev/shm
+          name: dshm
+        - mountPath: /work
+          name: work
+      securityContext:
+        fsGroup: 100
+      volumes:
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 64Gi
+      - name: work
+        persistentVolumeClaim:
+          claimName: vcharkin-parallel-r1-pvc

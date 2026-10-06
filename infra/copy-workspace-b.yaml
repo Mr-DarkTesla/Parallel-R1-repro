@@ -1,0 +1,73 @@
+# Copies immutable inputs and frozen source commits. No GPU allocation, training or generation.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vcharkin-pr1-copy-b
+  namespace: shared-dzen-ml
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: vcharkin-pr1-copy-b
+    spec:
+      restartPolicy: Never
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: vcharkin-exp-vm
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - name: copy
+        image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
+        resources:
+          limits:
+            cpu: "8"
+            memory: 32Gi
+            vk.team/cpu.slots: "32"
+        command: ["bash", "-c"]
+        args:
+        - |
+          set -euo pipefail
+          for dir in assets venv bench_data; do
+            echo "COPY $dir $(date -Iseconds)"
+            mkdir -p "/work/$dir"
+            cp -a "/source/$dir/." "/work/$dir/"
+          done
+          echo "COPY frozen source commits $(date -Iseconds)"
+          git init -q /work/parallel-r1
+          git -C /work/parallel-r1 fetch /source/parallel-r1 '+refs/heads/*:refs/heads/*'
+          git -C /work/parallel-r1 checkout -q --detach "$(git -C /source/parallel-r1 rev-parse HEAD)"
+          for dir in setup-src bench-src runner-src; do
+            commit=$(git -C "/source/$dir" rev-parse HEAD)
+            git -C /work/parallel-r1 worktree add -q --detach "/work/$dir" "$commit"
+            if [ -d "/source/$dir/verl/data_preprocess_scripts/data" ]; then
+              cp -a "/source/$dir/verl/data_preprocess_scripts/data/." "/work/$dir/verl/data_preprocess_scripts/data/"
+            fi
+            echo "$dir $commit"
+          done
+          mkdir -p /work/queue
+          touch /work/queue/gpu0.txt /work/queue/gpu1.txt
+          /work/venv/bin/python -c 'import torch, transformers, verl; print(torch.__version__, transformers.__version__)'
+          test -s /work/assets/Qwen3-0.6B-Base-add-special-token/config.json
+          test -s /work/assets/parathinker/train_mix.parquet
+          date -Iseconds > /work/COPY_READY
+          echo COPY_READY
+        volumeMounts:
+        - name: source
+          mountPath: /source
+          readOnly: true
+        - name: target
+          mountPath: /work
+      securityContext:
+        fsGroup: 100
+      volumes:
+      - name: source
+        persistentVolumeClaim:
+          claimName: vcharkin-parallel-r1-pvc
+          readOnly: true
+      - name: target
+        persistentVolumeClaim:
+          claimName: vcharkin-parallel-r1-b-pvc
