@@ -25,7 +25,7 @@ tokenizer = llm.get_tokenizer()
 for name, data in SETS.items():
     prompts = [tokenizer.apply_chat_template(list(prompt), add_generation_prompt=True, tokenize=False) for prompt in data["prompt"]]
     for temperature in (0.0, 1.0):
-        params = SamplingParams(temperature=temperature, max_tokens=3000, skip_special_tokens=False, seed=0)
+        params = SamplingParams(temperature=temperature, max_tokens=8192, skip_special_tokens=False, seed=0)
         outputs = [output.outputs[0].text for output in llm.generate(prompts, params, use_tqdm=False)]
         with open(f"{generations_dir}/{os.path.basename(model)}_{name}_t{temperature}.jsonl", "w") as f:
             f.writelines(json.dumps({"output": output}) + "\n" for output in outputs)

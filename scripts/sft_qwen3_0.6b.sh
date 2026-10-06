@@ -17,7 +17,7 @@ torchrun --standalone --nnodes=1 --nproc_per_node=1 \
     data.val_files=$data/rl_all_accuracy_times_parallel_reward/test.parquet \
     data.prompt_key=extra_info \
     data.response_key=extra_info \
-    data.max_length=4096 \
+    data.max_length=8192 \
     +data.prompt_dict_keys=['question'] \
     +data.response_dict_keys=['answer'] \
     data.micro_batch_size_per_gpu=4 \

@@ -8,7 +8,7 @@ model=$1
 output_dir=$2
 data=./data_preprocess_scripts/data
 test=${3:-$data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet}
-max_length=3000
+max_length=8192
 max_prompt_len=2000
 
 cd "$(dirname "$0")/../verl"
