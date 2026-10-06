@@ -127,6 +127,7 @@ class AgentLoopOutput(BaseModel):
     metrics: AgentLoopMetrics
     """Auxiliary performance metrics"""
     multiverse_pos_ids: torch.Tensor
+    repro_stats: dict[str, Any] = {}
     # multiverse_attn_bool: torch.Tensor
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -333,6 +334,7 @@ class AgentLoopWorker:
                 server_manager=self.server_manager,
                 tokenizer=self.tokenizer,
             )
+            agent_loop.trajectory = trajectory
             output = await agent_loop.run(messages, sampling_params)
             return output
 
@@ -425,7 +427,10 @@ class AgentLoopWorker:
         num_turns = np.array([input.num_turns for input in inputs], dtype=np.int32)
         metrics = [input.metrics.model_dump() for input in inputs]
         left_pad_lens = np.array(left_pad_lens, dtype=object)
-        return DataProto(batch=batch, non_tensor_batch={"__num_turns__": num_turns, "position_required_masks": position_required_masks_all, "left_pad_lens": left_pad_lens}, meta_info={"metrics": metrics})
+        repro_stats = np.empty(batch_size, dtype=object)
+        for i, item in enumerate(inputs):
+            repro_stats[i] = item.repro_stats
+        return DataProto(batch=batch, non_tensor_batch={"__num_turns__": num_turns, "position_required_masks": position_required_masks_all, "left_pad_lens": left_pad_lens, "parallel_stats": repro_stats}, meta_info={"metrics": metrics})
 
 
 async def get_trajectory_info(step, index, validate):
