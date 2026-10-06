@@ -1,4 +1,4 @@
-# Copies immutable inputs and frozen source commits. No GPU allocation, training or generation.
+# Run after the old GPU pods stop and detach the source PVC. No GPU allocation or generation.
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -12,19 +12,6 @@ spec:
         app: vcharkin-pr1-copy-b
     spec:
       restartPolicy: Never
-      # The source PVC is attached to our active GPU node; no GPU is requested by this Job.
-      tolerations:
-      - key: hardware.vk.team/gpuonly
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
-      affinity:
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                app: vcharkin-exp-vm
-            topologyKey: kubernetes.io/hostname
       containers:
       - name: copy
         image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
