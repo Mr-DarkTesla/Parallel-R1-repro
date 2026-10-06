@@ -53,7 +53,7 @@ class Server:
     def __init__(self, mode):
         self.mode, self.calls, self.main = mode, [], 0
     async def generate(self, **kw):
-        self.calls.append(kw)
+        self.calls.append(copy.deepcopy(kw))
         params = kw['sampling_params']
         budget = params['max_tokens']
         assert budget >= 0
@@ -65,10 +65,43 @@ class Server:
             return [10] if self.main == 1 else [0]
         if self.mode == 'long':
             return [42] * budget
+        if self.mode == 'eos':
+            return [0]
         return [stop]
 
 
 class LoopTests(unittest.TestCase):
+    def test_policy_calls_keep_sampled_eos_and_exclude_inserted_tags(self):
+        async def run(mode):
+            config = SimpleNamespace(actor_rollout_ref=SimpleNamespace(rollout=SimpleNamespace(
+                prompt_length=8, response_length=100, agent=SimpleNamespace(
+                    record_policy_calls=True, add_diverse_prefix=False, max_iterations_for_parallel_thinking=4,
+                    num_paths=2, max_path_response_length=4096))))
+            Loop._class_initialized = False
+            Loop.init_class(config, Tokenizer())
+            loop = Loop(); loop.loop = asyncio.get_running_loop(); loop.server_manager = Server(mode)
+            result = await loop.run([], {})
+            mask = [0] * len(result.response_ids)
+            for call in result.rollout_calls:
+                matches = [c for c in loop.server_manager.calls if c['prompt_ids'] == call['prompt_ids']]
+                self.assertTrue(matches)
+                for i, token in enumerate(call['generated_ids'], call['response_start']):
+                    self.assertEqual(mask[i], 0)
+                    mask[i] = 1
+                    self.assertTrue(token == result.response_ids[i] or (token == 0 and result.response_ids[i] in (13, 15)))
+            self.assertEqual(mask, result.response_mask)
+            if mode != 'empty':
+                self.assertIn(0, result.response_mask)  # Runtime-supplied tags.
+                self.assertEqual(result.response_mask[0], 1)  # Sampled Parallel is an action.
+            if mode == 'eos':
+                paths = [c for c in result.rollout_calls if c['phase'] == 'path']
+                self.assertEqual(len(paths), 2)
+                self.assertEqual(paths[0]['prompt_ids'], paths[1]['prompt_ids'])
+                self.assertEqual(paths[0]['generated_ids'], [0])
+        for mode in ('normal', 'eos', 'empty', 'long'):
+            with self.subTest(mode=mode):
+                asyncio.run(run(mode))
+
     def test_budgets_and_real_fork_telemetry(self):
         async def run(limit, paths, mode):
             config = SimpleNamespace(actor_rollout_ref=SimpleNamespace(rollout=SimpleNamespace(
