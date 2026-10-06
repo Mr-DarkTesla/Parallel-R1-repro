@@ -23,7 +23,7 @@ python -m verl.trainer.main_ppo \
     data.max_response_length=$max_length \
     data.filter_overlong_prompts=False \
     data.truncation='left' \
-    +data.validation_shuffle=False \
+    data.validation_shuffle=False \
     actor_rollout_ref.model.path="$model" \
     actor_rollout_ref.model.use_remove_padding=False \
     actor_rollout_ref.actor.ppo_mini_batch_size=128 \
