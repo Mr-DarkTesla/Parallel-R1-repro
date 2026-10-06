@@ -86,6 +86,13 @@ class DataParallelPPOActor(BasePPOActor):
             log_probs: # (bs, response_len)
         """
         response_length = micro_batch["responses"].size(-1)
+        if 'rollout_calls' in micro_batch:
+            from verl.workers.actor.rollout_context import forward_rollout_calls
+            if self.use_fused_kernels or self.use_remove_padding:
+                raise ValueError('Rollout-call contexts require ordinary Qwen3 forward (no fused/remove-padding mode)')
+            with torch.autocast(device_type=self.device_name, dtype=torch.bfloat16):
+                return forward_rollout_calls(self.actor_module, micro_batch['rollout_calls'],
+                                             micro_batch['responses'], temperature, calculate_entropy)
         multi_modal_inputs = {}
         if "multi_modal_inputs" in micro_batch.keys():
             if "image_bound" in micro_batch["multi_modal_inputs"][0]:  # minicpm-o logic
@@ -402,6 +409,8 @@ class DataParallelPPOActor(BasePPOActor):
         if "final_attention_mask" in data.batch.keys():
             select_keys.append("final_attention_mask")
         non_tensor_select_keys = ["multi_modal_inputs"] if has_multi_modal_inputs else []
+        if 'rollout_calls' in data.non_tensor_batch:
+            non_tensor_select_keys.append('rollout_calls')
         if "position_required_masks" in data.non_tensor_batch.keys():
             non_tensor_select_keys.append("position_required_masks")
         if "left_pad_lens" in data.non_tensor_batch.keys():
@@ -461,6 +470,8 @@ class DataParallelPPOActor(BasePPOActor):
         
         has_multi_modal_inputs = "multi_modal_inputs" in data.non_tensor_batch.keys()
         non_tensor_select_keys = ["multi_modal_inputs"] if has_multi_modal_inputs else []
+        if 'rollout_calls' in data.non_tensor_batch:
+            non_tensor_select_keys.append('rollout_calls')
         if "position_required_masks" in data.non_tensor_batch.keys():
             non_tensor_select_keys.append("position_required_masks")
         if "left_pad_lens" in data.non_tensor_batch.keys():

@@ -275,7 +275,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             )
             if self.record_policy_calls:
                 self.policy_calls.append(dict(prompt_ids=list(prompt_ids), generated_ids=list(ids),
-                                              response_start=len(prompt_ids) - init_len, phase='main'))
+                                              response_start=len(prompt_ids) - init_len, phase='main',
+                                              temperature=sp_main.get('temperature', 1.0)))
             append_tokens(ids)
             if should_stop() or not await self.check_parallel(ids):
                 break
@@ -398,7 +399,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             )
             if max_len and len(ids) > max_len:
                 ids = ids[:max_len]
-            call = dict(prompt_ids=list(prompt_i) + [PATH_OPEN], generated_ids=list(ids), phase='path')
+            call = dict(prompt_ids=list(prompt_i) + [PATH_OPEN], generated_ids=list(ids), phase='path',
+                        temperature=sp['temperature'])
             
             if not ids or ids[-1] != PATH_CLOSE:
                 if ids and ids[-1] == self.eos_token_id:
@@ -467,6 +469,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             if self.record_policy_calls:
                 self.policy_calls.append(dict(prompt_ids=list(prompt_ids) + list(parallel_ids),
                                               generated_ids=list(summary_ids), phase='summary',
+                                              temperature=sp_sum.get('temperature', 1.0),
                                               response_start=self.response_length - remaining + len(parallel_ids)))
             if not summary_ids or summary_ids[-1] != self.end_summary_token:
                 if summary_ids and summary_ids[-1] == self.eos_token_id:

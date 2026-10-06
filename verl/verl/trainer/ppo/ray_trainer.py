@@ -1191,6 +1191,8 @@ class RayPPOTrainer:
                             metrics['parallel/generation_calls_mean'] = float(np.mean([item['generation_calls'] for item in parallel_stats]))
                             metrics['parallel/generated_tokens_mean'] = float(np.mean([item['generated_tokens'] for item in parallel_stats]))
                             metrics['parallel/truncated_ratio'] = float(np.mean([item['truncated'] for item in parallel_stats]))
+                            metrics['parallel/forced_tokens_mean'] = float(np.mean([item.get('forced_tokens', 0) for item in parallel_stats]))
+                            metrics['parallel/sampled_tokens_mean'] = float(np.mean([item.get('sampled_tokens', 0) for item in parallel_stats]))
                             metrics['parallel/blocks'] = len(positions)
                             if positions:
                                 metrics['parallel/relative_position_mean'] = float(np.mean(positions))
@@ -1330,6 +1332,13 @@ class RayPPOTrainer:
                             norm_adv_by_std_in_grpo=norm_adv_by_std_in_grpo,
                             config=self.config.algorithm,
                         )
+                        if self.config.algorithm.adv_estimator == 'grpo':
+                            informative = batch.batch['advantages'].abs().sum(-1).gt(0).cpu().numpy()
+                            informative_uids = set(batch.non_tensor_batch['uid'][informative])
+                            all_uids = set(batch.non_tensor_batch['uid'])
+                            metrics['grpo/informative_prompts'] = len(informative_uids)
+                            metrics['grpo/zero_advantage_group_fraction'] = 1 - len(informative_uids) / len(all_uids)
+                            metrics['grpo/positive_response_fraction'] = (reward_tensor.sum(-1) > 0).float().mean().item()
 
                     # update critic
                     if self.use_critic:

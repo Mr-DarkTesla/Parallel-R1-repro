@@ -55,7 +55,6 @@ class NaiveRewardManager:
         reward_extra_info = defaultdict(list)
 
         already_print_data_sources = {}
-        print(data)
         global_steps = data.meta_info["global_steps"]
 
         for i in range(len(data)):
