@@ -1,0 +1,206 @@
+{
+  "input": "verl/data_preprocess_scripts/data/gsm8k/adaptive_parallel_thinking_final_with_prompt_v3/sft_all_accuracy_times_parallel_reward/train.parquet",
+  "rows": 5910,
+  "dev_percent": 5,
+  "seed": 0,
+  "problem_groups": 5909,
+  "rows_in_multi_row_groups": 2,
+  "by_split_label_reason": {
+    "dev/ambiguous/stated_then_block_reaches_new_value": 2,
+    "dev/ambiguous/value_in_sequential_text_not_explicit_answer": 25,
+    "dev/ambiguous/value_only_in_earlier_path": 21,
+    "dev/answer_first/block1": 11,
+    "dev/answer_first/later_block": 56,
+    "dev/clean/": 182,
+    "dev/malformed/malformed_tags": 2,
+    "train/ambiguous/stated_then_block_reaches_new_value": 30,
+    "train/ambiguous/value_in_sequential_text_not_explicit_answer": 618,
+    "train/ambiguous/value_only_in_earlier_path": 334,
+    "train/answer_first/block1": 218,
+    "train/answer_first/later_block": 1092,
+    "train/clean/": 3266,
+    "train/malformed/final_answer_not_last_line": 2,
+    "train/malformed/malformed_tags": 36,
+    "train/malformed/no_parallel": 15
+  },
+  "length_decile_edges_target_tokens": [
+    291,
+    325,
+    350,
+    376,
+    404,
+    430,
+    463,
+    504,
+    571
+  ],
+  "dev_untouched_excluded": [
+    {
+      "row": 179,
+      "source_index": 224,
+      "label": "answer_first"
+    }
+  ],
+  "random_control_dropped_by_label": {
+    "answer_first": 365,
+    "ambiguous": 277,
+    "clean": 668
+  },
+  "random_control_broad_dropped_by_label": {
+    "answer_first": 627,
+    "clean": 1171,
+    "ambiguous": 494
+  },
+  "arms": {
+    "dev": {
+      "rows": 297,
+      "target_tokens": 122910,
+      "parallel_blocks": {
+        "1": 2,
+        "2": 279,
+        "3": 15,
+        "4": 1
+      },
+      "paths": {
+        "2": 2,
+        "4": 275,
+        "5": 1,
+        "6": 17,
+        "8": 2
+      }
+    },
+    "dev_untouched": {
+      "rows": 296,
+      "target_tokens": 122456,
+      "parallel_blocks": {
+        "1": 2,
+        "2": 278,
+        "3": 15,
+        "4": 1
+      },
+      "paths": {
+        "2": 2,
+        "4": 274,
+        "5": 1,
+        "6": 17,
+        "8": 2
+      }
+    },
+    "control_full": {
+      "rows": 5558,
+      "target_tokens": 2339179,
+      "parallel_blocks": {
+        "1": 60,
+        "2": 5248,
+        "3": 231,
+        "4": 14,
+        "5": 4,
+        "6": 1
+      },
+      "paths": {
+        "2": 57,
+        "3": 3,
+        "4": 5181,
+        "5": 36,
+        "6": 250,
+        "7": 4,
+        "8": 15,
+        "9": 7,
+        "10": 4,
+        "12": 1
+      }
+    },
+    "filtered": {
+      "rows": 4248,
+      "target_tokens": 1732780,
+      "parallel_blocks": {
+        "1": 52,
+        "2": 3972,
+        "3": 208,
+        "4": 12,
+        "5": 4
+      },
+      "paths": {
+        "2": 49,
+        "3": 3,
+        "4": 3917,
+        "5": 30,
+        "6": 222,
+        "7": 3,
+        "8": 13,
+        "9": 7,
+        "10": 4
+      }
+    },
+    "random_control": {
+      "rows": 4248,
+      "target_tokens": 1737281,
+      "parallel_blocks": {
+        "1": 52,
+        "2": 3972,
+        "3": 208,
+        "4": 12,
+        "5": 3,
+        "6": 1
+      },
+      "paths": {
+        "2": 49,
+        "3": 3,
+        "4": 3917,
+        "5": 30,
+        "6": 222,
+        "7": 3,
+        "8": 13,
+        "9": 7,
+        "10": 3,
+        "12": 1
+      }
+    },
+    "filtered_broad": {
+      "rows": 3266,
+      "target_tokens": 1279508,
+      "parallel_blocks": {
+        "1": 47,
+        "2": 3009,
+        "3": 194,
+        "4": 12,
+        "5": 4
+      },
+      "paths": {
+        "2": 45,
+        "3": 2,
+        "4": 2966,
+        "5": 23,
+        "6": 204,
+        "7": 3,
+        "8": 13,
+        "9": 6,
+        "10": 4
+      }
+    },
+    "random_control_broad": {
+      "rows": 3266,
+      "target_tokens": 1284620,
+      "parallel_blocks": {
+        "1": 47,
+        "2": 3009,
+        "3": 194,
+        "4": 11,
+        "5": 4,
+        "6": 1
+      },
+      "paths": {
+        "2": 45,
+        "3": 2,
+        "4": 2966,
+        "5": 23,
+        "6": 202,
+        "7": 4,
+        "8": 12,
+        "9": 7,
+        "10": 4,
+        "12": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+dev                    rows=  297 membership_unchanged_vs_previous=True
+dev_untouched          rows=  296 (new)
+control_full           rows= 5558 membership_unchanged_vs_previous=True
+filtered               rows= 4248 membership_unchanged_vs_previous=True
+random_control         rows= 4248 membership_unchanged_vs_previous=False
+filtered_broad         rows= 3266 membership_unchanged_vs_previous=True
+random_control_broad   rows= 3266 membership_unchanged_vs_previous=False
+labels/splits unchanged; train arms ⊆ control_full; no dev problem group in any train arm; dev_untouched = dev minus source_index 224 (row 179), its group absent
+random_control overlap with filtered: 3303 of 4248

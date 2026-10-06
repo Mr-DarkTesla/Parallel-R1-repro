@@ -34,3 +34,33 @@ init is unknown; what matters is that their tags are distinct.
 ## Pod
 
 - StatefulSet `vcharkin-shared-vm`: `/dev/shm` is an in-memory `emptyDir` of 32Gi (was 64M), needed by the DataLoader workers.
+
+## exp/13-instruct4b-control: SFT of the hybrid Qwen3-4B (instruct) in its native template
+
+Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer of `/work/assets/models/Qwen3-4B`, tiny random Qwen3 for gradients).
+
+1. `fsdp_parallel_sft_trainer.py`: the loss is divided by the number of micro batches before `backward()` (`loss_scale`), not after.
+   Before, the gradient was `n_micro` times the batch mean, so clipping at 1.0 acted on a scaled norm. The objective
+   (token mean within a sample, mean over samples) is unchanged. `train/grad_norm` is logged. A mutation check
+   (scale removed) makes the test fail with a 2x gradient.
+2. `parallel_thinking_sft_dataset.py`: `data.enable_thinking` (default `None` = old behaviour) is passed to the chat template.
+   With `False` the hybrid Qwen3 template renders the native non-thinking prompt (`<think>\n\n</think>\n\n`);
+   prompt + response + `<|im_end|>` is then exactly the template's render of the conversation.
+3. `parallel_thinking_loop_v3.py`: `PARALLEL_ROLLOUT_ENABLE_THINKING=true|false` (unset = old behaviour) is passed to the
+   chat template of the parallel rollout and printed once (`Parallel rollout chat template kwargs: ...`), so the rollout
+   prompt has the same tokens as the SFT prompt. An env var because `scripts/bench/eval_rollout.sh` takes no overrides.
+4. `scripts/instruct4b/prepare_model.py` (new; `scripts/add_special_tokens.py` is unchanged): the six tags get ids
+   151669-151674, which already lie inside the 151936 embedding rows of Qwen3-4B (unused, identical rows, cosine 1.0).
+   No resize, so `vocab_size` stays 151936; only these six rows of the tied embedding / lm_head change (mean of the
+   pieces, as in `add_special_tokens.py`); saved in bf16 like the source, with the native chat template. Checked on the
+   pod CPU: changed rows are exactly the six, no other parameter changes, same generation config. As in the authors'
+   checkpoint, `additional_special_tokens` lists only the six tags; the Qwen control tokens stay special in
+   `added_tokens_decoder` and are still skipped by `decode(skip_special_tokens=True)`.
+5. `parallel_thinking_sft_dataset.py`: the structure mask is built on the response only; the prompt stays fully causal.
+   Before, the mask was built on prompt + response, so a user instruction with two literal `<Path>` blocks hid them
+   from each other (the authors' prompt has one pair and gets the same mask as before: checked by a test).
+   Positions were already response-only.
+6. `fsdp_parallel_sft_trainer.py`, only when `trainer.total_training_steps` is set (unset = old behaviour):
+   the lr schedule spans these steps (before, its length was steps per epoch x epochs, so arms of different size had
+   different lr curves for the same number of updates), and no validation or checkpoint at the end of an earlier epoch
+   (each is a 16 GB fp32 checkpoint). `train/target_tokens` (target tokens of the global batch) is logged every step.

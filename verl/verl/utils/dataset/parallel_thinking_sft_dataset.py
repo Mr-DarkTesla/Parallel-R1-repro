@@ -47,6 +47,9 @@ class ParallelThinkingSFTDataset(Dataset):
         max_length = config.get("max_length", 1024)
         truncation = config.get("truncation", "error")
         use_shm = config.get('use_shm', False)
+        # Hybrid Qwen3 templates: False renders the native non-thinking prompt (empty <think></think>); None keeps the default
+        enable_thinking = config.get("enable_thinking", None)
+        self.template_kwargs = {} if enable_thinking is None else {"enable_thinking": enable_thinking}
 
         assert truncation in ["error", "left", "right"]
         self.truncation = truncation
@@ -379,7 +382,7 @@ class ParallelThinkingSFTDataset(Dataset):
         prompt_chat = [{"role": "user", "content": prompt}]
         # print(prompt_chat)
         # string
-        prompt_chat_str = tokenizer.apply_chat_template(prompt_chat, add_generation_prompt=True, tokenize=False)
+        prompt_chat_str = tokenizer.apply_chat_template(prompt_chat, add_generation_prompt=True, tokenize=False, **self.template_kwargs)
         response_chat_str = response + tokenizer.eos_token
 
         # tokenize
@@ -422,8 +425,9 @@ class ParallelThinkingSFTDataset(Dataset):
             else:
                 raise NotImplementedError(f"Unknown truncation method {self.truncation}")
 
-        attention_mask = self.generate_parallel_thinking_reasponse_mask(input_ids)
-        # print(attention_mask)
+        # The prompt may mention the tags in its instruction: it stays causal, only the response has parallel structure
+        attention_mask = torch.ones(len(input_ids), len(input_ids), dtype=torch.bool).tril()
+        attention_mask[prompt_length:, prompt_length:] = self.generate_parallel_thinking_reasponse_mask(input_ids[prompt_length:])
 
         if sequence_length < self.max_length:
             attention_mask[:,-(self.max_length - sequence_length):] = False

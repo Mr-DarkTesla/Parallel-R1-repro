@@ -1,0 +1,5 @@
+self.total_steps = self.config.trainer.total_training_steps or self.steps_per_epoch * self.config.trainer.total_epochs
+control_full rows=5558 steps/epoch=86 epochs=1 total_steps=64 warmup=6 lr[1,6,7,32,63,64]=['1.667e-06', '1.000e-05', '9.993e-06', '5.809e-06', '7.333e-09', '0.000e+00']
+filtered rows=4248 steps/epoch=66 epochs=1 total_steps=64 warmup=6 lr[1,6,7,32,63,64]=['1.667e-06', '1.000e-05', '9.993e-06', '5.809e-06', '7.333e-09', '0.000e+00']
+random_control rows=4248 steps/epoch=66 epochs=1 total_steps=64 warmup=6 lr[1,6,7,32,63,64]=['1.667e-06', '1.000e-05', '9.993e-06', '5.809e-06', '7.333e-09', '0.000e+00']
+OK: identical lr per step for the three arms

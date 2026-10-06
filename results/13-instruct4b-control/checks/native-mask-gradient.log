@@ -1,0 +1,22 @@
+bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+bash: warning: setlocale: LC_ALL: cannot change locale (en_US.UTF-8)
+Sliding Window Attention is enabled but not implemented for `sdpa`; unexpected results may be encountered.
+PASS test_checkout_is_used
+PASS test_tags_are_single_new_tokens
+['Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?', 'Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?']
+PASS test_native_non_thinking_template
+['Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?', 'Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?']
+PASS test_default_template_unchanged
+['Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?', 'Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?']
+PASS test_structure_only_in_response
+['Reply in the format <Parallel><Path>first</Path><Path>second</Path></Parallel><Summary>...</Summary>.\n\nProblem: 2 + 3?', 'Reply in the format <Parallel><Path>first</Path><Path>second</Path></Parallel><Summary>...</Summary>.\n\nProblem: 2 + 3?']
+PASS test_two_literal_paths_in_prompt_are_text
+['Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?', 'Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?']
+PASS test_single_path_prompt_mask_unchanged
+Performing class-level ParallelThinkingV3AgentLoop initialization
+Parallel rollout chat template kwargs: {'enable_thinking': False}
+['Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?', 'Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?']
+PASS test_rollout_prompt_matches_sft
+['Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?', 'Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?']
+['Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?', 'Insert a parallel block: begin with <Parallel>, each path within <Path> and </Path>, close with </Parallel>, then <Summary> and </Summary>.\n\nProblem: 2 + 3?']
+PASS test_gradient_accumulation_divides_before_backward

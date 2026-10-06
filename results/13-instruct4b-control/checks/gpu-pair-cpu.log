@@ -1,0 +1,57 @@
+--- case 1: idle pair, command sees both GPUs
+exit=0
+2026-10-06 23:39:22 600819 pair gpu2,gpu3: bash -c echo CVD=$CUDA_VISIBLE_DEVICES; sleep 8
+2026-10-06 23:39:23 holds queued
+2026-10-06 23:39:28 start
+CVD=2,3
+2026-10-06 23:39:36 finished exit=0
+finished
+hold-2
+hold-3
+owner
+pair.log
+queues after:
+0 q/gpu2.txt
+0 q/gpu3.txt
+0 total
+==> q/gpu2.log <==
+2026-10-06 23:39:36 END exit=0 bash /tmp/pairtest/gpu_pair.sh hold /tmp/pairtest/pairs/ok 2
+2026-10-06 23:39:37 END exit=0 bash /tmp/pairtest/gpu_pair.sh hold /tmp/pairtest/pairs/ok 2
+
+==> q/gpu3.log <==
+2026-10-06 23:39:37 END exit=0 bash /tmp/pairtest/gpu_pair.sh hold /tmp/pairtest/pairs/ok 3
+--- case 2: same name refused
+/tmp/pairtest/pairs/ok exists: one owner per name
+exit=1
+--- case 3: G2 queue not empty -> refused, nothing appended to G1
+mkdir: cannot create directory '/tmp/pairtest/pairs/ok': File exists
+exit=1
+2026-10-06 23:39:43 601023 pair gpu2,gpu3: true
+gpu3 queue not empty
+2026-10-06 23:39:43 finished exit=1
+G1 queue bytes: 0
+--- case 4: G2 runner last START (busy) -> refused
+exit=1
+2026-10-06 23:39:43 finished exit=1
+--- case 5: no runner on G2 -> hold never starts -> abort; G1 hold then exits
+exit=1
+2026-10-06 23:39:43 601069 pair gpu2,gpu3: true
+2026-10-06 23:39:43 holds queued
+holds did not start in 200 s
+2026-10-06 23:39:58 finished exit=1
+finished
+hold-2
+owner
+pair.log
+G1 queue bytes: 0 (expect 0)
+2026-10-06 23:40:00 END exit=0 bash /tmp/pairtest/gpu_pair.sh hold /tmp/pairtest/pairs/norunner 2
+G2 queue (stale hold left, harmless: finished exists):
+bash /tmp/pairtest/gpu_pair.sh hold /tmp/pairtest/pairs/norunner 3
+--- case 6: failing command -> finished records exit code
+exit=7
+7 2026-10-06 23:40:10
+==> q/gpu2.log <==
+2026-10-06 23:40:12 END exit=0 bash /tmp/pairtest/gpu_pair.sh hold /tmp/pairtest/pairs/fail 2
+
+==> q/gpu3.log <==
+2026-10-06 23:40:12 END exit=0 bash /tmp/pairtest/gpu_pair.sh hold /tmp/pairtest/pairs/fail 3

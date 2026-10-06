@@ -289,7 +289,8 @@ class FSDPParallelThinkingSFTTrainer:
         log_gpu_memory_usage("After initialize optimizer", logger=logger)
 
         self.steps_per_epoch = len(self.train_dataloader)
-        self.total_steps = self.steps_per_epoch * self.config.trainer.total_epochs
+        # A fixed budget (trainer.total_training_steps) is also the length of the lr schedule
+        self.total_steps = self.config.trainer.total_training_steps or self.steps_per_epoch * self.config.trainer.total_epochs
 
         if self.device_mesh.get_rank() == 0:
             print(f"Number of steps/epoch {self.steps_per_epoch}, number of epochs {self.config.trainer.total_epochs}, total number of steps {self.total_steps}")
@@ -303,7 +304,7 @@ class FSDPParallelThinkingSFTTrainer:
         else:
             raise ValueError(f"Unknown lr scheduler: {self.config.optim.lr_scheduler}")
 
-    def _compute_loss_and_backward(self, batch, do_backward=True):
+    def _compute_loss_and_backward(self, batch, do_backward=True, loss_scale=1.0):
         """Compute loss with optional sequence parallelism and remove padding features"""
         use_sp = self.use_remove_padding and self.config.ulysses_sequence_parallel_size > 1
 
@@ -381,7 +382,8 @@ class FSDPParallelThinkingSFTTrainer:
                 loss = full_loss.squeeze(-1)[:, :-1]  # Remove last token's loss
 
             # Token mean within each sample, then mean over samples: same objective as micro batch 1
-            loss = ((loss * loss_mask).sum(-1) / loss_mask.sum(-1)).mean()
+            # loss_scale = 1 / number of micro batches, applied before backward so the gradient is the batch mean
+            loss = ((loss * loss_mask).sum(-1) / loss_mask.sum(-1)).mean() * loss_scale
 
             if do_backward:
                 loss.backward()
@@ -396,11 +398,13 @@ class FSDPParallelThinkingSFTTrainer:
 
         log_gpu_memory_usage("After optimizer zero_grad", logger=logger)
 
+        target_tokens = batch["loss_mask"][:, :-1].sum().to(self.device_name)
+        torch.distributed.all_reduce(target_tokens)
         micro_batches = batch.split(self.config.data.micro_batch_size_per_gpu)
         n_micro_batches = len(micro_batches)
         step_loss = 0
         for micro_batch in micro_batches:
-            loss = self._compute_loss_and_backward(batch=micro_batch) / n_micro_batches
+            loss = self._compute_loss_and_backward(batch=micro_batch, loss_scale=1 / n_micro_batches)
             step_loss += loss.item()
 
         if self.config.model.strategy == 'fsdp':
@@ -434,7 +438,8 @@ class FSDPParallelThinkingSFTTrainer:
         elif is_npu_available:
             torch.distributed.all_reduce(step_loss)
             step_loss /= self.ulysses_device_mesh.size(0)
-        return {'train/loss': step_loss.detach().item(), 'train/lr(1e-3)': lr * 1e3}
+        return {'train/loss': step_loss.detach().item(), 'train/lr(1e-3)': lr * 1e3, 'train/grad_norm': grad_norm.item(),
+                'train/target_tokens': target_tokens.item()}
 
     def validation_step(self, batch: TensorDict):
         self.fsdp_model.eval()
@@ -545,6 +550,9 @@ class FSDPParallelThinkingSFTTrainer:
                     # Save final checkpoint
                     self.save_checkpoint(step=global_step)
                     return
+
+            if self.config.trainer.total_training_steps is not None and epoch + 1 < self.config.trainer.total_epochs:
+                continue  # fixed budget: validate and save only at its end (no extra 16 GB fp32 checkpoints)
 
             # validation
             val_losses = []

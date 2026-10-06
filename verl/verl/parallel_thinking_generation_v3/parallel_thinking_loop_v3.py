@@ -85,6 +85,11 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cls.prompt_length = config.actor_rollout_ref.rollout.prompt_length
         cls.response_length = config.actor_rollout_ref.rollout.response_length
         cls.system_prompt = tokenizer.apply_chat_template([{}], add_generation_prompt=False, tokenize=True)
+        # Hybrid Qwen3 templates: PARALLEL_ROLLOUT_ENABLE_THINKING=false renders the native non-thinking prompt
+        # (empty <think></think>), as in SFT with data.enable_thinking=False; unset keeps the default template
+        thinking = os.environ.get("PARALLEL_ROLLOUT_ENABLE_THINKING")
+        cls.template_kwargs = {} if thinking is None else {"enable_thinking": {"true": True, "false": False}[thinking]}
+        print(f"Parallel rollout chat template kwargs: {cls.template_kwargs}")
 
     @rollout_trace_op
     async def run(
@@ -97,7 +102,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         prompt_ids = await self.loop.run_in_executor(
             None,
             lambda: self.tokenizer.apply_chat_template(
-                messages, add_generation_prompt=True, tokenize=True
+                messages, add_generation_prompt=True, tokenize=True, **self.template_kwargs
             ),
         )
         init_len      = len(prompt_ids)                         
