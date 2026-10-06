@@ -12,6 +12,12 @@ spec:
         app: vcharkin-pr1-copy-b
     spec:
       restartPolicy: Never
+      # The source PVC is attached to our active GPU node; no GPU is requested by this Job.
+      tolerations:
+      - key: hardware.vk.team/gpuonly
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
       affinity:
         podAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
