@@ -92,6 +92,11 @@ the RL profile defaults to 1 A100 80 GB. Select the count explicitly when switch
 
 RL uses `rl_qwen3_06b.yaml`: batch 32, rollout n=8, microbatch 1, LR 1e-6,
 300 steps, save/validation every 10 steps, offline W&B and rollout telemetry.
+It uses CUDA graphs and trims padding while retaining the parallel attention mask.
+Activation checkpointing is disabled for A100 80 GB. For an 8-GPU run, use
+`NPROC_PER_NODE=8` with overrides `ray_init.num_cpus=32 actor_rollout_ref.rollout.agent.num_workers=8`.
+Per-token forward counting is opt-in: set `PARALLEL_R1_FORWARD_PROBE=1` and
+`actor_rollout_ref.rollout.enforce_eager=true` when profiling.
 S1 and S2 start independently from the same SFT. Existing repository Parquets
 have identical questions/order (17,917 train, 1,916 validation); only the S2
 train reward differs. Validation always uses accuracy. No dataset copying is needed.
@@ -104,7 +109,7 @@ command is a compatibility adapter for the previous environment variables.
 The shared dependency file remains `verl/requirements-qwen3.txt`. It uses
 Transformers 4.53.2, Ray 2.48.0 and TensorDict 0.8.3; the earlier RL environment
 used 4.51.3/2.43.0/0.6.2. The integrated interface and generation loop have CPU
-checks; a GPU smoke of the combined version is still required. RL retains the
+checks, including padding/gradient equivalence, and an 8-GPU training smoke. RL retains the
 upstream structured actor mask/positions and loss on runtime-inserted tags;
 its inference/training mismatch is unchanged. Our bounded total response budget
 also differs from the original RL branch, so old runs are not protocol-identical.
