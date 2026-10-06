@@ -10,7 +10,7 @@ root = sys.argv[1]
 runs = sorted(name for name in os.listdir(root) if os.path.isdir(f"{root}/{name}"))
 results = {run: {} for run in runs}
 for run in runs:
-    for name in os.listdir(f"{root}/{run}"):
+    for name in (f for f in os.listdir(f"{root}/{run}") if f.endswith(".json")):
         results[run].update(json.load(open(f"{root}/{run}/{name}")))
 
 COLUMNS = ["accuracy", "accuracy_robust", "pass@16", "pass_robust@16", "pass@4", "pass_robust@4", "prompt_level_loose_acc", "inst_level_strict_acc", "with_parallel", "valid_tagged_responses",
