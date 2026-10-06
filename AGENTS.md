@@ -18,7 +18,9 @@ Goal: reproduce Parallel-R1 and test the mid-training exploration scaffold hypot
 
 ## Runs
 
-- GPU: pod `vcharkin-exp-vm-0` (3x H100, `infra/exp-vm.yaml`), namespace `shared-dzen-ml`. One experiment per GPU via `CUDA_VISIBLE_DEVICES`.
+- GPU: pod `vcharkin-exp-vm-0` (1x H100, `infra/exp-vm.yaml`), namespace `shared-dzen-ml`. Use only 1 GPU (user's decision).
+  Experiments run one at a time from `/work/queue/gpu0.txt` (`scripts/queue_runner.sh 0`). An idle GPU pod is scaled to 0
+  by cluster automation after ~1.5-2 h; do uploads and installs on the CPU pod `infra/setup-vm.yaml`.
   Pods have no internet and no PyPI mirror: install from the offline wheelhouse (`env/`).
 - Persistent paths on PVC `vcharkin-parallel-r1-pvc` (`infra/parallel-r1-pvc.yaml`) mounted at `/work`: repo `/work/parallel-r1`,
   venv `/work/venv`, models and wheels `/work/assets`, runs `/work/runs`. Everything outside `/work` is lost when the pod is evicted

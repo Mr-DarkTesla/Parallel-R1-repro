@@ -21,9 +21,9 @@ spec:
         image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
         resources:
           limits:
-            cpu: "81"
-            memory: 366Gi
-            nvidia.com/gpu.h100.pa: "3"
+            cpu: "27"
+            memory: 122Gi
+            nvidia.com/gpu.h100.pa: "1"
         volumeMounts:
         - mountPath: /dev/shm
           name: dshm
@@ -35,7 +35,7 @@ spec:
       - name: dshm
         emptyDir:
           medium: Memory
-          sizeLimit: 96Gi
+          sizeLimit: 32Gi
       - name: work
         persistentVolumeClaim:
           claimName: vcharkin-parallel-r1-pvc
