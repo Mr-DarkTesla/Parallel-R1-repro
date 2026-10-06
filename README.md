@@ -115,6 +115,18 @@ existing run by passing `trainer.resume_mode=auto trainer.val_before_train=true`
 RL saves optimizer state; SFT does not. The old `experiments/qwen06/run_rl.sh`
 command is a compatibility adapter for the previous environment variables.
 
+For runs using the author's `token-mean` loss, keep
+`actor_rollout_ref.actor.sort_microbatches_by_length=false`. Optional
+`++actor_rollout_ref.actor.sort_microbatch_groups_by_length=true` reorders whole
+original microbatches without changing their loss weights;
+`++actor_rollout_ref.actor.sort_logprob_rows_by_length=true` restores log-prob
+outputs to their original row order. FSDP1 can defer gradient synchronization with
+`++actor_rollout_ref.actor.defer_gradient_sync=true` when parameters stay on GPU;
+this uses more gradient memory and changes BF16 accumulation rounding.
+`actor_rollout_ref.rollout.max_num_seqs` controls inference concurrency separately
+from the training batch. Re-measure full steps after changing it, including
+validation/checkpoint time in the completion estimate.
+
 The shared dependency file remains `verl/requirements-qwen3.txt`. It uses
 Transformers 4.53.2, Ray 2.48.0 and TensorDict 0.8.3; the earlier RL environment
 used 4.51.3/2.43.0/0.6.2. The integrated interface and generation loop have CPU
