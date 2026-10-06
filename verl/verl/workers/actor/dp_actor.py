@@ -237,6 +237,20 @@ class DataParallelPPOActor(BasePPOActor):
                 log_probs = full_log_probs.squeeze(-1)[:, -response_length - 1 : -1]  # (bsz, response_length)
 
             else:  # not using rmpad and no ulysses sp
+                original_response_length = response_length
+                trim_left = 0
+                if (self.config.get("trim_parallel_padding", False)
+                        and "position_required_masks" in micro_batch
+                        and not multi_modal_inputs and not self.use_fused_kernels):
+                    # Keep absolute RoPE positions and the custom path mask. Only
+                    # columns padded in every sequence may be removed.
+                    prompt_length = seqlen - response_length
+                    occupied = attention_mask.bool().any(dim=0).nonzero().flatten()
+                    trim_left = min(int(occupied[0]), prompt_length - 1)
+                    trim_right = max(int(occupied[-1]) + 1, prompt_length + 1)
+                    response_length = trim_right - prompt_length
+                    input_ids = input_ids[:, trim_left:trim_right]
+                    position_ids = position_ids[..., trim_left:trim_right]
                 extra_args = {}
                 if self.use_fused_kernels:
                     extra_args["temperature"] = temperature
@@ -244,7 +258,6 @@ class DataParallelPPOActor(BasePPOActor):
                 # if "position_required_masks" in micro_batch.keys(): so we need to construct the attention mask
                 # otherwise, we can use the attention_mask directly
                 if "position_required_masks" in micro_batch.keys():
-                    print("Using position_required_masks to construct attention_mask...")
                     position_required_masks = micro_batch["position_required_masks"]
                     left_pad_lens = micro_batch["left_pad_lens"]
 
@@ -252,7 +265,7 @@ class DataParallelPPOActor(BasePPOActor):
                     batch_size = len(input_ids)
                     max_len = len(input_ids[0])
 
-                    bool_mask = torch.tril(torch.ones(batch_size, max_len, max_len, dtype=torch.bool))
+                    bool_mask = torch.tril(torch.ones(batch_size, max_len, max_len, dtype=torch.bool, device=input_ids.device))
 
                     for i in range(batch_size):
                         position_required_masks_i =  position_required_masks[i]
@@ -265,7 +278,6 @@ class DataParallelPPOActor(BasePPOActor):
                             assert left_pad_len == left_pad_len_i, (
                                 f"left_pad_len {left_pad_len} does not match expected {left_pad_len_i} for input {i}"
                             )
-                            print(f"left_pad_len: {left_pad_len}, path1_start: {path1_start}, path1_end: {path1_end}, path2_start: {path2_start}, path2_end: {path2_end}")
                             #intuitively, path1_start and path2_start should be the same
                             # assert position_ids[i][path1_start] == position_ids[i][path2_start], (
                             #     f"position_ids {position_ids[i][path1_start]} does not match {position_ids[i][path2_start]} for input {i}"
@@ -291,8 +303,13 @@ class DataParallelPPOActor(BasePPOActor):
                             #         f"position_ids {position_ids[i][path1_start]} != {position_ids[i][path2_start]} for input {i}"
                             #     )
                            
+                            path1_start, path1_end, path2_start, path2_end = (
+                                max(0, int(p) - trim_left)
+                                for p in (path1_start, path1_end, path2_start, path2_end)
+                            )
                             bool_mask[i][path1_start:path1_end, path2_start:path2_end] = False
                             bool_mask[i][path2_start:path2_end, path1_start:path1_end] = False
+                        left_pad_len_i = max(0, int(left_pad_len_i) - trim_left)
                         if left_pad_len_i > 0:
                             bool_mask[i][left_pad_len_i:, :left_pad_len_i] = False 
 
@@ -322,12 +339,18 @@ class DataParallelPPOActor(BasePPOActor):
 
                     logits.div_(temperature)
                     logits = logits[:, -response_length - 1 : -1, :]  # (bsz, response_length, vocab_size)
-                    log_probs = logprobs_from_logits(logits, micro_batch["responses"])
+                    log_probs = logprobs_from_logits(logits, micro_batch["responses"][:, :response_length])
                     if calculate_entropy:
                         if not self.config.entropy_checkpointing:
                             entropy = verl_F.entropy_from_logits(logits)  # (bsz, response_length)
                         else:
                             entropy = torch.utils.checkpoint.checkpoint(verl_F.entropy_from_logits, logits)
+
+                if response_length < original_response_length:
+                    padding = (0, original_response_length - response_length)
+                    log_probs = torch.nn.functional.pad(log_probs, padding)
+                    if entropy is not None:
+                        entropy = torch.nn.functional.pad(entropy, padding)
 
             return entropy, log_probs
 

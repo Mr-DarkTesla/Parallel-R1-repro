@@ -29,6 +29,7 @@ actor_rollout_ref:
     use_dynamic_bsz: false
     use_kl_loss: false
     use_torch_compile: false
+    trim_parallel_padding: true
     fsdp_config:
       param_offload: false
       optimizer_offload: false
