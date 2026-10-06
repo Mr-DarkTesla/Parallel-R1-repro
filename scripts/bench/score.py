@@ -84,6 +84,7 @@ for source, group in frame.groupby("source"):
         "accuracy": round(100 * group["acc"].mean(), 2),
         **({"accuracy_robust": round(100 * group["acc_robust"].mean(), 2)} if "acc_robust" in group else {}),
         f"pass@{per_problem.size().iloc[0]}": round(100 * per_problem.max().mean(), 2),
+        **({f"pass_robust@{per_problem.size().iloc[0]}": round(100 * group.groupby("problem")["acc_robust"].max().mean(), 2)} if "acc_robust" in group else {}),
         "problems": int(per_problem.ngroups),
         "with_parallel": round(100 * group["parallel"].mean(), 1),
         "valid_tagged_responses": round(100 * (tagged["tags"] == tagged["correct_tags"]).mean(), 1) if len(tagged) else None,

@@ -13,7 +13,7 @@ for run in runs:
     for name in os.listdir(f"{root}/{run}"):
         results[run].update(json.load(open(f"{root}/{run}/{name}")))
 
-COLUMNS = ["accuracy", "accuracy_robust", "pass@16", "pass@4", "prompt_level_loose_acc", "inst_level_strict_acc", "with_parallel", "valid_tagged_responses",
+COLUMNS = ["accuracy", "accuracy_robust", "pass@16", "pass_robust@16", "pass@4", "pass_robust@4", "prompt_level_loose_acc", "inst_level_strict_acc", "with_parallel", "valid_tagged_responses",
            "no_final_answer", "truncated", "mean_chars"]
 for source in ["AIME24", "AIME25", "AMC23", "MATH300", "LIMO", "ARC", "MMLUPRO", "IFEVAL"]:
     rows = {run: result[source] for run, result in results.items() if source in result}
