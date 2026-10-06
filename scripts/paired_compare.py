@@ -12,6 +12,7 @@ import pandas as pd
 TESTS = {
     "apo": "data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet",
     "limo": "data_preprocess_scripts/data/limo/test.parquet",
+    "math300_x8": "data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/math300_x8.parquet",
 }
 
 

@@ -1,4 +1,5 @@
-"""Markdown comparison of experiments on every benchmark, from results/<name>/eval_apo.txt, eval_limo.txt, free_generation_tags.jsonl.
+"""Markdown comparison of experiments on every benchmark, from results/<name>/eval_apo.txt, eval_limo.txt, eval_math300_x8.txt
+and free_generation_tags.jsonl.
 
 Usage: python scripts/compare_runs.py <results_dir>...
 """
@@ -19,13 +20,18 @@ def read_table(path):
 
 runs = {os.path.basename(path.rstrip("/")): path for path in sys.argv[1:]}
 tables = {name: {**read_table(f"{path}/eval_apo.txt"), **read_table(f"{path}/eval_limo.txt")} for name, path in runs.items()}
-for source in ["APO_AIME24", "APO_AIME25", "APO_AMC23", "APO_MATH300", "APO_LIMO"]:
-    n = int(next(iter(tables.values()))[source]["n"])
+for name, path in runs.items():
+    if os.path.exists(f"{path}/eval_math300_x8.txt"):
+        tables[name]["APO_MATH300_x8"] = read_table(f"{path}/eval_math300_x8.txt")["APO_MATH300"]
+for source in ["APO_AIME24", "APO_AIME25", "APO_AMC23", "APO_MATH300", "APO_MATH300_x8", "APO_LIMO"]:
+    if not any(source in table for table in tables.values()):
+        continue
+    n = int(next(table for table in tables.values() if source in table)[source]["n"])
     print(f"\n### {source.removeprefix('APO_')} (x{n})\n")
     print("| run | " + " | ".join(f"{label}@{n}" if key in ("mean_acc", "pass_at_n") else label for key, label in COLUMNS.items()) + " |")
     print("|---" * (len(COLUMNS) + 1) + "|")
     for name, table in tables.items():
-        row = table[source]
+        row = table.get(source, {})
         print(f"| {name} | " + " | ".join(f"{row[key]:.1f}" if key in row else "—" for key in COLUMNS) + " |")
 
 print("\n### Free generation, final checkpoint: valid responses / correct tags\n")
