@@ -423,10 +423,10 @@ class vLLMAsyncRollout:
         socket_type = "ipc" if tensor_parallel_size <= local_world_size else "tcp"
 
         # File lock to prevent multiple workers listen to same port
-        with FileLock("/tmp/verl_vllm_zmq.lock"):
+        with FileLock(os.path.join(os.environ.get("TMPDIR", "/tmp"), "verl_vllm_zmq.lock")):
             if socket_type == "ipc":
                 pid = os.getpid()
-                address = f"ipc:///tmp/verl_vllm_zmq_{pid}.ipc"
+                address = "ipc://" + os.path.join(os.environ.get("TMPDIR", "/tmp"), f"verl_vllm_zmq_{pid}.ipc")
             else:
                 ip, port = self._get_free_port()
                 address = f"tcp://{ip}:{port}"
