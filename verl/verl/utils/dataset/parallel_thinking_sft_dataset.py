@@ -432,8 +432,6 @@ class ParallelThinkingSFTDataset(Dataset):
         # print(attention_mask)
         attention_mask = attention_mask.unsqueeze(0)
         # attention_mask = torch.cat((prompt_attention_mask, response_attention_mask), dim=-1)
-        float_attention_mask = torch.full_like(attention_mask, -torch.inf, dtype=torch.float)
-        float_attention_mask = float_attention_mask.masked_fill(attention_mask, 0.0)
 
         # The prompt mentions the tags in its instruction: only the response has parallel structure
         response_position_ids = self.compute_structured_position_ids(input_ids[prompt_length:])
@@ -452,8 +450,8 @@ class ParallelThinkingSFTDataset(Dataset):
 
         return {
             "input_ids": input_ids,
-            "attention_mask": float_attention_mask,
-            "bool_attention_mask": attention_mask,
+            # bool, 4x smaller than the float mask in host and shared memory; the trainer converts it on the GPU
+            "attention_mask": attention_mask,
             "position_ids": position_ids,
             "loss_mask": loss_mask,
             "length": torch.tensor(min(sequence_length, self.max_length)),

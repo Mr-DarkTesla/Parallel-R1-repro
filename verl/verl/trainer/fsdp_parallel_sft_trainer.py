@@ -312,6 +312,7 @@ class FSDPParallelThinkingSFTTrainer:
         # Move inputs to GPU and prepare loss mask
         input_ids = batch["input_ids"].to(self.device_name)
         attention_mask = batch["attention_mask"].to(self.device_name)
+        attention_mask = torch.zeros(attention_mask.shape, device=self.device_name).masked_fill(~attention_mask, -torch.inf)
         position_ids = batch["position_ids"].to(self.device_name)
         loss_mask = batch.pop("loss_mask")[:, :-1].to(self.device_name)
         loss_fct = nn.CrossEntropyLoss(reduction="none")

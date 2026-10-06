@@ -15,6 +15,9 @@ Base: upstream commit `f1c6389`.
 4. DataLoader `num_workers=2` instead of 8. With 8 workers the prefetched batches of float masks (up to ~3 GB per 128-sample batch)
    plus their pinned copies hit the pod memory limit of 122 GiB at the first epoch boundary (process killed with SIGKILL).
    Two workers are enough: a sample takes 0.04 s to build, a 128-sample batch ~5 s per worker, a training step ~6 s.
+5. The dataset returns the attention mask as bool; the trainer turns it into the same float mask (0 / -inf) on the GPU.
+   With 8192-token samples (exp12) a cropped 128-sample batch of float masks is ~30 GB and does not fit the 64 GiB `/dev/shm`
+   together with the prefetched batches; the bool mask is 4x smaller. The values passed to the model are unchanged.
 
 Verification:
 - CPU, tiny random Qwen3, authors' dataset class, 4 samples: same loss, max gradient difference 1.2e-7.
