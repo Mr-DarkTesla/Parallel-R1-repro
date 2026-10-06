@@ -7,7 +7,7 @@ import unittest
 class DecodeGraphTest(unittest.TestCase):
     def test_variable_batch_and_sleep(self):
         os.environ.update(VLLM_USE_V1='1', VLLM_ATTENTION_BACKEND='FLASH_ATTN',
-                          VLLM_ENABLE_V1_MULTIPROCESSING='0')
+                          VLLM_ENABLE_V1_MULTIPROCESSING='0', PARALLEL_R1_GRAPH_CAPTURE_MIN_USES='4')
         from vllm import LLM, SamplingParams
         from verl.workers.rollout.vllm_rollout.decode_graph import enable_decode_graph
 
@@ -38,6 +38,7 @@ class DecodeGraphTest(unittest.TestCase):
         stats = model.collective_rpc(lambda worker: worker.model_runner._decode_graph_stats)
         self.assertGreater(stats[0]['captures'], 1)
         self.assertGreater(stats[0]['replays'], stats[0]['captures'])
+        self.assertGreater(stats[0]['deferred_capture_calls'], 0)
         model.collective_rpc(lambda worker: delattr(worker.model_runner.model, 'forward'))
         del model
         import gc

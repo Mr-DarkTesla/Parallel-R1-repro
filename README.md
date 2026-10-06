@@ -102,6 +102,8 @@ On vLLM 0.8.5.post1, Qwen3 and rollout TP=1, full decode graphs can be enabled w
 `PARALLEL_R1_FULL_DECODE_GRAPH=1 VLLM_ATTENTION_BACKEND=FLASH_ATTN`.
 They retain the compiled kernels and exact batch shapes, check each new graph
 against the original forward, and use the existing path for prefill.
+Set `PARALLEL_R1_GRAPH_CAPTURE_MIN_USES=4` to run the first three occurrences of a
+new shape through the original forward before paying the capture cost (default: 1).
 Run `PARALLEL_R1_TEST_MODEL=/path/to/qwen3 python tests/test_vllm_decode_graph.py`
 with `PYTHONPATH=verl` for the GPU check, including variable batches and sleep/wake.
 The published S1/S2 scripts target Unseen-SFT. Use an Unseen checkpoint to reproduce

@@ -15,6 +15,10 @@ def enable_decode_graph(runner, check_replays=False):
 
     original = runner.model.forward
     graphs = {}
+    seen = {}
+    min_uses = int(os.getenv("PARALLEL_R1_GRAPH_CAPTURE_MIN_USES", "1"))
+    if min_uses < 1:
+        raise ValueError("PARALLEL_R1_GRAPH_CAPTURE_MIN_USES must be positive")
     pool = torch.cuda.graph_pool_handle()
     stats = {"captures": 0, "replays": 0}
     runner._decode_graph_stats = stats
@@ -35,6 +39,10 @@ def enable_decode_graph(runner, check_replays=False):
         context_bound = min(((int(metadata.max_seq_len) + 63) // 64) * 64, runner.max_model_len)
         key = (count, size, context_bound)
         if key not in graphs:
+            seen[key] = seen.get(key, 0) + 1
+            if seen[key] < min_uses:
+                stats["deferred_capture_calls"] = stats.get("deferred_capture_calls", 0) + 1
+                return original(*args, **kwargs)
             static = copy.copy(metadata)
             static.max_seq_len = context_bound
             static.query_start_loc = metadata.query_start_loc.clone()
