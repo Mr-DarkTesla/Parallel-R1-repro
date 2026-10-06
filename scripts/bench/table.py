@@ -7,7 +7,7 @@ import os
 import sys
 
 root = sys.argv[1]
-runs = sorted(os.listdir(root))
+runs = sorted(name for name in os.listdir(root) if os.path.isdir(f"{root}/{name}"))
 results = {run: {} for run in runs}
 for run in runs:
     for name in os.listdir(f"{root}/{run}"):
