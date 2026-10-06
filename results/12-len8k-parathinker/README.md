@@ -1,8 +1,8 @@
 # 12: GSM8K + ParaThinker в SFT, лимиты 8192
 
-Отличие от 11: к 5910 примерам GSM8K добавлены 1633 примера из ParaThinker (`Leslie04/parathinker-math-6K`), микробатч 2 вместо 4,
+Отличие от 11: к 5910 примерам GSM8K добавлены 1633 примера из ParaThinker (`Leslie04/parathinker-math-6K`), микробатч 1 вместо 4 (с микробатчем 2 первый шаг упал с CUDA OOM на fp32 cross-entropy),
 маска внимания передаётся из датасета как bool и превращается в float на GPU (`docs/changes.md`, п. 5).
-Запуск: `bash scripts/run_experiment.sh 12-len8k-parathinker data.train_files=/work/assets/parathinker/train_mix.parquet data.micro_batch_size_per_gpu=2`.
+Запуск: `bash scripts/run_experiment.sh 12-len8k-parathinker data.train_files=/work/assets/parathinker/train_mix.parquet data.micro_batch_size_per_gpu=1`.
 
 Данные (`scripts/make_parathinker_sft.py`). Пример ParaThinker — 2-6 независимых полных решений задачи и шаблонный summary с ответом.
 Берём два самых коротких законченных решения с ответом summary и пишем один блок в начале ответа:
