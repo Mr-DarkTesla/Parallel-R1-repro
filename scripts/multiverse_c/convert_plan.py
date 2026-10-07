@@ -133,29 +133,51 @@ def apply_edits(units, edits, allowed):
     return units, skipped
 
 
-# Block filter (independent review multiverse_c2_review): drop blocks with skipped edits, trivial or unbalanced paths, small
-# saving, or a path 2..k that opens like a continuation of its sibling; at most one re-check block after the answer appears.
-MIN_PATH_CHARS = 200  # ~60 Qwen3 tokens: no one-line paths (calibrated on the 10 reviewed samples)
+# Block filter (independent reviews multiverse_c2_review, multiverse_c2_review2): drop blocks with skipped edits, trivial or
+# unbalanced paths, small saving, or a path 2..k that opens like a continuation of its sibling (any connective at its start,
+# strong sibling markers at later paragraph starts within 600 chars; Qwen's own "But/Then/So" inside a path are not flagged); at most one
+# re-check block after the answer is stated, with substantial paths; a trace without any block before the answer keeps no blocks.
+MIN_PATH_CHARS = 200  # ~60 Qwen3 tokens: no one-line paths
 MIN_RATIO = 0.1  # shortest / longest path
-MIN_SAVED_CHARS = 200  # sum of paths minus the longest; good reviewed blocks saved 256-2800 chars
+MIN_SAVED_CHARS = 300  # ~90 tokens, sum of paths minus the longest (review 2 asked 400; 300 keeps 2 more good blocks, still drops 228/248)
+MIN_CHECK_PATH_CHARS = 400  # re-check blocks: every path >= 400 chars and >= 2 lines with a computation
+SCAN_CHARS = 600  # paragraph starts of paths 2..k scanned within their first 600 chars
 SIBLING_START = re.compile(r"^\s*(?:\d+(?:\.\d+)*:\s*)?(?:similarly|again|as before|as above|therefore|thus|hence|likewise|but|"
                            r"however|alternatively|also|next|then|in the same way|the other)\b", re.I)
-SIBLING_NEAR = re.compile(r"\b(?:the other (?:case|path|one|method|approach)|as before|as above|earlier|previous(?:ly)?)\b", re.I)
+SIBLING_PARA = re.compile(r"^\s*(?:similarly|again|as before|as above|likewise|in the same way|the other)\b", re.I)
+SIBLING_NEAR = re.compile(r"\b(?:the other (?:case|path|one|method|approach))\b", re.I)  # "earlier"/"previous" mostly mean pre-block text
+
+
+def norm_math(t):
+    """Normalize answers and text for matching: thousands separators, spaces, $, \\dfrac/\\frac{a}{b} -> a/b, \\pi -> π."""
+    t = t.replace("\\approx", "≈").replace("\\dfrac", "\\frac").replace("\\tfrac", "\\frac").replace("\\pi", "π").replace("$", "")
+    t = re.sub(r"\\frac\{([^{}]*)\}\{([^{}]*)\}", r"(\1)/(\2)", t)
+    t = re.sub(r"(?<=\d),(?=\d{3}\b)", "", t)
+    t = re.sub(r"\((\w+|π)\)", r"\1", t)
+    return re.sub(r"\s+", "", t)
 
 
 def answer_unit(units, cand):
-    """1-based index of the first paragraph that states the final candidate as a result (e.g. "= 59", "is 59"), else None."""
-    cand = (cand or "").strip()
-    if not cand or len(cand) > 30:
+    """1-based index of the first paragraph that states the final candidate as a result, else None.
+
+    Matches only result statements ("answer/result/total/sum/so/therefore/thus ... is/= CAND", "\\boxed{CAND}") with the value
+    at the end of the expression (not inside arithmetic such as "87 ÷ 3 = 29 ..." continuing with an operator)."""
+    c = norm_math(cand or "")
+    if not c or len(c) > 30:
         return None
-    pat = re.compile(r"(?:=|\bis\b|\bbe\b|\bget\b|\bgives?\b|\bequals?\b|boxed\{)\s*\$?\s*" + re.escape(cand) + r"(?!\d|\.\d)")
+    lead = re.compile(r"(?i)(answer|result|total|sum|final|therefore|thus|so|hence)")
     for i, u in enumerate(units, 1):
-        if pat.search(u):
-            return i
+        for sent in re.split(r"(?<=[.!?])\s+|\n", u):
+            n = norm_math(sent)
+            if "boxed{" + c + "}" in n:
+                return i
+            m = re.search(r"(?:=|≈|is|be|equals?|about|approximately|:)" + re.escape(c) + r"(?!\d|\.\d|[/^*+×÷-])", n)
+            if m and lead.search(sent):
+                return i
     return None
 
 
-def block_defects(blk, units, seps, skipped_units, top):
+def block_defects(blk, units, seps, skipped_units, top, is_check=False):
     def text(a, b):
         return "".join(units[i] + (seps[i] if i < b - 1 else "") for i in range(a - 1, b))
 
@@ -170,8 +192,14 @@ def block_defects(blk, units, seps, skipped_units, top):
         out.append("unbalanced")
     if top and sum(lens) - max(lens) < MIN_SAVED_CHARS:
         out.append("small_saving")
-    if any(SIBLING_START.search(t) or SIBLING_NEAR.search(t[:200]) for t in texts[1:]):
-        out.append("sibling_start")
+    if is_check and any(n < MIN_CHECK_PATH_CHARS or sum(bool(re.search(r"\d|=", ln)) for ln in t.splitlines()) < 2
+                        for t, n in zip(texts, lens)):
+        out.append("weak_check")
+    for p, t in zip(blk["paths"][1:], texts[1:]):
+        starts = [m.end() for m in re.finditer(r"\n\s*\n", t) if m.end() < SCAN_CHARS]  # later paragraph starts
+        if SIBLING_START.search(t) or any(SIBLING_PARA.search(t[s:s + 40]) for s in starts) or SIBLING_NEAR.search(t[:SCAN_CHARS]):
+            out.append("sibling_start")
+            break
     return out
 
 
@@ -186,8 +214,8 @@ def select_blocks(blocks, units, seps, skipped, ans_unit):
                 if d:
                     decisions.append({"range": p["inner"]["range"], "inner": True, "dropped": d})
                     p["inner"] = None
-        d = block_defects(blk, units, seps, skipped_units, top=True)
         is_check = ans_unit is not None and blk["range"][0] > ans_unit
+        d = block_defects(blk, units, seps, skipped_units, top=True, is_check=is_check)
         decisions.append({"range": blk["range"], "check": is_check, "dropped": d})
         if not d:
             (checks_ok if is_check else good).append(blk)
@@ -197,6 +225,11 @@ def select_blocks(blocks, units, seps, skipped, ans_unit):
             if dcs.get("check") and not dcs["dropped"] and dcs["range"] != best["range"]:
                 dcs["dropped"] = ["extra_check_block"]
         good.append(best)
+    if checks_ok and len(good) == 1:  # only a re-check block: the trace teaches branching just to re-check, keep it sequential
+        for dcs in decisions:
+            if dcs.get("check") and not dcs["dropped"]:
+                dcs["dropped"] = ["only_check_blocks"]
+        good = []
     return sorted(good, key=lambda b: b["range"][0]), decisions
 
 
