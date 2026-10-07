@@ -120,18 +120,28 @@ EOF
     elif [ "$mode" = parallel ]; then
         generations=$run/$bench/generations/0.jsonl
         bash ../scripts/bench/eval_rollout.sh "$model" "$run/$bench" "$test" "$budget" >> "$log" 2>&1
-        grep -q "Parallel rollout chat template kwargs: {'enable_thinking': False}" "$log" || { echo "rollout template not non-thinking: $log"; exit 1; }
+        # every AgentLoopWorker must log the non-thinking kwargs; none may log others ({} = env unset). The mismatches are collected
+        # first: a negated `grep | grep -q` pipeline can pass under pipefail when the first grep gets SIGPIPE.
+        other=$(grep "Parallel rollout chat template kwargs:" "$log" | grep -vF "{'enable_thinking': False}" || true)
+        grep -q "Parallel rollout chat template kwargs: {'enable_thinking': False}" "$log" && [ -z "$other" ] \
+            || { echo "rollout template not non-thinking: $log"; exit 1; }
     else
         generations=$run/$bench.jsonl
         python "../$generator" "$model" "$test" "$generations" "$budget" "$mode" >> "$log" 2>&1
     fi
-    # the dumped prompts must be rendered in the requested mode (empty think block = non-thinking template)
+    # the dumped prompts must be rendered in the requested mode (empty think block = non-thinking template).
+    # parallel: the dump's input is RLHFDataset's default-template prompt (ray_trainer._validate decodes the dataset input_ids
+    # before the rollout), not the agent-loop prompt; that one is gated by the Ray-log check above. Here: no output opens a think block.
     python - "$generations" "$mode" <<'EOF'
 import sys
 import pandas as pd
-inputs, mode = pd.read_json(sys.argv[1], lines=True)["input"], sys.argv[2]
-empty_think = inputs.str.contains("<think>\n\n</think>", regex=False)
-assert (empty_think if mode != "thinking" else ~empty_think).all(), f"{(~empty_think).sum()} prompts without an empty think block ({mode})"
+dump, mode = pd.read_json(sys.argv[1], lines=True), sys.argv[2]
+if mode == "parallel":
+    thinking = dump["output"].str.contains("<think>", regex=False)
+    assert not thinking.any(), f"{thinking.sum()} parallel outputs with a think block"
+else:
+    empty_think = dump["input"].str.contains("<think>\n\n</think>", regex=False)
+    assert (empty_think if mode != "thinking" else ~empty_think).all(), f"{(~empty_think).sum()} prompts without an empty think block ({mode})"
 EOF
     python ../scripts/bench/score.py "$generations" "$test" "$run/results/$bench.json.tmp" "$run/rows/$bench.jsonl.tmp" >> "$log" 2>&1
     mv "$run/results/$bench.json.tmp" "$run/results/$bench.json"
