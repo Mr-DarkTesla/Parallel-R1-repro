@@ -802,7 +802,9 @@ class ActorRolloutRefWorker(Worker, DistProfilerExtension):
         # https://pytorch.org/docs/stable/notes/fsdp.html#fsdp-notes
         # unshard the root FSDP module
         if self.world_size > 1 and fsdp_version(self.actor.actor_module) == 1:
-            self.actor.actor_module._handle.reshard(True)
+            handle = self.actor.actor_module._handle
+            if handle is not None and handle.uses_sharded_strategy:
+                handle.reshard(True)
 
         if self._is_offload_param:
             offload_fsdp_model_to_cpu(self.actor_module_fsdp)
@@ -842,7 +844,9 @@ class ActorRolloutRefWorker(Worker, DistProfilerExtension):
         # https://pytorch.org/docs/stable/notes/fsdp.html#fsdp-notes
         # unshard the root FSDP module
         if self.world_size > 1 and fsdp_version(self.ref_policy.actor_module) == 1:
-            self.ref_policy.actor_module._handle.reshard(True)
+            handle = self.ref_policy.actor_module._handle
+            if handle is not None and handle.uses_sharded_strategy:
+                handle.reshard(True)
 
         return output
 
@@ -1646,7 +1650,9 @@ class RewardModelWorker(Worker, DistProfilerExtension):
         # https://pytorch.org/docs/stable/notes/fsdp.html#fsdp-notes
         # unshard the root FSDP module
         if self.world_size > 1 and fsdp_version(self.reward_module) == 1:
-            self.reward_module._handle.reshard(True)
+            handle = self.reward_module._handle
+            if handle is not None and handle.uses_sharded_strategy:
+                handle.reshard(True)
 
         output = output.to("cpu")
         return output
