@@ -24,11 +24,24 @@ spec:
         args:
         - |
           set -euo pipefail
+          for q in /source/queue/gpu*.txt; do echo "SOURCE $q lines=$(grep -c . "$q" || true)"; cat "$q"; done
+          # Plain cp was OOMKilled at the 32Gi limit twice, even with periodic sync: big files bypass the page cache,
+          # small ones go through tar with periodic sync; memory.stat is logged for diagnosis.
+          mem=/sys/fs/cgroup/memory.stat; [ -f $mem ] || mem=/sys/fs/cgroup/memory/memory.stat
+          (i=0; while sleep 5; do sync -f /work; i=$((i+1)); [ $((i % 6)) = 0 ] && echo "MEM $(date +%T) $(grep -E '^(anon|file|file_dirty|file_writeback|kernel|slab|sock|rss|cache|dirty|writeback) ' $mem | tr '\n' ' ')"; done) &
+          monitor=$!
           for dir in assets venv bench_data; do
             echo "COPY $dir $(date -Iseconds)"
             mkdir -p "/work/$dir"
-            cp -a "/source/$dir/." "/work/$dir/"
+            (cd "/source/$dir" && find . \( ! -type f -o -size -65536k \) -print0 | tar --null --no-recursion -T - -cf -) | tar -C "/work/$dir" -xpf -
+            (cd "/source/$dir" && find . -type f -size +65535k -print0) | while IFS= read -r -d '' f; do
+              echo "BIG $dir/$f $(stat -c %s "/source/$dir/$f") $(date +%T)"
+              dd if="/source/$dir/$f" of="/work/$dir/$f" bs=64M iflag=direct oflag=direct status=none
+              touch -r "/source/$dir/$f" "/work/$dir/$f"
+              chmod --reference="/source/$dir/$f" "/work/$dir/$f"
+            done
           done
+          kill $monitor
           echo "COPY frozen source commits $(date -Iseconds)"
           git init -q /work/parallel-r1
           git -C /work/parallel-r1 fetch /source/parallel-r1 '+refs/heads/*:refs/heads/*'
