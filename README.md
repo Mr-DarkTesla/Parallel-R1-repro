@@ -1,6 +1,53 @@
 
 # **Parallel-R1**
-The official repository for "**Parallel-R1: Towards Parallel Thinking via Reinforcement Learning**".
+This fork adapts the code for "**Parallel-R1: Towards Parallel Thinking via Reinforcement Learning**"
+to Qwen3-0.6B. The upstream project description and published results follow below.
+
+## What this branch adds
+
+`sft-eval-adaptation` contains the reusable SFT, evaluation and RL implementation
+relative to upstream `main` (`f1c6389`). Its main entry point is
+[`scripts/qwen3.sh`](scripts/qwen3.sh); stage settings live in
+[`verl/verl/trainer/config`](verl/verl/trainer/config).
+
+- **Qwen3-0.6B SFT:** preparation and explicit initialization of six control
+  tokens, Seen/Unseen profiles, response-only structured masks and positions,
+  corrected gradient accumulation, equal response weighting, complete validation
+  without counting sampler duplicates, and BF16 HF checkpoint export.
+- **Checkpoint evaluation:** validation-only launcher, a shared total response
+  budget across paths and summary, empty-generation handling, observed `pass@N`,
+  separate tag-format diagnostics, and per-response JSONL output.
+- **S1/S2 RL:** a common launcher, author batch/loss defaults and S2 reward
+  schedule, local rollout/GRPO telemetry, optional forward probes, atomic
+  checkpoint tracking, and checkpoint saving before lengthy validation.
+- **Performance controls:** padding and unused prompt-logit trimming, token-only
+  final vLLM outputs, optional microbatch scheduling and deferred gradient sync,
+  configurable FSDP sharding, guarded zero-advantage skipping, and opt-in full
+  decode graphs. The detailed conditions and memory tradeoffs are documented below.
+- **Regression checks:** CPU tests for generation, PPO loss/gradients, ordering,
+  sharding guards and S2 rewards, plus optional CUDA checks for fused kernels
+  and decode graphs.
+
+The published 4B results below are upstream results, not measurements of this
+0.6B adaptation. Unseen generation still differs from training in its attention
+mask/positions, and RL still includes runtime-inserted tags in its loss. The
+bounded response budget also changes the original rollout protocol. This branch
+does not establish paper-level reproduction or a quality improvement.
+
+### Checking the branch
+
+From the repository root, in a Python environment with PyTorch 2.6.0 and
+Transformers 4.53.2:
+
+```bash
+python -m unittest discover -s tests -v
+git diff --check origin/main...HEAD
+```
+
+On CPU, the fused-kernel and decode-graph checks are skipped. The CUDA fused test
+also requires the training dependencies and `PYTHONPATH=verl`. For the full decode
+graph test, set `PARALLEL_R1_TEST_MODEL` to a local Qwen3 checkpoint as described
+below. CPU checks do not validate distributed FSDP execution or GPU performance.
 
 ## **Updates**
 * **2026-1-26**: 🎉Parallel-R1 was accepted at ICLR2026.
@@ -90,10 +137,11 @@ Arguments after the stage/model are ordinary Hydra overrides. All stages use
 The existing SFT/eval launchers remain available. SFT/eval default to 8 GPUs;
 the RL profile defaults to 1 A100 80 GB. Select the count explicitly when switching stages.
 
-RL uses `rl_qwen3_06b.yaml`: batch 32, rollout n=8, microbatch 4, LR 1e-6,
+RL uses `rl_qwen3_06b.yaml`: batch 256, PPO minibatch 128, rollout n=8,
+microbatch 2 per GPU, token-mean loss, LR 1e-6,
 300 steps, save/validation every 10 steps, offline W&B and rollout telemetry.
 It uses CUDA graphs and trims padding while retaining the parallel attention mask.
-Microbatches are grouped by length and the loss keeps the original equal weight per response.
+Length sorting is disabled by default to preserve the original PPO microbatch groups.
 Activation checkpointing is disabled for A100 80 GB. For an 8-GPU run, use
 `NPROC_PER_NODE=8` with overrides `ray_init.num_cpus=32 actor_rollout_ref.rollout.agent.num_workers=8`.
 Per-token forward counting is opt-in: set `PARALLEL_R1_FORWARD_PROBE=1` and
@@ -111,7 +159,6 @@ that setup; the launcher accepts any checkpoint and does not infer its SFT mode.
 S1 and S2 start independently from the same SFT. Existing repository Parquets
 have identical questions/order (17,917 train, 1,916 validation); only the S2
 train reward differs. Validation always uses accuracy. No dataset copying is needed.
-The Qwen RL profile retains batch256, mini128, micro2 and token-mean loss.
 S2 uses the author's reward: eight accuracy-only steps, followed by two steps
 where a correct, well-formed parallel answer receives +1.2 (plain correct: +1;
 incorrect or malformed parallel: -1). Start S2 from Unseen-SFT with a new run name.
