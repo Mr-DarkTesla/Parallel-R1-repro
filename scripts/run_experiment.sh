@@ -13,6 +13,11 @@ case "$name" in
         export RUN_NAME=$name
         exec bash "$repo/scripts/instruct4b/sft.sh" "$@"
         ;;
+    20-tagfix)
+        # 14-filtered recipe + 100x learning rate for the 6 tag-token embedding rows (results/20-instruct4b-tagfix/recipe.md)
+        export RUN_NAME=$name
+        exec bash "$repo/scripts/instruct4b/sft.sh" optim.tag_lr_mult=100 "$@"
+        ;;
 esac
 run=/work/runs/$name
 data=$repo/verl/data_preprocess_scripts/data
