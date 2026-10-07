@@ -5,7 +5,7 @@ defaults:
 data:
   train_files: data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_${oc.env:PARALLEL_R1_RL_REWARD}/train.parquet
   val_files: data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet
-  train_batch_size: 32
+  train_batch_size: 256
   return_raw_chat: true
   max_prompt_length: 2000
   max_response_length: 3000
@@ -24,11 +24,11 @@ actor_rollout_ref:
     optim:
       lr: 1e-6
     clip_ratio_high: 0.28
-    ppo_mini_batch_size: 32
-    ppo_micro_batch_size_per_gpu: 4
-    # Preserve the equal per-response weighting of microbatch 1.
-    loss_agg_mode: seq-mean-token-mean
-    sort_microbatches_by_length: true
+    ppo_mini_batch_size: 128
+    ppo_micro_batch_size_per_gpu: 2
+    # Keep the published PPO microbatch groups and token-mean objective.
+    loss_agg_mode: token-mean
+    sort_microbatches_by_length: false
     use_dynamic_bsz: false
     use_kl_loss: false
     use_torch_compile: false
