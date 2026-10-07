@@ -1,0 +1,12 @@
+14f log: /tmp/matrix_logcheck.sh: line 4: syntax error near unexpected token `else'
+15r log: /tmp/matrix_logcheck.sh: line 4: syntax error near unexpected token `else'
+log + {} line: rollout template not non-thinking: /tmp/matrix_bad.log
+log without kwargs line: rollout template not non-thinking: /tmp/matrix_bad.log
+14f par dump: PASS 15r par dump: PASS
+par dump with <think>: FAIL
+nothink dump: PASS think dump: PASS nothink dump as thinking: FAIL
+14f log: PASS
+15r log: PASS
+log + {} line: rollout template not non-thinking: /tmp/matrix_bad.log
+log with True: rollout template not non-thinking: /tmp/matrix_bad.log
+log without kwargs line: rollout template not non-thinking: /tmp/matrix_bad.log

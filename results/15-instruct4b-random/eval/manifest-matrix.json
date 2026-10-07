@@ -1,0 +1,399 @@
+{
+ "14f-dev-nothink": {
+  "remote": "B:/work/bench/instruct4b/14f-dev-nothink",
+  "meta": {
+   "model": "/work/runs/14-filtered/model",
+   "suite": "dev",
+   "mode": "no-thinking",
+   "budget": 16384,
+   "temperature": 1.0,
+   "top_p": 1.0,
+   "generator": "scripts/instruct4b_eval/generate.py",
+   "prompts": "/work/bench_data/instruct4b/eval/dev/plain",
+   "reused_from": null,
+   "ifeval_scorer_seed": 0,
+   "seeds": "sample index",
+   "commit": "baad65206897c8c77a75ddf7d5721ae4bc61c1ab"
+  },
+  "benchmarks": {
+   "arc_dev": {
+    "rows": 1196,
+    "unique_problem_ids": 299,
+    "first_ids": [
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695"
+    ],
+    "sources": [
+     "ARC"
+    ]
+   },
+   "gsm8k_dev": {
+    "rows": 1184,
+    "unique_problem_ids": 296,
+    "first_ids": [
+     "gsm8k-train/43",
+     "gsm8k-train/43",
+     "gsm8k-train/43"
+    ],
+    "sources": [
+     "GSM8K_DEV"
+    ]
+   },
+   "math_dev": {
+    "rows": 964,
+    "unique_problem_ids": 482,
+    "first_ids": [
+     "math-test/9",
+     "math-test/9",
+     "math-test/29"
+    ],
+    "sources": [
+     "MATH_DEV"
+    ]
+   },
+   "mmlu_pro_dev": {
+    "rows": 999,
+    "unique_problem_ids": 999,
+    "first_ids": [
+     "mmlu-pro/89",
+     "mmlu-pro/100",
+     "mmlu-pro/123"
+    ],
+    "sources": [
+     "MMLUPRO"
+    ]
+   }
+  }
+ },
+ "14f-dev-par": {
+  "remote": "B:/work/bench/instruct4b/14f-dev-par",
+  "meta": {
+   "model": "/work/runs/14-filtered/model",
+   "suite": "dev",
+   "mode": "parallel",
+   "budget": 16384,
+   "temperature": 1.0,
+   "top_p": 1.0,
+   "generator": "scripts/bench/eval_rollout.sh",
+   "prompts": "/work/bench_data/instruct4b/eval/dev/parallel",
+   "reused_from": null,
+   "ifeval_scorer_seed": 0,
+   "seeds": "unseeded",
+   "commit": "9227d52164f5c27249344d1e1ed6dbdc2fc85a11"
+  },
+  "benchmarks": {
+   "gsm8k_dev": {
+    "rows": 1184,
+    "unique_problem_ids": 296,
+    "first_ids": [
+     "gsm8k-train/43",
+     "gsm8k-train/43",
+     "gsm8k-train/43"
+    ],
+    "sources": [
+     "GSM8K_DEV"
+    ]
+   },
+   "math_dev": {
+    "rows": 964,
+    "unique_problem_ids": 482,
+    "first_ids": [
+     "math-test/9",
+     "math-test/9",
+     "math-test/29"
+    ],
+    "sources": [
+     "MATH_DEV"
+    ]
+   }
+  }
+ },
+ "14f-dev-think": {
+  "remote": "B:/work/bench/instruct4b/14f-dev-think",
+  "meta": {
+   "model": "/work/runs/14-filtered/model",
+   "suite": "dev",
+   "mode": "thinking",
+   "budget": 16384,
+   "temperature": 1.0,
+   "top_p": 1.0,
+   "generator": "scripts/instruct4b_eval/generate.py",
+   "prompts": "/work/bench_data/instruct4b/eval/dev/plain",
+   "reused_from": null,
+   "ifeval_scorer_seed": 0,
+   "seeds": "sample index",
+   "commit": "baad65206897c8c77a75ddf7d5721ae4bc61c1ab"
+  },
+  "benchmarks": {
+   "arc_dev": {
+    "rows": 1196,
+    "unique_problem_ids": 299,
+    "first_ids": [
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695"
+    ],
+    "sources": [
+     "ARC"
+    ]
+   },
+   "gsm8k_dev": {
+    "rows": 1184,
+    "unique_problem_ids": 296,
+    "first_ids": [
+     "gsm8k-train/43",
+     "gsm8k-train/43",
+     "gsm8k-train/43"
+    ],
+    "sources": [
+     "GSM8K_DEV"
+    ]
+   },
+   "math_dev": {
+    "rows": 964,
+    "unique_problem_ids": 482,
+    "first_ids": [
+     "math-test/9",
+     "math-test/9",
+     "math-test/29"
+    ],
+    "sources": [
+     "MATH_DEV"
+    ]
+   },
+   "mmlu_pro_dev": {
+    "rows": 999,
+    "unique_problem_ids": 999,
+    "first_ids": [
+     "mmlu-pro/89",
+     "mmlu-pro/100",
+     "mmlu-pro/123"
+    ],
+    "sources": [
+     "MMLUPRO"
+    ]
+   }
+  }
+ },
+ "15r-dev-nothink": {
+  "remote": "B:/work/bench/instruct4b/15r-dev-nothink",
+  "meta": {
+   "model": "/work/runs/15-random-control/model",
+   "suite": "dev",
+   "mode": "no-thinking",
+   "budget": 16384,
+   "temperature": 1.0,
+   "top_p": 1.0,
+   "generator": "scripts/instruct4b_eval/generate.py",
+   "prompts": "/work/bench_data/instruct4b/eval/dev/plain",
+   "reused_from": null,
+   "ifeval_scorer_seed": 0,
+   "seeds": "sample index",
+   "commit": "dbe704be475ab4f69a4e420308b62cd0e415fb35"
+  },
+  "benchmarks": {
+   "arc_dev": {
+    "rows": 1196,
+    "unique_problem_ids": 299,
+    "first_ids": [
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695"
+    ],
+    "sources": [
+     "ARC"
+    ]
+   },
+   "gsm8k_dev": {
+    "rows": 1184,
+    "unique_problem_ids": 296,
+    "first_ids": [
+     "gsm8k-train/43",
+     "gsm8k-train/43",
+     "gsm8k-train/43"
+    ],
+    "sources": [
+     "GSM8K_DEV"
+    ]
+   },
+   "math_dev": {
+    "rows": 964,
+    "unique_problem_ids": 482,
+    "first_ids": [
+     "math-test/9",
+     "math-test/9",
+     "math-test/29"
+    ],
+    "sources": [
+     "MATH_DEV"
+    ]
+   },
+   "mmlu_pro_dev": {
+    "rows": 999,
+    "unique_problem_ids": 999,
+    "first_ids": [
+     "mmlu-pro/89",
+     "mmlu-pro/100",
+     "mmlu-pro/123"
+    ],
+    "sources": [
+     "MMLUPRO"
+    ]
+   }
+  }
+ },
+ "15r-dev-par": {
+  "remote": "B:/work/bench/instruct4b/15r-dev-par",
+  "meta": {
+   "model": "/work/runs/15-random-control/model",
+   "suite": "dev",
+   "mode": "parallel",
+   "budget": 16384,
+   "temperature": 1.0,
+   "top_p": 1.0,
+   "generator": "scripts/bench/eval_rollout.sh",
+   "prompts": "/work/bench_data/instruct4b/eval/dev/parallel",
+   "reused_from": null,
+   "ifeval_scorer_seed": 0,
+   "seeds": "unseeded",
+   "commit": "c4a9c979bfb1479f807755b40dc5c3c683d3d91d"
+  },
+  "benchmarks": {
+   "gsm8k_dev": {
+    "rows": 1184,
+    "unique_problem_ids": 296,
+    "first_ids": [
+     "gsm8k-train/43",
+     "gsm8k-train/43",
+     "gsm8k-train/43"
+    ],
+    "sources": [
+     "GSM8K_DEV"
+    ]
+   },
+   "math_dev": {
+    "rows": 964,
+    "unique_problem_ids": 482,
+    "first_ids": [
+     "math-test/9",
+     "math-test/9",
+     "math-test/29"
+    ],
+    "sources": [
+     "MATH_DEV"
+    ]
+   }
+  }
+ },
+ "15r-dev-think": {
+  "remote": "B:/work/bench/instruct4b/15r-dev-think",
+  "meta": {
+   "model": "/work/runs/15-random-control/model",
+   "suite": "dev",
+   "mode": "thinking",
+   "budget": 16384,
+   "temperature": 1.0,
+   "top_p": 1.0,
+   "generator": "scripts/instruct4b_eval/generate.py",
+   "prompts": "/work/bench_data/instruct4b/eval/dev/plain",
+   "reused_from": null,
+   "ifeval_scorer_seed": 0,
+   "seeds": "sample index",
+   "commit": "dbe704be475ab4f69a4e420308b62cd0e415fb35"
+  },
+  "benchmarks": {
+   "arc_dev": {
+    "rows": 1196,
+    "unique_problem_ids": 299,
+    "first_ids": [
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695",
+     "arc-val/Mercury_SC_407695"
+    ],
+    "sources": [
+     "ARC"
+    ]
+   },
+   "gsm8k_dev": {
+    "rows": 1184,
+    "unique_problem_ids": 296,
+    "first_ids": [
+     "gsm8k-train/43",
+     "gsm8k-train/43",
+     "gsm8k-train/43"
+    ],
+    "sources": [
+     "GSM8K_DEV"
+    ]
+   },
+   "math_dev": {
+    "rows": 964,
+    "unique_problem_ids": 482,
+    "first_ids": [
+     "math-test/9",
+     "math-test/9",
+     "math-test/29"
+    ],
+    "sources": [
+     "MATH_DEV"
+    ]
+   },
+   "mmlu_pro_dev": {
+    "rows": 999,
+    "unique_problem_ids": 999,
+    "first_ids": [
+     "mmlu-pro/89",
+     "mmlu-pro/100",
+     "mmlu-pro/123"
+    ],
+    "sources": [
+     "MMLUPRO"
+    ]
+   }
+  }
+ },
+ "prep-dev-par": {
+  "remote": "B:/work/bench/instruct4b/prep-dev-par",
+  "meta": {
+   "model": "/work/assets/models/Qwen3-4B-instruct-add-special-token",
+   "suite": "dev",
+   "mode": "parallel",
+   "budget": 16384,
+   "temperature": 1.0,
+   "top_p": 1.0,
+   "generator": "scripts/bench/eval_rollout.sh",
+   "prompts": "/work/bench_data/instruct4b/eval/dev/parallel",
+   "reused_from": null,
+   "ifeval_scorer_seed": 0,
+   "seeds": "unseeded",
+   "commit": "4a778440ae33d7f72b9761fd484af22dcbaf73e8"
+  },
+  "benchmarks": {
+   "gsm8k_dev": {
+    "rows": 1184,
+    "unique_problem_ids": 296,
+    "first_ids": [
+     "gsm8k-train/43",
+     "gsm8k-train/43",
+     "gsm8k-train/43"
+    ],
+    "sources": [
+     "GSM8K_DEV"
+    ]
+   },
+   "math_dev": {
+    "rows": 964,
+    "unique_problem_ids": 482,
+    "first_ids": [
+     "math-test/9",
+     "math-test/9",
+     "math-test/29"
+    ],
+    "sources": [
+     "MATH_DEV"
+    ]
+   }
+  }
+ }
+}

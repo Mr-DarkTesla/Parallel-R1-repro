@@ -1,0 +1,690 @@
+{
+ "base": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/13-control-dev-nothink",
+ "cands": [
+  "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-nothink"
+ ],
+ "protocol": {
+  "suite": "dev",
+  "mode": "no-thinking",
+  "budget": 16384,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "generator": "scripts/instruct4b_eval/generate.py",
+  "prompts": "/work/bench_data/instruct4b/eval/dev/plain",
+  "ifeval_scorer_seed": 0
+ },
+ "cross_prompt": false,
+ "proposed_margin_pp": 2.0,
+ "margin_note": "working proposal, not confirmed by the user; applies per benchmark/source",
+ "benchmarks": {
+  "arc_dev": {
+   "samples_per_problem": {
+    "ARC": 4
+   },
+   "metrics": {
+    "15r-dev-nothink": {
+     "acc_robust": {
+      "base": 89.88,
+      "cand": 88.8,
+      "delta": -1.09,
+      "ci95": [
+       -2.84,
+       0.59
+      ],
+      "problems": 299,
+      "discordant_problems": 22.4
+     },
+     "acc": {
+      "base": 89.88,
+      "cand": 88.8,
+      "delta": -1.09,
+      "ci95": [
+       -2.84,
+       0.59
+      ],
+      "problems": 299,
+      "discordant_problems": 22.4
+     },
+     "truncated": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 299,
+      "discordant_problems": 0.0
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 299,
+      "discordant_problems": 0.0
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 299,
+      "discordant_problems": 0.0
+     },
+     "no_final_answer": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 299,
+      "discordant_problems": 0.0
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {},
+   "mean_tokens": {
+    "base": 249.3,
+    "15r-dev-nothink": 255.5
+   },
+   "primary": "acc_robust"
+  },
+  "gsm8k_dev": {
+   "samples_per_problem": {
+    "GSM8K_DEV": 4
+   },
+   "metrics": {
+    "15r-dev-nothink": {
+     "acc_robust": {
+      "base": 90.54,
+      "cand": 91.39,
+      "delta": 0.84,
+      "ci95": [
+       -0.84,
+       2.53
+      ],
+      "problems": 296,
+      "discordant_problems": 22.6
+     },
+     "acc": {
+      "base": 90.2,
+      "cand": 91.05,
+      "delta": 0.84,
+      "ci95": [
+       -0.84,
+       2.53
+      ],
+      "problems": 296,
+      "discordant_problems": 22.3
+     },
+     "truncated": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "no_final_answer": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {},
+   "mean_tokens": {
+    "base": 205.4,
+    "15r-dev-nothink": 212.7
+   },
+   "primary": "acc_robust"
+  },
+  "math_dev": {
+   "samples_per_problem": {
+    "MATH_DEV": 2
+   },
+   "metrics": {
+    "15r-dev-nothink": {
+     "acc_robust": {
+      "base": 68.78,
+      "cand": 68.15,
+      "delta": -0.62,
+      "ci95": [
+       -3.32,
+       2.07
+      ],
+      "problems": 482,
+      "discordant_problems": 26.6
+     },
+     "acc": {
+      "base": 54.46,
+      "cand": 54.36,
+      "delta": -0.1,
+      "ci95": [
+       -2.28,
+       2.07
+      ],
+      "problems": 482,
+      "discordant_problems": 17.8
+     },
+     "truncated": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 482,
+      "discordant_problems": 0.0
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 482,
+      "discordant_problems": 0.0
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 482,
+      "discordant_problems": 0.0
+     },
+     "no_final_answer": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 482,
+      "discordant_problems": 0.0
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {
+    "type=Algebra": {
+     "15r-dev-nothink": {
+      "base": 82.61,
+      "cand": 81.3,
+      "delta": -1.3,
+      "ci95": [
+       -5.22,
+       2.61
+      ],
+      "problems": 115,
+      "discordant_problems": 17.4
+     }
+    },
+    "type=Counting & Probability": {
+     "15r-dev-nothink": {
+      "base": 73.91,
+      "cand": 76.09,
+      "delta": 2.17,
+      "ci95": [
+       -4.35,
+       9.78
+      ],
+      "problems": 46,
+      "discordant_problems": 19.6
+     }
+    },
+    "type=Geometry": {
+     "15r-dev-nothink": {
+      "base": 47.96,
+      "cand": 50.0,
+      "delta": 2.04,
+      "ci95": [
+       -7.14,
+       12.24
+      ],
+      "problems": 49,
+      "discordant_problems": 36.7
+     }
+    },
+    "type=Intermediate Algebra": {
+     "15r-dev-nothink": {
+      "base": 46.95,
+      "cand": 50.0,
+      "delta": 3.05,
+      "ci95": [
+       -4.88,
+       10.98
+      ],
+      "problems": 82,
+      "discordant_problems": 31.7
+     }
+    },
+    "type=Number Theory": {
+     "15r-dev-nothink": {
+      "base": 84.04,
+      "cand": 78.72,
+      "delta": -5.32,
+      "ci95": [
+       -13.83,
+       4.26
+      ],
+      "problems": 47,
+      "discordant_problems": 27.7
+     }
+    },
+    "type=Prealgebra": {
+     "15r-dev-nothink": {
+      "base": 82.18,
+      "cand": 80.46,
+      "delta": -1.72,
+      "ci95": [
+       -7.47,
+       4.6
+      ],
+      "problems": 87,
+      "discordant_problems": 23.0
+     }
+    },
+    "type=Precalculus": {
+     "15r-dev-nothink": {
+      "base": 52.68,
+      "cand": 49.11,
+      "delta": -3.57,
+      "ci95": [
+       -11.61,
+       4.46
+      ],
+      "problems": 56,
+      "discordant_problems": 39.3
+     }
+    },
+    "level=Level 1": {
+     "15r-dev-nothink": {
+      "base": 77.78,
+      "cand": 79.17,
+      "delta": 1.39,
+      "ci95": [
+       -2.78,
+       5.56
+      ],
+      "problems": 36,
+      "discordant_problems": 8.3
+     }
+    },
+    "level=Level 2": {
+     "15r-dev-nothink": {
+      "base": 76.19,
+      "cand": 76.79,
+      "delta": 0.6,
+      "ci95": [
+       -5.36,
+       6.55
+      ],
+      "problems": 84,
+      "discordant_problems": 19.0
+     }
+    },
+    "level=Level 3": {
+     "15r-dev-nothink": {
+      "base": 80.08,
+      "cand": 77.24,
+      "delta": -2.85,
+      "ci95": [
+       -7.72,
+       2.03
+      ],
+      "problems": 123,
+      "discordant_problems": 24.4
+     }
+    },
+    "level=Level 4": {
+     "15r-dev-nothink": {
+      "base": 65.24,
+      "cand": 64.29,
+      "delta": -0.95,
+      "ci95": [
+       -6.67,
+       4.29
+      ],
+      "problems": 105,
+      "discordant_problems": 26.7
+     }
+    },
+    "level=Level 5": {
+     "15r-dev-nothink": {
+      "base": 54.1,
+      "cand": 54.48,
+      "delta": 0.37,
+      "ci95": [
+       -5.6,
+       6.34
+      ],
+      "problems": 134,
+      "discordant_problems": 38.1
+     }
+    }
+   },
+   "mean_tokens": {
+    "base": 992.4,
+    "15r-dev-nothink": 1003.4
+   },
+   "primary": "acc_robust"
+  },
+  "mmlu_pro_dev": {
+   "samples_per_problem": {
+    "MMLUPRO": 1
+   },
+   "metrics": {
+    "15r-dev-nothink": {
+     "acc_robust": {
+      "base": 60.06,
+      "cand": 61.06,
+      "delta": 1.0,
+      "ci95": [
+       -1.7,
+       3.8
+      ],
+      "problems": 999,
+      "discordant_problems": 19.8
+     },
+     "acc": {
+      "base": 59.86,
+      "cand": 61.06,
+      "delta": 1.2,
+      "ci95": [
+       -1.6,
+       4.0
+      ],
+      "problems": 999,
+      "discordant_problems": 20.0
+     },
+     "truncated": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 999,
+      "discordant_problems": 0.0
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 999,
+      "discordant_problems": 0.0
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 999,
+      "discordant_problems": 0.0
+     },
+     "no_final_answer": {
+      "base": 0.2,
+      "cand": 0.0,
+      "delta": -0.2,
+      "ci95": [
+       -0.5,
+       0.0
+      ],
+      "problems": 999,
+      "discordant_problems": 0.2
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {
+    "category=biology": {
+     "15r-dev-nothink": {
+      "base": 67.24,
+      "cand": 67.24,
+      "delta": 0.0,
+      "ci95": [
+       -8.62,
+       10.34
+      ],
+      "problems": 58,
+      "discordant_problems": 13.8
+     }
+    },
+    "category=business": {
+     "15r-dev-nothink": {
+      "base": 74.24,
+      "cand": 69.7,
+      "delta": -4.55,
+      "ci95": [
+       -15.15,
+       7.58
+      ],
+      "problems": 66,
+      "discordant_problems": 22.7
+     }
+    },
+    "category=chemistry": {
+     "15r-dev-nothink": {
+      "base": 62.11,
+      "cand": 64.21,
+      "delta": 2.11,
+      "ci95": [
+       -8.42,
+       12.63
+      ],
+      "problems": 95,
+      "discordant_problems": 25.3
+     }
+    },
+    "category=computer science": {
+     "15r-dev-nothink": {
+      "base": 61.76,
+      "cand": 61.76,
+      "delta": 0.0,
+      "ci95": [
+       -11.76,
+       11.76
+      ],
+      "problems": 34,
+      "discordant_problems": 11.8
+     }
+    },
+    "category=economics": {
+     "15r-dev-nothink": {
+      "base": 81.43,
+      "cand": 77.14,
+      "delta": -4.29,
+      "ci95": [
+       -14.29,
+       4.29
+      ],
+      "problems": 70,
+      "discordant_problems": 15.7
+     }
+    },
+    "category=engineering": {
+     "15r-dev-nothink": {
+      "base": 48.15,
+      "cand": 48.15,
+      "delta": 0.0,
+      "ci95": [
+       -12.35,
+       12.35
+      ],
+      "problems": 81,
+      "discordant_problems": 32.1
+     }
+    },
+    "category=health": {
+     "15r-dev-nothink": {
+      "base": 49.23,
+      "cand": 56.92,
+      "delta": 7.69,
+      "ci95": [
+       0.0,
+       15.38
+      ],
+      "problems": 65,
+      "discordant_problems": 10.8
+     }
+    },
+    "category=history": {
+     "15r-dev-nothink": {
+      "base": 50.0,
+      "cand": 43.75,
+      "delta": -6.25,
+      "ci95": [
+       -21.88,
+       9.38
+      ],
+      "problems": 32,
+      "discordant_problems": 18.8
+     }
+    },
+    "category=law": {
+     "15r-dev-nothink": {
+      "base": 21.35,
+      "cand": 21.35,
+      "delta": 0.0,
+      "ci95": [
+       -8.99,
+       8.99
+      ],
+      "problems": 89,
+      "discordant_problems": 20.2
+     }
+    },
+    "category=math": {
+     "15r-dev-nothink": {
+      "base": 76.11,
+      "cand": 78.76,
+      "delta": 2.65,
+      "ci95": [
+       -6.19,
+       11.5
+      ],
+      "problems": 113,
+      "discordant_problems": 23.9
+     }
+    },
+    "category=other": {
+     "15r-dev-nothink": {
+      "base": 47.44,
+      "cand": 46.15,
+      "delta": -1.28,
+      "ci95": [
+       -11.54,
+       8.97
+      ],
+      "problems": 78,
+      "discordant_problems": 19.2
+     }
+    },
+    "category=philosophy": {
+     "15r-dev-nothink": {
+      "base": 50.0,
+      "cand": 47.62,
+      "delta": -2.38,
+      "ci95": [
+       -14.29,
+       9.52
+      ],
+      "problems": 42,
+      "discordant_problems": 16.7
+     }
+    },
+    "category=physics": {
+     "15r-dev-nothink": {
+      "base": 75.23,
+      "cand": 77.98,
+      "delta": 2.75,
+      "ci95": [
+       -5.5,
+       11.01
+      ],
+      "problems": 109,
+      "discordant_problems": 19.3
+     }
+    },
+    "category=psychology": {
+     "15r-dev-nothink": {
+      "base": 64.18,
+      "cand": 74.63,
+      "delta": 10.45,
+      "ci95": [
+       2.99,
+       19.4
+      ],
+      "problems": 67,
+      "discordant_problems": 13.4
+     }
+    }
+   },
+   "mean_tokens": {
+    "base": 726.5,
+    "15r-dev-nothink": 781.3
+   },
+   "primary": "acc_robust"
+  }
+ },
+ "not_compared": []
+}

@@ -1,0 +1,7 @@
+train=/work/bench_data/instruct4b/sft/random_control.parquet rows=4248 bytes=7633809 columns=['index', 'output', 'data_source', 'prompt', 'ability', 'reward_model', 'extra_info']
+val=/work/bench_data/instruct4b/sft/dev_untouched.parquet rows=296 bytes=571076 columns=['index', 'output', 'data_source', 'prompt', 'ability', 'reward_model', 'extra_info']
+steps_per_epoch=66 epochs=1 updates=64 rows_processed=4096 distinct_rows_processed=4096
+model=/work/assets/models/Qwen3-4B-instruct-add-special-token vocab_size=151936 dtype=torch.bfloat16 tied=True
+Wed Oct  7 13:19:24 MSK 2026
+dbe704be475ab4f69a4e420308b62cd0e415fb35
+GPUs=0,1 updates=64 global_batch=64 micro_batch_per_gpu=2 epochs=1 overrides=
