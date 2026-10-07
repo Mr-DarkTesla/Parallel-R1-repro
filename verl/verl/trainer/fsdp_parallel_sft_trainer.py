@@ -85,6 +85,27 @@ def extract_step(path):
     return None
 
 
+# The six tokens added to the vocabulary for parallel thinking; their embedding rows start from an average of text pieces
+NEW_TAG_TOKENS = ("<Path>", "</Path>", "<Parallel>", "</Parallel>", "<Summary>", "</Summary>")
+
+
+def local_rows(weight, row_ids):
+    """This rank's storage of a 2-D parameter and the local indices of those global rows `row_ids` that it holds.
+    FSDP2 shards a parameter as a DTensor along dim 0 in torch.chunk pieces: rank r holds rows [r*c, (r+1)*c),
+    c = ceil(rows / ranks). A plain tensor holds all rows."""
+    from torch.distributed.tensor import DTensor, Shard
+
+    start, local = 0, weight.detach()
+    if isinstance(weight, DTensor):
+        assert tuple(weight.placements) == (Shard(0),), weight.placements
+        chunk = -(-weight.shape[0] // weight.device_mesh.size())
+        start = weight.device_mesh.get_local_rank() * chunk
+        local = weight.to_local().detach()
+        assert local.shape[0] == len(range(weight.shape[0])[start:start + chunk]), (local.shape, start, chunk)
+    rows = [i - start for i in row_ids if start <= i < start + local.shape[0]]
+    return local, torch.tensor(rows, dtype=torch.long, device=local.device)
+
+
 class FSDPParallelThinkingSFTTrainer:
     def __init__(self, config, device_mesh: DeviceMesh, ulysses_device_mesh: DeviceMesh, tokenizer, train_dataset: Dataset, val_dataset: Dataset):
         self.config = config
@@ -288,6 +309,19 @@ class FSDPParallelThinkingSFTTrainer:
 
         log_gpu_memory_usage("After initialize optimizer", logger=logger)
 
+        # optim.tag_lr_mult: learning rate multiplier for the embedding rows of the new tag tokens (tied with the output
+        # rows). At lr 1e-5 for 64 updates AdamW moves an element by at most ~4e-4, so these rows stay at their init.
+        self.tag_lr_mult = float(self.config.optim.get("tag_lr_mult", 1.0))
+        self.tag_ids = [self.tokenizer.convert_tokens_to_ids(t) for t in NEW_TAG_TOKENS]
+        if self.tag_lr_mult != 1.0:
+            assert fsdp_strategy == "fsdp2", "tag_lr_mult needs per-parameter sharding (fsdp2), not FSDP1 flat parameters"
+            assert all(self.tokenizer.encode(t, add_special_tokens=False) == [i] for t, i in zip(NEW_TAG_TOKENS, self.tag_ids))
+            embedding = self.model.get_input_embeddings().weight
+            assert self.model_config.tie_word_embeddings and self.model.get_output_embeddings().weight is embedding
+            _, rows = local_rows(embedding, self.tag_ids)
+            print(f"rank {self.device_mesh.get_rank()}: tag_lr_mult={self.tag_lr_mult} for tag ids {self.tag_ids}, "
+                  f"{len(rows)} of these rows held by this rank")
+
         self.steps_per_epoch = len(self.train_dataloader)
         # A fixed budget (trainer.total_training_steps) is also the length of the lr schedule
         self.total_steps = self.config.trainer.total_training_steps or self.steps_per_epoch * self.config.trainer.total_epochs
@@ -421,7 +455,9 @@ class FSDPParallelThinkingSFTTrainer:
             print(f"WARN: grad_norm is not finite: {grad_norm}")
             self.optimizer.zero_grad()
         else:
+            tag_rows = self._tag_rows_before_step()
             self.optimizer.step()
+            self._scale_tag_rows_update(tag_rows)
 
         log_gpu_memory_usage("After optimizer step", logger=logger)
 
@@ -440,6 +476,22 @@ class FSDPParallelThinkingSFTTrainer:
             step_loss /= self.ulysses_device_mesh.size(0)
         return {'train/loss': step_loss.detach().item(), 'train/lr(1e-3)': lr * 1e3, 'train/grad_norm': grad_norm.item(),
                 'train/target_tokens': target_tokens.item()}
+
+    @torch.no_grad()
+    def _tag_rows_before_step(self):
+        if self.tag_lr_mult == 1.0:
+            return None
+        local, rows = local_rows(self.model.get_input_embeddings().weight, self.tag_ids)
+        return local, rows, local[rows].clone()
+
+    @torch.no_grad()
+    def _scale_tag_rows_update(self, saved):
+        """AdamW is element-wise and its state does not depend on lr: multiplying this step's change of the tag rows by k
+        is exactly AdamW with lr*k (and the same decoupled weight decay) on these rows. Other weights keep the usual step."""
+        if saved is None:
+            return
+        local, rows, before = saved
+        local[rows] = before + self.tag_lr_mult * (local[rows] - before)
 
     def validation_step(self, batch: TensorDict):
         self.fsdp_model.eval()

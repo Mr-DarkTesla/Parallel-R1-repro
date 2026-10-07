@@ -141,6 +141,106 @@ def test_gradient_accumulation_divides_before_backward(tokenizer, tmp_path):
         torch.testing.assert_close(a, b, rtol=5e-2, atol=1e-5)
 
 
+TAG_IDS = list(range(151669, 151675))
+
+
+def tag_lr_steps(model, mult, grads, full=lambda p: p.detach(), shard=lambda g, p: g):
+    """AdamW steps of the trainer (tag-row multiplier `mult`) with given full gradients; returns full weights after each step."""
+    trainer = SimpleNamespace(model=model, tag_lr_mult=mult, tag_ids=TAG_IDS)
+    opt = torch.optim.AdamW(model.parameters(), lr=1e-3, betas=(0.9, 0.95), weight_decay=0.01)
+    sched = torch.optim.lr_scheduler.LambdaLR(opt, lambda s: (s + 1) / 3)  # changing lr, like the warmup
+    history = []
+    for step_grads in grads:
+        for p, g in zip(model.parameters(), step_grads):
+            p.grad = shard(g.clone(), p)
+        saved = FSDPParallelThinkingSFTTrainer._tag_rows_before_step(trainer)
+        opt.step()
+        FSDPParallelThinkingSFTTrainer._scale_tag_rows_update(trainer, saved)
+        sched.step()
+        history.append([full(p).clone() for p in model.parameters()])
+    return history
+
+
+def check_tag_lr(make_model, mult=50.0, steps=3, **sharding):
+    """Only the tag rows get lr*mult (equal to a separate AdamW with lr*mult); every other element follows the old recipe."""
+    params = list(tiny_tied_model().parameters())  # same init as make_model(), unsharded
+    torch.manual_seed(1)
+    grads = [[torch.randn_like(p) for p in params] for _ in range(steps)]
+    old = tag_lr_steps(tiny_tied_model(), 1.0, grads)  # old recipe, unsharded
+    new = tag_lr_steps(make_model(), mult, grads, **sharding)
+    emb = [i for i, p in enumerate(params) if p.shape[0] >= 151675]
+    assert len(emb) == 1, "tied embedding is a single parameter"
+    e = emb[0]
+    rows = torch.nn.Parameter(params[e].detach()[TAG_IDS].clone())
+    ref = torch.optim.AdamW([rows], lr=1e-3 * mult, betas=(0.9, 0.95), weight_decay=0.01)
+    ref_sched = torch.optim.lr_scheduler.LambdaLR(ref, lambda s: (s + 1) / 3)
+    others = torch.ones(params[e].shape[0], dtype=torch.bool)
+    others[TAG_IDS] = False
+    for step, (a, b) in enumerate(zip(old, new)):
+        rows.grad = grads[step][e][TAG_IDS].clone()
+        ref.step()
+        ref_sched.step()
+        for i, (x, y) in enumerate(zip(a, b)):
+            if i == e:
+                torch.testing.assert_close(y[others], x[others], rtol=0, atol=0)
+                torch.testing.assert_close(y[TAG_IDS], rows.detach(), rtol=1e-5, atol=1e-6)
+                assert (y[TAG_IDS] - x[TAG_IDS]).abs().max() > 1e-2  # the rows really moved further
+            else:
+                torch.testing.assert_close(y, x, rtol=0, atol=0)
+
+
+def tiny_tied_model(vocab=151936):  # the real embedding has 151936 rows, tags at 151669..151674
+    torch.manual_seed(0)
+    return Qwen3ForCausalLM(Qwen3Config(vocab_size=vocab, hidden_size=16, intermediate_size=32, num_hidden_layers=1,
+                                        num_attention_heads=2, num_key_value_heads=1, head_dim=8, tie_word_embeddings=True))
+
+
+def test_tag_lr_mult_only_tag_rows():
+    check_tag_lr(tiny_tied_model)
+
+
+def test_tag_lr_mult_default_is_old_step():
+    trainer = SimpleNamespace(model=tiny_tied_model(), tag_lr_mult=1.0, tag_ids=TAG_IDS)
+    assert FSDPParallelThinkingSFTTrainer._tag_rows_before_step(trainer) is None
+
+
+def _fsdp2_worker(rank, port, errors):
+    import torch.distributed as dist
+    from torch.distributed.device_mesh import init_device_mesh
+    from torch.distributed.fsdp import fully_shard
+    from torch.distributed.tensor import distribute_tensor
+
+    os.environ.update(MASTER_ADDR="127.0.0.1", MASTER_PORT=str(port))
+    dist.init_process_group("gloo", rank=rank, world_size=2)
+    try:
+        mesh = init_device_mesh("cpu", (2,))
+
+        def sharded_model():  # wrapped as in verl apply_fsdp2: layers, then the root (holds the tied embedding)
+            model = tiny_tied_model()
+            for layer in model.model.layers:
+                fully_shard(layer, mesh=mesh)
+            fully_shard(model, mesh=mesh)
+            assert model.get_output_embeddings().weight is model.get_input_embeddings().weight
+            return model
+
+        check_tag_lr(sharded_model, full=lambda p: p.full_tensor(),
+                     shard=lambda g, p: distribute_tensor(g, mesh, p.placements))
+    except Exception:
+        errors.put(f"rank {rank}: {traceback.format_exc()}")
+    finally:
+        dist.destroy_process_group()
+
+
+def test_tag_lr_mult_fsdp2_shards():
+    """The same check on 2 CPU ranks with the real FSDP2 layout (all tag rows on rank 1). Synthetic gradients:
+    FSDP2 forward/backward needs CUDA streams."""
+    import torch.multiprocessing as mp
+
+    errors = mp.get_context("spawn").SimpleQueue()
+    mp.spawn(_fsdp2_worker, args=(29500 + os.getpid() % 1000, errors), nprocs=2)
+    assert errors.empty(), errors.get()
+
+
 if __name__ == "__main__":
     tokenizer = AutoTokenizer.from_pretrained(os.environ.get("MODEL", "/work/assets/models/Qwen3-4B"))
     tokenizer.add_special_tokens({"additional_special_tokens": TAGS})
