@@ -1,4 +1,4 @@
-# Optional split pool. Keep at zero until the existing runs finish and migration is verified.
+# Retained GPU pod after the 2026-10-07 reduction. A stays at zero; both PVCs are preserved.
 # GPU pod for parallel experiments. Project data lives on the PVC at /work; the rest of the disk is ephemeral.
 apiVersion: apps/v1
 kind: StatefulSet
@@ -6,7 +6,7 @@ metadata:
   name: vcharkin-exp-vm-b
   namespace: shared-dzen-ml
 spec:
-  replicas: 0
+  replicas: 1
   serviceName: vcharkin-exp-vm-b
   selector:
     matchLabels:
