@@ -15,7 +15,13 @@ Control arm of cycle 2: exactly the 14-filtered SFT (`results/14-instruct4b-filt
 
 Why: teacher-forced on SFT rows, 13/14f/15r pick the right tag (top-1 0.95, p(right | some tag) 0.95, like the authors' SFT)
 but leave ~10% of the probability on the text pieces `>`, `</`, `<` the tags were initialised from (authors' SFT: 0.000);
-at T=1 about half of the sampled blocks break. With lr 1e-5 for 64 updates AdamW moves each row element by at most ~4e-4,
-so the tag rows stay at their init (moved ~2% of their norm). Multiplier from a CPU proxy (only the 6 rows trained on cached
-hidden states with this optimizer and schedule): x30-x300 plateau, x1000 overshoots; x100 keeps the row norms in the range of
-ordinary tokens. Evidence: tagfix/FINDING-diagnosis.md and tagfix/ in the project state folder.
+at T=1 about half of the sampled blocks break. With lr 1e-5 for 64 updates AdamW moves each row element by at most the sum of
+the lr schedule, ~3e-4, so the tag rows stay at their init (measured: moved ~2% of their norm). Multiplier from a CPU proxy (only the 6 rows trained on cached
+hidden states with this optimizer and schedule): held-out p(right tag) grows and saturates (from P's states x30 0.70, x100 0.81,
+x300 0.86; from 14f's x100 0.93 = x300), x1000 overshoots (worse tag NLL, row norms 1.4-2.8); x100 keeps the row norms in the range of
+ordinary tokens. Proxy limits: hidden states frozen, output side only; it predicts slightly more tag mass at non-tag positions
+(measured in the evaluation of 20). Independent review: ACCEPT (tagfix_review/verdict.md). Evidence: tagfix/FINDING-diagnosis.md and tagfix/ in the project state folder.
+
+Checks after the SFT (the fix must have applied, otherwise the arm does not count): train.log prints `tag_lr_mult=100.0` with 0 tag rows on
+rank 0 and 6 on rank 1; results/recipe.txt has `overrides=optim.tag_lr_mult=100`; results/rows.csv equals 14f's; exported tag rows moved
+from P by ~0.2-0.5 L2 (14f: 0.011-0.013), other rows by the same order as in 14f.
