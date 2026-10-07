@@ -36,12 +36,28 @@ def correct(row, answer):
     cand = candidate(answer)
     if not cand:
         return False
+    options = dict(re.findall(r"\\textbf\{\(([A-E])\)\s*\}\s*([^\\$]+?)\s*(?=\\qquad|\$|\\textbf|$)", row["question"]))
+    letter = re.fullmatch(r"\(?\\?(?:textbf\{)?\(?([A-E])\)?\}?\)?", cand)
+    if options and letter and letter.group(1) in options:  # AMC-style inline options, gold is the value
+        cand = options[letter.group(1)].strip()
     try:
         if verify(parse(f"${truth}$"), parse(f"${cand}$")):
             return True
     except Exception:
         pass
-    return bool(compute_score(f"Final Answer: {cand}", truth)["acc"])
+    if bool(compute_score(f"Final Answer: {cand}", truth)["acc"]):
+        return True
+    return close_numbers(truth, cand)
+
+
+def close_numbers(truth, cand, rel=1e-2):
+    """Science answers with a decimal gold (TheoremQA float, JEE numeric): equal within 1% (absolute 1e-6 for zero)."""
+    num = re.compile(r"^[-+]?\d*\.?\d+(?:[eE][-+]?\d+)?$")
+    t, c = truth.replace(",", "").strip(), re.sub(r"\\(?:text|mathrm)\{[^}]*\}", "", cand).replace(",", "").strip()
+    if not (num.match(t) and num.match(c)) or not re.search(r"[.eE]", t):  # integer gold: exact match only (handled above)
+        return False
+    t, c = float(t), float(c)
+    return abs(c - t) <= max(rel * abs(t), 1e-6)
 
 
 def main(pool_path, traces_path, out_path, summary_path):

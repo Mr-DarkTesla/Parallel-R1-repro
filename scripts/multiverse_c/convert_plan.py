@@ -1,4 +1,4 @@
-"""Variant C, step 3 (v3, plan-only): Claude returns a structure plan, this script assembles the Multiverse text from Qwen's paragraphs.
+"""Variant C, step 3 (plan-only converter, v4 with the review block filter): Claude returns a structure plan, this script assembles the Multiverse text from Qwen's paragraphs.
 
 Claude (convert_plan_system.md) sees the problem and the thinking text split into numbered paragraphs and returns, per block: paragraph
 ranges of lead / paths / tail, one outline per path, a short conclusion, and optional connective edits. Path text is therefore Qwen's
@@ -133,6 +133,73 @@ def apply_edits(units, edits, allowed):
     return units, skipped
 
 
+# Block filter (independent review multiverse_c2_review): drop blocks with skipped edits, trivial or unbalanced paths, small
+# saving, or a path 2..k that opens like a continuation of its sibling; at most one re-check block after the answer appears.
+MIN_PATH_CHARS = 200  # ~60 Qwen3 tokens: no one-line paths (calibrated on the 10 reviewed samples)
+MIN_RATIO = 0.1  # shortest / longest path
+MIN_SAVED_CHARS = 200  # sum of paths minus the longest; good reviewed blocks saved 256-2800 chars
+SIBLING_START = re.compile(r"^\s*(?:\d+(?:\.\d+)*:\s*)?(?:similarly|again|as before|as above|therefore|thus|hence|likewise|but|"
+                           r"however|alternatively|also|next|then|in the same way|the other)\b", re.I)
+SIBLING_NEAR = re.compile(r"\b(?:the other (?:case|path|one|method|approach)|as before|as above|earlier|previous(?:ly)?)\b", re.I)
+
+
+def answer_unit(units, cand):
+    """1-based index of the first paragraph that states the final candidate as a result (e.g. "= 59", "is 59"), else None."""
+    cand = (cand or "").strip()
+    if not cand or len(cand) > 30:
+        return None
+    pat = re.compile(r"(?:=|\bis\b|\bbe\b|\bget\b|\bgives?\b|\bequals?\b|boxed\{)\s*\$?\s*" + re.escape(cand) + r"(?!\d|\.\d)")
+    for i, u in enumerate(units, 1):
+        if pat.search(u):
+            return i
+    return None
+
+
+def block_defects(blk, units, seps, skipped_units, top):
+    def text(a, b):
+        return "".join(units[i] + (seps[i] if i < b - 1 else "") for i in range(a - 1, b))
+
+    texts = [text(*p["range"]) for p in blk["paths"]]
+    lens = [len(t) for t in texts]
+    out = []
+    if any(skipped_units & set(range(p["range"][0], p["range"][1] + 1)) for p in blk["paths"]):
+        out.append("edit_skipped")
+    if min(lens) < MIN_PATH_CHARS:
+        out.append("short_path")
+    if min(lens) < MIN_RATIO * max(lens):
+        out.append("unbalanced")
+    if top and sum(lens) - max(lens) < MIN_SAVED_CHARS:
+        out.append("small_saving")
+    if any(SIBLING_START.search(t) or SIBLING_NEAR.search(t[:200]) for t in texts[1:]):
+        out.append("sibling_start")
+    return out
+
+
+def select_blocks(blocks, units, seps, skipped, ans_unit):
+    """-> (kept top-level blocks, per-block decisions). Inner blocks with defects are unwrapped (path stays sequential)."""
+    skipped_units = {k for k, _ in skipped}
+    decisions, good, checks_ok = [], [], []
+    for blk in blocks:
+        for p in blk["paths"]:
+            if p["inner"]:
+                d = block_defects(p["inner"], units, seps, skipped_units, top=False)
+                if d:
+                    decisions.append({"range": p["inner"]["range"], "inner": True, "dropped": d})
+                    p["inner"] = None
+        d = block_defects(blk, units, seps, skipped_units, top=True)
+        is_check = ans_unit is not None and blk["range"][0] > ans_unit
+        decisions.append({"range": blk["range"], "check": is_check, "dropped": d})
+        if not d:
+            (checks_ok if is_check else good).append(blk)
+    if checks_ok:  # at most one re-check block: the one with the most text in paths
+        best = max(checks_ok, key=lambda b: sum(p["range"][1] - p["range"][0] + 1 for p in b["paths"]))
+        for dcs in decisions:
+            if dcs.get("check") and not dcs["dropped"] and dcs["range"] != best["range"]:
+                dcs["dropped"] = ["extra_check_block"]
+        good.append(best)
+    return sorted(good, key=lambda b: b["range"][0]), decisions
+
+
 def render(units, seps, blk, prefix=""):
     def text(a, b):
         return "".join(units[i] + (seps[i] if i < b - 1 else "") for i in range(a - 1, b))
@@ -162,6 +229,32 @@ def render(units, seps, blk, prefix=""):
     return out
 
 
+def assemble(rec, row, head, units, seps, tail):
+    """Parse the plan in rec["reply"], filter blocks, render; fills rec (blocks, decisions, response, checks)."""
+    blocks, edits = parse_plan(rec["reply"], len(units))
+    plan_ranges = [list(b["range"]) for b in blocks]
+    edited, skipped = apply_edits(units, edits, set(path_units(blocks)))
+    ans = answer_unit(units, row.get("candidate"))
+    kept, decisions = select_blocks(blocks, edited, seps, skipped, ans)
+    keep_units = set(path_units(kept))
+    for b in kept:  # edits only inside kept parallel paths; unwrapped inner blocks keep the original wording
+        for p in b["paths"]:
+            if p["inner"]:
+                keep_units |= set(path_units([p["inner"]]))
+    final = [edited[i] if (i + 1) in keep_units and not _in_unwrapped(i + 1, decisions) else units[i] for i in range(len(units))]
+    spliced = [(b["range"][0], b["range"][1], render(final, seps, b)) for b in kept]
+    rec.update({"plan_blocks": plan_ranges, "blocks": [list(b["range"]) for b in kept], "decisions": decisions,
+                "answer_unit": ans, "edits": len(edits), "edits_skipped": skipped,
+                "response": head + splice(units, seps, spliced) + tail})
+    rec.pop("checks", None)
+    if kept:
+        rec["checks"] = checks.check_sample(row["output"], rec["response"], units, spliced)
+
+
+def _in_unwrapped(u, decisions):
+    return any(d.get("inner") and d["range"][0] <= u <= d["range"][1] for d in decisions)
+
+
 def convert_one(row, problem, out_dir, model=None, fallback="claude-sonnet-5-5"):
     key = f"{row['mv_index']}_{row['sample']}"
     path = os.path.join(out_dir, key + ".json")
@@ -178,16 +271,10 @@ def convert_one(row, problem, out_dir, model=None, fallback="claude-sonnet-5-5")
     rec = {"key": key, "mv_index": row["mv_index"], "sample": row["sample"], "prompt": row["prompt"], "n_units": len(units),
            "reply": reply["text"], "usage": reply.get("usage"), "cost_usd": reply.get("cost_usd"),
            "duration_ms": reply.get("duration_ms"), "is_error": reply["is_error"], "attempts": attempts,
-           "plan_error": None, "blocks": [], "original": row["output"], "response": None}
+           "call_error": reply.get("error"), "plan_error": None, "blocks": [], "original": row["output"], "response": None}
     if not reply["is_error"]:
         try:
-            blocks, edits = parse_plan(reply["text"], len(units))
-            edited, skipped = apply_edits(units, edits, set(path_units(blocks)))
-            spliced = [(b["range"][0], b["range"][1], render(edited, seps, b)) for b in blocks]
-            rec.update({"blocks": [list(b["range"]) for b in blocks], "edits": len(edits), "edits_skipped": skipped,
-                        "response": head + splice(units, seps, spliced) + tail})
-            if blocks:
-                rec["checks"] = checks.check_sample(row["output"], rec["response"], units, spliced)
+            assemble(rec, row, head, units, seps, tail)
         except PlanError as e:
             rec["plan_error"] = str(e)
     json.dump(rec, open(path + ".tmp", "w"), ensure_ascii=False, indent=1)

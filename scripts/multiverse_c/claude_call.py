@@ -6,6 +6,7 @@ call(system, user) -> {"text", "usage", "cost_usd", "duration_ms", "is_error"}.
 import json
 import os
 import subprocess
+import time
 from pathlib import Path
 
 PROFILE = Path("/Users/v.charkin/.claude/settings.json")
@@ -21,7 +22,18 @@ def _env_and_model():
     return env, settings["model"]
 
 
-def call(system, user, timeout=1800, model=None):
+def call(system, user, timeout=1800, model=None, retries=3):
+    """Retries only transport failures of the CLI (empty/non-JSON stdout, e.g. "policyHelper failed: timed out"), never refusals."""
+    for k in range(retries):
+        r = _call_once(system, user, timeout, model)
+        if r["text"] or not r.get("error"):
+            break
+        time.sleep(20 * (k + 1))
+    r["transport_retries"] = k
+    return r
+
+
+def _call_once(system, user, timeout, model):
     env, default_model = _env_and_model()
     cmd = [CLAUDE, "-p", "--settings", str(PROFILE), "--setting-sources", "", "--strict-mcp-config",
            "--mcp-config", '{"mcpServers":{}}', "--tools", "", "--output-format", "json",
