@@ -1,0 +1,313 @@
+{
+ "base": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-par",
+ "cands": [
+  "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-par"
+ ],
+ "protocol": {
+  "suite": "dev",
+  "mode": "parallel",
+  "budget": 16384,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "generator": "scripts/bench/eval_rollout.sh",
+  "prompts": "/work/bench_data/instruct4b/eval/dev/parallel",
+  "ifeval_scorer_seed": 0
+ },
+ "cross_prompt": false,
+ "proposed_margin_pp": 2.0,
+ "margin_note": "working proposal, not confirmed by the user; applies per benchmark/source",
+ "benchmarks": {
+  "gsm8k_dev": {
+   "samples_per_problem": {
+    "GSM8K_DEV": 4
+   },
+   "metrics": {
+    "14f-dev-par": {
+     "acc_robust": {
+      "base": 82.6,
+      "cand": 81.42,
+      "delta": -1.18,
+      "ci95": [
+       -3.89,
+       1.52
+      ],
+      "problems": 296,
+      "discordant_problems": 45.6
+     },
+     "acc": {
+      "base": 72.55,
+      "cand": 70.69,
+      "delta": -1.86,
+      "ci95": [
+       -5.24,
+       1.52
+      ],
+      "problems": 296,
+      "discordant_problems": 63.9
+     },
+     "parallel": {
+      "base": 91.81,
+      "cand": 90.54,
+      "delta": -1.27,
+      "ci95": [
+       -3.55,
+       1.01
+      ],
+      "problems": 296,
+      "discordant_problems": 46.6
+     },
+     "valid_tags": {
+      "base": 18.58,
+      "cand": 21.2,
+      "delta": 2.62,
+      "ci95": [
+       -0.68,
+       5.91
+      ],
+      "problems": 296,
+      "discordant_problems": 66.9
+     },
+     "no_final_answer": {
+      "base": 0.08,
+      "cand": 0.08,
+      "delta": 0.0,
+      "ci95": [
+       -0.25,
+       0.25
+      ],
+      "problems": 296,
+      "discordant_problems": 0.7
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {},
+   "primary": "acc_robust"
+  },
+  "math_dev": {
+   "samples_per_problem": {
+    "MATH_DEV": 2
+   },
+   "metrics": {
+    "14f-dev-par": {
+     "acc_robust": {
+      "base": 61.93,
+      "cand": 58.2,
+      "delta": -3.73,
+      "ci95": [
+       -6.95,
+       -0.52
+      ],
+      "problems": 482,
+      "discordant_problems": 40.9
+     },
+     "acc": {
+      "base": 44.61,
+      "cand": 45.33,
+      "delta": 0.73,
+      "ci95": [
+       -2.39,
+       3.73
+      ],
+      "problems": 482,
+      "discordant_problems": 35.5
+     },
+     "parallel": {
+      "base": 91.29,
+      "cand": 89.21,
+      "delta": -2.07,
+      "ci95": [
+       -4.77,
+       0.52
+      ],
+      "problems": 482,
+      "discordant_problems": 31.7
+     },
+     "valid_tags": {
+      "base": 15.04,
+      "cand": 17.63,
+      "delta": 2.59,
+      "ci95": [
+       -0.73,
+       5.81
+      ],
+      "problems": 482,
+      "discordant_problems": 44.2
+     },
+     "no_final_answer": {
+      "base": 0.1,
+      "cand": 0.0,
+      "delta": -0.1,
+      "ci95": [
+       -0.31,
+       0.0
+      ],
+      "problems": 482,
+      "discordant_problems": 0.2
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {
+    "type=Algebra": {
+     "14f-dev-par": {
+      "base": 76.52,
+      "cand": 74.78,
+      "delta": -1.74,
+      "ci95": [
+       -7.39,
+       3.91
+      ],
+      "problems": 115,
+      "discordant_problems": 34.8
+     }
+    },
+    "type=Counting & Probability": {
+     "14f-dev-par": {
+      "base": 65.22,
+      "cand": 57.61,
+      "delta": -7.61,
+      "ci95": [
+       -18.48,
+       3.26
+      ],
+      "problems": 46,
+      "discordant_problems": 34.8
+     }
+    },
+    "type=Geometry": {
+     "14f-dev-par": {
+      "base": 50.0,
+      "cand": 41.84,
+      "delta": -8.16,
+      "ci95": [
+       -18.37,
+       2.04
+      ],
+      "problems": 49,
+      "discordant_problems": 40.8
+     }
+    },
+    "type=Intermediate Algebra": {
+     "14f-dev-par": {
+      "base": 38.41,
+      "cand": 34.15,
+      "delta": -4.27,
+      "ci95": [
+       -11.59,
+       3.05
+      ],
+      "problems": 82,
+      "discordant_problems": 40.2
+     }
+    },
+    "type=Number Theory": {
+     "14f-dev-par": {
+      "base": 64.89,
+      "cand": 65.96,
+      "delta": 1.06,
+      "ci95": [
+       -11.7,
+       13.83
+      ],
+      "problems": 47,
+      "discordant_problems": 51.1
+     }
+    },
+    "type=Prealgebra": {
+     "14f-dev-par": {
+      "base": 79.31,
+      "cand": 76.44,
+      "delta": -2.87,
+      "ci95": [
+       -11.49,
+       5.75
+      ],
+      "problems": 87,
+      "discordant_problems": 42.5
+     }
+    },
+    "type=Precalculus": {
+     "14f-dev-par": {
+      "base": 44.64,
+      "cand": 39.29,
+      "delta": -5.36,
+      "ci95": [
+       -14.29,
+       4.46
+      ],
+      "problems": 56,
+      "discordant_problems": 48.2
+     }
+    },
+    "level=Level 1": {
+     "14f-dev-par": {
+      "base": 76.39,
+      "cand": 76.39,
+      "delta": 0.0,
+      "ci95": [
+       -8.33,
+       9.72
+      ],
+      "problems": 36,
+      "discordant_problems": 25.0
+     }
+    },
+    "level=Level 2": {
+     "14f-dev-par": {
+      "base": 75.6,
+      "cand": 73.21,
+      "delta": -2.38,
+      "ci95": [
+       -8.93,
+       4.17
+      ],
+      "problems": 84,
+      "discordant_problems": 28.6
+     }
+    },
+    "level=Level 3": {
+     "14f-dev-par": {
+      "base": 69.92,
+      "cand": 65.85,
+      "delta": -4.07,
+      "ci95": [
+       -10.57,
+       2.85
+      ],
+      "problems": 123,
+      "discordant_problems": 40.7
+     }
+    },
+    "level=Level 4": {
+     "14f-dev-par": {
+      "base": 59.52,
+      "cand": 54.29,
+      "delta": -5.24,
+      "ci95": [
+       -11.9,
+       1.43
+      ],
+      "problems": 105,
+      "discordant_problems": 40.0
+     }
+    },
+    "level=Level 5": {
+     "14f-dev-par": {
+      "base": 44.03,
+      "cand": 39.93,
+      "delta": -4.1,
+      "ci95": [
+       -11.19,
+       2.99
+      ],
+      "problems": 134,
+      "discordant_problems": 53.7
+     }
+    }
+   },
+   "primary": "acc_robust"
+  }
+ },
+ "not_compared": []
+}

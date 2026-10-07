@@ -1,0 +1,14 @@
+{
+ "model": "/work/runs/14-filtered/model",
+ "suite": "dev",
+ "mode": "parallel",
+ "budget": 16384,
+ "temperature": 1.0,
+ "top_p": 1.0,
+ "generator": "scripts/bench/eval_rollout.sh",
+ "prompts": "/work/bench_data/instruct4b/eval/dev/parallel",
+ "reused_from": null,
+ "ifeval_scorer_seed": 0,
+ "seeds": "unseeded",
+ "commit": "9227d52164f5c27249344d1e1ed6dbdc2fc85a11"
+}

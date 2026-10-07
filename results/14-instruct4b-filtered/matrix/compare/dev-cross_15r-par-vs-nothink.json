@@ -1,0 +1,167 @@
+{
+ "base": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-nothink",
+ "cands": [
+  "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-par"
+ ],
+ "protocol": {
+  "suite": "dev",
+  "mode": "no-thinking",
+  "budget": 16384,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "generator": "scripts/instruct4b_eval/generate.py",
+  "prompts": "/work/bench_data/instruct4b/eval/dev/plain",
+  "ifeval_scorer_seed": 0
+ },
+ "cross_prompt": true,
+ "proposed_margin_pp": 2.0,
+ "margin_note": "working proposal, not confirmed by the user; applies per benchmark/source",
+ "benchmarks": {
+  "gsm8k_dev": {
+   "samples_per_problem": {
+    "GSM8K_DEV": 4
+   },
+   "metrics": {
+    "15r-dev-par": {
+     "acc_robust": {
+      "base": 91.39,
+      "cand": 82.6,
+      "delta": -8.78,
+      "ci95": [
+       -11.23,
+       -6.42
+      ],
+      "problems": 296,
+      "discordant_problems": 40.2
+     },
+     "acc": {
+      "base": 91.05,
+      "cand": 72.55,
+      "delta": -18.5,
+      "ci95": [
+       -21.45,
+       -15.62
+      ],
+      "problems": 296,
+      "discordant_problems": 60.1
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 91.81,
+      "delta": 91.81,
+      "ci95": [
+       90.29,
+       93.33
+      ],
+      "problems": 296,
+      "discordant_problems": 100.0
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 18.58,
+      "delta": 18.58,
+      "ci95": [
+       16.39,
+       20.86
+      ],
+      "problems": 296,
+      "discordant_problems": 55.4
+     },
+     "no_final_answer": {
+      "base": 0.0,
+      "cand": 0.08,
+      "delta": 0.08,
+      "ci95": [
+       0.0,
+       0.25
+      ],
+      "problems": 296,
+      "discordant_problems": 0.3
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {},
+   "mean_tokens": {
+    "base": 212.7,
+    "15r-dev-par": NaN
+   },
+   "primary": "acc_robust"
+  },
+  "math_dev": {
+   "samples_per_problem": {
+    "MATH_DEV": 2
+   },
+   "metrics": {
+    "15r-dev-par": {
+     "acc_robust": {
+      "base": 68.15,
+      "cand": 61.93,
+      "delta": -6.22,
+      "ci95": [
+       -9.34,
+       -3.22
+      ],
+      "problems": 482,
+      "discordant_problems": 33.8
+     },
+     "acc": {
+      "base": 54.36,
+      "cand": 44.61,
+      "delta": -9.75,
+      "ci95": [
+       -12.55,
+       -6.95
+      ],
+      "problems": 482,
+      "discordant_problems": 30.7
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 91.29,
+      "delta": 91.29,
+      "ci95": [
+       89.42,
+       93.05
+      ],
+      "problems": 482,
+      "discordant_problems": 99.4
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 15.04,
+      "delta": 15.04,
+      "ci95": [
+       12.76,
+       17.33
+      ],
+      "problems": 482,
+      "discordant_problems": 26.8
+     },
+     "no_final_answer": {
+      "base": 0.0,
+      "cand": 0.1,
+      "delta": 0.1,
+      "ci95": [
+       0.0,
+       0.31
+      ],
+      "problems": 482,
+      "discordant_problems": 0.2
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {},
+   "mean_tokens": {
+    "base": 1003.4,
+    "15r-dev-par": NaN
+   },
+   "primary": "acc_robust"
+  }
+ },
+ "not_compared": [
+  "arc_dev",
+  "mmlu_pro_dev"
+ ]
+}

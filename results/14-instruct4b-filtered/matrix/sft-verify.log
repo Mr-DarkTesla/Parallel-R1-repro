@@ -1,0 +1,48 @@
+===== 14-filtered
+Wed Oct  7 13:19:17 MSK 2026
+train=/work/bench_data/instruct4b/sft/filtered.parquet rows=4248 bytes=7610596 columns=['index', 'output', 'data_source', 'prompt', 'ability', 'reward_model', 'extra_info']
+val=/work/bench_data/instruct4b/sft/dev_untouched.parquet rows=296 bytes=571076 columns=['index', 'output', 'data_source', 'prompt', 'ability', 'reward_model', 'extra_info']
+steps_per_epoch=66 epochs=1 updates=64 rows_processed=4096 distinct_rows_processed=4096
+model=/work/assets/models/Qwen3-4B-instruct-add-special-token vocab_size=151936 dtype=torch.bfloat16 tied=True
+Wed Oct  7 13:07:00 MSK 2026
+baad65206897c8c77a75ddf7d5721ae4bc61c1ab
+GPUs=0,1 updates=64 global_batch=64 micro_batch_per_gpu=2 epochs=1 overrides=
+updates logged 64 max 64 target_tokens_sum 1674287
+step1 (2.0810437202453613, 0.0016666666666666666, '51.3130989074707', 27692) step6 (1.110144853591919, 0.01, '5.343983173370361', 24790) step7 (0.9781085252761841, 0.009992667069255619, '3.927307605743408', 27442) step64 (0.5178154706954956, 0.0, '0.881422758102417', 27871)
+nonfinite gnorm []
+val ['0.5341838002204895']
+errors 0
+export 151936 bfloat16 True
+DONE
+TRAINED
+model
+results
+train.log
+7.6G	/work/runs/14-filtered/model
+===== 15-random-control
+Wed Oct  7 13:26:29 MSK 2026
+train=/work/bench_data/instruct4b/sft/random_control.parquet rows=4248 bytes=7633809 columns=['index', 'output', 'data_source', 'prompt', 'ability', 'reward_model', 'extra_info']
+val=/work/bench_data/instruct4b/sft/dev_untouched.parquet rows=296 bytes=571076 columns=['index', 'output', 'data_source', 'prompt', 'ability', 'reward_model', 'extra_info']
+steps_per_epoch=66 epochs=1 updates=64 rows_processed=4096 distinct_rows_processed=4096
+model=/work/assets/models/Qwen3-4B-instruct-add-special-token vocab_size=151936 dtype=torch.bfloat16 tied=True
+Wed Oct  7 13:19:24 MSK 2026
+dbe704be475ab4f69a4e420308b62cd0e415fb35
+GPUs=0,1 updates=64 global_batch=64 micro_batch_per_gpu=2 epochs=1 overrides=
+updates logged 64 max 64 target_tokens_sum 1680811
+step1 (2.128645896911621, 0.0016666666666666666, '53.65121841430664', 26215) step6 (1.0734423398971558, 0.01, '5.338550090789795', 26054) step7 (1.0158588886260986, 0.009992667069255619, '4.227067470550537', 25815) step64 (0.5273494720458984, 0.0, '0.8863672018051147', 26590)
+nonfinite gnorm []
+val ['0.5335721969604492']
+errors 0
+export 151936 bfloat16 True
+DONE
+TRAINED
+model
+results
+train.log
+7.6G	/work/runs/15-random-control/model
+2026-10-07 13:06:52 START bash /work/exps/14-instruct4b-filtered/scripts/instruct4b/gpu_pair.sh hold /work/runs/pairs/matrix-14-15 0
+2026-10-07 13:26:52 END exit=0 bash /work/exps/14-instruct4b-filtered/scripts/instruct4b/gpu_pair.sh hold /work/runs/pairs/matrix-14-15 0
+2026-10-07 13:26:52 END exit=0 bash /work/exps/14-instruct4b-filtered/scripts/instruct4b/gpu_pair.sh hold /work/runs/pairs/matrix-14-15 1
+/work/exps/14-instruct4b-filtered dirty=1
+/work/exps/15-instruct4b-random dirty=1
+/dev/nvme10n1   196G   89G   97G  48% /work

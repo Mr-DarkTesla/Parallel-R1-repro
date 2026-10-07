@@ -1,0 +1,313 @@
+{
+ "base": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/prep-dev-par",
+ "cands": [
+  "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-par"
+ ],
+ "protocol": {
+  "suite": "dev",
+  "mode": "parallel",
+  "budget": 16384,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "generator": "scripts/bench/eval_rollout.sh",
+  "prompts": "/work/bench_data/instruct4b/eval/dev/parallel",
+  "ifeval_scorer_seed": 0
+ },
+ "cross_prompt": false,
+ "proposed_margin_pp": 2.0,
+ "margin_note": "working proposal, not confirmed by the user; applies per benchmark/source",
+ "benchmarks": {
+  "gsm8k_dev": {
+   "samples_per_problem": {
+    "GSM8K_DEV": 4
+   },
+   "metrics": {
+    "14f-dev-par": {
+     "acc_robust": {
+      "base": 92.82,
+      "cand": 81.42,
+      "delta": -11.4,
+      "ci95": [
+       -14.44,
+       -8.53
+      ],
+      "problems": 296,
+      "discordant_problems": 45.3
+     },
+     "acc": {
+      "base": 85.39,
+      "cand": 70.69,
+      "delta": -14.7,
+      "ci95": [
+       -18.58,
+       -10.81
+      ],
+      "problems": 296,
+      "discordant_problems": 65.5
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 90.54,
+      "delta": 90.54,
+      "ci95": [
+       88.77,
+       92.15
+      ],
+      "problems": 296,
+      "discordant_problems": 100.0
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 21.2,
+      "delta": 21.2,
+      "ci95": [
+       18.75,
+       23.65
+      ],
+      "problems": 296,
+      "discordant_problems": 58.8
+     },
+     "no_final_answer": {
+      "base": 1.52,
+      "cand": 0.08,
+      "delta": -1.44,
+      "ci95": [
+       -2.2,
+       -0.76
+      ],
+      "problems": 296,
+      "discordant_problems": 6.4
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {},
+   "primary": "acc_robust"
+  },
+  "math_dev": {
+   "samples_per_problem": {
+    "MATH_DEV": 2
+   },
+   "metrics": {
+    "14f-dev-par": {
+     "acc_robust": {
+      "base": 77.28,
+      "cand": 58.2,
+      "delta": -19.09,
+      "ci95": [
+       -22.72,
+       -15.46
+      ],
+      "problems": 482,
+      "discordant_problems": 42.7
+     },
+     "acc": {
+      "base": 63.59,
+      "cand": 45.33,
+      "delta": -18.26,
+      "ci95": [
+       -22.3,
+       -14.21
+      ],
+      "problems": 482,
+      "discordant_problems": 49.6
+     },
+     "parallel": {
+      "base": 1.04,
+      "cand": 89.21,
+      "delta": 88.17,
+      "ci95": [
+       86.2,
+       90.15
+      ],
+      "problems": 482,
+      "discordant_problems": 99.2
+     },
+     "valid_tags": {
+      "base": 0.52,
+      "cand": 17.63,
+      "delta": 17.12,
+      "ci95": [
+       14.83,
+       19.5
+      ],
+      "problems": 482,
+      "discordant_problems": 33.8
+     },
+     "no_final_answer": {
+      "base": 1.87,
+      "cand": 0.0,
+      "delta": -1.87,
+      "ci95": [
+       -2.8,
+       -1.04
+      ],
+      "problems": 482,
+      "discordant_problems": 3.7
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {
+    "type=Algebra": {
+     "14f-dev-par": {
+      "base": 89.13,
+      "cand": 74.78,
+      "delta": -14.35,
+      "ci95": [
+       -21.3,
+       -7.83
+      ],
+      "problems": 115,
+      "discordant_problems": 37.4
+     }
+    },
+    "type=Counting & Probability": {
+     "14f-dev-par": {
+      "base": 83.7,
+      "cand": 57.61,
+      "delta": -26.09,
+      "ci95": [
+       -38.04,
+       -15.22
+      ],
+      "problems": 46,
+      "discordant_problems": 39.1
+     }
+    },
+    "type=Geometry": {
+     "14f-dev-par": {
+      "base": 64.29,
+      "cand": 41.84,
+      "delta": -22.45,
+      "ci95": [
+       -33.67,
+       -11.22
+      ],
+      "problems": 49,
+      "discordant_problems": 36.7
+     }
+    },
+    "type=Intermediate Algebra": {
+     "14f-dev-par": {
+      "base": 59.15,
+      "cand": 34.15,
+      "delta": -25.0,
+      "ci95": [
+       -35.37,
+       -14.63
+      ],
+      "problems": 82,
+      "discordant_problems": 54.9
+     }
+    },
+    "type=Number Theory": {
+     "14f-dev-par": {
+      "base": 84.04,
+      "cand": 65.96,
+      "delta": -18.09,
+      "ci95": [
+       -29.79,
+       -6.38
+      ],
+      "problems": 47,
+      "discordant_problems": 31.9
+     }
+    },
+    "type=Prealgebra": {
+     "14f-dev-par": {
+      "base": 87.93,
+      "cand": 76.44,
+      "delta": -11.49,
+      "ci95": [
+       -18.97,
+       -4.02
+      ],
+      "problems": 87,
+      "discordant_problems": 37.9
+     }
+    },
+    "type=Precalculus": {
+     "14f-dev-par": {
+      "base": 63.39,
+      "cand": 39.29,
+      "delta": -24.11,
+      "ci95": [
+       -34.82,
+       -13.39
+      ],
+      "problems": 56,
+      "discordant_problems": 60.7
+     }
+    },
+    "level=Level 1": {
+     "14f-dev-par": {
+      "base": 87.5,
+      "cand": 76.39,
+      "delta": -11.11,
+      "ci95": [
+       -22.22,
+       0.0
+      ],
+      "problems": 36,
+      "discordant_problems": 33.3
+     }
+    },
+    "level=Level 2": {
+     "14f-dev-par": {
+      "base": 85.12,
+      "cand": 73.21,
+      "delta": -11.9,
+      "ci95": [
+       -20.83,
+       -2.98
+      ],
+      "problems": 84,
+      "discordant_problems": 41.7
+     }
+    },
+    "level=Level 3": {
+     "14f-dev-par": {
+      "base": 89.43,
+      "cand": 65.85,
+      "delta": -23.58,
+      "ci95": [
+       -30.49,
+       -17.07
+      ],
+      "problems": 123,
+      "discordant_problems": 42.3
+     }
+    },
+    "level=Level 4": {
+     "14f-dev-par": {
+      "base": 72.86,
+      "cand": 54.29,
+      "delta": -18.57,
+      "ci95": [
+       -26.19,
+       -10.95
+      ],
+      "problems": 105,
+      "discordant_problems": 41.0
+     }
+    },
+    "level=Level 5": {
+     "14f-dev-par": {
+      "base": 61.94,
+      "cand": 39.93,
+      "delta": -22.01,
+      "ci95": [
+       -29.48,
+       -14.55
+      ],
+      "problems": 134,
+      "discordant_problems": 47.8
+     }
+    }
+   },
+   "primary": "acc_robust"
+  }
+ },
+ "not_compared": []
+}

@@ -1,0 +1,78 @@
+2026-10-07 13:06:36 MICRO=2 bash matrix/m.sh launch
+2026-10-07 13:27:39 m.sh enqueue 0 14 dev no-thinking
+2026-10-07 13:27:39 m.sh enqueue 0 15 dev no-thinking
+2026-10-07 13:27:39 m.sh enqueue 0 14 dev parallel
+2026-10-07 13:27:39 m.sh enqueue 0 15 dev parallel
+2026-10-07 13:27:39 m.sh enqueue 0 14 dev thinking mmlu_pro_dev
+2026-10-07 13:27:39 m.sh enqueue 0 15 dev thinking mmlu_pro_dev
+2026-10-07 13:27:39 m.sh enqueue 1 14 dev thinking gsm8k_dev
+2026-10-07 13:27:39 m.sh enqueue 1 14 dev thinking math_dev
+2026-10-07 13:27:39 m.sh enqueue 1 14 dev thinking arc_dev
+2026-10-07 13:27:39 m.sh enqueue 1 15 dev thinking gsm8k_dev
+2026-10-07 13:27:39 m.sh enqueue 1 15 dev thinking math_dev
+2026-10-07 13:27:39 m.sh enqueue 1 15 dev thinking arc_dev
+(previous 12 enqueue attempts failed locally at arg parsing: nothing queued)
+2026-10-07 13:27:46 m.sh enqueue 0 14 dev no-thinking
+2026-10-07 13:27:46 m.sh enqueue 0 15 dev no-thinking
+2026-10-07 13:27:46 m.sh enqueue 0 14 dev parallel
+2026-10-07 13:27:46 m.sh enqueue 0 15 dev parallel
+2026-10-07 13:27:46 m.sh enqueue 0 14 dev thinking mmlu_pro_dev
+2026-10-07 13:27:46 m.sh enqueue 0 15 dev thinking mmlu_pro_dev
+2026-10-07 13:27:46 m.sh enqueue 1 14 dev thinking gsm8k_dev
+2026-10-07 13:27:46 m.sh enqueue 1 14 dev thinking math_dev
+2026-10-07 13:27:46 m.sh enqueue 1 14 dev thinking arc_dev
+2026-10-07 13:27:46 m.sh enqueue 1 15 dev thinking gsm8k_dev
+2026-10-07 13:27:46 m.sh enqueue 1 15 dev thinking math_dev
+2026-10-07 13:27:46 m.sh enqueue 1 15 dev thinking arc_dev
+(second attempt also failed locally: zsh no word splitting; nothing queued)
+2026-10-07 13:27:54 m.sh enqueue 0 14 dev no-thinking
+2026-10-07 13:27:57 m.sh enqueue 0 15 dev no-thinking
+2026-10-07 13:28:01 m.sh enqueue 0 14 dev parallel
+2026-10-07 13:28:04 m.sh enqueue 0 15 dev parallel
+2026-10-07 13:28:08 m.sh enqueue 0 14 dev thinking mmlu_pro_dev
+2026-10-07 13:28:11 m.sh enqueue 0 15 dev thinking mmlu_pro_dev
+2026-10-07 13:28:14 m.sh enqueue 1 14 dev thinking gsm8k_dev
+2026-10-07 13:28:17 m.sh enqueue 1 14 dev thinking math_dev
+2026-10-07 13:28:19 m.sh enqueue 1 14 dev thinking arc_dev
+2026-10-07 13:28:22 m.sh enqueue 1 15 dev thinking gsm8k_dev
+2026-10-07 13:28:27 m.sh enqueue 1 15 dev thinking math_dev
+2026-10-07 13:28:29 m.sh enqueue 1 15 dev thinking arc_dev
+2026-10-07 13:28:37 m.sh pull
+2026-10-07 13:45:43 cmp.sh dev-nothink_14f-vs-c0 dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/c0-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-nothink 
+2026-10-07 13:45:45 cmp.sh dev-nothink_14f-vs-prep dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/prep-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-nothink 
+2026-10-07 13:58:26 cmp.sh dev-nothink_15r-vs-c0 dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/c0-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-nothink 
+2026-10-07 13:58:27 cmp.sh dev-nothink_15r-vs-prep dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/prep-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-nothink 
+2026-10-07 13:58:29 cmp.sh dev-nothink_14f-vs-15r dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-nothink 
+2026-10-07 14:10:28 python3 matrix_continue/launch_review.py (read-only reviewer)
+2026-10-07 14:28:08 syncpar.sh 14
+2026-10-07 14:28:08 syncpar.sh 15
+2026-10-07 14:28:22 syncpar.sh 14
+2026-10-07 14:28:36 syncpar.sh 15
+2026-10-07 14:30:12 m.sh enqueue 0 14 dev parallel
+2026-10-07 14:30:16 m.sh enqueue 0 15 dev parallel
+2026-10-07 14:36:26 rebalance: move 15r-dev-think math_dev, arc_dev lines gpu1 -> gpu0 (non-head, under both edit locks)
+2026-10-07 14:47:05 cmp.sh dev-nothink_14f-vs-13 dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/13-control-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-nothink 
+2026-10-07 14:47:06 cmp.sh dev-nothink_15r-vs-13 dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/13-control-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-nothink 
+2026-10-07 14:47:07 cmp.sh dev-nothink_13-vs-c0 dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/c0-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/13-control-dev-nothink 
+2026-10-07 16:09:22 cmp.sh dev-think_14f-vs-c0 dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/c0-dev-think /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-think 
+2026-10-07 16:18:01 cmp.sh dev-par_14f-vs-15r dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-par /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-par 
+2026-10-07 16:18:02 cmp.sh dev-cross_14f-par-vs-nothink dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-par --cross-prompt
+2026-10-07 16:18:03 cmp.sh dev-cross_15r-par-vs-nothink dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-nothink /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-par --cross-prompt
+2026-10-07 17:56:30 cmp.sh dev-think_15r-vs-c0 dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/executor_launch/eval/c0-dev-think /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-think 
+2026-10-07 17:56:32 cmp.sh dev-think_14f-vs-15r dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-think /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-think 
+2026-10-07 17:57:14 m.sh enqueue 0 14 frozen no-thinking
+2026-10-07 17:57:18 m.sh enqueue 0 15 frozen no-thinking
+2026-10-07 17:57:24 m.sh enqueue 0 14 frozen parallel
+2026-10-07 17:57:30 m.sh enqueue 0 15 frozen parallel
+2026-10-07 17:57:35 m.sh enqueue 0 14 frozen thinking apo
+2026-10-07 17:57:42 m.sh enqueue 0 14 frozen thinking arc
+2026-10-07 17:57:46 m.sh enqueue 0 14 frozen thinking ifeval
+2026-10-07 17:57:50 m.sh enqueue 0 14 frozen thinking mmlu_pro
+2026-10-07 17:57:53 m.sh enqueue 0 15 frozen thinking apo
+2026-10-07 17:57:58 m.sh enqueue 0 15 frozen thinking arc
+2026-10-07 17:58:04 m.sh enqueue 0 15 frozen thinking ifeval
+2026-10-07 17:58:09 m.sh enqueue 0 15 frozen thinking mmlu_pro
+2026-10-07 17:58:14 m.sh enqueue 1 14 frozen thinking limo
+2026-10-07 17:58:20 m.sh enqueue 1 15 frozen thinking limo
+2026-10-07 18:36:14 cmp.sh dev-par_14f-vs-prep dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/prep-dev-par /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/14f-dev-par 
+2026-10-07 18:36:15 cmp.sh dev-par_15r-vs-prep dev /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/prep-dev-par /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/matrix_continue/eval/15r-dev-par 
