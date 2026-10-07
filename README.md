@@ -111,6 +111,10 @@ that setup; the launcher accepts any checkpoint and does not infer its SFT mode.
 S1 and S2 start independently from the same SFT. Existing repository Parquets
 have identical questions/order (17,917 train, 1,916 validation); only the S2
 train reward differs. Validation always uses accuracy. No dataset copying is needed.
+The Qwen RL profile retains batch256, mini128, micro2 and token-mean loss.
+S2 uses the author's reward: eight accuracy-only steps, followed by two steps
+where a correct, well-formed parallel answer receives +1.2 (plain correct: +1;
+incorrect or malformed parallel: -1). Start S2 from Unseen-SFT with a new run name.
 Results go to `<output>/rl/<PARALLEL_R1_RL_NAME>` (default name `qwen06-s1-seed1`
 or `qwen06-s2-seed1`); set a new name for each independent run. Continue an
 existing run by passing `trainer.resume_mode=auto trainer.val_before_train=true`.
@@ -128,6 +132,19 @@ this uses more gradient memory and changes BF16 accumulation rounding.
 `actor_rollout_ref.rollout.max_num_seqs` controls inference concurrency separately
 from the training batch. Re-measure full steps after changing it, including
 validation/checkpoint time in the completion estimate.
+For a small actor on a one-dimensional FSDP1 mesh,
+`++actor_rollout_ref.actor.fsdp_config.sharding_strategy=NO_SHARD` keeps model,
+optimizer and gradients replicated on each GPU while retaining gradient all-reduce.
+`SHARD_GRAD_OP` keeps optimizer states sharded and avoids resharding within
+`no_sync`. The default `auto` retains the original full/hybrid sharding.
+These options trade memory for communication; validate gradient equivalence,
+checkpoint/export and full-step time before using them for a run.
+With `NO_SHARD`, `defer_gradient_sync=true`, zero entropy coefficient and no KL loss,
+`++actor_rollout_ref.actor.skip_zero_advantage_microbatches=true` can omit zero-gradient
+microbatches. Original microbatch normalization and every optimizer update remain;
+the final microbatch always runs on all ranks to synchronize gradients. The skipped
+fraction is logged, and PPO KL is named `actor/ppo_kl_active_microbatches` because
+it covers only executed microbatches. Old-log-prob and entropy logging still cover all rows.
 
 The shared dependency file remains `verl/requirements-qwen3.txt`. It uses
 Transformers 4.53.2, Ray 2.48.0 and TensorDict 0.8.3; the earlier RL environment

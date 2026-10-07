@@ -460,6 +460,14 @@ class DataParallelPPOActor(BasePPOActor):
         if self.config.get("defer_gradient_sync", False) and isinstance(self.actor_module, FSDP):
             assert not self.actor_module.cpu_offload.offload_params, "Deferred gradient sync requires GPU parameters"
 
+        skip_zero = self.config.get("skip_zero_advantage_microbatches", False)
+        if skip_zero:
+            assert self.config.entropy_coeff == 0 and not self.config.use_kl_loss
+            assert self.config.policy_loss.loss_mode == "vanilla" and not self.config.use_dynamic_bsz
+            assert self.config.get("defer_gradient_sync", False)
+            assert isinstance(self.actor_module, FSDP)
+            assert all(m.sharding_strategy.name == "NO_SHARD" for m in FSDP.fsdp_modules(self.actor_module))
+
         temperature = data.meta_info["temperature"]  # temperature must be in the data.meta_info to avoid silent error
 
         select_keys = [
@@ -509,6 +517,15 @@ class DataParallelPPOActor(BasePPOActor):
                 self.actor_optimizer.zero_grad()
 
                 for micro_index, micro_batch in enumerate(micro_batches):
+                    # Keep the final backward on every rank to reduce all accumulated gradients.
+                    # The denominator remains the ORIGINAL microbatch count, even when work is skipped.
+                    omit = (skip_zero and micro_index < len(micro_batches) - 1
+                            and not torch.any(micro_batch.batch["advantages"] != 0).item())
+                    if skip_zero:
+                        append_to_dict(metrics, {"perf/skipped_zero_advantage_microbatch_fraction": float(omit)})
+                    if omit:
+                        append_to_dict(metrics, {"actor/pg_loss": 0., "actor/pg_clipfrac": 0., "actor/pg_clipfrac_lower": 0.})
+                        continue
                     # The final backward synchronizes the complete accumulated gradient.
                     defer_sync = (self.config.get("defer_gradient_sync", False)
                                   and isinstance(self.actor_module, FSDP)
@@ -597,7 +614,7 @@ class DataParallelPPOActor(BasePPOActor):
                             {
                                 "actor/pg_loss": pg_loss.detach().item(),
                                 "actor/pg_clipfrac": pg_clipfrac.detach().item(),
-                                "actor/ppo_kl": ppo_kl.detach().item(),
+                                "actor/ppo_kl_active_microbatches" if skip_zero else "actor/ppo_kl": ppo_kl.detach().item(),
                                 "actor/pg_clipfrac_lower": pg_clipfrac_lower.detach().item(),
                             }
                         )

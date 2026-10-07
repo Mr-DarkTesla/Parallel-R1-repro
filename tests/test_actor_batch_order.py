@@ -15,6 +15,11 @@ class Config(dict):
 class RecordingFSDP(torch.nn.Linear):
     deferred = False
     cpu_offload = SimpleNamespace(offload_params=False)
+    sharding_strategy = SimpleNamespace(name="NO_SHARD")
+
+    @staticmethod
+    def fsdp_modules(model):
+        return [model]
 
     @contextmanager
     def no_sync(self):
@@ -91,6 +96,34 @@ class OrderTest(unittest.TestCase):
             actor.gradients.append(grad.clone()); actor.actor_optimizer.step(); return grad.norm()
         actor._forward_micro_batch = forward; actor._optimizer_step = step
         return actor
+
+    def test_zero_advantage_skips_preserve_adam_updates_and_final_sync(self):
+        data = self.data()
+        # First optimizer minibatch contains signal; second is entirely zero.
+        # Adam must still apply its momentum on the second update.
+        data.batch['advantages'][:2] = 0
+        data.batch['advantages'][4:] = 0
+        reference, actual = self.actor(False, deferred=True), self.actor(False, deferred=True)
+        for actor in (reference, actual):
+            actor.actor_optimizer = torch.optim.Adam(actor.actor_module.parameters(), lr=.03)
+        actual.config['skip_zero_advantage_microbatches'] = True
+        outputs = [ns['update_policy'](a, data) for a in (reference, actual)]
+        self.assertEqual(actual.deferred, [True, False, False])
+        self.assertEqual(len(actual.gradients), 2)
+        for expected, observed in zip(reference.gradients, actual.gradients):
+            torch.testing.assert_close(observed, expected)
+        for expected, observed in zip(reference.actor_module.parameters(), actual.actor_module.parameters()):
+            torch.testing.assert_close(observed, expected)
+        self.assertEqual(sum(outputs[1]['perf/skipped_zero_advantage_microbatch_fraction']), 3)
+        self.assertNotIn('actor/ppo_kl', outputs[1])
+        self.assertIn('actor/ppo_kl_active_microbatches', outputs[1])
+
+    def test_zero_skip_rejects_additional_gradient_terms(self):
+        actor = self.actor(False, deferred=True)
+        actor.config['skip_zero_advantage_microbatches'] = True
+        actor.config['entropy_coeff'] = .01
+        with self.assertRaises(AssertionError):
+            ns['update_policy'](actor, self.data())
 
     def test_last_microbatch_synchronizes_each_optimizer_update(self):
         reference, actual = self.actor(True), self.actor(True, deferred=True)
