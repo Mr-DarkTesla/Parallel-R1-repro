@@ -84,3 +84,11 @@ copy-attempt3-success.log).
 `/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/migration_acceptance_alias/evidence-20261007-030709/verification.json`.
 Чистая инфраструктурная ветка и публикация проверены отдельно. Локальный архив main содержит 84 JSON метрик,
 в том числе 40 результатов 16k и четыре greedy IFEval.
+
+## Повторная приёмка после простоя 07.10
+
+К 11:55 оба новых StatefulSet имели replicas=0. Авторизация Teleport истекла в 11:51; вход восстановлен до 08.10 11:54. Старый основной StatefulSet оставлен replicas=0. Подняты только A/B с прежними PVC и обязательным размещением на разных узлах.
+
+Свежая полная приёмка 2026-10-07T12:14:20+0300: **65/65 успешно**. A: `ml-kub-node803.i`; B: `ml-kub-node806.i`. На каждом по 2 H100, обе GPU простаивают, очереди пусты, незапланированных ML-процессов нет. Данные, COPY_READY и импорты повторно проверены.
+
+Журнал: `/Users/v.charkin/Documents/ChatGPT/R1/outputs/continuation-2026-10-06/heartbeats/2026-10-07-current-acceptance/evidence-20261007-121129/verification.json`. После публикации этой приёмки root выдаёт MIGRATION_READY и отключает автоматизацию переноса.
