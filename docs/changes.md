@@ -104,3 +104,7 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     after removing only the structural tags. A mismatch stops the run before training.
 11. `scripts/exp21/sample_review.py` selects the same 30 problem IDs for independent review of M1 and M2, stratified across
     GSM8K and MATH integer, fraction and expression answers. The seed and sampled JSONL are saved with the audit.
+12. Exp 21 publishes the 187 paired M1/M2 rows, shared replay, exact training parquets, dataset cards and manual audit in
+    `results/21-qwen3-0.6b-multiverse/`. Both SFT runs use 64 updates and the same recipe. `score.py` now starts the
+    forward-pass count from generated token count, so the final EOS step is included even for an answer without blocks.
+    Runs scored before this change are corrected from saved dumps by `add_efficiency.py` into separate analysis directories.

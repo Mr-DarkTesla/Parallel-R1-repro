@@ -90,13 +90,14 @@ frame["mv_tags"], frame["mv_valid"] = mv.map(lambda r: r["tags"]), mv.map(lambda
 frame["mv_blocks"], frame["mv_numbered"] = mv.map(lambda r: len(r["blocks"])), mv.map(lambda r: r["valid"] and all(b["numbered"] for b in r["blocks"]))
 frame["mv_started_blocks"] = pd.concat([answers.str.count("<Parallel>"), answers.str.count("</Parallel>")], axis=1).max(axis=1)
 frame["mv_valid_blocks"] = mv.map(lambda r: sum(b["numbered"] for b in r["blocks"]))
+if "tokens" in generations:
+    frame["tokens"] = generations["tokens"]
 if os.environ.get("EXP21_TOKENIZER"):
     from transformers import AutoTokenizer
     _tok = AutoTokenizer.from_pretrained(os.environ["EXP21_TOKENIZER"])
     _count = lambda text: len(_tok(text, add_special_tokens=False)["input_ids"])  # noqa: E731
-    frame["forward_passes"] = [forward_passes(a, _count) for a in answers]
-if "tokens" in generations:
-    frame["tokens"] = generations["tokens"]
+    savings = [_count(a) - forward_passes(a, _count) for a in answers]
+    frame["forward_passes"] = (frame["tokens"] if "tokens" in frame else answers.map(_count)) - savings
 frame["chars"] = answers.str.len()
 if "truncated" in generations:
     frame["truncated"] = generations["truncated"]
