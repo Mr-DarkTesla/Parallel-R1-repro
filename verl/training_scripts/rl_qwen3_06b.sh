@@ -22,5 +22,5 @@ export OMP_NUM_THREADS=${OMP_NUM_THREADS:-4}
 export WANDB_MODE=${WANDB_MODE:-offline}
 export WANDB_DIR="$PARALLEL_R1_RL_DIR"
 export PARALLEL_R1_TRACE_DIR=${PARALLEL_R1_TRACE_DIR:-$PARALLEL_R1_RL_DIR/telemetry}
-python -m verl.trainer.main_ppo --config-name=rl_qwen3_06b \
+python -m verl.trainer.main_ppo --config-name="${PARALLEL_R1_RL_CONFIG:-rl_qwen3_06b}" \
   trainer.n_gpus_per_node="${NPROC_PER_NODE:-1}" "$@" 2>&1 | tee -a "$PARALLEL_R1_RL_DIR/train.log"

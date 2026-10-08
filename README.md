@@ -20,12 +20,17 @@ relative to upstream `main` (`f1c6389`). Its main entry point is
 - **S1/S2 RL:** a common launcher, author batch/loss defaults and S2 reward
   schedule, local rollout/GRPO telemetry, optional forward probes, atomic
   checkpoint tracking, and checkpoint saving before lengthy validation.
+- **Efficiency RL experiments:** critical decode-depth telemetry, a cost applied
+  only to correct solutions, a parallel-efficiency bonus, and optional split
+  GRPO advantages that preserve the auxiliary coefficient. See the
+  [formulas and launch recipe](docs/efficiency-rl.md) and the
+  [October 7–8 experiment report](docs/experiments/2026-10-08.md).
 - **Performance controls:** padding and unused prompt-logit trimming, token-only
   final vLLM outputs, optional microbatch scheduling and deferred gradient sync,
   configurable FSDP sharding, guarded zero-advantage skipping, and opt-in full
   decode graphs. The detailed conditions and memory tradeoffs are documented below.
 - **Regression checks:** CPU tests for generation, PPO loss/gradients, ordering,
-  sharding guards and S2 rewards, plus optional CUDA checks for fused kernels
+  sharding guards, S2 and efficiency rewards, plus optional CUDA checks for fused kernels
   and decode graphs.
 
 The published 4B results below are upstream results, not measurements of this

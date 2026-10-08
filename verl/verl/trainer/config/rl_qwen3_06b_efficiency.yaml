@@ -1,0 +1,41 @@
+# Independent runs from the same Unseen-SFT checkpoint; not a continuation of RL.
+defaults:
+  - rl_qwen3_06b
+  - _self_
+
+data:
+  train_batch_size: 32
+  val_batch_size: 256
+  seed: 20261008
+
+actor_rollout_ref:
+  actor:
+    ppo_mini_batch_size: 16
+    checkpoint:
+      save_contents: [model, optimizer, extra, hf_model]
+      load_contents: [model, optimizer, extra]
+  rollout:
+    log_prob_micro_batch_size_per_gpu: 4
+    agent:
+      num_workers: 32
+
+algorithm:
+  split_accuracy_aux: true
+
+custom_reward_function:
+  path: ${oc.env:PARALLEL_R1_EFFICIENCY_REWARD_PATH}
+  name: compute_score
+  reward_kwargs:
+    mode: ${oc.env:PARALLEL_R1_EFFICIENCY_MODE}
+    depth_lambda: 0.0001
+    bonus_alpha: 0.2
+
+trainer:
+  total_training_steps: 400
+  save_freq: 100
+  test_freq: 50
+  max_actor_ckpt_to_keep: 2
+  logger: [console]
+
+ray_init:
+  num_cpus: 64
