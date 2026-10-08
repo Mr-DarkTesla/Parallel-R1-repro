@@ -102,3 +102,5 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 10. `scripts/exp21/audit_sft_parity.py` checks the completed SFT parquets before GPU training: paired M1/M2 problem IDs,
     identical replay texts and split membership, equal repetitions and prompts, and control answers equal the chosen method
     after removing only the structural tags. A mismatch stops the run before training.
+11. `scripts/exp21/sample_review.py` selects the same 30 problem IDs for independent review of M1 and M2, stratified across
+    GSM8K and MATH integer, fraction and expression answers. The seed and sampled JSONL are saved with the audit.
