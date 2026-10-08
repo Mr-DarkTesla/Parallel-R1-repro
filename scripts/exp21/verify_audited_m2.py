@@ -19,7 +19,9 @@ def main():
         ap.add_argument(name)
     args = ap.parse_args()
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
-    graded = {(r["id"], r["sample"]): r["output"] for r in read(args.graded_nt) if r["correct"]}
+    # Keep the original even if the grader rejected a percent sign around an
+    # otherwise correct answer; the explicit normalization below checks it.
+    graded = {(r["id"], r["sample"]): r["output"] for r in read(args.graded_nt)}
     rows = read(args.selected)
     assert len(rows) == len({r["id"] for r in rows})
     issues = []
@@ -27,12 +29,14 @@ def main():
     verbatim_checked = 0
     percent_notation_accepted = []
     for row in rows:
-        original = graded.get((row["id"], row["sample"])) if "sample" in row else None
-        if "sample" in row:
-            verbatim_checked += 1
-            if original is None:
-                issues.append([row["id"], "missing_original"])
-                continue
+        if "sample" not in row:
+            issues.append([row["id"], "missing_sample"])
+            continue
+        original = graded.get((row["id"], row["sample"]))
+        verbatim_checked += 1
+        if original is None:
+            issues.append([row["id"], "missing_original"])
+            continue
         checked = check(row["response"], row["answer"], row["source"], original=original)
         if checked["issues"] == ["wrong_answer"] and "percent" in row["question"].lower():
             blocks = parse(row["response"])["blocks"]
@@ -48,7 +52,7 @@ def main():
         length_max["total"] = max(length_max["total"], prompt_tokens + response_tokens)
         if response_tokens > 2048 or prompt_tokens + response_tokens > 4096:
             issues.append([row["id"], "length"])
-    result = {"rows": len(rows), "verbatim_checked_new": verbatim_checked,
+    result = {"rows": len(rows), "verbatim_checked": verbatim_checked,
               "percent_notation_accepted": percent_notation_accepted, "max_tokens": length_max,
               "issues": issues, "ok": not issues}
     with open(args.output, "w") as f:

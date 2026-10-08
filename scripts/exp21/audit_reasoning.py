@@ -24,7 +24,8 @@ def audit(row):
         assert verdict["status"] in {"clean", "error", "incomplete", "uncertain"}
     except (ValueError, KeyError, AssertionError):
         verdict = {"status": "uncertain", "issue": "Could not parse auditor reply", "quote": ""}
-    return {"id": row["id"], "status": verdict["status"], "issue": verdict.get("issue", ""),
+    return {"id": row["id"], "question": row["question"], "answer": row["answer"],
+            "response": row["response"], "status": verdict["status"], "issue": verdict.get("issue", ""),
             "quote": verdict.get("quote", ""), "cost_usd": result.get("cost_usd"),
             "is_error": result.get("is_error", False)}
 
@@ -37,16 +38,25 @@ def main():
     args = ap.parse_args()
     rows = [json.loads(s) for s in open(args.input)]
     out = Path(args.output)
-    done = {r["id"] for r in (json.loads(s) for s in out.read_text().splitlines())} if out.exists() else set()
+    previous = [json.loads(s) for s in out.read_text().splitlines()] if out.exists() else []
+    done = {r["id"]: r for r in previous}
+    assert len(done) == len(previous)
+    assert len(rows) == len({r["id"] for r in rows})
+    for row in rows:
+        if row["id"] in done:
+            assert all(done[row["id"]].get(k) == row[k] for k in ("question", "answer", "response")), row["id"]
     todo = [r for r in rows if r["id"] not in done]
     print(f"Auditing {len(todo)} of {len(rows)} rows", flush=True)
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool, out.open("a") as f:
-        futures = {pool.submit(audit, row): row["id"] for row in todo}
+        futures = {pool.submit(audit, row): row for row in todo}
         for i, future in enumerate(concurrent.futures.as_completed(futures), 1):
             try:
                 result = future.result()
             except Exception as e:
-                result = {"id": futures[future], "status": "uncertain", "issue": str(e), "quote": "", "cost_usd": None, "is_error": True}
+                row = futures[future]
+                result = {"id": row["id"], "question": row["question"], "answer": row["answer"],
+                          "response": row["response"], "status": "uncertain", "issue": str(e),
+                          "quote": "", "cost_usd": None, "is_error": True}
             f.write(json.dumps(result, ensure_ascii=False) + "\n")
             f.flush()
             if i % 10 == 0 or result["status"] != "clean":

@@ -3,6 +3,7 @@ import argparse
 import collections
 import json
 import random
+from pathlib import Path
 
 
 def read(path):
@@ -36,6 +37,13 @@ def main():
         with open(f"{args.out_prefix}_{suffix}.jsonl", "w") as f:
             for r in rows:
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    manifest = {"selected": args.selected, "seed": args.seed, "exclude_files": args.exclude,
+                "excluded_prior_ids": sorted(excluded),
+                "quotas": [{"source": s, "answer_type": k, "independent": ni, "self": ns}
+                           for s, k, ni, ns in quotas],
+                "independent40_ids": [r["id"] for r in independent],
+                "self20_ids": [r["id"] for r in self_review]}
+    Path(f"{args.out_prefix}_sampling.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({"independent40": len(independent), "self20": len(self_review), "excluded_prior_ids": len(excluded)}))
 
 

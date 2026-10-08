@@ -136,3 +136,10 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     lengths and original-Qwen text on the pod; only two percentage suffixes require explicit semantic normalization.
     A fresh, disjoint manual sample of 20 plus independent 40 passes the quality gate. The old M2 model and data remain
     as preliminary provenance; a new M2 SFT uses the audited set with identical row counts and kind counts to M1.
+19. The auditor now persists the exact question, answer and response in every verdict and checks them before resuming.
+    Audited selection verifies each task against the leak-checked pool and each verdict against its candidate; it recovers
+    original Qwen sample IDs for all 187 rows. `verify_audited_m2.py` checks every selected row verbatim against its
+    original generation, including two correct percentage answers normalized under an explicit rule. The 40+20 review
+    sample has a saved seed, exclusions, quotas and IDs. Nine failed audit calls have no recorded price, so the known
+    proxy cost is a lower bound. The IFEval completion jobs use the benchmark's frozen-suite location after correcting
+    an invalid `suite=ifeval` invocation in the first control queue script.

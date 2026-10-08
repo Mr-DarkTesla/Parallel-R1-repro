@@ -24,11 +24,26 @@ def main():
     ap = argparse.ArgumentParser()
     for name in ("original", "extra", "original_audit", "extra_audit", "out_prefix"):
         ap.add_argument(name)
+    ap.add_argument("--pool", required=True, help="Leak-checked task pool manifest")
+    ap.add_argument("--raw-m2", required=True, help="Qwen generation records for verbatim checks")
     args = ap.parse_args()
     original, extra = read(args.original), read(args.extra)
+    pool = {r["id"]: r for r in read(args.pool)}
+    raw = collections.defaultdict(list)
+    for row in read(args.raw_m2):
+        raw[(row["id"], row["response"])].append(row["sample"])
     audits = {r["id"]: r for path in (args.original_audit, args.extra_audit) for r in read(path)}
     assert len(audits) == len(original) + len(extra)
     assert len({r["id"] for r in original + extra}) == len(original) + len(extra)
+    for row in original + extra:
+        allowed = pool.get(row["id"])
+        assert allowed is not None and all(allowed[k] == row[k] for k in ("source", "question", "answer", "answer_type")), row["id"]
+        verdict = audits[row["id"]]
+        assert all(verdict.get(k) == row[k] for k in ("question", "answer", "response")), row["id"]
+        if "sample" not in row:
+            samples = raw[(row["id"], row["response"])]
+            assert len(samples) == 1, (row["id"], len(samples))
+            row["sample"] = samples[0]
     desired = collections.Counter((r["source"], r["answer_type"]) for r in original)
     eligible = lambda r: audits[r["id"]]["status"] == "clean" and r["id"] not in MANUAL_EXCLUDE
     selected = [r for r in original if eligible(r)]
@@ -64,7 +79,8 @@ def main():
              "audit_status_original": dict(collections.Counter(audits[r["id"]]["status"] for r in original)),
              "audit_status_extra": dict(collections.Counter(audits[r["id"]]["status"] for r in extra)),
              "manual_exclude": sorted(MANUAL_EXCLUDE),
-             "auditor_cost_usd": sum(r.get("cost_usd") or 0 for r in audits.values()),
+             "auditor_known_cost_usd": sum(r.get("cost_usd") or 0 for r in audits.values()),
+             "auditor_unpriced_calls": sum(r.get("cost_usd") is None for r in audits.values()),
              "selected_ids": sorted(retained)}
     prefix.with_name(prefix.name + "_stats.json").write_text(json.dumps(stats, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps({k: v for k, v in stats.items() if k != "selected_ids"}, indent=2))
