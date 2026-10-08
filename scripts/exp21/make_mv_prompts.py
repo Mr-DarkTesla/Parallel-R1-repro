@@ -17,6 +17,12 @@ MV_PARAGRAPH = (
     "After the last path, combine the results of the paths in <Conclusion> and </Conclusion>, close the block with </Parallel> "
     "and continue the solution.\n\n")
 
+# Dev Multiverse parquets were first created before the prompt wording was
+# narrowed for SFT. Preserve their exact header for audited comparisons.
+MV_PARAGRAPH_EARLY = MV_PARAGRAPH.replace(
+    "(separate cases or separate quantities)",
+    "(separate cases, separate quantities, or independent checks)")
+
 
 def mv_prompt(plain):
     assert plain.startswith(FIRST_LINE), plain[:80]

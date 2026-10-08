@@ -19,9 +19,9 @@ Slices (report, not gates), primary metric: --meta-dir with meta/<suite>/<bench>
 and MATH type/level (a compared benchmark without its file is an error); IFEval instruction groups (instruction-level strict) come
 from the rows.
 
---cross-prompt compares a no-thinking run (plain prompts) with a parallel or Multiverse run (the corresponding prompt directory),
-on the benchmarks both runs have: same source, problem id and sample per row; the inserted paragraph is checked exactly and the
-problem text after the first "Problem:" must be equal.
+--cross-prompt compares a no-thinking run (plain prompts) with a parallel or Multiverse run,
+on the benchmarks both runs have: same source, problem id and sample per row; the inserted paragraph is checked exactly against
+the recorded Multiverse prompt versions and the problem text after the first "Problem:" must be equal.
 Budget and sampling are equal only nominally (the rollout has its own length limits and no seed).
 
 Usage: python scripts/instruct4b_eval/paired_compare.py --base <run> --cand <run> [--cand <run2>] [--meta-dir <dir>] [--cross-prompt] --out <out.json>
@@ -35,7 +35,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
-from exp21.make_mv_prompts import FIRST_LINE, MV_PARAGRAPH  # noqa: E402
+from exp21.make_mv_prompts import FIRST_LINE, MV_PARAGRAPH, MV_PARAGRAPH_EARLY  # noqa: E402
 
 PROTOCOL = ("suite", "mode", "budget", "temperature", "top_p", "generator", "prompts", "ifeval_scorer_seed")
 SLICES = ("category", "type", "level")
@@ -63,7 +63,9 @@ def check_cross_prompt(base, cand, where, base_mode):
     (base_header, base_problems), (cand_header, cand_problems) = header_and_problems(base, where), header_and_problems(cand, where)
     plain, special = (base_header, cand_header) if base_mode == "no-thinking" else (cand_header, base_header)
     if "Within each parallel block:" in special:
-        matches = plain.startswith(FIRST_LINE) and special == FIRST_LINE + MV_PARAGRAPH + plain[len(FIRST_LINE):]
+        matches = plain.startswith(FIRST_LINE) and any(
+            special == FIRST_LINE + paragraph + plain[len(FIRST_LINE):]
+            for paragraph in (MV_PARAGRAPH, MV_PARAGRAPH_EARLY))
     else:
         start, end = special.find("During the reasoning process"), special.find("End your response")
         matches = 0 < start < end and special[:start] + special[end:] == plain
@@ -193,8 +195,7 @@ def main():
             pair = {base_meta.get("mode"): str(base_meta.get("prompts")), meta.get("mode"): str(meta.get("prompts"))}
             if (set(pair) not in ({"no-thinking", "parallel"}, {"no-thinking", "multiverse"},
                                   {"no-thinking", "multiverse-branch"})
-                    or any(os.path.basename(p) != CROSS_PROMPTS[m] for m, p in pair.items())
-                    or len({os.path.dirname(p) for p in pair.values()}) != 1):
+                    or any(os.path.basename(p) != CROSS_PROMPTS[m] for m, p in pair.items())):
                 raise ValueError(f"{run}: --cross-prompt needs one no-thinking run on <data>/plain and one structured run: "
                                  f"{base_meta.get('mode'), base_meta.get('prompts')} vs {meta.get('mode'), meta.get('prompts')}")
         keys = [k for k in PROTOCOL if not (args.cross_prompt and k in ("mode", "prompts", "generator"))]

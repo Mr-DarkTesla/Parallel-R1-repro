@@ -118,8 +118,14 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     tags from the answer. `audit_sft_parity.py` checks prompt equality in addition to exact source text after tag removal,
     replay, split and repetition equality. This isolates the tag change within the available SFT comparison.
 15. `scripts/exp21/collect_eval.py` records each source within each benchmark's accuracy, grammar, response length, sequential forward passes,
-    truncation, evaluation mode and code commit in one CSV from the corrected run directories. A partial run over baseline
-    directories produced 28 rows; the report uses the final CSV for its tables.
+    truncation, evaluation mode and code commit in one CSV from the corrected run directories. It reads scored rows to add
+    grammatical-response rate over all responses, distinct from validity among tag users or attempted blocks. A partial run
+    over baseline directories produced 28 rows; the report uses the final CSV for its tables.
 16. `scripts/exp21/audit_branch_rollout.py` reports how often the independent-path decoder joined a block and whether the
     model closed its paths. It explicitly records the Path delimiters and numbers supplied by the decoder, so the resulting
     grammar rate cannot be mistaken for unconstrained left-to-right tag generation.
+17. The first dev Multiverse parquets were created before `make_mv_prompts.py` narrowed the first instruction from
+    "separate cases, separate quantities, or independent checks" to "separate cases or separate quantities" for SFT.
+    Every original dev variant used the same earlier prompt, so comparisons between variants remain paired, but it differs
+    slightly from training. `paired_compare.py` accepts both exact prompt paragraphs and still checks all problem texts.
+    A separate matched-prompt dev evaluation uses newly generated parquets without replacing the earlier artifacts.
