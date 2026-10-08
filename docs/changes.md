@@ -129,3 +129,10 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     Every original dev variant used the same earlier prompt, so comparisons between variants remain paired, but it differs
     slightly from training. `paired_compare.py` accepts both exact prompt paragraphs and still checks all problem texts.
     A separate matched-prompt dev evaluation uses newly generated parquets without replacing the earlier artifacts.
+18. A second independent M2 review found seven substantive reasoning errors in 30 responses despite correct final answers.
+    `audit_reasoning.py` audits every candidate's intermediate text through the VK AI Proxy; `select_m2_audited.py` excludes
+    errors, incomplete proofs and uncertain cases. The audited M2 set keeps 187 rows and the original source/answer-type
+    distribution, with 147 task IDs shared with M1 and 40 replacements. `verify_audited_m2.py` rechecks grammar, answer,
+    lengths and original-Qwen text on the pod; only two percentage suffixes require explicit semantic normalization.
+    A fresh, disjoint manual sample of 20 plus independent 40 passes the quality gate. The old M2 model and data remain
+    as preliminary provenance; a new M2 SFT uses the audited set with identical row counts and kind counts to M1.

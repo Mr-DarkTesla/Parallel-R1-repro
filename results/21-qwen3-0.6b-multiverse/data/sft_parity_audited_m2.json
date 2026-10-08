@@ -1,0 +1,47 @@
+{
+  "m1": {
+    "train": {
+      "rows": 1111,
+      "kinds": {
+        "parallel": 534,
+        "replay_th": 288,
+        "replay_nt": 289
+      },
+      "distinct_ids": 744
+    },
+    "val": {
+      "rows": 50,
+      "kinds": {
+        "parallel": 27,
+        "replay_nt": 11,
+        "replay_th": 12
+      },
+      "distinct_ids": 32
+    }
+  },
+  "m2_audited": {
+    "train": {
+      "rows": 1111,
+      "kinds": {
+        "parallel": 534,
+        "replay_nt": 289,
+        "replay_th": 288
+      },
+      "distinct_ids": 741
+    },
+    "val": {
+      "rows": 50,
+      "kinds": {
+        "parallel": 27,
+        "replay_nt": 11,
+        "replay_th": 12
+      },
+      "distinct_ids": 31
+    }
+  },
+  "replay_nt_same_ids": true,
+  "replay_th_same_ids": true,
+  "tagged_task_overlap": 147,
+  "equal_train_kind_counts": true,
+  "equal_val_kind_counts": true
+}
