@@ -29,6 +29,7 @@ import matplotlib.pyplot as plt
 from verl.utils import hf_tokenizer
 from verl.utils.fs import copy_to_local
 from verl.utils.model import compute_position_id_with_mask
+from verl.utils.dataset.multiverse_structure import dense_mask, multiverse_structure
 
 
 class ParallelThinkingSFTDataset(Dataset):
@@ -50,6 +51,9 @@ class ParallelThinkingSFTDataset(Dataset):
         # Hybrid Qwen3 templates: False renders the native non-thinking prompt (empty <think></think>); None keeps the default
         enable_thinking = config.get("enable_thinking", None)
         self.template_kwargs = {} if enable_thinking is None else {"enable_thinking": enable_thinking}
+        # "multiverse": <Goal>/<Outline>/<Conclusion> format with nested blocks (multiverse_structure.py); default: flat Parallel-R1
+        self.structure = config.get("structure", "parallel_r1")
+        assert self.structure in ("parallel_r1", "multiverse")
 
         assert truncation in ["error", "left", "right"]
         self.truncation = truncation
@@ -76,6 +80,8 @@ class ParallelThinkingSFTDataset(Dataset):
         self.end_path_token = self.tokenizer.encode('</Path>')[0]
         self.start_summary_token = self.tokenizer.encode('<Summary>')[0]
         self.end_summary_token = self.tokenizer.encode('</Summary>')[0]
+        self.structure_tags = {"Parallel": self.start_parallel_token, "/Parallel": self.end_parallel_token,
+                               "Path": self.start_path_token, "/Path": self.end_path_token}
 
         self._download()
         self._read_files_and_tokenize()
@@ -124,6 +130,10 @@ class ParallelThinkingSFTDataset(Dataset):
         if isinstance(self.responses, pd.DataFrame):
             self.responses = self.responses.squeeze()
         self.responses = self.responses.tolist()
+        # Optional per-row template mode extra_info["enable_thinking"] (exp 21 mixes thinking and non-thinking rows): it overrides
+        # data.enable_thinking for that row; rows without it keep the dataset-wide setting
+        extra = self.dataframe["extra_info"].tolist() if "extra_info" in self.dataframe else [None] * len(self.prompts)
+        self.row_thinking = [x.get("enable_thinking") if isinstance(x, dict) else None for x in extra]
 
     def generate_parallel_thinking_reasponse_mask(self, response_ids: torch.Tensor) -> torch.Tensor:
         """
@@ -382,7 +392,8 @@ class ParallelThinkingSFTDataset(Dataset):
         prompt_chat = [{"role": "user", "content": prompt}]
         # print(prompt_chat)
         # string
-        prompt_chat_str = tokenizer.apply_chat_template(prompt_chat, add_generation_prompt=True, tokenize=False, **self.template_kwargs)
+        template_kwargs = self.template_kwargs if self.row_thinking[item] is None else {"enable_thinking": bool(self.row_thinking[item])}
+        prompt_chat_str = tokenizer.apply_chat_template(prompt_chat, add_generation_prompt=True, tokenize=False, **template_kwargs)
         response_chat_str = response + tokenizer.eos_token
 
         # tokenize
@@ -427,7 +438,12 @@ class ParallelThinkingSFTDataset(Dataset):
 
         # The prompt may mention the tags in its instruction: it stays causal, only the response has parallel structure
         attention_mask = torch.ones(len(input_ids), len(input_ids), dtype=torch.bool).tril()
-        attention_mask[prompt_length:, prompt_length:] = self.generate_parallel_thinking_reasponse_mask(input_ids[prompt_length:])
+        if self.structure == "multiverse":
+            resp = input_ids[prompt_length:prompt_length + response_length].tolist()
+            mv_pos, mv_groups = multiverse_structure(resp, self.structure_tags)
+            attention_mask[prompt_length:prompt_length + len(resp), prompt_length:prompt_length + len(resp)] = dense_mask(len(resp), mv_groups)
+        else:
+            attention_mask[prompt_length:, prompt_length:] = self.generate_parallel_thinking_reasponse_mask(input_ids[prompt_length:])
 
         if sequence_length < self.max_length:
             attention_mask[:,-(self.max_length - sequence_length):] = False
@@ -440,7 +456,11 @@ class ParallelThinkingSFTDataset(Dataset):
         float_attention_mask = float_attention_mask.masked_fill(attention_mask, 0.0)
 
         # The prompt mentions the tags in its instruction: only the response has parallel structure
-        response_position_ids = self.compute_structured_position_ids(input_ids[prompt_length:])
+        if self.structure == "multiverse":  # padding after the response continues the positions (it is masked out anyway)
+            tail = torch.arange(len(input_ids) - prompt_length - len(mv_pos)) + (mv_pos[-1] + 1 if mv_pos else 0)
+            response_position_ids = torch.cat((torch.tensor(mv_pos, dtype=torch.long), tail))
+        else:
+            response_position_ids = self.compute_structured_position_ids(input_ids[prompt_length:])
         position_ids = torch.cat((torch.arange(prompt_length), prompt_length + response_position_ids))
 
         loss_mask = attention_mask_1d.clone()

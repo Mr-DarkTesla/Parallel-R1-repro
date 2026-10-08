@@ -5,6 +5,8 @@ accuracy_robust also accepts other answer layouts: math from the last \\boxed{} 
 math_verify; options also as "answer is X" / "Correct Answer: X" or as the option number (1 = A).
 IFEval: the official lm-eval checker on the answer with any <think> block removed (prompt- and instruction-level, strict and loose).
 Also: share of answers with <Parallel>, tag validity (scripts/tag_validator.py), answers without "Final Answer", mean length in characters.
+Multiverse format (exp 21, scripts/exp21/mv_format.py): mv_tags/mv_valid per answer; with env EXP21_TOKENIZER=<model dir> also
+forward_passes (paths of a block counted by the longest) next to the generated token count.
 
 Usage (from verl/, PYTHONPATH with the IFEval checker): python ../scripts/bench/score.py <generations.jsonl> <test.parquet> <output.json> [<rows.jsonl>]
 The optional rows.jsonl gets one outcome per answer for paired comparisons; the summary JSON does not depend on it.
@@ -22,6 +24,7 @@ import pandas as pd
 
 sys.path.insert(0, __file__.rsplit("/", 2)[0])
 from tag_validator import validate  # noqa: E402
+from exp21.mv_format import forward_passes, parse as mv_parse  # noqa: E402
 from math_verify import parse, verify  # noqa: E402
 from verl.utils.reward_score.math_dapo import compute_score, last_boxed_only_string, remove_boxed  # noqa: E402
 
@@ -82,6 +85,14 @@ else:
 frame["parallel"] = answers.str.contains("<Parallel>")
 frame[["tags", "correct_tags"]] = answers.map(validate).tolist()
 frame["no_final_answer"] = ~final.str.contains(r"(?i)Final Answer\s*:")
+mv = answers.map(mv_parse)
+frame["mv_tags"], frame["mv_valid"] = mv.map(lambda r: r["tags"]), mv.map(lambda r: r["valid"])
+frame["mv_blocks"], frame["mv_numbered"] = mv.map(lambda r: len(r["blocks"])), mv.map(lambda r: r["valid"] and all(b["numbered"] for b in r["blocks"]))
+if os.environ.get("EXP21_TOKENIZER"):
+    from transformers import AutoTokenizer
+    _tok = AutoTokenizer.from_pretrained(os.environ["EXP21_TOKENIZER"])
+    _count = lambda text: len(_tok(text, add_special_tokens=False)["input_ids"])  # noqa: E731
+    frame["forward_passes"] = [forward_passes(a, _count) if r["blocks"] else None for a, r in zip(answers, mv)]
 frame["chars"] = answers.str.len()
 if "truncated" in generations:
     frame["truncated"] = generations["truncated"]
@@ -99,6 +110,9 @@ for source, group in frame.groupby("source"):
         "with_parallel": round(100 * group["parallel"].mean(), 1),
         "valid_tagged_responses": round(100 * (tagged["tags"] == tagged["correct_tags"]).mean(), 1) if len(tagged) else None,
         "no_final_answer": round(100 * group["no_final_answer"].mean(), 1),
+        "mv_with_tags": round(100 * (group["mv_tags"] > 0).mean(), 1),
+        "mv_valid_tagged": round(100 * group.loc[group["mv_tags"] > 0, "mv_valid"].mean(), 1) if (group["mv_tags"] > 0).any() else None,
+        "mv_numbered_tagged": round(100 * group.loc[group["mv_tags"] > 0, "mv_numbered"].mean(), 1) if (group["mv_tags"] > 0).any() else None,
         "mean_chars": int(group["chars"].mean()),
         **({"truncated": round(100 * group["truncated"].mean(), 1)} if "truncated" in group else {}),
         **({key: round(100 * group[key].mean(), 2) for key in ("prompt_level_loose_acc", "inst_level_strict_acc")} if source == "IFEVAL" else {}),

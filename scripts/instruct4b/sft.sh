@@ -3,7 +3,8 @@
 # updates on 2 GPUs (the lr schedule spans exactly these updates), then a bf16 export.
 # Usage on the pod (venv active), from this checkout, on GPUs reserved by scripts/instruct4b/gpu_pair.sh:
 #   DATA_PATH=<train.parquet> VAL_PATH=<dev.parquet> RUN_NAME=<name> CUDA_VISIBLE_DEVICES=<g1>,<g2> bash scripts/instruct4b/sft.sh [hydra overrides]
-# Optional: MODEL (prepared init), STEPS (default 64), MICRO_BATCH (default 2 per GPU; global batch is always 64).
+# Optional: MODEL (prepared init), STEPS (default 64), MICRO_BATCH (default 2 per GPU); exp 21 (Qwen3-0.6B, 1 GPU) also sets
+# NGPUS (default 2), BATCH (global batch, default 64), MAX_LENGTH (4096), LR (1e-5), MIN_FREE_GB (30); defaults = the exp 13-20 recipe.
 # Output: /work/runs/$RUN_NAME/{train.log, model/ (bf16 HF), results/{recipe.txt, rows.csv, sft_metrics.txt}, DONE}.
 # DONE: nothing is repeated. TRAINED (trainer exited 0): only the missing export is repeated. Otherwise the unfinished run dir
 # is renamed to $RUN_NAME.interrupted-<time> (logs kept) and training starts again from the same init: the trainer
@@ -13,8 +14,9 @@ set -euo pipefail
 model=${MODEL:-/work/assets/models/Qwen3-4B-instruct-add-special-token}
 steps=${STEPS:-64}
 micro=${MICRO_BATCH:-2}
+ngpus=${NGPUS:-2} batch=${BATCH:-64} max_length=${MAX_LENGTH:-4096} lr=${LR:-1e-5} min_free=${MIN_FREE_GB:-30}
 gpus=$(echo "$CUDA_VISIBLE_DEVICES" | tr ',' '\n' | grep -c .)
-[ "$gpus" = 2 ] || { echo "need 2 GPUs, got CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"; exit 1; }
+[ "$gpus" = "$ngpus" ] || { echo "need $ngpus GPUs, got CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"; exit 1; }
 repo=$(cd "$(dirname "$0")/../.." && pwd)
 run=/work/runs/$RUN_NAME
 [ ! -e "$run/DONE" ] || { echo "$run is done"; exit 0; }
@@ -26,26 +28,26 @@ python -c "import os, verl; assert verl.__file__.startswith(os.getcwd()), verl._
 
 if [ ! -e "$run/TRAINED" ]; then
     # fp32 trainer checkpoint (16 GB) and bf16 export (8 GB) exist together for a moment
-    [ "$(df --output=avail -BG /work | tail -1 | tr -dc 0-9)" -ge 30 ] || { echo "need 30 GB free on /work"; exit 1; }
+    [ "$(df --output=avail -BG /work | tail -1 | tr -dc 0-9)" -ge "$min_free" ] || { echo "need $min_free GB free on /work"; exit 1; }
     mkdir -p "$run/results"
-    # Rows of each update: the trainer's DistributedSampler (seed 0, epoch-wise shuffle, drop_last) on 2 ranks
-    epochs=$(python - "$DATA_PATH" "$VAL_PATH" "$model" "$steps" "$run/results" <<'EOF'
+    # Rows of each update: the trainer's DistributedSampler (seed 0, epoch-wise shuffle, drop_last) on $ngpus ranks
+    epochs=$(python - "$DATA_PATH" "$VAL_PATH" "$model" "$steps" "$run/results" "$ngpus" "$batch" <<'EOF'
 import math, os, sys
 
 import pandas as pd
 from torch.utils.data import DistributedSampler
 from transformers import AutoConfig
 
-data, val, model, steps, out = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4]), sys.argv[5]
+data, val, model, steps, out, ranks, batch = *sys.argv[1:4], int(sys.argv[4]), sys.argv[5], int(sys.argv[6]), int(sys.argv[7])
 train = pd.read_parquet(data)
-per_rank = 64 // 2
-steps_per_epoch = len(train) // 2 // per_rank
+per_rank = batch // ranks
+steps_per_epoch = len(train) // ranks // per_rank
 epochs = math.ceil(steps / steps_per_epoch)
 ids = train["index"] if "index" in train else pd.Series(range(len(train)))
 lines = ["step,rank,row,source_index"]
 for epoch in range(epochs):
-    for rank in range(2):
-        sampler = DistributedSampler(range(len(train)), num_replicas=2, rank=rank, shuffle=True, drop_last=True)
+    for rank in range(ranks):
+        sampler = DistributedSampler(range(len(train)), num_replicas=ranks, rank=rank, shuffle=True, drop_last=True)
         sampler.set_epoch(epoch)
         order = list(sampler)
         for k in range(steps_per_epoch):
@@ -64,9 +66,9 @@ print(epochs)
 EOF
 )
     { date; git -C "$repo" rev-parse HEAD; git -C "$repo" status --short
-      echo "GPUs=$CUDA_VISIBLE_DEVICES updates=$steps global_batch=64 micro_batch_per_gpu=$micro epochs=$epochs overrides=$*"; } >> "$run/results/recipe.txt"
+      echo "GPUs=$CUDA_VISIBLE_DEVICES updates=$steps global_batch=$batch micro_batch_per_gpu=$micro max_length=$max_length lr=$lr epochs=$epochs overrides=$*"; } >> "$run/results/recipe.txt"
 
-    torchrun --standalone --nnodes=1 --nproc_per_node=2 -m verl.trainer.fsdp_parallel_sft_trainer \
+    torchrun --standalone --nnodes=1 --nproc_per_node="$ngpus" -m verl.trainer.fsdp_parallel_sft_trainer \
         data.train_files="$DATA_PATH" \
         data.val_files="$VAL_PATH" \
         data.prompt_key=extra_info \
@@ -74,14 +76,14 @@ EOF
         +data.prompt_dict_keys=['question'] \
         +data.response_dict_keys=['answer'] \
         +data.enable_thinking=False \
-        data.max_length=4096 \
+        data.max_length="$max_length" \
         data.truncation=error \
-        data.train_batch_size=64 \
+        data.train_batch_size="$batch" \
         data.micro_batch_size_per_gpu="$micro" \
         model.partial_pretrain="$model" \
         model.enable_gradient_checkpointing=True \
         model.strategy=fsdp2 \
-        optim.lr=1e-5 \
+        optim.lr="$lr" \
         optim.betas=[0.9,0.95] \
         optim.weight_decay=0.01 \
         optim.warmup_steps_ratio=0.1 \

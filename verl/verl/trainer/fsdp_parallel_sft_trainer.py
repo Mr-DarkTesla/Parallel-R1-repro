@@ -85,8 +85,10 @@ def extract_step(path):
     return None
 
 
-# The six tokens added to the vocabulary for parallel thinking; their embedding rows start from an average of text pieces
-NEW_TAG_TOKENS = ("<Path>", "</Path>", "<Parallel>", "</Parallel>", "<Summary>", "</Summary>")
+# Tokens that may be added to the vocabulary for parallel thinking (Parallel-R1 six; Multiverse ten, exp 21); the tokenizer's
+# added tokens among them are the rows of optim.tag_lr_mult
+NEW_TAG_TOKENS = ("<Path>", "</Path>", "<Parallel>", "</Parallel>", "<Summary>", "</Summary>",
+                  "<Goal>", "</Goal>", "<Outline>", "</Outline>", "<Conclusion>", "</Conclusion>")
 
 
 def local_rows(weight, row_ids):
@@ -312,10 +314,11 @@ class FSDPParallelThinkingSFTTrainer:
         # optim.tag_lr_mult: learning rate multiplier for the embedding rows of the new tag tokens (tied with the output
         # rows). At lr 1e-5 for 64 updates AdamW moves an element by at most ~4e-4, so these rows stay at their init.
         self.tag_lr_mult = float(self.config.optim.get("tag_lr_mult", 1.0))
-        self.tag_ids = [self.tokenizer.convert_tokens_to_ids(t) for t in NEW_TAG_TOKENS]
+        tag_tokens = [t for t in NEW_TAG_TOKENS if t in self.tokenizer.get_added_vocab()]
+        self.tag_ids = [self.tokenizer.convert_tokens_to_ids(t) for t in tag_tokens]
         if self.tag_lr_mult != 1.0:
             assert fsdp_strategy == "fsdp2", "tag_lr_mult needs per-parameter sharding (fsdp2), not FSDP1 flat parameters"
-            assert all(self.tokenizer.encode(t, add_special_tokens=False) == [i] for t, i in zip(NEW_TAG_TOKENS, self.tag_ids))
+            assert all(self.tokenizer.encode(t, add_special_tokens=False) == [i] for t, i in zip(tag_tokens, self.tag_ids))
             embedding = self.model.get_input_embeddings().weight
             assert self.model_config.tie_word_embeddings and self.model.get_output_embeddings().weight is embedding
             _, rows = local_rows(embedding, self.tag_ids)

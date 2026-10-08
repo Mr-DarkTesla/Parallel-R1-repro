@@ -3,6 +3,8 @@
 #   no-thinking | thinking: native Qwen3 chat template with enable_thinking off | on; plain prompts (IFEval: the original prompt)
 #   parallel: the authors' parallel prompt and the genuine parallel rollout (scripts/bench/eval_rollout.sh) in the non-thinking
 #             template (PARALLEL_ROLLOUT_ENABLE_THINKING=false); math benchmarks only
+#   multiverse (exp 21): the Multiverse-format prompt (scripts/exp21/make_mv_prompts.py, <prompt dir>/multiverse) with plain
+#             sequential no-thinking generation; score.py adds the Multiverse grammar check and forward passes (EXP21_TOKENIZER)
 # dev: scripts/instruct4b_eval/generate.py (seed = sample index). frozen: scripts/bench/generate_plain.py, the protocol of the finished
 # baseline runs. REUSE=<old run dir> scores that run's dumps instead of generating; allowed only for the two finished C0 16k runs below.
 # Usage on the pod (venv active): CUDA_VISIBLE_DEVICES=<g> bash scripts/instruct4b_eval/run_eval.sh <name> <model> <dev|frozen> <mode> <budget>
@@ -28,8 +30,9 @@ case $suite in
 esac
 case $mode in
     no-thinking | thinking) benches=${BENCHES:-$all} prompts=$dir/plain ;;
+    multiverse) benches=${BENCHES:-$all} prompts=$dir/multiverse ;;
     parallel) benches=${BENCHES:-$math} prompts=$dir/parallel generator=scripts/bench/eval_rollout.sh ;;
-    *) echo "mode: no-thinking | thinking | parallel"; exit 1 ;;
+    *) echo "mode: no-thinking | thinking | parallel | multiverse"; exit 1 ;;
 esac
 # REUSE: only the finished C0 frozen 16k runs of 2026-10-06 (queue logs gpu3.log / gpu0.log, exit 0):
 #   cd /work/bench-src && bash scripts/bench/run_bench.sh qwen3-4b-<nothinking|thinking>-16k /work/assets/models/Qwen3-4B <mode> 16384
@@ -49,6 +52,7 @@ export PYTHONPATH=$repo/verl:/work/assets/ifeval/pkg NLTK_DATA=/work/assets/ifev
 # private Ray dir per process; Ray's socket <dir>/session_<date>_<pid>/sockets/plasma_store must stay within the 107-byte AF_UNIX limit
 if [ "$mode" = parallel ] && [ ${#RAY_TMPDIR} -gt 45 ]; then echo "RAY_TMPDIR $RAY_TMPDIR too long for Ray sockets: use a shorter name"; exit 1; fi
 export PARALLEL_ROLLOUT_ENABLE_THINKING=false  # read by the rollout only
+export EXP21_TOKENIZER=$model  # score.py: forward passes of Multiverse answers in this model's tokens
 export SCORE_IFEVAL_SEED=0  # deterministic IFEval checker in score.py (per prompt key); fixed protocol, not a tuning knob
 # the verl that score.py and the rollout import (outside the repo, the cwd is not on the path): this checkout, not /work/setup-src
 (cd / && python -c "import sys, verl; assert verl.__file__ == sys.argv[1], verl.__file__" "$repo/verl/verl/__init__.py")
@@ -127,7 +131,7 @@ EOF
             || { echo "rollout template not non-thinking: $log"; exit 1; }
     else
         generations=$run/$bench.jsonl
-        python "../$generator" "$model" "$test" "$generations" "$budget" "$mode" >> "$log" 2>&1
+        python "../$generator" "$model" "$test" "$generations" "$budget" "${mode/multiverse/no-thinking}" >> "$log" 2>&1
     fi
     # the dumped prompts must be rendered in the requested mode (empty think block = non-thinking template).
     # parallel: the dump's input is RLHFDataset's default-template prompt (ray_trainer._validate decodes the dataset input_ids
