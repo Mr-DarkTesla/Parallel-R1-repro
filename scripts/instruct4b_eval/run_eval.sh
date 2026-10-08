@@ -74,8 +74,9 @@ meta = {"model": "$model", "suite": "$suite", "mode": "$mode", "budget": $budget
         "generator": "$generator", "prompts": "$prompts", "reused_from": "${REUSE:-}" or None,
         **({"reuse_provenance": "$reuse_provenance", "reuse_source_logs": "${REUSE:-}/<bench>.log"} if "${REUSE:-}" else {}),
         "ifeval_scorer_seed": int(os.environ["SCORE_IFEVAL_SEED"]),
-        "seeds": {"scripts/instruct4b_eval/generate.py": "sample index", "scripts/bench/generate_plain.py": "0 for every row",
-                  "scripts/bench/eval_rollout.sh": "unseeded"}["$generator"],
+    "seeds": {"scripts/instruct4b_eval/generate.py": "sample index", "scripts/bench/generate_plain.py": "0 for every row",
+                  "scripts/bench/eval_rollout.sh": "unseeded",
+                  "scripts/exp21/generate_multiverse.py": "sample index for Goal; 100*sample+path for paths; 100*sample+99 for suffix"}["$generator"],
         "commit": commit, **({} if commit else {"unversioned_test_only": True})}
 with open(path + ".lock", "w") as lock:
     fcntl.flock(lock, fcntl.LOCK_EX)
