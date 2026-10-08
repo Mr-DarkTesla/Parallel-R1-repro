@@ -114,3 +114,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     sibling-path context absent in SFT and often jumps straight to the conclusion. `run_eval.sh` names the new protocol
     `multiverse-branch`; its prompts, seed, budget and generator are recorded in run metadata. The joined conclusion still
     uses ordinary vLLM positions, so this is an approximation to the full custom-position Multiverse rollout.
+14. The tag-free control now keeps the same Multiverse training prompt as its tagged source and removes only the structural
+    tags from the answer. `audit_sft_parity.py` checks prompt equality in addition to exact source text after tag removal,
+    replay, split and repetition equality. This isolates the tag change within the available SFT comparison.

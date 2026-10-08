@@ -64,6 +64,7 @@ def check(first, second, control=None, control_source=None):
                     c = groups["control"][("control", key)][0]
                     source = groups[control_source][(kind, key)][0]
                     assert c["answer"] == strip_tags(source["answer"]).strip(), (split, key, "control text mismatch")
+                    assert c["question"] == source["question"], (split, key, "control prompt mismatch")
                     assert not c["enable_thinking"]
         assert {r["id"] for r in first[split]} == {r["id"] for r in second[split]}
         if control is not None:
