@@ -90,3 +90,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 6. `scripts/exp21/generate_pool.py` can ask Qwen for independent parts in separate paragraphs during an M2 pilot; Qwen still
    writes every solution word, and the converter must preserve that text exactly. `paired_compare.py` checks the Multiverse
    prompt against the plain prompt and reports paired intervals for response length and forward passes as well as accuracy.
+7. `scripts/exp21/prepare_m2_alternates.py` selects other already generated, correct Qwen answers only for problems where M1
+   passed and the first M2 plan did not. It keeps a maximum of two alternatives per problem; the same M2 converter and checks
+   apply. This can raise the paired yield without changing the candidate problem pool or using evaluation results.
