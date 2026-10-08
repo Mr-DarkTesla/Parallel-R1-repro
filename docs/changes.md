@@ -99,3 +99,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 9. Forward-pass savings now require the whole response to have valid, numbered Multiverse blocks. The benchmark scorer and
    saved-dump derivation also report the share of attempted blocks that parse and have numbered paths; malformed responses
    get their full token count as sequential work. The legacy `valid_tags` field uses an older grammar and is not used in exp 21.
+10. `scripts/exp21/audit_sft_parity.py` checks the completed SFT parquets before GPU training: paired M1/M2 problem IDs,
+    identical replay texts and split membership, equal repetitions and prompts, and control answers equal the chosen method
+    after removing only the structural tags. A mismatch stops the run before training.
