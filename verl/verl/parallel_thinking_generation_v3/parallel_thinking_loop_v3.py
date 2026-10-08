@@ -332,6 +332,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 'positions': self.trace.record['parallel_relative_positions'],
                 'generation_calls': self.trace.record['generation_calls'],
                 'generated_tokens': self.trace.record['generated_tokens_total'],
+                'critical_depth': self.trace.record['critical_depth'],
                 'truncated': self.trace.record['truncated'],
             },
         )

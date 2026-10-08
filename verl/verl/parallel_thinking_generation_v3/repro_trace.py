@@ -7,6 +7,30 @@ from pathlib import Path
 TOKENS = ('<Parallel>', '</Parallel>', '<Path>', '</Path>', '<Summary>', '</Summary>')
 
 
+def critical_depth(calls):
+    """Sum serial decode lengths and the longest concurrent path in each fork.
+
+    The loop awaits all paths before starting a summary, so each contiguous run
+    of path calls is one fork, even when those calls finish in a different order.
+    Counts sampled stop tokens, excludes injected tags and prompt prefill; this
+    is not a count of physical batched GPU forwards.
+    """
+    depth = 0
+    longest_path = 0
+    for call in calls:
+        count = call['generated_tokens']
+        if not isinstance(count, int) or count < 0:
+            raise ValueError('generated_tokens must be a nonnegative integer')
+        if call['phase'] == 'path':
+            longest_path = max(longest_path, count)
+        elif call['phase'] in ('main', 'summary'):
+            depth += longest_path + count
+            longest_path = 0
+        else:
+            raise ValueError(f"Unknown generation phase: {call['phase']}")
+    return depth + longest_path
+
+
 def write_record(kind, record):
     root = os.getenv('PARALLEL_R1_TRACE_DIR')
     if not root:
@@ -47,6 +71,7 @@ class Trace:
         self.record['executed_fork_count'] = len(self.record['forks'])
         self.record['generation_calls'] = len(self.record['calls'])
         self.record['generated_tokens_total'] = sum(call['generated_tokens'] for call in self.record['calls'])
+        self.record['critical_depth'] = critical_depth(self.record['calls'])
         write_record('traces', self.record)
 
 

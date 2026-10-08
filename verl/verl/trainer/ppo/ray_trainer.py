@@ -238,6 +238,8 @@ def compute_advantage(
     Returns:
         DataProto: The updated data with computed advantages and returns.
     """
+    if config is not None and config.get("split_accuracy_aux", False) and adv_estimator != AdvantageEstimator.GRPO:
+        raise ValueError('split_accuracy_aux is only supported with GRPO')
     # Back-compatible with trainers that do not compute response mask in fit
     if "response_mask" not in data.batch.keys():
         data.batch["response_mask"] = compute_response_mask(data)
@@ -262,13 +264,23 @@ def compute_advantage(
     elif adv_estimator == AdvantageEstimator.GRPO:
         # Initialize the mask for GRPO calculation
         grpo_calculation_mask = data.batch["response_mask"]
-        # Call compute_grpo_outcome_advantage with parameters matching its definition
-        advantages, returns = core_algos.compute_grpo_outcome_advantage(
-            token_level_rewards=data.batch["token_level_rewards"],
-            response_mask=grpo_calculation_mask,
-            index=data.non_tensor_batch["uid"],
-            norm_adv_by_std_in_grpo=norm_adv_by_std_in_grpo,
-        )
+        if config is not None and config.get("split_accuracy_aux", False):
+            if config.get("use_kl_in_reward", False) or not norm_adv_by_std_in_grpo:
+                raise ValueError('Split GRPO requires accuracy standardization and no in-reward KL')
+            from verl.trainer.ppo.split_grpo import compute_split_advantage
+
+            advantages, returns, split_metrics = compute_split_advantage(
+                data.non_tensor_batch["accuracy_reward"], data.non_tensor_batch["aux_reward"],
+                data.non_tensor_batch["uid"], grpo_calculation_mask,
+            )
+            data.meta_info["split_reward_metrics"] = split_metrics
+        else:
+            advantages, returns = core_algos.compute_grpo_outcome_advantage(
+                token_level_rewards=data.batch["token_level_rewards"],
+                response_mask=grpo_calculation_mask,
+                index=data.non_tensor_batch["uid"],
+                norm_adv_by_std_in_grpo=norm_adv_by_std_in_grpo,
+            )
         data.batch["advantages"] = advantages
         data.batch["returns"] = returns
     else:
@@ -1190,6 +1202,8 @@ class RayPPOTrainer:
                             metrics['parallel/forks_mean'] = float(np.mean([item['forks'] for item in parallel_stats]))
                             metrics['parallel/generation_calls_mean'] = float(np.mean([item['generation_calls'] for item in parallel_stats]))
                             metrics['parallel/generated_tokens_mean'] = float(np.mean([item['generated_tokens'] for item in parallel_stats]))
+                            if all('critical_depth' in item for item in parallel_stats):
+                                metrics['parallel/critical_depth_mean'] = float(np.mean([item['critical_depth'] for item in parallel_stats]))
                             metrics['parallel/truncated_ratio'] = float(np.mean([item['truncated'] for item in parallel_stats]))
                             metrics['parallel/blocks'] = len(positions)
                             if positions:
@@ -1330,6 +1344,7 @@ class RayPPOTrainer:
                             norm_adv_by_std_in_grpo=norm_adv_by_std_in_grpo,
                             config=self.config.algorithm,
                         )
+                        metrics.update(batch.meta_info.pop('split_reward_metrics', {}))
                         if self.config.algorithm.adv_estimator == 'grpo':
                             informative = batch.batch['advantages'].abs().sum(-1).gt(0).cpu().numpy()
                             informative_uids = set(batch.non_tensor_batch['uid'][informative])
