@@ -120,3 +120,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 15. `scripts/exp21/collect_eval.py` records each benchmark's accuracy, grammar, response length, sequential forward passes,
     truncation, evaluation mode and code commit in one CSV from the corrected run directories. A partial run over baseline
     directories produced 28 rows; the report uses the final CSV for its tables.
+16. `scripts/exp21/audit_branch_rollout.py` reports how often the independent-path decoder joined a block and whether the
+    model closed its paths. It explicitly records the Path delimiters and numbers supplied by the decoder, so the resulting
+    grammar rate cannot be mistaken for unconstrained left-to-right tag generation.
