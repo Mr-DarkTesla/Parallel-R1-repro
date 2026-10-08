@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 
-FIELDS = ("run", "suite", "mode", "bench", "problems", "accuracy", "mv_with_tags",
+FIELDS = ("run", "suite", "mode", "bench", "source", "problems", "accuracy", "mv_with_tags",
           "mv_valid_tagged", "mv_numbered_tagged", "mv_valid_blocks_percent",
           "mean_tokens", "mean_forward_passes", "truncated", "commit")
 
@@ -21,13 +21,13 @@ def main():
             continue
         meta = json.loads((run / "meta.json").read_text())
         for path in sorted((run / "results").glob("*.json")):
-            score = next(iter(json.loads(path.read_text()).values()))
-            row = {"run": run.name, "suite": meta["suite"], "mode": meta["mode"],
-                   "bench": path.stem, "problems": score.get("problems"),
-                   "accuracy": score.get("accuracy_robust", score.get("accuracy")),
-                   "commit": meta.get("commit")}
-            row.update({key: score.get(key) for key in FIELDS if key not in row})
-            rows.append(row)
+            for source, score in json.loads(path.read_text()).items():
+                row = {"run": run.name, "suite": meta["suite"], "mode": meta["mode"],
+                       "bench": path.stem, "source": source, "problems": score.get("problems"),
+                       "accuracy": score.get("accuracy_robust", score.get("accuracy")),
+                       "commit": meta.get("commit")}
+                row.update({key: score.get(key) for key in FIELDS if key not in row})
+                rows.append(row)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=FIELDS)
