@@ -117,3 +117,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 14. The tag-free control now keeps the same Multiverse training prompt as its tagged source and removes only the structural
     tags from the answer. `audit_sft_parity.py` checks prompt equality in addition to exact source text after tag removal,
     replay, split and repetition equality. This isolates the tag change within the available SFT comparison.
+15. `scripts/exp21/collect_eval.py` records each benchmark's accuracy, grammar, response length, sequential forward passes,
+    truncation, evaluation mode and code commit in one CSV from the corrected run directories. A partial run over baseline
+    directories produced 28 rows; the report uses the final CSV for its tables.
