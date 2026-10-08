@@ -3,7 +3,8 @@
 Inputs: the dataset survey folder (../dataset_survey: data/norm/*.jsonl, leak/*.hits.jsonl, leak/*.residual_pairs.md, raw MATH/ARC
 parquets under /tmp/ds_survey_dl). A row is dropped if the checker reports ANY tier (dup, variant or weak) against one of our eval
 sets, or dup/variant against the full MATH test (source of MATH dev and MATH300), or it is on the residual answer-rule lists (remove
-and review), or its text names AIME/AMC/HMMT. GSM8K dev is a subset of GSM8K train: those rows are dup hits and are dropped too.
+and review), or its text names AIME/AMC/HMMT. ARC is checked again after choices and the final instruction are added; transformed
+ARC questions are also deduplicated. GSM8K dev is a subset of GSM8K train: those rows are dup hits and are dropped too.
 Output rows: id, source (math|gsm8k|arc), question (as the eval prompt shows it), answer, answer_type (integer|fraction|expression|letter),
 level/type (MATH). Usage: python build_pool.py <survey_dir> <raw_dir> <out.jsonl>
 """
@@ -70,8 +71,14 @@ for name, source in (("src_math_train", "math"), ("src_gsm8k_train", "gsm8k")):
     stats[source] = {"rows": len(norm_rows(name)), "leaky_or_flagged": len(bad), "kept": kept}
 
 bad = leaky("rep_arc_train")
+sys.path.insert(0, f"{survey}/scripts")
+from leakcheck import Corpus  # noqa: E402
+
+corpus = Corpus(f"{survey}/eval_corpus")
 arc = pd.concat([pd.read_parquet(f"{raw}/arc/{f}.parquet") for f in ("easy", "challenge")])
-kept = 0
+kept = duplicates = 0
+final_flagged = []
+seen_arc = set()
 for _, r in arc.iterrows():
     if r["id"] in bad:
         continue
@@ -80,10 +87,21 @@ for _, r in arc.iterrows():
         continue
     lines = "\n".join(f"{LETTERS[i]}. {t}" for i, t in enumerate(r["choices"]["text"]))
     question = f"{r['question']}\n\n{lines}\n\nThe final result is the letter of the correct option."
-    rows.append({"id": f"arc-train/{r['id']}", "source": "arc", "question": question, "answer": LETTERS[labels.index(r["answerKey"])],
+    answer = LETTERS[labels.index(r["answerKey"])]
+    if any("(info)" not in hit["eval_set"] and hit["leak"] for hit in corpus.check(question, answer)):
+        final_flagged.append(f"arc-train/{r['id']}")
+        continue
+    key = re.sub(r"\s+", " ", question.strip().lower())
+    if key in seen_arc:
+        duplicates += 1
+        continue
+    seen_arc.add(key)
+    rows.append({"id": f"arc-train/{r['id']}", "source": "arc", "question": question, "answer": answer,
                  "answer_type": "letter"})
     kept += 1
-stats["arc"] = {"rows": len(arc), "leaky_or_flagged": len(bad), "kept": kept}
+stats["arc"] = {"rows": len(arc), "raw_leaky_or_flagged": len(bad), "final_prompt_leaky_or_flagged": len(final_flagged),
+                "final_prompt_duplicates": duplicates, "kept": kept}
+json.dump(final_flagged, open(out + ".arc_final_drops.json", "w"), indent=2)
 
 with open(out, "w") as f:
     for r in rows:

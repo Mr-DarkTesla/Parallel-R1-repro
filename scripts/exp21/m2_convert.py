@@ -1,10 +1,9 @@
 """M2 of exp 21: Qwen3-0.6B's own correct non-thinking answers + a block plan from Claude; path text stays Qwen's text.
 
 Claude (m2_system.md, through the VK AI Proxy) sees answers split into numbered units and returns, per answer, unit ranges of
-lead / paths / tail, one outline per path, a short conclusion and optional connective edits (plan-only converter of variant C, v3,
-0/28 refusals, here without nesting and batched). This script assembles the block from the units verbatim: only the listed connective
-edits and "Step k:" labels at path line starts change (step numbers would order the paths). Blocks with defects are dropped
-(short or unbalanced paths, small saving, a path 2..k that opens like a continuation of its sibling, edits that touch math);
+lead / paths / tail, one outline per path and a short conclusion (plan-only converter of variant C, v3,
+0/28 refusals, here without nesting and batched). This script assembles the block from the units verbatim. Blocks with defects are dropped
+(short or unbalanced paths, small saving, a path 2..k that opens like a continuation of its sibling);
 the result must pass checks.check (grammar, verified answer after the block, no answer before it, numbers kept, no re-check).
 Usage: python m2_convert.py <answers.jsonl> <out_dir> [--batch 4] [--workers 8] [--limit N] [--model M]
 answers.jsonl rows: id, sample, question, answer (gold), source, output (Qwen's answer text).
@@ -18,7 +17,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from checks import NUM, XREF, check  # noqa: E402
+from checks import XREF, check  # noqa: E402
 from claude_call import call  # noqa: E402
 
 SYSTEM = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "m2_system.md")).read()
@@ -28,7 +27,6 @@ TOK = re.compile(rf'<block {R}>|</block>|<(lead|tail) {R}\s*/>|<path {R}>|</path
                  r'<conclusion>(.*?)</conclusion>|<edit unit="(\d+)">\s*<old>(.*?)</old>\s*<new>(.*?)</new>\s*</edit>', re.S)
 SIBLING_START = re.compile(r"^\s*(?:similarly|again|as before|as above|therefore|thus|hence|likewise|but|however|alternatively|also|"
                            r"next|then|now|finally|in the same way|the other)\b", re.I)
-STEP = re.compile(r"(?m)^(#{1,6}\s*)?(\*\*)?\s*Step\s*\d+\s*[:.]\s*")
 MIN_PATH, MIN_RATIO, MIN_SAVED = 80, 0.15, 80  # characters
 
 
@@ -111,21 +109,15 @@ def parse_plan(text, n):
 
 def assemble(units, seps, blocks, edits):
     """-> (response or None, decisions)."""
-    in_path = {u for b in blocks for p in b["paths"] for u in range(p["range"][0], p["range"][1] + 1)}
-    units, bad_edit = list(units), set()
-    for k, old, new in edits:
-        if k not in in_path or not old or units[k - 1].count(old) != 1 or len(new) > len(old) + 20 or NUM.findall(old) != NUM.findall(new):
-            bad_edit.add(k)
-            continue
-        units[k - 1] = units[k - 1].replace(old, new, 1)
+    # A plan may suggest edits, but M2 keeps the model's words unchanged.
+    edited = {k for k, _, _ in edits}
     text = lambda a, b: "".join(units[i] + (seps[i] if i < b - 1 else "") for i in range(a - 1, b))  # noqa: E731
     sep = lambda i: seps[i - 1] if i - 1 < len(seps) else "\n"  # noqa: E731
     pieces, decisions, i = [], [], 1
     for blk in blocks:
-        paths = [re.sub(r"^#{1,6}\s*", "", STEP.sub(lambda m: (m.group(1) or "") + (m.group(2) or ""), text(*p["range"])).strip())
-                 for p in blk["paths"]]
+        paths = [text(*p["range"]).strip() for p in blk["paths"]]
         lens = [len(t) for t in paths]
-        why = [w for w, bad in (("edit_skipped", any(bad_edit & set(range(p["range"][0], p["range"][1] + 1)) for p in blk["paths"])),
+        why = [w for w, bad in (("edit_required", any(edited & set(range(p["range"][0], p["range"][1] + 1)) for p in blk["paths"])),
                                 ("short_path", min(lens) < MIN_PATH), ("unbalanced", min(lens) < MIN_RATIO * max(lens)),
                                 ("small_saving", sum(lens) - max(lens) < MIN_SAVED),
                                 ("sibling_start", any(SIBLING_START.search(t) for t in paths[1:])),

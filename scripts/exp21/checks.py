@@ -8,8 +8,8 @@ check(response, gold, source, original=None) -> dict(ok, issues, blocks, ...):
   paths        every path >= 80 characters of real text, shortest >= 0.15 of the longest, no near-duplicate paths (3-gram Jaccard >= 0.7)
   outline      outline texts do not contain the final answer; conclusion not empty
   recheck      the conclusion or an outline says the methods agree / verifies (verification, not decomposition)
-  verbatim     (M2, original given) the response without tags, outlines and conclusion equals the original answer up to whitespace
-               and the listed connective edits: every number of the original is kept, no new numbers in paths
+  verbatim     (M2, original given) removing tags, outlines, conclusion and path numbers recovers the model's answer
+               exactly except whitespace; no word, formula or number can change
   length       <= 2048 Qwen3 tokens (counted by the caller) is checked where the tokenizer is available
 """
 import re
@@ -117,6 +117,8 @@ def check(response, gold, source, original=None):
     if original is not None:
         body = re.sub(r"<Goal>.*?</Goal>|<Conclusion>.*?</Conclusion>", "", response, flags=re.S)
         body = ANY_TAG.sub("", re.sub(r"<Path>\s*\d+\s*:", "", body))
+        if re.sub(r"\s+", "", body) != re.sub(r"\s+", "", original):
+            issues.append("text_changed")
         nums = lambda t: sorted(NUM.findall(re.sub(r"Step\s*\d+", "Step", t)))  # noqa: E731  "Step k" labels may be dropped in paths
         if nums(body) != nums(original):
             issues.append("numbers_changed")

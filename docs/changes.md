@@ -68,3 +68,19 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
    comparisons; with `SCORE_IFEVAL_SEED=<int>` the IFEval checker's random fallbacks are seeded per prompt key (unset = old behaviour,
    same summary). Used by `scripts/instruct4b_eval/` (run_eval.sh always sets 0); verified by CPU tests in
    `results/13-instruct4b-control/checks/eval-*.log`, details in `results/13-instruct4b-control/evaluation.md`. Training code unchanged.
+
+## exp/21-qwen3-0.6b-multiverse
+
+1. `scripts/exp21/prepare_model.py` adds the ten Multiverse tags to the post-trained Qwen3-0.6B in unused tied-embedding rows,
+   with a distinct vector for each tag. The vocabulary tensor shape stays 151936. Pod B preparation checked that only those ten
+   rows changed, each tag is one token, their maximum pairwise cosine is 0.48 and the model remains bf16.
+2. `verl/utils/dataset/multiverse_structure.py` supplies sibling-path attention masking and positions from exp/19;
+   `parallel_thinking_sft_dataset.py` selects it with `data.structure=multiverse` and reads per-row thinking mode;
+   `fsdp_parallel_sft_trainer.py` applies `optim.tag_lr_mult` to the new tied rows (exp/20). Replay rows without blocks retain
+   ordinary causal masking. These changes are needed to train the requested format without a path reading a sibling.
+3. `scripts/exp21/` builds the leak-filtered pool, M1 and M2 data, training parquets and evaluations. M2 keeps Qwen's text
+   verbatim except whitespace and inserted tags/outline/conclusion: any proposed edit is rejected, and a content comparison
+   checks recovery of the original answer. Both methods require grammar, independence heuristics, answer, number and length checks.
+4. The experiment uses one GPU per pod and one queue per pod. Short training responses use at most 2048 tokens and full
+   prompt plus response at most 4096; the SFT dense Multiverse mask scales quadratically with this limit. The experiment
+   report records data quality gates, training parameters, benchmark results and paired intervals.

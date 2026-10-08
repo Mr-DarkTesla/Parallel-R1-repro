@@ -30,7 +30,7 @@ run() {
     sft)
         local name=$1 train=$2 val=$3; shift 3
         RUN_NAME=$name DATA_PATH=$train VAL_PATH=$val MODEL=${MODEL:-$M/Qwen3-0.6B-mv} NGPUS=1 BATCH=${BATCH:-32} \
-            MICRO_BATCH=${MICRO_BATCH:-4} MAX_LENGTH=${MAX_LENGTH:-8192} MIN_FREE_GB=10 \
+            MICRO_BATCH=${MICRO_BATCH:-4} MAX_LENGTH=${MAX_LENGTH:-4096} MIN_FREE_GB=10 \
             bash "$repo/scripts/instruct4b/sft.sh" +data.structure=multiverse optim.tag_lr_mult=${TAG_LR_MULT:-100} "$@" ;;
     *) echo "unknown job $job"; return 2 ;;
     esac

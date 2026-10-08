@@ -8,7 +8,7 @@ import sys
 
 FIRST_LINE = "Solve the following problem step by step.\n"
 MV_PARAGRAPH = (
-    "When the work splits into parts that do not depend on each other (separate cases, separate quantities, or independent checks), "
+    "When the work splits into parts that do not depend on each other (separate cases or separate quantities), "
     "solve those parts in a parallel block.\n\n"
     "Within each parallel block:\n"
     "Begin the block with <Parallel>, then list the parts inside <Goal> and </Goal>, one per <Outline> and </Outline>, numbered 1:, 2:, ...\n"

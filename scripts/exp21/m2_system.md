@@ -19,14 +19,13 @@ PLAN FORMAT, for each solution in the given order:
 </path>
 <conclusion>one or two sentences that restate only results stated in the paths</conclusion>
 <tail units="e+1-b"/>
-<edit unit="k"><old>exact text in unit k</old><new>replacement</new></edit>
 </block>
 </plan>
 or, if there is no valid block: <plan id="ID"></plan>
 
 Rules:
 - lead (optional) is text kept before the block, tail (optional) is text kept after it; lead, the paths and tail must cover a..b exactly, contiguous and in order. Units outside a..b stay as they are.
-- Edits (optional, at most three) only remove or replace a connective or step label inside a path that points to a sibling path or to the order of the paths, for example "Next, we find" -> "We find", "Step 3: Calculate" -> "Calculate", or drop "Similarly," at a path start (empty <new></new>). <old> must be an exact substring of unit k inside a path. Never change numbers, formulas or results; never fix mistakes; never add steps.
+- Keep every word, number, formula and step label of the model's answer unchanged. If a connective or step label makes a split dependent on earlier paths, choose another split or return no block.
 - If a path needs a value that a sibling computed, the split is wrong: choose a different split or no block.
 - The script numbers the outlines and paths (1:, 2:, ...); do not write numbers yourself.
 
