@@ -84,3 +84,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 4. The experiment uses one GPU per pod and one queue per pod. Short training responses use at most 2048 tokens and full
    prompt plus response at most 4096; the SFT dense Multiverse mask scales quadratically with this limit. The experiment
    report records data quality gates, training parameters, benchmark results and paired intervals.
+5. `scripts/bench/score.py` reports model-token length and sequential forward-pass counts for every response, including
+   responses without a parallel block (whose forward-pass count is their full length). Before this correction, such rows
+   had an empty forward-pass field. Truncation and grammar validity remain separate metrics.

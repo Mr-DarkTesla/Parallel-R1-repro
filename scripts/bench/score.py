@@ -92,7 +92,9 @@ if os.environ.get("EXP21_TOKENIZER"):
     from transformers import AutoTokenizer
     _tok = AutoTokenizer.from_pretrained(os.environ["EXP21_TOKENIZER"])
     _count = lambda text: len(_tok(text, add_special_tokens=False)["input_ids"])  # noqa: E731
-    frame["forward_passes"] = [forward_passes(a, _count) if r["blocks"] else None for a, r in zip(answers, mv)]
+    frame["forward_passes"] = [forward_passes(a, _count) for a in answers]
+if "tokens" in generations:
+    frame["tokens"] = generations["tokens"]
 frame["chars"] = answers.str.len()
 if "truncated" in generations:
     frame["truncated"] = generations["truncated"]
@@ -114,6 +116,8 @@ for source, group in frame.groupby("source"):
         "mv_valid_tagged": round(100 * group.loc[group["mv_tags"] > 0, "mv_valid"].mean(), 1) if (group["mv_tags"] > 0).any() else None,
         "mv_numbered_tagged": round(100 * group.loc[group["mv_tags"] > 0, "mv_numbered"].mean(), 1) if (group["mv_tags"] > 0).any() else None,
         "mean_chars": int(group["chars"].mean()),
+        **({"mean_tokens": round(group["tokens"].mean(), 1)} if "tokens" in group else {}),
+        **({"mean_forward_passes": round(group["forward_passes"].mean(), 1)} if "forward_passes" in group else {}),
         **({"truncated": round(100 * group["truncated"].mean(), 1)} if "truncated" in group else {}),
         **({key: round(100 * group[key].mean(), 2) for key in ("prompt_level_loose_acc", "inst_level_strict_acc")} if source == "IFEVAL" else {}),
     }
