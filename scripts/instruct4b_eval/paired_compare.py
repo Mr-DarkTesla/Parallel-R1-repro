@@ -19,9 +19,9 @@ Slices (report, not gates), primary metric: --meta-dir with meta/<suite>/<bench>
 and MATH type/level (a compared benchmark without its file is an error); IFEval instruction groups (instruction-level strict) come
 from the rows.
 
---cross-prompt compares a no-thinking run (plain prompts) with a parallel run (parallel prompts of the same data directory), nothing
-else, on the benchmarks both runs have: same source, problem id and sample per row; the headers must be the plain and the parallel
-version of one header (parallel paragraph removed) and the problem text after the first "Problem:" must be equal.
+--cross-prompt compares a no-thinking run (plain prompts) with a parallel or Multiverse run (the corresponding prompt directory),
+on the benchmarks both runs have: same source, problem id and sample per row; the inserted paragraph is checked exactly and the
+problem text after the first "Problem:" must be equal.
 Budget and sampling are equal only nominally (the rollout has its own length limits and no seed).
 
 Usage: python scripts/instruct4b_eval/paired_compare.py --base <run> --cand <run> [--cand <run2>] [--meta-dir <dir>] [--cross-prompt] --out <out.json>
@@ -29,13 +29,17 @@ Usage: python scripts/instruct4b_eval/paired_compare.py --base <run> --cand <run
 import argparse
 import json
 import os
+import sys
 
 import numpy as np
 import pandas as pd
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from exp21.make_mv_prompts import FIRST_LINE, MV_PARAGRAPH  # noqa: E402
+
 PROTOCOL = ("suite", "mode", "budget", "temperature", "top_p", "generator", "prompts", "ifeval_scorer_seed")
 SLICES = ("category", "type", "level")
-CROSS_PROMPTS = {"no-thinking": "plain", "parallel": "parallel"}  # --cross-prompt: the two modes and their prompt directories
+CROSS_PROMPTS = {"no-thinking": "plain", "parallel": "parallel", "multiverse": "multiverse"}
 MARGIN = 2.0  # proposed tolerance in pp (not confirmed by the user), only a printed label
 BOOTSTRAP, SEED = 10_000, 0
 
@@ -56,10 +60,14 @@ def header_and_problems(rows, where):
 
 def check_cross_prompt(base, cand, where, base_mode):
     (base_header, base_problems), (cand_header, cand_problems) = header_and_problems(base, where), header_and_problems(cand, where)
-    plain, parallel = (base_header, cand_header) if base_mode == "no-thinking" else (cand_header, base_header)
-    start, end = parallel.find("During the reasoning process"), parallel.find("End your response")
-    if not 0 < start < end or parallel[:start] + parallel[end:] != plain:  # as built by make_bench_data.py / make_eval_data.py
-        raise ValueError(f"{where}: headers are not the plain and the parallel version of one header")
+    plain, special = (base_header, cand_header) if base_mode == "no-thinking" else (cand_header, base_header)
+    if "Within each parallel block:" in special:
+        matches = plain.startswith(FIRST_LINE) and special == FIRST_LINE + MV_PARAGRAPH + plain[len(FIRST_LINE):]
+    else:
+        start, end = special.find("During the reasoning process"), special.find("End your response")
+        matches = 0 < start < end and special[:start] + special[end:] == plain
+    if not matches:
+        raise ValueError(f"{where}: headers are not matching plain and structured versions")
     bad = np.flatnonzero(base_problems != cand_problems)
     if len(bad):
         raise ValueError(f"{where}: problem text differs in {len(bad)} rows, first row {bad[0]}")
@@ -106,11 +114,27 @@ def bootstrap(base, cand):
             "problems": len(b), "discordant_problems": round(100 * np.mean(b[:, 0] / b[:, 1] != c[:, 0] / c[:, 1]), 1)}
 
 
+def bootstrap_mean(base, cand):
+    """Paired interval in native units for response length and sequential forward passes."""
+    assert base.index.equals(cand.index)
+    b, c = base["num"].to_numpy(), cand["num"].to_numpy()
+    delta = c - b
+    rng = np.random.default_rng(SEED)
+    means = np.concatenate([delta[ids].mean(axis=1) for ids in np.array_split(
+        rng.integers(0, len(delta), size=(BOOTSTRAP, len(delta))), 20)])
+    return {"base": round(float(b.mean()), 2), "cand": round(float(c.mean()), 2),
+            "delta": round(float(delta.mean()), 2), "ci95": [round(float(q), 2) for q in np.percentile(means, [2.5, 97.5])],
+            "problems": len(delta)}
+
+
 def compare(base, named, meta):
     """base rows, {run name: candidate rows} (one per training seed), optional meta rows -> results for every metric and slice."""
     cands = list(named.values())
     metrics = [m for m in ("acc_robust", "acc", "prompt_level_loose_acc", "inst_level_strict_acc", "truncated", "parallel",
-                           "valid_tags", "no_final_answer") if m in base and base[m].notna().all() and all(c[m].notna().all() for c in cands)]
+                           "valid_tags", "mv_valid", "mv_numbered", "no_final_answer")
+               if m in base and base[m].notna().all() and all(c[m].notna().all() for c in cands)]
+    numeric = [m for m in ("chars", "tokens", "forward_passes")
+               if m in base and base[m].notna().all() and all(m in c and c[m].notna().all() for c in cands)]
     pooled = cands[0].copy()
     for m in metrics:
         if not m.startswith("inst_level"):
@@ -122,6 +146,8 @@ def compare(base, named, meta):
     out = {"samples_per_problem": {s: int(n) for s, n in counts.items()}, "metrics": {}, "by_source": {}, "slices": {}}
     for name, cand in runs.items():
         out["metrics"][name] = {m: bootstrap(per_problem(base, m), per_problem(cand, m)) for m in metrics}
+    out["numeric_metrics"] = {name: {m: bootstrap_mean(per_problem(base, m), per_problem(cand, m)) for m in numeric}
+                              for name, cand in runs.items()}
     if len(counts) > 1:  # e.g. the authors' math set: AIME24, AIME25, AMC23, MATH300 are separate benchmarks
         for source in counts.index:
             b = base[base["source"] == source]
@@ -164,9 +190,10 @@ def main():
     for run, (meta, rows) in zip(args.cand, cands):
         if args.cross_prompt:
             pair = {base_meta.get("mode"): str(base_meta.get("prompts")), meta.get("mode"): str(meta.get("prompts"))}
-            if (set(pair) != set(CROSS_PROMPTS) or any(os.path.basename(p) != CROSS_PROMPTS[m] for m, p in pair.items())
+            if (set(pair) not in ({"no-thinking", "parallel"}, {"no-thinking", "multiverse"})
+                    or any(os.path.basename(p) != CROSS_PROMPTS[m] for m, p in pair.items())
                     or len({os.path.dirname(p) for p in pair.values()}) != 1):
-                raise ValueError(f"{run}: --cross-prompt needs one no-thinking run on <data>/plain and one parallel run on <data>/parallel: "
+                raise ValueError(f"{run}: --cross-prompt needs one no-thinking run on <data>/plain and one structured run: "
                                  f"{base_meta.get('mode'), base_meta.get('prompts')} vs {meta.get('mode'), meta.get('prompts')}")
         keys = [k for k in PROTOCOL if not (args.cross_prompt and k in ("mode", "prompts", "generator"))]
         differs = {k: (base_meta.get(k), meta.get(k)) for k in keys if base_meta.get(k) != meta.get(k)}
