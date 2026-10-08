@@ -164,6 +164,8 @@ def run_batch(k, rows, out_dir, model):
     reply = call(SYSTEM, "\n\n".join(msgs), model=model)
     rec = {"batch": k, "keys": [r["key"] for r in rows], "reply": reply["text"], "is_error": reply["is_error"],
            "error": reply.get("error"), "usage": reply.get("usage"), "cost_usd": reply.get("cost_usd")}
+    if reply["is_error"] and not reply["text"]:  # transport failure (e.g. policyHelper timeout): not saved, a rerun retries it
+        return rec
     json.dump(rec, open(path + ".tmp", "w"), ensure_ascii=False, indent=1)
     os.replace(path + ".tmp", path)
     return rec
