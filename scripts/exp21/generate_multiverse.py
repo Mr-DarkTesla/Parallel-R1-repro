@@ -51,6 +51,8 @@ def main():
         item = output.outputs[0]
         prefix = item.text
         stopped = item.stop_reason == ids["<Path>"]
+        if stopped and prefix.endswith("<Path>"):
+            prefix = prefix[:-len("<Path>")]
         count = path_count(prefix) if stopped else 0
         records.append({"input": prompt, "prefix": prefix, "prefix_tokens": len(item.token_ids),
                         "seed": int(seed), "count": count, "first_stopped": stopped,
@@ -66,7 +68,8 @@ def main():
         for (i, k, _, start), output in zip(branches, generated):
             item = output.outputs[0]
             stopped = item.stop_reason == ids["</Path>"]
-            segment = "<Path>\n" + f"{k}: " + item.text + ("</Path>\n" if stopped else "")
+            path_text = item.text.removesuffix("</Path>") if stopped else item.text
+            segment = "<Path>\n" + f"{k}: " + path_text + ("</Path>\n" if stopped else "")
             records[i].setdefault("paths", []).append(segment)
             records[i].setdefault("path_tokens", []).append(len(item.token_ids) + len(tok.encode(segment, add_special_tokens=False))
                                                              - len(tok.encode(item.text, add_special_tokens=False)))
