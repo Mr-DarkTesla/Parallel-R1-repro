@@ -3,8 +3,8 @@
 #   no-thinking | thinking: native Qwen3 chat template with enable_thinking off | on; plain prompts (IFEval: the original prompt)
 #   parallel: the authors' parallel prompt and the genuine parallel rollout (scripts/bench/eval_rollout.sh) in the non-thinking
 #             template (PARALLEL_ROLLOUT_ENABLE_THINKING=false); math benchmarks only
-#   multiverse (exp 21): the Multiverse-format prompt (scripts/exp21/make_mv_prompts.py, <prompt dir>/multiverse) with plain
-#             sequential no-thinking generation; score.py adds the Multiverse grammar check and forward passes (EXP21_TOKENIZER)
+#   multiverse (exp 21): sequential no-thinking diagnostic on the Multiverse prompt.
+#   multiverse-branch (exp 21): independently generate sibling paths from the shared Goal prefix, then join and continue.
 # dev: scripts/instruct4b_eval/generate.py (seed = sample index). frozen: scripts/bench/generate_plain.py, the protocol of the finished
 # baseline runs. REUSE=<old run dir> scores that run's dumps instead of generating; allowed only for the two finished C0 16k runs below.
 # Usage on the pod (venv active): CUDA_VISIBLE_DEVICES=<g> bash scripts/instruct4b_eval/run_eval.sh <name> <model> <dev|frozen> <mode> <budget>
@@ -31,6 +31,7 @@ esac
 case $mode in
     no-thinking | thinking) benches=${BENCHES:-$all} prompts=$dir/plain ;;
     multiverse) benches=${BENCHES:-$all} prompts=$dir/multiverse ;;
+    multiverse-branch) benches=${BENCHES:-$all} prompts=$dir/multiverse generator=scripts/exp21/generate_multiverse.py ;;
     parallel) benches=${BENCHES:-$math} prompts=$dir/parallel generator=scripts/bench/eval_rollout.sh ;;
     *) echo "mode: no-thinking | thinking | parallel | multiverse"; exit 1 ;;
 esac
@@ -131,7 +132,11 @@ EOF
             || { echo "rollout template not non-thinking: $log"; exit 1; }
     else
         generations=$run/$bench.jsonl
-        python "../$generator" "$model" "$test" "$generations" "$budget" "${mode/multiverse/no-thinking}" >> "$log" 2>&1
+        if [ "$mode" = multiverse-branch ]; then
+            python "../$generator" "$model" "$test" "$generations" "$budget" >> "$log" 2>&1
+        else
+            python "../$generator" "$model" "$test" "$generations" "$budget" "${mode/multiverse/no-thinking}" >> "$log" 2>&1
+        fi
     fi
     # the dumped prompts must be rendered in the requested mode (empty think block = non-thinking template).
     # parallel: the dump's input is RLHFDataset's default-template prompt (ray_trainer._validate decodes the dataset input_ids

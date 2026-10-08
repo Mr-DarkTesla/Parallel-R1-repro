@@ -39,7 +39,8 @@ from exp21.make_mv_prompts import FIRST_LINE, MV_PARAGRAPH  # noqa: E402
 
 PROTOCOL = ("suite", "mode", "budget", "temperature", "top_p", "generator", "prompts", "ifeval_scorer_seed")
 SLICES = ("category", "type", "level")
-CROSS_PROMPTS = {"no-thinking": "plain", "parallel": "parallel", "multiverse": "multiverse"}
+CROSS_PROMPTS = {"no-thinking": "plain", "parallel": "parallel", "multiverse": "multiverse",
+                 "multiverse-branch": "multiverse"}
 MARGIN = 2.0  # proposed tolerance in pp (not confirmed by the user), only a printed label
 BOOTSTRAP, SEED = 10_000, 0
 
@@ -190,7 +191,8 @@ def main():
     for run, (meta, rows) in zip(args.cand, cands):
         if args.cross_prompt:
             pair = {base_meta.get("mode"): str(base_meta.get("prompts")), meta.get("mode"): str(meta.get("prompts"))}
-            if (set(pair) not in ({"no-thinking", "parallel"}, {"no-thinking", "multiverse"})
+            if (set(pair) not in ({"no-thinking", "parallel"}, {"no-thinking", "multiverse"},
+                                  {"no-thinking", "multiverse-branch"})
                     or any(os.path.basename(p) != CROSS_PROMPTS[m] for m, p in pair.items())
                     or len({os.path.dirname(p) for p in pair.values()}) != 1):
                 raise ValueError(f"{run}: --cross-prompt needs one no-thinking run on <data>/plain and one structured run: "

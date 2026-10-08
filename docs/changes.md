@@ -108,3 +108,9 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     `results/21-qwen3-0.6b-multiverse/`. Both SFT runs use 64 updates and the same recipe. `score.py` now starts the
     forward-pass count from generated token count, so the final EOS step is included even for an answer without blocks.
     Runs scored before this change are corrected from saved dumps by `add_efficiency.py` into separate analysis directories.
+13. `scripts/exp21/generate_multiverse.py` adds an inference diagnostic that generates every numbered sibling path from the
+    same Goal prefix, then joins the paths and continues. This matches the training mask's independence constraint at the
+    path stage. Plain sequential generation is kept as a separate diagnostic: it gives the token after the first path a
+    sibling-path context absent in SFT and often jumps straight to the conclusion. `run_eval.sh` names the new protocol
+    `multiverse-branch`; its prompts, seed, budget and generator are recorded in run metadata. The joined conclusion still
+    uses ordinary vLLM positions, so this is an approximation to the full custom-position Multiverse rollout.
