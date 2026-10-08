@@ -1,0 +1,39 @@
+{
+ "math": {
+  "rows": 7500,
+  "leaky_or_flagged": 1027,
+  "kept": 6256
+ },
+ "gsm8k": {
+  "rows": 7473,
+  "leaky_or_flagged": 298,
+  "kept": 7175
+ },
+ "arc": {
+  "rows": 3370,
+  "raw_leaky_or_flagged": 10,
+  "final_prompt_leaky_or_flagged": 243,
+  "final_prompt_duplicates": 1,
+  "kept": 3116
+ },
+ "answer_types": {
+  "arc": {
+   "expression": 0,
+   "fraction": 0,
+   "integer": 0,
+   "letter": 3116
+  },
+  "gsm8k": {
+   "expression": 0,
+   "fraction": 0,
+   "integer": 7175,
+   "letter": 0
+  },
+  "math": {
+   "expression": 1326,
+   "fraction": 929,
+   "integer": 4001,
+   "letter": 0
+  }
+ }
+}
