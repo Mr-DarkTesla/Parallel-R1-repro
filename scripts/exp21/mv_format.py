@@ -53,10 +53,13 @@ def parse(text):
 
 def forward_passes(text, count_tokens):
     """Sequential decoding steps of an answer when the paths of each grammatical block run in parallel: text outside paths
-    counts fully, each block's paths count as the longest one. count_tokens(str) -> int (the model's tokenizer)."""
-    blocks = parse(text)["blocks"]
+    counts fully, each block's paths count as the longest one. Malformed or unnumbered answers get no parallel saving.
+    count_tokens(str) -> int (the model's tokenizer)."""
+    structure = parse(text)
     total, saved = count_tokens(text), 0
-    for b in blocks:
+    if not structure["valid"] or not all(b["numbered"] for b in structure["blocks"]):
+        return total
+    for b in structure["blocks"]:
         segment = text[b["start"]:b["end"]]
         lengths = [count_tokens(m.group(0)) for m in PATH.finditer(segment)]
         saved += sum(lengths) - max(lengths)

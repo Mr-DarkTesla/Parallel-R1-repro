@@ -11,7 +11,7 @@ from pathlib import Path
 import pandas as pd
 from transformers import AutoTokenizer
 
-from mv_format import forward_passes
+from mv_format import forward_passes, parse
 
 
 source, target, tokenizer = map(Path, sys.argv[1:4])
@@ -33,6 +33,9 @@ for path in sorted((source / "rows").glob("*.jsonl")):
     if dumps["tokens"].isna().any():
         raise ValueError(f"{bench}: generated token counts missing")
     answers = dumps["output"].str.replace("<|endoftext|>", "", regex=False).str.replace("<|im_end|>", "", regex=False)
+    structures = [parse(a) for a in answers]
+    rows["mv_started_blocks"] = [max(a.count("<Parallel>"), a.count("</Parallel>")) for a in answers]
+    rows["mv_valid_blocks"] = [sum(b["numbered"] for b in s["blocks"]) for s in structures]
     saved = [count(a) - forward_passes(a, count) for a in answers]
     rows["tokens"] = dumps["tokens"].astype(int).to_numpy()
     rows["forward_passes"] = rows["tokens"] - saved
@@ -43,5 +46,7 @@ for path in sorted((source / "rows").glob("*.jsonl")):
     for name, group in rows.groupby("source"):
         summary[name]["mean_tokens"] = round(float(group["tokens"].mean()), 1)
         summary[name]["mean_forward_passes"] = round(float(group["forward_passes"].mean()), 1)
+        started = group["mv_started_blocks"].sum()
+        summary[name]["mv_valid_blocks_percent"] = round(100 * group["mv_valid_blocks"].sum() / started, 1) if started else None
     (target / "results" / f"{bench}.json").write_text(json.dumps(summary, indent=1))
     print(bench, len(rows), round(float(rows["tokens"].mean()), 1), round(float(rows["forward_passes"].mean()), 1))

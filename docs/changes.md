@@ -96,3 +96,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 8. `scripts/exp21/add_efficiency.py` derives token length and sequential forward-pass counts from saved evaluation dumps in
    separate run directories. It checks row alignment, preserves the original scores, and counts the paths of each grammatical
    Multiverse block by their longest path. All variants use this same derivation for efficiency comparisons.
+9. Forward-pass savings now require the whole response to have valid, numbered Multiverse blocks. The benchmark scorer and
+   saved-dump derivation also report the share of attempted blocks that parse and have numbered paths; malformed responses
+   get their full token count as sequential work. The legacy `valid_tags` field uses an older grammar and is not used in exp 21.

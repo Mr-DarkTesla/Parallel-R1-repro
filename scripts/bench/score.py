@@ -88,6 +88,8 @@ frame["no_final_answer"] = ~final.str.contains(r"(?i)Final Answer\s*:")
 mv = answers.map(mv_parse)
 frame["mv_tags"], frame["mv_valid"] = mv.map(lambda r: r["tags"]), mv.map(lambda r: r["valid"])
 frame["mv_blocks"], frame["mv_numbered"] = mv.map(lambda r: len(r["blocks"])), mv.map(lambda r: r["valid"] and all(b["numbered"] for b in r["blocks"]))
+frame["mv_started_blocks"] = pd.concat([answers.str.count("<Parallel>"), answers.str.count("</Parallel>")], axis=1).max(axis=1)
+frame["mv_valid_blocks"] = mv.map(lambda r: sum(b["numbered"] for b in r["blocks"]))
 if os.environ.get("EXP21_TOKENIZER"):
     from transformers import AutoTokenizer
     _tok = AutoTokenizer.from_pretrained(os.environ["EXP21_TOKENIZER"])
@@ -115,6 +117,8 @@ for source, group in frame.groupby("source"):
         "mv_with_tags": round(100 * (group["mv_tags"] > 0).mean(), 1),
         "mv_valid_tagged": round(100 * group.loc[group["mv_tags"] > 0, "mv_valid"].mean(), 1) if (group["mv_tags"] > 0).any() else None,
         "mv_numbered_tagged": round(100 * group.loc[group["mv_tags"] > 0, "mv_numbered"].mean(), 1) if (group["mv_tags"] > 0).any() else None,
+        "mv_valid_blocks_percent": round(100 * group["mv_valid_blocks"].sum() / group["mv_started_blocks"].sum(), 1)
+        if group["mv_started_blocks"].sum() else None,
         "mean_chars": int(group["chars"].mean()),
         **({"mean_tokens": round(group["tokens"].mean(), 1)} if "tokens" in group else {}),
         **({"mean_forward_passes": round(group["forward_passes"].mean(), 1)} if "forward_passes" in group else {}),
