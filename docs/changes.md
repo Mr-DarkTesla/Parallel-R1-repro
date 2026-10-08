@@ -93,3 +93,6 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
 7. `scripts/exp21/prepare_m2_alternates.py` selects other already generated, correct Qwen answers only for problems where M1
    passed and the first M2 plan did not. It keeps a maximum of two alternatives per problem; the same M2 converter and checks
    apply. This can raise the paired yield without changing the candidate problem pool or using evaluation results.
+8. `scripts/exp21/add_efficiency.py` derives token length and sequential forward-pass counts from saved evaluation dumps in
+   separate run directories. It checks row alignment, preserves the original scores, and counts the paths of each grammatical
+   Multiverse block by their longest path. All variants use this same derivation for efficiency comparisons.
