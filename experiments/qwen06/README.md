@@ -105,7 +105,7 @@ RUN_NAME=eval-step300 REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$C
 | Блоки / ветки | `protocol=plan`: до `MAX_BLOCKS=2` блоков, 2–4 ветки по плану модели |
 | Log-probs актора | `flat_packed` с тем же подавлением тегов, что в vLLM; с `GRAPH_ROLLOUT=true` — `tree` (ниже); `rollout_gap/*` (см. выше) |
 
-Формат блока задаёт общий с thinking-SFT модуль `verl/verl/parallel_thinking_generation_v3/contract.py`: парсер плана, подавление тегов, графовые позиции и маска, D/T. SFT берёт его же, своей копии нет.
+Формат блока задаёт общий с thinking-SFT модуль `verl/verl/parallel_thinking_generation_v3/contract.py`: парсер плана, подавление тегов (в плане, ветках и summary также `<think>`, `</think>`, `<|im_start|>`), `plain_text` для тел, графовые позиции и маска, D/T. EOS — любой `eos_token_id` из generation_config модели (у Qwen3 `<|im_end|>` и `<|endoftext|>`): план с ним незавершён, ветка или summary получает закрывающий тег. SFT берёт его же, своей копии нет.
 
 ```
 <Parallel>branches=2<Plan>cases

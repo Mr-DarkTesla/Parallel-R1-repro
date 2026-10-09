@@ -18,9 +18,10 @@ def validate(path, plan=False):
     ids = [tokenizer.encode(token, add_special_tokens=False) for token in TOKENS]
     if any(len(x) != 1 for x in ids) or len({x[0] for x in ids}) != 6:
         raise ValueError('Six distinct atomic Parallel/Path/Summary opening and closing tokens are required')
-    if plan:  # protocol=plan also needs <Plan> and </Plan>, and the branch counts as single tokens
-        ids = [[contract.tag_ids(tokenizer)[token]] for token in contract.TAGS]
-        TOKENS = contract.TAGS
+    if plan:  # protocol=plan also needs <Plan>, </Plan>, the control tokens nodes suppress and the counts as single tokens
+        token_ids = contract.token_ids(tokenizer)
+        TOKENS = tuple(token_ids)
+        ids = [[token_ids[token]] for token in TOKENS]
         contract.count_ids(tokenizer)
     if max(x[0] for x in ids) >= config.vocab_size:
         raise ValueError('Special-token IDs exceed model vocabulary')

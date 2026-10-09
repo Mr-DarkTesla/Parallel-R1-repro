@@ -17,6 +17,8 @@ import ast
 import asyncio
 import contextlib
 import copy
+import json
+import tempfile
 import importlib.util
 from pathlib import Path
 import random
@@ -262,13 +264,19 @@ class FlatPackedContextTest(unittest.TestCase):
 PLAN_OPEN, PLAN_CLOSE = 16, 17
 WORDS = {'cases': 20, 'verify': 21, '\n': 22, '1': 23, '2': 24, '3': 25, '4': 26, ':': 27, ' x': 28, 'branches=': 29}
 BRANCHES = WORDS['branches=']
+CONTROL = {'<think>': 18, '</think>': 19, '<|im_start|>': 2}  # contract.NODE_CONTROL
+ENDOFTEXT = 9  # a second EOS id, as Qwen3's generation_config has (<|im_end|> and <|endoftext|>)
 
 
 class PlanTokenizer(Tokenizer):
-    """The eight contract tags at 10-17, and a few plan words."""
+    """The eight contract tags at 10-17, the control tokens body nodes suppress, and a few plan words."""
+    name_or_path = None  # no generation_config.json: EOS is eos_token_id only
+
     def encode(self, text, **kwargs):
         if text in contract.TAGS:
             return [10 + contract.TAGS.index(text)]
+        if text in CONTROL:
+            return [CONTROL[text]]
         if text in WORDS:
             return [WORDS[text]]
         return [WORDS[c] for c in text] if all(c in WORDS for c in text) else [NEWLINE]
@@ -324,7 +332,8 @@ class PlanProtocolTest(unittest.TestCase):
     setUp = FlatPackedContextTest.setUp
     actor_log_probs = FlatPackedContextTest.actor_log_probs
 
-    def rollout(self, context, prompt, seed, plans=None, counts=None, max_plan_tokens=32, allow_parallel=True):
+    def rollout(self, context, prompt, seed, plans=None, counts=None, max_plan_tokens=32, allow_parallel=True,
+                tokenizer=PlanTokenizer, script=None):
         prompt_length, response_length = 8, 128
         config = SimpleNamespace(actor_rollout_ref=SimpleNamespace(rollout=SimpleNamespace(
             prompt_length=prompt_length, response_length=response_length, agent=SimpleNamespace(
@@ -332,9 +341,10 @@ class PlanProtocolTest(unittest.TestCase):
                 max_path_response_length=8, logprob_context=context, rollout_logprobs=True, protocol='plan',
                 max_plan_tokens=max_plan_tokens, allow_parallel=allow_parallel))))
         Loop._class_initialized = False
-        Loop.init_class(config, PlanTokenizer(prompt))
+        Loop.init_class(config, tokenizer(prompt))
         loop = Loop()
-        loop.server_manager = PlanServer(self.model, plan_script(torch.Generator().manual_seed(seed), plans, counts))
+        loop.server_manager = PlanServer(self.model, script or plan_script(torch.Generator().manual_seed(seed), plans,
+                                                                           counts))
 
         async def run():
             loop.loop = asyncio.get_running_loop()
@@ -379,7 +389,7 @@ class PlanProtocolTest(unittest.TestCase):
             self.assertEqual(call['prompt'], calls[2]['prompt'] + calls[2]['ids'] + [PATH, WORDS[str(number)], WORDS[':']])
         self.assertEqual(calls[6]['prompt'][-2:], [END_PARALLEL, SUMMARY])  # no newline before <Summary>
         self.assertEqual(calls[-1]['stops'], [EOS])  # third block not allowed: <Parallel> suppressed, not a stop
-        tags = contract.tag_ids(PlanTokenizer([]))
+        tags = contract.token_ids(PlanTokenizer([]))
         counts = contract.count_ids(PlanTokenizer([]))
         for call, node in zip(calls, [0, 5, 2, 3, 3, 3, 4, 0, 5, 2, 3, 3, 4, 1]):
             self.assertEqual({k: v for k, v in dict(logit_bias=call['bias'], allowed_token_ids=call['allowed']).items()
@@ -477,6 +487,35 @@ class PlanProtocolTest(unittest.TestCase):
             self.assertEqual(result.repro_stats['valid_plan_blocks'], 0)
             self.assertEqual(result.response_ids[-len(result.calls[2]['ids']) - 1], PLAN_OPEN)
             self.assertEqual(result.repro_stats['sampled_tokens'], sum(len(c['ids']) for c in result.calls))
+
+    def test_every_generation_config_eos_ends_a_node(self):
+        """vLLM also stops on the generation_config's other EOS ids (Qwen3: <|endoftext|> besides <|im_end|>).
+        Such a stop is EOS, not a budget cut: a plan ends incomplete, a branch or summary gets its closing tag
+        in place of the EOS, scored as the EOS that was sampled."""
+        with tempfile.TemporaryDirectory() as directory:
+            Path(directory, 'generation_config.json').write_text(json.dumps(dict(eos_token_id=[EOS, ENDOFTEXT])))
+
+            class Qwen3Like(PlanTokenizer):
+                name_or_path = directory
+
+            script = plan_script(torch.Generator().manual_seed(0))
+            script['path'][1][-1] = ENDOFTEXT  # branch 2 of block 1 ends with EOS in plan_script
+            script['summary'][1][-1] = ENDOFTEXT
+            script['main'][2][-1] = ENDOFTEXT
+            result = self.rollout('flat_packed', [3, 4, 5], 0, tokenizer=Qwen3Like, script=script)[0]
+            self.assertEqual(Loop.eos_token_ids, (EOS, ENDOFTEXT))
+            stops = [call['stops'] for call in result.calls if call['kind'] != 'count']
+            self.assertTrue(all(stop[-2:] == [EOS, ENDOFTEXT] for stop in stops), stops)
+            self.assertEqual(result.repro_stats['trajectory_status'], 'ok')
+            self.assertEqual(sorted(token for _, token in result.label_overrides), [ENDOFTEXT, ENDOFTEXT])
+            for index, token in result.label_overrides:  # written as the closing tag
+                self.assertIn(result.response_ids[index], (END_PATH, END_SUMMARY))
+            self.assertEqual(result.response_ids[-1], ENDOFTEXT)  # main's own EOS stays
+            self.assertNotIn(ENDOFTEXT, result.response_ids[:-1])
+
+            plans = [plan('cases', 2)[:-1] + [ENDOFTEXT]]
+            result = self.rollout('flat_packed', [3, 4, 5], 0, plans=plans, counts=[2], tokenizer=Qwen3Like)[0]
+            self.assertEqual(result.repro_stats['trajectory_status'], contract.PLAN_INCOMPLETE)
 
     def test_sequential_baseline_suppresses_every_tag(self):
         batch, info = self.batch('flat_packed', allow_parallel=False)

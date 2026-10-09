@@ -15,6 +15,10 @@ next <Path>: a separator would let branch B read branch A through it. A plan who
 from N, an invalid, unfinished or over-budget plan ends the trajectory with c = 0; plans are never
 repaired and blocks are never empty.
 
+Plan, branch and summary nodes cannot sample <think>, </think> or <|im_start|> (suppressed like the
+tags they may not sample); EOS ends such a node (a plan is then incomplete, a branch or summary is written
+with its closing tag). So a plan item, branch or summary body is plain_text: no tag, no control token.
+
 v1 -> v2: "branches=N" between <Parallel> and <Plan>; node COUNT samples N from the digits 2-4 only.
 
 Branches of one block start at the position after their shared prefix (through </Plan>); </Parallel>
@@ -28,9 +32,10 @@ from dataclasses import dataclass
 import torch
 
 CONTRACT_VERSION = 2
-# Revision within version 2 (agreed with the SFT side): COUNT has zero support outside COUNTS in the actor too,
-# and plan items may not contain tags or chat/think control tokens, or repeat.
-CONTRACT_REVISION = 'a59c633+hard-count-and-safe-plan-20261009'
+# Revisions within version 2 (agreed with the SFT side). a59c633+hard-count-and-safe-plan: COUNT has zero support
+# outside COUNTS in the actor too; plan items may not contain tags or control tokens, or repeat.
+# 5ec8d5c+node-control-suppression: plan, branch and summary nodes suppress NODE_CONTROL; plain_text(body).
+CONTRACT_REVISION = '5ec8d5c+node-control-suppression-20261009'
 TAGS = ('<Parallel>', '</Parallel>', '<Path>', '</Path>', '<Summary>', '</Summary>', '<Plan>', '</Plan>')
 PLAN_KINDS = ('decompose', 'cases', 'candidates', 'methods', 'verify')
 MIN_PATHS, MAX_PATHS = 2, 4
@@ -41,9 +46,10 @@ MAX_BLOCKS = 2  # cap, not quota: the next <Parallel> is suppressed
 VALID, INVALID_PLAN, PLAN_INCOMPLETE, PLAN_BUDGET_EXHAUSTED = (
     'valid', 'invalid_plan', 'plan_incomplete', 'plan_budget_exhausted')
 
-# Generation nodes. Each samples one closing tag (main: <Parallel> while blocks remain); every other tag
-# gets SUPPRESS_BIAS, identically in sampling (vLLM logit_bias) and in replay (actor logits). COUNT samples
-# one token from COUNTS only (vLLM allowed_token_ids; the actor sets every other logit to HARD_MASK).
+# Generation nodes. Each samples one closing tag (main: <Parallel> while blocks remain); every other tag, and
+# in BODY_NODES the NODE_CONTROL tokens, get SUPPRESS_BIAS, identically in sampling (vLLM logit_bias) and in
+# replay (actor logits). COUNT samples one token from COUNTS only (vLLM allowed_token_ids; the actor sets
+# every other logit to HARD_MASK).
 MAIN_OPEN, MAIN_CLOSED, PLAN, PATH, SUMMARY, COUNT = range(6)
 INSERTED = -1  # runtime-inserted token: no log-prob
 SAMPLED_TAG = {MAIN_OPEN: '<Parallel>', MAIN_CLOSED: None, PLAN: '</Plan>', PATH: '</Path>', SUMMARY: '</Summary>',
@@ -52,8 +58,11 @@ SUPPRESS_BIAS = -100.0
 # exp(HARD_MASK - max) underflows to exactly 0, so the support is exactly COUNTS, as with -inf; unlike -inf it
 # keeps entropy finite (verl's entropy_from_logits computes softmax * logits, and 0 * -inf is NaN).
 HARD_MASK = -1e9
-# Plan items may not contain these (nor the tags): a branch assignment is plain text.
+# Bodies (plan items, branches, summaries) may not contain these (nor the tags): see plain_text.
 CONTROL_TOKENS = ('<think>', '</think>', '<|im_start|>', '<|im_end|>')
+# Suppressed in BODY_NODES like their foreign tags; <|im_end|> is EOS and ends the node instead.
+NODE_CONTROL = ('<think>', '</think>', '<|im_start|>')
+BODY_NODES = (PLAN, PATH, SUMMARY)
 # Runtime-inserted tags: after the sampled count, and after the last branch of a block.
 PLAN_OPEN, BLOCK_CLOSE = ('<Plan>',), ('</Parallel>', '<Summary>')
 _ITEM = re.compile(r'\s*(\d+)\s*:\s*(\S.*?)\s*')
@@ -87,12 +96,18 @@ def parse_plan(text, branches=None):
         if match is None or int(match.group(1)) != number:
             return None
         item = match.group(2)
-        if any(token in item for token in TAGS + CONTROL_TOKENS):
+        if not plain_text(item):
             return None
         items.append(item)
     if len(set(items)) != len(items):
         return None
     return Plan(kind.strip(), tuple(items))
+
+
+def plain_text(body):
+    """True if a plan item, branch or summary body (text between its tags) has no tag and no CONTROL_TOKENS,
+    as the suppression guarantees for sampled bodies; EOS ends a body, so it is not part of one either."""
+    return not any(token in body for token in TAGS + CONTROL_TOKENS)
 
 
 def plan_status(text, stop, branches=None):
@@ -135,6 +150,11 @@ def suppressed_tags(node):
     return tuple(tag for tag in TAGS if tag != SAMPLED_TAG[node])
 
 
+def suppressed_tokens(node):
+    """Tags the node may not sample and, in plan, branch and summary nodes, NODE_CONTROL."""
+    return suppressed_tags(node) + (NODE_CONTROL if node in BODY_NODES else ())
+
+
 def tag_ids(tokenizer):
     """Single-token ids of all tags; raises if the tokenizer lacks one."""
     ids = {}
@@ -145,6 +165,20 @@ def tag_ids(tokenizer):
         ids[tag] = encoded[0]
     if len(set(ids.values())) != len(TAGS):
         raise ValueError(f'Tags must have distinct ids: {ids}')
+    return ids
+
+
+def token_ids(tokenizer):
+    """tag_ids plus the single-token ids of NODE_CONTROL: every token some node suppresses (raises if one
+    is not a single token of its own)."""
+    ids = tag_ids(tokenizer)
+    for token in NODE_CONTROL:
+        encoded = tokenizer.encode(token, add_special_tokens=False)
+        if len(encoded) != 1:
+            raise ValueError(f'{token} must be one token, got {encoded}')
+        ids[token] = encoded[0]
+    if len(set(ids.values())) != len(ids):
+        raise ValueError(f'Tags and control tokens must have distinct ids: {ids}')
     return ids
 
 
@@ -162,7 +196,8 @@ def branches_ids(tokenizer):
 
 
 def logit_bias(node, ids):
-    return {ids[tag]: SUPPRESS_BIAS for tag in suppressed_tags(node)} if node != COUNT else {}
+    """vLLM logit_bias of a node; ids from token_ids."""
+    return {ids[token]: SUPPRESS_BIAS for token in suppressed_tokens(node)} if node != COUNT else {}
 
 
 def sampling_constraint(node, ids, counts):
@@ -174,8 +209,9 @@ def sampling_constraint(node, ids, counts):
 
 def suppression_table(ids, counts=()):
     """(nodes, 1 + width) tensor per node code: column 0 is the mode (0: the listed ids get SUPPRESS_BIAS,
-    1: every other token gets HARD_MASK), then token ids, -1 padded. COUNT lists `counts` in mode 1."""
-    rows = [[0] + [ids[tag] for tag in suppressed_tags(node)] for node in range(len(SAMPLED_TAG))]
+    1: every other token gets HARD_MASK), then token ids, -1 padded. COUNT lists `counts` in mode 1.
+    ids from token_ids."""
+    rows = [[0] + [ids[token] for token in suppressed_tokens(node)] for node in range(len(SAMPLED_TAG))]
     rows[COUNT] = [1] + list(counts)
     width = max(map(len, rows))
     return torch.tensor([row + [-1] * (width - len(row)) for row in rows], dtype=torch.long)

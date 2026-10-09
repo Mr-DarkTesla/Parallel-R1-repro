@@ -66,6 +66,21 @@ def test_mask(mask: torch.Tensor, position_ids: torch.Tensor, start: int, end: i
 class ParallelThinkingAgentLoopV3(AgentLoopBase):
     graph_attempts = 10000  # graph rollout: a request evicted this often in a row is a bug, not memory pressure
 
+    @staticmethod
+    def eos_ids(tokenizer):
+        """Every id vLLM ends a request on as EOS: the tokenizer's eos_token_id and the eos_token_id of the
+        model's generation_config.json, which vLLM adds as stops (Qwen3-0.6B: <|im_end|> and <|endoftext|>)."""
+        ids = [tokenizer.eos_token_id]
+        path = getattr(tokenizer, 'name_or_path', None)
+        if path:
+            from transformers import GenerationConfig
+            try:
+                extra = GenerationConfig.from_pretrained(path, local_files_only=True).eos_token_id
+            except OSError:  # no generation_config.json next to the tokenizer
+                extra = None
+            ids += list(extra) if isinstance(extra, (list, tuple)) else [extra]
+        return tuple(dict.fromkeys(i for i in ids if i is not None))
+
     @classmethod
     def init_class(cls, config, tokenizer, **kwargs):
         if cls._class_initialized:
@@ -107,12 +122,14 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if cls.graph_rollout and (cls.protocol != 'plan' or cls.logprob_context != 'tree'):
             raise ValueError('graph_rollout needs protocol=plan and logprob_context=tree')
         if cls.protocol == 'plan':
-            cls.tag_ids = contract.tag_ids(tokenizer)
+            cls.tag_ids = contract.token_ids(tokenizer)  # the tags and the control tokens nodes suppress
             cls.count_ids = contract.count_ids(tokenizer)
             cls.branches_ids = contract.branches_ids(tokenizer)
             cls.graph_tags = tuple(cls.tag_ids[tag] for tag in ('<Parallel>', '</Parallel>', '<Path>', '</Path>'))
 
         cls.eos_token_id = cls.tokenizer.eos_token_id
+        # protocol=plan: a node that samples any of these ends on EOS (plan incomplete, closing tag written).
+        cls.eos_token_ids = cls.eos_ids(cls.tokenizer)
         cls.start_parallel_token = cls.tokenizer.encode('<Parallel>')[0]
         cls.end_parallel_token = cls.tokenizer.encode('</Parallel>')[0]
         cls.start_path_token = cls.tokenizer.encode('<Path>')[0]
@@ -330,7 +347,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 # Up to max_blocks the main chain may sample <Parallel>; after that every tag is suppressed.
                 node = contract.main_node(iterations, max_blocks, self.allow_parallel)
                 stops = [self.start_parallel_token] if node == contract.MAIN_OPEN else []
-                sp_main = {**sampling_params, 'stop_token_ids': stops + [self.eos_token_id],
+                sp_main = {**sampling_params, 'stop_token_ids': stops + list(self.eos_token_ids),
                            'logit_bias': contract.logit_bias(node, self.tag_ids)}
             else:
                 sp_main = {**sampling_params, "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
@@ -591,12 +608,12 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if max_tokens < 1:
             return [], [], 'budget', False, None
         params = {**sampling_params, 'n': 1, 'max_tokens': max_tokens,
-                  'stop_token_ids': [] if close is None else [close, self.eos_token_id],
+                  'stop_token_ids': [] if close is None else [close, *self.eos_token_ids],
                   **contract.sampling_constraint(node, self.tag_ids, self.count_ids)}
         ids, log_probs, handle = await self._generate(phase, uuid4().hex, prompt_ids, params, parent, offset)
         if close is None:
             return ids, log_probs, 'close' if ids else 'budget', True, handle
-        stop = 'close' if ids and ids[-1] == close else 'eos' if ids and ids[-1] == self.eos_token_id else 'budget'
+        stop = 'close' if ids and ids[-1] == close else 'eos' if ids and ids[-1] in self.eos_token_ids else 'budget'
         return ids, log_probs, stop, True, handle
 
     def _written(self, ids, stop, close):
@@ -628,10 +645,10 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             out['log_probs'].extend([0.0] * len(ids) if log_probs is None else log_probs)
 
         def close_segment(ids, log_probs, stop, kind, node, close):
-            # As in legacy blocks: a sampled EOS is written as the closing tag but scored as EOS;
+            # As in legacy blocks: a sampled EOS is written as the closing tag but scored as the EOS it was;
             # a segment cut by its budget gets an inserted closing tag.
             if stop == 'eos':
-                out['overrides'].append((len(out['ids']) + len(ids) - 1, self.eos_token_id))
+                out['overrides'].append((len(out['ids']) + len(ids) - 1, ids[-1]))
             written = self._written(ids, stop, close)
             add(written[:len(ids)], kind, node, log_probs)
             add(written[len(ids):], 'forced')

@@ -15,9 +15,13 @@ spec.loader.exec_module(contract)
 Span = contract.Span
 
 
+SPECIAL = contract.TAGS + contract.NODE_CONTROL  # ids 200-210
+VOCAB = 220
+
+
 class Tokenizer:
     def encode(self, text, **kwargs):
-        return [200 + contract.TAGS.index(text)] if text in contract.TAGS else [ord(c) for c in text]
+        return [200 + SPECIAL.index(text)] if text in SPECIAL else [ord(c) for c in text]
 
 
 class PlanTest(unittest.TestCase):
@@ -39,6 +43,8 @@ class PlanTest(unittest.TestCase):
         for item in contract.TAGS + contract.CONTROL_TOKENS:
             text = f'cases\n1: a {item} b\n2: c'
             self.assertIsNone(contract.parse_plan(text), repr(text))
+            self.assertFalse(contract.plain_text(f' so {item} then'))
+        self.assertTrue(contract.plain_text(' x < 2 and </ Path > is not a tag'))
         self.assertIsNone(contract.parse_plan('cases\n1: odd\n2:  odd '))
         self.assertEqual(contract.parse_plan('cases\n1: odd\n2: odd n').items, ('odd', 'odd n'))
 
@@ -73,7 +79,7 @@ class PlanTest(unittest.TestCase):
 
 class SuppressionTest(unittest.TestCase):
     def setUp(self):
-        self.ids = contract.tag_ids(Tokenizer())
+        self.ids = contract.token_ids(Tokenizer())
 
     def test_each_node_samples_only_its_tag(self):
         self.assertEqual(contract.main_node(0), contract.MAIN_OPEN)
@@ -83,7 +89,24 @@ class SuppressionTest(unittest.TestCase):
             allowed = set(contract.TAGS) - set(contract.suppressed_tags(node))
             self.assertEqual(allowed, set() if tag is None else {tag})
         self.assertEqual(contract.logit_bias(contract.PLAN, self.ids),
-                         {self.ids[t]: -100.0 for t in contract.TAGS if t != '</Plan>'})
+                         {self.ids[t]: -100.0 for t in contract.TAGS + contract.NODE_CONTROL if t != '</Plan>'})
+
+    def test_bodies_cannot_sample_control_tokens(self):
+        """Plan, branch and summary nodes suppress <think>, </think> and <|im_start|>; main writes <think> and
+        </think> itself; <|im_end|> is EOS everywhere (it ends the node), so no node suppresses it."""
+        self.assertEqual(contract.NODE_CONTROL, ('<think>', '</think>', '<|im_start|>'))
+        controls = {self.ids[token] for token in contract.NODE_CONTROL}
+        for node in (contract.PLAN, contract.PATH, contract.SUMMARY):
+            self.assertLessEqual(controls, set(contract.logit_bias(node, self.ids)), node)
+        for node in (contract.MAIN_OPEN, contract.MAIN_CLOSED):
+            self.assertFalse(controls & set(contract.logit_bias(node, self.ids)), node)
+        self.assertEqual(contract.logit_bias(contract.COUNT, self.ids), {})
+        table = contract.suppression_table(self.ids, contract.count_ids(Tokenizer()))
+        for node in range(table.size(0)):
+            listed = set(table[node, 1:][table[node, 1:] >= 0].tolist())
+            expected = set(contract.count_ids(Tokenizer())) if node == contract.COUNT else set(
+                contract.logit_bias(node, self.ids))
+            self.assertEqual(listed, expected, node)
 
     def test_count_samples_only_the_digits(self):
         counts = contract.count_ids(Tokenizer())
@@ -103,21 +126,36 @@ class SuppressionTest(unittest.TestCase):
     def test_tag_ids_must_be_single_distinct_tokens(self):
         class Split(Tokenizer):
             def encode(self, text, **kwargs):
-                return [1, 2] if text == '<Plan>' else super().encode(text)
+                return [1, 2] if text in ('<Plan>', '<think>') else super().encode(text)
         with self.assertRaises(ValueError):
             contract.tag_ids(Split())
+        with self.assertRaises(ValueError):
+            contract.token_ids(Split())
+
+        class SplitControl(Tokenizer):
+            def encode(self, text, **kwargs):
+                return [1, 2] if text == '<|im_start|>' else super().encode(text)
+        self.assertEqual(len(contract.tag_ids(SplitControl())), len(contract.TAGS))
+        with self.assertRaises(ValueError):
+            contract.token_ids(SplitControl())
+
+        class Shared(Tokenizer):
+            def encode(self, text, **kwargs):
+                return super().encode('<Path>' if text == '</think>' else text)
+        with self.assertRaises(ValueError):
+            contract.token_ids(Shared())
 
     def test_actor_suppression_equals_sampling_bias(self):
         counts = contract.count_ids(Tokenizer())
         table = contract.suppression_table(self.ids, counts)
-        logits = torch.randn(2, 7, 210)
+        logits = torch.randn(2, 7, VOCAB)
         nodes = torch.tensor([[0, 1, 2, 3, 4, 5, -1], [5, 4, 3, 2, 1, 0, -1]])
         expected = logits.clone()
         for row in range(2):
             for column in range(7):
                 node = nodes[row, column].item()
                 if node == contract.COUNT:  # vLLM allowed_token_ids: every other token is impossible
-                    others = torch.ones(210, dtype=torch.bool)
+                    others = torch.ones(VOCAB, dtype=torch.bool)
                     others[list(counts)] = False
                     expected[row, column, others] = contract.HARD_MASK
                 elif node >= 0:
