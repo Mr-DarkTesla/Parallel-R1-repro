@@ -26,6 +26,8 @@ from typing import Dict, Optional, Type
 from codetiming import Timer
 import torch
 from verl.parallel_thinking_generation_v3.repro_trace import Trace, TOKENS
+from verl.parallel_thinking_generation_v3.logprob_gap import (MAIN_AFTER, MAIN_BEFORE, PATH_FIRST, PATH_LATER,
+                                                              SUMMARY_FIRST, SUMMARY_LATER)
 logger = logging.getLogger(__file__)
 logger.setLevel(os.getenv("VERL_LOGGING_LEVEL", "WARN"))
 
@@ -76,6 +78,13 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cls.max_iterations_for_parallel_thinking = config.actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking
         cls.num_paths = config.actor_rollout_ref.rollout.agent.num_paths
         cls.max_path_response_length = config.actor_rollout_ref.rollout.agent.max_path_response_length
+        # tree: upstream objective (Unseen mask + multiverse positions), which differs from the
+        # contexts vLLM samples summaries and later blocks in. flat_packed: the actor scores every
+        # sampled token in the causal context and positions of the vLLM call that produced it.
+        cls.logprob_context = getattr(config.actor_rollout_ref.rollout.agent, 'logprob_context', 'tree')
+        if cls.logprob_context not in ('tree', 'flat_packed'):
+            raise ValueError(f'Unknown logprob_context {cls.logprob_context!r}; use tree or flat_packed')
+        cls.rollout_logprobs = bool(getattr(config.actor_rollout_ref.rollout.agent, 'rollout_logprobs', False))
 
         cls.eos_token_id = cls.tokenizer.eos_token_id
         cls.start_parallel_token = cls.tokenizer.encode('<Parallel>')[0]
@@ -111,8 +120,13 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         self.trace.record['messages'] = messages
         self.trace.record['prompt_ids'] = list(prompt_ids)
         position_ids  = torch.arange(init_len, dtype=torch.long)
+        # Every call of this trajectory goes to one server, which holds its prefix cache.
+        self.routing_key = uuid4().hex
 
         response_mask = []                                     
+        # Per response token: rollout segment (-1 for injected tags) and vLLM log-prob.
+        rollout_segments, rollout_log_probs = [], []
+        forced, label_overrides, replay_segments = [], [], []
         iterations    = 0
         request_id    = uuid4().hex
 
@@ -266,11 +280,9 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             remaining = self.response_length - (len(prompt_ids) - init_len)
             sp_main = {**sampling_params, "max_tokens": remaining,
                        "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
-            ids = await self.trace.generate(self.server_manager, 'main',
-                request_id=request_id,
-                prompt_ids=prompt_ids,
-                sampling_params=sp_main,
-            )
+            ids, log_probs = await self._generate('main', request_id, prompt_ids, sp_main)
+            rollout_segments.extend([MAIN_BEFORE if iterations == 0 else MAIN_AFTER] * len(ids))
+            rollout_log_probs.extend(log_probs)
             append_tokens(ids)
             if should_stop() or not await self.check_parallel(ids):
                 break
@@ -288,9 +300,19 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             base_pos = position_ids[-1].item() + 1 # the position of the <Path> token
             parallel_stack.append({"base": base_pos, "longest": 0})
 
-            parallel_ids, path_spans, manual_mask_positions = await self._call_parallel_thinking(
+            block_start = len(prompt_ids) - init_len
+            parallel_ids, path_spans, manual_mask_positions, tokens = await self._call_parallel_thinking(
                 prompt_ids, sampling_params, remaining
             )
+            codes = dict(path=PATH_FIRST if iterations == 0 else PATH_LATER,
+                         summary=SUMMARY_FIRST if iterations == 0 else SUMMARY_LATER, forced=-1)
+            rollout_segments.extend(codes[kind] for kind in tokens['kinds'])
+            rollout_log_probs.extend(tokens['log_probs'])
+            forced.extend(block_start + i for i, kind in enumerate(tokens['kinds']) if kind == 'forced')
+            label_overrides.extend((block_start + i, token) for i, token in tokens['overrides'])
+            # vLLM generated path k from prompt + response[:block_start] + <Path>, without the
+            # earlier sibling paths that precede it in the response (path 1 needs no replay).
+            replay_segments.extend((block_start + s, block_start + e, block_start) for s, e in path_spans[1:])
             append_tokens(parallel_ids, is_parallel=True, path_spans=path_spans, manual_mask_positions=manual_mask_positions)
 
             iterations += 1
@@ -301,6 +323,13 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         response_ids = prompt_ids[init_len:]
         prompt_ids = prompt_ids[:init_len]
         assert init_len == (len(prompt_ids))
+        flat_packed = self.logprob_context == 'flat_packed'
+        if flat_packed:
+            # vLLM positions are physical indices; sibling paths are separated by replay, not masks.
+            position_ids = torch.arange(len(position_ids), dtype=torch.long)
+            position_required_masks = []
+            for index in forced:  # injected tags were never sampled
+                response_mask[index] = 0
         
         if left_pad_len > 0:
             position_ids = torch.cat([
@@ -319,6 +348,17 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             response_mask = response_mask[: self.response_length]
 
         self.trace.finish(self.tokenizer, response_ids, response_mask, position_ids, position_required_masks, untruncated_length)
+        kept = len(response_ids)
+        extra = {}
+        if flat_packed:
+            # A replay needs at least one sampled token after <Path> inside the kept response.
+            extra['replay_segments'] = [(s, min(e, kept), c) for s, e, c in replay_segments if min(e, kept) - s >= 2]
+            extra['label_overrides'] = [(i, token) for i, token in label_overrides if i < kept]
+        if self.rollout_logprobs:
+            assert len(rollout_segments) == len(rollout_log_probs) == untruncated_length
+            extra['rollout_segments'] = rollout_segments[:kept]
+            extra['rollout_log_probs'] = [lp if seg >= 0 else 0.0 for lp, seg in
+                                          zip(rollout_log_probs[:kept], rollout_segments[:kept])]
         return AgentLoopOutput(
             prompt_ids          = prompt_ids,
             response_ids        = response_ids,
@@ -335,7 +375,17 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 'critical_depth': self.trace.record['critical_depth'],
                 'truncated': self.trace.record['truncated'],
             },
+            **extra,
         )
+
+    async def _generate(self, phase, request_id, prompt_ids, sampling_params):
+        """Token ids and their vLLM log-probs (zeros unless rollout_logprobs is on)."""
+        extra = dict(return_logprobs=True) if self.rollout_logprobs else {}
+        output = await self.trace.generate(self.server_manager, phase, request_id=request_id, prompt_ids=prompt_ids,
+                                           sampling_params=sampling_params, routing_key=self.routing_key, **extra)
+        if isinstance(output, dict):
+            return list(output['token_ids']), list(output['logprobs'])
+        return list(output), [0.0] * len(output)
 
 
 
@@ -370,21 +420,20 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             # sp.update({"n": 1, "stop_token_ids": [PATH_CLOSE, self.eos_token_id],
             #         "temperature": 1.0})
             manual_append = False
-            ids = await self.trace.generate(self.server_manager, 'path',
-                request_id=uuid4().hex,
-                prompt_ids=prompt_i + [PATH_OPEN],
-                sampling_params=sp,
-            )
+            ids, log_probs = await self._generate('path', uuid4().hex, prompt_i + [PATH_OPEN], sp)
             if max_len and len(ids) > max_len:
-                ids = ids[:max_len]
-            
+                ids, log_probs = ids[:max_len], log_probs[:max_len]
+            close = 'sampled'
             if not ids or ids[-1] != PATH_CLOSE:
                 if ids and ids[-1] == self.eos_token_id:
                     ids[-1] = PATH_CLOSE
+                    close = 'replaced'
                 else:
                     ids.append(PATH_CLOSE)
+                    log_probs.append(0.0)
+                    close = 'appended'
                 manual_append = True
-            return [PATH_OPEN] + ids, manual_append
+            return [PATH_OPEN] + ids, manual_append, log_probs, close
 
         tasks = []
         for i in range(num_paths):
@@ -401,9 +450,26 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         parallel_ids = []             
         path_spans   = []
         cursor       = 0              
+        # Per token of parallel_ids: path/summary (sampled) or forced (injected), and its vLLM log-prob;
+        # overrides keep the sampled EOS where the runtime wrote a closing tag instead.
+        tokens = dict(kinds=[], log_probs=[], overrides=[])
+
+        def track(kind, sampled_ids, log_probs, close):
+            tokens['kinds'].extend([kind] * len(sampled_ids))
+            tokens['log_probs'].extend(log_probs)
+            if close == 'appended':
+                tokens['kinds'][-1] = 'forced'
+            elif close == 'replaced':
+                tokens['overrides'].append((len(tokens['kinds']) - 1, self.eos_token_id))
+
+        def force(count):
+            tokens['kinds'].extend(['forced'] * count)
+            tokens['log_probs'].extend([0.0] * count)
 
         #### <Path> </Path><Path> </Path> -> path_spans (0, len(path_1)) (len(path_1), len(path_1) + len(path_2))
-        for (ids, manual_append_flag) in path_token_lists:
+        for (ids, manual_append_flag, path_log_probs, close) in path_token_lists:
+            force(1)  # <Path>
+            track('path', ids[1:], path_log_probs, close)
             assert ids[0] == PATH_OPEN and ids[-1] == PATH_CLOSE, \
                 f"Path tokens must start with {PATH_OPEN} and end with {PATH_CLOSE}, got {ids}"
             span_start = cursor 
@@ -427,6 +493,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         manual_mask_positions.append(cursor)
         assert parallel_ids[cursor] == self.start_summary_token
         cursor += 1
+        force(len(parallel_ids) - len(tokens['kinds']))  # </Parallel>, newline, <Summary>
         
         # if exploration stage alos superass the max length, we will not generate summary
         if len(parallel_ids) < remaining:
@@ -435,17 +502,19 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             sp_sum = copy.deepcopy(sampling_params)
             sp_sum.update({"n": 1, "max_tokens": remaining - len(parallel_ids) - 1,
                            "stop_token_ids": [self.end_summary_token, self.eos_token_id]})
-            summary_ids = await self.trace.generate(self.server_manager, 'summary',
-                request_id=uuid4().hex,
-                prompt_ids=prompt_ids + parallel_ids,   # 现在的完整 prompt
-                sampling_params=sp_sum,
-            )
+            summary_ids, summary_log_probs = await self._generate(
+                'summary', uuid4().hex, prompt_ids + parallel_ids, sp_sum)   # 现在的完整 prompt
+            close = 'sampled'
             if not summary_ids or summary_ids[-1] != self.end_summary_token:
                 if summary_ids and summary_ids[-1] == self.eos_token_id:
                     summary_ids[-1] = self.end_summary_token
+                    close = 'replaced'
                 else:
                     summary_ids.append(self.end_summary_token)
+                    summary_log_probs.append(0.0)
+                    close = 'appended'
                 manual_append_summary = True
+            track('summary', summary_ids, summary_log_probs, close)
             parallel_ids.extend(summary_ids)
             cursor += len(summary_ids)
             if manual_append_summary:
@@ -455,4 +524,5 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             assert parallel_ids[-1] == self.end_summary_token, \
                 f"Parallel thinking did not end with {self.end_summary_token}, got {parallel_ids[-1]}"
         # print(self.tokenizer.decode(parallel_ids, skip_special_tokens=False))
-        return parallel_ids, path_spans, manual_mask_positions        # path_spans 已是相对 parallel_ids
+        assert len(tokens['kinds']) == len(tokens['log_probs']) == len(parallel_ids)
+        return parallel_ids, path_spans, manual_mask_positions, tokens        # path_spans 已是相对 parallel_ids

@@ -1271,6 +1271,11 @@ class RayPPOTrainer:
                         old_log_prob.batch.pop("entropys")
                         batch = batch.union(old_log_prob)
 
+                        if "rollout_token_log_probs" in batch.batch.keys():
+                            from verl.parallel_thinking_generation_v3.logprob_gap import gap_metrics
+                            metrics.update(gap_metrics(batch.batch["rollout_token_log_probs"],
+                                                       batch.batch["old_log_probs"], batch.batch["rollout_segments"]))
+
                         if "rollout_log_probs" in batch.batch.keys():
                             # TODO: we may want to add diff of probs too.
                             rollout_old_log_probs = batch.batch["rollout_log_probs"]

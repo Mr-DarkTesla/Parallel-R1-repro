@@ -36,6 +36,7 @@ from verl.utils.seqlen_balancing import prepare_dynamic_batch, restore_dynamic_b
 from verl.utils.torch_functional import logprobs_from_logits
 from verl.utils.ulysses import gather_outputs_and_unpad, ulysses_pad, ulysses_pad_and_slice_inputs
 from verl.workers.actor import BasePPOActor
+from verl.workers.actor.replay_context import append_replay_segments
 
 if is_cuda_available:
     from flash_attn.bert_padding import index_first_axis, pad_input, rearrange, unpad_input
@@ -87,6 +88,18 @@ class DataParallelPPOActor(BasePPOActor):
             log_probs: # (bs, response_len)
         """
         response_length = micro_batch["responses"].size(-1)
+        replay_segments = micro_batch["replay_segments"] if "replay_segments" in micro_batch.keys() else None
+        if replay_segments is not None and (self.use_remove_padding or self.use_fused_kernels
+                                            or "position_required_masks" not in micro_batch.keys()):
+            raise ValueError("logprob_context=flat_packed needs the padded custom-mask forward "
+                             "(use_remove_padding=False, use_fused_kernels=False)")
+        labels = micro_batch["responses"]
+        if "label_overrides" in micro_batch.keys():
+            # The runtime wrote a closing tag where vLLM sampled EOS; score the sampled action.
+            labels = labels.clone()
+            for row, overrides in enumerate(micro_batch["label_overrides"]):
+                for index, token in overrides:
+                    labels[row, index] = token
         multi_modal_inputs = {}
         if "multi_modal_inputs" in micro_batch.keys():
             if "image_bound" in micro_batch["multi_modal_inputs"][0]:  # minicpm-o logic
@@ -239,7 +252,9 @@ class DataParallelPPOActor(BasePPOActor):
 
             else:  # not using rmpad and no ulysses sp
                 original_response_length = response_length
+                prompt_length = seqlen - response_length
                 trim_left = 0
+                replay_targets = None
                 if (self.config.get("trim_parallel_padding", False)
                         and "position_required_masks" in micro_batch
                         and not multi_modal_inputs):
@@ -318,6 +333,11 @@ class DataParallelPPOActor(BasePPOActor):
                         if left_pad_len_i > 0:
                             bool_mask[i][left_pad_len_i:, :left_pad_len_i] = False 
 
+                    if replay_segments is not None:
+                        input_ids, position_ids, bool_mask, replay_targets = append_replay_segments(
+                            input_ids, position_ids, bool_mask, replay_segments, prompt_length - trim_left)
+                        if "logits_to_keep" in extra_args:
+                            extra_args["logits_to_keep"] += replay_targets.size(1)
                     
                     # attention_mask = bool_mask.to(torch.bfloat16)
                     # attention_mask.masked_fill_(~bool_mask, float("-inf"))      # True→0, False→-inf
@@ -343,13 +363,23 @@ class DataParallelPPOActor(BasePPOActor):
                     logits = output.logits
 
                     logits.div_(temperature)
+                    replay_width = 0 if replay_targets is None else replay_targets.size(1)
+                    replay_logits = logits[:, logits.size(1) - replay_width:, :]
+                    logits = logits[:, :logits.size(1) - replay_width, :]
                     logits = logits[:, -response_length - 1 : -1, :]  # (bsz, response_length, vocab_size)
-                    log_probs = logprobs_from_logits(logits, micro_batch["responses"][:, :response_length])
+                    log_probs = logprobs_from_logits(logits, labels[:, :response_length])
                     if calculate_entropy:
                         if not self.config.entropy_checkpointing:
                             entropy = verl_F.entropy_from_logits(logits)  # (bsz, response_length)
                         else:
                             entropy = torch.utils.checkpoint.checkpoint(verl_F.entropy_from_logits, logits)
+                    if replay_width:
+                        rows, columns = (replay_targets >= 0).nonzero(as_tuple=True)
+                        targets = replay_targets[rows, columns]
+                        selected = replay_logits[rows, columns]
+                        log_probs = log_probs.index_put((rows, targets), logprobs_from_logits(selected, labels[rows, targets]))
+                        if calculate_entropy:
+                            entropy = entropy.index_put((rows, targets), verl_F.entropy_from_logits(selected))
 
                 if response_length < original_response_length:
                     padding = (0, original_response_length - response_length)
@@ -411,6 +441,9 @@ class DataParallelPPOActor(BasePPOActor):
             non_tensor_select_keys.append("position_required_masks")
         if "left_pad_lens" in data.non_tensor_batch.keys():
             non_tensor_select_keys.append("left_pad_lens")
+        for key in ("replay_segments", "label_overrides"):
+            if key in data.non_tensor_batch.keys():
+                non_tensor_select_keys.append(key)
         data = data.select(batch_keys=select_keys, non_tensor_batch_keys=non_tensor_select_keys)
 
         restore_order = None
@@ -490,6 +523,9 @@ class DataParallelPPOActor(BasePPOActor):
             non_tensor_select_keys.append("position_required_masks")
         if "left_pad_lens" in data.non_tensor_batch.keys():
             non_tensor_select_keys.append("left_pad_lens")
+        for key in ("replay_segments", "label_overrides"):
+            if key in data.non_tensor_batch.keys():
+                non_tensor_select_keys.append(key)
 
         data = data.select(batch_keys=select_keys, non_tensor_batch_keys=non_tensor_select_keys)
 

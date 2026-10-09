@@ -46,13 +46,15 @@ class Trace:
         self.record = dict(schema_version=1, trajectory=trajectory, prompt_tokens=prompt_length,
                            calls=[], forks=[], started_at=time.time())
 
-    async def generate(self, manager, phase, request_id, prompt_ids, sampling_params):
+    async def generate(self, manager, phase, request_id, prompt_ids, sampling_params, **kwargs):
         started = time.time()
-        ids = await manager.generate(request_id=request_id, prompt_ids=prompt_ids, sampling_params=sampling_params)
+        output = await manager.generate(request_id=request_id, prompt_ids=prompt_ids,
+                                        sampling_params=sampling_params, **kwargs)
+        ids = output['token_ids'] if isinstance(output, dict) else output
         self.record['calls'].append(dict(phase=phase, request_id=request_id, prompt_tokens=len(prompt_ids),
                                         generated_tokens=len(ids), generated_ids=list(ids),
                                         started_at=started, duration_s=time.time()-started))
-        return ids
+        return output
 
     def fork(self, index):
         event = dict(response_token_index=index, fork_index=len(self.record['forks']))

@@ -201,9 +201,23 @@ it covers only executed microbatches. Old-log-prob and entropy logging still cov
 The shared dependency file remains `verl/requirements-qwen3.txt`. It uses
 Transformers 4.53.2, Ray 2.48.0 and TensorDict 0.8.3; the earlier RL environment
 used 4.51.3/2.43.0/0.6.2. The integrated interface and generation loop have CPU
-checks, including padding/gradient equivalence, and an 8-GPU training smoke. RL retains the
-upstream structured actor mask/positions and loss on runtime-inserted tags;
-its inference/training mismatch is unchanged. Our bounded total response budget
+checks, including padding/gradient equivalence, and an 8-GPU training smoke.
+vLLM samples each summary, the text after it and every later block in a flat causal
+context with flat positions, while the upstream actor scores them with the path mask
+and multiverse positions. `rl_qwen3_06b.yaml` therefore sets
+`actor_rollout_ref.rollout.agent.logprob_context=flat_packed`: the actor scores every
+sampled token in the context and positions of the vLLM call that produced it, in one
+forward per sequence (paths 2..n of each block are appended once and attend only to
+the context their call had), keeps the sampled EOS where the runtime wrote a closing
+tag, and leaves injected tags out of the loss. `logprob_context=tree` restores the
+upstream objective. With `rollout_logprobs=true`, vLLM's sampled-token log-probs are
+compared with `old_log_probs` and logged as `rollout_gap/*` per segment; block-1
+paths are the bf16 noise floor (valid at temperature 1 without top-p/top-k).
+`tests/test_flat_packed_context.py` checks values and gradients against one causal
+forward per recorded call; `tests/test_unseen_kv_reference.py` checks that the
+tree objective equals concatenating independently computed path KV caches.
+All calls of a trajectory are routed to one vLLM server to keep its prefix cache.
+Our bounded total response budget
 also differs from the original RL branch, so old runs are not protocol-identical.
 
 One-off VM provisioning, queues, plots, reports and smoke experiments remain on

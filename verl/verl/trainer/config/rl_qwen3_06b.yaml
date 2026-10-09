@@ -51,6 +51,10 @@ actor_rollout_ref:
       max_path_response_length: ${data.max_response_length}
       max_iterations_for_parallel_thinking: 4
       num_paths: 2
+      # vLLM samples summaries and later blocks in flat causal contexts; score them there
+      # (verl/workers/actor/replay_context.py). Set tree to reproduce the upstream objective.
+      logprob_context: flat_packed
+      rollout_logprobs: true
     val_kwargs:
       temperature: 1.0
       do_sample: true

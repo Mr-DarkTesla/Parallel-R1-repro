@@ -25,6 +25,9 @@ spec = importlib.util.spec_from_file_location('repro_trace', SOURCE / 'repro_tra
 trace = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(trace)
 TOKENS = trace.TOKENS
+spec = importlib.util.spec_from_file_location('logprob_gap', SOURCE / 'logprob_gap.py')
+gap = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(gap)
 
 # Load the unchanged class body; replace only infrastructure decorators/base/output.
 tree = ast.parse((SOURCE / 'parallel_thinking_loop_v3.py').read_text())
@@ -34,7 +37,9 @@ for node in cls.body:
     if isinstance(node, ast.AsyncFunctionDef):
         node.decorator_list = []
 ns = dict(torch=torch, asyncio=asyncio, copy=copy, random=random, Any=Any, uuid4=uuid4,
-          AgentLoopBase=object, AgentLoopOutput=lambda **kw: SimpleNamespace(**kw), Trace=trace.Trace, TOKENS=TOKENS)
+          AgentLoopBase=object, AgentLoopOutput=lambda **kw: SimpleNamespace(**kw), Trace=trace.Trace, TOKENS=TOKENS,
+          **{name: getattr(gap, name) for name in ('MAIN_BEFORE', 'MAIN_AFTER', 'PATH_FIRST', 'PATH_LATER',
+                                                   'SUMMARY_FIRST', 'SUMMARY_LATER')})
 exec(compile(ast.Module(body=[cls], type_ignores=[]), str(SOURCE), 'exec'), ns)
 Loop = ns['ParallelThinkingAgentLoopV3']
 
