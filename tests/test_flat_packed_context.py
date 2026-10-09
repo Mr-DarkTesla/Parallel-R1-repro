@@ -20,6 +20,7 @@ import copy
 import importlib.util
 from pathlib import Path
 import random
+import time
 from types import SimpleNamespace
 from typing import Any
 import unittest
@@ -43,6 +44,7 @@ def load(path, name):
 trace = load(SOURCE / 'repro_trace.py', 'repro_trace')
 gap = load(SOURCE / 'logprob_gap.py', 'logprob_gap')
 contract = load(SOURCE / 'contract.py', 'contract')
+graph_kv = load(SOURCE / 'graph_kv.py', 'graph_kv')
 replay = load(ROOT / 'verl/verl/workers/actor/replay_context.py', 'replay_context')
 TOKENS = trace.TOKENS
 PARALLEL, END_PARALLEL, PATH, END_PATH, SUMMARY, END_SUMMARY = range(10, 16)
@@ -62,8 +64,9 @@ def compiled(path, class_name, method=None):
     return compile(ast.Module(body=[node], type_ignores=[]), str(path), 'exec')
 
 
-ns = dict(torch=torch, asyncio=asyncio, copy=copy, random=random, Any=Any, uuid4=uuid4, AgentLoopBase=object,
+ns = dict(torch=torch, asyncio=asyncio, copy=copy, random=random, time=time, Any=Any, uuid4=uuid4, AgentLoopBase=object,
           AgentLoopOutput=lambda **kw: SimpleNamespace(**kw), Trace=trace.Trace, TOKENS=TOKENS, contract=contract,
+          graph_kv=graph_kv,
           **{name: getattr(gap, name) for name in ('MAIN_BEFORE', 'MAIN_AFTER', 'PATH_FIRST', 'PATH_LATER',
                                                    'SUMMARY_FIRST', 'SUMMARY_LATER', 'PLAN_FIRST', 'PLAN_LATER')})
 exec(compiled(SOURCE / 'parallel_thinking_loop_v3.py', 'ParallelThinkingAgentLoopV3'), ns)

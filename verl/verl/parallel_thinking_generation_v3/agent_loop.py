@@ -86,6 +86,7 @@ class AsyncLLMServerManager:
         sampling_params: dict[str, Any],
         routing_key: str | None = None,
         return_logprobs: bool = False,
+        graph: dict | None = None,
     ) -> list[int] | dict[str, list]:
         """Generate tokens from prompt ids.
 
@@ -96,6 +97,7 @@ class AsyncLLMServerManager:
             routing_key (str, optional): sticky-session key used instead of request_id, so that
                 every call of one trajectory reaches the server holding its prefix cache.
             return_logprobs (bool): also return the sampled tokens' log-probabilities.
+            graph (dict, optional): graph rollout spec (graph_kv.GraphSpec.as_dict()).
 
         Returns:
             List[int]: List of generated token ids, or a dict with token_ids and logprobs.
@@ -103,6 +105,8 @@ class AsyncLLMServerManager:
         server = self._choose_server(routing_key or request_id)
         print(server)
         kwargs = dict(return_logprobs=True) if return_logprobs else {}
+        if graph is not None:
+            kwargs['graph'] = graph
         output = await server.generate.remote(
             request_id=request_id,
             prompt_ids=prompt_ids,
@@ -110,6 +114,10 @@ class AsyncLLMServerManager:
             **kwargs,
         )
         return output
+
+    async def release(self, request_ids: list[str], routing_key: str | None = None):
+        """Graph rollout: free held requests on the server that holds them (see graph_kv.py)."""
+        await self._choose_server(routing_key or request_ids[0]).release.remote(request_ids)
 
 
 class AgentLoopMetrics(BaseModel):

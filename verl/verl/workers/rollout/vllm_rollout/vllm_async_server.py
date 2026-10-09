@@ -33,6 +33,7 @@ from vllm.v1.engine.async_llm import AsyncLLM
 from vllm.v1.executor.abstract import Executor
 from vllm.worker.worker_base import WorkerWrapperBase
 
+from verl.parallel_thinking_generation_v3 import graph_kv
 from verl.utils.fs import copy_to_local
 from verl.workers.rollout.async_server import AsyncServerBase
 
@@ -205,6 +206,7 @@ class AsyncvLLMServer(AsyncServerBase):
         self.vllm_dp_rank = vllm_dp_rank
         self.wg_prefix = wg_prefix
         self.engine: AsyncLLM = None
+        self.graph = graph_kv.Registry()
 
     async def init_engine(self):
         """Init vLLM AsyncLLM engine."""
@@ -233,6 +235,14 @@ class AsyncvLLMServer(AsyncServerBase):
                 kwargs[k] = config.get(k)
         print(f"override_generation_config: {kwargs}")
 
+        # Graph rollout (parallel_thinking_generation_v3/vllm_graph.py): vLLM imports these classes by name in
+        # its engine-core process and in every worker.
+        graph_args = {}
+        if config.get("agent", {}).get("graph_rollout", False):
+            from verl.parallel_thinking_generation_v3.vllm_graph import SCHEDULER, WORKER
+            graph_args = dict(scheduler_cls=SCHEDULER, worker_cls=WORKER)
+            print(f"graph rollout: {graph_args}")
+
         backend = os.environ.get("VERL_VLLM_DISTRIBUTED_BACKEND", "zeromq")
         if backend == "zeromq":
             distributed_executor_backend = ExternalZeroMQDistributedExecutor
@@ -260,6 +270,7 @@ class AsyncvLLMServer(AsyncServerBase):
             enable_prefix_caching=True,
             trust_remote_code=trust_remote_code,
             seed=config.get("seed", 0),
+            **graph_args,
         )
 
         # init async llm engine
@@ -314,11 +325,14 @@ class AsyncvLLMServer(AsyncServerBase):
             return JSONResponse(content=generator.model_dump())
 
     async def generate(self, prompt_ids: list[int], sampling_params: dict[str, Any], request_id: str,
-                       return_logprobs: bool = False) -> list[int] | dict[str, list]:
+                       return_logprobs: bool = False, graph: dict | None = None) -> list[int] | dict[str, list]:
         """Token ids; with return_logprobs, a dict that also has each sampled token's log-probability.
 
         vLLM V1 computes these from the raw logits, before temperature/top-p/top-k,
         so they equal the actor's log-probs only for temperature 1 without truncation.
+        graph: graph rollout spec (graph_kv.py); its sources must be requests this server holds. A graph request
+        returns a dict whose graph_evicted is true if the engine evicted its trajectory's held KV: token_ids are
+        then the tokens sampled so far, and the client rebuilds the KV and continues.
         """
         sampling_params = dict(sampling_params)
         max_tokens = min(sampling_params.pop('max_tokens', self.max_model_len), self.max_model_len - len(prompt_ids))
@@ -326,6 +340,9 @@ class AsyncvLLMServer(AsyncServerBase):
             return dict(token_ids=[], logprobs=[]) if return_logprobs else []
         if return_logprobs:
             sampling_params['logprobs'] = 0  # the sampled token only
+        if graph is not None:
+            self.graph.validate(graph, len(prompt_ids))
+            sampling_params['extra_args'] = {graph_kv.GRAPH_KEY: graph}
         sampling_params = SamplingParams(max_tokens=max_tokens, **sampling_params)
         prompt = TokensPrompt(prompt_token_ids=prompt_ids)
         generator = self.engine.generate(prompt=prompt, sampling_params=sampling_params, request_id=request_id)
@@ -337,10 +354,24 @@ class AsyncvLLMServer(AsyncServerBase):
         assert final_res is not None
 
         completion = final_res.outputs[0]
+        result = dict(token_ids=list(completion.token_ids))
         if return_logprobs:
-            return dict(token_ids=list(completion.token_ids),
-                        logprobs=[step[token].logprob for step, token in zip(completion.logprobs, completion.token_ids)])
-        return completion.token_ids
+            result['logprobs'] = [step[token].logprob for step, token in zip(completion.logprobs, completion.token_ids)]
+        if graph is None:
+            return result if return_logprobs else completion.token_ids
+        if completion.stop_reason == graph_kv.GRAPH_TOO_LARGE:
+            raise RuntimeError(f'graph rollout: a trajectory needs more KV than the cache has; raise '
+                               f'gpu_memory_utilization or lower the response length ({len(prompt_ids)} tokens so far)')
+        result['graph_evicted'] = completion.stop_reason == graph_kv.GRAPH_EVICTED
+        if not result['graph_evicted']:
+            self.graph.finished(request_id, graph, len(prompt_ids), len(completion.token_ids))
+        return result
+
+    async def release(self, request_ids: list[str]):
+        """Graph rollout: free held requests (an abort of a finished, held request frees its KV blocks)."""
+        held = self.graph.release(request_ids)
+        if held:
+            await self.engine.engine_core.abort_requests_async(held)
 
     async def wake_up(self):
         if self.config.rollout.free_cache_engine:
@@ -348,6 +379,8 @@ class AsyncvLLMServer(AsyncServerBase):
 
     async def sleep(self):
         # TODO: https://github.com/vllm-project/vllm/issues/17103
+        # GraphScheduler.reset_prefix_cache also frees any request still held.
+        self.graph.held.clear()
         await self.engine.reset_prefix_cache()
         if self.config.rollout.free_cache_engine:
             await self.engine.sleep()

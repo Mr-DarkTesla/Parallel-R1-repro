@@ -15,6 +15,7 @@ import asyncio
 import json
 import logging
 import os
+import time
 from typing import Any
 from uuid import uuid4
 import random
@@ -28,7 +29,7 @@ import torch
 from verl.parallel_thinking_generation_v3.repro_trace import Trace, TOKENS
 from verl.parallel_thinking_generation_v3.logprob_gap import (MAIN_AFTER, MAIN_BEFORE, PATH_FIRST, PATH_LATER,
                                                               PLAN_FIRST, PLAN_LATER, SUMMARY_FIRST, SUMMARY_LATER)
-from verl.parallel_thinking_generation_v3 import contract
+from verl.parallel_thinking_generation_v3 import contract, graph_kv
 logger = logging.getLogger(__file__)
 logger.setLevel(os.getenv("VERL_LOGGING_LEVEL", "WARN"))
 
@@ -63,6 +64,8 @@ def test_mask(mask: torch.Tensor, position_ids: torch.Tensor, start: int, end: i
 
 @register("parallel_thinking_agent_v3")
 class ParallelThinkingAgentLoopV3(AgentLoopBase):
+    graph_attempts = 10000  # graph rollout: a request evicted this often in a row is a bug, not memory pressure
+
     @classmethod
     def init_class(cls, config, tokenizer, **kwargs):
         if cls._class_initialized:
@@ -97,10 +100,17 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if cls.protocol not in ('legacy', 'plan'):
             raise ValueError(f'Unknown protocol {cls.protocol!r}; use legacy or plan')
         cls.max_plan_tokens = int(getattr(config.actor_rollout_ref.rollout.agent, 'max_plan_tokens', 256))
+        # graph_rollout (protocol=plan): vLLM samples every token in its contract graph context (sibling branches
+        # isolated, graph positions) by keeping branch KV and merging it (vllm_graph.py), so the actor scores
+        # with the same graph positions and mask (logprob_context=tree).
+        cls.graph_rollout = bool(getattr(config.actor_rollout_ref.rollout.agent, 'graph_rollout', False))
+        if cls.graph_rollout and (cls.protocol != 'plan' or cls.logprob_context != 'tree'):
+            raise ValueError('graph_rollout needs protocol=plan and logprob_context=tree')
         if cls.protocol == 'plan':
             cls.tag_ids = contract.tag_ids(tokenizer)
             cls.count_ids = contract.count_ids(tokenizer)
             cls.branches_ids = contract.branches_ids(tokenizer)
+            cls.graph_tags = tuple(cls.tag_ids[tag] for tag in ('<Parallel>', '</Parallel>', '<Path>', '</Path>'))
 
         cls.eos_token_id = cls.tokenizer.eos_token_id
         cls.start_parallel_token = cls.tokenizer.encode('<Parallel>')[0]
@@ -121,6 +131,15 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         messages: list[dict[str, Any]],
         sampling_params: dict[str, Any],
     ) -> AgentLoopOutput:
+        self.held = {}  # graph rollout: request id -> Handle kept on the server until released
+        self.trajectory = graph_kv.trajectory_key(time.time(), uuid4().hex)
+        try:
+            return await self._run(messages, sampling_params)
+        finally:
+            if self.held:
+                await self._release(list(self.held.values()))
+
+    async def _run(self, messages, sampling_params):
 
         
         prompt_ids = await self.loop.run_in_executor(
@@ -300,6 +319,9 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         calls, spans, node_codes = [], [], []
         status = 'ok'
         counters = dict(parallel_triggers=0, valid_plan_blocks=0, fork_dispatches=0, path_jobs=0)
+        # graph rollout: the held request whose KV covers a prefix of prompt_ids, and the RoPE offset
+        # (physical index - graph position) of the tokens appended next.
+        chain, offset = None, 0
 
         while True:
             request_id = uuid4().hex
@@ -315,7 +337,10 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                     sp_main.update(stop_token_ids=[self.eos_token_id], logit_bias={self.start_parallel_token: -100.0})
             remaining = self.response_length - (len(prompt_ids) - init_len)
             sp_main['max_tokens'] = remaining
-            ids, log_probs = await self._generate('main', request_id, prompt_ids, sp_main)
+            ids, log_probs, handle = await self._generate('main', request_id, prompt_ids, sp_main, chain, offset)
+            if handle is not None:
+                await self._release(chain)
+                chain = handle
             critical_depth += len(ids)
             sampled_tokens += len(ids)
             rollout_segments.extend([MAIN_BEFORE if iterations == 0 else MAIN_AFTER] * len(ids))
@@ -330,7 +355,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 counters['parallel_triggers'] += 1
                 block_start = len(response_mask)
                 block = await self._plan_block(prompt_ids, sampling_params, iterations,
-                                               self.response_length - block_start)
+                                               self.response_length - block_start, chain, offset)
+                chain, offset = block['chain'], block['offset']
                 codes = dict(plan=PLAN_FIRST if iterations == 0 else PLAN_LATER,
                              path=PATH_FIRST if iterations == 0 else PATH_LATER,
                              summary=SUMMARY_FIRST if iterations == 0 else SUMMARY_LATER, forced=-1)
@@ -473,33 +499,113 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             **extra,
         )
 
-    async def _generate(self, phase, request_id, prompt_ids, sampling_params):
-        """Token ids and their vLLM log-probs (zeros unless rollout_logprobs is on)."""
+    async def _generate(self, phase, request_id, prompt_ids, sampling_params, parent=None, offset=0, traced=True):
+        """Token ids, their vLLM log-probs (zeros unless rollout_logprobs is on) and, in graph rollout, the
+        finished request now held on the server (a Handle; None if nothing was sampled).
+
+        Graph rollout: parent is the Handle whose tokens the prompt continues, or ready KV segments; offset is
+        the RoPE offset of the tokens the request computes. If the engine evicts this trajectory's held KV
+        (memory pressure, see graph_kv.py), the KV is rebuilt from the tokens and sampling continues after the
+        tokens sampled so far, in a new request.
+        """
         extra = dict(return_logprobs=True) if self.rollout_logprobs else {}
-        output = await self.trace.generate(self.server_manager, phase, request_id=request_id, prompt_ids=prompt_ids,
-                                           sampling_params=sampling_params, routing_key=self.routing_key, **extra)
+        call = self.trace.generate if traced else self._untraced
+        if not self.graph_rollout:
+            output = await call(self.server_manager, phase, request_id=request_id, prompt_ids=prompt_ids,
+                                sampling_params=sampling_params, routing_key=self.routing_key, **extra)
+            return (*self._tokens(output), None)
+        kv = parent if isinstance(parent, list) else graph_kv.continuation(parent, prompt_ids)
+        ids, log_probs, replays = [], [], []
+        for _ in range(self.graph_attempts):
+            graph = graph_kv.GraphSpec(kv=kv, offset=offset, trajectory=self.trajectory).as_dict()
+            output = await call(self.server_manager, phase, request_id=request_id, prompt_ids=prompt_ids + ids,
+                                sampling_params={**sampling_params, 'max_tokens': sampling_params['max_tokens'] - len(ids)},
+                                routing_key=self.routing_key, graph=graph, **extra)
+            await self._release(replays)
+            new_ids, new_log_probs = self._tokens(output)
+            ids, log_probs = ids + new_ids, log_probs + new_log_probs
+            if not (isinstance(output, dict) and output.get('graph_evicted')):
+                return ids, log_probs, self._hold(request_id, prompt_ids, ids, offset)
+            kv, rebuilt, replays = await self._rebuild(prompt_ids + ids)
+            assert rebuilt == offset, f'rebuilt offset {rebuilt} != {offset}'
+            request_id = uuid4().hex
+        raise RuntimeError(f'graph rollout: KV evicted {self.graph_attempts} times in a row')
+
+    async def _untraced(self, manager, phase, **kwargs):
+        return await manager.generate(**kwargs)
+
+    @staticmethod
+    def _tokens(output):
         if isinstance(output, dict):
-            return list(output['token_ids']), list(output['logprobs'])
+            ids = list(output['token_ids'])
+            return ids, list(output['logprobs']) if 'logprobs' in output else [0.0] * len(ids)
         return list(output), [0.0] * len(output)
 
-    async def _node_call(self, phase, node, close, prompt_ids, sampling_params, max_tokens):
+    def _hold(self, request_id, prompt_ids, ids, offset):
+        """Record a finished graph request as held. No ids: the server had no room to run it, nothing is held."""
+        if not ids:
+            return None
+        handle = graph_kv.Handle(request_id, list(prompt_ids) + list(ids), len(prompt_ids) + len(ids) - 1, offset)
+        self.held[request_id] = handle
+        return handle
+
+    async def _release(self, handles):
+        handles = [handles] if isinstance(handles, graph_kv.Handle) else [h for h in handles or () if h is not None]
+        if handles:
+            for handle in handles:
+                self.held.pop(handle.request_id, None)
+            await self.server_manager.release([h.request_id for h in handles], routing_key=self.routing_key)
+
+    async def _seal(self, prompt_ids, parent, offset):
+        """graph_rollout: hold the KV of prompt_ids (e.g. a branch through its closing tag, which the request
+        that sampled </Path> has none for) computed from parent. One discarded sampled token; not a generation
+        call for D/T or traces."""
+        _, _, handle = await self._generate('seal', uuid4().hex, prompt_ids, dict(n=1, max_tokens=1, temperature=1.0),
+                                            parent, offset, traced=False)
+        return handle
+
+    async def _rebuild(self, tokens):
+        """graph_rollout, after an eviction: recompute the KV of tokens' closed blocks as it was sampled (each
+        branch in its own context after the shared prefix, then merged), with one-token requests. Returns the KV
+        segments and offset for a request whose prompt extends tokens, and the held requests they come from."""
+        kv, offset, held = [], 0, []
+        for paths in graph_kv.closed_blocks(tokens, *self.graph_tags):
+            base = list(tokens[:paths[0][0]])
+            first = await self._seal(base + list(tokens[slice(*paths[0])]), kv, offset)
+            rest = await asyncio.gather(*[self._seal(base + list(tokens[start:end]), first, offset)
+                                          for start, end in paths[1:]])
+            await self._release(held)
+            held = [first, *rest]
+            assert None not in held, 'no room to rebuild a branch that was sampled'
+            kv = graph_kv.merge(held, len(base))
+            offset = graph_kv.merged_offset(offset, [end - start for start, end in paths])
+        return kv, offset, held
+
+    async def _node_call(self, phase, node, close, prompt_ids, sampling_params, max_tokens, parent=None, offset=0):
         """plan: sample one node until its closing tag, EOS or max_tokens, with the node's tags suppressed.
 
         COUNT (close None) samples one token from contract.COUNTS. Returns ids, log-probs, stop ('close',
-        'eos' or 'budget') and whether a call was made.
+        'eos' or 'budget'), whether a call was made and, in graph rollout, the held request (a Handle).
         """
         if max_tokens < 1:
-            return [], [], 'budget', False
+            return [], [], 'budget', False, None
         params = {**sampling_params, 'n': 1, 'max_tokens': max_tokens,
                   'stop_token_ids': [] if close is None else [close, self.eos_token_id],
                   **contract.sampling_constraint(node, self.tag_ids, self.count_ids)}
-        ids, log_probs = await self._generate(phase, uuid4().hex, prompt_ids, params)
+        ids, log_probs, handle = await self._generate(phase, uuid4().hex, prompt_ids, params, parent, offset)
         if close is None:
-            return ids, log_probs, 'close' if ids else 'budget', True
+            return ids, log_probs, 'close' if ids else 'budget', True, handle
         stop = 'close' if ids and ids[-1] == close else 'eos' if ids and ids[-1] == self.eos_token_id else 'budget'
-        return ids, log_probs, stop, True
+        return ids, log_probs, stop, True, handle
 
-    async def _plan_block(self, context, sampling_params, block, room):
+    def _written(self, ids, stop, close):
+        """A segment as it is written into the sequence: a sampled EOS becomes the closing tag, a cut gets one."""
+        ids = list(ids)
+        if stop == 'eos':
+            ids[-1] = close
+        return ids + [close] if stop == 'budget' else ids
+
+    async def _plan_block(self, context, sampling_params, block, room, chain=None, offset=0):
         """plan block after a sampled <Parallel>: branches=N, <Plan>, the plan, its N branches,
         </Parallel><Summary>, summary.
 
@@ -507,9 +613,12 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         and, per token, kind (plan/path/summary when sampled, forced when inserted), node code and vLLM
         log-prob; EOS overrides; block-relative branch spans (<Path> through </Path>); the generation calls
         made (for D/T); and the plan status. After an invalid plan the block ends with the plan tokens.
+        Graph rollout: chain is the held request ending in <Parallel>, offset its RoPE offset; the result's
+        chain and offset are those of the summary request.
         """
         ids_of = self.tag_ids
-        out = dict(ids=[], kinds=[], nodes=[], log_probs=[], overrides=[], calls=[], path_spans=[])
+        out = dict(ids=[], kinds=[], nodes=[], log_probs=[], overrides=[], calls=[], path_spans=[],
+                   chain=chain, offset=offset)
 
         def add(ids, kind, node=contract.INSERTED, log_probs=None):
             out['ids'].extend(ids)
@@ -520,19 +629,24 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         def close_segment(ids, log_probs, stop, kind, node, close):
             # As in legacy blocks: a sampled EOS is written as the closing tag but scored as EOS;
             # a segment cut by its budget gets an inserted closing tag.
-            ids = list(ids)
             if stop == 'eos':
                 out['overrides'].append((len(out['ids']) + len(ids) - 1, self.eos_token_id))
-                ids[-1] = close
-            add(ids, kind, node, log_probs)
-            if stop == 'budget':
-                add([close], 'forced')
+            written = self._written(ids, stop, close)
+            add(written[:len(ids)], kind, node, log_probs)
+            add(written[len(ids):], 'forced')
+
+        async def advance(handle):
+            # The new held request continues the chain; the previous one is no longer needed.
+            if handle is not None:
+                await self._release(out['chain'])
+                out['chain'] = handle
 
         # branches=N: the model samples N (one of contract.COUNTS); the plan must then have N lines.
         add(self.branches_ids, 'forced')
-        ids, log_probs, stop, called = await self._node_call(
+        ids, log_probs, stop, called, handle = await self._node_call(
             'count', contract.COUNT, None, context + out['ids'], sampling_params,
-            min(1, room - len(out['ids'])))
+            min(1, room - len(out['ids'])), out['chain'], offset)
+        await advance(handle)
         if called:
             out['calls'].append(dict(node=contract.COUNT, block=block, sampled=len(ids)))
         add(ids, 'plan', contract.COUNT, log_probs)
@@ -542,9 +656,10 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         branches = contract.MIN_PATHS + self.count_ids.index(ids[0])
 
         add([ids_of[tag] for tag in contract.PLAN_OPEN], 'forced')
-        ids, log_probs, stop, called = await self._node_call(
+        ids, log_probs, stop, called, handle = await self._node_call(
             'plan', contract.PLAN, ids_of['</Plan>'], context + out['ids'], sampling_params,
-            min(self.max_plan_tokens, room - len(out['ids'])))
+            min(self.max_plan_tokens, room - len(out['ids'])), out['chain'], offset)
+        await advance(handle)
         if called:
             out['calls'].append(dict(node=contract.PLAN, block=block, sampled=len(ids)))
         text = self.tokenizer.decode(ids[:-1] if stop == 'close' else ids, skip_special_tokens=False)
@@ -557,11 +672,20 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         prefixes = [[ids_of['<Path>']] + contract.path_prefix_ids(self.tokenizer, number)
                     for number in range(1, len(items) + 1)]
         base, left = context + out['ids'], room - len(out['ids'])
-        results = await asyncio.gather(*[
-            self._node_call('path', contract.PATH, ids_of['</Path>'], base + prefix, sampling_params,
-                            min(self.max_path_response_length, left - len(prefix) - 1))
-            for prefix in prefixes])
-        for prefix, (ids, log_probs, stop, called) in zip(prefixes, results):
+        plan = out['chain']
+
+        async def branch(prefix):
+            result = await self._node_call('path', contract.PATH, ids_of['</Path>'], base + prefix, sampling_params,
+                                           min(self.max_path_response_length, left - len(prefix) - 1), plan, offset)
+            if not self.graph_rollout:
+                return result, None
+            ids, _, stop, _, handle = result
+            seal = await self._seal(base + prefix + self._written(ids, stop, ids_of['</Path>']), handle or plan, offset)
+            await self._release(handle)
+            return result, seal
+
+        results = await asyncio.gather(*[branch(prefix) for prefix in prefixes])
+        for prefix, ((ids, log_probs, stop, called, _), _) in zip(prefixes, results):
             if called:
                 out['calls'].append(dict(node=contract.PATH, block=block, sampled=len(ids)))
             start = len(out['ids'])
@@ -570,16 +694,23 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             out['path_spans'].append((start, len(out['ids'])))
 
         add([ids_of[tag] for tag in contract.BLOCK_CLOSE], 'forced')
-        ids, log_probs, stop, called = await self._node_call(
+        parent, seals = out['chain'], [seal for _, seal in results]
+        if self.graph_rollout and None in seals:  # a branch reached the length limit: no room for a summary
+            assert room - len(out['ids']) < 1, 'a branch could not be sealed although the summary has room'
+        elif self.graph_rollout:
+            # The summary sees every branch, each with the KV it got in its own context, at graph positions.
+            parent = graph_kv.merge(seals, len(base))
+            out['offset'] = graph_kv.merged_offset(offset, [end - start for start, end in out['path_spans']])
+        ids, log_probs, stop, called, handle = await self._node_call(
             'summary', contract.SUMMARY, ids_of['</Summary>'], context + out['ids'], sampling_params,
-            room - len(out['ids']))
+            room - len(out['ids']), parent, out['offset'])
+        await self._release(seals)
+        await advance(handle)
         if called:
             out['calls'].append(dict(node=contract.SUMMARY, block=block, sampled=len(ids)))
             close_segment(ids, log_probs, stop, 'summary', contract.SUMMARY, ids_of['</Summary>'])
         assert len(out['ids']) == len(out['kinds']) == len(out['nodes']) == len(out['log_probs'])
         return out
-
-
 
     async def check_parallel(self, response_ids):
         """
@@ -610,7 +741,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             #         "temperature": 1.0})
             manual_append = False
             sp['max_tokens'] = min(max_len, self.prompt_length + self.response_length - len(prompt_i) - 1)
-            ids, log_probs = await self._generate('path', uuid4().hex, prompt_i + [PATH_OPEN], sp)
+            ids, log_probs, _ = await self._generate('path', uuid4().hex, prompt_i + [PATH_OPEN], sp)
             if max_len and len(ids) > max_len:
                 ids, log_probs = ids[:max_len], log_probs[:max_len]
             close = 'sampled'
@@ -697,7 +828,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             sp_sum = copy.deepcopy(sampling_params)
             sp_sum.update({"n": 1, "stop_token_ids": [self.end_summary_token, self.eos_token_id]})
             sp_sum['max_tokens'] = self.prompt_length + self.response_length - len(prompt_ids) - len(parallel_ids)
-            summary_ids, summary_log_probs = await self._generate(
+            summary_ids, summary_log_probs, _ = await self._generate(
                 'summary', uuid4().hex, prompt_ids + parallel_ids, sp_sum)   # 现在的完整 prompt
             close = 'sampled'
             if not summary_ids:
