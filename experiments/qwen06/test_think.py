@@ -83,27 +83,37 @@ def test_prepare_think_fallback_builds_disjoint_roles():
 
 
 def test_prepare_think_reads_frozen_roles(tmp_path):
+    """Codex's format: `question`, `config`, `level`; gold in <role>.gold.jsonl `oracle` (MATH: whole solution)."""
     prepare = load_module('prepare_think')
     for role in prepare.ROLES:
-        rows = [dict(id=f'{role}-{i}', problem=f'{role} problem {i}', subject='Number Theory', level='Level 3')
+        rows = [dict(id=f'{role}-{i}', question=f'{role} problem {i}', config='number_theory', level='Level 3')
                 for i in range(3)]
         (tmp_path / f'{role}.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in rows))
-        (tmp_path / f'{role}.gold.jsonl').write_text(''.join(json.dumps(dict(id=r['id'], gold='7')) + '\n' for r in rows))
+        gold = [dict(id=r['id'], oracle='So $x = \\boxed{\\frac{7}{2}}$ units.') for r in rows]
+        (tmp_path / f'{role}.gold.jsonl').write_text(''.join(json.dumps(g) + '\n' for g in gold))
+    (tmp_path / 'gsm_retention_test.jsonl').write_text(json.dumps(dict(id='gsm-1', question='q', config='main')) + '\n')
+    (tmp_path / 'gsm_retention_test.gold.jsonl').write_text(json.dumps(dict(id='gsm-1', oracle='20')) + '\n')
     roles, info = prepare.frozen_roles(tmp_path, None)
-    assert roles['dev'][0] == dict(id='dev-0', problem='dev problem 0', answer='7', level=3, subject='number_theory')
+    assert roles['dev'][0] == dict(id='dev-0', problem='dev problem 0', answer='\\frac{7}{2}', level=3,
+                                   subject='number_theory')
+    assert roles['gsm_retention_test'] == [dict(id='gsm-1', problem='q', answer='20', level=-1,
+                                                subject='gsm_retention_test')]
     manifest = tmp_path / 'manifest.json'
-    manifest.write_text(json.dumps({role: dict(sha256=digest) for role, digest in info['sha256'].items()}))
+    manifest.write_text(json.dumps(dict(files={name: digest for digests in info['sha256'].values()
+                                               for name, digest in digests.items()})))
     prepare.frozen_roles(tmp_path, manifest)
-    manifest.write_text('{}')
-    with pytest.raises(ValueError):
+    (tmp_path / 'dev.gold.jsonl').write_text(''.join(json.dumps(dict(id=f'dev-{i}', oracle='8')) + '\n'
+                                                     for i in range(3)))
+    with pytest.raises(ValueError, match='dev.gold.jsonl'):  # a changed gold file no longer matches the manifest
         prepare.frozen_roles(tmp_path, manifest)
-    pool = [dict(id=f'pool-{i}', problem=f'pool problem {i}', answer='1') for i in range(600)]
+    pool = [dict(id=f'pool-{i}', question=f'pool problem {i}', answer='1') for i in range(600)]
     (tmp_path / 'math_extra_test.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in pool))
+    (tmp_path / 'math_extra_test.gold.jsonl').unlink()
     roles, info = prepare.frozen_roles(tmp_path, None)
     assert len(roles['math_extra_test']) == 512 and info['sampled_from'] == dict(math_extra_test=600)
     assert roles == prepare.frozen_roles(tmp_path, None)[0]
-    (tmp_path / 'dev.gold.jsonl').unlink()
-    with pytest.raises(ValueError):  # no answer anywhere
+    (tmp_path / 'dev.gold.jsonl').write_text(json.dumps(dict(id='dev-0', oracle='8')) + '\n')
+    with pytest.raises(ValueError, match='row 1'):  # dev-1 has no answer anywhere
         prepare.frozen_roles(tmp_path, None)
 
 

@@ -46,16 +46,21 @@ ROLES = dict(rl_train=('train', 'math'), rl_calibration=('calib', 'math'), dev=(
 
 
 def last_boxed(text):
-    """Content of the last \\boxed{...} (or \\fbox{...}) with balanced braces, or None."""
-    start = max(text.rfind('\\boxed{'), text.rfind('\\fbox{'))
-    if start < 0:
+    """Content of the last \\boxed{...} / \\fbox{...} with balanced braces, or of `\\boxed 9` up to the
+    closing $ (a few MATH solutions use that form), or None."""
+    boxed, fbox = text.rfind('\\boxed'), text.rfind('\\fbox')
+    if max(boxed, fbox) < 0:
         return None
-    index = text.index('{', start)
+    rest = text[boxed + len('\\boxed'):] if boxed > fbox else text[fbox + len('\\fbox'):]
+    if rest.startswith(' '):
+        return rest.split('$')[0].strip() or None
+    if not rest.startswith('{'):
+        return None
     depth = 0
-    for end in range(index, len(text)):
-        depth += {'{': 1, '}': -1}.get(text[end], 0)
+    for end, char in enumerate(rest):
+        depth += {'{': 1, '}': -1}.get(char, 0)
         if depth == 0:
-            return text[index + 1:end].strip()
+            return rest[1:end].strip()
     return None
 
 
@@ -126,31 +131,40 @@ def fallback_roles(load, levels, seed):
 
 
 def read_role(directory, role):
-    """Rows of <role>.jsonl, with answers from <role>.gold.jsonl when that file exists (joined by id)."""
+    """Rows of <role>.jsonl joined by id with <role>.gold.jsonl when that file exists. Codex's files keep the
+    problem in `question` and the gold in `oracle`: the whole MATH solution (its last \\boxed{} is the answer)
+    or the bare answer (MATH-500, GSM8K). Returns the rows and the sha256 of both files."""
     def rows(path):
         return [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
 
     def pick(item, *names):
         return next((item[name] for name in names if item.get(name) not in (None, '')), None)
 
+    def answer(value):
+        value = None if value is None else str(value)
+        return last_boxed(value) if value and ('\\boxed' in value or '\\fbox' in value) else value
+
     path = directory / f'{role}.jsonl'
+    paths = [path]
     items = rows(path)
     gold_path = directory / f'{role}.gold.jsonl'
     gold = {}
     if gold_path.exists():
-        gold = {str(pick(item, 'id', 'uid', 'unique_id')): pick(item, 'gold', 'answer', 'ground_truth')
+        paths.append(gold_path)
+        gold = {str(pick(item, 'id', 'uid', 'unique_id')): pick(item, 'oracle', 'gold', 'answer', 'ground_truth')
                 for item in rows(gold_path)}
     out = []
     for number, item in enumerate(items):
         index = str(pick(item, 'id', 'uid', 'unique_id') or f'{role}/{number}')
         problem = pick(item, 'problem', 'question')
-        answer = gold.get(index) or pick(item, 'gold', 'answer', 'ground_truth')
-        if problem is None or answer is None:
+        gold_answer = answer(gold.get(index) or pick(item, 'oracle', 'gold', 'answer', 'ground_truth'))
+        if problem is None or not gold_answer:
             raise ValueError(f'{path} row {number} needs problem/question and an answer (or {gold_path.name}); '
                              f'keys: {sorted(item)}')
-        out.append(dict(id=index, problem=problem, answer=answer, level=level(pick(item, 'level') or -1),
-                        subject=subject_name(pick(item, 'subject', 'type') or role)))
-    return out, hashlib.sha256(path.read_bytes()).hexdigest()
+        config = item.get('config') if item.get('config') != 'main' else None  # gsm8k's config is 'main'
+        out.append(dict(id=index, problem=problem, answer=gold_answer, level=level(pick(item, 'level') or -1),
+                        subject=subject_name(pick(item, 'subject', 'type') or config or role)))
+    return out, {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 
 def frozen_roles(directory, manifest, seed=SEED):
@@ -164,7 +178,7 @@ def frozen_roles(directory, manifest, seed=SEED):
             roles[role] = random.Random(seed).sample(roles[role], SIZES[role])
     if manifest is not None:
         text = manifest.read_text()
-        missing = [role for role, digest in hashes.items() if digest not in text]
+        missing = [name for digests in hashes.values() for name, digest in digests.items() if digest not in text]
         if missing:
             raise ValueError(f'sha256 of {missing} not found in {manifest}; the role files differ from the frozen ones')
     return roles, dict(sha256=hashes, sampled_from=sampled)
