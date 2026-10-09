@@ -4,7 +4,9 @@
 # Usage on the pod (venv active), from this checkout, on GPUs reserved by scripts/instruct4b/gpu_pair.sh:
 #   DATA_PATH=<train.parquet> VAL_PATH=<dev.parquet> RUN_NAME=<name> CUDA_VISIBLE_DEVICES=<g1>,<g2> bash scripts/instruct4b/sft.sh [hydra overrides]
 # Optional: MODEL (prepared init), STEPS (default 64), MICRO_BATCH (default 2 per GPU); exp 21 (Qwen3-0.6B, 1 GPU) also sets
-# NGPUS (default 2), BATCH (global batch, default 64), MAX_LENGTH (4096), LR (1e-5), MIN_FREE_GB (30); defaults = the exp 13-20 recipe.
+# NGPUS (default 2), BATCH (global batch, default 64), MAX_LENGTH (4096), LR (1e-5), MIN_FREE_GB (30),
+# RUN_ROOT (default /work/runs); defaults = the exp 13-20 recipe. Use an ephemeral RUN_ROOT only if the final
+# model and logs are copied to persistent storage before the pod stops.
 # Output: /work/runs/$RUN_NAME/{train.log, model/ (bf16 HF), results/{recipe.txt, rows.csv, sft_metrics.txt}, DONE}.
 # DONE: nothing is repeated. TRAINED (trainer exited 0): only the missing export is repeated. Otherwise the unfinished run dir
 # is renamed to $RUN_NAME.interrupted-<time> (logs kept) and training starts again from the same init: the trainer
@@ -18,7 +20,9 @@ ngpus=${NGPUS:-2} batch=${BATCH:-64} max_length=${MAX_LENGTH:-4096} lr=${LR:-1e-
 gpus=$(echo "$CUDA_VISIBLE_DEVICES" | tr ',' '\n' | grep -c .)
 [ "$gpus" = "$ngpus" ] || { echo "need $ngpus GPUs, got CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"; exit 1; }
 repo=$(cd "$(dirname "$0")/../.." && pwd)
-run=/work/runs/$RUN_NAME
+run_root=${RUN_ROOT:-/work/runs}
+mkdir -p "$run_root"
+run=$run_root/$RUN_NAME
 [ ! -e "$run/DONE" ] || { echo "$run is done"; exit 0; }
 if [ -e "$run" ] && [ ! -e "$run/TRAINED" ]; then mv "$run" "$run.interrupted-$(date +%Y%m%d-%H%M%S)"; fi
 
@@ -28,7 +32,7 @@ python -c "import os, verl; assert verl.__file__.startswith(os.getcwd()), verl._
 
 if [ ! -e "$run/TRAINED" ]; then
     # fp32 trainer checkpoint (16 GB) and bf16 export (8 GB) exist together for a moment
-    [ "$(df --output=avail -BG /work | tail -1 | tr -dc 0-9)" -ge "$min_free" ] || { echo "need $min_free GB free on /work"; exit 1; }
+    [ "$(df --output=avail -BG "$run_root" | tail -1 | tr -dc 0-9)" -ge "$min_free" ] || { echo "need $min_free GB free on $run_root"; exit 1; }
     mkdir -p "$run/results"
     # Rows of each update: the trainer's DistributedSampler (seed 0, epoch-wise shuffle, drop_last) on $ngpus ranks
     epochs=$(python - "$DATA_PATH" "$VAL_PATH" "$model" "$steps" "$run/results" "$ngpus" "$batch" <<'EOF'

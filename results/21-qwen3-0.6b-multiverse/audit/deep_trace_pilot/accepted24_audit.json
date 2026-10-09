@@ -1,0 +1,484 @@
+{
+  "count": 24,
+  "direct_math_verify": 23,
+  "choice_mapped_math_verify": 1,
+  "excluded_inconsistent": 1,
+  "rows": [
+    {
+      "id": "math-train/6855",
+      "keep": true,
+      "candidate": "\\sqrt{2}",
+      "gold": "\\sqrt{2}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/6855",
+        "gold_answer": "\\sqrt{2}",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "The three hypotenuse cases are exhausted; tan and cos cases are solved correctly, sine is correctly excluded, and the two tan-squared values sum to sqrt(2).",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "tan-hypotenuse case; cos-hypotenuse case with sine-hypotenuse exclusion",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/6774",
+      "keep": true,
+      "candidate": "\\frac{6}{25}",
+      "gold": "\\frac{6}{25}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/6774",
+        "gold_answer": "\\frac{6}{25}",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "The 20 distinct rationals, imaginary-part condition, overlap count 76, and additional nonzero c^2=s^2 count 20 are correct. The answer uses uniform selection over distinct rational values, matching gold.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "enumerate eligible rationals; derive fourth-power reality condition",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": "Problem wording could be misread as sampling fraction representations; trace explicitly chooses distinct rational values, which is gold interpretation.",
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/2170",
+      "keep": true,
+      "candidate": "2148",
+      "gold": "2148",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/2170",
+        "gold_answer": "2148",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "All-triple count 2300 and collinear count 152 are correct. Primitive-step enumeration correctly exhausts remaining slopes and yields 12 further triples.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "count all unordered triples; count collinear triples",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/2846",
+      "keep": true,
+      "candidate": "5\\sqrt{13}",
+      "gold": "5\\sqrt{13}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/2846",
+        "gold_answer": "5\\sqrt{13}",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Coordinate setup, line distance, both bisector-side tangency equations, feet on BC, and ray-versus-segment condition are correct. Center separation is 5sqrt(13).",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "circle on A side of BC; circle beyond BC",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/3082",
+      "keep": true,
+      "candidate": "\\frac{7}{2}",
+      "gold": "\\frac{7}{2}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/3082",
+        "gold_answer": "\\frac{7}{2}",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Right-triangle coordinates, I=(2,2), internal tangency radius r=4, exclusion of external r=30 by finite legs, and determinant area are correct.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "determine incenter I; determine tangent-circle center M",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/5272",
+      "keep": true,
+      "candidate": "757",
+      "gold": "757",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/5272",
+        "gold_answer": "757",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Density equation and exact congruence-disjointness restrictions are correct. The t>=3 and t=2 cases exhaust possibilities and residue checks prove 333 and 424 valid.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "derive density condition; derive pairwise-disjointness conditions",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/5482",
+      "keep": true,
+      "candidate": "73",
+      "gold": "73",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/5482",
+        "gold_answer": "73",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Reductions modulo 7 and 29, inverses, CRT combination, bound, and direct substitution are correct.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "solve modulo 7; solve modulo 29",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/7186",
+      "keep": true,
+      "candidate": "30",
+      "gold": "30",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/7186",
+        "gold_answer": "30",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Zero-coordinate solutions contribute 6 and all-nonzero absolute pattern (2,2,1) contributes 24. Classes are disjoint and exhaustive.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "solutions with a zero coordinate; solutions with all coordinates nonzero",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/5349",
+      "keep": true,
+      "candidate": "680",
+      "gold": "680",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/5349",
+        "gold_answer": "680",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Digit-position multiplicities correctly handle nonzero hundreds digit and zero's unequal frequency. Contributions total 355680, remainder 680.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "hundreds contribution; tens contribution; units contribution",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/3177",
+      "keep": true,
+      "candidate": "39",
+      "gold": "39",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/3177",
+        "gold_answer": "39",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Interior strip subtraction gives 16; exterior side rectangles plus four quarter-disks gives 20+pi. Sum 36+pi rounds to 39.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "visible region inside square; visible region outside square",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/6952",
+      "keep": true,
+      "candidate": "(3,-2,2)",
+      "gold": "(3,-2,2)",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/6952",
+        "gold_answer": "(3,-2,2)",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Normal line, equilateral base edge length, tetrahedron height, two candidates, integrality selection, and final distance check are correct.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "derive normal line through base centroid; derive regular-tetrahedron height",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/2464",
+      "keep": true,
+      "candidate": "\\frac{7}{24}",
+      "gold": "\\frac{7}{24}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/2464",
+        "gold_answer": "\\frac{7}{24}",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Event conditions, boss-time volume split, forbidden triangles for b in [1,2], integration, and normalization by 8 are correct.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "boss arrives during first hour; boss arrives during second hour",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/4047",
+      "keep": true,
+      "candidate": "(3281,3280)",
+      "gold": "(3281,3280)",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/4047",
+        "gold_answer": "(3281,3280)",
+        "final_answer_correct": true,
+        "math_reasoning": "pass",
+        "reasoning_notes": "Exponent recurrence is represented correctly. Sum invariants and difference multiplication by 3 independently yield b_8 exponents 3281 and -3280.",
+        "genuine_independent_useful_branches": true,
+        "suggested_siblings": "derive exponent-sum invariants; derive exponent-difference recurrences",
+        "path_detail_over_80_chars": true,
+        "ambiguity_or_risk": null,
+        "recommendation": "accept"
+      }
+    },
+    {
+      "id": "math-train/3699",
+      "keep": true,
+      "candidate": "\\sqrt{2}",
+      "gold": "\\sqrt{2}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/3699",
+        "gold_answer": "\\sqrt{2}",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "Both reality conditions are expanded correctly. The resulting norm minimization is sound and the stated equality case gives real f(1) and f(i).",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Reality conditions at z=1 and z=i are separate necessary equations; both are needed before minimization.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/2843",
+      "keep": true,
+      "candidate": "2\\sqrt{6}",
+      "gold": "2\\sqrt{6}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/2843",
+        "gold_answer": "2\\sqrt{6}",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "Coordinate model, tetrahedron volume 144, face area 36 sqrt(6), and distance calculation are correct. The perpendicular foot (2,2,4) is indeed inside triangular face ABC.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Volume through TAB and area of ABC are separate necessary computations for the same height.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/3423",
+      "keep": false,
+      "candidate": "No such function exists under the stated codomain",
+      "gold": "2",
+      "verification_method": "excluded_inconsistent_question",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/3423",
+        "gold_answer": "2",
+        "answer_correct": false,
+        "reasoning_quality": "pass_problem_defect",
+        "reasoning_notes": "At x=-1, property (i) gives f(-1)=-f(-1), hence f(-1)=0, impossible because the stated codomain S excludes zero. The trace correctly flags the contradiction. Pool gold answer 2 can only correspond to a different intended codomain or a nonstandard treatment of an inconsistent premise.",
+        "genuinely_independent_useful_branches": false,
+        "branch_notes": "No admissible function exists, so there is no usable two-path solution.",
+        "training_recommendation": "exclude_problem_defect"
+      }
+    },
+    {
+      "id": "math-train/4099",
+      "keep": true,
+      "candidate": "\\frac{3}{4}",
+      "gold": "\\frac{3}{4}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/4099",
+        "gold_answer": "\\frac{3}{4}",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "The product of summands is 1/64, AM-GM yields 3/4, and (a,b,c)=(1,2,2) attains equal summands 1/4. All equality equations are correct.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Universal lower-bound proof and independently found equality construction are both required to establish a minimum.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/4156",
+      "keep": true,
+      "candidate": "1717",
+      "gold": "1717",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/4156",
+        "gold_answer": "1717",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "Unit-cell reduction, allowed cell area, count s+1, finite support s<=99, and final finite sum are all correct.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Area within a cell and the number of cells at fixed m+n are separate inputs to the total sum.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/1177",
+      "keep": true,
+      "candidate": "y = 10x - 4",
+      "gold": "y=10x-4",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/1177",
+        "gold_answer": "y=10x-4",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "Vertical difference, both discriminants, their 40-point gap, uniqueness argument, b exclusion, and final check at m=10 are correct.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "The D=5 and D=-5 root-count calculations are independent cases that must be combined to enforce unique k.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/7294",
+      "keep": true,
+      "candidate": "\\frac{50}{37}",
+      "gold": "\\frac{50}{37}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/7294",
+        "gold_answer": "\\frac{50}{37}",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "Polar reciprocal, determinant area, allowed cos(2 theta), squared-modulus formula, radial minimum, and positive-real-part witness are correct.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Area constraint and target-modulus calculation are separate parameter computations before minimization.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/2326",
+      "keep": true,
+      "candidate": "C",
+      "gold": "0.20",
+      "verification_method": "choice_mapped_math_verify",
+      "mapped_option_value": "0.20",
+      "review": {
+        "id": "math-train/2326",
+        "gold_answer": "0.20",
+        "answer_correct": true,
+        "reasoning_quality": "pass_with_dataset_caveat",
+        "reasoning_notes": "Only t=6 can be a meeting time. Independent endpoint laws and Vandermonde give 99/512, whose closest listed numeric option is 0.20, namely C. The question explicitly requests the letter, so final C is correct; pool gold stores numeric 0.20 instead. An exact-string answer verifier would falsely reject this valid trace unless it recognizes the option mapping.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Endpoint distributions of A and B are independent and both required for their meeting probability.",
+        "training_recommendation": "keep_with_option_mapping"
+      }
+    },
+    {
+      "id": "math-train/2204",
+      "keep": true,
+      "candidate": "\\frac{475}{506}",
+      "gold": "\\dfrac{475}{506}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/2204",
+        "gold_answer": "\\dfrac{475}{506}",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "All-boy and all-girl counts are correct and disjoint; total count, subtraction, and reduction to 475/506 are correct.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "The two failure-class counts can be computed independently and both are needed for the complement.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/6288",
+      "keep": true,
+      "candidate": "\\frac{17}{32}",
+      "gold": "\\frac{17}{32}",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/6288",
+        "gold_answer": "\\frac{17}{32}",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "Black disk-plus-annulus area is 17 pi and white annuli total 32 pi; ratio reduction is correct.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Black and white area totals are independent disjoint-region calculations.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/2789",
+      "keep": true,
+      "candidate": "\\frac{3}{4}",
+      "gold": "\\tfrac34",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/2789",
+        "gold_answer": "\\tfrac34",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "B=(1,1), altitude 3, base length 2, candidate C values, and positive-slope selection C=(3,1) are all correct.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Intersection B and required base length are independent geometric quantities before selecting C.",
+        "training_recommendation": "keep"
+      }
+    },
+    {
+      "id": "math-train/7420",
+      "keep": true,
+      "candidate": "(91,60)",
+      "gold": "(91,60)",
+      "verification_method": "math_verify",
+      "mapped_option_value": null,
+      "review": {
+        "id": "math-train/7420",
+        "gold_answer": "(91,60)",
+        "answer_correct": true,
+        "reasoning_quality": "pass",
+        "reasoning_notes": "Double-angle expansion produces X=10^2-3^2=91 and Y=2(10)(3)=60, with correct coordinate order.",
+        "genuinely_independent_useful_branches": true,
+        "branch_notes": "Cosine and sine double-angle components independently determine the two output coordinates.",
+        "training_recommendation": "keep"
+      }
+    }
+  ]
+}

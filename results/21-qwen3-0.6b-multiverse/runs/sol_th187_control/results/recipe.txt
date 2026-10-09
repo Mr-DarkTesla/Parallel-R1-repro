@@ -1,0 +1,53 @@
+train=/work/parallel-r1/results/21-qwen3-0.6b-multiverse/data/sft_control_sol_th_187_train.parquet rows=1113 bytes=624620 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+val=/work/parallel-r1/results/21-qwen3-0.6b-multiverse/data/sft_control_sol_th_187_val.parquet rows=48 bytes=40731 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+steps_per_epoch=34 epochs=2 updates=64 rows_processed=2048 distinct_rows_processed=1110
+model=/work/assets/models/Qwen3-0.6B-mv vocab_size=151936 dtype=torch.bfloat16 tied=True
+Fri Oct  9 23:02:33 MSK 2026
+5aabb07152530a8ba20be75cd5137cf1a90d60a3
+ M verl/verl/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/__pycache__/base_config.cpython-310.pyc
+ M verl/verl/__pycache__/protocol.cpython-310.pyc
+ M verl/verl/models/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/models/__pycache__/registry.cpython-310.pyc
+ M verl/verl/single_controller/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/single_controller/base/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/single_controller/base/__pycache__/decorator.cpython-310.pyc
+ M verl/verl/single_controller/base/__pycache__/worker.cpython-310.pyc
+ M verl/verl/single_controller/base/__pycache__/worker_group.cpython-310.pyc
+ M verl/verl/trainer/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/trainer/__pycache__/fsdp_parallel_sft_trainer.cpython-310.pyc
+ M verl/verl/utils/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/__pycache__/config.cpython-310.pyc
+ M verl/verl/utils/__pycache__/device.cpython-310.pyc
+ M verl/verl/utils/__pycache__/distributed.cpython-310.pyc
+ M verl/verl/utils/__pycache__/fs.cpython-310.pyc
+ M verl/verl/utils/__pycache__/fsdp_utils.cpython-310.pyc
+ M verl/verl/utils/__pycache__/hdfs_io.cpython-310.pyc
+ M verl/verl/utils/__pycache__/import_utils.cpython-310.pyc
+ M verl/verl/utils/__pycache__/logging_utils.cpython-310.pyc
+ M verl/verl/utils/__pycache__/model.cpython-310.pyc
+ M verl/verl/utils/__pycache__/py_functional.cpython-310.pyc
+ M verl/verl/utils/__pycache__/tokenizer.cpython-310.pyc
+ M verl/verl/utils/__pycache__/torch_functional.cpython-310.pyc
+ M verl/verl/utils/__pycache__/tracking.cpython-310.pyc
+ M verl/verl/utils/__pycache__/ulysses.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/multiturn_sft_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/parallel_thinking_sft_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/rl_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/rm_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/sft_dataset.cpython-310.pyc
+ M verl/verl/utils/debug/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/logger/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/logger/__pycache__/aggregate_logger.cpython-310.pyc
+ M verl/verl/utils/profiler/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/profiler/__pycache__/config.cpython-310.pyc
+ M verl/verl/utils/profiler/__pycache__/performance.cpython-310.pyc
+ M verl/verl/utils/profiler/__pycache__/profile.cpython-310.pyc
+ M verl/verl/workers/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/workers/sharding_manager/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/workers/sharding_manager/__pycache__/base.cpython-310.pyc
+ M verl/verl/workers/sharding_manager/__pycache__/fsdp_ulysses.cpython-310.pyc
+?? verl/outputs/
+?? verl/verl/utils/dataset/__pycache__/multiverse_structure.cpython-310.pyc
+GPUs=0 updates=64 global_batch=32 micro_batch_per_gpu=4 max_length=4096 lr=1e-5 epochs=2 overrides=+data.structure=multiverse optim.tag_lr_mult=100

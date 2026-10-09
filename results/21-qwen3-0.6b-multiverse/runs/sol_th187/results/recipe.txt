@@ -1,0 +1,16 @@
+train=/work/parallel-r1/results/21-qwen3-0.6b-multiverse/data/sft_sol_th_187_train.parquet rows=1113 bytes=629264 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+val=/work/parallel-r1/results/21-qwen3-0.6b-multiverse/data/sft_sol_th_187_val.parquet rows=48 bytes=41220 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+steps_per_epoch=34 epochs=2 updates=64 rows_processed=2048 distinct_rows_processed=1110
+model=/work/assets/models/Qwen3-0.6B-mv vocab_size=151936 dtype=torch.bfloat16 tied=True
+Fri Oct  9 22:58:20 MSK 2026
+5aabb07152530a8ba20be75cd5137cf1a90d60a3
+ M verl/verl/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/__pycache__/protocol.cpython-310.pyc
+ M verl/verl/utils/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/__pycache__/config.cpython-310.pyc
+ M verl/verl/utils/__pycache__/device.cpython-310.pyc
+ M verl/verl/utils/__pycache__/logging_utils.cpython-310.pyc
+ M verl/verl/utils/__pycache__/py_functional.cpython-310.pyc
+ M verl/verl/utils/__pycache__/tokenizer.cpython-310.pyc
+ M verl/verl/utils/__pycache__/torch_functional.cpython-310.pyc
+GPUs=0 updates=64 global_batch=32 micro_batch_per_gpu=4 max_length=4096 lr=1e-5 epochs=2 overrides=+data.structure=multiverse optim.tag_lr_mult=100

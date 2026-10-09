@@ -1,0 +1,34 @@
+{
+  "seed": 20261010,
+  "source": "data/pool.jsonl",
+  "filter": "MATH fraction/expression, Level 2-4, <=800 question chars, not previously annotated or actual Qwen replay, two manually rejected weak MATH test variants",
+  "banned_weak_math_test_ids": [
+    "math-train/479",
+    "math-train/6722",
+    "math-train/1848"
+  ],
+  "id_order": [
+    "math-train/2448",
+    "math-train/874",
+    "math-train/4392",
+    "math-train/3948",
+    "math-train/7289",
+    "math-train/6930",
+    "math-train/517",
+    "math-train/506",
+    "math-train/5821",
+    "math-train/1491",
+    "math-train/7179",
+    "math-train/6266",
+    "math-train/5580",
+    "math-train/4420",
+    "math-train/4400",
+    "math-train/7323",
+    "math-train/7193",
+    "math-train/3986",
+    "math-train/2802",
+    "math-train/1448"
+  ],
+  "selection_history": "Initial sample had 18/20 hits against informational MATH train corpus, which is not eval leakage. Current sample excludes 594 actual replay_nt/th IDs and two weak MATH test similarities.",
+  "replacement_note": "math-train/1848 is a variant of math-test/1524; replaced with math-train/7289"
+}

@@ -103,7 +103,11 @@ def check(response, gold, source, original=None):
             issues.append("short_path")
         if min(lens) < 0.15 * max(lens):
             issues.append("unbalanced")
-        if any(XREF.search(p) for p in paths):
+        # A path's own leading "Part k:" label is a heading, not a reference
+        # to another path. Keep cross-reference checks on the remaining text.
+        path_bodies = [re.sub(rf"(?is)^part\s+{i}\s*[:.]\s*", "", p)
+                       for i, p in enumerate(paths, 1)]
+        if any(XREF.search(p) for p in path_bodies):
             issues.append("xref")
         grams = [_ngrams(p) for p in paths]
         if any(len(a & c) / max(len(a | c), 1) >= 0.7 for i, a in enumerate(grams) for c in grams[i + 1:]):
