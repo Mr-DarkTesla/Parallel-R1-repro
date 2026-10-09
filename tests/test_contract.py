@@ -35,6 +35,13 @@ class PlanTest(unittest.TestCase):
                      'cases\n1: a\n2: b\n\n', 'cases\n1: a\nso 2: b', '\ncases\n1: a\n2: b', '']:
             self.assertIsNone(contract.parse_plan(text), repr(text))
 
+    def test_items_are_plain_and_distinct(self):
+        for item in contract.TAGS + contract.CONTROL_TOKENS:
+            text = f'cases\n1: a {item} b\n2: c'
+            self.assertIsNone(contract.parse_plan(text), repr(text))
+        self.assertIsNone(contract.parse_plan('cases\n1: odd\n2:  odd '))
+        self.assertEqual(contract.parse_plan('cases\n1: odd\n2: odd n').items, ('odd', 'odd n'))
+
     def test_declared_count_must_match_the_plan(self):
         three = 'cases\n1: a\n2: b\n3: c\n'
         self.assertEqual(len(contract.parse_plan(three, 3).items), 3)
@@ -109,10 +116,10 @@ class SuppressionTest(unittest.TestCase):
         for row in range(2):
             for column in range(7):
                 node = nodes[row, column].item()
-                if node == contract.COUNT:  # vLLM allowed_token_ids: every other token is (almost) impossible
+                if node == contract.COUNT:  # vLLM allowed_token_ids: every other token is impossible
                     others = torch.ones(210, dtype=torch.bool)
                     others[list(counts)] = False
-                    expected[row, column, others] += contract.SUPPRESS_BIAS
+                    expected[row, column, others] = contract.HARD_MASK
                 elif node >= 0:
                     for token, bias in contract.logit_bias(node, self.ids).items():
                         expected[row, column, token] += bias
@@ -121,6 +128,29 @@ class SuppressionTest(unittest.TestCase):
         count = actual[0, 5].log_softmax(-1)[list(counts)]
         torch.testing.assert_close(count, logits[0, 5, list(counts)].log_softmax(-1))  # exactly renormalized
         self.assertTrue(torch.equal(actual[0, 5, list(counts)], logits[0, 5, list(counts)]))
+
+    def test_count_has_exactly_the_allowed_support(self):
+        counts = contract.count_ids(Tokenizer())
+        table = contract.suppression_table(self.ids, counts)
+        nodes = torch.full((1, 4), contract.MAIN_OPEN)
+        nodes[0, 2] = contract.COUNT
+        for dtype, temperature in [(torch.float32, 1.0), (torch.float32, 0.6), (torch.bfloat16, 1.0)]:
+            raw = (torch.randn(1, 4, 210) * 5).to(dtype).requires_grad_()
+            logits = contract.apply_suppression(raw.clone(), nodes, table) / temperature
+            probs = logits.float().softmax(-1)[0, 2]
+            others = torch.ones(210, dtype=torch.bool)
+            others[list(counts)] = False
+            self.assertTrue(torch.equal(probs[others], torch.zeros(int(others.sum()))))  # zero mass, as -inf
+            torch.testing.assert_close(probs[list(counts)], (raw[0, 2, list(counts)].float() / temperature).softmax(-1))
+            # verl's entropy_from_logits: logsumexp - sum(softmax * logits); finite only because HARD_MASK is.
+            entropy = torch.logsumexp(logits, -1) - (logits.softmax(-1) * logits).sum(-1)
+            self.assertTrue(torch.isfinite(entropy).all())
+            torch.testing.assert_close(entropy[0, 2].float(), torch.special.entr(probs[list(counts)]).sum(),
+                                       atol=2e-2, rtol=2e-2)
+            sampled = logits.float().log_softmax(-1)[0, 2, counts[1]]
+            (sampled + entropy.sum()).backward()
+            self.assertTrue(torch.isfinite(raw.grad).all())
+            self.assertTrue(torch.equal(raw.grad[0, 2, others], torch.zeros(int(others.sum()), dtype=dtype)))
 
 
 class GraphTest(unittest.TestCase):

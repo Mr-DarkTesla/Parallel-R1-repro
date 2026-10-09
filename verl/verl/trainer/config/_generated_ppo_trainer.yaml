@@ -139,6 +139,7 @@ actor_rollout_ref:
       allow_parallel: true # false: sequential baseline, <Parallel> is never sampled
       protocol: legacy # plan: <Parallel>branches=N<Plan>kind / N lines i: ...</Plan><Path>i:...</Path>..., see parallel_thinking_generation_v3/contract.py
       max_plan_tokens: 256 # plan: a plan without </Plan> within this budget ends the trajectory with c = 0
+      graph_rollout: false # plan + tree: vLLM samples each token in its graph context, branch KV kept and merged (vllm_graph.py)
       custom_async_server:
         path: null
         name: null

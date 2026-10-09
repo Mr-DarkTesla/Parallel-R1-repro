@@ -132,7 +132,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         sampling_params: dict[str, Any],
     ) -> AgentLoopOutput:
         self.held = {}  # graph rollout: request id -> Handle kept on the server until released
-        self.trajectory = graph_kv.trajectory_key(time.time(), uuid4().hex)
+        # graph rollout: orders this trajectory by age on the server (self.trajectory is the trace's metadata)
+        self.graph_key = graph_kv.trajectory_key(time.time(), uuid4().hex)
         try:
             return await self._run(messages, sampling_params)
         finally:
@@ -517,7 +518,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         kv = parent if isinstance(parent, list) else graph_kv.continuation(parent, prompt_ids)
         ids, log_probs, replays = [], [], []
         for _ in range(self.graph_attempts):
-            graph = graph_kv.GraphSpec(kv=kv, offset=offset, trajectory=self.trajectory).as_dict()
+            graph = graph_kv.GraphSpec(kv=kv, offset=offset, trajectory=self.graph_key).as_dict()
             output = await call(self.server_manager, phase, request_id=request_id, prompt_ids=prompt_ids + ids,
                                 sampling_params={**sampling_params, 'max_tokens': sampling_params['max_tokens'] - len(ids)},
                                 routing_key=self.routing_key, graph=graph, **extra)

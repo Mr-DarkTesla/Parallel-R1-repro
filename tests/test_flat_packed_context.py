@@ -280,7 +280,7 @@ class PlanTokenizer(Tokenizer):
 def plan(kind, items, newline=True):
     ids = [WORDS[kind]]
     for number in range(1, items + 1):
-        ids += [WORDS['\n'], WORDS[str(number)], WORDS[':'], WORDS[' x']]
+        ids += [WORDS['\n'], WORDS[str(number)], WORDS[':'], WORDS[' x'], WORDS[str(number)]]  # "i: xi"
     return ids + [WORDS['\n']] * newline + [PLAN_CLOSE]
 
 

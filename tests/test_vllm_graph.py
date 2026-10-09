@@ -243,13 +243,16 @@ class GraphRolloutTest(unittest.TestCase):
 
         async def main():
             runner = asyncio.create_task(engine.run())
-            results = []
-            for _ in range(trajectories):
+            loops = []
+            for index in range(trajectories):
                 loop = base.Loop()
                 loop.server_manager, loop.loop = engine, asyncio.get_running_loop()
-                results.append(loop.run([], dict(temperature=1.0, top_p=1.0)))
-            results = await asyncio.gather(*results)
+                loop.trajectory = dict(index=index)  # trace metadata, set by the agent loop worker
+                loops.append(loop)
+            results = await asyncio.gather(*[loop.run([], dict(temperature=1.0, top_p=1.0)) for loop in loops])
             runner.cancel()
+            for index, loop in enumerate(loops):
+                self.assertEqual(loop.trace.record['trajectory'], dict(index=index))
             return results
         return asyncio.run(main())
 
@@ -287,6 +290,19 @@ class GraphRolloutTest(unittest.TestCase):
         results = self.rollout(engine, 6)
         self.assertGreater(engine.preempted, 0)
         self.check(engine, results)
+
+    def test_evicted_trajectories_rebuild_their_kv(self):
+        # A trajectory alone needs 30 blocks here: with 32, held KV keeps filling the cache, younger
+        # trajectories are evicted, rebuild their KV branch by branch and continue after their sampled tokens.
+        engine = SimEngine(make_scheduler(num_blocks=32, max_batched=32), scripts(6, seed=3))
+        results = self.rollout(engine, 6)
+        self.assertGreater(engine.evicted, 0)
+        self.check(engine, results)
+
+    def test_trajectory_larger_than_the_cache_fails(self):
+        engine = SimEngine(make_scheduler(num_blocks=24, max_batched=32), scripts(1))
+        with self.assertRaisesRegex(RuntimeError, 'more KV than the cache has'):
+            self.rollout(engine, 1)
 
     def test_graph_positions_match_the_actor(self):
         engine = SimEngine(make_scheduler(), scripts(1))
@@ -326,6 +342,29 @@ class SchedulerTest(unittest.TestCase):
                          scheduler.kv_cache_manager.block_pool.num_gpu_blocks - 1)
         self.assertLess(free, scheduler.kv_cache_manager.block_pool.num_gpu_blocks - 1)
 
+    def test_eviction_follows_trajectory_age(self):
+        scheduler = make_scheduler(num_blocks=17)  # 16 usable blocks of 4 tokens
+        engine = SimEngine(scheduler)
+        engine.samplers = dict(a=lambda k: 30, b=lambda k: 31, c=lambda k: 32)
+        self.add(scheduler, 'a', list(range(1, 41)), 2, dict(kv=[], offset=0, hold=True, trajectory='t1'))
+        while engine.step():
+            pass
+        self.add(scheduler, 'b', [50] * 30, 1, dict(kv=[], offset=0, hold=False, trajectory='t2'))
+        for _ in range(3):  # does not fit next to a's 11 held blocks
+            self.assertFalse(engine.step())
+        # t1 is older and between requests: its next request would come first, so it is not evicted.
+        self.assertIn('a', scheduler.graph_held)
+        self.assertEqual([request.request_id for request in scheduler.waiting], ['b'])
+        self.add(scheduler, 'c', [51] * 30, 1, dict(kv=[], offset=0, hold=False, trajectory='t0'))
+        engine.step()  # c belongs to an older trajectory than t1: t1 is evicted
+        self.assertEqual(scheduler.graph_held, {})
+        self.assertEqual(scheduler.graph_evicted, {'a'})
+        while engine.step():
+            pass
+        self.assertEqual((engine.outputs['b'], engine.outputs['c']), ([31], [32]))
+        scheduler.finish_requests(['a'], RequestStatus.FINISHED_ABORTED)  # the client's release
+        self.assertEqual(scheduler.graph_evicted, set())
+
     def test_abort_and_reset_free_held_blocks(self):
         scheduler = make_scheduler(num_blocks=64)
         engine = SimEngine(scheduler)
@@ -338,6 +377,168 @@ class SchedulerTest(unittest.TestCase):
         self.assertEqual(set(scheduler.graph_held), {'c'})
         self.assertTrue(scheduler.reset_prefix_cache())
         self.assertEqual(scheduler.graph_held, {})
+
+
+class ClientTest(unittest.TestCase):
+    """vLLM's client side (OutputProcessor, as in AsyncLLM) on requests the scheduler failed after an eviction."""
+
+    def outputs(self, log_stats):
+        from vllm.v1.engine import EngineCoreOutput, EngineCoreRequest
+        from vllm.v1.engine.output_processor import OutputProcessor
+        from vllm.v1.metrics.stats import IterationStats
+        processor = OutputProcessor(SimpleNamespace(get_lora_tokenizer=lambda lora: None), log_stats=log_stats)
+        for request_id in 'ab':
+            processor.add_request(EngineCoreRequest(request_id, [1, 2, 3], None, None, None,
+                                                    SamplingParams(max_tokens=8, logprobs=0), EOS, time.time(), None),
+                                  None)
+        stats = IterationStats() if log_stats else None
+        processor.process_outputs([EngineCoreOutput('a', [7, 8])], time.time(), stats)  # a, then preempted
+        scheduler = make_scheduler()
+        scheduler._graph_fail(SimpleNamespace(request_id='a'))
+        scheduler._graph_fail(SimpleNamespace(request_id='b'))  # never got its first token
+        return {output.request_id: output.outputs[0] for output in
+                processor.process_outputs(scheduler.graph_failed, time.time(), stats).request_outputs}
+
+    def test_failed_requests_end_with_their_sampled_tokens(self):
+        outputs = self.outputs(log_stats=False)  # as the server runs vLLM in graph rollout
+        self.assertEqual(outputs['a'].token_ids, [7, 8])
+        self.assertEqual(outputs['b'].token_ids, [])
+        for output in outputs.values():
+            self.assertEqual((output.finish_reason, output.stop_reason), ('abort', graph_kv.GRAPH_EVICTED))
+
+    def test_request_stats_reject_a_failure_before_the_first_token(self):
+        with self.assertRaises(AssertionError):  # hence disable_log_stats in graph rollout
+            self.outputs(log_stats=True)
+
+
+def load_check():
+    spec = importlib.util.spec_from_file_location('check_graph_rollout', ROOT / 'experiments/qwen06/check_graph_rollout.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class FingerprintEngine(SimEngine):
+    """Reports each sampled token's query fingerprint as its log-prob, so a driver's bookkeeping can be checked."""
+
+    async def generate(self, *args, **kwargs):
+        result = await super().generate(*args, **kwargs)
+        if result['token_ids']:
+            result['logprobs'] = self.views[-1]['queries']  # this request's view: nothing ran in between
+        return result
+
+
+def merged_cache_log_probs(model, tokens, spans):
+    """Log-softmax at every token computed as graph rollout does in vLLM, with HF caches: each branch from its own
+    copy of the KV before it, the branches' KV concatenated after the block, RoPE positions continuing after the
+    longest branch."""
+    from transformers import DynamicCache
+
+    def run(ids, start, cache):
+        past = cache.get_seq_length()
+        out = model(torch.tensor([ids]), position_ids=torch.arange(start, start + len(ids))[None],
+                    past_key_values=cache, cache_position=torch.arange(past, past + len(ids)), use_cache=True)
+        return out.logits[0], out.past_key_values
+
+    blocks = {}
+    for span in spans:
+        blocks.setdefault(span.block, []).append(span)
+    logits, cache, index, position = [], DynamicCache(), 0, 0
+    for block in sorted(blocks.values(), key=lambda block: block[0].start):
+        out, cache = run(tokens[index:block[0].start], position, cache)
+        logits.append(out)
+        position += block[0].start - index
+        layers, tails = cache.to_legacy_cache(), []
+        for span in block:
+            size = span.end - span.start
+            copy = DynamicCache.from_legacy_cache(tuple((k.clone(), v.clone()) for k, v in layers))
+            out, copy = run(tokens[span.start:span.end], position, copy)
+            logits.append(out)
+            tails.append([(k[:, :, -size:], v[:, :, -size:]) for k, v in copy.to_legacy_cache()])
+        cache = DynamicCache.from_legacy_cache(tuple(
+            (torch.cat([layers[layer][0]] + [tail[layer][0] for tail in tails], 2),
+             torch.cat([layers[layer][1]] + [tail[layer][1] for tail in tails], 2)) for layer in range(len(layers))))
+        position += max(span.end - span.start for span in block)
+        index = block[-1].end
+    out, cache = run(tokens[index:], position, cache)
+    logits.append(out)
+    return torch.cat(logits).log_softmax(-1)
+
+
+class CheckScriptTest(unittest.TestCase):
+    """experiments/qwen06/check_graph_rollout.py: its forced-structure driver and its HF scorer."""
+
+    def test_forced_driver_records_each_token_in_its_graph_context(self):
+        check = load_check()
+        config = check.agent_config(prompt_length=8, response_length=200, path_length=8)
+        base.Loop._class_initialized = False
+        base.Loop.init_class(config, base.PlanTokenizer([3, 4, 5, 6, 7]))
+        lengths = dict(main=6, path=5, summary=4)
+        for blocks, expect_evictions in [(None, False), (32, True)]:  # 32: one fits, four evict each other
+            rng = torch.Generator().manual_seed(blocks or 0)
+            engine = FingerprintEngine(make_scheduler(**{'num_blocks': blocks} if blocks else {}, max_batched=32),
+                                       [dict(main=[torch.randint(30, 40, (6,), generator=rng).tolist()
+                                                   for _ in range(10)]) for _ in range(4)])
+
+            async def main():
+                runner = asyncio.create_task(engine.run())
+                results = await asyncio.gather(*[
+                    check.forced_trajectory(check.bare_loop(base.Loop, engine, f't{number}'), [3, 4, 5, 6, 7 + number],
+                                            lengths) for number in range(4)])
+                runner.cancel()
+                return results
+
+            results = asyncio.run(main())
+            self.assertEqual(engine.evicted > 0, expect_evictions)
+            for tokens, spans, sampled in results:
+                self.assertEqual([(s.start, s.end, s.block, s.path) for s in spans],
+                                 [(s.start, s.end, s.block, s.path) for s in spans_of(tokens)])
+                self.assertEqual([len([s for s in spans if s.block == b]) for b in (0, 1)], [2, 3])
+                reference = graph_fingerprints(tokens)
+                for index, token, query, segment in sampled:
+                    self.assertEqual(tokens[index], token)
+                    self.assertEqual(query, reference[index - 1], (segment, index))
+                counts = {segment: sum(row[3] == segment for row in sampled) for segment in dict.fromkeys(
+                    row[3] for row in sampled)}
+                self.assertEqual(counts, {'main_before_fork': 6, 'path1_block1': 5, 'path2+_block1': 5,
+                                          'summary_block1': 4, 'main_after_fork': 12, 'path1_block2': 5,
+                                          'path2+_block2': 10, 'summary_block2': 4})
+            self.assertEqual(engine.scheduler.graph_held, {})
+            self.assertEqual(engine.registry.held, {})
+
+    def test_scores_are_those_of_merged_branch_caches(self):
+        check = load_check()
+        from transformers import Qwen3Config, Qwen3ForCausalLM
+        torch.manual_seed(0)
+        config = Qwen3Config(vocab_size=64, hidden_size=64, intermediate_size=128, num_hidden_layers=2,
+                             num_attention_heads=4, num_key_value_heads=2, head_dim=16)
+        config._attn_implementation = 'sdpa'
+        model = Qwen3ForCausalLM(config).double().eval()
+        rng = torch.Generator().manual_seed(1)
+        text = lambda n: torch.randint(30, 64, (n,), generator=rng).tolist()
+        tokens, spans = text(6), []
+        for block, sizes in enumerate([(5, 8), (6, 3, 4)]):
+            tokens += [PARALLEL, WORDS['branches='], WORDS[str(len(sizes))], 16] + text(3) + [17]  # ...<Plan>..</Plan>
+            for number, size in enumerate(sizes, 1):
+                start = len(tokens)
+                tokens += [PATH, WORDS[str(number)], WORDS[':']] + text(size) + [END_PATH]
+                spans.append(check.contract.Span(start, len(tokens), block, number))
+            tokens += [END_PARALLEL, base.SUMMARY] + text(4) + [base.END_SUMMARY] + text(3)
+        rows = [(index - 1, tokens[index]) for index in range(1, len(tokens))]
+        scores = {name: torch.tensor(values, dtype=torch.float64) for name, values in
+                  check.score(model, tokens, spans, rows).items()}
+        with torch.no_grad():
+            reference = merged_cache_log_probs(model, tokens, spans)
+        reference = reference[torch.arange(len(rows)), torch.tensor(tokens[1:])]
+        torch.testing.assert_close(scores['graph'], reference, atol=1e-5, rtol=0)
+        before = spans[0].start  # up to the first branch everything is causal: the three forwards agree
+        for name in check.FORWARDS:
+            torch.testing.assert_close(scores[name][:before], reference[:before], atol=1e-5, rtol=0)
+        later = [index - 1 for span in spans if span.path > 1 for index in range(span.start + 1, span.end)]
+        after = list(range(spans[1].end - 1, len(rows)))  # </Parallel> onwards
+        for name in ('graph_mask_physical_positions', 'causal'):  # the contrasts are not vacuous
+            self.assertGreater((scores[name][later] - reference[later]).abs().max().item(), 1e-3, name)
+            self.assertGreater((scores[name][after] - reference[after]).abs().max().item(), 1e-3, name)
 
 
 if __name__ == '__main__':

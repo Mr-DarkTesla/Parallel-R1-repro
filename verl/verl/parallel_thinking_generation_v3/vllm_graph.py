@@ -168,21 +168,32 @@ class GraphScheduler(Scheduler):
         return output
 
     def _graph_evict(self):
-        """Nothing could be scheduled and held KV fills the cache: evict the youngest trajectory that holds KV."""
+        """Nothing could be scheduled and held KV fills the cache. The waiting head belongs to the oldest
+        trajectory with a waiting request; evict the youngest trajectory younger than it that holds KV.
+
+        If only older trajectories hold KV, they are between requests (none of theirs is waiting or running), and
+        their next requests will be scheduled before this one: wait, so the oldest trajectory always progresses.
+        If only the head's own trajectory holds KV, everything else is free and it still does not fit: it can
+        never finish, so its requests fail with GRAPH_TOO_LARGE instead of being evicted forever.
+        """
+        head = trajectory(self.waiting[0])
         holders = {trajectory(request) for request, _ in self.graph_held.values()}
-        victim = max(holders)
+        younger = [key for key in holders if key > head]
+        if not younger and holders != {head}:
+            return
+        victim = max(younger) if younger else head
         evicted = {request_id for request_id, (request, _) in self.graph_held.items() if trajectory(request) == victim}
-        if holders == {victim} and trajectory(self.waiting[0]) == victim:
-            # Only this trajectory holds KV and nothing runs, so all other blocks are free, yet its next request
-            # does not fit: it can never finish. Fail all its requests rather than evict it forever.
-            failed, reason = [request for request in self.waiting if trajectory(request) == victim], GRAPH_TOO_LARGE
-            logger.error('graph rollout: trajectory %s does not fit in the KV cache (%d blocks)', victim,
-                         self.kv_cache_manager.block_pool.num_gpu_blocks)
-        else:
-            failed, reason = [request for request in self.waiting if any(source in evicted for source, *_ in
-                                                                         (graph_spec(request) or {}).get('kv', ()))], GRAPH_EVICTED
+        if younger:
+            reason = GRAPH_EVICTED
+            failed = [request for request in self.waiting
+                      if any(source in evicted for source, *_ in (graph_spec(request) or {}).get('kv', ()))]
             logger.warning('graph rollout: KV cache full, evicting trajectory %s (%d held, %d waiting requests failed)',
                            victim, len(evicted), len(failed))
+        else:
+            reason = GRAPH_TOO_LARGE
+            failed = [request for request in self.waiting if trajectory(request) == victim]
+            logger.error('graph rollout: trajectory %s does not fit in the KV cache (%d blocks)', victim,
+                         self.kv_cache_manager.block_pool.num_gpu_blocks)
         for request in failed:
             self.waiting.remove(request)
             request.status = RequestStatus.FINISHED_ABORTED

@@ -7,6 +7,9 @@ shift 2
 [[ "$MODE" == s1 || "$MODE" == s2 || "$MODE" == think ]] || exit 2
 PY="$ROOT/.venv/bin/python"
 SMOKE=${SMOKE:-0}
+GRAPH_ROLLOUT=${GRAPH_ROLLOUT:-false}
+case "$GRAPH_ROLLOUT" in true|false) ;; *) echo 'GRAPH_ROLLOUT must be true or false'; exit 2;; esac
+DEFAULT_CONTEXT=flat_packed
 MODE_ARGS=()
 if [[ "$MODE" == think ]]; then
   # Qwen3-0.6B thinking SFT: RLOO over the group without std, reward V0/V1/V2 (README).
@@ -25,7 +28,14 @@ if [[ "$MODE" == think ]]; then
     [[ -f "${COST_SCALES:-}" ]] || { echo 'REWARD=v2 needs COST_SCALES=<output of calibrate_cost_scales.py>'; exit 2; }
     MODE_ARGS+=("+reward_model.reward_kwargs.cost_scales=$COST_SCALES")
   fi
+  if [[ "$GRAPH_ROLLOUT" == true ]]; then
+    # vLLM samples every token in its graph context (vllm_graph.py), which the actor scores with tree.
+    [[ "${LOGPROB_CONTEXT:-tree}" == tree ]] || { echo 'GRAPH_ROLLOUT=true needs LOGPROB_CONTEXT=tree'; exit 2; }
+    MODE_ARGS+=(actor_rollout_ref.rollout.agent.graph_rollout=true)
+    DEFAULT_CONTEXT=tree; TAG=$TAG-graph
+  fi
 else
+  [[ "$GRAPH_ROLLOUT" == false ]] || { echo 'GRAPH_ROLLOUT=true needs think mode (protocol=plan)'; exit 2; }
   ADV=grpo; DEFAULT_RESPONSE=3000; DEFAULT_BLOCKS=4; TAG=$MODE; CHECK_ARGS=()
 fi
 RUN_NAME=${RUN_NAME:-qwen06-$TAG-seed1}
@@ -85,7 +95,7 @@ exec "$PY" -m verl.trainer.main_ppo \
   actor_rollout_ref.rollout.agent.max_path_response_length="$RESPONSE" \
   actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking="$MAX_BLOCKS" \
   actor_rollout_ref.rollout.agent.num_paths="$NUM_PATHS" \
-  actor_rollout_ref.rollout.agent.logprob_context="${LOGPROB_CONTEXT:-flat_packed}" \
+  actor_rollout_ref.rollout.agent.logprob_context="${LOGPROB_CONTEXT:-$DEFAULT_CONTEXT}" \
   actor_rollout_ref.rollout.agent.rollout_logprobs="${ROLLOUT_LOGPROBS:-true}" \
   actor_rollout_ref.rollout.val_kwargs.temperature=1.0 actor_rollout_ref.rollout.val_kwargs.do_sample=True \
   actor_rollout_ref.rollout.val_kwargs.n=1 \

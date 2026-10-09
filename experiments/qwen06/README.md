@@ -103,7 +103,7 @@ RUN_NAME=eval-step300 REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$C
 | Advantage | RLOO по группе из 8, без деления на std |
 | Ответ | 16384 токена, `enable_thinking=true` |
 | Блоки / ветки | `protocol=plan`: до `MAX_BLOCKS=2` блоков, 2–4 ветки по плану модели |
-| Log-probs актора | `flat_packed` с тем же подавлением тегов, что в vLLM; `rollout_gap/*` (см. выше) |
+| Log-probs актора | `flat_packed` с тем же подавлением тегов, что в vLLM; с `GRAPH_ROLLOUT=true` — `tree` (ниже); `rollout_gap/*` (см. выше) |
 
 Формат блока задаёт общий с thinking-SFT модуль `verl/verl/parallel_thinking_generation_v3/contract.py`: парсер плана, подавление тегов, графовые позиции и маска, D/T. SFT берёт его же, своей копии нет.
 
@@ -119,8 +119,8 @@ RUN_NAME=eval-step300 REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$C
 - **Кто что пишет.** Модель сэмплирует `<Parallel>`, число веток N (одна цифра), текст плана и `</Plan>`, текст веток и `</Path>`, summary и `</Summary>`. Рантайм вставляет `branches=` после `<Parallel>`, `<Plan>` после N, `<Path>` с `i:` и `</Parallel><Summary>` без перевода строки. Вставленные токены не получают log-prob и не входят в D/T. Цифра N входит в лосс и в D/T.
 - **План.** N сэмплирует отдельный узел, которому разрешены только токены `2`, `3`, `4` (в vLLM `allowed_token_ids`). Первая строка плана — тип: decompose, cases, candidates, methods или verify. Дальше ровно N строк `i: текст`, и столько же веток.
 - **Невалидный план.** Если число строк не равно N, план не разбирается, обрывается EOS или не закрыт за `MAX_PLAN_TOKENS` (256), траектория на этом кончается. Её c = 0, то есть −1 в V0, и она остаётся в группе RLOO. План никто не чинит, пустых блоков не бывает.
-- **Подавление.** Каждый узел (основная цепочка, план, ветка, summary) может сэмплировать только свой закрывающий тег, остальным тегам vLLM даёт `logit_bias` −100. После `MAX_BLOCKS` блоков подавлен и `<Parallel>`. Актор прибавляет те же −100 к своим логитам до температуры, поэтому оценивает то распределение, из которого сэмплировали. Для цифры N актор прибавляет −100 ко всем токенам, кроме `2`, `3`, `4`; от −inf в vLLM это отличается на величину порядка e⁻¹⁰⁰.
-- **Ветки.** Все ветки блока сэмплируются после плана, без соседних веток в контексте; `flat_packed` пересчитывает ветки 2..n в этом же контексте.
+- **Подавление.** Каждый узел (основная цепочка, план, ветка, summary) может сэмплировать только свой закрывающий тег, остальным тегам vLLM даёт `logit_bias` −100. После `MAX_BLOCKS` блоков подавлен и `<Parallel>`. Актор прибавляет те же −100 к своим логитам до температуры, поэтому оценивает то распределение, из которого сэмплировали. Для цифры N актор ставит всем токенам, кроме `2`, `3`, `4`, логит −1e9: их вероятность ровно 0, как с `allowed_token_ids` в vLLM, а энтропия остаётся конечной (с −inf `softmax·logits` дал бы NaN). Это ревизия контракта `CONTRACT_REVISION` (правки Codex 9 октября): ещё парсер плана отвергает строки с тегами, `<think>`, `</think>`, `<|im_start|>`, `<|im_end|>` и повторы.
+- **Ветки.** Все ветки блока сэмплируются после плана, без соседних веток в контексте; `flat_packed` пересчитывает ветки 2..n в этом же контексте, а в графовом режиме их так же изолирует маска.
 - **Телеметрия.** `parallel/parallel_triggers_mean` (сколько раз сэмплирован `<Parallel>`), `parallel/valid_plan_blocks_mean`, `parallel/fork_dispatches_mean`, `parallel/path_jobs_mean`, `parallel/plan_valid_ratio`, `parallel/paths_per_block`, `parallel/plan_failed_ratio`; в наградах `plan_failed`.
 
 Награды из дебатов с Codex (8–9 октября). c = 1, только если ответ после последнего `</think>` верен и стоит вне веток. Если `</think>` нет или он внутри ветки, c = 0. Ответ берётся из последнего `\boxed{}` после `</think>`, иначе из строки `Final Answer:`.
@@ -141,9 +141,31 @@ RUN_NAME=calib-sft REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODE
 REWARD=v2 COST_SCALES=$PWD/data/cost_scales.json bash repo/experiments/qwen06/run_rl.sh think "$MODEL"
 ```
 
+### Графовый rollout
+
+```bash
+GRAPH_ROLLOUT=true REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"
+```
+
+По умолчанию rollout плоский: summary и всё после блока vLLM сэмплирует в обычном causal-контексте, где ветка 2 стоит после ветки 1, а `flat_packed` оценивает ровно эти контексты. С `GRAPH_ROLLOUT=true` vLLM сэмплирует каждый токен в графовом контексте контракта, в котором его оценивает и SFT: ветки блока не видят друг друга, summary и всё после блока видят все ветки на графовых позициях (`contract.graph_positions`). Актор при этом оценивает с `LOGPROB_CONTEXT=tree` (ставится сам), то есть той же маской и позициями. Ветки при summary не пересчитываются: их KV копируется. Код: `verl/verl/parallel_thinking_generation_v3/vllm_graph.py` (планировщик и воркер vLLM 0.8.5 V1, подключаются через `scheduler_cls`/`worker_cls`, vLLM не патчится), формат запросов в `graph_kv.py`.
+
+- Каждый вызов узла после завершения держит свой KV на сервере, следующий вызов копирует его вместо prefill. После каждой ветки запрос с `max_tokens=1` считает KV её `</Path>`. Summary получает KV веток подряд, а RoPE-позиции дальше сдвинуты на сумму длин веток минус самую длинную.
+- Удерживаемый KV vLLM не вытесняет. Поэтому запросы идут в порядке возраста траекторий, и если удерживаемый KV забил кэш, самая молодая траектория теряет свой KV, пересчитывает его по веткам и продолжает с того же токена. Самую старую не трогают, так что rollout не встаёт. Траектории нужно до ~2× её длины KV (ветки копируются при слиянии). Если она не влезает даже одна, запуск падает с `a trajectory needs more KV than the cache has`: поднять `gpu_memory_utilization` или уменьшить `RESPONSE`.
+- Только `think` (`protocol=plan`). Графовые и плоские запросы на одном сервере смешивать нельзя: prefix cache считает KV одинаковых токенов одинаковым.
+- Статистика запросов vLLM в этом режиме выключена: запрос, снятый из-за вытеснения, может не иметь ни одного токена, а её подсчёт такого не допускает.
+
+На GPU режим ещё не запускался. Перед RL проверить его на этой машине:
+
+```bash
+.venv/bin/python repo/experiments/qwen06/check_graph_rollout.py "$MODEL" --out runs/check-graph.json
+.venv/bin/python repo/experiments/qwen06/check_graph_rollout.py "$MODEL" --blocks 160 --out runs/check-graph-evict.json
+.venv/bin/python repo/experiments/qwen06/check_graph_rollout.py "$MODEL" --loop --out runs/check-graph-loop.json
+```
+
+Скрипт гонит траектории через vLLM с графовым планировщиком и пересчитывает каждый сэмплированный токен в HF (float32) с графовой маской и позициями. Первые два запуска задают структуру сами (2 блока по 2 и 3 ветки, текст сэмплирует vLLM), так что хватает модели с тегами, в том числе smoke из `prepare_think.py --smoke-model`. `--blocks 160` сжимает KV-кэш, чтобы шли preemption и вытеснения. `--loop` запускает настоящий цикл агента и имеет смысл на thinking-SFT, который пишет валидные планы. В таблице по сегментам (`path1_block1`, `path2+_block1`, `summary_block1`, …) стоит mean/max |vLLM − HF| в натах для графового forward и двух неправильных: маска без сдвига позиций и обычный causal. Графовый должен быть на уровне шума bf16 (порог `--tolerance 0.05`), контрасты у веток 2+ и summary — заметно больше. Код выхода 1, если где-то не так.
+
 Ограничения:
-- Rollout пока плоский: summary и всё после первого блока vLLM сэмплирует без маски веток, а `flat_packed` оценивает ровно эти контексты. Графовый rollout, как в графовом SFT, требует патча vLLM (вариант B в `/mnt/project-files/analysis/kv-merge-unseen-plan.md`).
-- Ветки 2..n каждого блока vLLM заново считает при prefill summary.
+- В плоском режиме ветки 2..n каждого блока vLLM заново считает при prefill summary.
 - `rollout_gap/*` сравнивает с log-prob vLLM по сырым логитам, до `logit_bias`, так что в plan в разрыв входит и масса подавленных тегов. Точное совпадение актора с сэмплирующим распределением проверяет `tests/test_flat_packed_context.py`.
 - vLLM 0.8.5 V1 применяет `logit_bias` питоновским циклом по запросам и токенам на каждом шаге декодирования. На smoke-прогоне стоит посмотреть, сколько это добавляет ко времени генерации.
 - Актор строит плотную маску T×T. Для 18k токенов это ~1 ГБ на ответ при microbatch 1.
@@ -177,12 +199,12 @@ Train/validation разделены; позиции усредняются по 
 
 ```bash
 .venv/bin/python -m pytest repo/experiments/qwen06/test_repro.py repo/experiments/qwen06/test_think.py -q
-.venv/bin/python -m pytest repo/tests/test_flat_packed_context.py repo/tests/test_unseen_kv_reference.py -q
+.venv/bin/python -m pytest repo/tests -q
 .venv/bin/python repo/experiments/qwen06/prepare.py --smoke-model
 SMOKE=1 RUN_NAME=smoke-sanity bash repo/experiments/qwen06/run_rl.sh s2 models/smoke-qwen3-0.6b-special
 ```
 
-Тесты проверяют fork/merge, position masks, пустые генерации и S2-награду 8/2. `tests/` на крошечной Qwen3 на CPU проверяют, что `flat_packed` воспроизводит log-probs и градиенты каждого вызова vLLM (2 блока × 3 пути), а Unseen-маска с multiverse-позициями совпадает с конкатенацией независимо посчитанных KV путей. Smoke использует disposable base-модель с необученными тегами, два вопроса, два rollout, 128 tokens, один update и искусственные награды для проверки ненулевого градиента. Это проверка инфраструктуры. Production запрещает модель с файлом `SMOKE_ONLY`.
+Тесты проверяют fork/merge, position masks, пустые генерации и S2-награду 8/2. `tests/` на крошечной Qwen3 на CPU проверяют, что `flat_packed` воспроизводит log-probs и градиенты каждого вызова vLLM (2 блока × 3 пути), а Unseen-маска с multiverse-позициями совпадает с конкатенацией независимо посчитанных KV путей. `tests/test_vllm_graph.py` (нужен vLLM 0.8.5) гоняет настоящий планировщик vLLM с графовым и модель-отпечаток, в которой KV токена кодирует весь его контекст: каждый сэмплированный токен должен быть посчитан в своём графовом контексте, в том числе при preemption и вытеснении траекторий; там же проверены драйвер и HF-оценка `check_graph_rollout.py`. Smoke использует disposable base-модель с необученными тегами, два вопроса, два rollout, 128 tokens, один update и искусственные награды для проверки ненулевого градиента. Это проверка инфраструктуры. Production запрещает модель с файлом `SMOKE_ONLY`.
 
 ## Прерываемая ВМ
 

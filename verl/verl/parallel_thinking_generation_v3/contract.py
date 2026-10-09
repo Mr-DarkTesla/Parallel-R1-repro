@@ -28,6 +28,9 @@ from dataclasses import dataclass
 import torch
 
 CONTRACT_VERSION = 2
+# Revision within version 2 (agreed with the SFT side): COUNT has zero support outside COUNTS in the actor too,
+# and plan items may not contain tags or chat/think control tokens, or repeat.
+CONTRACT_REVISION = 'a59c633+hard-count-and-safe-plan-20261009'
 TAGS = ('<Parallel>', '</Parallel>', '<Path>', '</Path>', '<Summary>', '</Summary>', '<Plan>', '</Plan>')
 PLAN_KINDS = ('decompose', 'cases', 'candidates', 'methods', 'verify')
 MIN_PATHS, MAX_PATHS = 2, 4
@@ -40,12 +43,17 @@ VALID, INVALID_PLAN, PLAN_INCOMPLETE, PLAN_BUDGET_EXHAUSTED = (
 
 # Generation nodes. Each samples one closing tag (main: <Parallel> while blocks remain); every other tag
 # gets SUPPRESS_BIAS, identically in sampling (vLLM logit_bias) and in replay (actor logits). COUNT samples
-# one token from COUNTS only (vLLM allowed_token_ids; the actor adds SUPPRESS_BIAS to every other token).
+# one token from COUNTS only (vLLM allowed_token_ids; the actor sets every other logit to HARD_MASK).
 MAIN_OPEN, MAIN_CLOSED, PLAN, PATH, SUMMARY, COUNT = range(6)
 INSERTED = -1  # runtime-inserted token: no log-prob
 SAMPLED_TAG = {MAIN_OPEN: '<Parallel>', MAIN_CLOSED: None, PLAN: '</Plan>', PATH: '</Path>', SUMMARY: '</Summary>',
                COUNT: None}
 SUPPRESS_BIAS = -100.0
+# exp(HARD_MASK - max) underflows to exactly 0, so the support is exactly COUNTS, as with -inf; unlike -inf it
+# keeps entropy finite (verl's entropy_from_logits computes softmax * logits, and 0 * -inf is NaN).
+HARD_MASK = -1e9
+# Plan items may not contain these (nor the tags): a branch assignment is plain text.
+CONTROL_TOKENS = ('<think>', '</think>', '<|im_start|>', '<|im_end|>')
 # Runtime-inserted tags: after the sampled count, and after the last branch of a block.
 PLAN_OPEN, BLOCK_CLOSE = ('<Plan>',), ('</Parallel>', '<Summary>')
 _ITEM = re.compile(r'\s*(\d+)\s*:\s*(\S.*?)\s*')
@@ -61,9 +69,9 @@ def parse_plan(text, branches=None):
     """Plan between <Plan> and </Plan> (exclusive), or None if it breaks the grammar.
 
     First line: a kind from PLAN_KINDS. Then MIN_PATHS..MAX_PATHS lines "i: text", i = 1..n in order,
-    non-empty one-line text; with `branches` (the sampled N) exactly that many. One trailing newline is
-    allowed; no blank lines or other text. Normalization (CRLF, surrounding spaces) happens only here;
-    sampled ids are never rewritten.
+    non-empty one-line text without tags or CONTROL_TOKENS, no two the same; with `branches` (the sampled N)
+    exactly that many. One trailing newline is allowed; no blank lines or other text. Normalization (CRLF,
+    surrounding spaces) happens only here; sampled ids are never rewritten.
     """
     text = text.replace('\r\n', '\n')
     if text.endswith('\n'):
@@ -78,7 +86,12 @@ def parse_plan(text, branches=None):
         match = _ITEM.fullmatch(line)
         if match is None or int(match.group(1)) != number:
             return None
-        items.append(match.group(2))
+        item = match.group(2)
+        if any(token in item for token in TAGS + CONTROL_TOKENS):
+            return None
+        items.append(item)
+    if len(set(items)) != len(items):
+        return None
     return Plan(kind.strip(), tuple(items))
 
 
@@ -161,7 +174,7 @@ def sampling_constraint(node, ids, counts):
 
 def suppression_table(ids, counts=()):
     """(nodes, 1 + width) tensor per node code: column 0 is the mode (0: the listed ids get SUPPRESS_BIAS,
-    1: every other token does), then token ids, -1 padded. COUNT lists `counts` in mode 1."""
+    1: every other token gets HARD_MASK), then token ids, -1 padded. COUNT lists `counts` in mode 1."""
     rows = [[0] + [ids[tag] for tag in suppressed_tags(node)] for node in range(len(SAMPLED_TAG))]
     rows[COUNT] = [1] + list(counts)
     width = max(map(len, rows))
@@ -169,7 +182,8 @@ def suppression_table(ids, counts=()):
 
 
 def apply_suppression(logits, nodes, table):
-    """Add SUPPRESS_BIAS in place where logits[b, t] predicts a token of node nodes[b, t] (see suppression_table)."""
+    """In place where logits[b, t] predicts a token of node nodes[b, t]: add SUPPRESS_BIAS to the node's
+    suppressed tags, or (COUNT) set every token but COUNTS to HARD_MASK (see suppression_table)."""
     for node in range(table.size(0)):
         rows, columns = (nodes == node).nonzero(as_tuple=True)
         listed = table[node, 1:][table[node, 1:] >= 0].to(logits.device)
@@ -178,10 +192,10 @@ def apply_suppression(logits, nodes, table):
         if table[node, 0] == 0:
             logits.index_put_((rows[:, None], columns[:, None], listed[None, :]),
                               torch.tensor(SUPPRESS_BIAS, dtype=logits.dtype, device=logits.device), accumulate=True)
-        else:  # allowed only: the listed ids keep their logits exactly
-            bias = torch.full((logits.size(-1),), SUPPRESS_BIAS, dtype=logits.dtype, device=logits.device)
-            bias[listed] = 0
-            logits[rows, columns] += bias
+        else:  # allowed only, as vLLM allowed_token_ids: the listed ids keep their logits, the rest get no mass
+            forbidden = torch.ones(logits.size(-1), dtype=torch.bool, device=logits.device)
+            forbidden[listed] = False
+            logits[rows, columns] = logits[rows, columns].masked_fill(forbidden, HARD_MASK)
     return logits
 
 
@@ -228,9 +242,9 @@ def isolation_pairs(spans):
     return [(a, b) for a in spans for b in spans if a.block == b.block and a.path != b.path]
 
 
-def graph_attention_mask(length, spans, offset=0):
+def graph_attention_mask(length, spans, offset=0, device=None):
     """(length, length) bool mask, True = may attend; spans are shifted by offset (e.g. left padding)."""
-    mask = torch.ones(length, length, dtype=torch.bool).tril()
+    mask = torch.ones(length, length, dtype=torch.bool, device=device).tril()
     for query, key in isolation_pairs(spans):
         mask[offset + query.start:offset + query.end, offset + key.start:offset + key.end] = False
     return mask

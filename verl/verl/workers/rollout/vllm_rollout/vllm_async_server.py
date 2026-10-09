@@ -275,7 +275,9 @@ class AsyncvLLMServer(AsyncServerBase):
 
         # init async llm engine
         vllm_config = self._create_engine_config(engine_args)
-        self.engine = AsyncLLM.from_vllm_config(vllm_config)
+        # Graph rollout fails evicted requests from inside the engine, possibly before their first token, which
+        # vLLM's request stats do not allow (IterationStats.update_from_output asserts a sampled token).
+        self.engine = AsyncLLM.from_vllm_config(vllm_config, disable_log_stats=bool(graph_args))
 
         # build serving chat
         model_config = self.engine.model_config
