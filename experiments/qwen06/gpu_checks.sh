@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # GPU checks of the qwen3-0.6b-rl branch in one run, on a fresh vast.ai instance or on the GCP VM.
-#   setup         bootstrap_vm.sh (uv environment, checkout); an existing clean checkout of the branch is fast-forwarded
+#   setup         bootstrap_vm.sh (uv environment, checkout); an existing checkout of the branch is fast-forwarded to
+#                 origin, and setup fails on local edits unless KEEP_LOCAL=1 (then they are tested as they are)
 #   prepare       prepare_think.py --smoke-model: think data (Hugging Face fallback) and Qwen3-0.6B with the tags
 #   unit_tests    pytest tests experiments, test_vllm_graph.py included (the real vLLM 0.8.5 scheduler)
 #   graph_forced  check_graph_rollout.py, forced blocks: every token vLLM samples vs. the HF graph forward
@@ -100,10 +101,22 @@ setup() {
       echo "$REPO is on $current, not $BRANCH; switch it yourself, the checks do not"
       return 1
     fi
-    if [ -n "$(git -C "$REPO" status --porcelain --untracked-files=no)" ]; then
-      echo "$REPO has local changes; testing them as they are"
+    local edits
+    edits=$(local_edits)
+    if [ -n "$edits" ] && [ "${KEEP_LOCAL:-0}" != 1 ]; then
+      printf '%s has local edits; commit or stash them, or test them as they are with KEEP_LOCAL=1:\n%s\n' "$REPO" "$edits"
+      return 1
+    elif [ -n "$edits" ]; then
+      echo "KEEP_LOCAL=1: testing the local edits as they are, without updating"
     else
+      # Only build artifacts differ: restore them so they cannot block the fast-forward.
+      git -C "$REPO" -c core.safecrlf=false diff --name-only -z HEAD \
+        | xargs -0r git -C "$REPO" checkout -q HEAD -- || return 1
       git -C "$REPO" merge -q --ff-only "origin/$BRANCH" || return 1
+      if [ "$(git -C "$REPO" rev-parse HEAD)" != "$(git -C "$REPO" rev-parse "origin/$BRANCH")" ]; then
+        echo "$REPO is not at origin/$BRANCH after the fast-forward"
+        return 1
+      fi
     fi
     bash "$REPO/experiments/qwen06/bootstrap_vm.sh" || return 1
   else
@@ -115,6 +128,16 @@ setup() {
 props = torch.cuda.get_device_properties(0)
 print(f"versions: torch {torch.__version__} (CUDA {torch.version.cuda}) vllm {vllm.__version__} transformers"
       f" {transformers.__version__} flash_attn {flash_attn.__version__} | {props.name} {props.total_memory / 2**30:.0f} GiB")'
+}
+
+# Tracked files edited in $REPO, ignoring build artifacts: .pyc and egg-info files the repo tracks, which Python
+# and the editable install rewrite, and files that differ only by CR at line ends (committed with CRLF although
+# .gitattributes says eol=lf, so they read as modified on a fresh checkout).
+local_edits() {
+  git -C "$REPO" -c core.safecrlf=false diff --name-only HEAD -- . ':(exclude)*.pyc' ':(exclude)*.egg-info/*' \
+    | while read -r path; do
+    git -C "$REPO" -c core.safecrlf=false diff --quiet --ignore-cr-at-eol HEAD -- "$path" || echo "$path"
+  done
 }
 
 stop_ray() {
