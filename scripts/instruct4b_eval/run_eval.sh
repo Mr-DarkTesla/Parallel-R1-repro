@@ -4,6 +4,7 @@
 #   parallel: the authors' parallel prompt and the genuine parallel rollout (scripts/bench/eval_rollout.sh) in the non-thinking
 #             template (PARALLEL_ROLLOUT_ENABLE_THINKING=false); math benchmarks only
 #   multiverse (exp 21): sequential no-thinking diagnostic on the Multiverse prompt.
+#   multiverse-thinking (exp 21): thinking-enabled generation on the same Multiverse dev prompt; tags can appear inside <think>.
 #   multiverse-branch (exp 21): independently generate sibling paths from the shared Goal prefix, then join and continue.
 # dev: scripts/instruct4b_eval/generate.py (seed = sample index). frozen: scripts/bench/generate_plain.py, the protocol of the finished
 # baseline runs. REUSE=<old run dir> scores that run's dumps instead of generating; allowed only for the two finished C0 16k runs below.
@@ -29,11 +30,14 @@ case $suite in
     *) echo "suite: dev | frozen"; exit 1 ;;
 esac
 case $mode in
-    no-thinking | thinking) benches=${BENCHES:-$all} prompts=$dir/plain ;;
-    multiverse) benches=${BENCHES:-$all} prompts=$dir/multiverse ;;
+    no-thinking | thinking) benches=${BENCHES:-$all} prompts=$dir/plain gen_mode=$mode ;;
+    multiverse) benches=${BENCHES:-$all} prompts=$dir/multiverse gen_mode=no-thinking ;;
+    multiverse-thinking)
+        [ "$suite" = dev ] || { echo "multiverse-thinking is dev-only"; exit 1; }
+        benches=${BENCHES:-$all} prompts=$dir/multiverse gen_mode=thinking ;;
     multiverse-branch) benches=${BENCHES:-$all} prompts=$dir/multiverse generator=scripts/exp21/generate_multiverse.py ;;
     parallel) benches=${BENCHES:-$math} prompts=$dir/parallel generator=scripts/bench/eval_rollout.sh ;;
-    *) echo "mode: no-thinking | thinking | parallel | multiverse"; exit 1 ;;
+    *) echo "mode: no-thinking | thinking | parallel | multiverse | multiverse-thinking"; exit 1 ;;
 esac
 # REUSE: only the finished C0 frozen 16k runs of 2026-10-06 (queue logs gpu3.log / gpu0.log, exit 0):
 #   cd /work/bench-src && bash scripts/bench/run_bench.sh qwen3-4b-<nothinking|thinking>-16k /work/assets/models/Qwen3-4B <mode> 16384
@@ -136,7 +140,7 @@ EOF
         if [ "$mode" = multiverse-branch ]; then
             python "../$generator" "$model" "$test" "$generations" "$budget" >> "$log" 2>&1
         else
-            python "../$generator" "$model" "$test" "$generations" "$budget" "${mode/multiverse/no-thinking}" >> "$log" 2>&1
+            python "../$generator" "$model" "$test" "$generations" "$budget" "$gen_mode" >> "$log" 2>&1
         fi
     fi
     # the dumped prompts must be rendered in the requested mode (empty think block = non-thinking template).
@@ -151,7 +155,8 @@ if mode == "parallel":
     assert not thinking.any(), f"{thinking.sum()} parallel outputs with a think block"
 else:
     empty_think = dump["input"].str.contains("<think>\n\n</think>", regex=False)
-    assert (empty_think if mode != "thinking" else ~empty_think).all(), f"{(~empty_think).sum()} prompts without an empty think block ({mode})"
+    assert (empty_think if mode not in ("thinking", "multiverse-thinking") else ~empty_think).all(), \
+        f"{(~empty_think).sum()} prompts without an empty think block ({mode})"
 EOF
     python ../scripts/bench/score.py "$generations" "$test" "$run/results/$bench.json.tmp" "$run/rows/$bench.jsonl.tmp" >> "$log" 2>&1
     mv "$run/results/$bench.json.tmp" "$run/results/$bench.json"
