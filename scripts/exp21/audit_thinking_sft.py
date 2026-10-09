@@ -1,7 +1,7 @@
-"""Audit the mixed M1 thinking SFT against its original rows and verified pairs.
+"""Audit a mixed M1 or M2 thinking SFT against its original rows and verified pairs.
 
-Usage: python audit_thinking_sft.py ORIGINAL_PREFIX MIX_PREFIX M1_PAIRS OUT_JSON [TOKENIZER]
-With TOKENIZER on the pod, also check math_verify and the 4096-token SFT limit.
+Usage: python audit_thinking_sft.py ORIGINAL_PREFIX MIX_PREFIX PAIRS OUT_JSON [TOKENIZER]
+With TOKENIZER, also check math_verify and the 4096-token SFT limit.
 """
 import collections
 import json
@@ -63,15 +63,18 @@ def main():
                 thought = thought.removeprefix("<think>\n")
                 parsed = parse(thought)
                 assert parsed["valid"] and all(block["numbered"] for block in parsed["blocks"])
-                assert parse(final)["tags"] == 0 and final.startswith("Final Answer:")
+                assert parse(final)["tags"] == 0 and re.match(r"(?i)^(?:#{1,6}\s*)?Final Answer\s*:", final)
                 if problem_id not in checked:
                     checked.add(problem_id)
                     if tokenizer_path:
                         answer = candidate(final)
                         gold = pairs[problem_id]["answer"]
                         direct = correct(gold, answer, pairs[problem_id]["source"])
-                        contextual_percent = (gold.endswith(r"\%") and norm(gold[:-2]) == norm(answer)
-                                              and "percent" in pairs[problem_id]["question"].lower())
+                        gold_norm = norm(gold).replace(r"\%", "%")
+                        answer_norm = norm(answer).replace(r"\%", "%")
+                        contextual_percent = ("percent" in pairs[problem_id]["question"].lower()
+                                              and gold_norm.endswith("%") != answer_norm.endswith("%")
+                                              and gold_norm.rstrip("%") == answer_norm.rstrip("%"))
                         assert direct or contextual_percent, (problem_id, gold, answer)
                         if contextual_percent and not direct:
                             report["percentage_contextual"].append(problem_id)
