@@ -3,11 +3,13 @@
 No structural tokens or path numbers are inserted. Supports one flat block per
 answer. Output columns match the existing generation dumps.
 
-Usage: python generate_masked_multiverse.py MODEL DEV_PARQUET OUT_JSONL COUNT MAX_TOKENS
+Usage: python generate_masked_multiverse.py MODEL DEV_PARQUET OUT_JSONL COUNT MAX_TOKENS [thinking|no-thinking]
 """
 import json
+import os
 import re
 import sys
+from pathlib import Path
 
 import pandas as pd
 import torch
@@ -59,6 +61,20 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close):
 def main():
     model_path, data_path, output_path, count, budget = sys.argv[1:6]
     count, budget = int(count), int(budget)
+    mode = sys.argv[6] if len(sys.argv) > 6 else "no-thinking"
+    assert mode in ("thinking", "no-thinking")
+    output = Path(output_path)
+    meta = {"model": model_path, "data": data_path, "count": count, "max_tokens": budget,
+            "seed": 0, "mode": mode, "decoder": "masked-autonomous-v1", "commit": os.environ.get("EXP21_COMMIT")}
+    meta_path = output.with_suffix(output.suffix + ".meta.json")
+    if meta_path.exists():
+        assert json.loads(meta_path.read_text()) == meta, "run settings changed during resume"
+    else:
+        assert not output.exists() or output.stat().st_size == 0, "output exists without run settings"
+        meta_path.write_text(json.dumps(meta, indent=2))
+    with open(output) if output.exists() else open(os.devnull) as previous_file:
+        previous = [json.loads(line) for line in previous_file]
+    assert len(previous) <= count
     tok = AutoTokenizer.from_pretrained(model_path)
     model = AutoModelForCausalLM.from_pretrained(
         model_path, torch_dtype=torch.bfloat16, attn_implementation="sdpa").to("cuda").eval()
@@ -67,19 +83,22 @@ def main():
     assert tok.encode("<Path>", add_special_tokens=False) == [path_open]
     assert tok.encode("</Path>", add_special_tokens=False) == [path_close]
     seen = set()
-    with open(output_path, "w") as file:
+    with open(output, "a") as file:
         for _, row in pd.read_parquet(data_path).iterrows():
             question = list(row["prompt"])[0]["content"]
             if question in seen:
                 continue
             seen.add(question)
             prompt = tok.apply_chat_template(list(row["prompt"]), add_generation_prompt=True,
-                                             tokenize=False, enable_thinking=False)
+                                             tokenize=False, enable_thinking=mode == "thinking")
+            if len(seen) <= len(previous):
+                assert previous[len(seen) - 1]["input"] == prompt, "resume order or prompt changed"
+                continue
             answer, length, truncated = generate(model, tok, prompt, budget, 0,
                                                  path_open, path_close)
             file.write(json.dumps({"input": prompt, "output": answer, "tokens": length,
                                    "truncated": truncated, "seed": 0,
-                                   "rollout": {"decoder": "masked-autonomous"}}, ensure_ascii=False) + "\n")
+                                   "rollout": {"decoder": "masked-autonomous", "mode": mode}}, ensure_ascii=False) + "\n")
             file.flush()
             print(len(seen), length, truncated, answer.count("<Path>"), flush=True)
             if len(seen) >= count:

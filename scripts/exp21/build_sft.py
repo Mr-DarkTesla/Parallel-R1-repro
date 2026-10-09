@@ -3,6 +3,7 @@ extra_info.enable_thinking).
 
 Row kinds:
   parallel  Multiverse prompt (make_mv_prompts.mv_prompt), non-thinking template, response = a checked M1/M2 example
+  parallel_th  same prompt and checked M1 solution placed inside <think>; final answer follows </think>
   control   the same examples with tags removed (mv_format.strip_tags), the same Multiverse prompt, non-thinking
   replay_nt plain prompt, non-thinking, response = Qwen3-0.6B's own correct non-thinking answer (verbatim)
   replay_th plain prompt, thinking, response = Qwen3-0.6B's own correct thinking answer (<think>...</think> + answer, verbatim)
@@ -32,6 +33,9 @@ def row(kind, r):
     response = r["response"].replace("<|im_end|>", "").replace("<|endoftext|>", "").strip()
     if kind == "parallel":
         prompt, thinking = mv_prompt(plain), False
+    elif kind == "parallel_th":
+        prompt, thinking = mv_prompt(plain), True
+        assert response.startswith("<think>") and response.count("</think>") == 1, r["id"]
     elif kind == "control":
         prompt, thinking, response = mv_prompt(plain), False, strip_tags(response).strip()
     elif kind == "replay_nt":
@@ -51,6 +55,7 @@ def main():
     ap.add_argument("--rows", nargs="+", required=True)
     ap.add_argument("--val", type=int, default=48)
     ap.add_argument("--seed", type=int, default=0)
+    ap.add_argument("--val-ids-from", help="reuse the held-out problem IDs of an existing SFT prefix")
     args = ap.parse_args()
     rng = random.Random(args.seed)
     rows = []
@@ -62,10 +67,14 @@ def main():
     problems = sorted({r["id"] for r in rows})
     rng.shuffle(problems)
     total, val_ids = len(rows), set()
-    for p in problems:  # whole problems go to val until it has args.val rows
-        if sum(r["id"] in val_ids for r in rows) >= args.val:
-            break
-        val_ids.add(p)
+    if args.val_ids_from:
+        val_ids = set(pd.read_parquet(f"{args.val_ids_from}_val.parquet")["id"])
+        assert val_ids <= set(problems)
+    else:
+        for p in problems:  # whole problems go to val until it has args.val rows
+            if sum(r["id"] in val_ids for r in rows) >= args.val:
+                break
+            val_ids.add(p)
     train = [r for r in rows if r["id"] not in val_ids]
     val = [r for r in rows if r["id"] in val_ids]
     rng.shuffle(train)

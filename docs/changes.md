@@ -162,3 +162,11 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     `compare_masked_pilot.py` pairs its dev rows with previously saved sequential and branch results. No authors'
     code changed. The scripts passed syntax checks, mask-position toy checks and a cached-logit check; pilot outcomes
     and limitations are recorded in `results/21-qwen3-0.6b-multiverse/FOLLOWUP_AUTONOMY.md`.
+23. A thinking-specific scorer separates Multiverse tags inside `<think>` from tags after `</think>`.
+    Matched 20-problem GSM8K dev pilots cover C0, M1, audited M2, the tag-free control, and a new M1-thmix SFT.
+    `make_thinking_m1.py` moves one of each M1 problem's three structured copies into `<think>` without changing
+    solution text; `audit_thinking_sft.py` checks every pair, answer, grammar, split, and length. M1-thmix was trained
+    for the same 64 steps and audited with sequential and training-mask decoding. The latter restores internal block
+    grammar but not answer quality in this pilot. `score_thinking_blocks.py` and `compare_thinking_blocks.py` save
+    per-response outcomes and paired intervals. The new dataset card, training log, raw responses, and limitations
+    are in `results/21-qwen3-0.6b-multiverse/`.
