@@ -1,0 +1,98 @@
+{
+  "arms": {
+    "m1": {
+      "train": 2251,
+      "val": 50,
+      "train_kinds": {
+        "replay_th": 588,
+        "parallel": 1077,
+        "replay_nt": 586
+      },
+      "val_kinds": {
+        "parallel": 24,
+        "replay_nt": 14,
+        "replay_th": 12
+      }
+    },
+    "m2": {
+      "train": 2251,
+      "val": 50,
+      "train_kinds": {
+        "replay_nt": 586,
+        "parallel": 1077,
+        "replay_th": 588
+      },
+      "val_kinds": {
+        "parallel": 24,
+        "replay_nt": 14,
+        "replay_th": 12
+      }
+    },
+    "control_m1": {
+      "train": 2251,
+      "val": 50,
+      "train_kinds": {
+        "replay_th": 588,
+        "control": 1077,
+        "replay_nt": 586
+      },
+      "val_kinds": {
+        "control": 24,
+        "replay_nt": 14,
+        "replay_th": 12
+      }
+    },
+    "control_m2": {
+      "train": 2251,
+      "val": 50,
+      "train_kinds": {
+        "replay_nt": 586,
+        "control": 1077,
+        "replay_th": 588
+      },
+      "val_kinds": {
+        "control": 24,
+        "replay_nt": 14,
+        "replay_th": 12
+      }
+    }
+  },
+  "primary_distribution": {
+    "gsm8k/integer": 140,
+    "math/expression": 63,
+    "math/integer": 93,
+    "math/fraction": 71
+  },
+  "audit_utc": "2026-10-09T13:25:15.891324+00:00",
+  "tokenizer_path": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/exp21_06b/data/q06_mv_tokenizer",
+  "inputs": {
+    "parquet_prefixes": {
+      "m1": "sft_m1_expanded",
+      "m2": "sft_m2_expanded",
+      "control_m1": "sft_control_m1_expanded",
+      "control_m2": "sft_control_m2_expanded"
+    },
+    "pair_files": [
+      "pair_expanded_m1.jsonl",
+      "pair_expanded_m2.jsonl"
+    ],
+    "replay_files": [
+      "replay_nt.jsonl",
+      "replay_th.jsonl"
+    ],
+    "new_files": [
+      "more_m1_matched180.jsonl",
+      "more_m2_matched180.jsonl"
+    ]
+  },
+  "max_tokens": {
+    "response": 3754,
+    "total": 3838
+  },
+  "new_primary_in_val": 0,
+  "shared_primary_ids": 147,
+  "tag_free_control_exact_text": true,
+  "replay_identical_all_arms": true,
+  "source_text_matches_parquet": true,
+  "normalized_question_train_val_overlap": 0
+}

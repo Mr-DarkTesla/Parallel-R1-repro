@@ -2,7 +2,7 @@
 
 Проверено через Teleport под учётной записью `v.charkin@vkteam.ru` в кластере `k8s_ml_MNTINFRA_3322`, namespace `shared-dzen-ml`.
 
-- У коллег запущены `gm-shared-vm-0` на 2 H100 и `nseliverstov-shared-vm-0` на 4 H100. Наши StatefulSet A и B имеют `replicas=0`, pod B отсутствует. Пользователь разрешил один наш GPU при шести GPU коллег: суммарно 7.
+- При проверке около 14:14 МСК у коллег работали `gm-shared-vm-0` на 2 H100 и `nseliverstov-shared-vm-0` на 4 H100. Пользователь разрешил один наш GPU при шести GPU коллег: суммарно 7. Текущее состояние pod меняется; ниже есть более поздняя проверка. Наши StatefulSet A и B имеют `replicas=0`.
 - PVC B `vcharkin-parallel-r1-b-pvc`, 200 Gi, `openebs-remote-multi-dc`, `ReadWriteOnce`, находится в `Bound`, `Used By: <none>`. PVC не удалялся.
 - При штатном планировании B на `ml-kub-node801.i` после `SuccessfulAttachVolume` повторялся `FailedMount` тома `work`. Контейнер оставался в `ContainerCreating` и не запускался.
 - Попытка вручную закрепить B за `ml-kub-node804.i` была ошибкой: доступность узла в Kubernetes не подтверждает допустимость его использования для этой работы. На node804 получен `Multi-Attach` того же RWO-тома и затем `FailedMount`; контейнер также не запускался. После замечания пользователя B остановлен, nodeSelector удалён, pod исчез. Повторять ручное закрепление на node804 нельзя.
@@ -22,3 +22,19 @@
 ## Повторное подключение по просьбе пользователя, около 15:11–15:16 МСК
 
 Teleport подтвердил вход `v.charkin@vkteam.ru` в нужный кластер. Перед запуском: A/B=0, nodeSelector отсутствует, PVC B `Bound`; у коллег работали 2+4 GPU. B запущен ровно в одной реплике через штатный планировщик, назначен на node801. Через 2 минуты 40 секунд pod оставался `ContainerCreating` и получил `FailedMount work: timed out waiting for the condition`. `containerStatuses.started=false`, `restartCount=0`, IP отсутствовал. После этого B возвращён в 0. `kubectl wait --for=delete` истёк, но следующая проверка получила `NotFound`: pod удалился сам без принудительного удаления. PVC остался `Bound`, никакой контейнер на GPU не запускался. Другие ресурсы не менялись. Это повтор прежнего сбоя, а не подтверждение точной причины тома.
+
+## События после остановки B, около 16:00 МСК
+
+Teleport всё ещё авторизован. A/B=0, PVC B `Bound` на 200 GiB. В журнале **уже остановленного** B появилось более подробное событие в 13:00:24 UTC: `MountVolume.Setup failed while expanding volume ... get PVC failed: persistentvolumeclaims "vcharkin-parallel-r1-b-pvc" is forbidden: User "system:node:ml-kub-node801.i" cannot get resource "persistentvolumeclaims" ... no relationship found between node 'ml-kub-node801.i' and this object`. Событие записано после удаления pod, поэтому оно не доказывает, что именно эта ошибка была первой причиной монтирования.
+
+В тот же момент два pod других пользователей на node801 находились в `ContainerCreating` с повторяющимся `FailedMount` их собственных PVC. Наш `vcharkin-shared-vm-0` на node802 был в `Terminating` и тоже получил `FailedMount`. Эти события указывают на более широкий сбой монтирования, а не только на наш том; чужие pod и тома не изменялись. Узел801 имеет `Ready=True`; это не подтверждает исправность storage. RBAC запрещает читать VolumeAttachment. Повторный запуск B до диагностики платформы не делался.
+
+Дополнение к готовому сообщению: «После остановки B его kubelet сообщил `NodeExpandVolume get PVC failed ... system:node:ml-kub-node801.i ... forbidden ... no relationship found`. На node801 одновременно повторяется `FailedMount` PVC ещё у двух pod. Можете проверить node authorizer/отношение pod–PVC, CSI и kubelet, а также прежнюю гипотезу VolumeAttachment? Ошибка node authorizer возникла после удаления B и может быть следствием, поэтому нужна хронология логов».
+
+## Повтор по просьбе пользователя, 16:23–16:27 МСК
+
+Teleport авторизован. Перед запуском A/B=0, PVC B `Bound`, старый `pid 88500` отсутствует. Другой наш pod `vcharkin-shared-vm-0` имел `deletionTimestamp`, контейнер уже завершён и не работал на GPU. B запущен одной репликой без `nodeSelector`, YuniKorn назначил его на `ml-kub-node803.i`. `SuccessfulAttachVolume` был через несколько секунд, но примерно через 2,5 минуты pod всё ещё оставался `ContainerCreating`, `Ready=False`, и пришёл `FailedMount: Unable to attach or mount volumes: unmounted volumes=[work] ... timed out waiting for the condition`. `kubectl wait Ready` истёк через 45 секунд. Команды в B не выполнялись, контейнер не стартовал. B возвращён в 0; PVC не изменялся. Узел803 выбрал штатный планировщик, ручного закрепления не было.
+
+После `scale B=0` pod оставался в `Terminating` больше двух минут, с `started=false` и без finalizer. Чтобы снять его заявку на GPU, принудительно удалён **только собственный pod** `vcharkin-exp-vm-b-0`; Kubernetes предупредил, что удаление API-объекта само по себе не подтверждает завершение работы на узле. Повторное чтение API: pod отсутствует, A/B=0, PVC B `Bound` на 200 Gi. Никакого контейнера этого pod Kubernetes не запускал до удаления; состояние kubelet и CSI за пределами доступного RBAC.
+
+Для поддержки к прежнему сообщению добавить: «9 октября около 16:23 МСК повторили запуск без nodeSelector. YuniKorn выбрал node803, attach прошёл, mount `work` снова истёк по тайм-ауту. Значит сбой воспроизводится и на третьем штатно выбранном узле. После `scale=0` pod зависал в Terminating и был удалён из API принудительно; PVC остался Bound». Это наблюдение не устанавливает точную причину; нужны логи CSI/kubelet и состояние VolumeAttachment.
