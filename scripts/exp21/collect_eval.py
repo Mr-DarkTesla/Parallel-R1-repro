@@ -41,7 +41,7 @@ def main():
                 rows.append(row)
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open("w", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=FIELDS)
+        writer = csv.DictWriter(file, fieldnames=FIELDS, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     print(f"{len(rows)} benchmark summaries -> {output}")

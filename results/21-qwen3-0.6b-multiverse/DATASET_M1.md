@@ -10,4 +10,18 @@
 
 **Пример.** В `math-train/2059` задача о трёх шарах из 8 чёрных и 7 белых. План разделяет случаи «2 чёрных и 1 белый» и «2 белых и 1 чёрный»; пути независимо считают 196 и 168 исходов, заключение складывает их, а вне блока итоговая вероятность сокращается до `\frac{4}{5}`. Полный текст и структурные теги сохранены в `data/pair_final_m1.jsonl`.
 
+Фрагмент ответа из этой строки:
+
+```text
+<Path>
+1: Choose 2 of the 8 black balls in $\binom{8}{2} = 28$ ways. Choose 1 of the 7 white balls in 7 ways. That gives $28 \cdot 7 = 196$ draws.
+</Path>
+<Path>
+2: Choose 2 of the 7 white balls in $\binom{7}{2} = 21$ ways. Choose 1 of the 8 black balls in 8 ways. That gives $21 \cdot 8 = 168$ draws.
+</Path>
+<Conclusion>
+There are 196 draws with two black balls and 168 with two white balls. The cases are disjoint, so there are $196 + 168 = 364$ favorable draws.
+</Conclusion>
+```
+
 В SFT каждая выбранная строка повторяется трижды; к обоим методам добавляются одни и те же 300 верных собственных ответов Qwen в режимах no-thinking и thinking. `audit/sft_parity.json` относится к первоначальному парному M2. Для очищенного M2 `data/sft_parity_audited_m2.json` подтверждает одинаковые числа train/val строк, виды строк и набор собственных ответов; 147 структурированных задач совпадают.
