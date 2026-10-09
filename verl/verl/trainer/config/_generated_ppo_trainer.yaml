@@ -135,6 +135,8 @@ actor_rollout_ref:
       add_diverse_prefix: false
       logprob_context: tree # tree: upstream Unseen mask/positions; flat_packed: score tokens in the vLLM call contexts
       rollout_logprobs: false # record vLLM log-probs of sampled tokens and log rollout_gap/* per segment
+      enable_thinking: null # passed to the chat template when set; Qwen3 thinks by default
+      allow_parallel: true # false: sequential baseline, <Parallel> is never sampled
       custom_async_server:
         path: null
         name: null

@@ -41,6 +41,11 @@ def default_compute_score(
     Raises:
         NotImplementedError: If the reward function is not implemented for the given data source.
     """
+    if extra_info and str(extra_info.get("reward_method", "")).startswith("think_"):
+        # Thinking-mode parallel RL: any math source, answer after </think> outside branches.
+        from . import parallel_think_cost
+
+        return parallel_think_cost.compute_score(solution_str_with_special_tokens, ground_truth, data_source, extra_info)
     if "GSM8k" in data_source or data_source == "openai/gsm8k":
         if extra_info['reward_method'] == 'accuracy_reward':
             from . import gsm8k

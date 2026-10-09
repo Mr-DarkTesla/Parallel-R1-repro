@@ -1,13 +1,30 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT=${PARALLEL_R1_ROOT:-$HOME/parallel-r1}
-MODE=${1:?Usage: run_rl.sh s1|s2 /absolute/model/path [Hydra overrides]}
+MODE=${1:?Usage: run_rl.sh s1|s2|think /absolute/model/path [Hydra overrides]}
 MODEL=${2:?Supply the validated SFT HF model directory}
 shift 2
-[[ "$MODE" == s1 || "$MODE" == s2 ]] || exit 2
+[[ "$MODE" == s1 || "$MODE" == s2 || "$MODE" == think ]] || exit 2
 PY="$ROOT/.venv/bin/python"
 SMOKE=${SMOKE:-0}
-RUN_NAME=${RUN_NAME:-qwen06-$MODE-seed1}
+MODE_ARGS=()
+if [[ "$MODE" == think ]]; then
+  # Qwen3-0.6B thinking SFT: RLOO over the group without std, reward V0/V1/V2 (README).
+  REWARD=${REWARD:-v0}
+  case "$REWARD" in v0|v1_low|v1_high|v2) ;; *) echo 'REWARD must be v0, v1_low, v1_high or v2'; exit 2;; esac
+  ADV=rloo; DEFAULT_RESPONSE=16384; DEFAULT_BLOCKS=2; TAG=think-$REWARD
+  [[ "${ALLOW_PARALLEL:-true}" == false ]] && TAG=think-sequential-$REWARD
+  MODE_ARGS=(actor_rollout_ref.rollout.agent.enable_thinking=true
+             "actor_rollout_ref.rollout.agent.allow_parallel=${ALLOW_PARALLEL:-true}"
+             "+reward_model.reward_kwargs.reward_method=think_$REWARD")
+  if [[ "$REWARD" == v2 ]]; then
+    [[ -f "${COST_SCALES:-}" ]] || { echo 'REWARD=v2 needs COST_SCALES=<output of calibrate_cost_scales.py>'; exit 2; }
+    MODE_ARGS+=("+reward_model.reward_kwargs.cost_scales=$COST_SCALES")
+  fi
+else
+  ADV=grpo; DEFAULT_RESPONSE=3000; DEFAULT_BLOCKS=4; TAG=$MODE
+fi
+RUN_NAME=${RUN_NAME:-qwen06-$TAG-seed1}
 RUN="$ROOT/runs/$RUN_NAME"
 mkdir -p "$RUN"
 export PARALLEL_R1_TRACE_DIR="$RUN/telemetry"
@@ -26,7 +43,9 @@ BATCH=${BATCH:-32}
 MINI=${MINI:-32}
 ROLLOUT_N=${ROLLOUT_N:-8}
 STEPS=${STEPS:-300}
-RESPONSE=${RESPONSE:-3000}
+RESPONSE=${RESPONSE:-$DEFAULT_RESPONSE}
+MAX_BLOCKS=${MAX_BLOCKS:-$DEFAULT_BLOCKS}
+NUM_PATHS=${NUM_PATHS:-2}
 PROMPT=${PROMPT:-2000}
 WORKERS=${WORKERS:-4}
 REWARD_ARGS=()
@@ -41,7 +60,7 @@ git rev-parse HEAD > "$RUN/source_commit.txt"
 git diff > "$RUN/source.patch"
 cp "$ROOT/environment.freeze.txt" "$RUN/" || true
 exec "$PY" -m verl.trainer.main_ppo \
-  algorithm.adv_estimator=grpo algorithm.use_kl_in_reward=False \
+  algorithm.adv_estimator="$ADV" algorithm.use_kl_in_reward=False \
   data.train_files="['$TRAIN']" data.val_files="['$VAL']" \
   data.train_batch_size="$BATCH" data.return_raw_chat=True \
   data.max_prompt_length="$PROMPT" data.max_response_length="$RESPONSE" \
@@ -60,7 +79,8 @@ exec "$PY" -m verl.trainer.main_ppo \
   actor_rollout_ref.rollout.max_num_seqs=64 actor_rollout_ref.rollout.temperature=1.0 \
   actor_rollout_ref.rollout.agent.num_workers="$WORKERS" \
   actor_rollout_ref.rollout.agent.max_path_response_length="$RESPONSE" \
-  actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking=4 actor_rollout_ref.rollout.agent.num_paths=2 \
+  actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking="$MAX_BLOCKS" \
+  actor_rollout_ref.rollout.agent.num_paths="$NUM_PATHS" \
   actor_rollout_ref.rollout.agent.logprob_context="${LOGPROB_CONTEXT:-flat_packed}" \
   actor_rollout_ref.rollout.agent.rollout_logprobs="${ROLLOUT_LOGPROBS:-true}" \
   actor_rollout_ref.rollout.val_kwargs.temperature=1.0 actor_rollout_ref.rollout.val_kwargs.do_sample=True \
@@ -70,4 +90,4 @@ exec "$PY" -m verl.trainer.main_ppo \
   trainer.total_epochs=100 trainer.total_training_steps="$STEPS" trainer.val_before_train=False \
   trainer.default_local_dir="$RUN/checkpoints" trainer.max_actor_ckpt_to_keep=3 \
   trainer.rollout_data_dir="$RUN/rollouts" trainer.validation_data_dir="$RUN/validation" \
-  trainer.resume_mode=disable ray_init.num_cpus=8 "${REWARD_ARGS[@]}" "$@"
+  trainer.resume_mode=disable ray_init.num_cpus=8 "${MODE_ARGS[@]}" "${REWARD_ARGS[@]}" "$@"

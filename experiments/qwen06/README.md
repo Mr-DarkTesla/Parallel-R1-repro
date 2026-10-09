@@ -66,6 +66,50 @@ bash repo/experiments/qwen06/run_rl.sh s2 "$MODEL"
 
 Log-probs актора задаёт `LOGPROB_CONTEXT`. По умолчанию `flat_packed`: каждый сэмплированный токен оценивается в том же causal-контексте и на тех же позициях, что и вызов vLLM, который его породил. Пути 2..n каждого блока vLLM генерировал без соседних путей, поэтому актор дописывает их копии в конец последовательности и берёт log-probs из копий; всё считается за один forward (`verl/verl/workers/actor/replay_context.py`). Вставленные рантаймом теги исключены из loss; где рантайм заменил сэмплированный EOS на закрывающий тег, оценивается EOS. `LOGPROB_CONTEXT=tree` возвращает исходную цель: Unseen-маска и multiverse-позиции. Она совпадает с rollout только до первого summary. `ROLLOUT_LOGPROBS=true` (по умолчанию) пишет `rollout_gap/*`: |log-prob vLLM − old_log_prob| по сегментам траектории. Метрика имеет смысл только при temperature 1 без top-p/top-k. `flat_packed` требует `use_remove_padding=False` и выключенных fused kernels, как в этом профиле. Все вызовы одной траектории идут на один vLLM-сервер, чтобы summary попадал в prefix cache путей.
 
+## RL в thinking-режиме
+
+Режим `think` запускает RL для Qwen3-0.6B (не Base) из thinking-SFT. Блоки `<Parallel>` идут внутри `<think>`, ответ пишется после `</think>`.
+
+```bash
+.venv/bin/python repo/experiments/qwen06/prepare_think.py          # --template должен совпадать с промптом SFT
+REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"    # v0 | v1_low | v1_high | v2
+ALLOW_PARALLEL=false REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"   # последовательный baseline
+```
+
+`prepare_think.py` берёт те же вопросы и ответы, что S1/S2 (DAPO train, APO validation), и заменяет инструкцию шаблоном. По умолчанию это `{problem}` и просьба дать ответ в `\boxed{}`. Ещё он пишет `think_calib.parquet`: 512 train-вопросов для калибровки V2. Отличия режима от S1/S2:
+
+| Настройка | think |
+|---|---|
+| Advantage | RLOO по группе из 8, без деления на std |
+| Ответ | 16384 токена, `enable_thinking=true` |
+| Блоки / ветки | `MAX_BLOCKS=2`, `NUM_PATHS=2` |
+| Log-probs актора | `flat_packed`, `rollout_gap/*` (см. выше) |
+
+Награды из дебатов с Codex (8–9 октября). c = 1, только если ответ после последнего `</think>` верен и стоит вне веток. Если `</think>` нет или он внутри ветки, c = 0. Ответ берётся из последнего `\boxed{}` после `</think>`, иначе из строки `Final Answer:`.
+
+- V0 = 2c − 1.
+- V1 = 2c − 1 − c·(α·D/16384 + β·T/16384). Для V1-low α = 0.10, β = 0.05; для V1-high α = 0.50, β = 0.25.
+- V2 = 2c − 1 − c·(0.10·g(D/s_D) + 0.05·g(T/s_T)), где g(x) = x/(1+x).
+
+D — критическая глубина: сэмплированные токены основной цепочки плюс самая длинная ветка и summary каждого блока. T — все сэмплированные токены. Вставленные рантаймом теги не входят ни в D, ни в T. В телеметрии это `parallel/critical_depth_mean` и `parallel/sampled_tokens_mean`, в наградах — `critical_depth`, `sampled_tokens`, `cost`.
+
+Масштабы s_D и s_T для V2 замораживаются один раз по верным ответам SFT-чекпоинта на калибровочных train-вопросах. Берётся медиана по источнику данных, а для задачи с ≥3 верными ответами — её собственная медиана. RL-сэмплы файл не меняют.
+
+```bash
+RUN_NAME=calib-sft REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL" \
+  trainer.val_only=true trainer.val_before_train=true \
+  data.val_files="['$HOME/parallel-r1/data/think_calib.parquet']" actor_rollout_ref.rollout.val_kwargs.n=8
+.venv/bin/python repo/experiments/qwen06/calibrate_cost_scales.py runs/calib-sft/validation --out data/cost_scales.json
+REWARD=v2 COST_SCALES=$PWD/data/cost_scales.json bash repo/experiments/qwen06/run_rl.sh think "$MODEL"
+```
+
+Ограничения:
+- Rollout пока плоский: summary и всё после первого блока vLLM сэмплирует без маски веток, а `flat_packed` оценивает ровно эти контексты. Графовый rollout, как в графовом SFT, требует патча vLLM (вариант B в `/mnt/project-files/analysis/kv-merge-unseen-plan.md`).
+- Ветки 2..n каждого блока vLLM заново считает при prefill summary.
+- В последовательном baseline `<Parallel>` запрещён через `logit_bias`, а актор считает вероятности по полному словарю. Это небольшое смещение, растущее с вероятностью `<Parallel>` у модели.
+- Подстановка `<Path>i:` и число веток из плана появятся, когда зафиксируют формат thinking-SFT.
+- Актор строит плотную маску T×T. Для 18k токенов это ~1 ГБ на ответ при microbatch 1.
+
 ## Трейсы и Figure 3
 
 В `runs/<name>` записываются происхождение запуска (`checkpoint.json`, `source_commit.txt`, `source.patch`, `environment.freeze.txt`), стандартные тексты/награды verl, offline W&B и telemetry:
@@ -94,7 +138,7 @@ Train/validation разделены; позиции усредняются по 
 ## Проверки
 
 ```bash
-.venv/bin/python -m pytest repo/experiments/qwen06/test_repro.py -q
+.venv/bin/python -m pytest repo/experiments/qwen06/test_repro.py repo/experiments/qwen06/test_think.py -q
 .venv/bin/python -m pytest repo/tests/test_flat_packed_context.py repo/tests/test_unseen_kv_reference.py -q
 .venv/bin/python repo/experiments/qwen06/prepare.py --smoke-model
 SMOKE=1 RUN_NAME=smoke-sanity bash repo/experiments/qwen06/run_rl.sh s2 models/smoke-qwen3-0.6b-special

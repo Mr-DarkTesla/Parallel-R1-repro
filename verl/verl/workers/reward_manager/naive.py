@@ -25,7 +25,8 @@ from verl.workers.reward_manager import register
 class NaiveRewardManager:
     """The reward manager."""
 
-    def __init__(self, tokenizer, num_examine, compute_score=None, reward_fn_key="data_source") -> None:
+    def __init__(self, tokenizer, num_examine, compute_score=None, reward_fn_key="data_source",
+                 reward_method=None, cost_scales=None) -> None:
         """
         Initialize the NaiveRewardManager instance.
 
@@ -35,11 +36,16 @@ class NaiveRewardManager:
             compute_score: A function to compute the reward score. If None, `default_compute_score` will be used.
             reward_fn_key: The key used to access the data source in the non-tensor batch data. Defaults to
                 "data_source".
+            reward_method: overrides extra_info["reward_method"] of every row (e.g. think_v1_low).
+            cost_scales: JSON file with frozen s_D/s_T for reward_method=think_v2.
         """
         self.tokenizer = tokenizer  # Store the tokenizer for decoding token IDs
         self.num_examine = num_examine  # the number of batches of decoded responses to print to the console
         self.compute_score = compute_score or default_compute_score
         self.reward_fn_key = reward_fn_key  # Store the key for accessing the data source
+        # Thinking-mode runs pick the reward variant in config (reward_model.reward_kwargs), not per data row.
+        self.reward_method = reward_method
+        self.cost_scales = cost_scales
 
     def __call__(self, data: DataProto, return_dict=False):
         """We will expand this function gradually based on the available datasets"""
@@ -80,7 +86,15 @@ class NaiveRewardManager:
 
             ground_truth = data_item.non_tensor_batch["reward_model"]["ground_truth"]
             data_source = data_item.non_tensor_batch[self.reward_fn_key]
-            extra_info = data_item.non_tensor_batch.get("extra_info", {})
+            extra_info = dict(data_item.non_tensor_batch.get("extra_info", None) or {})
+            if self.reward_method is not None:
+                extra_info["reward_method"] = self.reward_method
+            if self.cost_scales is not None:
+                extra_info["cost_scales"] = self.cost_scales
+            parallel_stats = data_item.non_tensor_batch.get("parallel_stats", None)
+            if parallel_stats:
+                extra_info["critical_depth"] = parallel_stats.get("critical_depth")
+                extra_info["sampled_tokens"] = parallel_stats.get("sampled_tokens")
             num_turns = data_item.non_tensor_batch.get("__num_turns__", None)
             extra_info["num_turns"] = num_turns
             extra_info["global_steps"] = global_steps

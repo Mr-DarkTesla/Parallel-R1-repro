@@ -85,6 +85,10 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if cls.logprob_context not in ('tree', 'flat_packed'):
             raise ValueError(f'Unknown logprob_context {cls.logprob_context!r}; use tree or flat_packed')
         cls.rollout_logprobs = bool(getattr(config.actor_rollout_ref.rollout.agent, 'rollout_logprobs', False))
+        # None keeps the chat template's default; Qwen3 thinks unless enable_thinking is false.
+        cls.enable_thinking = getattr(config.actor_rollout_ref.rollout.agent, 'enable_thinking', None)
+        # false: sequential baseline, <Parallel> is never sampled.
+        cls.allow_parallel = bool(getattr(config.actor_rollout_ref.rollout.agent, 'allow_parallel', True))
 
         cls.eos_token_id = cls.tokenizer.eos_token_id
         cls.start_parallel_token = cls.tokenizer.encode('<Parallel>')[0]
@@ -110,7 +114,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         prompt_ids = await self.loop.run_in_executor(
             None,
             lambda: self.tokenizer.apply_chat_template(
-                messages, add_generation_prompt=True, tokenize=True
+                messages, add_generation_prompt=True, tokenize=True,
+                **({} if self.enable_thinking is None else {'enable_thinking': self.enable_thinking}),
             ),
         )
         init_len      = len(prompt_ids)
@@ -127,6 +132,9 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         # Per response token: rollout segment (-1 for injected tags) and vLLM log-prob.
         rollout_segments, rollout_log_probs = [], []
         forced, label_overrides, replay_segments = [], [], []
+        # Sampled tokens on the longest chain (main + longest path + summary per block) and in total;
+        # tags the runtime inserted count in neither.
+        critical_depth = sampled_tokens = 0
         iterations    = 0
         request_id    = uuid4().hex
 
@@ -278,13 +286,17 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         while True:
             request_id = uuid4().hex
             sp_main = {**sampling_params, "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
+            if not self.allow_parallel:
+                sp_main.update(stop_token_ids=[self.eos_token_id], logit_bias={self.start_parallel_token: -100.0})
             remaining = self.response_length - (len(prompt_ids) - init_len)
             sp_main['max_tokens'] = remaining
             ids, log_probs = await self._generate('main', request_id, prompt_ids, sp_main)
+            critical_depth += len(ids)
+            sampled_tokens += len(ids)
             rollout_segments.extend([MAIN_BEFORE if iterations == 0 else MAIN_AFTER] * len(ids))
             rollout_log_probs.extend(log_probs)
             append_tokens(ids)
-            if should_stop() or not await self.check_parallel(ids):
+            if should_stop() or not self.allow_parallel or not await self.check_parallel(ids):
                 break
 
             assert ids[-1] != self.eos_token_id
@@ -307,6 +319,10 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             # vLLM generated path k from prompt + response[:block_start] + <Path>, without the
             # earlier sibling paths that precede it in the response (path 1 needs no replay).
             replay_segments.extend((block_start + s, block_start + e, block_start) for s, e in path_spans[1:])
+            path_tokens = [sum(kind == 'path' for kind in tokens['kinds'][s:e]) for s, e in path_spans]
+            summary_tokens = sum(kind == 'summary' for kind in tokens['kinds'])
+            critical_depth += max(path_tokens) + summary_tokens
+            sampled_tokens += sum(path_tokens) + summary_tokens
             append_tokens(parallel_ids, is_parallel=True, path_spans=path_spans, manual_mask_positions=manual_mask_positions)
 
             iterations += 1
@@ -367,6 +383,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 'generation_calls': self.trace.record['generation_calls'],
                 'generated_tokens': self.trace.record['generated_tokens_total'],
                 'truncated': self.trace.record['truncated'],
+                'critical_depth': critical_depth,
+                'sampled_tokens': sampled_tokens,
             },
             **extra,
         )
