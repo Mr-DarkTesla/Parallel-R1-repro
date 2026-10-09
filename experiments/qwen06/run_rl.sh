@@ -12,17 +12,21 @@ if [[ "$MODE" == think ]]; then
   # Qwen3-0.6B thinking SFT: RLOO over the group without std, reward V0/V1/V2 (README).
   REWARD=${REWARD:-v0}
   case "$REWARD" in v0|v1_low|v1_high|v2) ;; *) echo 'REWARD must be v0, v1_low, v1_high or v2'; exit 2;; esac
-  ADV=rloo; DEFAULT_RESPONSE=16384; DEFAULT_BLOCKS=2; TAG=think-$REWARD
+  ADV=rloo; DEFAULT_RESPONSE=16384; DEFAULT_BLOCKS=2; TAG=think-$REWARD; CHECK_ARGS=(--plan)
   [[ "${ALLOW_PARALLEL:-true}" == false ]] && TAG=think-sequential-$REWARD
+  # Blocks follow the shared contract with the thinking SFT (contract.py): the model writes a plan
+  # after <Parallel> that sets 2-4 branches; an invalid plan ends the trajectory with c = 0.
   MODE_ARGS=(actor_rollout_ref.rollout.agent.enable_thinking=true
              "actor_rollout_ref.rollout.agent.allow_parallel=${ALLOW_PARALLEL:-true}"
+             actor_rollout_ref.rollout.agent.protocol=plan_v1
+             "actor_rollout_ref.rollout.agent.max_plan_tokens=${MAX_PLAN_TOKENS:-256}"
              "+reward_model.reward_kwargs.reward_method=think_$REWARD")
   if [[ "$REWARD" == v2 ]]; then
     [[ -f "${COST_SCALES:-}" ]] || { echo 'REWARD=v2 needs COST_SCALES=<output of calibrate_cost_scales.py>'; exit 2; }
     MODE_ARGS+=("+reward_model.reward_kwargs.cost_scales=$COST_SCALES")
   fi
 else
-  ADV=grpo; DEFAULT_RESPONSE=3000; DEFAULT_BLOCKS=4; TAG=$MODE
+  ADV=grpo; DEFAULT_RESPONSE=3000; DEFAULT_BLOCKS=4; TAG=$MODE; CHECK_ARGS=()
 fi
 RUN_NAME=${RUN_NAME:-qwen06-$TAG-seed1}
 RUN="$ROOT/runs/$RUN_NAME"
@@ -35,7 +39,7 @@ export OMP_NUM_THREADS=4
 export HYDRA_FULL_ERROR=1
 export WANDB_MODE=offline
 export WANDB_DIR="$RUN"
-"$PY" "$ROOT/repo/experiments/qwen06/check_checkpoint.py" "$MODEL" > "$RUN/checkpoint.json"
+"$PY" "$ROOT/repo/experiments/qwen06/check_checkpoint.py" "$MODEL" "${CHECK_ARGS[@]}" > "$RUN/checkpoint.json"
 if [[ -f "$MODEL/SMOKE_ONLY" && "$SMOKE" != 1 ]]; then echo 'Refusing production RL from disposable smoke weights'; exit 2; fi
 TRAIN="$ROOT/data/${MODE}_train.parquet"
 VAL="$ROOT/data/${MODE}_val.parquet"

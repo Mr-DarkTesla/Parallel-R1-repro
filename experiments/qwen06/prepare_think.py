@@ -43,6 +43,8 @@ def main():
     parser.add_argument('--template', default=DEFAULT_TEMPLATE, help='Python format string with {problem}')
     parser.add_argument('--calib-size', type=int, default=512)
     parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--smoke-model', action='store_true',
+                        help='write Qwen3-0.6B with the eight untrained contract tags for SMOKE=1 runs only')
     args = parser.parse_args()
     root = Path(args.root)
     source = root / 'repo/verl/data_preprocess_scripts/data'
@@ -65,6 +67,22 @@ def main():
             manifest['calib'] = dict(rows=len(calib), indices=[row['extra_info'].get('index') for row in calib])
     (out / 'think_manifest.json').write_text(json.dumps(manifest, indent=2, ensure_ascii=False))
     print(json.dumps({k: v for k, v in manifest.items() if k != 'calib'}, indent=2, ensure_ascii=False))
+    if args.smoke_model:
+        import torch
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+        from verl.parallel_thinking_generation_v3.contract import TAGS
+        model_id = 'Qwen/Qwen3-0.6B'
+        tokenizer = AutoTokenizer.from_pretrained(model_id)
+        tokenizer.add_special_tokens({'additional_special_tokens': list(TAGS)})
+        model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16)
+        if len(tokenizer) > model.get_input_embeddings().weight.size(0):
+            model.resize_token_embeddings(len(tokenizer))
+        target = root / 'models/smoke-qwen3-0.6b-think'
+        target.mkdir(parents=True, exist_ok=True)
+        tokenizer.save_pretrained(target)
+        model.save_pretrained(target)
+        (target / 'SMOKE_ONLY').write_text('Disposable untrained tag embeddings. Never use as SFT checkpoint.\n')
+        print('Smoke model:', target)
 
 
 if __name__ == '__main__':

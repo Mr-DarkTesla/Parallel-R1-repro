@@ -95,6 +95,7 @@ class NaiveRewardManager:
             if parallel_stats:
                 extra_info["critical_depth"] = parallel_stats.get("critical_depth")
                 extra_info["sampled_tokens"] = parallel_stats.get("sampled_tokens")
+                extra_info["trajectory_status"] = parallel_stats.get("trajectory_status", "ok")
             num_turns = data_item.non_tensor_batch.get("__num_turns__", None)
             extra_info["num_turns"] = num_turns
             extra_info["global_steps"] = global_steps

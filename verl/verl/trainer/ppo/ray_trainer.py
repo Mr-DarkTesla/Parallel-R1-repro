@@ -1194,6 +1194,16 @@ class RayPPOTrainer:
                             if 'critical_depth' in parallel_stats[0]:
                                 metrics['parallel/critical_depth_mean'] = float(np.mean([item['critical_depth'] for item in parallel_stats]))
                                 metrics['parallel/sampled_tokens_mean'] = float(np.mean([item['sampled_tokens'] for item in parallel_stats]))
+                            if 'parallel_triggers' in parallel_stats[0]:  # protocol=plan_v1
+                                for key in ('parallel_triggers', 'valid_plan_blocks', 'fork_dispatches', 'path_jobs'):
+                                    metrics[f'parallel/{key}_mean'] = float(np.mean([item[key] for item in parallel_stats]))
+                                triggers = sum(item['parallel_triggers'] for item in parallel_stats)
+                                valid = sum(item['valid_plan_blocks'] for item in parallel_stats)
+                                metrics['parallel/plan_valid_ratio'] = valid / triggers if triggers else float('nan')
+                                metrics['parallel/paths_per_block'] = (
+                                    sum(item['path_jobs'] for item in parallel_stats) / valid if valid else float('nan'))
+                                metrics['parallel/plan_failed_ratio'] = float(np.mean(
+                                    [item['trajectory_status'] != 'ok' for item in parallel_stats]))
                             metrics['parallel/blocks'] = len(positions)
                             if positions:
                                 metrics['parallel/relative_position_mean'] = float(np.mean(positions))

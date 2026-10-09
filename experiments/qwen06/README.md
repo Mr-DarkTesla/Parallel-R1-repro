@@ -72,6 +72,7 @@ Log-probs актора задаёт `LOGPROB_CONTEXT`. По умолчанию `
 
 ```bash
 .venv/bin/python repo/experiments/qwen06/prepare_think.py          # --template должен совпадать с промптом SFT
+                                                                    # --smoke-model: Qwen3-0.6B с 8 необученными тегами, только для SMOKE=1
 REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"    # v0 | v1_low | v1_high | v2
 ALLOW_PARALLEL=false REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"   # последовательный baseline
 ```
@@ -82,8 +83,24 @@ ALLOW_PARALLEL=false REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MO
 |---|---|
 | Advantage | RLOO по группе из 8, без деления на std |
 | Ответ | 16384 токена, `enable_thinking=true` |
-| Блоки / ветки | `MAX_BLOCKS=2`, `NUM_PATHS=2` |
-| Log-probs актора | `flat_packed`, `rollout_gap/*` (см. выше) |
+| Блоки / ветки | `protocol=plan_v1`: до `MAX_BLOCKS=2` блоков, 2–4 ветки по плану модели |
+| Log-probs актора | `flat_packed` с тем же подавлением тегов, что в vLLM; `rollout_gap/*` (см. выше) |
+
+Формат блока задаёт общий с thinking-SFT модуль `verl/verl/parallel_thinking_generation_v3/contract.py`: парсер плана, подавление тегов, графовые позиции и маска, D/T. SFT берёт его же, своей копии нет.
+
+```
+<Parallel><Plan>cases
+1: x > 0
+2: x <= 0
+</Plan><Path>1: …</Path><Path>2: …</Path></Parallel><Summary>…</Summary>
+```
+
+- **Кто что пишет.** Модель сэмплирует `<Parallel>`, текст плана и `</Plan>`, текст веток и `</Path>`, summary и `</Summary>`. Рантайм вставляет `<Plan>`, `<Path>` с `i:` и `</Parallel><Summary>` без перевода строки. Вставленные токены не получают log-prob и не входят в D/T.
+- **План.** Первая строка — тип: decompose, cases, candidates, methods или verify. Дальше 2–4 строки `i: текст`. Сколько строк, столько веток.
+- **Невалидный план.** Если план не разбирается, обрывается EOS или не закрыт за `MAX_PLAN_TOKENS` (256), траектория на этом кончается. Её c = 0, то есть −1 в V0, и она остаётся в группе RLOO. План никто не чинит, пустых блоков не бывает.
+- **Подавление.** Каждый узел (основная цепочка, план, ветка, summary) может сэмплировать только свой закрывающий тег, остальным тегам vLLM даёт `logit_bias` −100. После `MAX_BLOCKS` блоков подавлен и `<Parallel>`. Актор прибавляет те же −100 к своим логитам до температуры, поэтому оценивает то распределение, из которого сэмплировали.
+- **Ветки.** Все ветки блока сэмплируются после плана, без соседних веток в контексте; `flat_packed` пересчитывает ветки 2..n в этом же контексте.
+- **Телеметрия.** `parallel/parallel_triggers_mean` (сколько раз сэмплирован `<Parallel>`), `parallel/valid_plan_blocks_mean`, `parallel/fork_dispatches_mean`, `parallel/path_jobs_mean`, `parallel/plan_valid_ratio`, `parallel/paths_per_block`, `parallel/plan_failed_ratio`; в наградах `plan_failed`.
 
 Награды из дебатов с Codex (8–9 октября). c = 1, только если ответ после последнего `</think>` верен и стоит вне веток. Если `</think>` нет или он внутри ветки, c = 0. Ответ берётся из последнего `\boxed{}` после `</think>`, иначе из строки `Final Answer:`.
 
@@ -106,8 +123,8 @@ REWARD=v2 COST_SCALES=$PWD/data/cost_scales.json bash repo/experiments/qwen06/ru
 Ограничения:
 - Rollout пока плоский: summary и всё после первого блока vLLM сэмплирует без маски веток, а `flat_packed` оценивает ровно эти контексты. Графовый rollout, как в графовом SFT, требует патча vLLM (вариант B в `/mnt/project-files/analysis/kv-merge-unseen-plan.md`).
 - Ветки 2..n каждого блока vLLM заново считает при prefill summary.
-- В последовательном baseline `<Parallel>` запрещён через `logit_bias`, а актор считает вероятности по полному словарю. Это небольшое смещение, растущее с вероятностью `<Parallel>` у модели.
-- Подстановка `<Path>i:` и число веток из плана появятся, когда зафиксируют формат thinking-SFT.
+- `rollout_gap/*` сравнивает с log-prob vLLM по сырым логитам, до `logit_bias`, так что в plan_v1 в разрыв входит и масса подавленных тегов. Точное совпадение актора с сэмплирующим распределением проверяет `tests/test_flat_packed_context.py`.
+- vLLM 0.8.5 V1 применяет `logit_bias` питоновским циклом по запросам и токенам на каждом шаге декодирования. На smoke-прогоне стоит посмотреть, сколько это добавляет ко времени генерации.
 - Актор строит плотную маску T×T. Для 18k токенов это ~1 ГБ на ответ при microbatch 1.
 
 ## Трейсы и Figure 3

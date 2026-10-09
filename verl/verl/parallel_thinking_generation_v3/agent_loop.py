@@ -143,6 +143,10 @@ class AgentLoopOutput(BaseModel):
     """Log-probs vLLM reported for the sampled tokens; 0 where rollout_segments is -1."""
     rollout_segments: list[int] | None = None
     """Per response token, see logprob_gap.SEGMENTS; -1 for injected tags."""
+    node_codes: list[int] | None = None
+    """protocol=plan_v1: per response token, the contract node that sampled it (contract.INSERTED = -1)."""
+    node_suppression: list[list[int]] | None = None
+    """protocol=plan_v1: contract.suppression_table, the tag ids each node suppresses (-1 padded)."""
     # multiverse_attn_bool: torch.Tensor
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -464,6 +468,15 @@ class AgentLoopWorker:
                 segments[i, :n] = torch.tensor(item.rollout_segments, dtype=torch.long)
             batch["rollout_token_log_probs"] = log_probs
             batch["rollout_segments"] = segments
+        if all(item.node_codes is not None for item in inputs):
+            # The actor adds the same tag suppression to its logits that vLLM sampled with.
+            response_length = self.config.actor_rollout_ref.rollout.response_length
+            nodes = torch.full((batch_size, response_length), -1, dtype=torch.long)
+            for i, item in enumerate(inputs):
+                nodes[i, :len(item.node_codes)] = torch.tensor(item.node_codes, dtype=torch.long)
+            batch["node_codes"] = nodes
+            batch["node_suppression"] = torch.tensor(inputs[0].node_suppression, dtype=torch.long).expand(
+                batch_size, -1, -1).clone()
         return DataProto(batch=batch, non_tensor_batch=non_tensor_batch, meta_info={"metrics": metrics})
 
 

@@ -36,6 +36,7 @@ from verl.utils.torch_functional import logprobs_from_logits
 from verl.utils.ulysses import gather_outputs_and_unpad, ulysses_pad, ulysses_pad_and_slice_inputs
 from verl.workers.actor import BasePPOActor
 from verl.workers.actor.replay_context import append_replay_segments
+from verl.parallel_thinking_generation_v3.contract import apply_suppression
 
 if is_cuda_available:
     from flash_attn.bert_padding import index_first_axis, pad_input, rearrange, unpad_input
@@ -88,9 +89,11 @@ class DataParallelPPOActor(BasePPOActor):
         """
         response_length = micro_batch["responses"].size(-1)
         replay_segments = micro_batch["replay_segments"] if "replay_segments" in micro_batch.keys() else None
-        if replay_segments is not None and (self.use_remove_padding or self.use_fused_kernels
-                                            or "position_required_masks" not in micro_batch.keys()):
-            raise ValueError("logprob_context=flat_packed needs the padded custom-mask forward "
+        # protocol=plan_v1: the node that sampled each response token, and the tags each node suppresses.
+        node_codes = micro_batch["node_codes"] if "node_codes" in micro_batch.keys() else None
+        if (replay_segments is not None or node_codes is not None) and (
+                self.use_remove_padding or self.use_fused_kernels or "position_required_masks" not in micro_batch.keys()):
+            raise ValueError("logprob_context=flat_packed and protocol=plan_v1 need the padded custom-mask forward "
                              "(use_remove_padding=False, use_fused_kernels=False)")
         labels = micro_batch["responses"]
         if "label_overrides" in micro_batch.keys():
@@ -337,9 +340,18 @@ class DataParallelPPOActor(BasePPOActor):
 
                 else:
                     logits = output.logits
+                    replay_width = 0 if replay_targets is None else replay_targets.size(1)
+                    if node_codes is not None:
+                        # The same tag suppression vLLM sampled with, added before temperature as vLLM does.
+                        table = micro_batch["node_suppression"][0]
+                        end = logits.size(1) - replay_width
+                        apply_suppression(logits[:, end - response_length - 1:end - 1], node_codes, table)
+                        if replay_width:
+                            replay_nodes = torch.where(replay_targets >= 0,
+                                                       node_codes.gather(1, replay_targets.clamp(min=0)), -1)
+                            apply_suppression(logits[:, end:], replay_nodes, table)
 
                     logits.div_(temperature)
-                    replay_width = 0 if replay_targets is None else replay_targets.size(1)
                     replay_logits = logits[:, logits.size(1) - replay_width:, :]
                     logits = logits[:, :logits.size(1) - replay_width, :]
                     logits = logits[:, -response_length - 1 : -1, :]  # (bsz, response_length, vocab_size)
@@ -406,6 +418,7 @@ class DataParallelPPOActor(BasePPOActor):
         select_keys = ["responses", "input_ids", "attention_mask", "position_ids"]
         if "final_attention_mask" in data.batch.keys():
             select_keys.append("final_attention_mask")
+        select_keys += [key for key in ("node_codes", "node_suppression") if key in data.batch.keys()]
         non_tensor_select_keys = ["multi_modal_inputs"] if has_multi_modal_inputs else []
         if "position_required_masks" in data.non_tensor_batch.keys():
             non_tensor_select_keys.append("position_required_masks")
@@ -466,7 +479,8 @@ class DataParallelPPOActor(BasePPOActor):
             select_keys.append("ref_log_prob")
         if "final_attention_mask" in data.batch.keys():
             select_keys.append("final_attention_mask")
-        
+        select_keys += [key for key in ("node_codes", "node_suppression") if key in data.batch.keys()]
+
         has_multi_modal_inputs = "multi_modal_inputs" in data.non_tensor_batch.keys()
         non_tensor_select_keys = ["multi_modal_inputs"] if has_multi_modal_inputs else []
         if "position_required_masks" in data.non_tensor_batch.keys():

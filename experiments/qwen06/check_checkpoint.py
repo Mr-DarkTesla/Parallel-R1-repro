@@ -6,10 +6,11 @@ import tarfile
 from pathlib import Path
 
 
-def validate(path):
+def validate(path, plan=False):
     from transformers import AutoConfig, AutoTokenizer
     from safetensors import safe_open
     from verl.parallel_thinking_generation_v3.repro_trace import TOKENS
+    from verl.parallel_thinking_generation_v3 import contract
     config = AutoConfig.from_pretrained(path, local_files_only=True)
     tokenizer = AutoTokenizer.from_pretrained(path, local_files_only=True)
     if config.model_type != 'qwen3' or config.hidden_size != 1024 or config.num_hidden_layers != 28:
@@ -17,6 +18,9 @@ def validate(path):
     ids = [tokenizer.encode(token, add_special_tokens=False) for token in TOKENS]
     if any(len(x) != 1 for x in ids) or len({x[0] for x in ids}) != 6:
         raise ValueError('Six distinct atomic Parallel/Path/Summary opening and closing tokens are required')
+    if plan:  # protocol=plan_v1 also needs <Plan> and </Plan>
+        ids = [[contract.tag_ids(tokenizer)[token]] for token in contract.TAGS]
+        TOKENS = contract.TAGS
     if max(x[0] for x in ids) >= config.vocab_size:
         raise ValueError('Special-token IDs exceed model vocabulary')
     files = list(path.glob('*.safetensors'))
@@ -39,6 +43,7 @@ def validate(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('checkpoint', type=Path)
+    parser.add_argument('--plan', action='store_true', help='require the eight plan_v1 tags (contract.TAGS)')
     parser.add_argument('--extract-to', type=Path)
     args = parser.parse_args()
     path = args.checkpoint.resolve()
@@ -67,7 +72,7 @@ def main():
             for block in iter(lambda: stream.read(8 * 1024 * 1024), b''):
                 digest.update(block)
         (destination / 'archive.sha256').write_text(digest.hexdigest() + '\n')
-    report = validate(path)
+    report = validate(path, plan=args.plan)
     (path / 'checkpoint_validation.json').write_text(json.dumps(report, indent=2))
 
 

@@ -1,6 +1,7 @@
 """Rewards for thinking-mode parallel RL (V0/V1/V2 agreed in the reward debate, 2026-10-08).
 
-c = 1 only for a correct final answer after the closing </think>, outside every branch.
+c = 1 only for a correct final answer after the closing </think>, outside every branch, in a trajectory
+the rollout did not end early (protocol=plan_v1: an invalid, unfinished or over-budget plan gives c = 0).
 V0 = 2c - 1
 V1 = 2c - 1 - c * (alpha * D / 16384 + beta * T / 16384)   (low: .10/.05, high: .50/.25)
 V2 = 2c - 1 - c * (alpha * g(D / s_D) + beta * g(T / s_T)),  g(x) = x / (1 + x), alpha=.10, beta=.05
@@ -61,7 +62,9 @@ def compute_score(text, ground_truth, data_source, extra_info):
         raise ValueError(f'Unknown reward_method {method!r}; use one of {sorted(WEIGHTS)}')
     region = answer_region(text)
     pred = extract_answer(region) if region is not None else None
-    correct = pred is not None and normalize_final_answer(pred) == normalize_final_answer(str(ground_truth))
+    ended = extra_info.get('trajectory_status', 'ok') != 'ok'
+    correct = (not ended and pred is not None
+               and normalize_final_answer(pred) == normalize_final_answer(str(ground_truth)))
     depth, tokens = extra_info.get('critical_depth'), extra_info.get('sampled_tokens')
     cost = 0.0
     if WEIGHTS[method] is not None:
@@ -76,5 +79,6 @@ def compute_score(text, ground_truth, data_source, extra_info):
             cost = alpha * depth / LENGTH_SCALE + beta * tokens / LENGTH_SCALE
     c = float(correct)
     return dict(score=2 * c - 1 - c * cost, acc=c, cost=cost, formatted=float(region is not None),
+                plan_failed=float(ended),
                 critical_depth=-1 if depth is None else int(depth), sampled_tokens=-1 if tokens is None else int(tokens),
                 pred='' if pred is None else pred, bucket=str(data_source), task=str(extra_info.get('index', '')))

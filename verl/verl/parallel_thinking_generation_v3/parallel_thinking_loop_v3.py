@@ -27,7 +27,8 @@ from codetiming import Timer
 import torch
 from verl.parallel_thinking_generation_v3.repro_trace import Trace, TOKENS
 from verl.parallel_thinking_generation_v3.logprob_gap import (MAIN_AFTER, MAIN_BEFORE, PATH_FIRST, PATH_LATER,
-                                                              SUMMARY_FIRST, SUMMARY_LATER)
+                                                              PLAN_FIRST, PLAN_LATER, SUMMARY_FIRST, SUMMARY_LATER)
+from verl.parallel_thinking_generation_v3 import contract
 logger = logging.getLogger(__file__)
 logger.setLevel(os.getenv("VERL_LOGGING_LEVEL", "WARN"))
 
@@ -89,6 +90,15 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cls.enable_thinking = getattr(config.actor_rollout_ref.rollout.agent, 'enable_thinking', None)
         # false: sequential baseline, <Parallel> is never sampled.
         cls.allow_parallel = bool(getattr(config.actor_rollout_ref.rollout.agent, 'allow_parallel', True))
+        # legacy: upstream blocks of num_paths branches. plan_v1: the shared contract (contract.py), where the
+        # model writes a plan after <Parallel> that sets the number of branches, and every node suppresses
+        # the tags it may not sample.
+        cls.protocol = getattr(config.actor_rollout_ref.rollout.agent, 'protocol', 'legacy')
+        if cls.protocol not in ('legacy', 'plan_v1'):
+            raise ValueError(f'Unknown protocol {cls.protocol!r}; use legacy or plan_v1')
+        cls.max_plan_tokens = int(getattr(config.actor_rollout_ref.rollout.agent, 'max_plan_tokens', 256))
+        if cls.protocol == 'plan_v1':
+            cls.tag_ids = contract.tag_ids(tokenizer)
 
         cls.eos_token_id = cls.tokenizer.eos_token_id
         cls.start_parallel_token = cls.tokenizer.encode('<Parallel>')[0]
@@ -282,12 +292,25 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 return True
             return False
 
-        
+        plan_protocol = self.protocol == 'plan_v1'
+        max_blocks = self.max_iterations_for_parallel_thinking or contract.MAX_BLOCKS
+        # plan_v1: generation calls (for D/T), branch spans, per-token node codes, block counters.
+        calls, spans, node_codes = [], [], []
+        status = 'ok'
+        counters = dict(parallel_triggers=0, valid_plan_blocks=0, fork_dispatches=0, path_jobs=0)
+
         while True:
             request_id = uuid4().hex
-            sp_main = {**sampling_params, "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
-            if not self.allow_parallel:
-                sp_main.update(stop_token_ids=[self.eos_token_id], logit_bias={self.start_parallel_token: -100.0})
+            if plan_protocol:
+                # Up to max_blocks the main chain may sample <Parallel>; after that every tag is suppressed.
+                node = contract.main_node(iterations, max_blocks, self.allow_parallel)
+                stops = [self.start_parallel_token] if node == contract.MAIN_OPEN else []
+                sp_main = {**sampling_params, 'stop_token_ids': stops + [self.eos_token_id],
+                           'logit_bias': contract.logit_bias(node, self.tag_ids)}
+            else:
+                sp_main = {**sampling_params, "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
+                if not self.allow_parallel:
+                    sp_main.update(stop_token_ids=[self.eos_token_id], logit_bias={self.start_parallel_token: -100.0})
             remaining = self.response_length - (len(prompt_ids) - init_len)
             sp_main['max_tokens'] = remaining
             ids, log_probs = await self._generate('main', request_id, prompt_ids, sp_main)
@@ -296,6 +319,45 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             rollout_segments.extend([MAIN_BEFORE if iterations == 0 else MAIN_AFTER] * len(ids))
             rollout_log_probs.extend(log_probs)
             append_tokens(ids)
+            if plan_protocol:
+                calls.append(dict(node=node, block=None, sampled=len(ids)))
+                node_codes.extend([node] * len(ids))
+                if (len(response_mask) >= self.response_length or node != contract.MAIN_OPEN
+                        or not await self.check_parallel(ids)):
+                    break
+                counters['parallel_triggers'] += 1
+                block_start = len(response_mask)
+                block = await self._plan_block(prompt_ids, sampling_params, iterations,
+                                               self.response_length - block_start)
+                codes = dict(plan=PLAN_FIRST if iterations == 0 else PLAN_LATER,
+                             path=PATH_FIRST if iterations == 0 else PATH_LATER,
+                             summary=SUMMARY_FIRST if iterations == 0 else SUMMARY_LATER, forced=-1)
+                rollout_segments.extend(codes[kind] for kind in block['kinds'])
+                rollout_log_probs.extend(block['log_probs'])
+                forced.extend(block_start + i for i, kind in enumerate(block['kinds']) if kind == 'forced')
+                label_overrides.extend((block_start + i, token) for i, token in block['overrides'])
+                node_codes.extend(block['nodes'])
+                calls.extend(block['calls'])
+                if block['path_spans']:
+                    # Every branch was sampled after prompt + response through </Plan> (+ its <Path>i:).
+                    context_end = block_start + block['path_spans'][0][0]
+                    replay_segments.extend((block_start + s, block_start + e, context_end)
+                                           for s, e in block['path_spans'][1:])
+                spans.extend(contract.Span(block_start + s, block_start + e, iterations, number)
+                             for number, (s, e) in enumerate(block['path_spans'], 1))
+                append_tokens(block['ids'])
+                if block['status'] != contract.VALID:
+                    status = block['status']  # no repair, no empty block: the trajectory ends here
+                    break
+                jobs = sum(call['node'] == contract.PATH for call in block['calls'])
+                counters['valid_plan_blocks'] += 1
+                counters['fork_dispatches'] += bool(jobs)
+                counters['path_jobs'] += jobs
+                self.trace.fork(block_start - 1)
+                iterations += 1
+                if len(response_mask) >= self.response_length:
+                    break
+                continue
             if should_stop() or not self.allow_parallel or not await self.check_parallel(ids):
                 break
 
@@ -334,10 +396,23 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         prompt_ids = prompt_ids[: len(prompt_ids) - len(response_mask)]
         assert init_len == (len(prompt_ids))
         flat_packed = self.logprob_context == 'flat_packed'
+        if plan_protocol:
+            critical_depth, sampled_tokens = contract.depth_and_tokens(calls)
         if flat_packed:
             # vLLM positions are physical indices; sibling paths are separated by replay, not masks.
             position_ids = torch.arange(len(position_ids), dtype=torch.long)
             position_required_masks = []
+        elif plan_protocol:
+            # Graph positions and sibling isolation from the contract, in padded sequence columns.
+            kept = min(untruncated_length, self.response_length)
+            position_ids = torch.cat([torch.arange(init_len, dtype=torch.long), torch.tensor(
+                contract.graph_positions(untruncated_length, spans, first=init_len), dtype=torch.long)])
+            column = left_pad_len + init_len
+            kept_spans = [span for span in spans if span.start < kept]
+            position_required_masks = [
+                (left_pad_len, column + a.start, column + min(a.end, kept), column + b.start, column + min(b.end, kept))
+                for a, b in contract.isolation_pairs(kept_spans) if a.path < b.path]
+        if flat_packed or plan_protocol:
             for index in forced:  # injected tags were never sampled
                 response_mask[index] = 0
         
@@ -363,7 +438,12 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if flat_packed:
             # A replay needs at least one sampled token after <Path> inside the kept response.
             extra['replay_segments'] = [(s, min(e, kept), c) for s, e, c in replay_segments if min(e, kept) - s >= 2]
+        if flat_packed or plan_protocol:
             extra['label_overrides'] = [(i, token) for i, token in label_overrides if i < kept]
+        if plan_protocol:
+            assert len(node_codes) == untruncated_length
+            extra['node_codes'] = node_codes[:kept]
+            extra['node_suppression'] = contract.suppression_table(self.tag_ids).tolist()
         if self.rollout_logprobs:
             assert len(rollout_segments) == len(rollout_log_probs) == untruncated_length
             extra['rollout_segments'] = rollout_segments[:kept]
@@ -385,6 +465,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 'truncated': self.trace.record['truncated'],
                 'critical_depth': critical_depth,
                 'sampled_tokens': sampled_tokens,
+                'trajectory_status': status,
+                **(counters if plan_protocol else {}),
             },
             **extra,
         )
@@ -397,6 +479,85 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if isinstance(output, dict):
             return list(output['token_ids']), list(output['logprobs'])
         return list(output), [0.0] * len(output)
+
+    async def _node_call(self, phase, node, close, prompt_ids, sampling_params, max_tokens):
+        """plan_v1: sample one node until its closing tag, EOS or max_tokens, with the node's tags suppressed.
+
+        Returns ids, log-probs, stop ('close', 'eos' or 'budget') and whether a call was made.
+        """
+        if max_tokens < 1:
+            return [], [], 'budget', False
+        params = {**sampling_params, 'n': 1, 'stop_token_ids': [close, self.eos_token_id],
+                  'logit_bias': contract.logit_bias(node, self.tag_ids), 'max_tokens': max_tokens}
+        ids, log_probs = await self._generate(phase, uuid4().hex, prompt_ids, params)
+        stop = 'close' if ids and ids[-1] == close else 'eos' if ids and ids[-1] == self.eos_token_id else 'budget'
+        return ids, log_probs, stop, True
+
+    async def _plan_block(self, context, sampling_params, block, room):
+        """plan_v1 block after a sampled <Parallel>: <Plan>, the plan, its branches, </Parallel><Summary>, summary.
+
+        context: prompt + response through <Parallel>; room: response tokens left. Returns the block's ids
+        and, per token, kind (plan/path/summary when sampled, forced when inserted), node code and vLLM
+        log-prob; EOS overrides; block-relative branch spans (<Path> through </Path>); the generation calls
+        made (for D/T); and the plan status. After an invalid plan the block ends with the plan tokens.
+        """
+        ids_of = self.tag_ids
+        out = dict(ids=[], kinds=[], nodes=[], log_probs=[], overrides=[], calls=[], path_spans=[])
+
+        def add(ids, kind, node=contract.INSERTED, log_probs=None):
+            out['ids'].extend(ids)
+            out['kinds'].extend([kind] * len(ids))
+            out['nodes'].extend([node] * len(ids))
+            out['log_probs'].extend([0.0] * len(ids) if log_probs is None else log_probs)
+
+        def close_segment(ids, log_probs, stop, kind, node, close):
+            # As in legacy blocks: a sampled EOS is written as the closing tag but scored as EOS;
+            # a segment cut by its budget gets an inserted closing tag.
+            ids = list(ids)
+            if stop == 'eos':
+                out['overrides'].append((len(out['ids']) + len(ids) - 1, self.eos_token_id))
+                ids[-1] = close
+            add(ids, kind, node, log_probs)
+            if stop == 'budget':
+                add([close], 'forced')
+
+        add([ids_of[tag] for tag in contract.PLAN_OPEN], 'forced')
+        ids, log_probs, stop, called = await self._node_call(
+            'plan', contract.PLAN, ids_of['</Plan>'], context + out['ids'], sampling_params,
+            min(self.max_plan_tokens, room - len(out['ids'])))
+        if called:
+            out['calls'].append(dict(node=contract.PLAN, block=block, sampled=len(ids)))
+        text = self.tokenizer.decode(ids[:-1] if stop == 'close' else ids, skip_special_tokens=False)
+        out['status'] = contract.plan_status(text, stop)
+        add(ids, 'plan', contract.PLAN, log_probs)
+        if out['status'] != contract.VALID:
+            return out
+
+        items = contract.parse_plan(text).items
+        prefixes = [[ids_of['<Path>']] + contract.path_prefix_ids(self.tokenizer, number)
+                    for number in range(1, len(items) + 1)]
+        base, left = context + out['ids'], room - len(out['ids'])
+        results = await asyncio.gather(*[
+            self._node_call('path', contract.PATH, ids_of['</Path>'], base + prefix, sampling_params,
+                            min(self.max_path_response_length, left - len(prefix) - 1))
+            for prefix in prefixes])
+        for prefix, (ids, log_probs, stop, called) in zip(prefixes, results):
+            if called:
+                out['calls'].append(dict(node=contract.PATH, block=block, sampled=len(ids)))
+            start = len(out['ids'])
+            add(prefix, 'forced')
+            close_segment(ids, log_probs, stop, 'path', contract.PATH, ids_of['</Path>'])
+            out['path_spans'].append((start, len(out['ids'])))
+
+        add([ids_of[tag] for tag in contract.BLOCK_CLOSE], 'forced')
+        ids, log_probs, stop, called = await self._node_call(
+            'summary', contract.SUMMARY, ids_of['</Summary>'], context + out['ids'], sampling_params,
+            room - len(out['ids']))
+        if called:
+            out['calls'].append(dict(node=contract.SUMMARY, block=block, sampled=len(ids)))
+            close_segment(ids, log_probs, stop, 'summary', contract.SUMMARY, ids_of['</Summary>'])
+        assert len(out['ids']) == len(out['kinds']) == len(out['nodes']) == len(out['log_probs'])
+        return out
 
 
 

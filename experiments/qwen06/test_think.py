@@ -63,6 +63,15 @@ def test_v2_uses_task_scale_then_bucket_scale(tmp_path):
     assert bucket['cost'] == pytest.approx(0.10 * 0.75 + 0.05 * 0.5)
 
 
+def test_trajectory_ended_by_the_rollout_gets_no_credit():
+    # plan_v1: an invalid, unfinished or over-budget plan ends the trajectory; c = 0 even if text follows.
+    right = '<think>a</think>\\boxed{34}'
+    ended = score(right, trajectory_status='invalid_plan')
+    assert ended['score'] == -1.0 and ended['acc'] == 0.0 and ended['plan_failed'] == 1.0
+    kept = score(right, 'think_v1_low', critical_depth=0, sampled_tokens=0, trajectory_status='ok')
+    assert kept['score'] == 1.0 and kept['plan_failed'] == 0.0
+
+
 def run_loop(server, **agent):
     Loop._class_initialized = False
     config = OmegaConf.create({'actor_rollout_ref': {'rollout': {
@@ -120,11 +129,12 @@ def test_reward_manager_passes_rollout_depth_and_configured_method():
                          reward_model=np.array([{'ground_truth': '34'}] * 2, dtype=object),
                          extra_info=np.array([{'reward_method': 'accuracy_reward'}] * 2, dtype=object),
                          parallel_stats=np.array([{'critical_depth': 8192, 'sampled_tokens': 16384},
-                                                  {'critical_depth': 0, 'sampled_tokens': 0}], dtype=object)),
+                                                  {'critical_depth': 0, 'sampled_tokens': 0,
+                                                   'trajectory_status': 'plan_incomplete'}], dtype=object)),
         meta_info=dict(global_steps=1))
     manager = NaiveRewardManager(Decoder(), 0, reward_method='think_v1_low')
     result = manager(data, return_dict=True)
-    assert result['reward_tensor'][:, -1].tolist() == pytest.approx([0.9, 1.0])
+    assert result['reward_tensor'][:, -1].tolist() == pytest.approx([0.9, -1.0])
     assert result['reward_extra_info']['critical_depth'] == [8192, 0]
     assert data.non_tensor_batch['extra_info'][0] == {'reward_method': 'accuracy_reward'}  # rows untouched
 
