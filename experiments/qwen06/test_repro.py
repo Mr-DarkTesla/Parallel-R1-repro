@@ -23,7 +23,7 @@ class Tokenizer:
 
 class Server:
     def __init__(self, empty=False): self.main = 0; self.empty = empty
-    async def generate(self, request_id, prompt_ids, sampling_params):
+    async def generate(self, request_id, prompt_ids, sampling_params, **kwargs):
         stop = sampling_params['stop_token_ids'][0]
         if stop == 10:
             self.main += 1

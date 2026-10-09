@@ -313,11 +313,19 @@ class AsyncvLLMServer(AsyncServerBase):
             assert isinstance(generator, ChatCompletionResponse)
             return JSONResponse(content=generator.model_dump())
 
-    async def generate(self, prompt_ids: list[int], sampling_params: dict[str, Any], request_id: str) -> list[int]:
+    async def generate(self, prompt_ids: list[int], sampling_params: dict[str, Any], request_id: str,
+                       return_logprobs: bool = False) -> list[int] | dict[str, list]:
+        """Token ids; with return_logprobs, a dict that also has each sampled token's log-probability.
+
+        vLLM V1 computes these from the raw logits, before temperature/top-p/top-k,
+        so they equal the actor's log-probs only for temperature 1 without truncation.
+        """
         sampling_params = dict(sampling_params)
         max_tokens = min(sampling_params.pop('max_tokens', self.max_model_len), self.max_model_len - len(prompt_ids))
         if max_tokens <= 0:
-            return []
+            return dict(token_ids=[], logprobs=[]) if return_logprobs else []
+        if return_logprobs:
+            sampling_params['logprobs'] = 0  # the sampled token only
         sampling_params = SamplingParams(max_tokens=max_tokens, **sampling_params)
         prompt = TokensPrompt(prompt_token_ids=prompt_ids)
         generator = self.engine.generate(prompt=prompt, sampling_params=sampling_params, request_id=request_id)
@@ -328,7 +336,11 @@ class AsyncvLLMServer(AsyncServerBase):
             final_res = output
         assert final_res is not None
 
-        return final_res.outputs[0].token_ids
+        completion = final_res.outputs[0]
+        if return_logprobs:
+            return dict(token_ids=list(completion.token_ids),
+                        logprobs=[step[token].logprob for step, token in zip(completion.logprobs, completion.token_ids)])
+        return completion.token_ids
 
     async def wake_up(self):
         if self.config.rollout.free_cache_engine:

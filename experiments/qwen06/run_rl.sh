@@ -61,6 +61,8 @@ exec "$PY" -m verl.trainer.main_ppo \
   actor_rollout_ref.rollout.agent.num_workers="$WORKERS" \
   actor_rollout_ref.rollout.agent.max_path_response_length="$RESPONSE" \
   actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking=4 actor_rollout_ref.rollout.agent.num_paths=2 \
+  actor_rollout_ref.rollout.agent.logprob_context="${LOGPROB_CONTEXT:-flat_packed}" \
+  actor_rollout_ref.rollout.agent.rollout_logprobs="${ROLLOUT_LOGPROBS:-true}" \
   actor_rollout_ref.rollout.val_kwargs.temperature=1.0 actor_rollout_ref.rollout.val_kwargs.do_sample=True \
   actor_rollout_ref.rollout.val_kwargs.n=1 \
   trainer.logger="['console','wandb']" trainer.project_name=Parallel-R1-qwen06 trainer.experiment_name="$RUN_NAME" \

@@ -64,6 +64,8 @@ bash repo/experiments/qwen06/run_rl.sh s2 "$MODEL"
 
 Оба режима стартуют из общего SFT. По умолчанию `trainer.resume_mode=disable`; для продолжения своего запуска передайте `trainer.resume_mode=auto`. Сохраняются model/optimizer/extra, последние три actor checkpoint. FSDP checkpoint не является готовым HF-каталогом: `actor/huggingface` содержит config/tokenizer; веса экспортируются model_merger из verl.
 
+Log-probs актора задаёт `LOGPROB_CONTEXT`. По умолчанию `flat_packed`: каждый сэмплированный токен оценивается в том же causal-контексте и на тех же позициях, что и вызов vLLM, который его породил. Пути 2..n каждого блока vLLM генерировал без соседних путей, поэтому актор дописывает их копии в конец последовательности и берёт log-probs из копий; всё считается за один forward (`verl/verl/workers/actor/replay_context.py`). Вставленные рантаймом теги исключены из loss; где рантайм заменил сэмплированный EOS на закрывающий тег, оценивается EOS. `LOGPROB_CONTEXT=tree` возвращает исходную цель: Unseen-маска и multiverse-позиции. Она совпадает с rollout только до первого summary. `ROLLOUT_LOGPROBS=true` (по умолчанию) пишет `rollout_gap/*`: |log-prob vLLM − old_log_prob| по сегментам траектории. Метрика имеет смысл только при temperature 1 без top-p/top-k. `flat_packed` требует `use_remove_padding=False` и выключенных fused kernels, как в этом профиле. Все вызовы одной траектории идут на один vLLM-сервер, чтобы summary попадал в prefix cache путей.
+
 ## Трейсы и Figure 3
 
 В `runs/<name>` записываются происхождение запуска (`checkpoint.json`, `source_commit.txt`, `source.patch`, `environment.freeze.txt`), стандартные тексты/награды verl, offline W&B и telemetry:
@@ -93,11 +95,12 @@ Train/validation разделены; позиции усредняются по 
 
 ```bash
 .venv/bin/python -m pytest repo/experiments/qwen06/test_repro.py -q
+.venv/bin/python -m pytest repo/tests/test_flat_packed_context.py repo/tests/test_unseen_kv_reference.py -q
 .venv/bin/python repo/experiments/qwen06/prepare.py --smoke-model
 SMOKE=1 RUN_NAME=smoke-sanity bash repo/experiments/qwen06/run_rl.sh s2 models/smoke-qwen3-0.6b-special
 ```
 
-Тесты проверяют fork/merge, position masks, пустые генерации и S2-награду 8/2. Smoke использует disposable base-модель с необученными тегами, два вопроса, два rollout, 128 tokens, один update и искусственные награды для проверки ненулевого градиента. Это проверка инфраструктуры. Production запрещает модель с файлом `SMOKE_ONLY`.
+Тесты проверяют fork/merge, position masks, пустые генерации и S2-награду 8/2. `tests/` на крошечной Qwen3 на CPU проверяют, что `flat_packed` воспроизводит log-probs и градиенты каждого вызова vLLM (2 блока × 3 пути), а Unseen-маска с multiverse-позициями совпадает с конкатенацией независимо посчитанных KV путей. Smoke использует disposable base-модель с необученными тегами, два вопроса, два rollout, 128 tokens, один update и искусственные награды для проверки ненулевого градиента. Это проверка инфраструктуры. Production запрещает модель с файлом `SMOKE_ONLY`.
 
 ## Прерываемая ВМ
 

@@ -84,23 +84,30 @@ class AsyncLLMServerManager:
         *,
         prompt_ids: list[int],
         sampling_params: dict[str, Any],
-    ) -> list[int]:
+        routing_key: str | None = None,
+        return_logprobs: bool = False,
+    ) -> list[int] | dict[str, list]:
         """Generate tokens from prompt ids.
 
         Args:
             request_id (str): request id for sticky session.
             prompt_ids (List[int]): List of prompt token ids.
             sampling_params (Dict[str, Any]): Sampling parameters for the chat completion.
+            routing_key (str, optional): sticky-session key used instead of request_id, so that
+                every call of one trajectory reaches the server holding its prefix cache.
+            return_logprobs (bool): also return the sampled tokens' log-probabilities.
 
         Returns:
-            List[int]: List of generated token ids.
+            List[int]: List of generated token ids, or a dict with token_ids and logprobs.
         """
-        server = self._choose_server(request_id)
+        server = self._choose_server(routing_key or request_id)
         print(server)
+        kwargs = dict(return_logprobs=True) if return_logprobs else {}
         output = await server.generate.remote(
             request_id=request_id,
             prompt_ids=prompt_ids,
             sampling_params=sampling_params,
+            **kwargs,
         )
         return output
 
@@ -128,6 +135,14 @@ class AgentLoopOutput(BaseModel):
     """Auxiliary performance metrics"""
     multiverse_pos_ids: torch.Tensor
     repro_stats: dict[str, Any] = {}
+    replay_segments: list[tuple[int, int, int]] | None = None
+    """flat_packed mode: response spans [start, end) the actor rescores in context prompt + response[:ctx_end]."""
+    label_overrides: list[tuple[int, int]] | None = None
+    """flat_packed mode: (response index, sampled token) where the runtime replaced the sampled token."""
+    rollout_log_probs: list[float] | None = None
+    """Log-probs vLLM reported for the sampled tokens; 0 where rollout_segments is -1."""
+    rollout_segments: list[int] | None = None
+    """Per response token, see logprob_gap.SEGMENTS; -1 for injected tags."""
     # multiverse_attn_bool: torch.Tensor
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
@@ -430,7 +445,26 @@ class AgentLoopWorker:
         repro_stats = np.empty(batch_size, dtype=object)
         for i, item in enumerate(inputs):
             repro_stats[i] = item.repro_stats
-        return DataProto(batch=batch, non_tensor_batch={"__num_turns__": num_turns, "position_required_masks": position_required_masks_all, "left_pad_lens": left_pad_lens, "parallel_stats": repro_stats}, meta_info={"metrics": metrics})
+        non_tensor_batch = {"__num_turns__": num_turns, "position_required_masks": position_required_masks_all,
+                            "left_pad_lens": left_pad_lens, "parallel_stats": repro_stats}
+        for key in ("replay_segments", "label_overrides"):
+            if all(getattr(item, key) is not None for item in inputs):
+                values = np.empty(batch_size, dtype=object)
+                for i, item in enumerate(inputs):
+                    values[i] = [list(map(int, entry)) for entry in getattr(item, key)]
+                non_tensor_batch[key] = values
+        if all(item.rollout_log_probs is not None for item in inputs):
+            # Distinct from verl's generic rollout_log_probs, which assumes every response token was sampled.
+            response_length = self.config.actor_rollout_ref.rollout.response_length
+            log_probs = torch.zeros(batch_size, response_length, dtype=torch.float32)
+            segments = torch.full((batch_size, response_length), -1, dtype=torch.long)
+            for i, item in enumerate(inputs):
+                n = len(item.rollout_log_probs)
+                log_probs[i, :n] = torch.tensor(item.rollout_log_probs, dtype=torch.float32)
+                segments[i, :n] = torch.tensor(item.rollout_segments, dtype=torch.long)
+            batch["rollout_token_log_probs"] = log_probs
+            batch["rollout_segments"] = segments
+        return DataProto(batch=batch, non_tensor_batch=non_tensor_batch, meta_info={"metrics": metrics})
 
 
 async def get_trajectory_info(step, index, validate):

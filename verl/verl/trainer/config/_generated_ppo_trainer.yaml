@@ -133,6 +133,8 @@ actor_rollout_ref:
       num_paths: 2 # number of parallel branches
       max_path_response_length: 256
       add_diverse_prefix: false
+      logprob_context: tree # tree: upstream Unseen mask/positions; flat_packed: score tokens in the vLLM call contexts
+      rollout_logprobs: false # record vLLM log-probs of sampled tokens and log rollout_gap/* per segment
       custom_async_server:
         path: null
         name: null
