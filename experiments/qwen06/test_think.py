@@ -97,6 +97,11 @@ def test_prepare_think_reads_frozen_roles(tmp_path):
     manifest.write_text('{}')
     with pytest.raises(ValueError):
         prepare.frozen_roles(tmp_path, manifest)
+    pool = [dict(id=f'pool-{i}', problem=f'pool problem {i}', answer='1') for i in range(600)]
+    (tmp_path / 'math_extra_test.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in pool))
+    roles, info = prepare.frozen_roles(tmp_path, None)
+    assert len(roles['math_extra_test']) == 512 and info['sampled_from'] == dict(math_extra_test=600)
+    assert roles == prepare.frozen_roles(tmp_path, None)[0]
     (tmp_path / 'dev.gold.jsonl').unlink()
     with pytest.raises(ValueError):  # no answer anywhere
         prepare.frozen_roles(tmp_path, None)

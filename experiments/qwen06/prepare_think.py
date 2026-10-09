@@ -15,7 +15,8 @@ prealgebra, number theory, counting & probability, levels 2-4); math_train_reser
 GSM8K train and MATH geometry / intermediate algebra / precalculus belong to SFT only.
 
 --roles DIR reads those files (<role>.jsonl, answers optionally in <role>.gold.jsonl) and
---manifest checks their sha256. Without --roles the same roles are built from the Hugging Face
+--manifest checks their sha256. A file larger than its role (math_extra_test given as the whole pool) and the
+128-problem pilots are sampled with the seed; think_manifest.json lists every role's ids. Without --roles the same roles are built from the Hugging Face
 datasets as a fallback: exact-duplicate and [asy] filtering only (no trigram near-duplicate
 filter), so its ids differ from the frozen ones.
 """
@@ -152,16 +153,21 @@ def read_role(directory, role):
     return out, hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def frozen_roles(directory, manifest):
-    roles, hashes = {}, {}
+def frozen_roles(directory, manifest, seed=SEED):
+    """Role files as given. A role file larger than its size (math_extra_test may be the whole 1708-problem
+    pool) is sampled down with the seed; the chosen ids go to think_manifest.json for comparison."""
+    roles, hashes, sampled = {}, {}, {}
     for role in ROLES:
         roles[role], hashes[role] = read_role(directory, role)
+        if len(roles[role]) > SIZES.get(role, len(roles[role])):
+            sampled[role] = len(roles[role])
+            roles[role] = random.Random(seed).sample(roles[role], SIZES[role])
     if manifest is not None:
         text = manifest.read_text()
         missing = [role for role, digest in hashes.items() if digest not in text]
         if missing:
             raise ValueError(f'sha256 of {missing} not found in {manifest}; the role files differ from the frozen ones')
-    return roles, dict(sha256=hashes)
+    return roles, dict(sha256=hashes, sampled_from=sampled)
 
 
 def main():
@@ -179,7 +185,7 @@ def main():
     out = root / 'data'
     out.mkdir(exist_ok=True)
     if args.roles:
-        roles, provenance = frozen_roles(args.roles, args.manifest)
+        roles, provenance = frozen_roles(args.roles, args.manifest, args.seed)
         provenance['roles'] = str(args.roles)
     else:
         from datasets import load_dataset
@@ -198,7 +204,8 @@ def main():
                 for item in roles[role]]
         pq.write_table(pa.Table.from_pylist(rows), out / f'think_{name}.parquet')
         manifest[name] = dict(role=role, rows=len(rows), by_subject=dict(Counter(r['extra_info']['subject'] for r in rows)),
-                              by_level=dict(Counter(r['extra_info']['level'] for r in rows)))
+                              by_level=dict(Counter(r['extra_info']['level'] for r in rows)),
+                              ids=[r['index'] for r in rows])
         if role in ('math500_test', 'gsm_retention_test'):  # pilot subsets, fixed by the seed
             pilot = random.Random(args.seed).sample(rows, min(SIZES['pilot'], len(rows)))
             pq.write_table(pa.Table.from_pylist(pilot), out / f'think_{name}_pilot.parquet')
