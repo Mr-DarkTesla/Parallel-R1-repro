@@ -7,7 +7,7 @@ sampled token, across two parallel blocks, three paths, left padding, a path tha
 ends with EOS and a path cut at its length budget. The upstream tree objective is
 checked to match only before the first summary.
 
-PlanProtocolTest repeats this for protocol=plan_v1 (contract.py): the model writes a plan
+PlanProtocolTest repeats this for protocol=plan (contract.py): the model writes a plan
 after <Parallel>, every call samples with the node's tag suppression (vLLM logit_bias),
 and the actor must score the suppressed distribution, with graph positions in tree mode.
 
@@ -257,7 +257,8 @@ class FlatPackedContextTest(unittest.TestCase):
 
 
 PLAN_OPEN, PLAN_CLOSE = 16, 17
-WORDS = {'cases': 20, 'verify': 21, '\n': 22, '1': 23, '2': 24, '3': 25, '4': 26, ':': 27, ' x': 28}
+WORDS = {'cases': 20, 'verify': 21, '\n': 22, '1': 23, '2': 24, '3': 25, '4': 26, ':': 27, ' x': 28, 'branches=': 29}
+BRANCHES = WORDS['branches=']
 
 
 class PlanTokenizer(Tokenizer):
@@ -265,6 +266,8 @@ class PlanTokenizer(Tokenizer):
     def encode(self, text, **kwargs):
         if text in contract.TAGS:
             return [10 + contract.TAGS.index(text)]
+        if text in WORDS:
+            return [WORDS[text]]
         return [WORDS[c] for c in text] if all(c in WORDS for c in text) else [NEWLINE]
     def decode(self, ids, **kwargs):
         names = {v: k for k, v in WORDS.items()}
@@ -279,26 +282,34 @@ def plan(kind, items, newline=True):
 
 
 class PlanServer(Server):
-    """Scripted tokens with log-probs of the distribution vLLM samples: logits plus the call's logit_bias."""
+    """Scripted tokens with log-probs of the distribution vLLM samples: logits plus the call's logit_bias,
+    or only allowed_token_ids (vLLM sets every other logit to -inf)."""
     KINDS = {PARALLEL: 'main', EOS: 'main', PLAN_CLOSE: 'plan', END_PATH: 'path', END_SUMMARY: 'summary'}
 
     async def generate(self, request_id, prompt_ids, sampling_params, routing_key=None, return_logprobs=False):
-        kind = self.KINDS[sampling_params['stop_token_ids'][0]]
+        stops = sampling_params['stop_token_ids']
+        kind = self.KINDS[stops[0]] if stops else 'count' if 'allowed_token_ids' in sampling_params else 'main'
         ids = self.script[kind].pop(0)[:sampling_params['max_tokens']]
-        self.calls.append(dict(kind=kind, prompt=list(prompt_ids), ids=list(ids), bias=sampling_params['logit_bias'],
-                               stops=sampling_params['stop_token_ids']))
+        allowed = sampling_params.get('allowed_token_ids')
+        self.calls.append(dict(kind=kind, prompt=list(prompt_ids), ids=list(ids), stops=stops,
+                               bias=sampling_params.get('logit_bias'), allowed=allowed))
         with torch.no_grad():
             logits = self.model(torch.tensor([prompt_ids + ids])).logits[0, len(prompt_ids) - 1:-1]
-        for token, bias in sampling_params['logit_bias'].items():
+        for token, bias in (sampling_params.get('logit_bias') or {}).items():
             logits[:, token] += bias
+        if allowed is not None:
+            others = torch.ones(logits.size(-1), dtype=torch.bool)
+            others[allowed] = False
+            logits[:, others] = -float('inf')
         log_probs = logprobs_from_logits(logits, torch.tensor(ids)).tolist()
         return dict(token_ids=list(ids), logprobs=log_probs) if return_logprobs else list(ids)
 
 
-def plan_script(rng, plans=None):
+def plan_script(rng, plans=None, counts=None):
     text = lambda n: torch.randint(30, 40, (n,), generator=rng).tolist()
     return dict(
         main=[text(4) + [PARALLEL], text(3) + [PARALLEL], text(5) + [EOS]],
+        count=[[WORDS[str(n)]] for n in counts or (3, 2)],
         plan=plans or [plan('cases', 3), plan('verify', 2, newline=False)],
         # Block 1: path 2 ends with EOS (runtime writes </Path>), path 3 hits its budget.
         path=[text(3) + [END_PATH], text(5) + [EOS], text(30), text(2) + [END_PATH], text(4) + [END_PATH]],
@@ -306,21 +317,21 @@ def plan_script(rng, plans=None):
 
 
 class PlanProtocolTest(unittest.TestCase):
-    """protocol=plan_v1: the actor must score every sampled token under the suppressed distribution vLLM sampled."""
+    """protocol=plan: the actor must score every sampled token under the suppressed distribution vLLM sampled."""
     setUp = FlatPackedContextTest.setUp
     actor_log_probs = FlatPackedContextTest.actor_log_probs
 
-    def rollout(self, context, prompt, seed, plans=None, max_plan_tokens=32, allow_parallel=True):
+    def rollout(self, context, prompt, seed, plans=None, counts=None, max_plan_tokens=32, allow_parallel=True):
         prompt_length, response_length = 8, 128
         config = SimpleNamespace(actor_rollout_ref=SimpleNamespace(rollout=SimpleNamespace(
             prompt_length=prompt_length, response_length=response_length, agent=SimpleNamespace(
                 add_diverse_prefix=False, max_iterations_for_parallel_thinking=2, num_paths=2,
-                max_path_response_length=8, logprob_context=context, rollout_logprobs=True, protocol='plan_v1',
+                max_path_response_length=8, logprob_context=context, rollout_logprobs=True, protocol='plan',
                 max_plan_tokens=max_plan_tokens, allow_parallel=allow_parallel))))
         Loop._class_initialized = False
         Loop.init_class(config, PlanTokenizer(prompt))
         loop = Loop()
-        loop.server_manager = PlanServer(self.model, plan_script(torch.Generator().manual_seed(seed), plans))
+        loop.server_manager = PlanServer(self.model, plan_script(torch.Generator().manual_seed(seed), plans, counts))
 
         async def run():
             loop.loop = asyncio.get_running_loop()
@@ -357,16 +368,19 @@ class PlanProtocolTest(unittest.TestCase):
     def test_rollout_follows_the_contract(self):
         result = self.rollout('flat_packed', [3, 4, 5], 0)[0]
         calls = result.calls
-        self.assertEqual([c['kind'] for c in calls], ['main', 'plan', 'path', 'path', 'path', 'summary', 'main', 'plan',
-                                                     'path', 'path', 'summary', 'main'])
-        self.assertEqual(calls[1]['prompt'][-2:], [PARALLEL, PLAN_OPEN])
-        for number, call in enumerate(calls[2:5], 1):  # every branch sees the plan, none sees a sibling
-            self.assertEqual(call['prompt'], calls[1]['prompt'] + calls[1]['ids'] + [PATH, WORDS[str(number)], WORDS[':']])
-        self.assertEqual(calls[5]['prompt'][-2:], [END_PARALLEL, SUMMARY])  # no newline before <Summary>
+        self.assertEqual([c['kind'] for c in calls], ['main', 'count', 'plan', 'path', 'path', 'path', 'summary', 'main',
+                                                     'count', 'plan', 'path', 'path', 'summary', 'main'])
+        self.assertEqual(calls[1]['prompt'][-2:], [PARALLEL, BRANCHES])  # branches=N
+        self.assertEqual(calls[2]['prompt'][-4:], [PARALLEL, BRANCHES, WORDS['3'], PLAN_OPEN])
+        for number, call in enumerate(calls[3:6], 1):  # every branch sees the plan, none sees a sibling
+            self.assertEqual(call['prompt'], calls[2]['prompt'] + calls[2]['ids'] + [PATH, WORDS[str(number)], WORDS[':']])
+        self.assertEqual(calls[6]['prompt'][-2:], [END_PARALLEL, SUMMARY])  # no newline before <Summary>
         self.assertEqual(calls[-1]['stops'], [EOS])  # third block not allowed: <Parallel> suppressed, not a stop
         tags = contract.tag_ids(PlanTokenizer([]))
-        for call, node in zip(calls, [0, 2, 3, 3, 3, 4, 0, 2, 3, 3, 4, 1]):
-            self.assertEqual(call['bias'], contract.logit_bias(node, tags))
+        counts = contract.count_ids(PlanTokenizer([]))
+        for call, node in zip(calls, [0, 5, 2, 3, 3, 3, 4, 0, 5, 2, 3, 3, 4, 1]):
+            self.assertEqual({k: v for k, v in dict(logit_bias=call['bias'], allowed_token_ids=call['allowed']).items()
+                              if v is not None}, contract.sampling_constraint(node, tags, counts))
         stats = result.repro_stats
         self.assertEqual({k: stats[k] for k in ('parallel_triggers', 'valid_plan_blocks', 'fork_dispatches',
                                                 'path_jobs', 'trajectory_status', 'forks')},
@@ -374,10 +388,11 @@ class PlanProtocolTest(unittest.TestCase):
                               trajectory_status='ok', forks=2))
         sampled = [len(c['ids']) for c in calls]
         self.assertEqual(stats['sampled_tokens'], sum(sampled))
-        self.assertEqual(stats['critical_depth'], sum(sampled) - sum(sampled[2:5]) + max(sampled[2:5])
-                         - sum(sampled[8:10]) + max(sampled[8:10]))
-        # Inserted tokens: <Plan>, <Path> + "i:", the cut path's </Path>, </Parallel><Summary>.
-        self.assertEqual(sum(code == contract.INSERTED for code in result.node_codes), 2 * (1 + 2) + 5 * 3 + 1)
+        self.assertEqual(stats['critical_depth'], sum(sampled) - sum(sampled[3:6]) + max(sampled[3:6])
+                         - sum(sampled[10:12]) + max(sampled[10:12]))
+        # Inserted tokens: branches=, <Plan>, <Path> + "i:", the cut path's </Path>, </Parallel><Summary>.
+        self.assertEqual(sum(code == contract.INSERTED for code in result.node_codes), 2 * (2 + 2) + 5 * 3 + 1)
+        self.assertEqual(sum(code == contract.COUNT for code in result.node_codes), 2)
         self.assertEqual([i for i, m in enumerate(result.response_mask) if m == 0],
                          [i for i, c in enumerate(result.node_codes) if c == contract.INSERTED])
 
@@ -412,7 +427,11 @@ class PlanProtocolTest(unittest.TestCase):
                 start = next(later) if later_path else len(call['prompt']) - len(result.prompt_ids)
                 previous = call['kind']
                 bias = torch.zeros(self.model.config.vocab_size)
-                bias[list(call['bias'])] = torch.tensor(list(call['bias'].values()))
+                if call['allowed'] is not None:
+                    bias += contract.SUPPRESS_BIAS
+                    bias[call['allowed']] = 0
+                else:
+                    bias[list(call['bias'])] = torch.tensor(list(call['bias'].values()))
                 logits = self.model(torch.tensor([call['prompt'] + call['ids']])).logits[0, len(call['prompt']) - 1:-1]
                 scores = logprobs_from_logits(logits + bias, torch.tensor(call['ids']))
                 slots = torch.arange(start, start + len(call['ids']))
@@ -443,15 +462,17 @@ class PlanProtocolTest(unittest.TestCase):
             self.assertGreater(metrics[f'rollout_gap/{name}_abs_max'], 1e-3, name)
 
     def test_invalid_plan_ends_the_trajectory(self):
-        for plans, kwargs, status in [([plan('cases', 1)], {}, contract.INVALID_PLAN),
-                                      ([plan('cases', 2)[:-1] + [EOS]], {}, contract.PLAN_INCOMPLETE),
-                                      ([plan('cases', 4)], dict(max_plan_tokens=6), contract.PLAN_BUDGET_EXHAUSTED)]:
-            result = self.rollout('flat_packed', [3, 4, 5], 0, plans=plans, **kwargs)[0]
-            self.assertEqual([c['kind'] for c in result.calls], ['main', 'plan'])
+        for plans, counts, kwargs, status in [
+                ([plan('cases', 1)], [2], {}, contract.INVALID_PLAN),
+                ([plan('cases', 3)], [2], {}, contract.INVALID_PLAN),  # N = 2, but three lines
+                ([plan('cases', 2)[:-1] + [EOS]], [2], {}, contract.PLAN_INCOMPLETE),
+                ([plan('cases', 4)], [4], dict(max_plan_tokens=6), contract.PLAN_BUDGET_EXHAUSTED)]:
+            result = self.rollout('flat_packed', [3, 4, 5], 0, plans=plans, counts=counts, **kwargs)[0]
+            self.assertEqual([c['kind'] for c in result.calls], ['main', 'count', 'plan'])
             self.assertEqual(result.repro_stats['trajectory_status'], status)
             self.assertEqual(result.repro_stats['parallel_triggers'], 1)
             self.assertEqual(result.repro_stats['valid_plan_blocks'], 0)
-            self.assertEqual(result.response_ids[-len(result.calls[1]['ids']) - 1], PLAN_OPEN)
+            self.assertEqual(result.response_ids[-len(result.calls[2]['ids']) - 1], PLAN_OPEN)
             self.assertEqual(result.repro_stats['sampled_tokens'], sum(len(c['ids']) for c in result.calls))
 
     def test_sequential_baseline_suppresses_every_tag(self):

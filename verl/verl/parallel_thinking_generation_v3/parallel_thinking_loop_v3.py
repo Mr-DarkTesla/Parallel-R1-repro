@@ -90,15 +90,17 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cls.enable_thinking = getattr(config.actor_rollout_ref.rollout.agent, 'enable_thinking', None)
         # false: sequential baseline, <Parallel> is never sampled.
         cls.allow_parallel = bool(getattr(config.actor_rollout_ref.rollout.agent, 'allow_parallel', True))
-        # legacy: upstream blocks of num_paths branches. plan_v1: the shared contract (contract.py), where the
-        # model writes a plan after <Parallel> that sets the number of branches, and every node suppresses
+        # legacy: upstream blocks of num_paths branches. plan: the shared contract (contract.py), where the
+        # model samples branches=N after <Parallel> and then a plan of N lines, and every node suppresses
         # the tags it may not sample.
         cls.protocol = getattr(config.actor_rollout_ref.rollout.agent, 'protocol', 'legacy')
-        if cls.protocol not in ('legacy', 'plan_v1'):
-            raise ValueError(f'Unknown protocol {cls.protocol!r}; use legacy or plan_v1')
+        if cls.protocol not in ('legacy', 'plan'):
+            raise ValueError(f'Unknown protocol {cls.protocol!r}; use legacy or plan')
         cls.max_plan_tokens = int(getattr(config.actor_rollout_ref.rollout.agent, 'max_plan_tokens', 256))
-        if cls.protocol == 'plan_v1':
+        if cls.protocol == 'plan':
             cls.tag_ids = contract.tag_ids(tokenizer)
+            cls.count_ids = contract.count_ids(tokenizer)
+            cls.branches_ids = contract.branches_ids(tokenizer)
 
         cls.eos_token_id = cls.tokenizer.eos_token_id
         cls.start_parallel_token = cls.tokenizer.encode('<Parallel>')[0]
@@ -292,9 +294,9 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 return True
             return False
 
-        plan_protocol = self.protocol == 'plan_v1'
+        plan_protocol = self.protocol == 'plan'
         max_blocks = self.max_iterations_for_parallel_thinking or contract.MAX_BLOCKS
-        # plan_v1: generation calls (for D/T), branch spans, per-token node codes, block counters.
+        # plan: generation calls (for D/T), branch spans, per-token node codes, block counters.
         calls, spans, node_codes = [], [], []
         status = 'ok'
         counters = dict(parallel_triggers=0, valid_plan_blocks=0, fork_dispatches=0, path_jobs=0)
@@ -443,7 +445,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if plan_protocol:
             assert len(node_codes) == untruncated_length
             extra['node_codes'] = node_codes[:kept]
-            extra['node_suppression'] = contract.suppression_table(self.tag_ids).tolist()
+            extra['node_suppression'] = contract.suppression_table(self.tag_ids, self.count_ids).tolist()
         if self.rollout_logprobs:
             assert len(rollout_segments) == len(rollout_log_probs) == untruncated_length
             extra['rollout_segments'] = rollout_segments[:kept]
@@ -481,20 +483,25 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         return list(output), [0.0] * len(output)
 
     async def _node_call(self, phase, node, close, prompt_ids, sampling_params, max_tokens):
-        """plan_v1: sample one node until its closing tag, EOS or max_tokens, with the node's tags suppressed.
+        """plan: sample one node until its closing tag, EOS or max_tokens, with the node's tags suppressed.
 
-        Returns ids, log-probs, stop ('close', 'eos' or 'budget') and whether a call was made.
+        COUNT (close None) samples one token from contract.COUNTS. Returns ids, log-probs, stop ('close',
+        'eos' or 'budget') and whether a call was made.
         """
         if max_tokens < 1:
             return [], [], 'budget', False
-        params = {**sampling_params, 'n': 1, 'stop_token_ids': [close, self.eos_token_id],
-                  'logit_bias': contract.logit_bias(node, self.tag_ids), 'max_tokens': max_tokens}
+        params = {**sampling_params, 'n': 1, 'max_tokens': max_tokens,
+                  'stop_token_ids': [] if close is None else [close, self.eos_token_id],
+                  **contract.sampling_constraint(node, self.tag_ids, self.count_ids)}
         ids, log_probs = await self._generate(phase, uuid4().hex, prompt_ids, params)
+        if close is None:
+            return ids, log_probs, 'close' if ids else 'budget', True
         stop = 'close' if ids and ids[-1] == close else 'eos' if ids and ids[-1] == self.eos_token_id else 'budget'
         return ids, log_probs, stop, True
 
     async def _plan_block(self, context, sampling_params, block, room):
-        """plan_v1 block after a sampled <Parallel>: <Plan>, the plan, its branches, </Parallel><Summary>, summary.
+        """plan block after a sampled <Parallel>: branches=N, <Plan>, the plan, its N branches,
+        </Parallel><Summary>, summary.
 
         context: prompt + response through <Parallel>; room: response tokens left. Returns the block's ids
         and, per token, kind (plan/path/summary when sampled, forced when inserted), node code and vLLM
@@ -521,6 +528,19 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             if stop == 'budget':
                 add([close], 'forced')
 
+        # branches=N: the model samples N (one of contract.COUNTS); the plan must then have N lines.
+        add(self.branches_ids, 'forced')
+        ids, log_probs, stop, called = await self._node_call(
+            'count', contract.COUNT, None, context + out['ids'], sampling_params,
+            min(1, room - len(out['ids'])))
+        if called:
+            out['calls'].append(dict(node=contract.COUNT, block=block, sampled=len(ids)))
+        add(ids, 'plan', contract.COUNT, log_probs)
+        if stop != 'close':
+            out['status'] = contract.PLAN_BUDGET_EXHAUSTED
+            return out
+        branches = contract.MIN_PATHS + self.count_ids.index(ids[0])
+
         add([ids_of[tag] for tag in contract.PLAN_OPEN], 'forced')
         ids, log_probs, stop, called = await self._node_call(
             'plan', contract.PLAN, ids_of['</Plan>'], context + out['ids'], sampling_params,
@@ -528,12 +548,12 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         if called:
             out['calls'].append(dict(node=contract.PLAN, block=block, sampled=len(ids)))
         text = self.tokenizer.decode(ids[:-1] if stop == 'close' else ids, skip_special_tokens=False)
-        out['status'] = contract.plan_status(text, stop)
+        out['status'] = contract.plan_status(text, stop, branches)
         add(ids, 'plan', contract.PLAN, log_probs)
         if out['status'] != contract.VALID:
             return out
 
-        items = contract.parse_plan(text).items
+        items = contract.parse_plan(text, branches).items
         prefixes = [[ids_of['<Path>']] + contract.path_prefix_ids(self.tokenizer, number)
                     for number in range(1, len(items) + 1)]
         base, left = context + out['ids'], room - len(out['ids'])

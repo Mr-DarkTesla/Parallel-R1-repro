@@ -14,11 +14,11 @@ if [[ "$MODE" == think ]]; then
   case "$REWARD" in v0|v1_low|v1_high|v2) ;; *) echo 'REWARD must be v0, v1_low, v1_high or v2'; exit 2;; esac
   ADV=rloo; DEFAULT_RESPONSE=16384; DEFAULT_BLOCKS=2; TAG=think-$REWARD; CHECK_ARGS=(--plan)
   [[ "${ALLOW_PARALLEL:-true}" == false ]] && TAG=think-sequential-$REWARD
-  # Blocks follow the shared contract with the thinking SFT (contract.py): the model writes a plan
-  # after <Parallel> that sets 2-4 branches; an invalid plan ends the trajectory with c = 0.
+  # Blocks follow the shared contract with the thinking SFT (contract.py, v2): after <Parallel> the model
+  # samples branches=N (2-4) and a plan of N lines; an invalid plan ends the trajectory with c = 0.
   MODE_ARGS=(actor_rollout_ref.rollout.agent.enable_thinking=true
              "actor_rollout_ref.rollout.agent.allow_parallel=${ALLOW_PARALLEL:-true}"
-             actor_rollout_ref.rollout.agent.protocol=plan_v1
+             actor_rollout_ref.rollout.agent.protocol=plan
              "actor_rollout_ref.rollout.agent.max_plan_tokens=${MAX_PLAN_TOKENS:-256}"
              "+reward_model.reward_kwargs.reward_method=think_$REWARD")
   if [[ "$REWARD" == v2 ]]; then

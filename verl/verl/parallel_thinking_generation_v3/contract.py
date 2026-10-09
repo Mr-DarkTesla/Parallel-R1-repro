@@ -1,17 +1,21 @@
-"""Parallel-thinking serialization contract shared by the generator, SFT and RL (agreed 2026-10-09).
+"""Parallel-thinking serialization contract shared by the generator, SFT and RL (v2, 2026-10-09).
 
-    ... <Parallel><Plan>kind
+    ... <Parallel>branches=N<Plan>kind
     1: ...
-    2: ...
-    </Plan><Path>1: ...</Path><Path>2: ...</Path></Parallel><Summary>...</Summary> ...
+    ...
+    N: ...
+    </Plan><Path>1: ...</Path>...<Path>N: ...</Path></Parallel><Summary>...</Summary> ...
 
-The model samples <Parallel> (the only fork decision), the plan text and </Plan>, branch text and
-</Path>, summary text and </Summary>. The runtime inserts <Plan> after <Parallel>, <Path> plus "i:"
-at the start of branch i, and </Parallel><Summary> after the last branch; inserted tokens are
-context only (no SFT loss, no RL log-prob). The model writes " text" after "i:" itself. No token sits
-between </Plan> and the first <Path> or between </Path> and the next <Path>: a separator would let
-branch B read branch A through it. An invalid, unfinished or over-budget plan ends the trajectory
-with c = 0; plans are never repaired and blocks are never empty.
+The model samples <Parallel> (the only fork decision), the branch count N (one digit token, 2-4), the plan
+text and </Plan>, branch text and </Path>, summary text and </Summary>. The runtime inserts "branches="
+after <Parallel>, <Plan> after N, <Path> plus "i:" at the start of branch i, and </Parallel><Summary>
+after the last branch; inserted tokens are context only (no SFT loss, no RL log-prob). The model writes
+" text" after "i:" itself. No token sits between </Plan> and the first <Path> or between </Path> and the
+next <Path>: a separator would let branch B read branch A through it. A plan whose line count differs
+from N, an invalid, unfinished or over-budget plan ends the trajectory with c = 0; plans are never
+repaired and blocks are never empty.
+
+v1 -> v2: "branches=N" between <Parallel> and <Plan>; node COUNT samples N from the digits 2-4 only.
 
 Branches of one block start at the position after their shared prefix (through </Plan>); </Parallel>
 takes the longest branch's last position + 1 and positions continue from there. A query never sees a
@@ -23,22 +27,26 @@ from dataclasses import dataclass
 
 import torch
 
-CONTRACT_VERSION = 1
+CONTRACT_VERSION = 2
 TAGS = ('<Parallel>', '</Parallel>', '<Path>', '</Path>', '<Summary>', '</Summary>', '<Plan>', '</Plan>')
 PLAN_KINDS = ('decompose', 'cases', 'candidates', 'methods', 'verify')
 MIN_PATHS, MAX_PATHS = 2, 4
+BRANCHES = 'branches='  # inserted after <Parallel>; the model then samples one of COUNTS
+COUNTS = tuple(str(n) for n in range(MIN_PATHS, MAX_PATHS + 1))
 MAX_BLOCKS = 2  # cap, not quota: the next <Parallel> is suppressed
 
 VALID, INVALID_PLAN, PLAN_INCOMPLETE, PLAN_BUDGET_EXHAUSTED = (
     'valid', 'invalid_plan', 'plan_incomplete', 'plan_budget_exhausted')
 
 # Generation nodes. Each samples one closing tag (main: <Parallel> while blocks remain); every other tag
-# gets SUPPRESS_BIAS, identically in sampling (vLLM logit_bias) and in replay (actor logits).
-MAIN_OPEN, MAIN_CLOSED, PLAN, PATH, SUMMARY = range(5)
+# gets SUPPRESS_BIAS, identically in sampling (vLLM logit_bias) and in replay (actor logits). COUNT samples
+# one token from COUNTS only (vLLM allowed_token_ids; the actor adds SUPPRESS_BIAS to every other token).
+MAIN_OPEN, MAIN_CLOSED, PLAN, PATH, SUMMARY, COUNT = range(6)
 INSERTED = -1  # runtime-inserted token: no log-prob
-SAMPLED_TAG = {MAIN_OPEN: '<Parallel>', MAIN_CLOSED: None, PLAN: '</Plan>', PATH: '</Path>', SUMMARY: '</Summary>'}
+SAMPLED_TAG = {MAIN_OPEN: '<Parallel>', MAIN_CLOSED: None, PLAN: '</Plan>', PATH: '</Path>', SUMMARY: '</Summary>',
+               COUNT: None}
 SUPPRESS_BIAS = -100.0
-# Runtime-inserted text: after a sampled <Parallel>, and after the last branch of a block.
+# Runtime-inserted tags: after the sampled count, and after the last branch of a block.
 PLAN_OPEN, BLOCK_CLOSE = ('<Plan>',), ('</Parallel>', '<Summary>')
 _ITEM = re.compile(r'\s*(\d+)\s*:\s*(\S.*?)\s*')
 
@@ -49,18 +57,21 @@ class Plan:
     items: tuple
 
 
-def parse_plan(text):
+def parse_plan(text, branches=None):
     """Plan between <Plan> and </Plan> (exclusive), or None if it breaks the grammar.
 
     First line: a kind from PLAN_KINDS. Then MIN_PATHS..MAX_PATHS lines "i: text", i = 1..n in order,
-    non-empty one-line text. One trailing newline is allowed; no blank lines or other text.
-    Normalization (CRLF, surrounding spaces) happens only here; sampled ids are never rewritten.
+    non-empty one-line text; with `branches` (the sampled N) exactly that many. One trailing newline is
+    allowed; no blank lines or other text. Normalization (CRLF, surrounding spaces) happens only here;
+    sampled ids are never rewritten.
     """
     text = text.replace('\r\n', '\n')
     if text.endswith('\n'):
         text = text[:-1]
     kind, *lines = text.split('\n')
     if kind.strip() not in PLAN_KINDS or not MIN_PATHS <= len(lines) <= MAX_PATHS:
+        return None
+    if branches is not None and len(lines) != branches:
         return None
     items = []
     for number, line in enumerate(lines, 1):
@@ -71,13 +82,26 @@ def parse_plan(text):
     return Plan(kind.strip(), tuple(items))
 
 
-def plan_status(text, stop):
-    """Status of a plan call: stop is 'close' (sampled </Plan>), 'eos' or 'budget'."""
+def plan_status(text, stop, branches=None):
+    """Status of a plan call: stop is 'close' (sampled </Plan>), 'eos' or 'budget'; branches is the sampled N."""
     if stop == 'eos':
         return PLAN_INCOMPLETE
     if stop == 'budget':
         return PLAN_BUDGET_EXHAUSTED
-    return VALID if parse_plan(text) is not None else INVALID_PLAN
+    return VALID if parse_plan(text, branches) is not None else INVALID_PLAN
+
+
+def format_block(kind, items, paths, summary):
+    """Serialized text of one block (sampled and inserted parts alike): the text SFT tokenizes.
+
+    items: the plan lines; paths: branch texts after "i:" (the model's leading space included);
+    summary: text between <Summary> and </Summary>.
+    """
+    assert len(items) == len(paths) and str(len(items)) in COUNTS
+    plan = kind + '\n' + ''.join(f'{number}: {item}\n' for number, item in enumerate(items, 1))
+    assert parse_plan(plan, len(items)) == Plan(kind, tuple(items)), 'items must be one-line, trimmed text'
+    branches = ''.join(f'<Path>{path_prefix(number)}{path}</Path>' for number, path in enumerate(paths, 1))
+    return f'<Parallel>{BRANCHES}{len(items)}<Plan>{plan}</Plan>{branches}</Parallel><Summary>{summary}</Summary>'
 
 
 def path_prefix(number):
@@ -111,25 +135,53 @@ def tag_ids(tokenizer):
     return ids
 
 
+def count_ids(tokenizer):
+    """Single-token ids of COUNTS, in order (N = MIN_PATHS + index); raises otherwise."""
+    ids = tuple(tokenizer.encode(count, add_special_tokens=False) for count in COUNTS)
+    if any(len(encoded) != 1 for encoded in ids) or len({encoded[0] for encoded in ids}) != len(COUNTS):
+        raise ValueError(f'{COUNTS} must be distinct single tokens, got {ids}')
+    return tuple(encoded[0] for encoded in ids)
+
+
+def branches_ids(tokenizer):
+    """Token ids the runtime inserts between <Parallel> and the sampled count."""
+    return tokenizer.encode(BRANCHES, add_special_tokens=False)
+
+
 def logit_bias(node, ids):
-    return {ids[tag]: SUPPRESS_BIAS for tag in suppressed_tags(node)}
+    return {ids[tag]: SUPPRESS_BIAS for tag in suppressed_tags(node)} if node != COUNT else {}
 
 
-def suppression_table(ids):
-    """(nodes, len(TAGS)) tensor of suppressed token ids per node code, -1 padded."""
-    rows = [[ids[tag] for tag in suppressed_tags(node)] for node in range(len(SAMPLED_TAG))]
+def sampling_constraint(node, ids, counts):
+    """vLLM sampling params for a node: the tag logit_bias, or allowed_token_ids for COUNT."""
+    if node == COUNT:
+        return dict(allowed_token_ids=list(counts))
+    return dict(logit_bias=logit_bias(node, ids))
+
+
+def suppression_table(ids, counts=()):
+    """(nodes, 1 + width) tensor per node code: column 0 is the mode (0: the listed ids get SUPPRESS_BIAS,
+    1: every other token does), then token ids, -1 padded. COUNT lists `counts` in mode 1."""
+    rows = [[0] + [ids[tag] for tag in suppressed_tags(node)] for node in range(len(SAMPLED_TAG))]
+    rows[COUNT] = [1] + list(counts)
     width = max(map(len, rows))
     return torch.tensor([row + [-1] * (width - len(row)) for row in rows], dtype=torch.long)
 
 
 def apply_suppression(logits, nodes, table):
-    """Add SUPPRESS_BIAS in place to suppressed tags where logits[b, t] predicts a token of node nodes[b, t]."""
+    """Add SUPPRESS_BIAS in place where logits[b, t] predicts a token of node nodes[b, t] (see suppression_table)."""
     for node in range(table.size(0)):
         rows, columns = (nodes == node).nonzero(as_tuple=True)
-        banned = table[node][table[node] >= 0].to(logits.device)
-        if rows.numel() and banned.numel():
-            logits.index_put_((rows[:, None], columns[:, None], banned[None, :]),
+        listed = table[node, 1:][table[node, 1:] >= 0].to(logits.device)
+        if not rows.numel() or not listed.numel():
+            continue
+        if table[node, 0] == 0:
+            logits.index_put_((rows[:, None], columns[:, None], listed[None, :]),
                               torch.tensor(SUPPRESS_BIAS, dtype=logits.dtype, device=logits.device), accumulate=True)
+        else:  # allowed only: the listed ids keep their logits exactly
+            bias = torch.full((logits.size(-1),), SUPPRESS_BIAS, dtype=logits.dtype, device=logits.device)
+            bias[listed] = 0
+            logits[rows, columns] += bias
     return logits
 
 
@@ -187,9 +239,9 @@ def graph_attention_mask(length, spans, offset=0):
 def depth_and_tokens(calls):
     """(D, T) from sampled-token counts per generation call.
 
-    calls: dicts with node (MAIN_*, PLAN, PATH, SUMMARY), block (None for main) and sampled.
+    calls: dicts with node (MAIN_*, COUNT, PLAN, PATH, SUMMARY), block (None for main) and sampled.
     T counts every sampled token, a failed plan included. D adds main segments and, per block,
-    plan + longest branch + summary. Runtime-inserted tokens count in neither.
+    count + plan + longest branch + summary. Runtime-inserted tokens count in neither.
     """
     depth = tokens = 0
     longest = {}

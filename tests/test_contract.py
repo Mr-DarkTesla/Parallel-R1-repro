@@ -17,7 +17,7 @@ Span = contract.Span
 
 class Tokenizer:
     def encode(self, text, **kwargs):
-        return [100 + contract.TAGS.index(text)] if text in contract.TAGS else [ord(c) for c in text]
+        return [200 + contract.TAGS.index(text)] if text in contract.TAGS else [ord(c) for c in text]
 
 
 class PlanTest(unittest.TestCase):
@@ -34,6 +34,23 @@ class PlanTest(unittest.TestCase):
                      'cases\n1: a\n3: b', 'cases\n2: a\n1: b', 'cases\n1: a\n2: ', 'cases\n1: a\n\n2: b',
                      'cases\n1: a\n2: b\n\n', 'cases\n1: a\nso 2: b', '\ncases\n1: a\n2: b', '']:
             self.assertIsNone(contract.parse_plan(text), repr(text))
+
+    def test_declared_count_must_match_the_plan(self):
+        three = 'cases\n1: a\n2: b\n3: c\n'
+        self.assertEqual(len(contract.parse_plan(three, 3).items), 3)
+        for branches in (2, 4):
+            self.assertIsNone(contract.parse_plan(three, branches))
+            self.assertEqual(contract.plan_status(three, 'close', branches), contract.INVALID_PLAN)
+        self.assertEqual(contract.plan_status(three, 'close', 3), contract.VALID)
+        self.assertEqual(contract.COUNTS, ('2', '3', '4'))
+
+    def test_format_block_is_the_v2_serialization(self):
+        text = contract.format_block('cases', ['x > 0', 'x <= 0'], [' if x > 0 then 1', ' else 0'], ' 1 or 0')
+        self.assertEqual(text, '<Parallel>branches=2<Plan>cases\n1: x > 0\n2: x <= 0\n</Plan>'
+                               '<Path>1: if x > 0 then 1</Path><Path>2: else 0</Path></Parallel><Summary> 1 or 0</Summary>')
+        self.assertEqual(contract.CONTRACT_VERSION, 2)
+        with self.assertRaises(AssertionError):
+            contract.format_block('cases', ['a\nb', 'c'], [' x', ' y'], '')
 
     def test_status(self):
         good = 'methods\n1: algebra\n2: geometry\n'
@@ -61,6 +78,21 @@ class SuppressionTest(unittest.TestCase):
         self.assertEqual(contract.logit_bias(contract.PLAN, self.ids),
                          {self.ids[t]: -100.0 for t in contract.TAGS if t != '</Plan>'})
 
+    def test_count_samples_only_the_digits(self):
+        counts = contract.count_ids(Tokenizer())
+        self.assertEqual(counts, (ord('2'), ord('3'), ord('4')))
+        self.assertEqual(contract.branches_ids(Tokenizer()), [ord(c) for c in 'branches='])
+        self.assertEqual(contract.sampling_constraint(contract.COUNT, self.ids, counts),
+                         dict(allowed_token_ids=list(counts)))
+        self.assertEqual(contract.sampling_constraint(contract.PATH, self.ids, counts),
+                         dict(logit_bias=contract.logit_bias(contract.PATH, self.ids)))
+
+        class Merged(Tokenizer):
+            def encode(self, text, **kwargs):
+                return [1, 2] if text == '3' else super().encode(text)
+        with self.assertRaises(ValueError):
+            contract.count_ids(Merged())
+
     def test_tag_ids_must_be_single_distinct_tokens(self):
         class Split(Tokenizer):
             def encode(self, text, **kwargs):
@@ -69,18 +101,26 @@ class SuppressionTest(unittest.TestCase):
             contract.tag_ids(Split())
 
     def test_actor_suppression_equals_sampling_bias(self):
-        table = contract.suppression_table(self.ids)
-        logits = torch.randn(2, 6, 110)
-        nodes = torch.tensor([[0, 1, 2, 3, 4, -1], [4, 3, 2, 1, 0, -1]])
+        counts = contract.count_ids(Tokenizer())
+        table = contract.suppression_table(self.ids, counts)
+        logits = torch.randn(2, 7, 210)
+        nodes = torch.tensor([[0, 1, 2, 3, 4, 5, -1], [5, 4, 3, 2, 1, 0, -1]])
         expected = logits.clone()
         for row in range(2):
-            for column in range(6):
+            for column in range(7):
                 node = nodes[row, column].item()
-                if node >= 0:
+                if node == contract.COUNT:  # vLLM allowed_token_ids: every other token is (almost) impossible
+                    others = torch.ones(210, dtype=torch.bool)
+                    others[list(counts)] = False
+                    expected[row, column, others] += contract.SUPPRESS_BIAS
+                elif node >= 0:
                     for token, bias in contract.logit_bias(node, self.ids).items():
                         expected[row, column, token] += bias
         actual = contract.apply_suppression(logits.clone(), nodes, table)
         torch.testing.assert_close(actual, expected)
+        count = actual[0, 5].log_softmax(-1)[list(counts)]
+        torch.testing.assert_close(count, logits[0, 5, list(counts)].log_softmax(-1))  # exactly renormalized
+        self.assertTrue(torch.equal(actual[0, 5, list(counts)], logits[0, 5, list(counts)]))
 
 
 class GraphTest(unittest.TestCase):
@@ -121,7 +161,8 @@ class GraphTest(unittest.TestCase):
 
 class DepthTest(unittest.TestCase):
     def test_depth_and_tokens(self):
-        calls = [dict(node=contract.MAIN_OPEN, block=None, sampled=10), dict(node=contract.PLAN, block=0, sampled=6),
+        calls = [dict(node=contract.MAIN_OPEN, block=None, sampled=9), dict(node=contract.COUNT, block=0, sampled=1),
+                 dict(node=contract.PLAN, block=0, sampled=6),
                  dict(node=contract.PATH, block=0, sampled=20), dict(node=contract.PATH, block=0, sampled=35),
                  dict(node=contract.PATH, block=0, sampled=5), dict(node=contract.SUMMARY, block=0, sampled=8),
                  dict(node=contract.MAIN_CLOSED, block=None, sampled=12)]

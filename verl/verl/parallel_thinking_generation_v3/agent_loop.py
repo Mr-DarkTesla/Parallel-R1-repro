@@ -144,9 +144,9 @@ class AgentLoopOutput(BaseModel):
     rollout_segments: list[int] | None = None
     """Per response token, see logprob_gap.SEGMENTS; -1 for injected tags."""
     node_codes: list[int] | None = None
-    """protocol=plan_v1: per response token, the contract node that sampled it (contract.INSERTED = -1)."""
+    """protocol=plan: per response token, the contract node that sampled it (contract.INSERTED = -1)."""
     node_suppression: list[list[int]] | None = None
-    """protocol=plan_v1: contract.suppression_table, the tag ids each node suppresses (-1 padded)."""
+    """protocol=plan: contract.suppression_table, per node a mode and the token ids it suppresses or allows."""
     # multiverse_attn_bool: torch.Tensor
     model_config = ConfigDict(arbitrary_types_allowed=True)
 

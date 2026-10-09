@@ -1,7 +1,7 @@
 """Rewards for thinking-mode parallel RL (V0/V1/V2 agreed in the reward debate, 2026-10-08).
 
 c = 1 only for a correct final answer after the closing </think>, outside every branch, in a trajectory
-the rollout did not end early (protocol=plan_v1: an invalid, unfinished or over-budget plan gives c = 0).
+the rollout did not end early (protocol=plan: an invalid, unfinished or over-budget plan gives c = 0).
 V0 = 2c - 1
 V1 = 2c - 1 - c * (alpha * D / 16384 + beta * T / 16384)   (low: .10/.05, high: .50/.25)
 V2 = 2c - 1 - c * (alpha * g(D / s_D) + beta * g(T / s_T)),  g(x) = x / (1 + x), alpha=.10, beta=.05

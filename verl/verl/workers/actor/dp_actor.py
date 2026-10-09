@@ -89,11 +89,11 @@ class DataParallelPPOActor(BasePPOActor):
         """
         response_length = micro_batch["responses"].size(-1)
         replay_segments = micro_batch["replay_segments"] if "replay_segments" in micro_batch.keys() else None
-        # protocol=plan_v1: the node that sampled each response token, and the tags each node suppresses.
+        # protocol=plan: the node that sampled each response token, and the tags each node suppresses.
         node_codes = micro_batch["node_codes"] if "node_codes" in micro_batch.keys() else None
         if (replay_segments is not None or node_codes is not None) and (
                 self.use_remove_padding or self.use_fused_kernels or "position_required_masks" not in micro_batch.keys()):
-            raise ValueError("logprob_context=flat_packed and protocol=plan_v1 need the padded custom-mask forward "
+            raise ValueError("logprob_context=flat_packed and protocol=plan need the padded custom-mask forward "
                              "(use_remove_padding=False, use_fused_kernels=False)")
         labels = micro_batch["responses"]
         if "label_overrides" in micro_batch.keys():

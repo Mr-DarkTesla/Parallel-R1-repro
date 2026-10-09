@@ -4,7 +4,7 @@ Block-1 paths are scored in the rollout's own context by both the tree and the
 flat_packed actor, so their gap is the bf16 noise floor; a larger gap elsewhere
 is a rollout/actor context mismatch. Valid for temperature 1 without top-p/top-k
 truncation, because vLLM V1 reports log-probs of the raw logits. For the same reason,
-with protocol=plan_v1 the gap also contains the mass of the tags each node suppresses
+with protocol=plan the gap also contains the mass of the tags each node suppresses
 (the actor scores the suppressed distribution that was actually sampled).
 """
 import torch

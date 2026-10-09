@@ -141,7 +141,7 @@ def test_v2_uses_task_scale_then_bucket_scale(tmp_path):
 
 
 def test_trajectory_ended_by_the_rollout_gets_no_credit():
-    # plan_v1: an invalid, unfinished or over-budget plan ends the trajectory; c = 0 even if text follows.
+    # plan: an invalid, unfinished or over-budget plan ends the trajectory; c = 0 even if text follows.
     right = '<think>a</think>\\boxed{34}'
     ended = score(right, trajectory_status='invalid_plan')
     assert ended['score'] == -1.0 and ended['acc'] == 0.0 and ended['plan_failed'] == 1.0

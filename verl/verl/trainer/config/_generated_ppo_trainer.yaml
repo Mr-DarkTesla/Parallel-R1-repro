@@ -137,8 +137,8 @@ actor_rollout_ref:
       rollout_logprobs: false # record vLLM log-probs of sampled tokens and log rollout_gap/* per segment
       enable_thinking: null # passed to the chat template when set; Qwen3 thinks by default
       allow_parallel: true # false: sequential baseline, <Parallel> is never sampled
-      protocol: legacy # plan_v1: <Parallel><Plan>kind / i: lines</Plan><Path>i:...</Path>..., see parallel_thinking_generation_v3/contract.py
-      max_plan_tokens: 256 # plan_v1: a plan without </Plan> within this budget ends the trajectory with c = 0
+      protocol: legacy # plan: <Parallel>branches=N<Plan>kind / N lines i: ...</Plan><Path>i:...</Path>..., see parallel_thinking_generation_v3/contract.py
+      max_plan_tokens: 256 # plan: a plan without </Plan> within this budget ends the trajectory with c = 0
       custom_async_server:
         path: null
         name: null
