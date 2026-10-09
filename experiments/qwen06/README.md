@@ -4,7 +4,7 @@
 
 ## Установка
 
-Скрипт рассчитан на Ubuntu 22.04, Python 3.10 и NVIDIA GPU с совместимым драйвером. Для системных пакетов требуется sudo. Основные версии: PyTorch 2.6.0, vLLM 0.8.5.post1, Transformers 4.51.3, Ray 2.43.0, flash-attention 2.7.4.post1. Существующий checkout не переключается автоматически.
+Скрипт рассчитан на Ubuntu 22.04, Python 3.10 и NVIDIA GPU с совместимым драйвером. Для системных пакетов нужен root или sudo без пароля (контейнер vast.ai под root подходит); если apt не даёт python3.10-dev, окружение строится на CPython 3.10 от uv. Основные версии: PyTorch 2.6.0, vLLM 0.8.5.post1, Transformers 4.51.3, Ray 2.43.0, flash-attention 2.7.4.post1. Существующий checkout не переключается автоматически.
 
 ```bash
 git clone --branch qwen3-0.6b-rl https://github.com/Mr-DarkTesla/Parallel-R1-repro.git ~/parallel-r1/repo
@@ -196,6 +196,15 @@ GRAPH_ROLLOUT=true REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODE
 Train/validation разделены; позиции усредняются по блокам. SEM описателен: блоки одного ответа не независимы. `plot_progress.py` проверяет полноту завершённых train-шагов; `--expected-samples` равен batch × rollout n. Сдвиг позиции сам по себе не доказывает переход от exploration к verification. Проверка эффекта требует законченных S1/S2 и нескольких seeds.
 
 ## Проверки
+
+На машине с GPU всё разом, начиная с окружения, если его ещё нет: тесты, проверка графового rollout (обычная и с вытеснениями), smoke-RL плоский и с `GRAPH_ROLLOUT=true`. В конце печатается сводка, логи остаются в `runs/gpu-checks/<время>`; шаги описаны в шапке скрипта.
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Mr-DarkTesla/Parallel-R1-repro/qwen3-0.6b-rl/experiments/qwen06/gpu_checks.sh -o ~/gpu_checks.sh
+nohup bash ~/gpu_checks.sh > ~/gpu-checks.log 2>&1 < /dev/null &   # лог кончается строкой GPU_CHECKS_DONE
+```
+
+По отдельности:
 
 ```bash
 .venv/bin/python -m pytest repo/experiments/qwen06/test_repro.py repo/experiments/qwen06/test_think.py -q
