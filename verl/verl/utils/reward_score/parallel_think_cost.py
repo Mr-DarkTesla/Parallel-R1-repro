@@ -11,9 +11,15 @@ answers on train calibration questions (experiments/qwen06/calibrate_cost_scales
 """
 import json
 import re
+import threading
 from functools import lru_cache
 
 from .math_dapo import last_boxed_only_string, normalize_final_answer, remove_boxed
+
+try:  # MATH answers (fractions, intervals, expressions) need symbolic equivalence, not string equality
+    from math_verify import parse, verify
+except ImportError:
+    parse = verify = None
 
 LENGTH_SCALE = 16384
 WEIGHTS = {'think_v0': None, 'think_v1_low': (0.10, 0.05), 'think_v1_high': (0.50, 0.25), 'think_v2': (0.10, 0.05)}
@@ -41,6 +47,20 @@ def extract_answer(region):
     return match[-1] if match else None
 
 
+def equivalent(pred, truth):
+    """DAPO-normalized string match, else math-verify equivalence when it is installed."""
+    if normalize_final_answer(pred) == normalize_final_answer(truth):
+        return True
+    if verify is None:
+        return False
+    timeout = 5 if threading.current_thread() is threading.main_thread() else None  # signal-based timeouts
+    try:
+        return bool(verify(parse(f'${truth}$', parsing_timeout=timeout), parse(f'${pred}$', parsing_timeout=timeout),
+                           timeout_seconds=timeout))
+    except Exception:
+        return False
+
+
 @lru_cache(maxsize=4)
 def load_scales(path):
     with open(path) as f:
@@ -63,8 +83,7 @@ def compute_score(text, ground_truth, data_source, extra_info):
     region = answer_region(text)
     pred = extract_answer(region) if region is not None else None
     ended = extra_info.get('trajectory_status', 'ok') != 'ok'
-    correct = (not ended and pred is not None
-               and normalize_final_answer(pred) == normalize_final_answer(str(ground_truth)))
+    correct = not ended and pred is not None and equivalent(pred, str(ground_truth))
     depth, tokens = extra_info.get('critical_depth'), extra_info.get('sampled_tokens')
     cost = 0.0
     if WEIGHTS[method] is not None:

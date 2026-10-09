@@ -77,7 +77,25 @@ REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"    # v0 | v1_low
 ALLOW_PARALLEL=false REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"   # последовательный baseline
 ```
 
-`prepare_think.py` берёт те же вопросы и ответы, что S1/S2 (DAPO train, APO validation), и заменяет инструкцию шаблоном. По умолчанию это `{problem}` и просьба дать ответ в `\boxed{}`. Ещё он пишет `think_calib.parquet`: 512 train-вопросов для калибровки V2. Отличия режима от S1/S2:
+`prepare_think.py` скачивает данные с Hugging Face по разбиению из дебатов о thinking-SFT (вариант A, 9 октября):
+
+| Файл | Что внутри | Зачем |
+|---|---|---|
+| `think_train` | MATH train: algebra, prealgebra, number theory, counting & probability, уровни 2–4 | RL |
+| `think_val` | MATH-500 | валидация во время RL |
+| `think_math_test` | MATH test без задач MATH-500, те же разделы и уровни, что в train | отдельный TEST |
+| `think_gsm8k_test` | GSM8K test | проверка, что модель не разучилась |
+| `think_calib` | 512 вопросов из `think_train` | калибровка V2 |
+
+GSM8K train и разделы MATH geometry, intermediate algebra и precalculus уходят в SFT, в RL их нет. Шаблон по умолчанию — `{problem}` и просьба дать ответ в `\boxed{}`; он должен совпадать с промптом SFT. Ответ сравнивается по нормализации DAPO, а если строки не совпали, то через math-verify (`0.75` = `\frac{3}{4}`). TEST и GSM8K считаются отдельным прогоном без обучения:
+
+```bash
+RUN_NAME=eval-step300 REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$CHECKPOINT" \
+  trainer.val_only=true trainer.val_before_train=true \
+  data.val_files="['$HOME/parallel-r1/data/think_math_test.parquet','$HOME/parallel-r1/data/think_gsm8k_test.parquet']"
+```
+
+Отличия режима от S1/S2:
 
 | Настройка | think |
 |---|---|

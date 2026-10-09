@@ -16,9 +16,16 @@ from verl.utils.reward_score import default_compute_score
 from verl.workers.reward_manager.naive import NaiveRewardManager
 
 HERE = Path(__file__).resolve().parent
-spec = importlib.util.spec_from_file_location('calibrate_cost_scales', HERE / 'calibrate_cost_scales.py')
-calibrate = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(calibrate)
+
+
+def load_module(name):
+    spec = importlib.util.spec_from_file_location(name, HERE / f'{name}.py')
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+calibrate = load_module('calibrate_cost_scales')
 
 
 def score(text, method='think_v0', truth='34', **info):
@@ -38,6 +45,32 @@ def test_correctness_reads_only_the_final_answer_outside_branches(text, correct)
     result = score(text)
     assert result['acc'] == float(correct)
     assert result['score'] == (1.0 if correct else -1.0)
+
+
+@pytest.mark.parametrize('pred, truth', [('0.75', '\\frac{3}{4}'), ('\\dfrac34', '\\frac{3}{4}'), ('(2, 3)', '(2,3)'),
+                                         ('\\text{(C)}', 'C'), ('1,000', '1000')])
+def test_math_answers_are_compared_symbolically(pred, truth):
+    assert score(f'<think>a</think>\\boxed{{{pred}}}', truth=truth)['acc'] == 1.0
+    assert score('<think>a</think>\\boxed{0.7}', truth=truth)['acc'] == 0.0
+
+
+def test_prepare_think_takes_the_agreed_math_slice():
+    prepare = load_module('prepare_think')
+    assert prepare.last_boxed('so \\boxed{\\frac{1}{2}} and \\boxed{\\{1, 2\\}}.') == '\\{1, 2\\}'
+    items = {('algebra', 'train'): [dict(problem='a  b', level='Level 2', solution='\\boxed{1}'),
+                                    dict(problem='c', level='Level 5', solution='\\boxed{2}'),
+                                    dict(problem='d', level='Level ?', solution='\\boxed{3}'),
+                                    dict(problem='e', level='Level 4', solution='no box')],
+             ('algebra', 'test'): [dict(problem='a b', level='Level 3', solution='\\boxed{4}'),
+                                   dict(problem='f', level='Level 3', solution='\\boxed{5}')]}
+    load = lambda name, subject, split: items[subject, split]
+    rows, skipped = prepare.math_rows(load, 'train', 'math_train', ['algebra'], {2, 3, 4}, '{problem}!')
+    assert [r['reward_model']['ground_truth'] for r in rows] == ['1'] and skipped == {'no_boxed_answer': 1}
+    assert rows[0]['extra_info'] == dict(index='math_train/algebra/0', reward_method='think_v0', subject='algebra', level=2)
+    rows, skipped = prepare.math_rows(load, 'test', 'math_test', ['algebra'], {3}, '{problem}', {prepare.key('a\nb')})
+    assert [r['prompt'][0]['content'] for r in rows] == ['f'] and skipped == {'math500': 1}
+    assert set(prepare.RL_SUBJECTS) == {'algebra', 'prealgebra', 'number_theory', 'counting_and_probability'}
+    assert not set(prepare.RL_SUBJECTS) & set(prepare.SFT_SUBJECTS)
 
 
 def test_v1_costs_scale_with_depth_and_tokens_for_correct_answers_only():
