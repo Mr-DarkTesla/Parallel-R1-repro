@@ -1,13 +1,12 @@
 """Pilot autonomous Multiverse decoding with the same path mask and positions as SFT.
 
-No structural tokens or path numbers are inserted. Supports one flat block per
-answer. Output columns match the existing generation dumps.
+No structural tokens or path numbers are inserted. Supports multiple flat blocks
+per answer. Output columns match the existing generation dumps.
 
 Usage: python generate_masked_multiverse.py MODEL DEV_PARQUET OUT_JSONL COUNT MAX_TOKENS [thinking|no-thinking]
 """
 import json
 import os
-import re
 import sys
 from pathlib import Path
 
@@ -15,17 +14,7 @@ import pandas as pd
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from masked_decode_state import MaskedDecodeState
-
-
-def path_count(prefix):
-    goal = re.search(r"<Goal>(.*?)</Goal>\s*$", prefix, re.S)
-    if not goal:
-        return 0
-    outlines = re.findall(r"<Outline>\s*(\d+)\s*:(.*?)</Outline>", goal.group(1), re.S)
-    if len(outlines) not in (2, 3, 4):
-        return 0
-    return len(outlines) if [int(x[0]) for x in outlines] == list(range(1, len(outlines) + 1)) else 0
+from masked_decode_state import MaskedDecodeState, path_count
 
 
 def generate(model, tok, prompt, max_tokens, seed, path_open, path_close):
@@ -34,14 +23,16 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close):
     state = MaskedDecodeState(path_open, path_close)
     generator = torch.Generator(device="cuda").manual_seed(seed)
     response = []
+    ended_with_eos = False
     with torch.inference_mode():
         out = model(input_ids=ids, use_cache=True)
         past, logits = out.past_key_values, out.logits[0, -1].float()
         for step in range(max_tokens):
             token = torch.multinomial(torch.softmax(logits, -1), 1, generator=generator).item()
             if token == tok.eos_token_id:
+                ended_with_eos = True
                 break
-            if token == path_open and state.base is None:
+            if token == path_open and state.phase == "plain":
                 state.expected_paths = path_count(tok.decode(response, skip_special_tokens=False)) or 1
             position, visible = state.append(token)
             response.append(token)
@@ -55,7 +46,10 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close):
                         cache_position=torch.tensor([len(prompt_ids) + step], device="cuda"),
                         use_cache=True)
             past, logits = out.past_key_values, out.logits[0, -1].float()
-    return tok.decode(response, skip_special_tokens=False), len(response), len(response) == max_tokens
+    # Token decisions include EOS; physical calls also include prompt prefill and
+    # execute every path serially. Scoring separately reports ideal parallel depth.
+    return (tok.decode(response, skip_special_tokens=False), len(response) + int(ended_with_eos),
+            not ended_with_eos, 1 + len(response))
 
 
 def main():
@@ -65,7 +59,7 @@ def main():
     assert mode in ("thinking", "no-thinking")
     output = Path(output_path)
     meta = {"model": model_path, "data": data_path, "count": count, "max_tokens": budget,
-            "seed": 0, "mode": mode, "decoder": "masked-autonomous-v1", "commit": os.environ.get("EXP21_COMMIT")}
+            "seed": 0, "mode": mode, "decoder": "masked-autonomous-v2", "commit": os.environ.get("EXP21_COMMIT")}
     meta_path = output.with_suffix(output.suffix + ".meta.json")
     if meta_path.exists():
         assert json.loads(meta_path.read_text()) == meta, "run settings changed during resume"
@@ -94,11 +88,12 @@ def main():
             if len(seen) <= len(previous):
                 assert previous[len(seen) - 1]["input"] == prompt, "resume order or prompt changed"
                 continue
-            answer, length, truncated = generate(model, tok, prompt, budget, 0,
-                                                 path_open, path_close)
+            answer, length, truncated, model_calls = generate(model, tok, prompt, budget, 0,
+                                                              path_open, path_close)
             file.write(json.dumps({"input": prompt, "output": answer, "tokens": length,
                                    "truncated": truncated, "seed": 0,
-                                   "rollout": {"decoder": "masked-autonomous", "mode": mode}}, ensure_ascii=False) + "\n")
+                                   "model_forward_calls": model_calls,
+                                   "rollout": {"decoder": "masked-autonomous-v2", "mode": mode}}, ensure_ascii=False) + "\n")
             file.flush()
             print(len(seen), length, truncated, answer.count("<Path>"), flush=True)
             if len(seen) >= count:

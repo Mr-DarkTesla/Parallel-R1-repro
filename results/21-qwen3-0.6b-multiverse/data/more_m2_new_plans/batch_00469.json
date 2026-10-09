@@ -1,0 +1,35 @@
+{
+ "batch": 469,
+ "keys": [
+  "math-train/6549#2",
+  "math-train/5590#0",
+  "math-train/5753#3",
+  "math-train/2031#0"
+ ],
+ "reply": "<plan id=\"math-train/6549#2\">\n<block units=\"1-3\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The smallest multiple of 10 in the range.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The largest multiple of 10 in the range.</outline>\n</path>\n<conclusion>The smallest multiple of 10 in the range is 20 and the largest is 100.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5590#0\"></plan>\n<plan id=\"math-train/5753#3\"></plan>\n<plan id=\"math-train/2031#0\">\n<block units=\"4-7\">\n<lead units=\"4-5\"/>\n<path units=\"6-6\">\n<outline>The number of ways to choose the one triplet.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The number of ways to choose the remaining 5 players from the non-triplets.</outline>\n</path>\n<conclusion>There are 3 ways to choose the triplet and 462 ways to choose the other 5 players.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2048,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 790,
+  "output_tokens_details": {
+   "thinking_tokens": 424
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2048,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0323768
+}

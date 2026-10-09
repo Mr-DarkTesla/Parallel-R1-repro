@@ -1,0 +1,35 @@
+{
+ "batch": 144,
+ "keys": [
+  "math-train/5713#1",
+  "gsm8k-train/6546#3",
+  "math-train/1160#0",
+  "math-train/3724#3"
+ ],
+ "reply": "<plan id=\"math-train/5713#1\"></plan>\n<plan id=\"gsm8k-train/6546#3\">\n<block units=\"6-8\">\n<lead units=\"6-6\"/>\n<path units=\"7-7\">\n<outline>The number of people who got steak.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The number of people who got chicken.</outline>\n</path>\n<conclusion>18 people got steak and 6 people got chicken.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/1160#0\"></plan>\n<plan id=\"math-train/3724#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2235,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 509,
+  "output_tokens_details": {
+   "thinking_tokens": 310
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2235,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0282528
+}

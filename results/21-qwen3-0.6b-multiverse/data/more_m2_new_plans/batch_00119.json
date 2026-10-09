@@ -1,0 +1,35 @@
+{
+ "batch": 119,
+ "keys": [
+  "math-train/1702#1",
+  "gsm8k-train/2932#0",
+  "math-train/2276#3",
+  "math-train/4897#1"
+ ],
+ "reply": "<plan id=\"math-train/1702#1\">\n<block units=\"3-7\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The combined coefficient of the a^3 terms.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The combined coefficient of the a^2 terms.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The combined constant term.</outline>\n</path>\n<conclusion>The like terms combine to 13a^3, 91a^2 and 0.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2932#0\">\n<block units=\"1-9\">\n<path units=\"1-3\">\n<outline>The total number of tools on the Walmart multitool.</outline>\n</path>\n<path units=\"4-7\">\n<outline>The total number of tools on the Target multitool.</outline>\n</path>\n<conclusion>Walmart's multitool has 6 tools and Target's has 11 tools.</conclusion>\n<tail units=\"8-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/2276#3\"></plan>\n<plan id=\"math-train/4897#1\">\n<block units=\"18-25\">\n<lead units=\"18-18\"/>\n<path units=\"19-21\">\n<outline>The GCDs of the first three factor pairs.</outline>\n</path>\n<path units=\"22-24\">\n<outline>The GCDs of the last three factor pairs.</outline>\n</path>\n<conclusion>The first three pairs have GCDs 1, 2 and 2, and the last three have GCDs 5, 1 and 10.</conclusion>\n<tail units=\"25-25\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2657,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1166,
+  "output_tokens_details": {
+   "thinking_tokens": 603
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2657,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0447688
+}

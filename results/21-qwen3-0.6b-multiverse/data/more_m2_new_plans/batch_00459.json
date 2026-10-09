@@ -1,0 +1,35 @@
+{
+ "batch": 459,
+ "keys": [
+  "gsm8k-train/185#3",
+  "math-train/5888#0",
+  "gsm8k-train/5855#1",
+  "math-train/6097#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/185#3\"></plan>\n<plan id=\"math-train/5888#0\"></plan>\n<plan id=\"gsm8k-train/5855#1\"></plan>\n<plan id=\"math-train/6097#1\">\n<block units=\"5-9\">\n<path units=\"5-6\">\n<outline>The side length of the new square garden.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The area of the original rectangular garden.</outline>\n</path>\n<conclusion>The side of the square is 30 feet, and the original rectangle has an area of 500 square feet.</conclusion>\n<tail units=\"8-9\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2078,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 554,
+  "output_tokens_details": {
+   "thinking_tokens": 335
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2078,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0278968
+}

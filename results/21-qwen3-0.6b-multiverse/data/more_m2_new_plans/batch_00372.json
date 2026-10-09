@@ -1,0 +1,35 @@
+{
+ "batch": 372,
+ "keys": [
+  "gsm8k-train/6075#3",
+  "math-train/436#0",
+  "gsm8k-train/5640#0",
+  "gsm8k-train/885#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6075#3\"></plan>\n<plan id=\"math-train/436#0\"></plan>\n<plan id=\"gsm8k-train/5640#0\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The cost of the black inks.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The cost of the red inks.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The cost of the yellow inks.</outline>\n</path>\n<conclusion>The black inks cost $22, the red inks cost $45, and the yellow inks cost $26.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/885#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1959,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 395,
+  "output_tokens_details": {
+   "thinking_tokens": 132
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1959,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0237648
+}

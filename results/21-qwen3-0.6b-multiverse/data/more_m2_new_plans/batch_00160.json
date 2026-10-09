@@ -1,0 +1,35 @@
+{
+ "batch": 160,
+ "keys": [
+  "math-train/49#0",
+  "gsm8k-train/83#0",
+  "math-train/418#2",
+  "math-train/3247#2"
+ ],
+ "reply": "<plan id=\"math-train/49#0\"></plan>\n<plan id=\"gsm8k-train/83#0\">\n<block units=\"3-6\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The combined number of red hats.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The combined number of blue hats.</outline>\n</path>\n<conclusion>Together they have 36 red hats and 72 blue hats.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/418#2\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The vertex where the line meets the x-axis.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The vertex where the line meets the y-axis.</outline>\n</path>\n<conclusion>The line meets the x-axis at $(3, 0)$ and the y-axis at $(0, 6)$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/3247#2\">\n<block units=\"1-10\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The volume of the cube.</outline>\n</path>\n<path units=\"4-8\">\n<outline>The volume of the cylindrical section.</outline>\n</path>\n<conclusion>The cube has volume 64 cubic feet and the cylindrical section has volume $16\\pi$ cubic feet.</conclusion>\n<tail units=\"9-10\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2510,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 914,
+  "output_tokens_details": {
+   "thinking_tokens": 390
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2510,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0385528
+}

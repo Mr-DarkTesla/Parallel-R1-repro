@@ -1,0 +1,35 @@
+{
+ "batch": 334,
+ "keys": [
+  "math-train/6737#1",
+  "math-train/5072#2",
+  "gsm8k-train/1376#2",
+  "math-train/857#2"
+ ],
+ "reply": "<plan id=\"math-train/6737#1\"></plan>\n<plan id=\"math-train/5072#2\">\n<block units=\"2-8\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The contribution of the digit in the 3^4 place.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The contribution of the digit in the 3^3 place.</outline>\n</path>\n<path units=\"5-6\">\n<outline>The contributions of the digits in the 3^2 and 3^1 places.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The contribution of the digit in the 3^0 place.</outline>\n</path>\n<conclusion>The digit contributions are 81, 54, 0, 3 and 2.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1376#2\"></plan>\n<plan id=\"math-train/857#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1540,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 678,
+  "output_tokens_details": {
+   "thinking_tokens": 362
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1540,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0260728
+}

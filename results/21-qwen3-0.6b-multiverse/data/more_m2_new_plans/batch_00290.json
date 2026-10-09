@@ -1,0 +1,35 @@
+{
+ "batch": 290,
+ "keys": [
+  "math-train/6003#0",
+  "math-train/1656#0",
+  "gsm8k-train/1461#1",
+  "math-train/6219#0"
+ ],
+ "reply": "<plan id=\"math-train/6003#0\"></plan>\n<plan id=\"math-train/1656#0\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The denominator after multiplying by the complex conjugate.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The numerator after multiplying by the complex conjugate.</outline>\n</path>\n<conclusion>The denominator is 34 and the numerator is 136 - 136i.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1461#1\"></plan>\n<plan id=\"math-train/6219#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1981,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 384,
+  "output_tokens_details": {
+   "thinking_tokens": 150
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1981,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0237208
+}

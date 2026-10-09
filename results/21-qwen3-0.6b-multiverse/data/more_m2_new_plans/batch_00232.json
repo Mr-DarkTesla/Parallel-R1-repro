@@ -1,0 +1,35 @@
+{
+ "batch": 232,
+ "keys": [
+  "math-train/2013#0",
+  "gsm8k-train/3804#1",
+  "math-train/5500#1",
+  "math-train/5145#3"
+ ],
+ "reply": "<plan id=\"math-train/2013#0\">\n<block units=\"10-18\">\n<path units=\"10-11\">\n<outline>The number of ways to order the three blocks.</outline>\n</path>\n<path units=\"12-16\">\n<outline>The number of ways to order the animals inside each block.</outline>\n</path>\n<conclusion>The 3 blocks can be ordered in $3! = 6$ ways. Inside the blocks, the chickens, dogs and cats can be ordered in $4! = 24$, $2! = 2$ and $5! = 120$ ways.</conclusion>\n<tail units=\"17-18\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/3804#1\"></plan>\n<plan id=\"math-train/5500#1\"></plan>\n<plan id=\"math-train/5145#3\">\n<block units=\"5-17\">\n<path units=\"5-8\">\n<outline>The base-10 value of $AA_5$.</outline>\n</path>\n<path units=\"9-11\">\n<outline>The base-10 value of $BB_7$.</outline>\n</path>\n<conclusion>In base 10, $AA_5 = 6A$ and $BB_7 = 8B$.</conclusion>\n<tail units=\"12-17\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2568,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 922,
+  "output_tokens_details": {
+   "thinking_tokens": 512
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2568,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0391768
+}

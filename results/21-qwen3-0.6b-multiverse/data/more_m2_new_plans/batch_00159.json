@@ -1,0 +1,35 @@
+{
+ "batch": 159,
+ "keys": [
+  "math-train/7291#1",
+  "math-train/5743#0",
+  "math-train/277#1",
+  "gsm8k-train/6336#0"
+ ],
+ "reply": "<plan id=\"math-train/7291#1\"></plan>\n<plan id=\"math-train/5743#0\">\n<block units=\"7-9\">\n<lead units=\"7-7\"/>\n<path units=\"8-8\">\n<outline>The value of the difference in the first parentheses.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The value of the sum in the second parentheses.</outline>\n</path>\n<conclusion>The difference is $\\frac{-13}{10}$ and the sum is $\\frac{53}{12}$.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/277#1\"></plan>\n<plan id=\"gsm8k-train/6336#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3447,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 401,
+  "output_tokens_details": {
+   "thinking_tokens": 176
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3447,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.035788799999999996
+}

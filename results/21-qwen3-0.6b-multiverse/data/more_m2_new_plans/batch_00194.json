@@ -1,0 +1,35 @@
+{
+ "batch": 194,
+ "keys": [
+  "math-train/4960#0",
+  "gsm8k-train/6274#1",
+  "math-train/6306#1",
+  "math-train/5387#0"
+ ],
+ "reply": "<plan id=\"math-train/4960#0\"></plan>\n<plan id=\"gsm8k-train/6274#1\">\n<block units=\"1-9\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The area of the plot of land.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The area of the sidewalk.</outline>\n</path>\n<path units=\"4-8\">\n<outline>The total area of all the flower beds.</outline>\n</path>\n<conclusion>The plot is 10,000 ft², the sidewalk is 150 ft², and the flower beds total 376 ft².</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/6306#1\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The simplified radical form of the first term.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The simplified radical form of the second term.</outline>\n</path>\n<conclusion>$\\sqrt{50} = 5\\sqrt{2}$ and $\\sqrt{18} = 3\\sqrt{2}$.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"math-train/5387#0\">\n<block units=\"3-7\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>Whether the sequence for the first tested starting value consists of primes.</outline>\n</path>\n<path units=\"5-5\">\n<outline>Whether the sequence for the second tested starting value consists of primes.</outline>\n</path>\n<path units=\"6-6\">\n<outline>Whether the sequence for the third tested starting value consists of primes.</outline>\n</path>\n<conclusion>For $p = 5$ all five terms are prime, while $p = 7$ gives 25 and $p = 11$ gives 35, which are not prime.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2555,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 971,
+  "output_tokens_details": {
+   "thinking_tokens": 313
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2555,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0400528
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 355,
+ "keys": [
+  "gsm8k-train/6970#1",
+  "math-train/333#1",
+  "gsm8k-train/4967#1",
+  "math-train/6656#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6970#1\"></plan>\n<plan id=\"math-train/333#1\"></plan>\n<plan id=\"gsm8k-train/4967#1\">\n<block units=\"8-13\">\n<path units=\"8-9\">\n<outline>The gallons lost during the first 5 hours.</outline>\n</path>\n<path units=\"10-11\">\n<outline>The gallons lost during the next 10 hours.</outline>\n</path>\n<conclusion>The tank lost 160,000 gallons in the first 5 hours and 100,000 gallons in the next 10 hours.</conclusion>\n<tail units=\"12-13\"/>\n</block>\n</plan>\n<plan id=\"math-train/6656#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2583,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 512,
+  "output_tokens_details": {
+   "thinking_tokens": 276
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2583,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.031096799999999997
+}

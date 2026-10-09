@@ -1,0 +1,35 @@
+{
+ "batch": 465,
+ "keys": [
+  "math-train/736#0",
+  "math-train/6237#1",
+  "math-train/2292#2",
+  "math-train/1459#0"
+ ],
+ "reply": "<plan id=\"math-train/736#0\"></plan>\n<plan id=\"math-train/6237#1\"></plan>\n<plan id=\"math-train/2292#2\">\n<block units=\"2-6\">\n<path units=\"2-3\">\n<outline>The total number of ways to choose 4 marbles from 12.</outline>\n</path>\n<path units=\"4-6\">\n<outline>The number of selections with exactly one red, green, or blue marble.</outline>\n</path>\n<conclusion>There are 495 ways to choose 4 marbles in total, and 252 of them contain exactly one red, green, or blue marble.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/1459#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2043,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 508,
+  "output_tokens_details": {
+   "thinking_tokens": 281
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2043,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0266968
+}

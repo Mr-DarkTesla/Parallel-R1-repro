@@ -1,0 +1,35 @@
+{
+ "batch": 49,
+ "keys": [
+  "math-train/5325#2",
+  "math-train/1200#2",
+  "gsm8k-train/6000#2",
+  "math-train/1358#3"
+ ],
+ "reply": "<plan id=\"math-train/5325#2\">\n<block units=\"4-6\">\n<path units=\"4-4\">\n<outline>The smallest n for which 2^n is at least 10.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The largest n for which 2^n is at most 99.</outline>\n</path>\n<conclusion>The smallest n is 4, since 2^4 = 16, and the largest n is 6, since 2^6 = 64 and 2^7 = 128 is outside the range.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/1200#2\"></plan>\n<plan id=\"gsm8k-train/6000#2\"></plan>\n<plan id=\"math-train/1358#3\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The base-2 form of 64.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The base-2 form of 32.</outline>\n</path>\n<conclusion>64 = 2^6 and 32 = 2^5.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2247,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 805,
+  "output_tokens_details": {
+   "thinking_tokens": 421
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2247,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0342688
+}

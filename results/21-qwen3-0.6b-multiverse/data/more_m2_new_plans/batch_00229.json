@@ -1,0 +1,35 @@
+{
+ "batch": 229,
+ "keys": [
+  "gsm8k-train/2077#0",
+  "math-train/4428#0",
+  "math-train/3501#2",
+  "gsm8k-train/2766#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2077#0\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The cost of the baking dish.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The total cost of the five ingredients.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The cost of the apron.</outline>\n</path>\n<conclusion>The baking dish costs $12, the five ingredients cost $15, and the apron costs $7.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/4428#0\">\n<block units=\"2-8\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The residue of the exponent 14762 modulo 4.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The residue of the exponent 14763 modulo 4.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The residue of the exponent 14764 modulo 4.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The residue of the exponent 14765 modulo 4.</outline>\n</path>\n<conclusion>The exponents 14762, 14763, 14764 and 14765 leave residues 2, 3, 0 and 1 modulo 4.</conclusion>\n<tail units=\"7-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/3501#2\">\n<block units=\"7-10\">\n<lead units=\"7-8\"/>\n<path units=\"9-9\">\n<outline>The linear equation in the coefficients obtained from the condition at x = 1.</outline>\n</path>\n<path units=\"10-10\">\n<outline>The linear equation in the coefficients obtained from the condition at x = -1.</outline>\n</path>\n<conclusion>The condition P(1) = 2k gives a + b + c = k, and the condition P(-1) = 3k gives -a + b - c = 2k.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2766#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2455,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1165,
+  "output_tokens_details": {
+   "thinking_tokens": 470
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2455,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0431328
+}

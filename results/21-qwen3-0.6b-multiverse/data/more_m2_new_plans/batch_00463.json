@@ -1,0 +1,35 @@
+{
+ "batch": 463,
+ "keys": [
+  "gsm8k-train/5411#0",
+  "math-train/5708#0",
+  "gsm8k-train/6154#2",
+  "math-train/1741#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/5411#0\"></plan>\n<plan id=\"math-train/5708#0\">\n<block units=\"6-8\">\n<path units=\"6-6\">\n<outline>The length of segment BD.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The length of segment BC.</outline>\n</path>\n<conclusion>BD is 35 units and BC is 20 units.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6154#2\"></plan>\n<plan id=\"math-train/1741#0\">\n<block units=\"4-8\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The value of the first term at x = 1.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The value of the second term at x = 1.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The value of the third term at x = 1.</outline>\n</path>\n<conclusion>The three terms evaluate to 4, 12 and 9.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2683,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 721,
+  "output_tokens_details": {
+   "thinking_tokens": 349
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2683,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0360768
+}

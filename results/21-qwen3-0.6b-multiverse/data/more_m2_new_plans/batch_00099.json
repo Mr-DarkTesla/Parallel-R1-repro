@@ -1,0 +1,35 @@
+{
+ "batch": 99,
+ "keys": [
+  "math-train/5526#3",
+  "math-train/6870#1",
+  "gsm8k-train/6220#1",
+  "math-train/7478#3"
+ ],
+ "reply": "<plan id=\"math-train/5526#3\">\n<block units=\"10-19\">\n<lead units=\"10-10\"/>\n<path units=\"11-14\">\n<outline>The value of n + 1 for n from 3 to 6.</outline>\n</path>\n<path units=\"15-18\">\n<outline>The value of n + 1 for n from 7 to 10.</outline>\n</path>\n<conclusion>For n = 3, 4, 5, 6 the values of n + 1 are 4, 5, 6, 7, and for n = 7, 8, 9, 10 they are 8, 9, 10, 11.</conclusion>\n<tail units=\"19-19\"/>\n</block>\n</plan>\n<plan id=\"math-train/6870#1\">\n<block units=\"3-4\">\n<path units=\"3-3\">\n<outline>The dot product of the two vectors.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The magnitudes of the two vectors.</outline>\n</path>\n<conclusion>The dot product is 29, and the magnitudes are $\\sqrt{29}$ and $\\sqrt{58}$.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6220#1\"></plan>\n<plan id=\"math-train/7478#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2724,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 700,
+  "output_tokens_details": {
+   "thinking_tokens": 288
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2724,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0359848
+}

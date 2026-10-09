@@ -1,0 +1,35 @@
+{
+ "batch": 258,
+ "keys": [
+  "math-train/5808#1",
+  "gsm8k-train/1212#1",
+  "math-train/6308#0",
+  "gsm8k-train/1884#0"
+ ],
+ "reply": "<plan id=\"math-train/5808#1\"></plan>\n<plan id=\"gsm8k-train/1212#1\">\n<block units=\"2-11\">\n<path units=\"2-4\">\n<outline>The total number of crackers Darren bought.</outline>\n</path>\n<path units=\"5-9\">\n<outline>The number of boxes Calvin bought and his total number of crackers.</outline>\n</path>\n<conclusion>Darren bought 96 crackers and Calvin bought 168 crackers.</conclusion>\n<tail units=\"10-11\"/>\n</block>\n</plan>\n<plan id=\"math-train/6308#0\"></plan>\n<plan id=\"gsm8k-train/1884#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1834,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 412,
+  "output_tokens_details": {
+   "thinking_tokens": 185
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1834,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.023104799999999998
+}

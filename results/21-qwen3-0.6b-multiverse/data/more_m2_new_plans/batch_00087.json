@@ -1,0 +1,35 @@
+{
+ "batch": 87,
+ "keys": [
+  "math-train/4157#1",
+  "gsm8k-train/4700#3",
+  "math-train/1444#1",
+  "math-train/1407#1"
+ ],
+ "reply": "<plan id=\"math-train/4157#1\"></plan>\n<plan id=\"gsm8k-train/4700#3\"></plan>\n<plan id=\"math-train/1444#1\">\n<block units=\"11-17\">\n<lead units=\"11-11\"/>\n<path units=\"12-12\">\n<outline>The value of k for the pair (1, 8).</outline>\n</path>\n<path units=\"13-13\">\n<outline>The value of k for the pair (2, 4).</outline>\n</path>\n<path units=\"14-14\">\n<outline>The value of k for the pair (-1, -8).</outline>\n</path>\n<path units=\"15-15\">\n<outline>The value of k for the pair (-2, -4).</outline>\n</path>\n<conclusion>The pairs give k = 9, k = 6, k = -9 and k = -6 respectively.</conclusion>\n<tail units=\"16-17\"/>\n</block>\n</plan>\n<plan id=\"math-train/1407#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2545,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 605,
+  "output_tokens_details": {
+   "thinking_tokens": 297
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2545,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.032652799999999996
+}

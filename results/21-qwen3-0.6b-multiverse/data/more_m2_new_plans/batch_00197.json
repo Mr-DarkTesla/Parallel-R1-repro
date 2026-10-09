@@ -1,0 +1,35 @@
+{
+ "batch": 197,
+ "keys": [
+  "gsm8k-train/4532#1",
+  "math-train/3556#1",
+  "gsm8k-train/4415#3",
+  "math-train/3263#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/4532#1\">\n<block units=\"1-6\">\n<path units=\"1-2\">\n<outline>The total daily water consumption of the cows.</outline>\n</path>\n<path units=\"3-6\">\n<outline>The number of sheep and their total daily water consumption.</outline>\n</path>\n<conclusion>The cows drink 3200 liters daily, and the 400 sheep drink 8000 liters daily.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/3556#1\">\n<block units=\"2-7\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The value of the term $2(7)^4$.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The value of the term $-17(7)^3$.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The value of the term $26(7)^2$.</outline>\n</path>\n<path units=\"6-7\">\n<outline>The value of the term $-24(7)$, along with the constant term.</outline>\n</path>\n<conclusion>The terms are 4802, -5831, 1274, -168 and -60.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4415#3\"></plan>\n<plan id=\"math-train/3263#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2108,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 731,
+  "output_tokens_details": {
+   "thinking_tokens": 300
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2108,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0316768
+}

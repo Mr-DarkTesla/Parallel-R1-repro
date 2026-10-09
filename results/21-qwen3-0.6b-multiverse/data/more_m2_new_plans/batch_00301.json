@@ -1,0 +1,35 @@
+{
+ "batch": 301,
+ "keys": [
+  "gsm8k-train/2507#1",
+  "math-train/1018#2",
+  "math-train/396#1",
+  "gsm8k-train/5115#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2507#1\">\n<block units=\"7-12\">\n<path units=\"7-7\">\n<outline>The distance Sadie covers.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The distance Ariana covers.</outline>\n</path>\n<path units=\"9-11\">\n<outline>The time Sarah runs and the distance she covers.</outline>\n</path>\n<conclusion>Sadie covers 6 miles, Ariana covers 3 miles, and Sarah runs for 2 hours and covers 8 miles.</conclusion>\n<tail units=\"12-12\"/>\n</block>\n</plan>\n<plan id=\"math-train/1018#2\"></plan>\n<plan id=\"math-train/396#1\"></plan>\n<plan id=\"gsm8k-train/5115#2\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>Janet's weekly earnings from her normal hours.</outline>\n</path>\n<path units=\"7-7\">\n<outline>Janet's weekly earnings from her overtime hours.</outline>\n</path>\n<conclusion>Janet earns 800 per week from normal hours and 360 per week from overtime hours.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2326,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 772,
+  "output_tokens_details": {
+   "thinking_tokens": 343
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2326,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0342408
+}

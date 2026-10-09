@@ -1,0 +1,35 @@
+{
+ "batch": 111,
+ "keys": [
+  "math-train/1499#3",
+  "math-train/6316#2",
+  "gsm8k-train/7255#0",
+  "math-train/1471#1"
+ ],
+ "reply": "<plan id=\"math-train/1499#3\">\n<block units=\"12-22\">\n<lead units=\"12-12\"/>\n<path units=\"13-14\">\n<outline>The legs a and b for the factor pair (1, 16).</outline>\n</path>\n<path units=\"15-16\">\n<outline>The legs a and b for the factor pair (2, 8).</outline>\n</path>\n<path units=\"17-18\">\n<outline>The legs a and b for the factor pair (4, 4).</outline>\n</path>\n<conclusion>The factor pairs give legs a = 5, b = 20; a = 6, b = 12; and a = 8, b = 8.</conclusion>\n<tail units=\"19-22\"/>\n</block>\n</plan>\n<plan id=\"math-train/6316#2\"></plan>\n<plan id=\"gsm8k-train/7255#0\">\n<block units=\"2-9\">\n<path units=\"2-6\">\n<outline>The number of marbles Miles has.</outline>\n</path>\n<path units=\"7-8\">\n<outline>The number of marbles Kyle has.</outline>\n</path>\n<conclusion>Miles has 3 marbles and Kyle has 5 marbles.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/1471#1\">\n<block units=\"7-10\">\n<lead units=\"7-7\"/>\n<path units=\"8-8\">\n<outline>The y-intercept b in terms of s from the first line.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The y-intercept b in terms of t from the second line.</outline>\n</path>\n<conclusion>The first line gives b = -10s and the second line gives b = -6t.</conclusion>\n<tail units=\"10-10\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2584,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 959,
+  "output_tokens_details": {
+   "thinking_tokens": 387
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2584,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0400448
+}

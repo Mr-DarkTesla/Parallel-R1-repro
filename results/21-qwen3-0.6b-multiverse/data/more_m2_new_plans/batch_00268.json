@@ -1,0 +1,35 @@
+{
+ "batch": 268,
+ "keys": [
+  "math-train/1899#2",
+  "gsm8k-train/6383#1",
+  "math-train/7016#2",
+  "gsm8k-train/1589#1"
+ ],
+ "reply": "<plan id=\"math-train/1899#2\">\n<block units=\"2-9\">\n<path units=\"2-4\">\n<outline>The total number of 3-letter words with no restriction.</outline>\n</path>\n<path units=\"5-7\">\n<outline>The number of 3-letter words that do not use the letter A.</outline>\n</path>\n<conclusion>There are 64 words in total and 27 words that do not use A.</conclusion>\n<tail units=\"8-9\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6383#1\">\n<block units=\"5-12\">\n<lead units=\"5-5\"/>\n<path units=\"6-7\">\n<outline>The cost of the vegetables.</outline>\n</path>\n<path units=\"8-9\">\n<outline>The cost of the beef.</outline>\n</path>\n<conclusion>The vegetables cost $12 and the beef costs $24.</conclusion>\n<tail units=\"10-12\"/>\n</block>\n</plan>\n<plan id=\"math-train/7016#2\"></plan>\n<plan id=\"gsm8k-train/1589#1\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The revenue from matinee tickets.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The revenue from evening tickets.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The revenue from 3D tickets.</outline>\n</path>\n<conclusion>The revenues are $1,000 from matinee, $3,600 from evening, and $2,000 from 3D tickets.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1908,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1110,
+  "output_tokens_details": {
+   "thinking_tokens": 567
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1908,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.037656800000000004
+}

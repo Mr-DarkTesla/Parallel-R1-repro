@@ -1,0 +1,35 @@
+{
+ "batch": 417,
+ "keys": [
+  "gsm8k-train/1101#2",
+  "math-train/5625#0",
+  "gsm8k-train/4418#2",
+  "math-train/159#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/1101#2\"></plan>\n<plan id=\"math-train/5625#0\">\n<block units=\"2-3\">\n<path units=\"2-2\">\n<outline>The value of the three $10 bills.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The value of the eight quarters.</outline>\n</path>\n<conclusion>The three $10 bills are worth 30 dollars and the eight quarters are worth 2 dollars.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4418#2\"></plan>\n<plan id=\"math-train/159#1\">\n<block units=\"2-4\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The left-hand side rewritten as a power of 2.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The right-hand side rewritten as a power of 2.</outline>\n</path>\n<conclusion>The left-hand side equals $2^{3n}$ and the right-hand side equals $2^{6n - 216}$.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2176,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 687,
+  "output_tokens_details": {
+   "thinking_tokens": 323
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2176,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0313408
+}

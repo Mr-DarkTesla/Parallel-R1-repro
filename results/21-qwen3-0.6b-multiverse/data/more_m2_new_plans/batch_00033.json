@@ -1,0 +1,35 @@
+{
+ "batch": 33,
+ "keys": [
+  "math-train/1648#1",
+  "gsm8k-train/1333#3",
+  "math-train/375#2",
+  "gsm8k-train/6740#0"
+ ],
+ "reply": "<plan id=\"math-train/1648#1\">\n<block units=\"6-8\">\n<path units=\"6-6\">\n<outline>The total number of supporters.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The total number of people surveyed.</outline>\n</path>\n<conclusion>There are 780 supporters out of 1000 people surveyed.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1333#3\"></plan>\n<plan id=\"math-train/375#2\"></plan>\n<plan id=\"gsm8k-train/6740#0\">\n<block units=\"2-8\">\n<path units=\"2-4\">\n<outline>Sally's current amount of money.</outline>\n</path>\n<path units=\"5-7\">\n<outline>Jolly's current amount of money.</outline>\n</path>\n<conclusion>Sally has $S = 100$ and Jolly has $J = 50$.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1978,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 549,
+  "output_tokens_details": {
+   "thinking_tokens": 216
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1978,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0269968
+}

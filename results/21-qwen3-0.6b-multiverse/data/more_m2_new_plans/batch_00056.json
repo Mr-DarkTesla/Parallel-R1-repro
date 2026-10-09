@@ -1,0 +1,35 @@
+{
+ "batch": 56,
+ "keys": [
+  "math-train/589#1",
+  "gsm8k-train/4298#2",
+  "math-train/1908#0",
+  "math-train/11#2"
+ ],
+ "reply": "<plan id=\"math-train/589#1\"></plan>\n<plan id=\"gsm8k-train/4298#2\">\n<block units=\"1-9\">\n<lead units=\"1-2\"/>\n<path units=\"3-3\">\n<outline>The cost of the potatoes.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The cost of the tomatoes.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The cost of the cucumbers.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The cost of the bananas.</outline>\n</path>\n<conclusion>The potatoes cost $12, the tomatoes $27, the cucumbers $20, and the bananas $15.</conclusion>\n<tail units=\"7-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/1908#0\"></plan>\n<plan id=\"math-train/11#2\">\n<block units=\"1-8\">\n<lead units=\"1-2\"/>\n<path units=\"3-3\">\n<outline>The value of f(2).</outline>\n</path>\n<path units=\"4-4\">\n<outline>The expression for g(2).</outline>\n</path>\n<conclusion>f(2) = 22.5 and g(2) = 4 - k.</conclusion>\n<tail units=\"5-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1952,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 703,
+  "output_tokens_details": {
+   "thinking_tokens": 276
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1952,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0298688
+}

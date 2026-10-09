@@ -1,0 +1,35 @@
+{
+ "batch": 279,
+ "keys": [
+  "math-train/6664#2",
+  "gsm8k-train/6478#3",
+  "math-train/5082#1",
+  "math-train/7033#0"
+ ],
+ "reply": "<plan id=\"math-train/6664#2\"></plan>\n<plan id=\"gsm8k-train/6478#3\"></plan>\n<plan id=\"math-train/5082#1\"></plan>\n<plan id=\"math-train/7033#0\">\n<block units=\"6-10\">\n<lead units=\"6-6\"/>\n<path units=\"7-7\">\n<outline>The x-coordinate.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The y-coordinate.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The z-coordinate.</outline>\n</path>\n<conclusion>The components are x = 0, y = 0 and z = 3.</conclusion>\n<tail units=\"10-10\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2366,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 441,
+  "output_tokens_details": {
+   "thinking_tokens": 200
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2366,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.027940800000000002
+}

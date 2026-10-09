@@ -1,0 +1,35 @@
+{
+ "batch": 182,
+ "keys": [
+  "gsm8k-train/7186#1",
+  "math-train/5473#1",
+  "math-train/6354#0",
+  "gsm8k-train/7136#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/7186#1\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The total time for the 5-minute commercials.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The total time for the 2-minute commercials.</outline>\n</path>\n<conclusion>The 5-minute commercials take 15 minutes and the 2-minute commercials take 22 minutes.</conclusion>\n<tail units=\"6-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/5473#1\"></plan>\n<plan id=\"math-train/6354#0\"></plan>\n<plan id=\"gsm8k-train/7136#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1935,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 392,
+  "output_tokens_details": {
+   "thinking_tokens": 150
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1935,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0235128
+}

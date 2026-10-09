@@ -1,0 +1,35 @@
+{
+ "batch": 403,
+ "keys": [
+  "math-train/990#1",
+  "gsm8k-train/2354#3",
+  "math-train/403#3",
+  "gsm8k-train/1771#1"
+ ],
+ "reply": "<plan id=\"math-train/990#1\"></plan>\n<plan id=\"gsm8k-train/2354#3\"></plan>\n<plan id=\"math-train/403#3\">\n<block units=\"5-7\">\n<path units=\"5-5\">\n<outline>The expression for the 2000th term of the sequence.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The expression for the 2005th term of the sequence.</outline>\n</path>\n<conclusion>The 2000th term is $-8 + 1999 \\cdot 6$ and the 2005th term is $-8 + 2004 \\cdot 6$.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1771#1\">\n<block units=\"1-11\">\n<path units=\"1-2\">\n<outline>The cost of the cupcakes.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The cost of the doughnuts.</outline>\n</path>\n<path units=\"5-6\">\n<outline>The cost of the apple pie slices.</outline>\n</path>\n<path units=\"7-8\">\n<outline>The cost of the cookies.</outline>\n</path>\n<conclusion>The cupcakes cost \\$10, the doughnuts \\$6, the apple pie slices \\$8, and the cookies \\$9.</conclusion>\n<tail units=\"9-11\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2301,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 726,
+  "output_tokens_details": {
+   "thinking_tokens": 267
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2301,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0331208
+}

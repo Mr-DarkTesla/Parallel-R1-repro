@@ -1,0 +1,35 @@
+{
+ "batch": 139,
+ "keys": [
+  "gsm8k-train/5558#0",
+  "math-train/6013#2",
+  "math-train/212#0",
+  "gsm8k-train/2642#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/5558#0\"></plan>\n<plan id=\"math-train/6013#2\"></plan>\n<plan id=\"math-train/212#0\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The product of x with x.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The product of 2 with x.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The product of x with 5.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The product of 2 with 5.</outline>\n</path>\n<conclusion>The four products are $x^2$, $2x$, $5x$ and $10$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2642#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1496,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 545,
+  "output_tokens_details": {
+   "thinking_tokens": 263
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1496,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0230608
+}

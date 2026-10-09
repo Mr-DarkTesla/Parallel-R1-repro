@@ -1,0 +1,35 @@
+{
+ "batch": 156,
+ "keys": [
+  "math-train/1043#1",
+  "gsm8k-train/1003#3",
+  "math-train/682#0",
+  "math-train/4083#1"
+ ],
+ "reply": "<plan id=\"math-train/1043#1\">\n<block units=\"4-11\">\n<path units=\"4-6\">\n<outline>The equation relating a and r from the sum of the whole series.</outline>\n</path>\n<path units=\"7-11\">\n<outline>The equation relating a and r from the sum of the terms involving odd powers of r.</outline>\n</path>\n<conclusion>The whole series gives a/(1 - r) = 12, and the odd-power terms give ar/(1 - r^2) = 5.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1003#3\"></plan>\n<plan id=\"math-train/682#0\">\n<block units=\"2-3\">\n<path units=\"2-2\">\n<outline>The completed square form of the x terms.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The completed square form of the y terms.</outline>\n</path>\n<conclusion>x^2 + 10x = (x + 5)^2 - 25 and y^2 + 6y = (y + 3)^2 - 9.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4083#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2677,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 731,
+  "output_tokens_details": {
+   "thinking_tokens": 357
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2677,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0362288
+}

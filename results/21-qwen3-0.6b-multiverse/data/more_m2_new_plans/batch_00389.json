@@ -1,0 +1,35 @@
+{
+ "batch": 389,
+ "keys": [
+  "gsm8k-train/3573#2",
+  "math-train/2357#1",
+  "gsm8k-train/3911#3",
+  "gsm8k-train/255#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3573#2\"></plan>\n<plan id=\"math-train/2357#1\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The total number of ways to seat 7 people in a row.</outline>\n</path>\n<path units=\"4-6\">\n<outline>The number of arrangements where Wilma and Paul sit next to each other.</outline>\n</path>\n<conclusion>The total number of seatings is $ 7! $, and the number of arrangements with Wilma and Paul next to each other is $ 2! \\times 6! $.</conclusion>\n<tail units=\"7-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/3911#3\"></plan>\n<plan id=\"gsm8k-train/255#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1993,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 587,
+  "output_tokens_details": {
+   "thinking_tokens": 315
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1993,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0278768
+}

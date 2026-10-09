@@ -1,0 +1,35 @@
+{
+ "batch": 329,
+ "keys": [
+  "gsm8k-train/2215#3",
+  "math-train/6938#2",
+  "gsm8k-train/6633#2",
+  "math-train/182#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2215#3\"></plan>\n<plan id=\"math-train/6938#2\"></plan>\n<plan id=\"gsm8k-train/6633#2\">\n<block units=\"1-4\">\n<path units=\"1-1\">\n<outline>The cost of the 4 pairs of pants after the discount.</outline>\n</path>\n<path units=\"2-2\">\n<outline>The cost of the 2 pairs of socks after the discount.</outline>\n</path>\n<conclusion>The pants cost $308.00 and the socks cost $84.00 after the discount.</conclusion>\n<tail units=\"3-4\"/>\n</block>\n</plan>\n<plan id=\"math-train/182#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1874,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 231,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1874,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0198048
+}

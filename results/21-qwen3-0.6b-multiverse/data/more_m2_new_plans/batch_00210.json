@@ -1,0 +1,35 @@
+{
+ "batch": 210,
+ "keys": [
+  "gsm8k-train/1986#1",
+  "math-train/882#0",
+  "gsm8k-train/5233#2",
+  "math-train/6739#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/1986#1\">\n<block units=\"3-5\">\n<path units=\"3-3\">\n<outline>The amount of money Samuel received.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The amount Samuel spent on drinks.</outline>\n</path>\n<conclusion>Samuel received 180, and he spent 48 on drinks.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/882#0\"></plan>\n<plan id=\"gsm8k-train/5233#2\"></plan>\n<plan id=\"math-train/6739#1\">\n<block units=\"4-7\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The first 3-digit number divisible by 7.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The last 3-digit number divisible by 7.</outline>\n</path>\n<conclusion>The first 3-digit number divisible by 7 is 105, and the last one is 996.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1751,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 614,
+  "output_tokens_details": {
+   "thinking_tokens": 250
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1751,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0264808
+}

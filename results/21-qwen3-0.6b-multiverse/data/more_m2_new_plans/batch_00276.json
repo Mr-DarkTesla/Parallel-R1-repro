@@ -1,0 +1,35 @@
+{
+ "batch": 276,
+ "keys": [
+  "math-train/976#0",
+  "gsm8k-train/6651#1",
+  "math-train/3557#0",
+  "math-train/3427#2"
+ ],
+ "reply": "<plan id=\"math-train/976#0\"></plan>\n<plan id=\"gsm8k-train/6651#1\"></plan>\n<plan id=\"math-train/3557#0\">\n<block units=\"6-8\">\n<lead units=\"6-6\"/>\n<path units=\"7-7\">\n<outline>The value of a from a^2.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The value of b from b^2.</outline>\n</path>\n<conclusion>So a^2 = 18 with a = 3√2, and b^2 = 2 with b = √2.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/3427#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2025,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 384,
+  "output_tokens_details": {
+   "thinking_tokens": 171
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2025,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0240728
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 173,
+ "keys": [
+  "math-train/2786#3",
+  "gsm8k-train/3642#3",
+  "math-train/3434#2",
+  "math-train/1677#0"
+ ],
+ "reply": "<plan id=\"math-train/2786#3\">\n<block units=\"2-4\">\n<path units=\"2-2\">\n<outline>The curved surface area of the hemisphere.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The area of the circular base of the hemisphere.</outline>\n</path>\n<conclusion>The curved surface area is $2\\pi r^2$ and the area of the circular base is $\\pi r^2$.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/3642#3\"></plan>\n<plan id=\"math-train/3434#2\"></plan>\n<plan id=\"math-train/1677#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2289,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 529,
+  "output_tokens_details": {
+   "thinking_tokens": 301
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2289,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.029084799999999997
+}

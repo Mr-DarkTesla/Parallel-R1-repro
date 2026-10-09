@@ -1,0 +1,35 @@
+{
+ "batch": 377,
+ "keys": [
+  "gsm8k-train/5564#2",
+  "gsm8k-train/5796#0",
+  "math-train/1132#3",
+  "gsm8k-train/6158#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/5564#2\"></plan>\n<plan id=\"gsm8k-train/5796#0\"></plan>\n<plan id=\"math-train/1132#3\">\n<block units=\"5-9\">\n<lead units=\"5-5\"/>\n<path units=\"6-7\">\n<outline>The value of the first factor at a = 3/2.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The value of the second factor at a = 3/2.</outline>\n</path>\n<conclusion>The first factor equals -17/4 and the second factor equals 0.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6158#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2720,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 414,
+  "output_tokens_details": {
+   "thinking_tokens": 179
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2720,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0302328
+}

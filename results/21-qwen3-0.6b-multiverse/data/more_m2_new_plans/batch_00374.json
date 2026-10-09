@@ -1,0 +1,35 @@
+{
+ "batch": 374,
+ "keys": [
+  "math-train/476#1",
+  "gsm8k-train/5586#0",
+  "math-train/255#2",
+  "gsm8k-train/4026#0"
+ ],
+ "reply": "<plan id=\"math-train/476#1\">\n<block units=\"1-9\">\n<lead units=\"1-1\"/>\n<path units=\"2-5\">\n<outline>The solution of the equation in the case x ≥ 0.</outline>\n</path>\n<path units=\"6-7\">\n<outline>The solution of the equation in the case x < 0.</outline>\n</path>\n<conclusion>Case 1 gives x = 1 + √2 and Case 2 gives x = -1.</conclusion>\n<tail units=\"8-9\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/5586#0\"></plan>\n<plan id=\"math-train/255#2\"></plan>\n<plan id=\"gsm8k-train/4026#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2068,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 240,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2068,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.021536800000000002
+}

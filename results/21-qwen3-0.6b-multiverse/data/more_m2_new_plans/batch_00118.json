@@ -1,0 +1,35 @@
+{
+ "batch": 118,
+ "keys": [
+  "math-train/3445#3",
+  "math-train/6399#1",
+  "gsm8k-train/4097#3",
+  "math-train/4349#2"
+ ],
+ "reply": "<plan id=\"math-train/3445#3\">\n<block units=\"7-9\">\n<lead units=\"7-7\"/>\n<path units=\"8-8\">\n<outline>The value of k from the y-term.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The value of h from the x-term.</outline>\n</path>\n<conclusion>The comparison gives k = 1 and h = 4/3.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/6399#1\">\n<block units=\"20-24\">\n<lead units=\"20-20\"/>\n<path units=\"21-21\">\n<outline>The count of valid numbers for the first hundreds digit.</outline>\n</path>\n<path units=\"22-23\">\n<outline>The count of valid numbers for the next hundreds digits.</outline>\n</path>\n<path units=\"24-24\">\n<outline>The count of valid numbers for the largest hundreds digit.</outline>\n</path>\n<conclusion>For a = 1 there are 9 numbers, for a = 2 there are 9 numbers, and for a = 9 there is 1 number.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4097#3\"></plan>\n<plan id=\"math-train/4349#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2384,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 788,
+  "output_tokens_details": {
+   "thinking_tokens": 381
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2384,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.035024799999999995
+}

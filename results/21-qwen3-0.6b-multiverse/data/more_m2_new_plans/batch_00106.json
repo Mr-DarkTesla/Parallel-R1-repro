@@ -1,0 +1,35 @@
+{
+ "batch": 106,
+ "keys": [
+  "math-train/7343#1",
+  "gsm8k-train/3053#3",
+  "math-train/4686#1",
+  "math-train/2474#2"
+ ],
+ "reply": "<plan id=\"math-train/7343#1\"></plan>\n<plan id=\"gsm8k-train/3053#3\"></plan>\n<plan id=\"math-train/4686#1\">\n<block units=\"3-8\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The largest allowed a for b = 2.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The largest allowed a for b = 3.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The largest allowed a for b = 4.</outline>\n</path>\n<path units=\"7-8\">\n<outline>The largest allowed a for b = 5 and for b = 6.</outline>\n</path>\n<conclusion>The largest allowed values of a are 19 for b = 2, 7 for b = 3, 4 for b = 4, 3 for b = 5 and 2 for b = 6.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/2474#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2454,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 780,
+  "output_tokens_details": {
+   "thinking_tokens": 457
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2454,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0354248
+}

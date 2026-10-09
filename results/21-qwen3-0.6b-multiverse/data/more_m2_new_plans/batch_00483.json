@@ -1,0 +1,35 @@
+{
+ "batch": 483,
+ "keys": [
+  "math-train/6001#3",
+  "math-train/6550#3",
+  "math-train/5147#1",
+  "math-train/5160#2"
+ ],
+ "reply": "<plan id=\"math-train/6001#3\"></plan>\n<plan id=\"math-train/6550#3\"></plan>\n<plan id=\"math-train/5147#1\"></plan>\n<plan id=\"math-train/5160#2\">\n<block units=\"2-7\">\n<path units=\"2-3\">\n<outline>The base-10 value of $1001_2$.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The base-10 value of $121_3$.</outline>\n</path>\n<conclusion>$1001_2 = 9$ and $121_3 = 16$ in base 10.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1759,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 520,
+  "output_tokens_details": {
+   "thinking_tokens": 306
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1759,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0246648
+}

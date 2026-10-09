@@ -1,0 +1,35 @@
+{
+ "batch": 202,
+ "keys": [
+  "gsm8k-train/2797#0",
+  "math-train/4942#1",
+  "gsm8k-train/5031#1",
+  "math-train/5522#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2797#0\"></plan>\n<plan id=\"math-train/4942#1\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The base 10 values of $1_3$ and $12_3$.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The base 10 value of $212_3$.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The base 10 value of $2121_3$.</outline>\n</path>\n<conclusion>In base 10, $1_3 = 1$, $12_3 = 5$, $212_3 = 23$ and $2121_3 = 70$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/5031#1\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The ratio of walking time to sitting time.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The time Gretchen spends at her desk, in minutes.</outline>\n</path>\n<conclusion>The walking-to-sitting ratio is 1/9, and 6 hours is 360 minutes.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/5522#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2458,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 756,
+  "output_tokens_details": {
+   "thinking_tokens": 300
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2458,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0349768
+}

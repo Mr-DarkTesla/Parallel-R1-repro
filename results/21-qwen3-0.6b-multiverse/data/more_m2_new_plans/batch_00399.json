@@ -1,0 +1,35 @@
+{
+ "batch": 399,
+ "keys": [
+  "math-train/1510#3",
+  "gsm8k-train/1431#3",
+  "math-train/5130#3",
+  "gsm8k-train/324#0"
+ ],
+ "reply": "<plan id=\"math-train/1510#3\"></plan>\n<plan id=\"gsm8k-train/1431#3\"></plan>\n<plan id=\"math-train/5130#3\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The coefficient 17 reduced modulo 7.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The right-hand side 1234 reduced modulo 7.</outline>\n</path>\n<conclusion>The coefficient reduces to $17 \\equiv 3 \\pmod{7}$ and the right-hand side reduces to $1234 \\equiv 2 \\pmod{7}$.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/324#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2217,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 578,
+  "output_tokens_details": {
+   "thinking_tokens": 316
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2217,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.029488799999999996
+}

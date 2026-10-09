@@ -1,0 +1,35 @@
+{
+ "batch": 287,
+ "keys": [
+  "math-train/2577#3",
+  "gsm8k-train/6127#1",
+  "math-train/1777#2",
+  "math-train/6273#3"
+ ],
+ "reply": "<plan id=\"math-train/2577#3\">\n<block units=\"2-6\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The area of the circle with radius 1.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The area of the circle with radius 2.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The area of the circle with radius 3.</outline>\n</path>\n<conclusion>The three circles have areas $\\pi$, $4\\pi$, and $9\\pi$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6127#1\"></plan>\n<plan id=\"math-train/1777#2\"></plan>\n<plan id=\"math-train/6273#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1901,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 381,
+  "output_tokens_details": {
+   "thinking_tokens": 119
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1901,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0230208
+}

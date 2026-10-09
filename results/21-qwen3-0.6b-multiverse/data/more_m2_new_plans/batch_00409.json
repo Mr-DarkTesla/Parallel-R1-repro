@@ -1,0 +1,35 @@
+{
+ "batch": 409,
+ "keys": [
+  "gsm8k-train/1728#2",
+  "math-train/735#0",
+  "gsm8k-train/2563#2",
+  "math-train/4736#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/1728#2\"></plan>\n<plan id=\"math-train/735#0\"></plan>\n<plan id=\"gsm8k-train/2563#2\"></plan>\n<plan id=\"math-train/4736#2\">\n<block units=\"6-8\">\n<path units=\"6-6\">\n<outline>The remainder when 22 is divided by 3.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The remainder when 22 is divided by 5.</outline>\n</path>\n<conclusion>Dividing 22 by 3 leaves remainder 1, and dividing 22 by 5 leaves remainder 2.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1946,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 417,
+  "output_tokens_details": {
+   "thinking_tokens": 180
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1946,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0241008
+}

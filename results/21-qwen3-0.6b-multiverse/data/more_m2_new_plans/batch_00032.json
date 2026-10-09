@@ -1,0 +1,35 @@
+{
+ "batch": 32,
+ "keys": [
+  "math-train/1194#1",
+  "gsm8k-train/6711#2",
+  "math-train/6017#1",
+  "math-train/5212#1"
+ ],
+ "reply": "<plan id=\"math-train/1194#1\"></plan>\n<plan id=\"gsm8k-train/6711#2\"></plan>\n<plan id=\"math-train/6017#1\"></plan>\n<plan id=\"math-train/5212#1\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The units digit of $31^3$.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The units digit of $13^3$.</outline>\n</path>\n<conclusion>The units digit of $31^3$ is 1 and the units digit of $13^3$ is 7.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1774,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 323,
+  "output_tokens_details": {
+   "thinking_tokens": 94
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1774,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0208448
+}

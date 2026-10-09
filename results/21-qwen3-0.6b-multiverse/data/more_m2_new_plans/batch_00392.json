@@ -1,0 +1,35 @@
+{
+ "batch": 392,
+ "keys": [
+  "gsm8k-train/6637#0",
+  "math-train/1532#1",
+  "gsm8k-train/1303#0",
+  "math-train/515#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6637#0\"></plan>\n\n<plan id=\"math-train/1532#1\">\n<block units=\"6-9\">\n<lead units=\"6-6\"/>\n<path units=\"7-7\">\n<outline>The value of y when x = 35.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The value of y when x = 36.</outline>\n</path>\n<conclusion>If x = 35 then y = 36, and if x = 36 then y = 35.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/1303#0\"></plan>\n\n<plan id=\"math-train/515#2\">\n<block units=\"2-6\">\n<path units=\"2-2\">\n<outline>The simplified form of the left-hand side.</outline>\n</path>\n<path units=\"3-5\">\n<outline>The simplified form of the right-hand side as a power of 2.</outline>\n</path>\n<conclusion>The left-hand side is $Q^{3/2}$ and the right-hand side is $2^{9/2}$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2291,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 665,
+  "output_tokens_details": {
+   "thinking_tokens": 290
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2291,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.031820799999999996
+}

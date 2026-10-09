@@ -1,0 +1,35 @@
+{
+ "batch": 23,
+ "keys": [
+  "math-train/285#0",
+  "math-train/5359#2",
+  "gsm8k-train/4467#2",
+  "math-train/505#1"
+ ],
+ "reply": "<plan id=\"math-train/285#0\">\n<block units=\"4-7\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The solution of the first factor's equation.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The solution of the second factor's equation.</outline>\n</path>\n<conclusion>The first factor gives $x = -\\frac{5}{3}$ and the second factor gives $x = \\frac{9}{2}$.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/5359#2\"></plan>\n<plan id=\"gsm8k-train/4467#2\">\n<block units=\"1-3\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The pounds of green lettuce.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The pounds of red lettuce.</outline>\n</path>\n<conclusion>Julie bought 4 pounds of green lettuce and 3 pounds of red lettuce.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/505#1\">\n<block units=\"4-5\">\n<path units=\"4-4\">\n<outline>The simplified form of the sum formula with the given values substituted.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The value of the tenth power of the common ratio.</outline>\n</path>\n<conclusion>The sum simplifies to $2 \\left(1 - \\left(\\frac{2}{3}\\right)^{10}\\right)$, and $\\left(\\frac{2}{3}\\right)^{10} = \\frac{1024}{59049}$.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2197,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1093,
+  "output_tokens_details": {
+   "thinking_tokens": 536
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2197,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.039628800000000006
+}

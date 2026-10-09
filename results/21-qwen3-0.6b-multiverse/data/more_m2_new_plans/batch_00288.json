@@ -1,0 +1,35 @@
+{
+ "batch": 288,
+ "keys": [
+  "gsm8k-train/3343#0",
+  "math-train/4905#2",
+  "math-train/4826#1",
+  "gsm8k-train/6807#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3343#0\"></plan>\n<plan id=\"math-train/4905#2\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The residue of 77 modulo 20.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The residue of 88 modulo 20.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The residue of 99 modulo 20.</outline>\n</path>\n<conclusion>Modulo 20, 77 reduces to 7, 88 reduces to 8, and 99 reduces to 9.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/4826#1\"></plan>\n<plan id=\"gsm8k-train/6807#2\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The cost of milk for one batch.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The cost of fruit for one batch.</outline>\n</path>\n<conclusion>For one batch, the milk costs $15 and the fruit costs $6.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1640,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 564,
+  "output_tokens_details": {
+   "thinking_tokens": 144
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1640,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0245928
+}

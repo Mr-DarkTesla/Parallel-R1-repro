@@ -1,0 +1,35 @@
+{
+ "batch": 353,
+ "keys": [
+  "gsm8k-train/3773#1",
+  "math-train/6921#3",
+  "math-train/365#2",
+  "gsm8k-train/817#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3773#1\">\n<block units=\"6-9\">\n<lead units=\"6-6\"/>\n<path units=\"7-7\">\n<outline>Half of the cherry-flavored sweets.</outline>\n</path>\n<path units=\"8-8\">\n<outline>Half of the strawberry-flavored sweets.</outline>\n</path>\n<path units=\"9-9\">\n<outline>Half of the pineapple-flavored sweets.</outline>\n</path>\n<conclusion>Half of each type is 15 cherry, 20 strawberry and 25 pineapple sweets.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/6921#3\"></plan>\n<plan id=\"math-train/365#2\"></plan>\n<plan id=\"gsm8k-train/817#0\">\n<block units=\"1-17\">\n<path units=\"1-11\">\n<outline>The weekly cost of coffee beans.</outline>\n</path>\n<path units=\"12-15\">\n<outline>The weekly cost of milk.</outline>\n</path>\n<conclusion>Coffee beans cost $16 per week and milk costs $2 per week.</conclusion>\n<tail units=\"16-17\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2396,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 787,
+  "output_tokens_details": {
+   "thinking_tokens": 390
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2396,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0351008
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 270,
+ "keys": [
+  "gsm8k-train/3929#1",
+  "math-train/6512#1",
+  "math-train/602#0",
+  "gsm8k-train/7217#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3929#1\"></plan>\n<plan id=\"math-train/6512#1\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The measure of the angle 5x.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The measure of the angle 6x.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The measure of the angle 7x.</outline>\n</path>\n<conclusion>The three angles measure 50°, 60° and 70°.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/602#0\"></plan>\n<plan id=\"gsm8k-train/7217#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1857,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 488,
+  "output_tokens_details": {
+   "thinking_tokens": 248
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1857,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0248088
+}

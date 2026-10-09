@@ -1,0 +1,35 @@
+{
+ "batch": 237,
+ "keys": [
+  "math-train/1264#1",
+  "gsm8k-train/6882#2",
+  "math-train/3751#1",
+  "gsm8k-train/1621#3"
+ ],
+ "reply": "<plan id=\"math-train/1264#1\"></plan>\n<plan id=\"gsm8k-train/6882#2\"></plan>\n<plan id=\"math-train/3751#1\">\n<block units=\"16-21\">\n<lead units=\"16-16\"/>\n<path units=\"17-17\">\n<outline>Whether |z| is an integer for y = 1.</outline>\n</path>\n<path units=\"18-18\">\n<outline>Whether |z| is an integer for y = 2.</outline>\n</path>\n<path units=\"19-19\">\n<outline>Whether |z| is an integer for y = 3.</outline>\n</path>\n<path units=\"20-20\">\n<outline>Whether |z| is an integer for y = 4.</outline>\n</path>\n<conclusion>For y = 1, 2, 3 the modulus is √10, √13, √18, none of which is an integer, while y = 4 gives |z| = 5, an integer.</conclusion>\n<tail units=\"21-21\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1621#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2769,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 778,
+  "output_tokens_details": {
+   "thinking_tokens": 437
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2769,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0379048
+}

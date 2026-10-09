@@ -1,0 +1,35 @@
+{
+ "batch": 398,
+ "keys": [
+  "math-train/2012#0",
+  "gsm8k-train/5999#0",
+  "math-train/1213#3",
+  "gsm8k-train/164#1"
+ ],
+ "reply": "<plan id=\"math-train/2012#0\"></plan>\n<plan id=\"gsm8k-train/5999#0\"></plan>\n<plan id=\"math-train/1213#3\">\n<block units=\"3-6\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The left-hand side rewritten as a power of 2.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The right-hand side rewritten as a power of 2.</outline>\n</path>\n<conclusion>The left-hand side is $2^{-4x - 16}$ and the right-hand side is $2^{8x + 20}$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/164#1\">\n<block units=\"1-9\">\n<lead units=\"1-4\"/>\n<path units=\"5-6\">\n<outline>The number of cards Buddy has after Wednesday's purchase.</outline>\n</path>\n<path units=\"7-8\">\n<outline>The number of cards Buddy buys on Thursday.</outline>\n</path>\n<conclusion>After Wednesday Buddy has 27 cards, and on Thursday he buys 5 cards.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2351,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 906,
+  "output_tokens_details": {
+   "thinking_tokens": 488
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2351,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.037120799999999995
+}

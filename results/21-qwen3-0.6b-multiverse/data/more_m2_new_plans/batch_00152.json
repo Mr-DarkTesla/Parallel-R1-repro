@@ -1,0 +1,35 @@
+{
+ "batch": 152,
+ "keys": [
+  "gsm8k-train/5773#0",
+  "math-train/999#0",
+  "math-train/3681#0",
+  "gsm8k-train/599#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/5773#0\"></plan>\n<plan id=\"math-train/999#0\">\n<block units=\"3-7\">\n<path units=\"3-3\">\n<outline>The distance between the first and second vertices.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The distance between the second and third vertices.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The distance between the third and fourth vertices.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The distance between the fourth and first vertices.</outline>\n</path>\n<conclusion>The four side lengths are $3\\sqrt{2}$, $\\sqrt{2}$, $\\sqrt{10}$ and $\\sqrt{10}$.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/3681#0\"></plan>\n<plan id=\"gsm8k-train/599#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2765,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 507,
+  "output_tokens_details": {
+   "thinking_tokens": 192
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2765,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.032452800000000004
+}

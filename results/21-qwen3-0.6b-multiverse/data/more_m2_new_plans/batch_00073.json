@@ -1,0 +1,35 @@
+{
+ "batch": 73,
+ "keys": [
+  "math-train/6688#1",
+  "math-train/4526#2",
+  "gsm8k-train/3269#1",
+  "math-train/5724#2"
+ ],
+ "reply": "<plan id=\"math-train/6688#1\"></plan>\n<plan id=\"math-train/4526#2\">\n<block units=\"6-9\">\n<path units=\"6-6\">\n<outline>The solutions of the first equation, x^2 - 3x = 0.</outline>\n</path>\n<path units=\"7-8\">\n<outline>The solutions of the second equation, x^2 - 3x - 4 = 0.</outline>\n</path>\n<conclusion>The first equation gives x = 0 or x = 3, and the second equation gives x = 4 or x = -1.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/3269#1\"></plan>\n<plan id=\"math-train/5724#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2236,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 452,
+  "output_tokens_details": {
+   "thinking_tokens": 205
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2236,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0271208
+}

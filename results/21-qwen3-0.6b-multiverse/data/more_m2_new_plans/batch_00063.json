@@ -1,0 +1,35 @@
+{
+ "batch": 63,
+ "keys": [
+  "math-train/2849#0",
+  "gsm8k-train/3479#0",
+  "math-train/1515#3",
+  "math-train/373#3"
+ ],
+ "reply": "<plan id=\"math-train/2849#0\"></plan>\n<plan id=\"gsm8k-train/3479#0\">\n<block units=\"1-8\">\n<path units=\"1-4\">\n<outline>The total earnings from the shark photos.</outline>\n</path>\n<path units=\"5-6\">\n<outline>The cost of fuel for the 5-hour trip.</outline>\n</path>\n<conclusion>The earnings from photos are $450 and the fuel cost is $250.</conclusion>\n<tail units=\"7-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/1515#3\"></plan>\n<plan id=\"math-train/373#3\">\n<block units=\"9-12\">\n<lead units=\"9-9\"/>\n<path units=\"10-10\">\n<outline>The value of t for the pair (1, 4).</outline>\n</path>\n<path units=\"11-11\">\n<outline>The value of t for the pair (2, 3).</outline>\n</path>\n<conclusion>The pair (1, 4) gives t = 4 and the pair (2, 3) gives t = 6.</conclusion>\n<tail units=\"12-12\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2255,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 370,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2255,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0256328
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 207,
+ "keys": [
+  "math-train/5927#1",
+  "math-train/7281#2",
+  "gsm8k-train/768#0",
+  "math-train/2037#2"
+ ],
+ "reply": "<plan id=\"math-train/5927#1\">\n<block units=\"2-6\">\n<lead units=\"2-2\"/>\n<path units=\"3-4\">\n<outline>The position of the hour hand at 9:40.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The position of the minute hand at 40 minutes.</outline>\n</path>\n<conclusion>The hour hand is at 290° and the minute hand is at 240°.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/7281#2\"></plan>\n<plan id=\"gsm8k-train/768#0\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The number of commencement addresses given by Governor Hawkins.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The number of commencement addresses given by Governor Sloan.</outline>\n</path>\n<conclusion>Governor Hawkins gave 6 commencement addresses and Governor Sloan gave 22.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/2037#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2034,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 789,
+  "output_tokens_details": {
+   "thinking_tokens": 396
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2034,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0322448
+}

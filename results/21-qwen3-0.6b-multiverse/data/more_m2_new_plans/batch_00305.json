@@ -1,0 +1,35 @@
+{
+ "batch": 305,
+ "keys": [
+  "math-train/346#0",
+  "math-train/2655#2",
+  "gsm8k-train/5379#3",
+  "math-train/1261#1"
+ ],
+ "reply": "<plan id=\"math-train/346#0\">\n<block units=\"5-6\">\n<path units=\"5-5\">\n<outline>The time Xanthia takes to finish the book.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The time Molly takes to finish the book.</outline>\n</path>\n<conclusion>Xanthia takes 2.25 hours and Molly takes 4.5 hours to finish the book.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/2655#2\"></plan>\n<plan id=\"gsm8k-train/5379#3\"></plan>\n<plan id=\"math-train/1261#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1984,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 626,
+  "output_tokens_details": {
+   "thinking_tokens": 414
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1984,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0285848
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 240,
+ "keys": [
+  "math-train/4093#1",
+  "gsm8k-train/6940#2",
+  "math-train/784#0",
+  "math-train/7070#0"
+ ],
+ "reply": "<plan id=\"math-train/4093#1\"></plan>\n<plan id=\"gsm8k-train/6940#2\"></plan>\n<plan id=\"math-train/784#0\">\n<block units=\"3-8\">\n<lead units=\"3-3\"/>\n<path units=\"4-5\">\n<outline>The y-intercept of the line.</outline>\n</path>\n<path units=\"6-7\">\n<outline>The x-intercept of the line.</outline>\n</path>\n<conclusion>The y-intercept is $-28$ and the x-intercept is $7$.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/7070#0\">\n<block units=\"4-7\">\n<path units=\"4-5\">\n<outline>The dot product of a and c.</outline>\n</path>\n<path units=\"6-7\">\n<outline>The dot product of a and b.</outline>\n</path>\n<conclusion>We have $\\mathbf{a} \\cdot \\mathbf{c} = -64$ and $\\mathbf{a} \\cdot \\mathbf{b} = \\sqrt{7} - 3$.</conclusion>\n</block>\n<block units=\"9-21\">\n<lead units=\"9-9\"/>\n<path units=\"10-12\">\n<outline>The components of the first term, (a·c) times b.</outline>\n</path>\n<path units=\"13-16\">\n<outline>The components of the second term, minus (a·b) times c.</outline>\n</path>\n<conclusion>The first term has components $-64\\sqrt{7}$, $-256$, $64$, and the second term has components $-13\\sqrt{7} + 39$, $4\\sqrt{7} - 12$, $-17\\sqrt{7} + 51$.</conclusion>\n<tail units=\"17-21\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 4524,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1053,
+  "output_tokens_details": {
+   "thinking_tokens": 475
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 4524,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.057444800000000004
+}

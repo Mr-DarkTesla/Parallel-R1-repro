@@ -1,0 +1,35 @@
+{
+ "batch": 273,
+ "keys": [
+  "gsm8k-train/5606#0",
+  "math-train/4952#1",
+  "math-train/5132#3",
+  "gsm8k-train/1389#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/5606#0\">\n<block units=\"2-6\">\n<path units=\"2-2\">\n<outline>Gunther's total free time in minutes.</outline>\n</path>\n<path units=\"3-6\">\n<outline>The time each cleaning task takes, including brushing all the cats.</outline>\n</path>\n<conclusion>Gunther has 180 minutes of free time, and the tasks take 45, 60, 30 and 15 minutes.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4952#1\"></plan>\n<plan id=\"math-train/5132#3\"></plan>\n<plan id=\"gsm8k-train/1389#3\">\n<block units=\"2-4\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The number of words typed in 5 minutes before the injury.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The number of words typed in 5 minutes after the injury.</outline>\n</path>\n<conclusion>He could type 50 words before and 40 words after.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1830,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 712,
+  "output_tokens_details": {
+   "thinking_tokens": 351
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1830,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0290728
+}

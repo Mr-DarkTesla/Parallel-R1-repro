@@ -1,0 +1,35 @@
+{
+ "batch": 200,
+ "keys": [
+  "math-train/7239#0",
+  "math-train/5047#1",
+  "gsm8k-train/7095#1",
+  "math-train/30#2"
+ ],
+ "reply": "<plan id=\"math-train/7239#0\"></plan>\n<plan id=\"math-train/5047#1\"></plan>\n<plan id=\"gsm8k-train/7095#1\">\n<block units=\"8-11\">\n<path units=\"8-8\">\n<outline>The total number of oysters over both days.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The total number of crabs over both days.</outline>\n</path>\n<conclusion>There were 75 oysters and 120 crabs in total over the two days.</conclusion>\n<tail units=\"10-11\"/>\n</block>\n</plan>\n<plan id=\"math-train/30#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2091,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 541,
+  "output_tokens_details": {
+   "thinking_tokens": 334
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2091,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0277408
+}

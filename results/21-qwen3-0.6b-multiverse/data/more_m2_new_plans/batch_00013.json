@@ -1,0 +1,35 @@
+{
+ "batch": 13,
+ "keys": [
+  "math-train/3180#2",
+  "gsm8k-train/2358#3",
+  "math-train/1411#1",
+  "math-train/1565#3"
+ ],
+ "reply": "<plan id=\"math-train/3180#2\"></plan>\n<plan id=\"gsm8k-train/2358#3\">\n<block units=\"1-7\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The cost of the two dozen pencils.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The cost of the 20 folders.</outline>\n</path>\n<conclusion>The pencils cost 12 dollars and the folders cost 18 dollars.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/1411#1\"></plan>\n<plan id=\"math-train/1565#3\">\n<block units=\"4-8\">\n<lead units=\"4-5\"/>\n<path units=\"6-6\">\n<outline>The value of g(25) obtained from x = 3.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The value of g(25) obtained from x = -3.</outline>\n</path>\n<conclusion>Substituting x = 3 gives g(25) = 13, and substituting x = -3 gives g(25) = 7.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2349,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 589,
+  "output_tokens_details": {
+   "thinking_tokens": 199
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2349,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030764800000000002
+}

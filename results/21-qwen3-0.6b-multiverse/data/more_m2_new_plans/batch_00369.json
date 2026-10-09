@@ -1,0 +1,35 @@
+{
+ "batch": 369,
+ "keys": [
+  "math-train/3375#0",
+  "gsm8k-train/4885#1",
+  "math-train/5528#3",
+  "gsm8k-train/2199#2"
+ ],
+ "reply": "<plan id=\"math-train/3375#0\"></plan>\n<plan id=\"gsm8k-train/4885#1\">\n<block units=\"1-9\">\n<lead units=\"1-2\"/>\n<path units=\"3-4\">\n<outline>The amount Jade spends on living expenses.</outline>\n</path>\n<path units=\"5-6\">\n<outline>The amount Jade spends on insurance.</outline>\n</path>\n<conclusion>Jade spends $1200 on living expenses and $320 on insurance.</conclusion>\n<tail units=\"7-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/5528#3\"></plan>\n<plan id=\"gsm8k-train/2199#2\">\n<block units=\"1-9\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The number of students currently from other countries.</outline>\n</path>\n<path units=\"4-6\">\n<outline>The total number of students after the new students join.</outline>\n</path>\n<conclusion>540 students are currently from other countries, and the total number of students after the new students join is 2000.</conclusion>\n<tail units=\"7-9\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3006,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 913,
+  "output_tokens_details": {
+   "thinking_tokens": 539
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3006,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0425008
+}

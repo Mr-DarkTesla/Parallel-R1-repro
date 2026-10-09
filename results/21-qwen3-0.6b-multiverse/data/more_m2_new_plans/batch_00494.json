@@ -1,0 +1,35 @@
+{
+ "batch": 494,
+ "keys": [
+  "math-train/1002#0",
+  "math-train/1634#0",
+  "math-train/5423#2",
+  "math-train/5942#0"
+ ],
+ "reply": "<plan id=\"math-train/1002#0\">\n<block units=\"2-4\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The left side 4^6 rewritten as a power of 2.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The right side 8^n rewritten as a power of 2.</outline>\n</path>\n<conclusion>The left side equals 2^{12} and the right side equals 2^{3n}.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/1634#0\"></plan>\n<plan id=\"math-train/5423#2\"></plan>\n<plan id=\"math-train/5942#0\">\n<block units=\"2-3\">\n<path units=\"2-2\">\n<outline>The sum of the first set of five numbers.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The sum of the second set of six numbers.</outline>\n</path>\n<conclusion>The first set sums to 65 and the second set sums to 144.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1645,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 338,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1645,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0201128
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 19,
+ "keys": [
+  "math-train/5216#1",
+  "gsm8k-train/6966#3",
+  "math-train/1026#1",
+  "math-train/5440#1"
+ ],
+ "reply": "<plan id=\"math-train/5216#1\">\n<block units=\"2-7\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The decimal value of 1011_2.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The decimal value of 101_2.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The decimal value of 1100_2.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The decimal value of 1101_2.</outline>\n</path>\n<conclusion>The four binary numbers equal 11, 5, 12 and 13 in decimal.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6966#3\">\n<block units=\"4-9\">\n<path units=\"4-5\">\n<outline>The cost of the 60 texts on the alternative plan.</outline>\n</path>\n<path units=\"6-7\">\n<outline>The cost of the 60 minutes of calls on the alternative plan.</outline>\n</path>\n<conclusion>The texts cost $2 and the calls cost $9 on the alternative plan.</conclusion>\n<tail units=\"8-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/1026#1\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The solution using the plus sign.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The solution using the minus sign.</outline>\n</path>\n<conclusion>The two solutions are t = -1/1.4 and t = 2/1.4.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/5440#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2612,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 992,
+  "output_tokens_details": {
+   "thinking_tokens": 410
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2612,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0409288
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 247,
+ "keys": [
+  "gsm8k-train/6171#0",
+  "math-train/6490#1",
+  "math-train/1561#1",
+  "gsm8k-train/2528#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6171#0\">\n<block units=\"1-6\">\n<path units=\"1-2\">\n<outline>The cost of the bananas.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The cost of the oranges.</outline>\n</path>\n<conclusion>The bananas cost $10 and the oranges cost $15.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/6490#1\"></plan>\n<plan id=\"math-train/1561#1\"></plan>\n<plan id=\"gsm8k-train/2528#2\">\n<block units=\"1-6\">\n<path units=\"1-2\">\n<outline>The area of the rectangle.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The area of the square.</outline>\n</path>\n<conclusion>The rectangle has area 18 square inches and the square has area 25 square inches.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1988,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 328,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1988,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0226568
+}

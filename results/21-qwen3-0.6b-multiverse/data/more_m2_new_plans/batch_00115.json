@@ -1,0 +1,35 @@
+{
+ "batch": 115,
+ "keys": [
+  "math-train/3642#2",
+  "math-train/3956#0",
+  "math-train/1245#0",
+  "math-train/7339#3"
+ ],
+ "reply": "<plan id=\"math-train/3642#2\"></plan>\n<plan id=\"math-train/3956#0\">\n<block units=\"15-18\">\n<lead units=\"15-15\"/>\n<path units=\"16-16\">\n<outline>The values of x and y for the factor pair (1, 49).</outline>\n</path>\n<path units=\"17-17\">\n<outline>The values of x and y for the factor pair (7, 7).</outline>\n</path>\n<path units=\"18-18\">\n<outline>The values of x and y for the factor pair (49, 1).</outline>\n</path>\n<conclusion>The three factor pairs give the solutions x = 4, y = 56; x = 7, y = 14; and x = 28, y = 8.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/1245#0\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The products of x^2 with each term of the second polynomial.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The products of -2x with each term of the second polynomial.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The products of 2 with each term of the second polynomial.</outline>\n</path>\n<conclusion>The partial products are x^4, 2x^3, 2x^2 from x^2; -2x^3, -4x^2, -4x from -2x; and 2x^2, 4x, 4 from 2.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/7339#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 4,
+  "cache_creation_input_tokens": 5969,
+  "cache_read_input_tokens": 1848,
+  "output_tokens": 853,
+  "output_tokens_details": {
+   "thinking_tokens": 345
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 5969,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0651976
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 164,
+ "keys": [
+  "gsm8k-train/5382#3",
+  "math-train/7348#1",
+  "gsm8k-train/2237#0",
+  "math-train/5976#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/5382#3\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The time spent watching TV episodes.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The time spent sleeping, in minutes.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The time spent watching movies.</outline>\n</path>\n<conclusion>TV takes 75 minutes, sleep takes 270 minutes, and movies take 210 minutes.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/7348#1\"></plan>\n<plan id=\"gsm8k-train/2237#0\"></plan>\n<plan id=\"math-train/5976#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2141,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 535,
+  "output_tokens_details": {
+   "thinking_tokens": 264
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2141,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0280208
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 446,
+ "keys": [
+  "gsm8k-train/3497#1",
+  "math-train/6497#0",
+  "gsm8k-train/2795#1",
+  "math-train/5634#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3497#1\"></plan>\n<plan id=\"math-train/6497#0\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The simplified form of the cubed term in the denominator.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The simplified form of the second factor raised to the tenth power.</outline>\n</path>\n<conclusion>The denominator term is $-7^9$ and the second factor is $7^{10}$.</conclusion>\n<tail units=\"5-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2795#1\"></plan>\n<plan id=\"math-train/5634#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1938,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 608,
+  "output_tokens_details": {
+   "thinking_tokens": 365
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1938,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0278568
+}

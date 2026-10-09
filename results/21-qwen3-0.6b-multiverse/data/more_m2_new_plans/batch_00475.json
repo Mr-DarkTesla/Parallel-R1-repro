@@ -1,0 +1,35 @@
+{
+ "batch": 475,
+ "keys": [
+  "math-train/1643#3",
+  "math-train/2018#0",
+  "math-train/6576#0",
+  "math-train/5489#1"
+ ],
+ "reply": "<plan id=\"math-train/1643#3\"></plan>\n<plan id=\"math-train/2018#0\"></plan>\n<plan id=\"math-train/6576#0\"></plan>\n<plan id=\"math-train/5489#1\">\n<block units=\"2-7\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The remainder of 1734 modulo 10.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The remainder of 5389 modulo 10.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The remainder of 80,607 modulo 10.</outline>\n</path>\n<conclusion>The residues modulo 10 are 4, 9 and 7 for 1734, 5389 and 80,607 respectively.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1913,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 472,
+  "output_tokens_details": {
+   "thinking_tokens": 193
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1913,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.024936800000000002
+}

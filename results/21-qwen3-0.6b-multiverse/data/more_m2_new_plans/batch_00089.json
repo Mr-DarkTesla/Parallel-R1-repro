@@ -1,0 +1,35 @@
+{
+ "batch": 89,
+ "keys": [
+  "gsm8k-train/4541#0",
+  "math-train/558#0",
+  "math-train/766#0",
+  "gsm8k-train/6027#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/4541#0\"></plan>\n\n<plan id=\"math-train/558#0\"></plan>\n\n<plan id=\"math-train/766#0\">\n<block units=\"2-6\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The combined x^3 terms.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The combined x^2 terms.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The combined x terms.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The combined constant terms.</outline>\n</path>\n<conclusion>The x^3 terms give 0, the x^2 terms give 5x^2, the x terms give 0, and the constants give 14.</conclusion>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/6027#0\">\n<block units=\"1-7\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The number of eggs remaining after the omelet.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The number of eggs laid by the chickens.</outline>\n</path>\n<conclusion>5 eggs remain after the omelet, and the chickens laid 6 eggs.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1789,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 831,
+  "output_tokens_details": {
+   "thinking_tokens": 394
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1789,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0311248
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 9,
+ "keys": [
+  "math-train/800#1",
+  "math-train/5555#0",
+  "math-train/5966#0",
+  "gsm8k-train/5074#2"
+ ],
+ "reply": "<plan id=\"math-train/800#1\">\n<block units=\"16-19\">\n<lead units=\"16-16\"/>\n<path units=\"17-17\">\n<outline>The value of k for the pair (1, 16).</outline>\n</path>\n<path units=\"18-18\">\n<outline>The value of k for the pair (2, 8).</outline>\n</path>\n<path units=\"19-19\">\n<outline>The value of k for the pair (4, 4).</outline>\n</path>\n<conclusion>The pairs give k = 17, k = 10 and k = 8 respectively.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5555#0\">\n<block units=\"4-5\">\n<path units=\"4-4\">\n<outline>The third side when 5 and 12 are both legs.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The third side in the second case, where 12 is the hypotenuse.</outline>\n</path>\n<conclusion>The first case gives a hypotenuse of 13, and the second case gives a leg of $\\sqrt{119}$.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5966#0\">\n<block units=\"2-3\">\n<path units=\"2-2\">\n<outline>The solution set of the first inequality.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The solution set of the second inequality.</outline>\n</path>\n<conclusion>The first inequality gives $n > 1$ and the second gives $n < 3$.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/5074#2\">\n<block units=\"4-6\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The money earned from piercing 6 noses.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The money earned from piercing 9 ears.</outline>\n</path>\n<conclusion>The noses bring in 120 and the ears bring in 270.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2160,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 982,
+  "output_tokens_details": {
+   "thinking_tokens": 336
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2160,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0371128
+}

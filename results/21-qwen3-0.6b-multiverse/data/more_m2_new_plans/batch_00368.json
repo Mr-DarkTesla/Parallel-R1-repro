@@ -1,0 +1,35 @@
+{
+ "batch": 368,
+ "keys": [
+  "gsm8k-train/4234#1",
+  "math-train/4098#3",
+  "gsm8k-train/2935#1",
+  "math-train/389#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/4234#1\"></plan>\n\n<plan id=\"math-train/4098#3\">\n<block units=\"6-14\">\n<lead units=\"6-6\"/>\n<path units=\"7-8\">\n<outline>The relation between a and b given by the sum of the roots.</outline>\n</path>\n<path units=\"9-14\">\n<outline>The relations between a and b given by the product of the roots, from its real and imaginary parts.</outline>\n</path>\n<conclusion>The sum of the roots gives a + b = 10. The product of the roots gives ab = 24 and 5a + 4b = 46.</conclusion>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/2935#1\"></plan>\n\n<plan id=\"math-train/389#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2624,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 512,
+  "output_tokens_details": {
+   "thinking_tokens": 259
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2624,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0314248
+}

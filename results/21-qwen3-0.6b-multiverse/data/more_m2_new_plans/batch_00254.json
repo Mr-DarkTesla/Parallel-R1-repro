@@ -1,0 +1,35 @@
+{
+ "batch": 254,
+ "keys": [
+  "gsm8k-train/3002#2",
+  "math-train/4334#1",
+  "gsm8k-train/734#3",
+  "math-train/7332#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3002#2\"></plan>\n<plan id=\"math-train/4334#1\">\n<block units=\"3-5\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The value of a.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The value of b.</outline>\n</path>\n<conclusion>We have a = 10 and b = 8.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/734#3\"></plan>\n<plan id=\"math-train/7332#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2319,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 369,
+  "output_tokens_details": {
+   "thinking_tokens": 179
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2319,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0261248
+}

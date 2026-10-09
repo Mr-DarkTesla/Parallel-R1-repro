@@ -1,0 +1,35 @@
+{
+ "batch": 352,
+ "keys": [
+  "gsm8k-train/6879#2",
+  "math-train/5621#3",
+  "gsm8k-train/2645#1",
+  "math-train/4151#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6879#2\"></plan>\n<plan id=\"math-train/5621#3\"></plan>\n<plan id=\"gsm8k-train/2645#1\">\n<block units=\"1-6\">\n<path units=\"1-2\">\n<outline>The revenue from the haircuts.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The revenue from the perm.</outline>\n</path>\n<path units=\"5-6\">\n<outline>The revenue from the dye jobs.</outline>\n</path>\n<conclusion>The haircuts bring in $120, the perm brings in $40, and the dye jobs bring in $120.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4151#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2193,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 731,
+  "output_tokens_details": {
+   "thinking_tokens": 488
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2193,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0323568
+}

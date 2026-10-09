@@ -1,0 +1,35 @@
+{
+ "batch": 292,
+ "keys": [
+  "math-train/475#2",
+  "gsm8k-train/5615#2",
+  "math-train/1464#1",
+  "math-train/7038#0"
+ ],
+ "reply": "<plan id=\"math-train/475#2\"></plan>\n<plan id=\"gsm8k-train/5615#2\"></plan>\n<plan id=\"math-train/1464#1\"></plan>\n<plan id=\"math-train/7038#0\">\n<block units=\"3-5\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The dot product of u and v.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The squared magnitude of v.</outline>\n</path>\n<conclusion>The dot product is $\\mathbf{u} \\cdot \\mathbf{v} = 15 - z$, and the squared magnitude is $\\|\\mathbf{v}\\|^2 = 35$.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2494,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 464,
+  "output_tokens_details": {
+   "thinking_tokens": 218
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2494,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0294248
+}

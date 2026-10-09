@@ -1,0 +1,35 @@
+{
+ "batch": 165,
+ "keys": [
+  "math-train/3340#2",
+  "gsm8k-train/4756#1",
+  "math-train/3233#0",
+  "math-train/1247#1"
+ ],
+ "reply": "<plan id=\"math-train/3340#2\">\n<block units=\"1-6\">\n<lead units=\"1-2\"/>\n<path units=\"3-3\">\n<outline>The volume of the larger sphere.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The volume of the smaller sphere.</outline>\n</path>\n<conclusion>The larger sphere has volume 288π and the smaller sphere has volume 36π.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4756#1\"></plan>\n<plan id=\"math-train/3233#0\"></plan>\n<plan id=\"math-train/1247#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2802,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 394,
+  "output_tokens_details": {
+   "thinking_tokens": 168
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2802,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030488799999999996
+}

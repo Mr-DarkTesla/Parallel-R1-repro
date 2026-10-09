@@ -1,0 +1,41 @@
+{
+  "m1": {
+    "selected": 180,
+    "distribution": {
+      "gsm8k/integer": 85,
+      "math/expression": 25,
+      "math/integer": 62,
+      "math/fraction": 8
+    },
+    "max_tokens": {
+      "prompt": 764,
+      "response": 659,
+      "total": 1333
+    },
+    "verbatim_qwen_checked": 0
+  },
+  "m2": {
+    "selected": 180,
+    "distribution": {
+      "gsm8k/integer": 85,
+      "math/expression": 25,
+      "math/integer": 62,
+      "math/fraction": 8
+    },
+    "max_tokens": {
+      "prompt": 427,
+      "response": 1302,
+      "total": 1540
+    },
+    "verbatim_qwen_checked": 180
+  },
+  "checks": {
+    "pool_membership": 360,
+    "no_old_or_cross_method_id": true,
+    "grammar_answer_independence_length": 360,
+    "m1_self_review": 20,
+    "m1_independent_review": 30,
+    "m2_self_review": 20,
+    "m2_human_reviewed": 180
+  }
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 466,
+ "keys": [
+  "math-train/307#0",
+  "math-train/1631#0",
+  "math-train/1951#1",
+  "math-train/4224#1"
+ ],
+ "reply": "<plan id=\"math-train/307#0\">\n<block units=\"4-6\">\n<path units=\"4-4\">\n<outline>The x-coordinate of point B.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The y-coordinate of point B.</outline>\n</path>\n<conclusion>The x-coordinate of B is 0 and the y-coordinate of B is 4.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/1631#0\"></plan>\n<plan id=\"math-train/1951#1\"></plan>\n<plan id=\"math-train/4224#1\">\n<block units=\"5-7\">\n<path units=\"5-5\">\n<outline>The Cesaro sum of the 100-term sequence expressed through the original partial sums.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The total of the partial sums of the original 99-term sequence.</outline>\n</path>\n<conclusion>The new Cesaro sum equals (100 + (S_1 + ... + S_100))/100, and S_1 + ... + S_99 = 99000.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2654,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 773,
+  "output_tokens_details": {
+   "thinking_tokens": 386
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2654,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0368848
+}

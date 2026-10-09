@@ -1,0 +1,35 @@
+{
+ "batch": 104,
+ "keys": [
+  "math-train/5714#0",
+  "math-train/1652#0",
+  "gsm8k-train/6224#2",
+  "math-train/6722#1"
+ ],
+ "reply": "<plan id=\"math-train/5714#0\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The probability of flipping a head on the coin.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The probability of rolling a 2 on the die.</outline>\n</path>\n<conclusion>The probability of heads is $ \\frac{1}{2} $ and the probability of rolling a 2 is $ \\frac{1}{6} $.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"math-train/1652#0\"></plan>\n<plan id=\"gsm8k-train/6224#2\"></plan>\n<plan id=\"math-train/6722#1\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The area of Square A.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The area of Square B.</outline>\n</path>\n<conclusion>Square A has area $ x^2 $ square inches and Square B has area $ 16x^2 $ square inches.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2067,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 897,
+  "output_tokens_details": {
+   "thinking_tokens": 501
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2067,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0346688
+}

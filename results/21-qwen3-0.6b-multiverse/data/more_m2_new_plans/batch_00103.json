@@ -1,0 +1,35 @@
+{
+ "batch": 103,
+ "keys": [
+  "math-train/7429#3",
+  "math-train/3345#3",
+  "math-train/3230#2",
+  "gsm8k-train/408#2"
+ ],
+ "reply": "<plan id=\"math-train/7429#3\"></plan>\n<plan id=\"math-train/3345#3\"></plan>\n<plan id=\"math-train/3230#2\">\n<block units=\"3-6\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The lower bound on a from the first triangle inequality.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The upper bound on a from the second triangle inequality.</outline>\n</path>\n<conclusion>The first inequality gives a ≥ 4 and the second gives a ≤ 7.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n<block units=\"7-15\">\n<lead units=\"7-7\"/>\n<path units=\"8-9\">\n<outline>Whether the sides for a = 4 form a valid triangle.</outline>\n</path>\n<path units=\"10-11\">\n<outline>Whether the sides for a = 5 form a valid triangle.</outline>\n</path>\n<path units=\"12-13\">\n<outline>Whether the sides for a = 6 form a valid triangle.</outline>\n</path>\n<path units=\"14-15\">\n<outline>Whether the sides for a = 7 form a valid triangle.</outline>\n</path>\n<conclusion>The sides for a = 4, 5, 6 and 7 all form valid triangles.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/408#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2706,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 974,
+  "output_tokens_details": {
+   "thinking_tokens": 504
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2706,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.041320800000000005
+}

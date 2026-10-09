@@ -1,0 +1,35 @@
+{
+ "batch": 242,
+ "keys": [
+  "gsm8k-train/3321#0",
+  "math-train/4296#3",
+  "math-train/1717#1",
+  "gsm8k-train/1390#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3321#0\">\n<block units=\"1-7\">\n<path units=\"1-2\">\n<outline>The number of correct answers on the first 40 questions.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The number of correct answers on the next 40 questions.</outline>\n</path>\n<conclusion>She got 36 correct answers on the first 40 questions and 38 correct answers on the next 40 questions.</conclusion>\n<tail units=\"5-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/4296#3\">\n<block units=\"1-29\">\n<path units=\"1-8\">\n<outline>The linear equation in a and b given by the remainder on division by x - 1.</outline>\n</path>\n<path units=\"9-17\">\n<outline>The linear equation in a and b given by the remainder on division by x + 2.</outline>\n</path>\n<conclusion>The two remainder conditions give the equations a + b = 6 and 4a + b = 12.</conclusion>\n<tail units=\"18-29\"/>\n</block>\n</plan>\n<plan id=\"math-train/1717#1\"></plan>\n<plan id=\"gsm8k-train/1390#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2104,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 653,
+  "output_tokens_details": {
+   "thinking_tokens": 261
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2104,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030084800000000002
+}

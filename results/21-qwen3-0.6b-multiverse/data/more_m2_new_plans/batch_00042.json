@@ -1,0 +1,35 @@
+{
+ "batch": 42,
+ "keys": [
+  "math-train/2467#1",
+  "math-train/300#1",
+  "gsm8k-train/659#2",
+  "math-train/237#1"
+ ],
+ "reply": "<plan id=\"math-train/2467#1\"></plan>\n<plan id=\"math-train/300#1\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The simplified form of the left-hand side.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The simplified form of the right-hand side.</outline>\n</path>\n<conclusion>The left-hand side is 2^6 · 3^3 and the right-hand side is 3^3 · 2^{12p}.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/659#2\">\n<block units=\"2-8\">\n<path units=\"2-4\">\n<outline>The total cost of ingredients.</outline>\n</path>\n<path units=\"5-7\">\n<outline>The total revenue from selling the bags.</outline>\n</path>\n<conclusion>The total cost is $60.00 and the total revenue is $110.00.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/237#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2224,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 628,
+  "output_tokens_details": {
+   "thinking_tokens": 262
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2224,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030544799999999997
+}

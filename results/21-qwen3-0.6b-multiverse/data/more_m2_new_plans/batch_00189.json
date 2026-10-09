@@ -1,0 +1,35 @@
+{
+ "batch": 189,
+ "keys": [
+  "math-train/6036#1",
+  "math-train/658#2",
+  "gsm8k-train/6750#3",
+  "math-train/1321#3"
+ ],
+ "reply": "<plan id=\"math-train/6036#1\"></plan>\n<plan id=\"math-train/658#2\">\n<block units=\"2-5\">\n<lead units=\"2-3\"/>\n<path units=\"4-4\">\n<outline>The completed-square form of the x terms.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The completed-square form of the y terms.</outline>\n</path>\n<conclusion>The x terms become $(x - 4)^2 - 16$ and the y terms become $(y + 3)^2 - 9$.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6750#3\"></plan>\n<plan id=\"math-train/1321#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1830,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 489,
+  "output_tokens_details": {
+   "thinking_tokens": 261
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1830,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.024612799999999997
+}

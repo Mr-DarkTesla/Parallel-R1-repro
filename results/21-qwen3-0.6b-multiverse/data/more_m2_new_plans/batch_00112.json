@@ -1,0 +1,35 @@
+{
+ "batch": 112,
+ "keys": [
+  "math-train/6568#2",
+  "gsm8k-train/5660#0",
+  "math-train/5445#1",
+  "math-train/744#0"
+ ],
+ "reply": "<plan id=\"math-train/6568#2\"></plan>\n<plan id=\"gsm8k-train/5660#0\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The Monday and Tuesday durations converted to decimal hours.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The Wednesday and Thursday durations converted to decimal hours.</outline>\n</path>\n<conclusion>Monday and Tuesday are 0.75 hours and 0.5 hours. Wednesday and Thursday are 0.666... hours and 0.833... hours.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5445#1\">\n<block units=\"12-23\">\n<lead units=\"12-12\"/>\n<path units=\"13-16\">\n<outline>Whether each of the numbers 1 through 4 is abundant.</outline>\n</path>\n<path units=\"17-20\">\n<outline>Whether each of the numbers 5 through 8 is abundant.</outline>\n</path>\n<path units=\"21-23\">\n<outline>Whether 9, 10 and 12 are abundant.</outline>\n</path>\n<conclusion>None of 1 through 10 is less than the sum of its proper divisors. 12 is, since its proper divisors sum to 16.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/744#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2136,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 938,
+  "output_tokens_details": {
+   "thinking_tokens": 473
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2136,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0360408
+}

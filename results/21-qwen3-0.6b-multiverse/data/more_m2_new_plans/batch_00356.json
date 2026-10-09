@@ -1,0 +1,35 @@
+{
+ "batch": 356,
+ "keys": [
+  "gsm8k-train/2150#1",
+  "math-train/208#2",
+  "math-train/1019#0",
+  "gsm8k-train/1012#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2150#1\">\n<block units=\"6-20\">\n<lead units=\"6-6\"/>\n<path units=\"7-10\">\n<outline>The total number of eggs bought per week.</outline>\n</path>\n<path units=\"11-16\">\n<outline>The total number of eggs eaten per week.</outline>\n</path>\n<conclusion>Rhea buys 48 eggs per week and the family eats 42 eggs per week.</conclusion>\n<tail units=\"17-20\"/>\n</block>\n</plan>\n<plan id=\"math-train/208#2\"></plan>\n<plan id=\"math-train/1019#0\"></plan>\n<plan id=\"gsm8k-train/1012#1\">\n<block units=\"1-9\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The commission on the first house.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The commission on the second house.</outline>\n</path>\n<path units=\"6-7\">\n<outline>The commission on the third house.</outline>\n</path>\n<conclusion>The commissions are 3,140, 9,980 and 2,500 for the three houses.</conclusion>\n<tail units=\"8-9\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2391,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 599,
+  "output_tokens_details": {
+   "thinking_tokens": 199
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2391,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.031300800000000004
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 331,
+ "keys": [
+  "math-train/236#3",
+  "gsm8k-train/1852#3",
+  "math-train/6545#2",
+  "math-train/5580#0"
+ ],
+ "reply": "<plan id=\"math-train/236#3\"></plan>\n<plan id=\"gsm8k-train/1852#3\"></plan>\n<plan id=\"math-train/6545#2\"></plan>\n<plan id=\"math-train/5580#0\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The area of the larger circle.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The area of the smaller circle.</outline>\n</path>\n<conclusion>The larger circle has area $100\\pi$ and the smaller circle has area $36\\pi$.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1866,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 450,
+  "output_tokens_details": {
+   "thinking_tokens": 226
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1866,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.024120799999999998
+}

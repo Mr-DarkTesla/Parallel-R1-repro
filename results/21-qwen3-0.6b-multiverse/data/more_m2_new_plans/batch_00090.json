@@ -1,0 +1,35 @@
+{
+ "batch": 90,
+ "keys": [
+  "math-train/645#3",
+  "math-train/6503#1",
+  "math-train/1334#1",
+  "math-train/338#2"
+ ],
+ "reply": "<plan id=\"math-train/645#3\"></plan>\n<plan id=\"math-train/6503#1\">\n<block units=\"1-18\">\n<lead units=\"1-1\"/>\n<path units=\"2-5\">\n<outline>The number of divisors of each of the numbers 1 through 4.</outline>\n</path>\n<path units=\"6-9\">\n<outline>The number of divisors of each of the numbers 5 through 8.</outline>\n</path>\n<path units=\"10-13\">\n<outline>The number of divisors of each of the numbers 9 through 12.</outline>\n</path>\n<path units=\"14-16\">\n<outline>The number of divisors of each of the numbers 13 through 15.</outline>\n</path>\n<conclusion>The divisor counts are 1, 2, 2, 3 for 1–4; 2, 4, 2, 4 for 5–8; 3, 4, 2, 6 for 9–12; and 2, 4, 4 for 13–15.</conclusion>\n<tail units=\"17-18\"/>\n</block>\n</plan>\n<plan id=\"math-train/1334#1\"></plan>\n<plan id=\"math-train/338#2\">\n<block units=\"1-5\">\n<path units=\"1-1\">\n<outline>The sum of the roots of the quadratic.</outline>\n</path>\n<path units=\"2-2\">\n<outline>The product of the roots of the quadratic.</outline>\n</path>\n<conclusion>The sum of the roots is $-\\frac{4}{3}$ and the product of the roots is $-3$.</conclusion>\n<tail units=\"3-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1979,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 870,
+  "output_tokens_details": {
+   "thinking_tokens": 355
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1979,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0334248
+}

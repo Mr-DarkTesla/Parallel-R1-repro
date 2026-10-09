@@ -1,0 +1,35 @@
+{
+ "batch": 154,
+ "keys": [
+  "math-train/6820#2",
+  "math-train/4211#1",
+  "gsm8k-train/6229#3",
+  "math-train/3877#1"
+ ],
+ "reply": "<plan id=\"math-train/6820#2\">\n<block units=\"16-19\">\n<lead units=\"16-16\"/>\n<path units=\"17-17\">\n<outline>Whether the factor x^2 = 0 gives a usable value of cos A.</outline>\n</path>\n<path units=\"18-19\">\n<outline>Which values of x come from the factor 25x^2 - 16 = 0, and which of them are kept.</outline>\n</path>\n<conclusion>The case x = 0 is rejected because tan A and sec A would be undefined. The case 25x^2 - 16 = 0 gives x = 4/5 or x = -4/5, and x = -4/5 is discarded.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4211#1\"></plan>\n<plan id=\"gsm8k-train/6229#3\">\n<block units=\"1-7\">\n<path units=\"1-2\">\n<outline>The cost of the drip coffees and the double shot espresso.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The cost of the lattes and the vanilla syrup.</outline>\n</path>\n<path units=\"5-6\">\n<outline>The cost of the cold brew coffees and the cappuccino.</outline>\n</path>\n<conclusion>The drip coffees cost $4.50 and the espresso $3.50. The lattes cost $8.00 and the syrup $0.50. The cold brews cost $5.00 and the cappuccino $3.50.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/3877#1\">\n<block units=\"8-10\">\n<lead units=\"8-8\"/>\n<path units=\"9-9\">\n<outline>The equation obtained from the functional equation at x = 1/2.</outline>\n</path>\n<path units=\"10-10\">\n<outline>The equation obtained from the functional equation at x = 2.</outline>\n</path>\n<conclusion>At x = 1/2 the equation is f(1/2) - 2f(2) = 2. At x = 2 it is f(2) - 2f(1/2) = 16.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3769,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1188,
+  "output_tokens_details": {
+   "thinking_tokens": 491
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3769,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0541048
+}

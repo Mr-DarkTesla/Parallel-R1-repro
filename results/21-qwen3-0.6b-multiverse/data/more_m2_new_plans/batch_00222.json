@@ -1,0 +1,35 @@
+{
+ "batch": 222,
+ "keys": [
+  "math-train/2625#0",
+  "gsm8k-train/396#0",
+  "math-train/6194#1",
+  "gsm8k-train/5147#0"
+ ],
+ "reply": "<plan id=\"math-train/2625#0\"></plan>\n<plan id=\"gsm8k-train/396#0\"></plan>\n<plan id=\"math-train/6194#1\">\n<block units=\"2-9\">\n<path units=\"2-5\">\n<outline>The side length of the square.</outline>\n</path>\n<path units=\"6-9\">\n<outline>The side length of the equilateral triangle.</outline>\n</path>\n<conclusion>The side length of the square is 12 inches and the side length of the triangle is 16 inches.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/5147#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1931,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 574,
+  "output_tokens_details": {
+   "thinking_tokens": 371
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1931,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0271208
+}

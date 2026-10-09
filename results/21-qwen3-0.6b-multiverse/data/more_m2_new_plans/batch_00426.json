@@ -1,0 +1,35 @@
+{
+ "batch": 426,
+ "keys": [
+  "gsm8k-train/215#2",
+  "math-train/7042#0",
+  "gsm8k-train/4288#2",
+  "math-train/5974#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/215#2\"></plan>\n<plan id=\"math-train/7042#0\">\n<block units=\"3-7\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The value of the first 2x2 minor.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The value of the second 2x2 minor.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The value of the third 2x2 minor.</outline>\n</path>\n<conclusion>The first minor is 3, the second minor is 4, and the third minor is -20.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4288#2\">\n<block units=\"1-2\">\n<path units=\"1-1\">\n<outline>The cost of the hamburgers.</outline>\n</path>\n<path units=\"2-2\">\n<outline>The cost of the cola bottles.</outline>\n</path>\n<conclusion>The hamburgers cost $10 and the cola costs $6.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5974#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2108,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 680,
+  "output_tokens_details": {
+   "thinking_tokens": 302
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2108,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0306568
+}

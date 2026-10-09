@@ -1,0 +1,35 @@
+{
+ "batch": 471,
+ "keys": [
+  "math-train/510#1",
+  "math-train/5605#2",
+  "math-train/6029#0",
+  "math-train/557#1"
+ ],
+ "reply": "<plan id=\"math-train/510#1\"></plan>\n<plan id=\"math-train/5605#2\">\n<block units=\"2-8\">\n<lead units=\"2-2\"/>\n<path units=\"3-4\">\n<outline>Whether the ones digits 0 and 4 are possible.</outline>\n</path>\n<path units=\"5-6\">\n<outline>Whether the ones digits 8 and 2 are possible.</outline>\n</path>\n<path units=\"7-7\">\n<outline>Whether the ones digit 6 is possible.</outline>\n</path>\n<conclusion>The ones digits 0, 4, 8, 2 and 6 were each found to give a number divisible by 4.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/6029#0\"></plan>\n<plan id=\"math-train/557#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1978,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 629,
+  "output_tokens_details": {
+   "thinking_tokens": 349
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1978,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.028596800000000002
+}

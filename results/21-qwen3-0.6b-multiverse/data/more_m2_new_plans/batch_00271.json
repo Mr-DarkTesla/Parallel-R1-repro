@@ -1,0 +1,35 @@
+{
+ "batch": 271,
+ "keys": [
+  "math-train/572#1",
+  "gsm8k-train/626#0",
+  "math-train/2629#0",
+  "math-train/2820#3"
+ ],
+ "reply": "<plan id=\"math-train/572#1\"></plan>\n<plan id=\"gsm8k-train/626#0\"></plan>\n<plan id=\"math-train/2629#0\">\n<block units=\"3-7\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The bound on x from requiring the sum of the two given sides to exceed x.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The bound on x from requiring 4 plus x to exceed 9.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The bound on x from requiring 9 plus x to exceed 4.</outline>\n</path>\n<conclusion>The three inequalities give 13 > x, x > 5, and x > -5, the last always true since x > 0.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/2820#3\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The radius of the cone.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The height of the cone.</outline>\n</path>\n<conclusion>The radius is r = 4 feet and the height is h = 6 feet.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1930,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 624,
+  "output_tokens_details": {
+   "thinking_tokens": 193
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1930,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0281128
+}

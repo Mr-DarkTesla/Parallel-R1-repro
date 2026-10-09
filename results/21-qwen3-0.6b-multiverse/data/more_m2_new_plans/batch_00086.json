@@ -1,0 +1,35 @@
+{
+ "batch": 86,
+ "keys": [
+  "math-train/57#0",
+  "math-train/7169#0",
+  "gsm8k-train/4193#0",
+  "math-train/4718#2"
+ ],
+ "reply": "<plan id=\"math-train/57#0\">\n<block units=\"7-17\">\n<path units=\"7-10\">\n<outline>Whether the first case, x - 7 = x + 1, yields any solution.</outline>\n</path>\n<path units=\"11-15\">\n<outline>The solution of the second case, x - 7 = -x - 1.</outline>\n</path>\n<conclusion>The first case leads to a contradiction and has no solution, while the second case gives x = 3.</conclusion>\n<tail units=\"16-17\"/>\n</block>\n</plan>\n<plan id=\"math-train/7169#0\"></plan>\n<plan id=\"gsm8k-train/4193#0\"></plan>\n<plan id=\"math-train/4718#2\">\n<block units=\"2-6\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The base-10 value of 1000_7.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The base-10 value of 666_7.</outline>\n</path>\n<conclusion>In base 10, 1000_7 equals 343 and 666_7 equals 342.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2196,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 605,
+  "output_tokens_details": {
+   "thinking_tokens": 223
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2196,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0298608
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 75,
+ "keys": [
+  "math-train/1127#3",
+  "gsm8k-train/5235#2",
+  "math-train/2871#3",
+  "math-train/6336#3"
+ ],
+ "reply": "<plan id=\"math-train/1127#3\"></plan>\n\n<plan id=\"gsm8k-train/5235#2\">\n<block units=\"1-9\">\n<lead units=\"1-2\"/>\n<path units=\"3-4\">\n<outline>Ms. Elizabeth's total revenue from her investment streams.</outline>\n</path>\n<path units=\"5-6\">\n<outline>Mr. Banks' total revenue from his investments.</outline>\n</path>\n<conclusion>Ms. Elizabeth's total revenue is 4500, and Mr. Banks' total revenue is 4000.</conclusion>\n<tail units=\"7-9\"/>\n</block>\n</plan>\n\n<plan id=\"math-train/2871#3\"></plan>\n\n<plan id=\"math-train/6336#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1728,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 468,
+  "output_tokens_details": {
+   "thinking_tokens": 215
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1728,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0233768
+}

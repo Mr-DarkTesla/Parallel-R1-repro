@@ -1,0 +1,35 @@
+{
+ "batch": 447,
+ "keys": [
+  "gsm8k-train/6761#2",
+  "math-train/468#2",
+  "gsm8k-train/5436#3",
+  "gsm8k-train/5405#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6761#2\"></plan>\n\n<plan id=\"math-train/468#2\">\n<block units=\"3-8\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The root from the linear factor.</outline>\n</path>\n<path units=\"5-8\">\n<outline>The roots of the quadratic factor.</outline>\n</path>\n<conclusion>The linear factor gives x = 5, and the quadratic factor gives x = -2 and x = -3.</conclusion>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/5436#3\"></plan>\n\n<plan id=\"gsm8k-train/5405#1\">\n<block units=\"2-3\">\n<path units=\"2-2\">\n<outline>The total training time per day in minutes.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The required total training time in minutes.</outline>\n</path>\n<conclusion>She trains 30 minutes per day and needs 300 minutes in total.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1559,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 605,
+  "output_tokens_details": {
+   "thinking_tokens": 265
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1559,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0247648
+}

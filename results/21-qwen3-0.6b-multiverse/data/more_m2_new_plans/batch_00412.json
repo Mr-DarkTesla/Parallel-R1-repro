@@ -1,0 +1,35 @@
+{
+ "batch": 412,
+ "keys": [
+  "math-train/3267#0",
+  "gsm8k-train/6165#2",
+  "gsm8k-train/4847#3",
+  "math-train/127#3"
+ ],
+ "reply": "<plan id=\"math-train/3267#0\">\n<block units=\"2-6\">\n<path units=\"2-3\">\n<outline>The area when the two given sides are the legs.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The area when the hypotenuse is 5 and one leg is 4.</outline>\n</path>\n<conclusion>The area is 10 square units when 4 and 5 are the legs. It is 6 square units when 5 is the hypotenuse and 4 is a leg.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6165#2\"></plan>\n<plan id=\"gsm8k-train/4847#3\"></plan>\n<plan id=\"math-train/127#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1919,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 471,
+  "output_tokens_details": {
+   "thinking_tokens": 220
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1919,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0249648
+}

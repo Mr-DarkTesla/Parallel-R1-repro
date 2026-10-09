@@ -1,0 +1,35 @@
+{
+ "batch": 221,
+ "keys": [
+  "gsm8k-train/6479#0",
+  "math-train/1027#0",
+  "math-train/1203#3",
+  "gsm8k-train/4609#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6479#0\"></plan>\n<plan id=\"math-train/1027#0\">\n<block units=\"4-6\">\n<path units=\"4-4\">\n<outline>The left-hand side rewritten as a power of 2.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The right-hand side rewritten as a power of 2.</outline>\n</path>\n<conclusion>The left-hand side equals $2^{9n}$ and the right-hand side equals $2^{18}$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/1203#3\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>Equation (1) scaled by 12.</outline>\n</path>\n<path units=\"7-7\">\n<outline>Equation (2) scaled by 21.</outline>\n</path>\n<conclusion>Equation (3) is $144x + 252y = 180$ and equation (4) is $441x + 252y = 1071$.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4609#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2077,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 659,
+  "output_tokens_details": {
+   "thinking_tokens": 263
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2077,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.029988799999999996
+}

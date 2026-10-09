@@ -1,0 +1,35 @@
+{
+ "batch": 454,
+ "keys": [
+  "gsm8k-train/4470#2",
+  "math-train/1695#2",
+  "gsm8k-train/928#0",
+  "math-train/2456#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/4470#2\"></plan>\n\n<plan id=\"math-train/1695#2\">\n<block units=\"3-8\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The combined x^2 terms.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The combined x^3 terms.</outline>\n</path>\n<conclusion>The x^2 terms combine to 0 and the x^3 terms combine to -7x^3.</conclusion>\n<tail units=\"6-8\"/>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/928#0\"></plan>\n\n<plan id=\"math-train/2456#2\">\n<block units=\"2-7\">\n<lead units=\"2-2\"/>\n<path units=\"3-4\">\n<outline>The number of entries in rows 0 and 1.</outline>\n</path>\n<path units=\"5-7\">\n<outline>The number of entries in rows 2 through 19.</outline>\n</path>\n<conclusion>Rows 0 and 1 have 1 and 2 entries. Rows 2 through 19 have 3 up to 20 entries.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1710,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 851,
+  "output_tokens_details": {
+   "thinking_tokens": 466
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1710,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030892799999999998
+}

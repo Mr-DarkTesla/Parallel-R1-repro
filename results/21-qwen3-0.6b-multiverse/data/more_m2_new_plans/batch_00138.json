@@ -1,0 +1,35 @@
+{
+ "batch": 138,
+ "keys": [
+  "math-train/541#1",
+  "gsm8k-train/6470#2",
+  "math-train/1751#1",
+  "math-train/591#0"
+ ],
+ "reply": "<plan id=\"math-train/541#1\">\n<block units=\"2-6\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The combined x^2 terms.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The combined x terms.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The combined constant terms.</outline>\n</path>\n<conclusion>The like terms combine to $x^2$, $2x$, and $9$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6470#2\"></plan>\n<plan id=\"math-train/1751#1\"></plan>\n<plan id=\"math-train/591#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1887,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 379,
+  "output_tokens_details": {
+   "thinking_tokens": 135
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1887,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0228688
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 84,
+ "keys": [
+  "math-train/5730#1",
+  "math-train/3560#3",
+  "math-train/5643#0",
+  "gsm8k-train/7045#3"
+ ],
+ "reply": "<plan id=\"math-train/5730#1\"></plan>\n\n<plan id=\"math-train/3560#3\">\n<block units=\"4-7\">\n<path units=\"4-4\">\n<outline>The cube root for k = 0.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The cube root for k = 1.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The cube root for k = 2.</outline>\n</path>\n<conclusion>The three roots are $1 + i\\sqrt{3}$ for k = 0, $-2$ for k = 1, and $1 - i\\sqrt{3}$ for k = 2.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n\n<plan id=\"math-train/5643#0\">\n<block units=\"10-12\">\n<lead units=\"10-10\"/>\n<path units=\"11-11\">\n<outline>Chandra's reading time in terms of x.</outline>\n</path>\n<path units=\"12-12\">\n<outline>Bob's reading time in terms of x.</outline>\n</path>\n<conclusion>Chandra's time is $30x$ seconds and Bob's time is $45(760 - x)$ seconds.</conclusion>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/7045#3\">\n<block units=\"1-7\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The total time spent vacuuming.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The time spent washing dishes and cleaning the bathroom.</outline>\n</path>\n<conclusion>Vacuuming took 4 hours, washing dishes took 0.5 hours, and cleaning the bathroom took 1.5 hours.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2745,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1067,
+  "output_tokens_details": {
+   "thinking_tokens": 474
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2745,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0434928
+}

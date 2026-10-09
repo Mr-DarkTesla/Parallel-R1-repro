@@ -1,0 +1,35 @@
+{
+ "batch": 123,
+ "keys": [
+  "math-train/933#0",
+  "math-train/2541#1",
+  "gsm8k-train/6964#3",
+  "math-train/7341#3"
+ ],
+ "reply": "<plan id=\"math-train/933#0\"></plan>\n<plan id=\"math-train/2541#1\"></plan>\n<plan id=\"gsm8k-train/6964#3\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The total calories eaten from the Cheezits.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The calories burned during the run.</outline>\n</path>\n<conclusion>He ate 900 calories from the Cheezits and burned 480 calories during the run.</conclusion>\n<tail units=\"6-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/7341#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2063,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 226,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2063,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0212168
+}

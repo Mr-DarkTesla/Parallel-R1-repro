@@ -1,0 +1,35 @@
+{
+ "batch": 113,
+ "keys": [
+  "math-train/5793#3",
+  "gsm8k-train/217#1",
+  "math-train/4122#2",
+  "math-train/1074#3"
+ ],
+ "reply": "<plan id=\"math-train/5793#3\"></plan>\n<plan id=\"gsm8k-train/217#1\"></plan>\n<plan id=\"math-train/4122#2\">\n<block units=\"3-11\">\n<path units=\"3-6\">\n<outline>The rationalized form of the first term.</outline>\n</path>\n<path units=\"7-10\">\n<outline>The rationalized form of the second term.</outline>\n</path>\n<conclusion>The first term becomes (-16 + 30i)/34 and the second term becomes (-16 - 30i)/34.</conclusion>\n<tail units=\"11-11\"/>\n</block>\n</plan>\n<plan id=\"math-train/1074#3\">\n<block units=\"10-15\">\n<lead units=\"10-10\"/>\n<path units=\"11-12\">\n<outline>Whether the points (3, 10) and (6, 20) lie above the line.</outline>\n</path>\n<path units=\"13-13\">\n<outline>Whether the point (12, 35) lies above the line.</outline>\n</path>\n<path units=\"14-14\">\n<outline>Whether the point (18, 40) lies above the line.</outline>\n</path>\n<path units=\"15-15\">\n<outline>Whether the point (20, 50) lies above the line.</outline>\n</path>\n<conclusion>The points (6, 20), (12, 35) and (20, 50) lie above the line. The points (3, 10) and (18, 40) lie below it.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2846,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 915,
+  "output_tokens_details": {
+   "thinking_tokens": 444
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2846,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0412608
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 102,
+ "keys": [
+  "gsm8k-train/1689#2",
+  "math-train/1657#0",
+  "math-train/906#0",
+  "gsm8k-train/3606#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/1689#2\"></plan>\n<plan id=\"math-train/1657#0\">\n<block units=\"13-17\">\n<lead units=\"13-13\"/>\n<path units=\"14-15\">\n<outline>The value of b for the pairs (1, 2008) and (2, 1004).</outline>\n</path>\n<path units=\"16-17\">\n<outline>The value of b for the pairs (4, 502) and (8, 251).</outline>\n</path>\n<conclusion>The pairs give b = 2009, 1006, 506 and 259 respectively.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/906#0\"></plan>\n<plan id=\"gsm8k-train/3606#3\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The number of girls in the primary grades.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The number of boys in the primary grades.</outline>\n</path>\n<conclusion>There are 350 girls and 120 boys in the primary grades.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2404,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 572,
+  "output_tokens_details": {
+   "thinking_tokens": 194
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2404,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030864799999999998
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 21,
+ "keys": [
+  "gsm8k-train/2895#3",
+  "math-train/1954#0",
+  "math-train/153#1",
+  "math-train/1549#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2895#3\">\n<block units=\"3-6\">\n<path units=\"3-3\">\n<outline>The time spent driving.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The total time of the lunch and bathroom breaks.</outline>\n</path>\n<conclusion>The driving takes 8 hours and the breaks take 1 hour.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/1954#0\"></plan>\n<plan id=\"math-train/153#1\"></plan>\n<plan id=\"math-train/1549#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2048,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 375,
+  "output_tokens_details": {
+   "thinking_tokens": 166
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2048,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0240768
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 478,
+ "keys": [
+  "math-train/2428#3",
+  "math-train/1382#0",
+  "math-train/775#0",
+  "math-train/5538#1"
+ ],
+ "reply": "<plan id=\"math-train/2428#3\"></plan>\n\n<plan id=\"math-train/1382#0\">\n<block units=\"5-7\">\n<path units=\"5-5\">\n<outline>The degree of f(x^3).</outline>\n</path>\n<path units=\"6-6\">\n<outline>The degree of g(x^2).</outline>\n</path>\n<conclusion>The degree of f(x^3) is 12 and the degree of g(x^2) is 10.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n\n<plan id=\"math-train/775#0\"></plan>\n\n<plan id=\"math-train/5538#1\">\n<block units=\"4-9\">\n<lead units=\"4-4\"/>\n<path units=\"5-6\">\n<outline>The sixth powers of 1 and 2.</outline>\n</path>\n<path units=\"7-8\">\n<outline>The sixth powers of 3 and 4.</outline>\n</path>\n<conclusion>1^6 = 1, 2^6 = 64, 3^6 = 729 and 4^6 = 4096.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1979,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 744,
+  "output_tokens_details": {
+   "thinking_tokens": 376
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1979,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030904799999999996
+}

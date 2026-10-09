@@ -1,0 +1,35 @@
+{
+ "batch": 250,
+ "keys": [
+  "gsm8k-train/6450#2",
+  "math-train/4461#2",
+  "math-train/2550#0",
+  "gsm8k-train/6236#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6450#2\"></plan>\n<plan id=\"math-train/4461#2\"></plan>\n<plan id=\"math-train/2550#0\"></plan>\n<plan id=\"gsm8k-train/6236#1\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>Abigail's typing rate in words per hour.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The number of words she still needs to write.</outline>\n</path>\n<conclusion>Her typing rate is 600 words per hour, and she still needs to write 800 words.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2263,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 521,
+  "output_tokens_details": {
+   "thinking_tokens": 288
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2263,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.028716799999999997
+}

@@ -1,0 +1,35 @@
+{
+  "quotas": {
+    "gsm8k/integer": 85,
+    "math/integer": 62,
+    "math/expression": 25,
+    "math/fraction": 8
+  },
+  "m1_clean": 309,
+  "m2_existing_reviewed": 27,
+  "m2_new_auto_clean": 189,
+  "m2_new_human_excluded": 15,
+  "m2_reviewed_available": 201,
+  "selected_each": 180,
+  "m1_reserve": 122,
+  "m2_reserve": 17,
+  "m1_m2_selected_id_overlap": 0,
+  "m1_human_excluded": [
+    "gsm8k-train/5130"
+  ],
+  "m1_replacements": {
+    "gsm8k-train/5130": "gsm8k-train/5854"
+  },
+  "m2_self_excluded": [
+    "gsm8k-train/2162",
+    "gsm8k-train/3556",
+    "math-train/1169",
+    "math-train/4216"
+  ],
+  "m2_replacements": {
+    "gsm8k-train/2162": "gsm8k-train/3422",
+    "gsm8k-train/3556": "gsm8k-train/4557",
+    "math-train/4216": "math-train/1600",
+    "math-train/1169": "math-train/4122"
+  }
+}

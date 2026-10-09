@@ -1,0 +1,35 @@
+{
+ "batch": 12,
+ "keys": [
+  "math-train/429#1",
+  "gsm8k-train/4813#2",
+  "math-train/2180#2",
+  "math-train/535#1"
+ ],
+ "reply": "<plan id=\"math-train/429#1\"></plan>\n<plan id=\"gsm8k-train/4813#2\"></plan>\n<plan id=\"math-train/2180#2\"></plan>\n<plan id=\"math-train/535#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2431,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 392,
+  "output_tokens_details": {
+   "thinking_tokens": 313
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2431,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0274808
+}

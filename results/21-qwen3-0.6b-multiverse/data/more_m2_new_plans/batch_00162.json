@@ -1,0 +1,35 @@
+{
+ "batch": 162,
+ "keys": [
+  "math-train/519#2",
+  "gsm8k-train/7348#3",
+  "math-train/7017#2",
+  "gsm8k-train/2987#1"
+ ],
+ "reply": "<plan id=\"math-train/519#2\">\n<block units=\"4-7\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The y-coordinate of the intersection point at x = 1.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The y-coordinate of the intersection point at x = -1.</outline>\n</path>\n<conclusion>At x = 1 the y-coordinate is 3, and at x = -1 the y-coordinate is 1.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/7348#3\"></plan>\n<plan id=\"math-train/7017#2\"></plan>\n<plan id=\"gsm8k-train/2987#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2435,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 409,
+  "output_tokens_details": {
+   "thinking_tokens": 157
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2435,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0278528
+}

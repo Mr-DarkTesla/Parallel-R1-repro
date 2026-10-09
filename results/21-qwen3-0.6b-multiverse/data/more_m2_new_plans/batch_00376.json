@@ -1,0 +1,35 @@
+{
+ "batch": 376,
+ "keys": [
+  "gsm8k-train/1378#2",
+  "math-train/4532#1",
+  "gsm8k-train/5985#2",
+  "math-train/3538#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/1378#2\"></plan>\n<plan id=\"math-train/4532#1\">\n<block units=\"3-7\">\n<lead units=\"3-4\"/>\n<path units=\"5-5\">\n<outline>The value of r^3 + 1/r^3 in the case x = √3.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The value of r^3 + 1/r^3 in the case x = -√3.</outline>\n</path>\n<conclusion>Both cases, x = √3 and x = -√3, give r^3 + 1/r^3 = 0.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/5985#2\"></plan>\n<plan id=\"math-train/3538#2\">\n<block units=\"2-6\">\n<lead units=\"2-3\"/>\n<path units=\"4-4\">\n<outline>The factorization of x^4 - 1.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The factorization of x^4 + 1.</outline>\n</path>\n<conclusion>x^4 - 1 = (x - 1)(x + 1)(x^2 + 1), and x^4 + 1 = (x^2 + √2x + 1)(x^2 - √2x + 1).</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2482,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 798,
+  "output_tokens_details": {
+   "thinking_tokens": 350
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2482,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.036008799999999994
+}

@@ -7,6 +7,8 @@ IFEval: the official lm-eval checker on the answer with any <think> block remove
 Also: share of answers with <Parallel>, tag validity (scripts/tag_validator.py), answers without "Final Answer", mean length in characters.
 Multiverse format (exp 21, scripts/exp21/mv_format.py): mv_tags/mv_valid per answer; with env EXP21_TOKENIZER=<model dir> also
 forward_passes (paths of a block counted by the longest) next to the generated token count.
+For serial masked decoding, model_forward_calls in the dump is the actual number of model calls including prompt prefill;
+forward_passes remains the ideal parallel-path depth requested by the Multiverse protocol.
 
 Usage (from verl/, PYTHONPATH with the IFEval checker): python ../scripts/bench/score.py <generations.jsonl> <test.parquet> <output.json> [<rows.jsonl>]
 The optional rows.jsonl gets one outcome per answer for paired comparisons; the summary JSON does not depend on it.
@@ -92,6 +94,8 @@ frame["mv_started_blocks"] = pd.concat([answers.str.count("<Parallel>"), answers
 frame["mv_valid_blocks"] = mv.map(lambda r: sum(b["numbered"] for b in r["blocks"]))
 if "tokens" in generations:
     frame["tokens"] = generations["tokens"]
+if "model_forward_calls" in generations:
+    frame["model_forward_calls"] = generations["model_forward_calls"]
 if os.environ.get("EXP21_TOKENIZER"):
     from transformers import AutoTokenizer
     _tok = AutoTokenizer.from_pretrained(os.environ["EXP21_TOKENIZER"])
@@ -123,6 +127,7 @@ for source, group in frame.groupby("source"):
         "mean_chars": int(group["chars"].mean()),
         **({"mean_tokens": round(group["tokens"].mean(), 1)} if "tokens" in group else {}),
         **({"mean_forward_passes": round(group["forward_passes"].mean(), 1)} if "forward_passes" in group else {}),
+        **({"mean_model_forward_calls": round(group["model_forward_calls"].mean(), 1)} if "model_forward_calls" in group else {}),
         **({"truncated": round(100 * group["truncated"].mean(), 1)} if "truncated" in group else {}),
         **({key: round(100 * group[key].mean(), 2) for key in ("prompt_level_loose_acc", "inst_level_strict_acc")} if source == "IFEVAL" else {}),
     }

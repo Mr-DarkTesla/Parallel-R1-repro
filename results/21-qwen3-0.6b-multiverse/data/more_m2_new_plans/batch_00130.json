@@ -1,0 +1,35 @@
+{
+ "batch": 130,
+ "keys": [
+  "math-train/5472#0",
+  "math-train/5824#1",
+  "gsm8k-train/37#0",
+  "math-train/5618#1"
+ ],
+ "reply": "<plan id=\"math-train/5472#0\">\n<block units=\"5-20\">\n<path units=\"5-8\">\n<outline>The value of p^2 modulo 8 for primes p greater than 5.</outline>\n</path>\n<path units=\"9-12\">\n<outline>The value of p^2 modulo 3 for primes p greater than 5.</outline>\n</path>\n<path units=\"13-20\">\n<outline>The possible values of p^2 modulo 5 for primes p greater than 5.</outline>\n</path>\n<conclusion>For primes p greater than 5, p^2 ≡ 1 mod 8, p^2 ≡ 1 mod 3, and p^2 ≡ 1 or 4 mod 5.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5824#1\"></plan>\n<plan id=\"gsm8k-train/37#0\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The cost of the hamburgers.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The cost of the French fries.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The cost of the sodas and of the spaghetti.</outline>\n</path>\n<conclusion>The hamburgers cost $15, the French fries cost $4.80, the sodas cost $2.50, and the spaghetti costs $2.7.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5618#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2939,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 765,
+  "output_tokens_details": {
+   "thinking_tokens": 269
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2939,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0390048
+}

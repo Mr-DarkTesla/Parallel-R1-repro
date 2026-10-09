@@ -1,0 +1,35 @@
+{
+ "batch": 38,
+ "keys": [
+  "math-train/1290#0",
+  "gsm8k-train/1484#2",
+  "math-train/3948#1",
+  "math-train/1973#0"
+ ],
+ "reply": "<plan id=\"math-train/1290#0\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The value of the dimes.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The value of the quarters.</outline>\n</path>\n<conclusion>The dimes are worth 500 and the quarters are worth 500.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1484#2\"></plan>\n<plan id=\"math-train/3948#1\"></plan>\n<plan id=\"math-train/1973#0\">\n<block units=\"5-10\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The number of choices for the first number.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The number of choices for the second number.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The number of choices for the third number.</outline>\n</path>\n<conclusion>There are 15 odd numbers, 15 even numbers, and 10 multiples of 3 between 1 and 30.</conclusion>\n<tail units=\"9-10\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2139,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 646,
+  "output_tokens_details": {
+   "thinking_tokens": 248
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2139,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030224799999999996
+}

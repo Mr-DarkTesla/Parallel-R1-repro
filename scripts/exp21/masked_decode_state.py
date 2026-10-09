@@ -1,9 +1,25 @@
-"""Incremental Multiverse attention for one flat block, without inserting tokens.
+"""Incremental Multiverse attention for flat blocks, without inserting tokens.
 
 The caller supplies the number of outlines from the model's Goal before the first
 Path closes. Every emitted token is then fed back with the same sibling visibility
-and position as `multiverse_structure.py` uses for SFT.
+and position as `multiverse_structure.py` uses for SFT. After each block's last
+path, plain text and later blocks continue from that block's longest path.
 """
+import re
+
+
+def path_count(prefix):
+    """Count numbered outlines in the most recent complete Goal."""
+    start = prefix.rfind("<Goal>")
+    if start < 0:
+        return 0
+    goal = re.fullmatch(r"<Goal>(.*?)</Goal>\s*", prefix[start:], re.S)
+    if not goal:
+        return 0
+    outlines = re.findall(r"<Outline>\s*(\d+)\s*:(.*?)</Outline>", goal.group(1), re.S)
+    if len(outlines) not in (2, 3, 4):
+        return 0
+    return len(outlines) if [int(x[0]) for x in outlines] == list(range(1, len(outlines) + 1)) else 0
 
 
 class MaskedDecodeState:
@@ -13,26 +29,29 @@ class MaskedDecodeState:
         self.expected_paths = expected_paths
         self.tokens = []
         self.positions = []
-        self.phase = "pre"
+        self.phase = "plain"
+        self.next_plain_position = 0
         self.base = None
         self.current_start = None
-        self.suffix_start = None
-        self.suffix_base = None
         self.path_spans = []
         self.path_lengths = []
 
     def append(self, token):
         i = len(self.tokens)
         phase = self.phase
-        if phase == "pre" and token == self.path_open:
-            self.base = self.current_start = i
+        if phase == "plain" and token == self.path_open:
+            if self.expected_paths is None:
+                raise ValueError("set expected_paths from the Goal before the first <Path>")
+            self.base = self.next_plain_position
+            self.current_start = i
+            self.path_spans = []
+            self.path_lengths = []
             self.phase = phase = "path"
-        if phase == "pre":
-            position = i
-        elif phase in ("path", "gap"):
-            position = self.base + i - self.current_start
+        if phase == "plain":
+            position = self.next_plain_position
+            self.next_plain_position += 1
         else:
-            position = self.suffix_base + i - self.suffix_start
+            position = self.base + i - self.current_start
         visible = [True] * (i + 1)
         if phase in ("path", "gap"):
             for start, end in self.path_spans:
@@ -49,9 +68,11 @@ class MaskedDecodeState:
                 self.current_start = end
                 self.phase = "gap"
             else:
-                self.suffix_start = end
-                self.suffix_base = self.base + max(self.path_lengths)
-                self.phase = "suffix"
+                self.next_plain_position = self.base + max(self.path_lengths)
+                self.base = self.current_start = self.expected_paths = None
+                self.path_spans = []
+                self.path_lengths = []
+                self.phase = "plain"
         elif phase == "gap" and token == self.path_open:
             self.phase = "path"
         return position, visible

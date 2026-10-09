@@ -1,0 +1,35 @@
+{
+ "batch": 35,
+ "keys": [
+  "math-train/6392#3",
+  "math-train/3331#0",
+  "math-train/6326#2",
+  "gsm8k-train/2696#2"
+ ],
+ "reply": "<plan id=\"math-train/6392#3\">\n<block units=\"5-7\">\n<path units=\"5-5\">\n<outline>The total number of marbles in the bag.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The number of marbles that are either red or blue.</outline>\n</path>\n<conclusion>The bag holds 10 marbles in total, and 5 of them are red or blue.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/3331#0\"></plan>\n<plan id=\"math-train/6326#2\">\n<block units=\"3-9\">\n<lead units=\"3-3\"/>\n<path units=\"4-5\">\n<outline>The decimal values of the options 1/4 and 1/5.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The decimal value of the option 1/6.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The decimal value of the option 1/7.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The decimal value of the option 1/8.</outline>\n</path>\n<conclusion>The options equal 0.25, 0.20, about 0.1667, about 0.1429 and 0.125.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2696#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2024,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 945,
+  "output_tokens_details": {
+   "thinking_tokens": 498
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2024,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.035284800000000005
+}

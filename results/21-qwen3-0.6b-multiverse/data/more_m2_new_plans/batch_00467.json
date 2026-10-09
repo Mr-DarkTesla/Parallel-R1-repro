@@ -1,0 +1,35 @@
+{
+ "batch": 467,
+ "keys": [
+  "math-train/5690#1",
+  "math-train/4775#2",
+  "math-train/5619#0",
+  "math-train/455#3"
+ ],
+ "reply": "<plan id=\"math-train/5690#1\">\n<block units=\"2-4\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The expanded form of the left side.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The expanded and simplified form of the right side.</outline>\n</path>\n<conclusion>The left side expands to $3r - 21$ and the right side simplifies to $12 - 8r$.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4775#2\"></plan>\n<plan id=\"math-train/5619#0\">\n<block units=\"2-4\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The decimal value of the lower bound.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The decimal value of the upper bound.</outline>\n</path>\n<conclusion>The bounds are $\\frac{17}{4} = 4.25$ and $\\frac{35}{2} = 17.5$.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/455#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2010,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 734,
+  "output_tokens_details": {
+   "thinking_tokens": 372
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2010,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0309528
+}

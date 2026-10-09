@@ -1,0 +1,35 @@
+{
+ "batch": 20,
+ "keys": [
+  "math-train/7418#3",
+  "gsm8k-train/1744#1",
+  "math-train/7498#2",
+  "math-train/1330#3"
+ ],
+ "reply": "<plan id=\"math-train/7418#3\"></plan>\n<plan id=\"gsm8k-train/1744#1\">\n<block units=\"1-12\">\n<lead units=\"1-1\"/>\n<path units=\"2-5\">\n<outline>The revenue from the potatoes.</outline>\n</path>\n<path units=\"6-9\">\n<outline>The revenue from the carrots.</outline>\n</path>\n<conclusion>The potatoes bring in $19.00 and the carrots bring in $32.00.</conclusion>\n<tail units=\"10-12\"/>\n</block>\n</plan>\n<plan id=\"math-train/7498#2\"></plan>\n<plan id=\"math-train/1330#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2637,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 223,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2637,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.025748800000000002
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 127,
+ "keys": [
+  "gsm8k-train/6323#0",
+  "math-train/4748#1",
+  "math-train/679#0",
+  "gsm8k-train/2004#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6323#0\">\n<block units=\"1-9\">\n<lead units=\"1-1\"/>\n<path units=\"2-5\">\n<outline>The number of jellybeans left in the jar after Samantha and Shelby took theirs out.</outline>\n</path>\n<path units=\"6-8\">\n<outline>The number of jellybeans Shannon added when refilling the jar.</outline>\n</path>\n<conclusion>After Samantha and Shelby, 54 jellybeans are left in the jar, and Shannon refilled it with 18 jellybeans.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/4748#1\">\n<block units=\"21-24\">\n<lead units=\"21-21\"/>\n<path units=\"22-22\">\n<outline>The value of the sum abc + abd + acd + bcd for the example quadruple.</outline>\n</path>\n<path units=\"23-23\">\n<outline>The value of the product abcd for the example quadruple.</outline>\n</path>\n<conclusion>For the example quadruple, the sum abc + abd + acd + bcd is 176 and the product abcd is 105.</conclusion>\n<tail units=\"24-24\"/>\n</block>\n</plan>\n<plan id=\"math-train/679#0\"></plan>\n<plan id=\"gsm8k-train/2004#3\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The total marks across all four tests.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The total marks of the first two tests.</outline>\n</path>\n<conclusion>The four tests total 300 marks, and the first two tests total 170 marks.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2884,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1194,
+  "output_tokens_details": {
+   "thinking_tokens": 606
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2884,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0471448
+}

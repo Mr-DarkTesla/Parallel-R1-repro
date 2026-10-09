@@ -1,0 +1,35 @@
+{
+ "batch": 62,
+ "keys": [
+  "math-train/2648#1",
+  "gsm8k-train/7318#3",
+  "math-train/1716#1",
+  "math-train/1373#2"
+ ],
+ "reply": "<plan id=\"math-train/2648#1\"></plan>\n\n<plan id=\"gsm8k-train/7318#3\">\n<block units=\"1-9\">\n<path units=\"1-3\">\n<outline>The total number of purple pages Mirella read.</outline>\n</path>\n<path units=\"4-6\">\n<outline>The total number of orange pages Mirella read.</outline>\n</path>\n<conclusion>She read 1150 purple pages and 2040 orange pages.</conclusion>\n<tail units=\"7-9\"/>\n</block>\n</plan>\n\n<plan id=\"math-train/1716#1\"></plan>\n\n<plan id=\"math-train/1373#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2515,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 212,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2515,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0245528
+}

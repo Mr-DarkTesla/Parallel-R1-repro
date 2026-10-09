@@ -1,0 +1,35 @@
+{
+ "batch": 428,
+ "keys": [
+  "math-train/4457#0",
+  "gsm8k-train/7368#2",
+  "math-train/4543#2",
+  "gsm8k-train/6198#2"
+ ],
+ "reply": "<plan id=\"math-train/4457#0\"></plan>\n\n<plan id=\"gsm8k-train/7368#2\"></plan>\n\n<plan id=\"math-train/4543#2\">\n<block units=\"3-6\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The value of the left-hand side when y = 3.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The value of the left-hand side when y = 3.5.</outline>\n</path>\n<conclusion>At y = 3 the left-hand side equals 17, and at y = 3.5 it is approximately 21.81.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/6198#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1824,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 649,
+  "output_tokens_details": {
+   "thinking_tokens": 401
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1824,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0277648
+}

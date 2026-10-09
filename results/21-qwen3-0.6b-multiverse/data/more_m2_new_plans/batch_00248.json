@@ -1,0 +1,35 @@
+{
+ "batch": 248,
+ "keys": [
+  "math-train/1457#0",
+  "gsm8k-train/132#1",
+  "math-train/2729#0",
+  "math-train/1446#1"
+ ],
+ "reply": "<plan id=\"math-train/1457#0\"></plan>\n<plan id=\"gsm8k-train/132#1\"></plan>\n<plan id=\"math-train/2729#0\">\n<block units=\"4-8\">\n<lead units=\"4-5\"/>\n<path units=\"6-6\">\n<outline>The length of the second side.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The length of the third side.</outline>\n</path>\n<conclusion>The second side is 12 and the third side is 17.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/1446#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2001,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 374,
+  "output_tokens_details": {
+   "thinking_tokens": 170
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2001,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.023680800000000002
+}

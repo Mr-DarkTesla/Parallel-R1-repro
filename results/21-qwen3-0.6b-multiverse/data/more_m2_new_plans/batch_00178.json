@@ -1,0 +1,35 @@
+{
+ "batch": 178,
+ "keys": [
+  "math-train/2660#3",
+  "gsm8k-train/2430#1",
+  "math-train/869#1",
+  "math-train/964#1"
+ ],
+ "reply": "<plan id=\"math-train/2660#3\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The intersection point of y = x and y = 6.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The intersection point of y = -x and y = 6.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The intersection point of y = x and y = -x.</outline>\n</path>\n<conclusion>The three intersection points are (6, 6), (-6, 6) and (0, 0).</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2430#1\">\n<block units=\"5-9\">\n<lead units=\"5-6\"/>\n<path units=\"7-7\">\n<outline>The cost of the books.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The cost of the magazines.</outline>\n</path>\n<conclusion>The books cost 176 and the magazines cost 3.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/869#1\"></plan>\n<plan id=\"math-train/964#1\">\n<block units=\"1-9\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The value of 4 Δ 13.</outline>\n</path>\n<path units=\"3-5\">\n<outline>The value of 3^{3 Δ 5}.</outline>\n</path>\n<conclusion>4 Δ 13 = 3, and 3^{3 Δ 5} = 3^4 = 81.</conclusion>\n<tail units=\"6-9\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2097,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1005,
+  "output_tokens_details": {
+   "thinking_tokens": 450
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2097,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0370688
+}

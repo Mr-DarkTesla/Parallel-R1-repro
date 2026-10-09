@@ -1,0 +1,35 @@
+{
+ "batch": 67,
+ "keys": [
+  "math-train/2177#1",
+  "math-train/6461#1",
+  "gsm8k-train/353#3",
+  "math-train/6717#1"
+ ],
+ "reply": "<plan id=\"math-train/2177#1\">\n<block units=\"2-12\">\n<path units=\"2-3\">\n<outline>The total number of lattice points in the grid.</outline>\n</path>\n<path units=\"4-12\">\n<outline>The number of collinear triples of points.</outline>\n</path>\n<conclusion>There are 16 points in the grid and 64 collinear triples.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/6461#1\"></plan>\n<plan id=\"gsm8k-train/353#3\"></plan>\n<plan id=\"math-train/6717#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2276,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 730,
+  "output_tokens_details": {
+   "thinking_tokens": 535
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2276,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0330008
+}

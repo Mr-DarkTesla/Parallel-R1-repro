@@ -1,0 +1,35 @@
+{
+ "batch": 192,
+ "keys": [
+  "math-train/1227#3",
+  "math-train/213#2",
+  "gsm8k-train/350#3",
+  "math-train/5701#1"
+ ],
+ "reply": "<plan id=\"math-train/1227#3\"></plan>\n<plan id=\"math-train/213#2\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The area of the rectangle in terms of x.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The perimeter of the rectangle in terms of x.</outline>\n</path>\n<conclusion>The area is $3x^2 + 15x$ and the perimeter is $8x + 10$.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/350#3\"></plan>\n<plan id=\"math-train/5701#1\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The area enclosed by the outer edge of the frame.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The area of the mirror from its reduced dimensions.</outline>\n</path>\n<conclusion>The area within the outer edge of the frame is $4800 \\, \\text{cm}^2$, and the mirror's area is $2400 \\, \\text{cm}^2$.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2375,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 891,
+  "output_tokens_details": {
+   "thinking_tokens": 486
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2375,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0370128
+}

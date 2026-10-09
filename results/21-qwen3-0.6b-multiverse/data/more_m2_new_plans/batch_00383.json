@@ -1,0 +1,35 @@
+{
+ "batch": 383,
+ "keys": [
+  "math-train/4719#1",
+  "gsm8k-train/7083#0",
+  "gsm8k-train/3127#0",
+  "math-train/5899#2"
+ ],
+ "reply": "<plan id=\"math-train/4719#1\">\n<block units=\"2-3\">\n<path units=\"2-2\">\n<outline>The possible values of n allowed by the condition for divisibility by 2.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The digit sum of the number, for the condition for divisibility by 9.</outline>\n</path>\n<conclusion>n must be even, n ∈ {0, 2, 4, 6, 8}, and the digit sum is 10 + n.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/7083#0\"></plan>\n<plan id=\"gsm8k-train/3127#0\">\n<block units=\"6-7\">\n<path units=\"6-6\">\n<outline>Fem's age in two years.</outline>\n</path>\n<path units=\"7-7\">\n<outline>Matt's age in two years.</outline>\n</path>\n<conclusion>In two years Fem will be 13 and Matt will be 46.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5899#2\">\n<block units=\"5-7\">\n<path units=\"5-5\">\n<outline>The number of choices for the last digit.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The number of choices for the hundreds digit.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The number of choices for the tens digit.</outline>\n</path>\n<conclusion>The last digit has 2 choices, the hundreds digit has 4 choices, and the tens digit has 5 choices.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2179,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1060,
+  "output_tokens_details": {
+   "thinking_tokens": 544
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2179,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0388248
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 17,
+ "keys": [
+  "math-train/1530#1",
+  "math-train/1089#2",
+  "gsm8k-train/4891#3",
+  "math-train/222#2"
+ ],
+ "reply": "<plan id=\"math-train/1530#1\"></plan>\n<plan id=\"math-train/1089#2\"></plan>\n<plan id=\"gsm8k-train/4891#3\">\n<block units=\"1-7\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The total cost for the dogs.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The total cost for the cats.</outline>\n</path>\n<conclusion>The cost for the dogs is $1,200 and the cost for the cats is $2,400.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/222#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2267,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 330,
+  "output_tokens_details": {
+   "thinking_tokens": 108
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2267,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0249288
+}

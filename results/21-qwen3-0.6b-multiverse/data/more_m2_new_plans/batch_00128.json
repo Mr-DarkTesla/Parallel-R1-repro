@@ -1,0 +1,35 @@
+{
+ "batch": 128,
+ "keys": [
+  "math-train/2594#0",
+  "math-train/516#1",
+  "math-train/4054#1",
+  "gsm8k-train/3508#2"
+ ],
+ "reply": "<plan id=\"math-train/2594#0\"></plan>\n\n<plan id=\"math-train/516#1\"></plan>\n\n<plan id=\"math-train/4054#1\">\n<block units=\"15-26\">\n<lead units=\"15-15\"/>\n<path units=\"16-20\">\n<outline>The values of a for the listed triples whose smallest root is 1.</outline>\n</path>\n<path units=\"21-23\">\n<outline>The values of a for the listed triples whose smallest root is 2.</outline>\n</path>\n<path units=\"24-26\">\n<outline>The values of a for the listed triples whose smallest root is 3 or 5.</outline>\n</path>\n<conclusion>The triples with smallest root 1 give a = 1008, 674, 408, 342 and 212. Those with smallest root 2 give 340, 208 and 175, and the remaining triples give 142, 124 and 78.</conclusion>\n</block>\n</plan>\n\n<plan id=\"gsm8k-train/3508#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2482,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 651,
+  "output_tokens_details": {
+   "thinking_tokens": 332
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2482,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.033068799999999995
+}

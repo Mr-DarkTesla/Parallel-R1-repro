@@ -1,0 +1,35 @@
+{
+ "batch": 53,
+ "keys": [
+  "math-train/7387#2",
+  "math-train/732#0",
+  "math-train/5699#1",
+  "gsm8k-train/1049#0"
+ ],
+ "reply": "<plan id=\"math-train/7387#2\"></plan>\n<plan id=\"math-train/732#0\"></plan>\n<plan id=\"math-train/5699#1\">\n<block units=\"7-11\">\n<lead units=\"7-7\"/>\n<path units=\"8-8\">\n<outline>The number of Audis sold.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The number of Toyotas sold.</outline>\n</path>\n<path units=\"10-10\">\n<outline>The number of Acuras sold.</outline>\n</path>\n<conclusion>The dealer sold 30 Audis, 44 Toyotas and 56 Acuras.</conclusion>\n<tail units=\"11-11\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1049#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2195,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 370,
+  "output_tokens_details": {
+   "thinking_tokens": 113
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2195,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0251528
+}

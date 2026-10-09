@@ -1,0 +1,35 @@
+{
+ "batch": 230,
+ "keys": [
+  "math-train/4648#3",
+  "math-train/3455#0",
+  "gsm8k-train/3047#0",
+  "math-train/4216#0"
+ ],
+ "reply": "<plan id=\"math-train/4648#3\"></plan>\n<plan id=\"math-train/3455#0\">\n<block units=\"15-18\">\n<lead units=\"15-15\"/>\n<path units=\"16-16\">\n<outline>The value of b when a = 2.</outline>\n</path>\n<path units=\"17-17\">\n<outline>The value of b when a = -2.</outline>\n</path>\n<conclusion>When a = 2, b = -9, and when a = -2, b = 9.</conclusion>\n<tail units=\"18-18\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/3047#0\"></plan>\n<plan id=\"math-train/4216#0\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-4\">\n<outline>The solution of g(x) = 3 in the case x < 0.</outline>\n</path>\n<path units=\"5-7\">\n<outline>The solution of g(x) = 3 in the case x ≥ 0.</outline>\n</path>\n<conclusion>The case x < 0 gives x = -1, and the case x ≥ 0 gives x = 8.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2970,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 601,
+  "output_tokens_details": {
+   "thinking_tokens": 212
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2970,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0359728
+}

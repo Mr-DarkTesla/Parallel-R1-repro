@@ -1,0 +1,35 @@
+{
+ "batch": 445,
+ "keys": [
+  "math-train/4857#0",
+  "gsm8k-train/7245#1",
+  "math-train/1511#3",
+  "gsm8k-train/2901#1"
+ ],
+ "reply": "<plan id=\"math-train/4857#0\"></plan>\n<plan id=\"gsm8k-train/7245#1\"></plan>\n<plan id=\"math-train/1511#3\">\n<block units=\"4-7\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The side length of the first square, s_1.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The side length of the second square, s_2.</outline>\n</path>\n<conclusion>The side lengths are s_1 = 7 and s_2 = 4.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2901#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1832,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 404,
+  "output_tokens_details": {
+   "thinking_tokens": 177
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1832,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0229288
+}

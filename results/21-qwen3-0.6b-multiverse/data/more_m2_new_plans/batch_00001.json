@@ -1,0 +1,35 @@
+{
+ "batch": 1,
+ "keys": [
+  "math-train/2415#3",
+  "gsm8k-train/3556#1",
+  "math-train/1514#0",
+  "math-train/3334#0"
+ ],
+ "reply": "<plan id=\"math-train/2415#3\"></plan>\n<plan id=\"gsm8k-train/3556#1\">\n<block units=\"1-9\">\n<path units=\"1-2\">\n<outline>The total amount Kathleen saved over June, July and August.</outline>\n</path>\n<path units=\"3-5\">\n<outline>The total amount Kathleen spent on school supplies and clothes.</outline>\n</path>\n<conclusion>Kathleen saved $112 in total and spent $66 in total.</conclusion>\n<tail units=\"6-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/1514#0\">\n<block units=\"1-11\">\n<lead units=\"1-7\"/>\n<path units=\"8-8\">\n<outline>The x-coordinate of the other endpoint.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The y-coordinate of the other endpoint.</outline>\n</path>\n<conclusion>The other endpoint has x = 5 and y = 7.</conclusion>\n<tail units=\"10-11\"/>\n</block>\n</plan>\n<plan id=\"math-train/3334#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3314,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 595,
+  "output_tokens_details": {
+   "thinking_tokens": 228
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3314,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.03842
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 470,
+ "keys": [
+  "math-train/6329#1",
+  "math-train/6028#2",
+  "math-train/4728#0",
+  "math-train/2044#0"
+ ],
+ "reply": "<plan id=\"math-train/6329#1\"></plan>\n<plan id=\"math-train/6028#2\"></plan>\n<plan id=\"math-train/4728#0\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The value of 2^n - 1 for n = 2 and n = 3, and whether each is a prime less than 200.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The value of 2^n - 1 for n = 5, and whether it is a prime less than 200.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The value of 2^n - 1 for n = 7, and whether it is a prime less than 200.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The value of 2^n - 1 for n = 11, and how it compares with 200.</outline>\n</path>\n<conclusion>For n = 2, 3, 5, 7 the values 3, 7, 31, 127 are primes less than 200, while for n = 11 the value 2047 is greater than 200.</conclusion>\n<tail units=\"7-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/2044#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2014,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 606,
+  "output_tokens_details": {
+   "thinking_tokens": 211
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2014,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0284248
+}

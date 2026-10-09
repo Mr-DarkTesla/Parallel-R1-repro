@@ -1,0 +1,35 @@
+{
+ "batch": 95,
+ "keys": [
+  "math-train/4002#2",
+  "gsm8k-train/3099#3",
+  "math-train/5070#0",
+  "math-train/6376#0"
+ ],
+ "reply": "<plan id=\"math-train/4002#2\">\n<block units=\"9-11\">\n<lead units=\"9-9\"/>\n<path units=\"10-10\">\n<outline>The value of x for the case n = 8.</outline>\n</path>\n<path units=\"11-11\">\n<outline>The value of x for the case n = 9 and whether it is valid.</outline>\n</path>\n<conclusion>For n = 8, x = 80/9 ≈ 8.888...; for n = 9, x = 10, which is not valid because ⌊10⌋ = 10 ≠ 9.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/3099#3\">\n<block units=\"1-4\">\n<path units=\"1-2\">\n<outline>The total time Natasha exercised.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The total time Esteban exercised.</outline>\n</path>\n<conclusion>Natasha exercised 210 minutes and Esteban exercised 90 minutes.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5070#0\"></plan>\n<plan id=\"math-train/6376#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2126,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 810,
+  "output_tokens_details": {
+   "thinking_tokens": 433
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2126,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.033400799999999994
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 11,
+ "keys": [
+  "math-train/2898#3",
+  "math-train/1083#0",
+  "gsm8k-train/6600#2",
+  "math-train/461#3"
+ ],
+ "reply": "<plan id=\"math-train/2898#3\">\n<block units=\"3-7\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The length of the median to the first side of length 10.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The length of the median to the second side of length 10.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The length of the median to the side of length 12.</outline>\n</path>\n<conclusion>The three medians are $m_1 = \\frac{1}{2}\\sqrt{388}$, $m_2 = \\frac{1}{2}\\sqrt{256}$, and $m_3 = \\frac{1}{2}\\sqrt{388}$.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/1083#0\">\n<block units=\"4-7\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The value of t from the plus sign, and whether it is valid.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The value of t from the minus sign.</outline>\n</path>\n<conclusion>The plus sign gives $t = -4$, which is discarded. The minus sign gives $t = \\frac{7}{3} \\approx 2.33$.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6600#2\">\n<block units=\"6-9\">\n<lead units=\"6-6\"/>\n<path units=\"7-7\">\n<outline>The number of shepherd's pies sold.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The number of chicken pot pies sold.</outline>\n</path>\n<conclusion>Chef Michel sold 13 shepherd's pies and 16 chicken pot pies.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/461#3\">\n<block units=\"2-7\">\n<path units=\"2-3\">\n<outline>The simplified form of the first equation.</outline>\n</path>\n<path units=\"4-6\">\n<outline>The value obtained from the second equation.</outline>\n</path>\n<conclusion>The first equation simplifies to $x + y = 5$, and the second equation gives $y = 1$.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2776,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1042,
+  "output_tokens_details": {
+   "thinking_tokens": 262
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2776,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.043240799999999996
+}

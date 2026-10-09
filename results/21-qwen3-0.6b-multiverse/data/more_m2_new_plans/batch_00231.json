@@ -1,0 +1,35 @@
+{
+ "batch": 231,
+ "keys": [
+  "gsm8k-train/7073#3",
+  "math-train/3519#2",
+  "gsm8k-train/7404#0",
+  "math-train/5188#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/7073#3\"></plan>\n<plan id=\"math-train/3519#2\"></plan>\n<plan id=\"gsm8k-train/7404#0\">\n<block units=\"3-6\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The cost of the first 5 days.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The cost of the remaining 5 days.</outline>\n</path>\n<conclusion>The first 5 days cost $500 and the remaining 5 days cost $300.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/5188#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2743,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 394,
+  "output_tokens_details": {
+   "thinking_tokens": 165
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2743,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030016800000000003
+}

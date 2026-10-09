@@ -1,0 +1,35 @@
+{
+ "batch": 293,
+ "keys": [
+  "gsm8k-train/7333#2",
+  "math-train/6409#3",
+  "gsm8k-train/2460#1",
+  "math-train/4921#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/7333#2\"></plan>\n<plan id=\"math-train/6409#3\"></plan>\n<plan id=\"gsm8k-train/2460#1\"></plan>\n<plan id=\"math-train/4921#3\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The units digits of the first and second powers of 13.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The units digits of the third and fourth powers of 13.</outline>\n</path>\n<conclusion>The units digits of $13^1$, $13^2$, $13^3$ and $13^4$ are 3, 9, 7 and 1.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1691,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 665,
+  "output_tokens_details": {
+   "thinking_tokens": 421
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1691,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.027020799999999998
+}

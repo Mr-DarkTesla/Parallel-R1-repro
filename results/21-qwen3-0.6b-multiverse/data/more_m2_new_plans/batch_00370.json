@@ -1,0 +1,35 @@
+{
+ "batch": 370,
+ "keys": [
+  "math-train/3507#2",
+  "math-train/5169#0",
+  "gsm8k-train/2194#2",
+  "math-train/2515#1"
+ ],
+ "reply": "<plan id=\"math-train/3507#2\"></plan>\n<plan id=\"math-train/5169#0\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The base-10 value of $165_7$.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The base-10 value of $11_2$.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The base-10 value of $121_6$.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The base-10 value of $21_3$.</outline>\n</path>\n<conclusion>In base 10, $165_7 = 96$, $11_2 = 3$, $121_6 = 49$ and $21_3 = 7$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2194#2\"></plan>\n<plan id=\"math-train/2515#1\">\n<block units=\"31-36\">\n<lead units=\"31-31\"/>\n<path units=\"32-32\">\n<outline>The distance from the origin to the image of A.</outline>\n</path>\n<path units=\"33-33\">\n<outline>The distance from the origin to the image of B.</outline>\n</path>\n<path units=\"34-34\">\n<outline>The distance from the origin to the image of C.</outline>\n</path>\n<path units=\"35-35\">\n<outline>The distance from the origin to the image of D.</outline>\n</path>\n<conclusion>The distances from the origin are $\\sqrt{520}$ for A, $\\sqrt{648}$ for B, $\\sqrt{520}$ for C and $\\sqrt{392}$ for D.</conclusion>\n<tail units=\"36-36\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3648,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1045,
+  "output_tokens_details": {
+   "thinking_tokens": 472
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3648,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.050276799999999996
+}

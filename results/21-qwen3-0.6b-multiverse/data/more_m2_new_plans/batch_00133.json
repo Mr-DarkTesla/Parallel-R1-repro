@@ -1,0 +1,35 @@
+{
+ "batch": 133,
+ "keys": [
+  "math-train/6742#2",
+  "gsm8k-train/4223#0",
+  "math-train/85#2",
+  "gsm8k-train/3555#2"
+ ],
+ "reply": "<plan id=\"math-train/6742#2\"></plan>\n<plan id=\"gsm8k-train/4223#0\">\n<block units=\"2-7\">\n<path units=\"2-2\">\n<outline>The cost of the apples.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The cost of the bananas.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The cost of the oranges.</outline>\n</path>\n<conclusion>The apples cost $24, the bananas cost $4, and the oranges cost $12.</conclusion>\n<tail units=\"5-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/85#2\"></plan>\n<plan id=\"gsm8k-train/3555#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2044,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 556,
+  "output_tokens_details": {
+   "thinking_tokens": 314
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2044,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.027664799999999996
+}

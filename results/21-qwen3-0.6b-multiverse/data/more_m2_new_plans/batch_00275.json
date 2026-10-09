@@ -1,0 +1,35 @@
+{
+ "batch": 275,
+ "keys": [
+  "math-train/2817#3",
+  "math-train/6424#0",
+  "gsm8k-train/2833#0",
+  "math-train/2911#3"
+ ],
+ "reply": "<plan id=\"math-train/2817#3\"></plan>\n<plan id=\"math-train/6424#0\">\n<block units=\"1-7\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The smallest multiple of 3 at the lower end of the range.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The largest multiple of 3 at the upper end of the range.</outline>\n</path>\n<conclusion>The smallest multiple of 3 used is 60 and the largest is 210.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2833#0\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The number of students in Miss Johnson's class who prefer goldfish.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The number of students in Mr. Feldstein's class who prefer goldfish.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The number of students in Ms. Henderson's class who prefer goldfish.</outline>\n</path>\n<conclusion>5 students in Miss Johnson's class, 20 in Mr. Feldstein's class and 6 in Ms. Henderson's class prefer goldfish.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/2911#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2194,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 629,
+  "output_tokens_details": {
+   "thinking_tokens": 149
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2194,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.030324800000000002
+}

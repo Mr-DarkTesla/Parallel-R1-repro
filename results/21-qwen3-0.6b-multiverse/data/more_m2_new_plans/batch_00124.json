@@ -1,0 +1,35 @@
+{
+ "batch": 124,
+ "keys": [
+  "math-train/4951#2",
+  "math-train/872#2",
+  "gsm8k-train/3622#3",
+  "math-train/5602#2"
+ ],
+ "reply": "<plan id=\"math-train/4951#2\">\n<block units=\"10-17\">\n<lead units=\"10-11\"/>\n<path units=\"12-13\">\n<outline>The value of $abc$ and its digits for $y = 1$ and $y = 2$.</outline>\n</path>\n<path units=\"14-15\">\n<outline>The value of $abc$ and its digits for $y = 4$ and $y = 5$.</outline>\n</path>\n<path units=\"16-17\">\n<outline>The value of $abc$ and its digits for $y = 8$ and $y = 9$.</outline>\n</path>\n<conclusion>The cases give $abc = 1000, 500, 250, 200, 125, 111$ for $y = 1, 2, 4, 5, 8, 9$ respectively.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/872#2\"></plan>\n<plan id=\"gsm8k-train/3622#3\">\n<block units=\"3-5\">\n<path units=\"3-3\">\n<outline>The number of pencils Clare has.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The number of pencils Jeanine has after giving some to Abby.</outline>\n</path>\n<conclusion>Clare has 9 pencils and Jeanine now has 12 pencils.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5602#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2649,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 760,
+  "output_tokens_details": {
+   "thinking_tokens": 308
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2649,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0365848
+}

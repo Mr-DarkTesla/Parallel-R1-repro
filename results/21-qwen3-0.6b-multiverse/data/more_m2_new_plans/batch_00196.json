@@ -1,0 +1,35 @@
+{
+ "batch": 196,
+ "keys": [
+  "math-train/2721#2",
+  "gsm8k-train/3148#1",
+  "math-train/4915#3",
+  "math-train/1866#0"
+ ],
+ "reply": "<plan id=\"math-train/2721#2\"></plan>\n<plan id=\"gsm8k-train/3148#1\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The cost of the pants in terms of the shirt's cost.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The cost of the coat in terms of the shirt's cost.</outline>\n</path>\n<conclusion>The pants cost $100 - x$ and the coat costs $5x$.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/4915#3\"></plan>\n<plan id=\"math-train/1866#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2043,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 511,
+  "output_tokens_details": {
+   "thinking_tokens": 274
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2043,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0267568
+}

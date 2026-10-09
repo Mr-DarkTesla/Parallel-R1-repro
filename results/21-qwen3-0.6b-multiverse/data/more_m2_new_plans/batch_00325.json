@@ -1,0 +1,35 @@
+{
+ "batch": 325,
+ "keys": [
+  "gsm8k-train/4624#2",
+  "math-train/6120#0",
+  "math-train/6365#3",
+  "gsm8k-train/2572#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/4624#2\">\n<block units=\"8-10\">\n<path units=\"8-8\">\n<outline>The tractor-days worked by the 2-tractor crew over 2 days.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The tractor-days worked by the 7-tractor crew over 3 days.</outline>\n</path>\n<conclusion>The first crew contributes 4 tractor-days and the second crew contributes 21 tractor-days.</conclusion>\n<tail units=\"10-10\"/>\n</block>\n</plan>\n<plan id=\"math-train/6120#0\"></plan>\n<plan id=\"math-train/6365#3\">\n<block units=\"4-7\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>The total age of the females.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The total age of the males.</outline>\n</path>\n<conclusion>The females' total age is 300 years and the males' total age is 525 years.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2572#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2293,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 535,
+  "output_tokens_details": {
+   "thinking_tokens": 156
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2293,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0292368
+}

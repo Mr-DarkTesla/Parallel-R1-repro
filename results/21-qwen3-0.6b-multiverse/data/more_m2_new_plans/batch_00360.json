@@ -1,0 +1,35 @@
+{
+ "batch": 360,
+ "keys": [
+  "gsm8k-train/4854#1",
+  "math-train/6436#2",
+  "gsm8k-train/6441#1",
+  "math-train/5456#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/4854#1\"></plan>\n<plan id=\"math-train/6436#2\"></plan>\n<plan id=\"gsm8k-train/6441#1\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-4\">\n<outline>The total cost of the gifts for the 8 friends.</outline>\n</path>\n<path units=\"5-8\">\n<outline>The total cost of the gifts for the mother and father, in terms of the unknown amount per gift.</outline>\n</path>\n<conclusion>The friends' gifts cost $72 in total, and the gifts for his mother and father cost $2x$ in total.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5456#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2463,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 499,
+  "output_tokens_details": {
+   "thinking_tokens": 248
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2463,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0298768
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 472,
+ "keys": [
+  "math-train/6277#1",
+  "math-train/6745#1",
+  "math-train/6248#2",
+  "math-train/726#1"
+ ],
+ "reply": "<plan id=\"math-train/6277#1\">\n<block units=\"1-10\">\n<lead units=\"1-2\"/>\n<path units=\"3-3\">\n<outline>The prime factorization of 18.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The prime factorization of 42.</outline>\n</path>\n<conclusion>18 factors as $2 \\times 3^2$ and 42 factors as $2 \\times 3 \\times 7$.</conclusion>\n<tail units=\"5-10\"/>\n</block>\n</plan>\n<plan id=\"math-train/6745#1\"></plan>\n<plan id=\"math-train/6248#2\">\n<block units=\"1-8\">\n<lead units=\"1-2\"/>\n<path units=\"3-3\">\n<outline>The prime factorization of 14.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The prime factorization of 21.</outline>\n</path>\n<conclusion>14 factors as $2 \\times 7$ and 21 factors as $3 \\times 7$.</conclusion>\n<tail units=\"5-8\"/>\n</block>\n</plan>\n<plan id=\"math-train/726#1\">\n<block units=\"1-10\">\n<lead units=\"1-2\"/>\n<path units=\"3-4\">\n<outline>The value of the product $\\sqrt{3} \\times 3^{\\frac{1}{2}}$.</outline>\n</path>\n<path units=\"5-6\">\n<outline>The value of $12 \\div 3 \\times 2$.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The value of $4^{\\frac{3}{2}}$.</outline>\n</path>\n<conclusion>The three terms simplify to 3, 8 and 8 respectively.</conclusion>\n<tail units=\"8-10\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1902,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1047,
+  "output_tokens_details": {
+   "thinking_tokens": 467
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1902,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0363488
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 45,
+ "keys": [
+  "math-train/3440#0",
+  "gsm8k-train/1649#3",
+  "math-train/6781#3",
+  "math-train/479#0"
+ ],
+ "reply": "<plan id=\"math-train/3440#0\"></plan>\n<plan id=\"gsm8k-train/1649#3\"></plan>\n<plan id=\"math-train/6781#3\"></plan>\n<plan id=\"math-train/479#0\">\n<block units=\"7-10\">\n<lead units=\"7-7\"/>\n<path units=\"8-8\">\n<outline>The solution from the plus sign.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The solution from the minus sign.</outline>\n</path>\n<conclusion>The two solutions are t = 2.5 and t = -4.</conclusion>\n<tail units=\"10-10\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2675,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 367,
+  "output_tokens_details": {
+   "thinking_tokens": 153
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2675,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.028932799999999998
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 27,
+ "keys": [
+  "gsm8k-train/6931#1",
+  "math-train/1827#1",
+  "math-train/7187#1",
+  "gsm8k-train/6817#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6931#1\"></plan>\n<plan id=\"math-train/1827#1\">\n<block units=\"2-7\">\n<path units=\"2-3\">\n<outline>The total number of outfits with no restriction.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The number of outfits where all three items are the same color.</outline>\n</path>\n<conclusion>There are 216 outfits in total, and 6 of them have all three items the same color.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/7187#1\"></plan>\n<plan id=\"gsm8k-train/6817#2\">\n<block units=\"2-14\">\n<lead units=\"2-4\"/>\n<path units=\"5-6\">\n<outline>The cost of the first 10 patches.</outline>\n</path>\n<path units=\"7-10\">\n<outline>The cost of the remaining patches.</outline>\n</path>\n<conclusion>The first 10 patches cost 100 dollars, and the remaining 70 patches cost 350 dollars.</conclusion>\n<tail units=\"11-14\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2328,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 769,
+  "output_tokens_details": {
+   "thinking_tokens": 395
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2328,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0341968
+}

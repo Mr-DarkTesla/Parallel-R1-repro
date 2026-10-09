@@ -1,0 +1,35 @@
+{
+ "batch": 131,
+ "keys": [
+  "math-train/6350#1",
+  "gsm8k-train/7191#3",
+  "math-train/2879#2",
+  "math-train/1167#0"
+ ],
+ "reply": "<plan id=\"math-train/6350#1\"></plan>\n<plan id=\"gsm8k-train/7191#3\"></plan>\n<plan id=\"math-train/2879#2\">\n<block units=\"10-21\">\n<lead units=\"10-10\"/>\n<path units=\"11-13\">\n<outline>The validity of the cases k = 0, k = 1 and k = 2.</outline>\n</path>\n<path units=\"14-16\">\n<outline>The validity of the cases k = 3, k = 4 and k = 5.</outline>\n</path>\n<path units=\"17-19\">\n<outline>The validity of the cases k = 8, k = 9 and k = 14.</outline>\n</path>\n<path units=\"20-21\">\n<outline>The validity of the cases k = 44 and k = 89.</outline>\n</path>\n<conclusion>The cases k = 1, 2, 3, 5, 9 and 89 are valid. The cases k = 0, 4, 8, 14 and 44 are invalid.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/1167#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2719,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 585,
+  "output_tokens_details": {
+   "thinking_tokens": 236
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2719,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0336448
+}

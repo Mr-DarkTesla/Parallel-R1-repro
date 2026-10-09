@@ -1,0 +1,35 @@
+{
+ "batch": 312,
+ "keys": [
+  "math-train/819#1",
+  "gsm8k-train/2233#1",
+  "math-train/7392#0",
+  "gsm8k-train/6142#2"
+ ],
+ "reply": "<plan id=\"math-train/819#1\"></plan>\n<plan id=\"gsm8k-train/2233#1\">\n<block units=\"1-5\">\n<path units=\"1-1\">\n<outline>The number of croissants the two eat together.</outline>\n</path>\n<path units=\"2-2\">\n<outline>The number of cakes the two eat together.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The number of pizzas the two eat together.</outline>\n</path>\n<conclusion>Together they eat 14 croissants, 36 cakes, and 60 pizzas.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/7392#0\"></plan>\n<plan id=\"gsm8k-train/6142#2\">\n<block units=\"1-5\">\n<path units=\"1-1\">\n<outline>The monthly total for the first floor.</outline>\n</path>\n<path units=\"2-2\">\n<outline>The monthly total for the second floor.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The monthly total for the third floor.</outline>\n</path>\n<conclusion>The first floor brings in $45, the second floor $60, and the third floor $60.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1987,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 588,
+  "output_tokens_details": {
+   "thinking_tokens": 171
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1987,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0278488
+}

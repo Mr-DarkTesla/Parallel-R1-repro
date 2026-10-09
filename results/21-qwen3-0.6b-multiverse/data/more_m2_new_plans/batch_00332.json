@@ -1,0 +1,35 @@
+{
+ "batch": 332,
+ "keys": [
+  "gsm8k-train/2061#2",
+  "math-train/1555#3",
+  "math-train/4583#0",
+  "gsm8k-train/2448#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2061#2\"></plan>\n<plan id=\"math-train/1555#3\"></plan>\n<plan id=\"math-train/4583#0\"></plan>\n<plan id=\"gsm8k-train/2448#2\">\n<block units=\"1-4\">\n<path units=\"1-1\">\n<outline>The amount of water in one bottle.</outline>\n</path>\n<path units=\"2-2\">\n<outline>The total number of bottles in all the boxes.</outline>\n</path>\n<conclusion>Each bottle contains 9 liters of water, and there are 500 bottles in total.</conclusion>\n<tail units=\"3-4\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1706,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 537,
+  "output_tokens_details": {
+   "thinking_tokens": 317
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1706,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0245808
+}

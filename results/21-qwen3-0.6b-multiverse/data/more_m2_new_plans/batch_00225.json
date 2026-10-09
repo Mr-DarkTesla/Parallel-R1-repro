@@ -1,0 +1,35 @@
+{
+ "batch": 225,
+ "keys": [
+  "math-train/6177#1",
+  "gsm8k-train/2217#3",
+  "math-train/2906#3",
+  "math-train/4424#0"
+ ],
+ "reply": "<plan id=\"math-train/6177#1\"></plan>\n<plan id=\"gsm8k-train/2217#3\"></plan>\n<plan id=\"math-train/2906#3\">\n<block units=\"12-14\">\n<lead units=\"12-12\"/>\n<path units=\"13-13\">\n<outline>The vector from A to G.</outline>\n</path>\n<path units=\"14-14\">\n<outline>The vector from A to C.</outline>\n</path>\n<conclusion>The two vectors are $\\vec{AG} = (1, 1, 1)$ and $\\vec{AC} = (1, 1, 0)$.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4424#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2786,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 481,
+  "output_tokens_details": {
+   "thinking_tokens": 254
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2786,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0321008
+}

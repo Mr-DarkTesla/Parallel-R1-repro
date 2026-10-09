@@ -1,0 +1,35 @@
+{
+ "batch": 278,
+ "keys": [
+  "gsm8k-train/2053#2",
+  "math-train/6927#1",
+  "math-train/3687#1",
+  "gsm8k-train/3278#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/2053#2\"></plan>\n<plan id=\"math-train/6927#1\"></plan>\n<plan id=\"math-train/3687#1\"></plan>\n<plan id=\"gsm8k-train/3278#2\">\n<block units=\"2-8\">\n<path units=\"2-4\">\n<outline>The number of books Corey had on Tuesday.</outline>\n</path>\n<path units=\"5-8\">\n<outline>The number of books Corey gave to Lily on Wednesday.</outline>\n</path>\n<conclusion>Corey had 90 books on Tuesday, and on Wednesday Mike gave Lily 10 books while Corey gave her 25 books.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1892,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 660,
+  "output_tokens_details": {
+   "thinking_tokens": 423
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1892,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0285288
+}

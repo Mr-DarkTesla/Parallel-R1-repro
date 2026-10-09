@@ -1,0 +1,35 @@
+{
+ "batch": 28,
+ "keys": [
+  "math-train/4335#1",
+  "math-train/1012#0",
+  "math-train/2342#2",
+  "gsm8k-train/5410#2"
+ ],
+ "reply": "<plan id=\"math-train/4335#1\"></plan>\n\n<plan id=\"math-train/1012#0\">\n<block units=\"6-8\">\n<path units=\"6-6\">\n<outline>The value of b squared.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The product of a and c.</outline>\n</path>\n<conclusion>So $b^2 = \\frac{100}{9}$ and $ac = 1$.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n\n<plan id=\"math-train/2342#2\"></plan>\n\n<plan id=\"gsm8k-train/5410#2\">\n<block units=\"1-14\">\n<lead units=\"1-1\"/>\n<path units=\"2-5\">\n<outline>The time taken to hike Trail 1.</outline>\n</path>\n<path units=\"6-11\">\n<outline>The total time taken to hike Trail 2, including the break.</outline>\n</path>\n<conclusion>Trail 1 takes 4 hours, and Trail 2 takes 5 hours in total.</conclusion>\n<tail units=\"12-14\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2147,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 692,
+  "output_tokens_details": {
+   "thinking_tokens": 330
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2147,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.031208800000000002
+}

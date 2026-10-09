@@ -1,0 +1,35 @@
+{
+ "batch": 61,
+ "keys": [
+  "math-train/201#0",
+  "math-train/3806#0",
+  "gsm8k-train/421#0",
+  "math-train/1173#3"
+ ],
+ "reply": "<plan id=\"math-train/201#0\"></plan>\n<plan id=\"math-train/3806#0\">\n<block units=\"7-10\">\n<lead units=\"7-7\"/>\n<path units=\"8-8\">\n<outline>The value of p at -1.</outline>\n</path>\n<path units=\"9-9\">\n<outline>The value of q at -1.</outline>\n</path>\n<conclusion>p(-1) = -2 and q(-1) = -6.</conclusion>\n<tail units=\"10-10\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/421#0\">\n<block units=\"1-6\">\n<path units=\"1-2\">\n<outline>The cost of the VIP tickets.</outline>\n</path>\n<path units=\"3-4\">\n<outline>The cost of the regular tickets.</outline>\n</path>\n<conclusion>The VIP tickets cost $200 and the regular tickets cost $150.</conclusion>\n<tail units=\"5-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/1173#3\">\n<block units=\"6-9\">\n<lead units=\"6-6\"/>\n<path units=\"7-7\">\n<outline>The value of the log base 3 of 3 cubed.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The value of the log base 3 of the square root of 3.</outline>\n</path>\n<conclusion>The log base 3 of 3 cubed is 3, and the log base 3 of the square root of 3 is 1/2.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2778,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 726,
+  "output_tokens_details": {
+   "thinking_tokens": 220
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2778,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0369368
+}

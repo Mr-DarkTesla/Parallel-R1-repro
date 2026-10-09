@@ -1,0 +1,35 @@
+{
+ "batch": 438,
+ "keys": [
+  "gsm8k-train/1436#1",
+  "math-train/4936#0",
+  "gsm8k-train/3005#3",
+  "math-train/6019#1"
+ ],
+ "reply": "<plan id=\"gsm8k-train/1436#1\">\n<block units=\"7-12\">\n<path units=\"7-8\">\n<outline>The total number of instruments Charlie owns.</outline>\n</path>\n<path units=\"9-10\">\n<outline>The total number of instruments Carli owns.</outline>\n</path>\n<conclusion>Charlie owns 4 instruments and Carli owns 3 instruments.</conclusion>\n<tail units=\"11-12\"/>\n</block>\n</plan>\n<plan id=\"math-train/4936#0\"></plan>\n<plan id=\"gsm8k-train/3005#3\"></plan>\n<plan id=\"math-train/6019#1\">\n<block units=\"2-4\">\n<path units=\"2-2\">\n<outline>The area of the basement floor.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The depth of the water in feet.</outline>\n</path>\n<conclusion>The floor area is 768 ft² and the water depth is 1.5 ft.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2147,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 796,
+  "output_tokens_details": {
+   "thinking_tokens": 449
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2147,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0332888
+}

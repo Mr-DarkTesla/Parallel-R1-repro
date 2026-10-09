@@ -1,0 +1,35 @@
+{
+ "batch": 233,
+ "keys": [
+  "gsm8k-train/3591#0",
+  "gsm8k-train/3609#1",
+  "math-train/7229#0",
+  "math-train/5993#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3591#0\"></plan>\n<plan id=\"gsm8k-train/3609#1\"></plan>\n<plan id=\"math-train/7229#0\">\n<block units=\"16-17\">\n<path units=\"16-16\">\n<outline>The value of a from equation 2.</outline>\n</path>\n<path units=\"17-17\">\n<outline>The value of b from equation 3.</outline>\n</path>\n<conclusion>Equation 2 gives a = -3 and equation 3 gives b = 1/14.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/5993#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2822,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 452,
+  "output_tokens_details": {
+   "thinking_tokens": 248
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2822,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0318088
+}

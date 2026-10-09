@@ -1,0 +1,35 @@
+{
+ "batch": 253,
+ "keys": [
+  "math-train/1853#0",
+  "gsm8k-train/1055#1",
+  "math-train/3741#2",
+  "math-train/1563#2"
+ ],
+ "reply": "<plan id=\"math-train/1853#0\">\n<block units=\"6-8\">\n<path units=\"6-6\">\n<outline>The number of ways to choose the triplets.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The number of ways to choose the non-triplet players.</outline>\n</path>\n<conclusion>There is 1 way to choose the triplets and 165 ways to choose the 3 non-triplet players.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1055#1\"></plan>\n<plan id=\"math-train/3741#2\">\n<block units=\"3-5\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The rationalized form of the first term in the denominator.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The rationalized form of the second term in the denominator.</outline>\n</path>\n<conclusion>The first term simplifies to $\\sqrt{2} - 1$ and the second term simplifies to $\\sqrt{3} + 1$.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/1563#2\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2814,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 619,
+  "output_tokens_details": {
+   "thinking_tokens": 233
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2814,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0350848
+}

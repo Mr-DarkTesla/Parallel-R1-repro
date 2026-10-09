@@ -1,0 +1,35 @@
+{
+ "batch": 0,
+ "keys": [
+  "math-train/762#3",
+  "gsm8k-train/2377#0",
+  "math-train/1292#1",
+  "math-train/6225#0"
+ ],
+ "reply": "<plan id=\"math-train/762#3\"></plan>\n<plan id=\"gsm8k-train/2377#0\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The cost of the student tickets.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The cost of the adult tickets.</outline>\n</path>\n<conclusion>The student tickets cost $120 and the adult tickets cost $96.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"math-train/1292#1\">\n<block units=\"2-6\">\n<lead units=\"2-2\"/>\n<path units=\"3-4\">\n<outline>The product in the numerator.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The product in the denominator.</outline>\n</path>\n<conclusion>The numerator is $-1 - 5i$ and the denominator is $13$.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/6225#0\">\n<block units=\"1-8\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The LCMs of 12 with 2 and with 4.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The LCMs of 12 with 6 and with 8.</outline>\n</path>\n<path units=\"6-7\">\n<outline>The LCMs of 12 with 10 and with 12.</outline>\n</path>\n<conclusion>The LCMs are 12, 24, 12, 24, 60 and 12.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3170,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 905,
+  "output_tokens_details": {
+   "thinking_tokens": 355
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3170,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.043468
+}

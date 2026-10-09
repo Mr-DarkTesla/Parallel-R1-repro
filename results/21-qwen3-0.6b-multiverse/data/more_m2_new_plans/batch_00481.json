@@ -1,0 +1,35 @@
+{
+ "batch": 481,
+ "keys": [
+  "math-train/1996#3",
+  "math-train/5501#2",
+  "math-train/711#2",
+  "math-train/5919#2"
+ ],
+ "reply": "<plan id=\"math-train/1996#3\"></plan>\n<plan id=\"math-train/5501#2\"></plan>\n<plan id=\"math-train/711#2\"></plan>\n<plan id=\"math-train/5919#2\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The simplified form of the left-hand side.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The simplified form of the right-hand side.</outline>\n</path>\n<conclusion>The left-hand side simplifies to $3x$ and the right-hand side simplifies to $400 - 7x$.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1815,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 492,
+  "output_tokens_details": {
+   "thinking_tokens": 258
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1815,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0245528
+}

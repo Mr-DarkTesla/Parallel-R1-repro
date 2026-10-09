@@ -1,0 +1,35 @@
+{
+ "batch": 96,
+ "keys": [
+  "gsm8k-train/7270#1",
+  "math-train/5351#3",
+  "math-train/6412#0",
+  "math-train/5864#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/7270#1\"></plan>\n<plan id=\"math-train/5351#3\">\n<block units=\"14-17\">\n<lead units=\"14-14\"/>\n<path units=\"15-15\">\n<outline>The value of n for the factor pair (1, 2043).</outline>\n</path>\n<path units=\"16-16\">\n<outline>The value of n for the factor pair (3, 681).</outline>\n</path>\n<path units=\"17-17\">\n<outline>The value of n for the factor pair (9, 227).</outline>\n</path>\n<conclusion>The three factor pairs give n = 1016, n = 336 and n = 112.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/6412#0\"></plan>\n<plan id=\"math-train/5864#0\">\n<block units=\"2-4\">\n<path units=\"2-3\">\n<outline>The product of 2^3 and 3.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The value of 5^3.</outline>\n</path>\n<conclusion>2^3 times 3 is 24, and 5^3 is 125.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2469,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 794,
+  "output_tokens_details": {
+   "thinking_tokens": 421
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2469,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0358248
+}

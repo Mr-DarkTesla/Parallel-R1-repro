@@ -1,0 +1,35 @@
+{
+ "batch": 226,
+ "keys": [
+  "gsm8k-train/6042#2",
+  "math-train/2574#3",
+  "math-train/4971#1",
+  "gsm8k-train/4882#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6042#2\">\n<block units=\"1-6\">\n<path units=\"1-1\">\n<outline>The number of glue sticks Allison bought.</outline>\n</path>\n<path units=\"2-2\">\n<outline>The number of packs of construction paper Allison bought.</outline>\n</path>\n<conclusion>Allison bought 23 glue sticks and 5 packs of construction paper.</conclusion>\n<tail units=\"3-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/2574#3\">\n<block units=\"5-7\">\n<path units=\"5-5\">\n<outline>The midpoint of A and A'.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The midpoint of B and B'.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The midpoint of C and C'.</outline>\n</path>\n<conclusion>The midpoints are (2, -1), (7, -1) and (-4, -1).</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4971#1\"></plan>\n<plan id=\"gsm8k-train/4882#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2669,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 623,
+  "output_tokens_details": {
+   "thinking_tokens": 248
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2669,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0340048
+}

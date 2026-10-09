@@ -1,0 +1,35 @@
+{
+ "batch": 70,
+ "keys": [
+  "math-train/1066#1",
+  "gsm8k-train/6906#2",
+  "math-train/76#1",
+  "math-train/1299#3"
+ ],
+ "reply": "<plan id=\"math-train/1066#1\"></plan>\n<plan id=\"gsm8k-train/6906#2\"></plan>\n<plan id=\"math-train/76#1\"></plan>\n<plan id=\"math-train/1299#3\">\n<block units=\"5-11\">\n<path units=\"5-8\">\n<outline>Whether the trial values a = 4 and a = 3 give an admissible fractional part.</outline>\n</path>\n<path units=\"9-10\">\n<outline>Whether the trial value a = 2 gives an admissible fractional part.</outline>\n</path>\n<conclusion>For a = 4 and a = 3 the fractional part f comes out negative, which is impossible. For a = 2, f = 1/3 satisfies 0 ≤ f < 1, so this case is valid.</conclusion>\n<tail units=\"11-11\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2622,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 722,
+  "output_tokens_details": {
+   "thinking_tokens": 442
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2622,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0356088
+}

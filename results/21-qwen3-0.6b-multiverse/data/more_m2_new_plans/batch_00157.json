@@ -1,0 +1,35 @@
+{
+ "batch": 157,
+ "keys": [
+  "math-train/7045#1",
+  "gsm8k-train/1858#3",
+  "math-train/4325#3",
+  "math-train/1651#1"
+ ],
+ "reply": "<plan id=\"math-train/7045#1\">\n<block units=\"1-24\">\n<lead units=\"1-6\"/>\n<path units=\"7-11\">\n<outline>The value of the dot product a · b.</outline>\n</path>\n<path units=\"12-16\">\n<outline>An expression for c and the expansion of b · c in terms of simpler dot products.</outline>\n</path>\n<conclusion>From the norm condition, a · b = 1/2. Expressing c as a + 2b + 3d gives b · c = b · a + 2 b · b + 3 b · d.</conclusion>\n<tail units=\"17-24\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1858#3\"></plan>\n<plan id=\"math-train/4325#3\">\n<block units=\"6-12\">\n<path units=\"6-7\">\n<outline>The equation that comes from the point (-3, 4).</outline>\n</path>\n<path units=\"8-9\">\n<outline>The value of a^2 from the point (-2, 0).</outline>\n</path>\n<conclusion>The point (-3, 4) gives equation (1), 9/a^2 - 16/b^2 = 1, and the point (-2, 0) gives a^2 = 4.</conclusion>\n<tail units=\"10-12\"/>\n</block>\n</plan>\n<plan id=\"math-train/1651#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 4390,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 906,
+  "output_tokens_details": {
+   "thinking_tokens": 468
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 4390,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0534328
+}

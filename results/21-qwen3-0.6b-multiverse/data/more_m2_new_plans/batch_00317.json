@@ -1,0 +1,35 @@
+{
+ "batch": 317,
+ "keys": [
+  "gsm8k-train/5982#3",
+  "math-train/2361#3",
+  "math-train/1442#2",
+  "gsm8k-train/4353#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/5982#3\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The hours of TV watched from Monday to Friday.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The hours of TV watched on Saturday and Sunday.</outline>\n</path>\n<conclusion>Ralph watches 20 hours from Monday to Friday and 12 hours on Saturday and Sunday.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/2361#3\">\n<block units=\"1-5\">\n<path units=\"1-1\">\n<outline>The volume of the cube defined by the coordinate bounds.</outline>\n</path>\n<path units=\"2-3\">\n<outline>The volume of the region where x^2+y^2+z^2 ≤ 1.</outline>\n</path>\n<conclusion>The cube has volume 8 and the sphere has volume 4/3 π.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/1442#2\"></plan>\n<plan id=\"gsm8k-train/4353#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2250,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 598,
+  "output_tokens_details": {
+   "thinking_tokens": 194
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2250,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0301528
+}

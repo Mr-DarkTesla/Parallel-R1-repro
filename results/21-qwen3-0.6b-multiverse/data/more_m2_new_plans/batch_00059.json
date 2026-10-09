@@ -1,0 +1,35 @@
+{
+ "batch": 59,
+ "keys": [
+  "math-train/2814#1",
+  "math-train/1738#2",
+  "math-train/1380#2",
+  "gsm8k-train/3528#3"
+ ],
+ "reply": "<plan id=\"math-train/2814#1\"></plan>\n<plan id=\"math-train/1738#2\"></plan>\n<plan id=\"math-train/1380#2\"></plan>\n<plan id=\"gsm8k-train/3528#3\">\n<block units=\"1-7\">\n<path units=\"1-3\">\n<outline>The total number of bottles Samira starts with.</outline>\n</path>\n<path units=\"4-5\">\n<outline>The total number of bottles taken by the players.</outline>\n</path>\n<conclusion>Samira starts with 48 bottles and the players take 33 bottles in total.</conclusion>\n<tail units=\"6-7\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2346,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 428,
+  "output_tokens_details": {
+   "thinking_tokens": 212
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2346,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.027520799999999998
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 440,
+ "keys": [
+  "math-train/2055#3",
+  "gsm8k-train/6447#3",
+  "math-train/2413#1",
+  "gsm8k-train/2646#1"
+ ],
+ "reply": "<plan id=\"math-train/2055#3\"></plan>\n<plan id=\"gsm8k-train/6447#3\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The number of apples Emmy can buy.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The number of apples Gerry can buy.</outline>\n</path>\n<conclusion>Emmy can buy 100 apples and Gerry can buy 50 apples.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"math-train/2413#1\"></plan>\n<plan id=\"gsm8k-train/2646#1\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1785,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 232,
+  "output_tokens_details": {
+   "thinking_tokens": 0
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1785,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0191128
+}

@@ -1,0 +1,35 @@
+{
+ "batch": 145,
+ "keys": [
+  "math-train/6360#2",
+  "gsm8k-train/2006#2",
+  "math-train/161#3",
+  "math-train/600#1"
+ ],
+ "reply": "<plan id=\"math-train/6360#2\"></plan>\n<plan id=\"gsm8k-train/2006#2\"></plan>\n<plan id=\"math-train/161#3\">\n<block units=\"4-10\">\n<lead units=\"4-4\"/>\n<path units=\"5-6\">\n<outline>The values of the first two terms, i^11 and i^16.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The value of the term i^21.</outline>\n</path>\n<path units=\"8-9\">\n<outline>The values of the last two terms, i^26 and i^31.</outline>\n</path>\n<conclusion>The terms evaluate to -i, 1, i, -1 and -i respectively.</conclusion>\n<tail units=\"10-10\"/>\n</block>\n</plan>\n<plan id=\"math-train/600#1\">\n<block units=\"7-10\">\n<lead units=\"7-7\"/>\n<path units=\"8-8\">\n<outline>Equation (1) scaled by 3.</outline>\n</path>\n<path units=\"9-9\">\n<outline>Equation (2) scaled by 2.</outline>\n</path>\n<conclusion>The scaled equations are 18x - 12y = 3a and 12y - 18x = 2b.</conclusion>\n<tail units=\"10-10\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2514,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 708,
+  "output_tokens_details": {
+   "thinking_tokens": 289
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2514,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.034464800000000004
+}

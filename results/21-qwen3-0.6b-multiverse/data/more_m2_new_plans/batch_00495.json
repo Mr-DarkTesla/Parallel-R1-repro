@@ -1,0 +1,35 @@
+{
+ "batch": 495,
+ "keys": [
+  "math-train/2441#2",
+  "math-train/6686#2",
+  "math-train/1125#1",
+  "math-train/2241#2"
+ ],
+ "reply": "<plan id=\"math-train/2441#2\">\n<block units=\"4-7\">\n<lead units=\"4-4\"/>\n<path units=\"5-5\">\n<outline>Whether the candidate value x = 3 satisfies the equation.</outline>\n</path>\n<path units=\"6-6\">\n<outline>Whether the candidate value x = 4 satisfies the equation.</outline>\n</path>\n<conclusion>For x = 3 the left side equals 5, not 23, while for x = 4 it equals 23.</conclusion>\n<tail units=\"7-7\"/>\n</block>\n</plan>\n<plan id=\"math-train/6686#2\"></plan>\n<plan id=\"math-train/1125#1\"></plan>\n<plan id=\"math-train/2241#2\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The value of 5!.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The value of 6!.</outline>\n</path>\n<conclusion>5! = 120 and 6! = 720.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1594,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 602,
+  "output_tokens_details": {
+   "thinking_tokens": 234
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1594,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0249848
+}

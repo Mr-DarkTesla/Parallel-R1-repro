@@ -1,0 +1,35 @@
+{
+ "batch": 439,
+ "keys": [
+  "gsm8k-train/3833#1",
+  "math-train/1644#3",
+  "gsm8k-train/6904#3",
+  "gsm8k-train/2719#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/3833#1\"></plan>\n<plan id=\"math-train/1644#3\"></plan>\n<plan id=\"gsm8k-train/6904#3\"></plan>\n<plan id=\"gsm8k-train/2719#3\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The total time to rise the 4 balls of dough.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The total time to bake the 4 balls of dough.</outline>\n</path>\n<conclusion>Rising the 4 balls takes 12 hours and baking them takes 8 hours.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1657,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 371,
+  "output_tokens_details": {
+   "thinking_tokens": 127
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1657,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0208688
+}

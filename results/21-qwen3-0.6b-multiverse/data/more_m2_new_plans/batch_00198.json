@@ -1,0 +1,35 @@
+{
+ "batch": 198,
+ "keys": [
+  "gsm8k-train/835#1",
+  "math-train/1004#1",
+  "math-train/7174#2",
+  "gsm8k-train/6014#2"
+ ],
+ "reply": "<plan id=\"gsm8k-train/835#1\"></plan>\n<plan id=\"math-train/1004#1\"></plan>\n<plan id=\"math-train/7174#2\">\n<block units=\"5-9\">\n<path units=\"5-7\">\n<outline>An expression for the angle theta from its given tangent.</outline>\n</path>\n<path units=\"8-9\">\n<outline>An expression for the angle phi from its given sine.</outline>\n</path>\n<conclusion>Theta is arctan(1/7) and phi is arcsin(1/sqrt(10)).</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/6014#2\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The cost of the 3 sodas.</outline>\n</path>\n<path units=\"7-8\">\n<outline>The cost of the 2 soups and the sandwich in terms of x.</outline>\n</path>\n<conclusion>The 3 sodas cost 3, the 2 soups cost 6x and the sandwich costs 9x.</conclusion>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2501,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 862,
+  "output_tokens_details": {
+   "thinking_tokens": 493
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2501,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0374408
+}

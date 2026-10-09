@@ -1,0 +1,35 @@
+{
+ "batch": 175,
+ "keys": [
+  "gsm8k-train/6018#2",
+  "math-train/722#0",
+  "math-train/4636#2",
+  "gsm8k-train/2569#0"
+ ],
+ "reply": "<plan id=\"gsm8k-train/6018#2\"></plan>\n<plan id=\"math-train/722#0\">\n<block units=\"2-4\">\n<path units=\"2-2\">\n<outline>The factors of 45.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The factors of 30.</outline>\n</path>\n<conclusion>The factors of 45 are 1, 3, 5, 9, 15, 45, and the factors of 30 are 1, 2, 3, 5, 6, 10, 15, 30.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"math-train/4636#2\">\n<block units=\"2-5\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The magnitude of 6 - 4i.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The magnitude of t + 2i√3 expressed in terms of t.</outline>\n</path>\n<conclusion>|6 - 4i| = 2√13 and |t + 2i√3| = √(t^2 + 12).</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/2569#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1865,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 635,
+  "output_tokens_details": {
+   "thinking_tokens": 228
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1865,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0278128
+}

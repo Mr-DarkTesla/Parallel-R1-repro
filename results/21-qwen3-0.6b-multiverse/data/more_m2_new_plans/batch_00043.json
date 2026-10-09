@@ -1,0 +1,35 @@
+{
+ "batch": 43,
+ "keys": [
+  "math-train/1731#2",
+  "math-train/1624#3",
+  "gsm8k-train/7128#3",
+  "math-train/4274#0"
+ ],
+ "reply": "<plan id=\"math-train/1731#2\"></plan>\n<plan id=\"math-train/1624#3\">\n<block units=\"3-4\">\n<path units=\"3-3\">\n<outline>The value of x from the first case.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The value of x from the second case.</outline>\n</path>\n<conclusion>The first case gives x = 19/3 and the second case gives x = -11.</conclusion>\n</block>\n</plan>\n<plan id=\"gsm8k-train/7128#3\">\n<block units=\"5-7\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The total cost of the primer.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The total cost of the paint.</outline>\n</path>\n<conclusion>The primer costs $120.00 and the paint costs $125.00.</conclusion>\n</block>\n</plan>\n<plan id=\"math-train/4274#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2402,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 594,
+  "output_tokens_details": {
+   "thinking_tokens": 279
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2402,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0312888
+}

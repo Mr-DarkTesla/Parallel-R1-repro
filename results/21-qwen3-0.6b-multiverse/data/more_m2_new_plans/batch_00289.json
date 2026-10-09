@@ -1,0 +1,35 @@
+{
+ "batch": 289,
+ "keys": [
+  "math-train/6591#1",
+  "gsm8k-train/5341#3",
+  "math-train/6165#0",
+  "gsm8k-train/4709#0"
+ ],
+ "reply": "<plan id=\"math-train/6591#1\"></plan>\n<plan id=\"gsm8k-train/5341#3\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>Mark's height in inches.</outline>\n</path>\n<path units=\"3-3\">\n<outline>Mike's height in inches.</outline>\n</path>\n<conclusion>Mark is 63 inches tall and Mike is 73 inches tall.</conclusion>\n<tail units=\"4-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/6165#0\">\n<block units=\"1-7\">\n<lead units=\"1-1\"/>\n<path units=\"2-3\">\n<outline>The costs of the large and medium pizzas.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The total cost of the three drinks.</outline>\n</path>\n<conclusion>The large pizza costs $3p$ dollars, the medium pizza costs $2p$ dollars, and the drinks cost $3p$ dollars in total.</conclusion>\n<tail units=\"5-7\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4709#0\">\n<block units=\"1-6\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The area Elisa paints on Tuesday.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The area Elisa paints on Wednesday.</outline>\n</path>\n<conclusion>Elisa paints 60 square feet on Tuesday and 15 square feet on Wednesday.</conclusion>\n<tail units=\"4-6\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1692,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 910,
+  "output_tokens_details": {
+   "thinking_tokens": 360
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1692,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0319288
+}

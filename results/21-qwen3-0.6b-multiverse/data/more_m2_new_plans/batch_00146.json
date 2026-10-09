@@ -1,0 +1,35 @@
+{
+ "batch": 146,
+ "keys": [
+  "gsm8k-train/420#2",
+  "math-train/359#0",
+  "math-train/3904#1",
+  "math-train/530#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/420#2\"></plan>\n<plan id=\"math-train/359#0\"></plan>\n<plan id=\"math-train/3904#1\">\n<block units=\"11-14\">\n<lead units=\"11-11\"/>\n<path units=\"12-12\">\n<outline>The value of x that makes the coefficient of y equal to zero.</outline>\n</path>\n<path units=\"13-13\">\n<outline>The value of x that makes the constant term equal to zero.</outline>\n</path>\n<conclusion>The coefficient equation gives x = 3/2 and the constant-term equation also gives x = 3/2.</conclusion>\n<tail units=\"14-14\"/>\n</block>\n</plan>\n<plan id=\"math-train/530#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 3045,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 484,
+  "output_tokens_details": {
+   "thinking_tokens": 240
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 3045,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0342328
+}

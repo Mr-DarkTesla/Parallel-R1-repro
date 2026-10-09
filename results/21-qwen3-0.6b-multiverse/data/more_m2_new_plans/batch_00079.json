@@ -1,0 +1,35 @@
+{
+ "batch": 79,
+ "keys": [
+  "math-train/3220#0",
+  "math-train/5039#2",
+  "gsm8k-train/664#3",
+  "math-train/4781#0"
+ ],
+ "reply": "<plan id=\"math-train/3220#0\">\n<block units=\"1-4\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The length of the base from (0,0) to (0,5).</outline>\n</path>\n<path units=\"3-3\">\n<outline>The height from the base to the third vertex (7,12).</outline>\n</path>\n<conclusion>The base is 5 units and the height is 7 units.</conclusion>\n<tail units=\"4-4\"/>\n</block>\n</plan>\n<plan id=\"math-train/5039#2\"></plan>\n<plan id=\"gsm8k-train/664#3\"></plan>\n<plan id=\"math-train/4781#0\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1707,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 410,
+  "output_tokens_details": {
+   "thinking_tokens": 186
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1707,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0220488
+}

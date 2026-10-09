@@ -1,0 +1,35 @@
+{
+ "batch": 255,
+ "keys": [
+  "math-train/6249#0",
+  "gsm8k-train/3165#2",
+  "math-train/5706#3",
+  "gsm8k-train/957#0"
+ ],
+ "reply": "<plan id=\"math-train/6249#0\">\n<block units=\"3-8\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The amount Partner 1 receives.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The amount Partner 2 receives.</outline>\n</path>\n<path units=\"6-6\">\n<outline>The amount Partner 3 receives.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The amount Partner 4 receives.</outline>\n</path>\n<conclusion>Partner 1 receives 4,000, Partners 2 and 3 receive 6,000 each, and Partner 4 receives 10,000.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/3165#2\"></plan>\n<plan id=\"math-train/5706#3\"></plan>\n<plan id=\"gsm8k-train/957#0\">\n<block units=\"1-5\">\n<lead units=\"1-2\"/>\n<path units=\"3-3\">\n<outline>The number of coals burned per minute.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The total number of coals in the 3 bags.</outline>\n</path>\n<conclusion>The grill burns 0.75 coals per minute, and the 3 bags hold 180 coals in total.</conclusion>\n<tail units=\"5-5\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 1950,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 810,
+  "output_tokens_details": {
+   "thinking_tokens": 340
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 1950,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0319928
+}

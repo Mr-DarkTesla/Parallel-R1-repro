@@ -1,0 +1,35 @@
+{
+ "batch": 361,
+ "keys": [
+  "gsm8k-train/4213#0",
+  "math-train/6942#2",
+  "math-train/5885#2",
+  "gsm8k-train/1918#3"
+ ],
+ "reply": "<plan id=\"gsm8k-train/4213#0\">\n<block units=\"2-6\">\n<lead units=\"2-2\"/>\n<path units=\"3-3\">\n<outline>The area of the first square.</outline>\n</path>\n<path units=\"4-4\">\n<outline>The area of the second square.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The area of the third square.</outline>\n</path>\n<conclusion>The three squares have areas of 40, 70 and 25 square feet.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"math-train/6942#2\"></plan>\n<plan id=\"math-train/5885#2\">\n<block units=\"3-6\">\n<lead units=\"3-3\"/>\n<path units=\"4-4\">\n<outline>The simplified value of the first square root.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The simplified value of the second square root.</outline>\n</path>\n<conclusion>The first square root simplifies to 13/4 and the second to 5/4.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/1918#3\"></plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2624,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 721,
+  "output_tokens_details": {
+   "thinking_tokens": 336
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2624,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0356048
+}

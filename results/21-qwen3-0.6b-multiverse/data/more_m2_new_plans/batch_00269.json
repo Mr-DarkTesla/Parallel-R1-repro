@@ -1,0 +1,35 @@
+{
+ "batch": 269,
+ "keys": [
+  "math-train/358#0",
+  "gsm8k-train/4011#2",
+  "math-train/6821#3",
+  "math-train/6073#0"
+ ],
+ "reply": "<plan id=\"math-train/358#0\">\n<block units=\"2-6\">\n<path units=\"2-4\">\n<outline>The left side 27^8 written as a power of 3.</outline>\n</path>\n<path units=\"5-5\">\n<outline>The right side 9^q written as a power of 3.</outline>\n</path>\n<conclusion>The left side is 3^{24} and the right side is 3^{2q}.</conclusion>\n<tail units=\"6-6\"/>\n</block>\n</plan>\n<plan id=\"gsm8k-train/4011#2\">\n<block units=\"1-5\">\n<lead units=\"1-1\"/>\n<path units=\"2-2\">\n<outline>The area of the painting.</outline>\n</path>\n<path units=\"3-3\">\n<outline>The area of the wall.</outline>\n</path>\n<conclusion>The painting has an area of 8 sq ft and the wall has an area of 50 sq ft.</conclusion>\n<tail units=\"4-5\"/>\n</block>\n</plan>\n<plan id=\"math-train/6821#3\">\n<block units=\"7-9\">\n<path units=\"7-7\">\n<outline>The coefficients A, B, C and constant D of the first plane in standard form.</outline>\n</path>\n<path units=\"8-8\">\n<outline>The coefficients A, B, C and constant D of the second plane in standard form.</outline>\n</path>\n<conclusion>Both planes have A = 1, B = -3, C = 3, with D = -8 for the first and D = -1 for the second.</conclusion>\n<tail units=\"9-9\"/>\n</block>\n</plan>\n<plan id=\"math-train/6073#0\">\n<block units=\"5-8\">\n<lead units=\"5-5\"/>\n<path units=\"6-6\">\n<outline>The area of the region.</outline>\n</path>\n<path units=\"7-7\">\n<outline>The area of one tile.</outline>\n</path>\n<conclusion>The region has an area of 1440 square inches and one tile has an area of 12 square inches.</conclusion>\n<tail units=\"8-8\"/>\n</block>\n</plan>",
+ "is_error": false,
+ "error": null,
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 2150,
+  "cache_read_input_tokens": 924,
+  "output_tokens": 1261,
+  "output_tokens_details": {
+   "thinking_tokens": 599
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 2150,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0426128
+}
