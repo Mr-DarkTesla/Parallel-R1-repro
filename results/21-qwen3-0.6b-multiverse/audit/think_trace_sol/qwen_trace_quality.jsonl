@@ -1,0 +1,24 @@
+{"id": "gsm8k-train/2587", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/7415", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/2221", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/6932", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/2793", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/3663", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/2334", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/4824", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/2098", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/6417", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/4952", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "gsm8k-train/4765", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "math-train/5938", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "math-train/1853", "quality": "minor_issue", "issues": ["Unit 8 incorrectly says an exclusion/subtraction approach cannot be used because all triplets must start; subtracting lineups missing at least one triplet is valid.", "Unit 9 says being triplets itself puts them in the starting lineup; inclusion follows from the explicit condition, not being triplets. The main C(11,3)=165 derivation is correct."], "usable_for_sft": false}
+{"id": "math-train/3269", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "math-train/5768", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "math-train/840", "quality": "minor_issue", "issues": ["Units 33-34 give 5/4.449 approximately 1.128, but it is approximately 1.12385; the approximately 0.005 discrepancy from 1.1225 is incorrectly attributed to rounding sqrt(6) to 2.449.", "The exact conjugate derivation and A=5, B=6, C=-10, D=2, sum=3 are correct. Many repeated sign checks add substantial redundancy."], "usable_for_sft": false}
+{"id": "math-train/2263", "quality": "wrong_reasoning", "issues": ["Units 12-14, 25-27, 38-44 repeatedly count delivery to all original houses as exactly two correct packages, although it has four correct packages; the identity permutation is reused as if six distinct favorable permutations.", "Unit 26 also calls swapped destinations original houses/correct, contradicting package-house matching.", "A correct C(4,2)*D(2)=6 argument with D(2)=1 swap appears in units 17-20 and 50-51 and in the final response, but subsequent contradictory examples persist. Correct final 1/4 does not repair the reasoning trace."], "usable_for_sft": false}
+{"id": "math-train/2023", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "math-train/853", "quality": "minor_issue", "issues": ["Unit 11 falsely claims a quadratic with positive leading coefficient is always increasing. Here f(x)=(x-1)^2-1 decreases for x<1 and increases for x>1.", "The substitution (-1)^2-2(-1)=3 is correct; the false monotonicity statement is extraneous and remains uncorrected."], "usable_for_sft": false}
+{"id": "math-train/6378", "quality": "good", "issues": [], "usable_for_sft": true}
+{"id": "math-train/2484", "quality": "wrong_reasoning", "issues": ["Unit 23 calls 789789 a seven-digit palindrome; it has six digits and is not a palindrome. Choices 7,8,9,7 should produce 7897987.", "Unit 27 falsely says three-digit palindromes require D1=D2=D3, then gives conflicting counts 3 and 27; correct count is 3^2=9. It also treats 778 as a palindrome.", "Unit 27 falsely says all five digits must equal yet counts 3^5=243; correct five-digit palindrome count is 3^3=27.", "The main first-four-free-digits derivation 3^4=81 is correct, but the purported small-case verification contradicts palindrome constraints. The final response also says all digits determined by first three despite the independent middle digit."], "usable_for_sft": false}
+{"id": "math-train/6286", "quality": "minor_issue", "issues": ["Units 3-4 and 10-11 repeatedly confuse allowing both letter cases with having 26 character choices. If case distinguished characters were allowed there would be 52 choices, not 26; if case ignored, that must be stated.", "Claims most real license plates allow both uppercase and lowercase are unsupported and irrelevant. The conventional 26^2*10^3=676000 solution is present and correct, but the case discussion is internally inconsistent."], "usable_for_sft": false}
+{"id": "math-train/1214", "quality": "good", "issues": [], "usable_for_sft": true}

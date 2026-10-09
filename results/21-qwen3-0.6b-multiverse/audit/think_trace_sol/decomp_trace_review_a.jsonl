@@ -1,0 +1,20 @@
+{"id": "math-train/0", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/317", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/324", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/331", "quality": "minor_issue", "usable_source": false, "issues": ["До </think> указаны A=2 и B=1: это весь запрошенный ответ (A,B), хотя итоговая строка вынесена за границу. Математика верна; подстановка x=7 и x=-6 допустима в полученном полиномиальном тождестве. Два определения коэффициентов независимы."], "semantic_answer_correct": true}
+{"id": "math-train/352", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/438", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/457", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/6805", "quality": "minor_issue", "usable_source": false, "issues": ["До </think> словесно раскрыт полный итог: числитель 2 над общим знаменателем cos(x), то есть 2/cos(x). Второй заявленный компонент только повторяет исходную дробь; содержательного независимого расчёта в нём нет. Преобразование и область определения верны; 2/cos(x) эквивалентно gold 2 sec(x)."], "semantic_answer_correct": true}
+{"id": "math-train/788", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/999", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1475", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1517", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1648", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1728", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1766", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1776", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1793", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1829", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1840", "quality": "good", "usable_source": true, "issues": [], "semantic_answer_correct": true}
+{"id": "math-train/1867", "quality": "minor_issue", "usable_source": true, "issues": ["В условии дана только вероятность дождя за отдельный день, независимость дней не указана. Решение честно вводит предполагаемую независимость; при ней binomial(30,0.1), P(X<=2)=0.9^30+30*0.1*0.9^29+435*0.01*0.9^28=0.411351239559..., округление 0.411 верно. Без независимости ответ не определён: при полностью совпадающих событиях дождя P(X<=2)=0.9. Gold корректен только при стандартном дополнительном предположении, не является доказанно арифметически ошибочным."], "semantic_answer_correct": true}
