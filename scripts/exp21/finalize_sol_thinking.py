@@ -1,4 +1,4 @@
-"""Combine fully reviewed Sol thinking blocks and choose 187 primary rows for matched SFT.
+"""Combine fully reviewed Sol thinking blocks and match M1/M2 source and answer types.
 
 Usage: python -B scripts/exp21/finalize_sol_thinking.py
 No model, network or GPU calls.
@@ -29,7 +29,7 @@ def write(path, rows):
     path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows))
 
 
-def finalized_batch(prefix, reviews, gold):
+def finalized_batch(prefix, reviews, gold, additional_reviews=()):
     assembled = read(AUDIT / f"{prefix}_assembled/assembled.jsonl")
     candidates = [row for row in assembled if row["status"] == "ok"]
     by_id = {row["id"]: row for row in candidates}
@@ -38,8 +38,12 @@ def finalized_batch(prefix, reviews, gold):
     verdict = {row["id"]: row for row in judgments}
     require(len(verdict) == len(judgments), f"duplicate review ID in {prefix}")
     require(set(verdict) == set(by_id), f"incomplete review coverage in {prefix}")
-    rejected = [row["id"] for row in candidates if not all(verdict[row["id"]][key]
-                                                          for key in ("answer_correct", "reasoning_correct", "useful_block"))]
+    extra = [row for name in additional_reviews for row in read(AUDIT / name)]
+    require(len({row["id"] for row in extra}) == len(extra), f"duplicate additional review ID in {prefix}")
+    require({row["id"] for row in extra} <= set(by_id), f"unknown additional review ID in {prefix}")
+    good = lambda row: all(row[key] for key in ("answer_correct", "reasoning_correct", "useful_block"))
+    vetoed = {row["id"] for row in extra if not good(row)}
+    rejected = [row["id"] for row in candidates if not good(verdict[row["id"]]) or row["id"] in vetoed]
     rows = []
     for row in candidates:
         if row["id"] in rejected:
@@ -51,6 +55,7 @@ def finalized_batch(prefix, reviews, gold):
                      "provenance": "sol-6.1-public-solution+independent-sol-6.1-plan-only; full-review"})
     write(AUDIT / f"{prefix}_final.jsonl", rows)
     return rows, {"assembled_ok": len(candidates), "fully_reviewed": len(judgments),
+                  "additional_reviewed": len(extra),
                   "rejected_ids": rejected, "accepted": len(rows)}
 
 
@@ -64,7 +69,10 @@ def main():
                                                          "next120_personal_review20.jsonl",
                                                          "next120_review_remaining_a_verdict.jsonl",
                                                          "next120_review_remaining_b_verdict.jsonl"], gold)
-    all_rows = first + second + third
+    fourth, fourth_audit = finalized_batch("noninteger60", ["noninteger60_review_a.jsonl",
+                                                              "noninteger60_review_b.jsonl"], gold,
+                                            ["noninteger60_personal20_review.jsonl"])
+    all_rows = first + second + third + fourth
     require(len({row["id"] for row in all_rows}) == len(all_rows), "duplicate ID across batches")
     require(len(all_rows) >= TARGET, "not enough reviewed rows")
     write(AUDIT / "accepted_all_reviewed.jsonl", all_rows)
@@ -73,20 +81,26 @@ def main():
                   for row in read(BASE / f"data/{name}.jsonl")}
     replay_overlap = sorted({row["id"] for row in all_rows if row["id"] in replay_ids})
     eligible = [row for row in all_rows if row["id"] not in replay_ids]
-    noninteger = [row for row in eligible if row["answer_type"] != "integer"]
-    integer = [row for row in eligible if row["answer_type"] == "integer"]
-    require(len(noninteger) <= TARGET, "too many noninteger rows for target size")
+    arms = [read(BASE / f"data/pair_final_{method}.jsonl") for method in ("m1", "m2")]
+    targets = [collections.Counter((row["source"], row["answer_type"]) for row in arm) for arm in arms]
+    require(targets[0] == targets[1] and sum(targets[0].values()) == TARGET,
+            "M1/M2 source and answer-type distributions differ")
     rng = random.Random(SEED)
-    selected_ids = {row["id"] for row in noninteger}
-    selected_ids.update(row["id"] for row in rng.sample(integer, TARGET - len(noninteger)))
+    selected_ids = set()
+    for stratum, target in sorted(targets[0].items()):
+        options = [row["id"] for row in eligible if (row["source"], row["answer_type"]) == stratum]
+        require(len(options) >= target, f"not enough fully reviewed rows in {stratum}: {len(options)} < {target}")
+        selected_ids.update(rng.sample(options, target))
     selected = [row for row in all_rows if row["id"] in selected_ids]
     require(len(selected) == TARGET, "incorrect selection size")
     write(AUDIT / "selected187.jsonl", selected)
 
     summary = {"old_pilot": len(first), "next80": second_audit, "next120": third_audit,
+               "noninteger60": fourth_audit,
                "all_fully_reviewed": len(all_rows), "selected_for_matched_sft": len(selected),
                "selection_seed": SEED,
-               "selection_rule": "exclude replay-overlap IDs, retain all fraction/expression rows, seeded sample of integer rows; preserve source order",
+               "selection_rule": "exclude replay-overlap IDs, match M1 and M2 by source and answer type with seeded samples; preserve source order",
+               "target_strata": {f"{source}:{kind}": count for (source, kind), count in sorted(targets[0].items())},
                "excluded_due_to_replay_overlap": replay_overlap,
                "all_answer_types": dict(collections.Counter(row["answer_type"] for row in all_rows)),
                "selected_answer_types": dict(collections.Counter(row["answer_type"] for row in selected)),

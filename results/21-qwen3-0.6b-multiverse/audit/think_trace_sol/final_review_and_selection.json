@@ -3,6 +3,7 @@
   "next80": {
     "assembled_ok": 69,
     "fully_reviewed": 69,
+    "additional_reviewed": 0,
     "rejected_ids": [
       "gsm8k-train/1028"
     ],
@@ -11,47 +12,95 @@
   "next120": {
     "assembled_ok": 106,
     "fully_reviewed": 106,
+    "additional_reviewed": 0,
     "rejected_ids": [
       "math-train/6170",
       "math-train/3569"
     ],
     "accepted": 104
   },
-  "all_fully_reviewed": 201,
+  "noninteger60": {
+    "assembled_ok": 33,
+    "fully_reviewed": 33,
+    "additional_reviewed": 20,
+    "rejected_ids": [
+      "math-train/43",
+      "math-train/2054"
+    ],
+    "accepted": 31
+  },
+  "all_fully_reviewed": 232,
   "selected_for_matched_sft": 187,
   "selection_seed": 21,
-  "selection_rule": "exclude replay-overlap IDs, retain all fraction/expression rows, seeded sample of integer rows; preserve source order",
+  "selection_rule": "exclude replay-overlap IDs, match M1 and M2 by source and answer type with seeded samples; preserve source order",
+  "target_strata": {
+    "gsm8k:integer": 55,
+    "math:expression": 38,
+    "math:fraction": 63,
+    "math:integer": 31
+  },
   "excluded_due_to_replay_overlap": [
     "math-train/999"
   ],
   "all_answer_types": {
     "integer": 121,
-    "fraction": 51,
-    "expression": 29
+    "fraction": 65,
+    "expression": 46
   },
   "selected_answer_types": {
-    "integer": 107,
-    "fraction": 51,
-    "expression": 29
+    "integer": 86,
+    "fraction": 63,
+    "expression": 38
   },
   "selected_sources": {
-    "math": 115,
-    "gsm8k": 72
+    "math": 132,
+    "gsm8k": 55
   },
   "not_selected_ids": [
     "math-train/999",
-    "gsm8k-train/27",
-    "gsm8k-train/660",
-    "gsm8k-train/961",
-    "math-train/6840",
-    "gsm8k-train/1408",
-    "gsm8k-train/1677",
+    "math-train/1517",
+    "gsm8k-train/199",
+    "math-train/253",
+    "math-train/1362",
+    "math-train/2406",
+    "math-train/2450",
+    "gsm8k-train/604",
+    "gsm8k-train/616",
+    "gsm8k-train/634",
+    "gsm8k-train/682",
+    "gsm8k-train/781",
+    "gsm8k-train/840",
+    "gsm8k-train/857",
+    "gsm8k-train/873",
+    "gsm8k-train/573",
+    "gsm8k-train/1130",
+    "gsm8k-train/1182",
+    "gsm8k-train/1222",
+    "math-train/2851",
+    "math-train/2884",
+    "math-train/1881",
+    "math-train/3600",
+    "gsm8k-train/1339",
+    "gsm8k-train/1358",
+    "gsm8k-train/1375",
+    "gsm8k-train/1404",
+    "gsm8k-train/1456",
+    "gsm8k-train/1548",
     "gsm8k-train/1678",
-    "gsm8k-train/1922",
-    "gsm8k-train/1938",
-    "gsm8k-train/2188",
+    "gsm8k-train/1690",
+    "gsm8k-train/1703",
+    "gsm8k-train/1942",
+    "gsm8k-train/1988",
+    "gsm8k-train/2114",
+    "gsm8k-train/2145",
     "gsm8k-train/2212",
-    "gsm8k-train/2232",
-    "gsm8k-train/2249"
+    "gsm8k-train/2249",
+    "gsm8k-train/2267",
+    "math-train/954",
+    "math-train/422",
+    "math-train/799",
+    "math-train/1400",
+    "math-train/1708",
+    "math-train/2486"
   ]
 }

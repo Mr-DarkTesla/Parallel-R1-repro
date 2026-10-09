@@ -11,6 +11,7 @@ import pandas as pd
 from transformers import AutoTokenizer
 
 from mv_format import ANY_TAG, strip_tags
+from build_sft import row as sft_row
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -35,7 +36,9 @@ def load(prefix, split):
 def main(tokenizer_path):
     selected = read_jsonl(AUDIT / "selected187.jsonl")
     primary_ids = {r["id"] for r in selected}
+    primary = {r["id"]: r for r in selected}
     replay = {name: read_jsonl(DATA / f"{name}.jsonl") for name in ("replay_nt", "replay_th")}
+    replay_by_id = {name: {r["id"]: r for r in rows} for name, rows in replay.items()}
     replay_ids = {r["id"] for rows in replay.values() for r in rows}
     require(len(selected) == len(primary_ids) == 187, "187 unique primary rows required")
     require(not primary_ids & replay_ids, "primary and replay question overlap")
@@ -43,10 +46,10 @@ def main(tokenizer_path):
 
     tagged = {split: load("sft_sol_th_187", split) for split in ("train", "val")}
     control = {split: load("sft_control_sol_th_187", split) for split in ("train", "val")}
-    require({split: len(rows) for split, rows in tagged.items()} == {"train": 1111, "val": 50},
+    require(sum(len(rows) for rows in tagged.values()) == 1161 and 48 <= len(tagged["val"]) <= 50,
             "tagged split sizes differ")
-    require({split: len(rows) for split, rows in control.items()} == {"train": 1111, "val": 50},
-            "control split sizes differ")
+    require({split: len(rows) for split, rows in tagged.items()} ==
+            {split: len(rows) for split, rows in control.items()}, "control split sizes differ")
     for arm in (tagged, control):
         require(not ({r["id"] for r in arm["train"]} & {r["id"] for r in arm["val"]}),
                 "same ID in train and val")
@@ -70,11 +73,18 @@ def main(tokenizer_path):
                 require(ci["answer"] == strip_tags(ti["answer"]).strip(), f"control text differs: {t['id']}")
                 require(not ANY_TAG.search(ci["answer"]), f"tag in control: {t['id']}")
                 require(ti["enable_thinking"], f"thinking disabled for primary: {t['id']}")
+                reference = primary[t["id"]]
+                expected_t, expected_c = sft_row("parallel_th", reference), sft_row("control_th", reference)
             else:
                 require(t["id"] in replay_ids, f"unknown row: {t['id']}")
                 require(ti["kind"] == ci["kind"] in replay, f"replay kind differs: {t['id']}")
                 require(ti["answer"] == ci["answer"], f"replay text differs: {t['id']}")
                 require(ti["enable_thinking"] == (ti["kind"] == "replay_th"), f"replay mode differs: {t['id']}")
+                reference = replay_by_id[ti["kind"]][t["id"]]
+                expected_t = expected_c = sft_row(ti["kind"], reference)
+            for actual, expected in ((t, expected_t), (c, expected_c)):
+                require(all(actual[key] == expected[key] for key in ("id", "source", "data_source", "extra_info")),
+                        f"parquet row differs from source JSONL: {t['id']}")
 
     all_tagged = tagged["train"] + tagged["val"]
     all_control = control["train"] + control["val"]
@@ -106,6 +116,7 @@ def main(tokenizer_path):
                "replay_nt": len(replay["replay_nt"]), "replay_th": len(replay["replay_th"]),
                "primary_replay_overlap": 0, "matched_order_prompt_split": True,
                "control_exact_tag_stripping": True, "thinking_mode_matched": True,
+               "exact_source_rows": True,
                "kinds_in_tagged": counts, "max_tokens": max_tokens,
                "tokenizer_path": str(tokenizer_path),
                "tagged_prefix": str(DATA / "sft_sol_th_187"),
