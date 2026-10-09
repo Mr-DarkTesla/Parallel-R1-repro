@@ -356,6 +356,9 @@ def main():
     # vLLM imports the scheduler and worker classes by name in its engine-core and worker processes.
     os.environ['PYTHONPATH'] = os.pathsep.join(filter(None, [str(ROOT / 'verl'), os.environ.get('PYTHONPATH')]))
     os.environ.setdefault('VLLM_USE_V1', '1')
+    # A forked engine core fails here with "Cannot re-initialize CUDA in forked subprocess" (H100 VM,
+    # 2026-10-09); verl's servers run in Ray actors, where vLLM spawns it anyway.
+    os.environ.setdefault('VLLM_WORKER_MULTIPROC_METHOD', 'spawn')
     sys.exit(0 if asyncio.run(run(args)) else 1)
 
 
