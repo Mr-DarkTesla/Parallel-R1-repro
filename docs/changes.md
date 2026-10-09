@@ -143,3 +143,14 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     sample has a saved seed, exclusions, quotas and IDs. Nine failed audit calls have no recorded price, so the known
     proxy cost is a lower bound. The IFEval completion jobs use the benchmark's frozen-suite location after correcting
     an invalid `suite=ifeval` invocation in the first control queue script.
+20. `compare_final.py` also emits paired confidence intervals for the exact SFT-prompt Multiverse sensitivity runs.
+    This leaves the earlier common dev prompt and its paired comparisons intact. `collect_eval.py` writes LF CSV lines,
+    so the consolidated metrics table remains reviewable in Git. The experiment report distinguishes full-response
+    grammar from valid attempted blocks, branch decoding from autonomous sequential generation, and `accuracy_robust`
+    per response from pass@k on repeated frozen tasks. The previously unopened APO, ARC, MMLU-Pro and LIMO sets are
+    evaluated only for the dev-selected M1 model; IFEval is a separate selection metric for all variants.
+21. M1 completed the held-out APO, ARC, MMLU-Pro and LIMO evaluations in both thinking modes. The report includes
+    per-answer robust accuracy, output tokens, sequential forwards and truncation for every source, with the actual
+    repeated-sample counts. Both frozen jobs and efficiency postprocessing exited successfully. The corrected source
+    summaries add 14 rows to `metrics.csv` (142 total). After transferring the analysis archive, pod B was scaled to
+    zero alongside A; its 200Gi PVC remains Bound.
