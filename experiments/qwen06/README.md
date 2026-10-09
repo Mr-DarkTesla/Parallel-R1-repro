@@ -77,22 +77,23 @@ REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"    # v0 | v1_low
 ALLOW_PARALLEL=false REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"   # последовательный baseline
 ```
 
-`prepare_think.py` скачивает данные с Hugging Face по разбиению из дебатов о thinking-SFT (вариант A, 9 октября):
+`prepare_think.py` раскладывает данные по ролям, которые заморозила сторона SFT (dataset-plan.md и manifest.json у Codex, seed 20261009). С `--roles DIR` он читает готовые `<role>.jsonl` (ответы можно положить в `<role>.gold.jsonl`), а `--manifest` сверяет их sha256. Без `--roles` те же роли собираются из Hugging Face как запасной вариант: там отсеиваются только точные дубли и задачи с `[asy]`, без фильтра почти-дублей по триграммам, поэтому id отличаются от замороженных.
 
-| Файл | Что внутри | Зачем |
+| Роль | Файл | Зачем |
 |---|---|---|
-| `think_train` | MATH train: algebra, prealgebra, number theory, counting & probability, уровни 2–4 | RL |
-| `think_val` | MATH-500 | валидация во время RL |
-| `think_math_test` | MATH test без задач MATH-500, те же разделы и уровни, что в train | отдельный TEST |
-| `think_gsm8k_test` | GSM8K test | проверка, что модель не разучилась |
-| `think_calib` | 512 вопросов из `think_train` | калибровка V2 |
+| rl_train, 1024 | `think_train` | RL |
+| rl_calibration, 128 | `think_calib` | проверка сложности и шкалы V2; в RL-rollout не идёт |
+| dev, 256 | `think_val` | валидация во время RL, выбор чекпоинта и настроек |
+| math_extra_test, 512 | `think_math_test` | только финальное сравнение |
+| math500_test | `think_math500`, пилот `think_math500_pilot` (128) | только отчёт, ничего по нему не выбирают |
+| gsm_retention_test | `think_gsm8k_test`, пилот `think_gsm8k_test_pilot` (128) | проверка, что модель не разучилась |
 
-GSM8K train и разделы MATH geometry, intermediate algebra и precalculus уходят в SFT, в RL их нет. Шаблон по умолчанию — `{problem}` и просьба дать ответ в `\boxed{}`; он должен совпадать с промптом SFT. Ответ сравнивается по нормализации DAPO, а если строки не совпали, то через math-verify (`0.75` = `\frac{3}{4}`). TEST и GSM8K считаются отдельным прогоном без обучения:
+rl_train, rl_calibration и dev — непересекающиеся части очищенного пула MATH train (algebra, prealgebra, number theory, counting & probability, уровни 2–4); резерв пула в обучение не идёт. Скрипт падает, если роли обучения пересекаются с другими. GSM8K train и разделы MATH geometry, intermediate algebra и precalculus уходят в SFT, в RL их нет. Шаблон по умолчанию — `{problem}` и просьба дать ответ в `\boxed{}`; он должен совпадать с промптом SFT. Ответ сравнивается по нормализации DAPO, а если строки не совпали, то через math-verify (`0.75` = `\frac{3}{4}`). TEST, MATH-500 и GSM8K считаются отдельным прогоном без обучения:
 
 ```bash
 RUN_NAME=eval-step300 REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$CHECKPOINT" \
   trainer.val_only=true trainer.val_before_train=true \
-  data.val_files="['$HOME/parallel-r1/data/think_math_test.parquet','$HOME/parallel-r1/data/think_gsm8k_test.parquet']"
+  data.val_files="['$HOME/parallel-r1/data/think_math_test.parquet','$HOME/parallel-r1/data/think_math500.parquet','$HOME/parallel-r1/data/think_gsm8k_test.parquet']"
 ```
 
 Отличия режима от S1/S2:
@@ -128,7 +129,7 @@ RUN_NAME=eval-step300 REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$C
 
 D — критическая глубина: сэмплированные токены основной цепочки плюс самая длинная ветка и summary каждого блока. T — все сэмплированные токены. Вставленные рантаймом теги не входят ни в D, ни в T. В телеметрии это `parallel/critical_depth_mean` и `parallel/sampled_tokens_mean`, в наградах — `critical_depth`, `sampled_tokens`, `cost`.
 
-Масштабы s_D и s_T для V2 замораживаются один раз по верным ответам SFT-чекпоинта на калибровочных train-вопросах. Берётся медиана по источнику данных, а для задачи с ≥3 верными ответами — её собственная медиана. RL-сэмплы файл не меняют.
+Масштабы s_D и s_T для V2 замораживаются один раз по верным ответам SFT-чекпоинта на `think_calib` (rl_calibration). Берётся медиана по источнику данных; у rl_train, rl_calibration и dev он общий (`math`), поэтому шкала с калибровки применяется к обучению. Собственные медианы задач из калибровки к rl_train не относятся: роли не пересекаются. RL-сэмплы файл не меняют.
 
 ```bash
 RUN_NAME=calib-sft REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL" \

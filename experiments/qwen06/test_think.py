@@ -54,23 +54,52 @@ def test_math_answers_are_compared_symbolically(pred, truth):
     assert score('<think>a</think>\\boxed{0.7}', truth=truth)['acc'] == 0.0
 
 
-def test_prepare_think_takes_the_agreed_math_slice():
+def test_prepare_think_fallback_builds_disjoint_roles():
     prepare = load_module('prepare_think')
     assert prepare.last_boxed('so \\boxed{\\frac{1}{2}} and \\boxed{\\{1, 2\\}}.') == '\\{1, 2\\}'
-    items = {('algebra', 'train'): [dict(problem='a  b', level='Level 2', solution='\\boxed{1}'),
-                                    dict(problem='c', level='Level 5', solution='\\boxed{2}'),
-                                    dict(problem='d', level='Level ?', solution='\\boxed{3}'),
-                                    dict(problem='e', level='Level 4', solution='no box')],
-             ('algebra', 'test'): [dict(problem='a b', level='Level 3', solution='\\boxed{4}'),
-                                   dict(problem='f', level='Level 3', solution='\\boxed{5}')]}
-    load = lambda name, subject, split: items[subject, split]
-    rows, skipped = prepare.math_rows(load, 'train', 'math_train', ['algebra'], {2, 3, 4}, '{problem}!')
-    assert [r['reward_model']['ground_truth'] for r in rows] == ['1'] and skipped == {'no_boxed_answer': 1}
-    assert rows[0]['extra_info'] == dict(index='math_train/algebra/0', reward_method='think_v0', subject='algebra', level=2)
-    rows, skipped = prepare.math_rows(load, 'test', 'math_test', ['algebra'], {3}, '{problem}', {prepare.key('a\nb')})
-    assert [r['prompt'][0]['content'] for r in rows] == ['f'] and skipped == {'math500': 1}
-    assert set(prepare.RL_SUBJECTS) == {'algebra', 'prealgebra', 'number_theory', 'counting_and_probability'}
+    train = [dict(problem=f'p{i}', level=f'Level {2 + i % 3}', solution=f'\\boxed{{{i}}}') for i in range(1500)]
+    train += [dict(problem='p0 ', level='Level 2', solution='\\boxed{0}'),  # duplicate
+              dict(problem='late', level='Level 5', solution='\\boxed{1}'),
+              dict(problem='[asy] draw', level='Level 3', solution='\\boxed{1}'),
+              dict(problem='no box', level='Level 3', solution='1')]
+    test = [dict(problem=f't{i}', level='Level 3', solution='\\boxed{1}') for i in range(600)]
+    tables = {('algebra', 'train'): train, ('algebra', 'test'): test}
+
+    def load(name, config=None, split=None):
+        if name == 'HuggingFaceH4/MATH-500':
+            return [dict(unique_id='test/algebra/1.json', problem='t0', answer='1', subject='Algebra', level=3)]
+        if name == 'openai/gsm8k':
+            return [dict(question='q', answer='... #### 1,234')]
+        return tables.get((config, split), [])
+    roles, info = prepare.fallback_roles(load, {2, 3, 4}, prepare.SEED)
+    assert [len(roles[r]) for r in ('rl_train', 'rl_calibration', 'dev', 'math_extra_test')] == [1024, 128, 256, 512]
+    assert info['train'] == {'duplicate_or_math500': 1, 'no_boxed_answer_or_asy': 2} and info['reserve'] == 1500 - 1408
+    assert 't0' not in {item['problem'] for item in roles['math_extra_test']}  # MATH-500 stays out of TEST
+    assert roles['gsm_retention_test'][0]['answer'] == '1234'
+    ids = [{item['id'] for item in roles[r]} for r in ('rl_train', 'rl_calibration', 'dev')]
+    assert not (ids[0] & ids[1] or ids[0] & ids[2] or ids[1] & ids[2])
+    assert roles == prepare.fallback_roles(load, {2, 3, 4}, prepare.SEED)[0]  # frozen by the seed
     assert not set(prepare.RL_SUBJECTS) & set(prepare.SFT_SUBJECTS)
+
+
+def test_prepare_think_reads_frozen_roles(tmp_path):
+    prepare = load_module('prepare_think')
+    for role in prepare.ROLES:
+        rows = [dict(id=f'{role}-{i}', problem=f'{role} problem {i}', subject='Number Theory', level='Level 3')
+                for i in range(3)]
+        (tmp_path / f'{role}.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in rows))
+        (tmp_path / f'{role}.gold.jsonl').write_text(''.join(json.dumps(dict(id=r['id'], gold='7')) + '\n' for r in rows))
+    roles, info = prepare.frozen_roles(tmp_path, None)
+    assert roles['dev'][0] == dict(id='dev-0', problem='dev problem 0', answer='7', level=3, subject='number_theory')
+    manifest = tmp_path / 'manifest.json'
+    manifest.write_text(json.dumps({role: dict(sha256=digest) for role, digest in info['sha256'].items()}))
+    prepare.frozen_roles(tmp_path, manifest)
+    manifest.write_text('{}')
+    with pytest.raises(ValueError):
+        prepare.frozen_roles(tmp_path, manifest)
+    (tmp_path / 'dev.gold.jsonl').unlink()
+    with pytest.raises(ValueError):  # no answer anywhere
+        prepare.frozen_roles(tmp_path, None)
 
 
 def test_v1_costs_scale_with_depth_and_tokens_for_correct_answers_only():
