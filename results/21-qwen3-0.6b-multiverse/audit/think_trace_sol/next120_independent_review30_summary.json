@@ -1,0 +1,24 @@
+{
+  "source": "next120_review30.jsonl",
+  "review_file": "next120_independent_review30.jsonl",
+  "method": "Вручную прочитаны question, gold_answer и response всех 30 строк; проверены расчеты, финальный ответ, независимость Path, соответствие Goal/Conclusion и связность текста. Автоматический статус не использован.",
+  "counts": {
+    "total": 30,
+    "answer_correct": 30,
+    "answer_incorrect": 0,
+    "reasoning_correct": 30,
+    "reasoning_incorrect": 0,
+    "useful_block": 29,
+    "not_useful_block": 1
+  },
+  "problem_ids": {
+    "answer_incorrect": [],
+    "reasoning_incorrect": [],
+    "not_useful_block": [
+      "math-train/3569"
+    ]
+  },
+  "uncertainties": [
+    "math-train/3569: значение 32 легко вывести из условия, поэтому дефект касается явной самостоятельности ветви, а не математической истинности решения."
+  ]
+}

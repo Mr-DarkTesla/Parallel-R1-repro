@@ -5,6 +5,7 @@ Row kinds:
   parallel  Multiverse prompt (make_mv_prompts.mv_prompt), non-thinking template, response = a checked M1/M2 example
   parallel_th  same prompt and checked M1 solution placed inside <think>; final answer follows </think>
   control   the same examples with tags removed (mv_format.strip_tags), the same Multiverse prompt, non-thinking
+  control_th  the same internal-thinking examples with tags removed, thinking enabled
   replay_nt plain prompt, non-thinking, response = Qwen3-0.6B's own correct non-thinking answer (verbatim)
   replay_th plain prompt, thinking, response = Qwen3-0.6B's own correct thinking answer (<think>...</think> + answer, verbatim)
 Usage: python build_sft.py <out_prefix> --rows kind:path[:n] ... [--val 48] [--seed 0]
@@ -38,6 +39,9 @@ def row(kind, r):
         assert response.startswith("<think>") and response.count("</think>") == 1, r["id"]
     elif kind == "control":
         prompt, thinking, response = mv_prompt(plain), False, strip_tags(response).strip()
+    elif kind == "control_th":
+        assert response.startswith("<think>") and response.count("</think>") == 1, r["id"]
+        prompt, thinking, response = mv_prompt(plain), True, strip_tags(response).strip()
     elif kind == "replay_nt":
         prompt, thinking = plain, False
     elif kind == "replay_th":

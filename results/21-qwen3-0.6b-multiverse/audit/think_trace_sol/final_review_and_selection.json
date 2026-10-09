@@ -1,0 +1,57 @@
+{
+  "old_pilot": 29,
+  "next80": {
+    "assembled_ok": 69,
+    "fully_reviewed": 69,
+    "rejected_ids": [
+      "gsm8k-train/1028"
+    ],
+    "accepted": 68
+  },
+  "next120": {
+    "assembled_ok": 106,
+    "fully_reviewed": 106,
+    "rejected_ids": [
+      "math-train/6170",
+      "math-train/3569"
+    ],
+    "accepted": 104
+  },
+  "all_fully_reviewed": 201,
+  "selected_for_matched_sft": 187,
+  "selection_seed": 21,
+  "selection_rule": "exclude replay-overlap IDs, retain all fraction/expression rows, seeded sample of integer rows; preserve source order",
+  "excluded_due_to_replay_overlap": [
+    "math-train/999"
+  ],
+  "all_answer_types": {
+    "integer": 121,
+    "fraction": 51,
+    "expression": 29
+  },
+  "selected_answer_types": {
+    "integer": 107,
+    "fraction": 51,
+    "expression": 29
+  },
+  "selected_sources": {
+    "math": 115,
+    "gsm8k": 72
+  },
+  "not_selected_ids": [
+    "math-train/999",
+    "gsm8k-train/27",
+    "gsm8k-train/660",
+    "gsm8k-train/961",
+    "math-train/6840",
+    "gsm8k-train/1408",
+    "gsm8k-train/1677",
+    "gsm8k-train/1678",
+    "gsm8k-train/1922",
+    "gsm8k-train/1938",
+    "gsm8k-train/2188",
+    "gsm8k-train/2212",
+    "gsm8k-train/2232",
+    "gsm8k-train/2249"
+  ]
+}

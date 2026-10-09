@@ -1,0 +1,33 @@
+{
+  "tagged_train": 1111,
+  "tagged_val": 50,
+  "control_train": 1111,
+  "control_val": 50,
+  "unique_primary": 187,
+  "primary_repeats": 3,
+  "replay_nt": 300,
+  "replay_th": 300,
+  "primary_replay_overlap": 0,
+  "matched_order_prompt_split": true,
+  "control_exact_tag_stripping": true,
+  "thinking_mode_matched": true,
+  "kinds_in_tagged": {
+    "train": {
+      "parallel_th": 537,
+      "replay_nt": 287,
+      "replay_th": 287
+    },
+    "val": {
+      "parallel_th": 24,
+      "replay_nt": 13,
+      "replay_th": 13
+    }
+  },
+  "max_tokens": {
+    "tagged": 3838,
+    "control": 3838
+  },
+  "tokenizer_path": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/exp21_06b/data/q06_mv_tokenizer",
+  "tagged_prefix": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/data/sft_sol_th_187",
+  "control_prefix": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/data/sft_control_sol_th_187"
+}
