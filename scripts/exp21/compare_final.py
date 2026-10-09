@@ -1,4 +1,4 @@
-"""Paired confidence intervals for the final exp21 dev and IFEval comparisons.
+"""Paired confidence intervals for the final exp21 dev, IFEval and matched-prompt comparisons.
 
 Usage: python scripts/exp21/compare_final.py EVAL_EFF_DIR OUT_DIR
 All referenced runs must have finished. Frozen runs are deliberately excluded.
@@ -24,6 +24,12 @@ def main():
     for base, candidate in (("control-m1", "m1"), ("p06", "m2a"),
                             ("m1", "m2a"), ("control-m1", "m2a")):
         comparisons.append((base, candidate, "dev-mvb"))
+    matched = args.runs / "m1-dev-mvb-match" / "meta.json"
+    if matched.exists():
+        comparisons.append(("m1", "m2a", "dev-mv-match"))
+        for base, candidate in (("control-m1", "m1"), ("control-m1", "m2a"),
+                                ("p06", "m1"), ("p06", "m2a"), ("m1", "m2a")):
+            comparisons.append((base, candidate, "dev-mvb-match"))
     for base, candidate, suffix in comparisons:
         base_run = args.runs / f"{base}-{suffix}"
         candidate_run = args.runs / f"{candidate}-{suffix}"
