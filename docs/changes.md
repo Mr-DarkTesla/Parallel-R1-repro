@@ -154,3 +154,11 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
     repeated-sample counts. Both frozen jobs and efficiency postprocessing exited successfully. The corrected source
     summaries add 14 rows to `metrics.csv` (142 total). After transferring the analysis archive, pod B was scaled to
     zero alongside A; its 200Gi PVC remains Bound.
+22. A follow-up tests why M1 cannot emit full blocks with ordinary sequential decoding. `diagnose_mask_gap.py` and
+    `check_masked_decode_state.py` check a one-block incremental mask and positions against the exact SFT structure.
+    `diagnose_tag_transition.py` compares teacher-forced token probabilities under the training and causal masks;
+    `verify_cached_mask.py` checks cached logits against a full structured pass. `generate_masked_multiverse.py`
+    generates flat blocks autonomously with the training mask and positions, inserting no tags or path numbers;
+    `compare_masked_pilot.py` pairs its dev rows with previously saved sequential and branch results. No authors'
+    code changed. The scripts passed syntax checks, mask-position toy checks and a cached-logit check; pilot outcomes
+    and limitations are recorded in `results/21-qwen3-0.6b-multiverse/FOLLOWUP_AUTONOMY.md`.

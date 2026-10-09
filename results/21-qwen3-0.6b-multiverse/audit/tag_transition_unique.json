@@ -1,0 +1,431 @@
+{
+  "source_rows": 27,
+  "unique_tasks": 9,
+  "summary": {
+    "path_first": {
+      "structured": {
+        "n": 9,
+        "median_prob": 0.99995,
+        "top1_count": 9
+      },
+      "causal": {
+        "n": 9,
+        "median_prob": 0.999943,
+        "top1_count": 9
+      }
+    },
+    "path_second": {
+      "structured": {
+        "n": 9,
+        "median_prob": 0.999965,
+        "top1_count": 9
+      },
+      "causal": {
+        "n": 9,
+        "median_prob": 2.3e-05,
+        "top1_count": 0
+      }
+    },
+    "conclusion": {
+      "structured": {
+        "n": 9,
+        "median_prob": 0.999515,
+        "top1_count": 9
+      },
+      "causal": {
+        "n": 9,
+        "median_prob": 0.995821,
+        "top1_count": 9
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "gsm8k-train/2",
+      "path_count": 2,
+      "tokens": 457,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.99973,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999695,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.999734,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 4.7e-05,
+            "rank": 41,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.999217,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.998716,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "math-train/5524",
+      "path_count": 2,
+      "tokens": 508,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.99995,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999943,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.999987,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.0,
+            "rank": 26,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.999947,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.964494,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "math-train/1325",
+      "path_count": 2,
+      "tokens": 544,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.999934,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999926,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.99986,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.002921,
+            "rank": 3,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.999114,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.988348,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "math-train/6008",
+      "path_count": 2,
+      "tokens": 412,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.99997,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999969,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.999938,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 1e-06,
+            "rank": 15,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.999515,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.995821,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "math-train/3512",
+      "path_count": 2,
+      "tokens": 565,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.999914,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999912,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.999972,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.000101,
+            "rank": 9,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.998307,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.998192,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "math-train/2465",
+      "path_count": 2,
+      "tokens": 520,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.999976,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999975,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.999988,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 2.9e-05,
+            "rank": 10,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.999856,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.965468,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "math-train/1210",
+      "path_count": 2,
+      "tokens": 458,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.999977,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999973,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.999965,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 2.3e-05,
+            "rank": 41,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.996697,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.991485,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "gsm8k-train/4334",
+      "path_count": 2,
+      "tokens": 469,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.999971,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.999965,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.999984,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 1e-06,
+            "rank": 27,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.999936,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.998976,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    },
+    {
+      "id": "math-train/6987",
+      "path_count": 2,
+      "tokens": 730,
+      "scores": {
+        "path_first": {
+          "structured": {
+            "prob": 0.99749,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 0.995523,
+            "rank": 1,
+            "top1": "<Path>"
+          }
+        },
+        "path_second": {
+          "structured": {
+            "prob": 0.997596,
+            "rank": 1,
+            "top1": "<Path>"
+          },
+          "causal": {
+            "prob": 1e-06,
+            "rank": 73,
+            "top1": "<Conclusion>"
+          }
+        },
+        "conclusion": {
+          "structured": {
+            "prob": 0.999982,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          },
+          "causal": {
+            "prob": 0.998639,
+            "rank": 1,
+            "top1": "<Conclusion>"
+          }
+        }
+      }
+    }
+  ]
+}

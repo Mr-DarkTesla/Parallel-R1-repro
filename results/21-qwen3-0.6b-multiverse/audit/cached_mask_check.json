@@ -1,0 +1,20 @@
+{
+  "sample": "gsm8k-train/2, first M1 SFT validation row",
+  "model": "exp21-m1",
+  "check": "cached one-token decoding versus a full structured forward pass",
+  "first_path": {
+    "full_top": "<Path>",
+    "cached_top": "<Path>",
+    "full_path_prob": 0.9997302889823914,
+    "cached_path_prob": 0.9996540546417236,
+    "max_logit_delta": 0.6875
+  },
+  "second_path": {
+    "full_top": "<Path>",
+    "cached_top": "<Path>",
+    "full_path_prob": 0.999734103679657,
+    "cached_path_prob": 0.9996986389160156,
+    "max_logit_delta": 0.6875
+  },
+  "note": "Probabilities and top token agree; bfloat16 cached and full logits are not numerically identical."
+}
