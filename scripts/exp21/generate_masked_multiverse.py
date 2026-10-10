@@ -3,7 +3,7 @@
 No structural tokens or path numbers are inserted. Supports multiple flat blocks
 per answer. Output columns match the existing generation dumps.
 
-Usage: python generate_masked_multiverse.py MODEL DEV_PARQUET OUT_JSONL COUNT MAX_TOKENS [thinking|no-thinking]
+Usage: python generate_masked_multiverse.py MODEL DEV_PARQUET OUT_JSONL COUNT MAX_TOKENS [thinking|no-thinking] [sample|greedy]
 """
 import json
 import os
@@ -17,7 +17,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from masked_decode_state import MaskedDecodeState, path_count
 
 
-def generate(model, tok, prompt, max_tokens, seed, path_open, path_close):
+def generate(model, tok, prompt, max_tokens, seed, path_open, path_close, policy="sample"):
     prompt_ids = tok.encode(prompt, add_special_tokens=False)
     ids = torch.tensor([prompt_ids], device="cuda")
     state = MaskedDecodeState(path_open, path_close)
@@ -28,7 +28,8 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close):
         out = model(input_ids=ids, use_cache=True)
         past, logits = out.past_key_values, out.logits[0, -1].float()
         for step in range(max_tokens):
-            token = torch.multinomial(torch.softmax(logits, -1), 1, generator=generator).item()
+            token = (int(logits.argmax()) if policy == "greedy" else
+                     torch.multinomial(torch.softmax(logits, -1), 1, generator=generator).item())
             if token == tok.eos_token_id:
                 ended_with_eos = True
                 break
@@ -56,10 +57,14 @@ def main():
     model_path, data_path, output_path, count, budget = sys.argv[1:6]
     count, budget = int(count), int(budget)
     mode = sys.argv[6] if len(sys.argv) > 6 else "no-thinking"
+    policy = sys.argv[7] if len(sys.argv) > 7 else "sample"
     assert mode in ("thinking", "no-thinking")
+    assert policy in ("sample", "greedy")
     output = Path(output_path)
     meta = {"model": model_path, "data": data_path, "count": count, "max_tokens": budget,
             "seed": 0, "mode": mode, "decoder": "masked-autonomous-v2", "commit": os.environ.get("EXP21_COMMIT")}
+    if policy == "greedy":
+        meta["policy"] = policy
     meta_path = output.with_suffix(output.suffix + ".meta.json")
     if meta_path.exists():
         assert json.loads(meta_path.read_text()) == meta, "run settings changed during resume"
@@ -89,11 +94,12 @@ def main():
                 assert previous[len(seen) - 1]["input"] == prompt, "resume order or prompt changed"
                 continue
             answer, length, truncated, model_calls = generate(model, tok, prompt, budget, 0,
-                                                              path_open, path_close)
+                                                              path_open, path_close, policy)
             file.write(json.dumps({"input": prompt, "output": answer, "tokens": length,
                                    "truncated": truncated, "seed": 0,
                                    "model_forward_calls": model_calls,
-                                   "rollout": {"decoder": "masked-autonomous-v2", "mode": mode}}, ensure_ascii=False) + "\n")
+                                   "rollout": {"decoder": "masked-autonomous-v2", "mode": mode,
+                                               "policy": policy}}, ensure_ascii=False) + "\n")
             file.flush()
             print(len(seen), length, truncated, answer.count("<Path>"), flush=True)
             if len(seen) >= count:

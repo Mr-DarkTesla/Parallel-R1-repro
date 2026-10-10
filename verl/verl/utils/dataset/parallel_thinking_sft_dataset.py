@@ -54,6 +54,8 @@ class ParallelThinkingSFTDataset(Dataset):
         # "multiverse": <Goal>/<Outline>/<Conclusion> format with nested blocks (multiverse_structure.py); default: flat Parallel-R1
         self.structure = config.get("structure", "parallel_r1")
         assert self.structure in ("parallel_r1", "multiverse")
+        self.parallel_text_loss_weight = float(config.get("parallel_text_loss_weight", 1.0))
+        assert 0 < self.parallel_text_loss_weight <= 1
 
         assert truncation in ["error", "left", "right"]
         self.truncation = truncation
@@ -82,6 +84,13 @@ class ParallelThinkingSFTDataset(Dataset):
         self.end_summary_token = self.tokenizer.encode('</Summary>')[0]
         self.structure_tags = {"Parallel": self.start_parallel_token, "/Parallel": self.end_parallel_token,
                                "Path": self.start_path_token, "/Path": self.end_path_token}
+        if self.parallel_text_loss_weight != 1.0:
+            assert self.structure == "multiverse" and self.truncation == "error"
+            names = ("Parallel", "/Parallel", "Goal", "/Goal", "Outline", "/Outline",
+                     "Path", "/Path", "Conclusion", "/Conclusion")
+            self.loss_tag_ids = {self.tokenizer.convert_tokens_to_ids(f"<{name}>") for name in names}
+            assert all(self.tokenizer.encode(f"<{name}>", add_special_tokens=False) ==
+                       [self.tokenizer.convert_tokens_to_ids(f"<{name}>")] for name in names)
 
         self._download()
         self._read_files_and_tokenize()
@@ -134,6 +143,7 @@ class ParallelThinkingSFTDataset(Dataset):
         # data.enable_thinking for that row; rows without it keep the dataset-wide setting
         extra = self.dataframe["extra_info"].tolist() if "extra_info" in self.dataframe else [None] * len(self.prompts)
         self.row_thinking = [x.get("enable_thinking") if isinstance(x, dict) else None for x in extra]
+        self.row_kind = [x.get("kind") if isinstance(x, dict) else None for x in extra]
 
     def generate_parallel_thinking_reasponse_mask(self, response_ids: torch.Tensor) -> torch.Tensor:
         """
@@ -469,6 +479,14 @@ class ParallelThinkingSFTDataset(Dataset):
             loss_mask[: min(prompt_length, loss_mask.size(0)) - 1] = 0
         # mask out the last token in response
         loss_mask[min(prompt_length + response_length, loss_mask.size(0)) - 1] = 0
+        if self.parallel_text_loss_weight != 1.0:
+            loss_mask = loss_mask.float()
+        if self.parallel_text_loss_weight != 1.0 and self.row_kind[item] in ("parallel_th", "control_th"):
+            first, last = prompt_length - 1, prompt_length + response_length - 1
+            loss_mask[first:last] = self.parallel_text_loss_weight
+            for i, token in enumerate(response_ids.tolist()):
+                if token in self.loss_tag_ids:
+                    loss_mask[first + i] = 1.0
 
         # print(float_attention_mask.shape)
         # print(loss_mask.shape)
