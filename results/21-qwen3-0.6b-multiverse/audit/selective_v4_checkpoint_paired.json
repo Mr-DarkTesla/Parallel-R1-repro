@@ -1,0 +1,356 @@
+{
+  "protocol": "same 40 masked greedy prompts; semantic answer review",
+  "steps": {
+    "8": {
+      "archive": "selective_v4_step8_masked_pilot.tgz",
+      "manual_corrections": [
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/132",
+          0
+        ],
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/228",
+          0
+        ],
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/288",
+          0
+        ],
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/653",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/45",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/51",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/65",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/93",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/98",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/108",
+          0
+        ]
+      ],
+      "robust_correct": 23,
+      "manual_correct": 33,
+      "numbered_blocks": 0,
+      "strict_useful_ids": [],
+      "outside_think": 3,
+      "truncated": 7,
+      "mean_tokens": 1396.8,
+      "mean_forward_passes": 1396.8,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 82.5,
+          "delta": -2.5,
+          "ci95": [
+            -12.5,
+            7.5
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 82.5,
+          "delta": 7.5,
+          "ci95": [
+            -7.5,
+            22.5
+          ],
+          "n": 40
+        }
+      }
+    },
+    "16": {
+      "archive": "selective_v4_step16_masked_pilot.tgz",
+      "manual_corrections": [
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/279",
+          0
+        ]
+      ],
+      "robust_correct": 27,
+      "manual_correct": 28,
+      "numbered_blocks": 0,
+      "strict_useful_ids": [],
+      "outside_think": 3,
+      "truncated": 6,
+      "mean_tokens": 1089.2,
+      "mean_forward_passes": 1089.2,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 70.0,
+          "delta": -15.0,
+          "ci95": [
+            -27.5,
+            -5.0
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 70.0,
+          "delta": -5.0,
+          "ci95": [
+            -20.0,
+            7.5
+          ],
+          "n": 40
+        }
+      }
+    },
+    "24": {
+      "archive": "selective_v4_step24_masked_pilot.tgz",
+      "manual_corrections": [],
+      "robust_correct": 28,
+      "manual_correct": 28,
+      "numbered_blocks": 1,
+      "strict_useful_ids": [],
+      "outside_think": 0,
+      "truncated": 4,
+      "mean_tokens": 986.98,
+      "mean_forward_passes": 985.33,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 70.0,
+          "delta": -15.0,
+          "ci95": [
+            -27.5,
+            -2.5
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 70.0,
+          "delta": -5.0,
+          "ci95": [
+            -20.0,
+            10.0
+          ],
+          "n": 40
+        }
+      }
+    },
+    "32": {
+      "archive": "selective_v4_step32_masked_pilot.tgz",
+      "manual_corrections": [],
+      "robust_correct": 26,
+      "manual_correct": 26,
+      "numbered_blocks": 16,
+      "strict_useful_ids": [],
+      "outside_think": 0,
+      "truncated": 2,
+      "mean_tokens": 603.95,
+      "mean_forward_passes": 582.0,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 65.0,
+          "delta": -20.0,
+          "ci95": [
+            -35.0,
+            -5.0
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 65.0,
+          "delta": -10.0,
+          "ci95": [
+            -25.0,
+            5.0
+          ],
+          "n": 40
+        }
+      }
+    },
+    "40": {
+      "archive": "selective_v4_step40_masked_pilot.tgz",
+      "manual_corrections": [
+        [
+          "MATH_DEV",
+          "math-test/36",
+          0
+        ]
+      ],
+      "robust_correct": 27,
+      "manual_correct": 28,
+      "numbered_blocks": 11,
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "outside_think": 0,
+      "truncated": 3,
+      "mean_tokens": 716.35,
+      "mean_forward_passes": 699.98,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 70.0,
+          "delta": -15.0,
+          "ci95": [
+            -27.5,
+            -2.5
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 70.0,
+          "delta": -5.0,
+          "ci95": [
+            -17.5,
+            7.5
+          ],
+          "n": 40
+        }
+      }
+    },
+    "48": {
+      "archive": "selective_v4_step48_masked_pilot.tgz",
+      "manual_corrections": [],
+      "robust_correct": 25,
+      "manual_correct": 25,
+      "numbered_blocks": 18,
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "outside_think": 0,
+      "truncated": 3,
+      "mean_tokens": 655.95,
+      "mean_forward_passes": 627.98,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 62.5,
+          "delta": -22.5,
+          "ci95": [
+            -40.0,
+            -5.0
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 62.5,
+          "delta": -12.5,
+          "ci95": [
+            -27.5,
+            2.5
+          ],
+          "n": 40
+        }
+      }
+    },
+    "56": {
+      "archive": "selective_v4_step56_masked_pilot.tgz",
+      "manual_corrections": [
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/279",
+          0
+        ]
+      ],
+      "robust_correct": 26,
+      "manual_correct": 27,
+      "numbered_blocks": 19,
+      "strict_useful_ids": [
+        "math-test/9",
+        "math-test/36"
+      ],
+      "outside_think": 0,
+      "truncated": 4,
+      "mean_tokens": 693.05,
+      "mean_forward_passes": 666.45,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 67.5,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 67.5,
+          "delta": -7.5,
+          "ci95": [
+            -22.5,
+            7.5
+          ],
+          "n": 40
+        }
+      }
+    },
+    "64": {
+      "archive": "selective_v4_step64_masked_pilot.tgz",
+      "manual_corrections": [],
+      "robust_correct": 26,
+      "manual_correct": 26,
+      "numbered_blocks": 19,
+      "strict_useful_ids": [
+        "math-test/9",
+        "math-test/36"
+      ],
+      "outside_think": 1,
+      "truncated": 2,
+      "mean_tokens": 608.38,
+      "mean_forward_passes": 582.8,
+      "paired_accuracy": {
+        "c0_corrected": {
+          "base": 85.0,
+          "candidate": 65.0,
+          "delta": -20.0,
+          "ci95": [
+            -35.0,
+            -7.5
+          ],
+          "n": 40
+        },
+        "selective_v2": {
+          "base": 75.0,
+          "candidate": 65.0,
+          "delta": -10.0,
+          "ci95": [
+            -25.0,
+            5.0
+          ],
+          "n": 40
+        }
+      }
+    }
+  }
+}
