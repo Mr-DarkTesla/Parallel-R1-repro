@@ -1,0 +1,73 @@
+{
+  "model": "/work/assets/models/Qwen3-0.6B-mv",
+  "tag_ids": {
+    "<Parallel>": 151669,
+    "</Parallel>": 151670,
+    "<Goal>": 151671,
+    "</Goal>": 151672,
+    "<Outline>": 151673,
+    "</Outline>": 151674,
+    "<Path>": 151675,
+    "</Path>": 151676,
+    "<Conclusion>": 151677,
+    "</Conclusion>": 151678
+  },
+  "files": {
+    "/work/exp21/expanded_th/sft_expanded_th_m1_frontblock_replay3_tagged_train.parquet": {
+      "rows": 2748,
+      "kinds": {
+        "replay_nt": 879,
+        "replay_th": 882,
+        "parallel_th": 987
+      },
+      "max_tokens": 3838,
+      "over_4096": 0,
+      "token_length_p50": 459,
+      "tag_target_counts": {
+        "<Parallel>": 987,
+        "</Parallel>": 987,
+        "<Goal>": 987,
+        "</Goal>": 987,
+        "<Outline>": 1974,
+        "</Outline>": 1974,
+        "<Path>": 1974,
+        "</Path>": 1974,
+        "<Conclusion>": 987,
+        "</Conclusion>": 987
+      },
+      "masked_tag_target_counts": {},
+      "prompt_suffixes": {
+        "no_thinking": "im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+        "thinking": " $501^2 - 499^2$?<|im_end|>\n<|im_start|>assistant\n"
+      }
+    },
+    "/work/exp21/expanded_th/sft_expanded_th_m1_frontblock_replay3_tagged_val.parquet": {
+      "rows": 63,
+      "kinds": {
+        "parallel_th": 24,
+        "replay_nt": 21,
+        "replay_th": 18
+      },
+      "max_tokens": 3513,
+      "over_4096": 0,
+      "token_length_p50": 466,
+      "tag_target_counts": {
+        "<Parallel>": 24,
+        "</Parallel>": 24,
+        "<Goal>": 24,
+        "</Goal>": 24,
+        "<Outline>": 48,
+        "</Outline>": 48,
+        "<Path>": 48,
+        "</Path>": 48,
+        "<Conclusion>": 24,
+        "</Conclusion>": 24
+      },
+      "masked_tag_target_counts": {},
+      "prompt_suffixes": {
+        "thinking": "umbers are there?<|im_end|>\n<|im_start|>assistant\n",
+        "no_thinking": "im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+      }
+    }
+  }
+}

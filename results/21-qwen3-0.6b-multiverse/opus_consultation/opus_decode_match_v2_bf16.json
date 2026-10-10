@@ -1,0 +1,63 @@
+{
+  "model": "/tmp/exp21-expanded-th-runs/exp21-expanded-th-m2/model",
+  "validation": "/work/exp21/expanded_th/sft_expanded_th_m2_tagged_val.parquet",
+  "backend": "sdpa",
+  "dtype": "bfloat16",
+  "rows": [
+    {
+      "id": "gsm8k-train/4681",
+      "prompt_tokens": 266,
+      "response_tokens": 223,
+      "paths": 2,
+      "max_logprob_delta": 0.22014689445495605,
+      "p99_logprob_delta": 0.07605568319559097,
+      "path2_max_delta": 0.06909787654876709,
+      "ordinary_causal_max_delta": 0.6967873573303223,
+      "ordinary_causal_p99_delta": 0.11181892454624176,
+      "mask_effect_path2_max": 14.460592269897461,
+      "mask_effect_path2_mean": 2.348249912261963,
+      "largest_deltas": [
+        {
+          "response_token_index": 198,
+          "token": " +",
+          "delta": 0.220147
+        },
+        {
+          "response_token_index": 44,
+          "token": " to",
+          "delta": 0.091621
+        },
+        {
+          "response_token_index": 170,
+          "token": " takes",
+          "delta": 0.076092
+        },
+        {
+          "response_token_index": 5,
+          "token": " total",
+          "delta": 0.075927
+        },
+        {
+          "response_token_index": 2,
+          "token": "To",
+          "delta": 0.07465
+        },
+        {
+          "response_token_index": 21,
+          "token": " taken",
+          "delta": 0.073536
+        },
+        {
+          "response_token_index": 119,
+          "token": " -",
+          "delta": 0.069098
+        },
+        {
+          "response_token_index": 175,
+          "token": " the",
+          "delta": 0.064692
+        }
+      ]
+    }
+  ]
+}

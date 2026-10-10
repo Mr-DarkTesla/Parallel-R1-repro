@@ -1,0 +1,21 @@
+{
+  "source": "results/21-qwen3-0.6b-multiverse/sol_compare/block_plain_deep75_math_dev_rows.jsonl",
+  "by_trigger": {
+    "False": {
+      "rows": 698,
+      "accuracy_robust_percent": 50.14,
+      "mean_tokens": 1468.2
+    },
+    "True": {
+      "rows": 266,
+      "accuracy_robust_percent": 10.53,
+      "mean_tokens": 527.7
+    }
+  },
+  "discordant_tasks": 142,
+  "same_task_accuracy_percent": {
+    "with_parallel": 13.38,
+    "without_parallel": 28.17
+  },
+  "note": "observational split; triggering is not randomized, so these are not causal effects"
+}

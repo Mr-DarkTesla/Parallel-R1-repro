@@ -1,0 +1,173 @@
+{
+  "model": "/tmp/exp21-expanded-th-runs/exp21-expanded-th-m2/model",
+  "validation": "/work/exp21/expanded_th/sft_expanded_th_m2_tagged_train.parquet",
+  "backend": "sdpa",
+  "dtype": "float32",
+  "rows": [
+    {
+      "id": "gsm8k-train/7024",
+      "prompt_tokens": 211,
+      "response_tokens": 165,
+      "paths": 2,
+      "max_logprob_delta": 1.7523765563964844e-05,
+      "p99_logprob_delta": 1.4209748769644648e-05,
+      "path2_max_delta": 1.7523765563964844e-05,
+      "ordinary_causal_max_delta": 4.1961669921875e-05,
+      "ordinary_causal_p99_delta": 1.9464499928290024e-05,
+      "mask_effect_path2_max": 10.01859188079834,
+      "mask_effect_path2_mean": 1.1498231887817383,
+      "largest_deltas": [
+        {
+          "response_token_index": 98,
+          "token": " $",
+          "delta": 1.8e-05
+        },
+        {
+          "response_token_index": 34,
+          "token": " ",
+          "delta": 1.5e-05
+        },
+        {
+          "response_token_index": 86,
+          "token": " -",
+          "delta": 1.4e-05
+        },
+        {
+          "response_token_index": 105,
+          "token": " \\$",
+          "delta": 1.3e-05
+        },
+        {
+          "response_token_index": 97,
+          "token": ":",
+          "delta": 1.1e-05
+        },
+        {
+          "response_token_index": 58,
+          "token": " $",
+          "delta": 9e-06
+        },
+        {
+          "response_token_index": 116,
+          "token": " \\$",
+          "delta": 7e-06
+        },
+        {
+          "response_token_index": 2,
+          "token": "<Parallel>",
+          "delta": 7e-06
+        }
+      ]
+    },
+    {
+      "id": "gsm8k-train/5789",
+      "prompt_tokens": 258,
+      "response_tokens": 214,
+      "paths": 3,
+      "max_logprob_delta": 2.300739288330078e-05,
+      "p99_logprob_delta": 1.70248604263179e-05,
+      "path2_max_delta": 1.4483928680419922e-05,
+      "ordinary_causal_max_delta": 7.224082946777344e-05,
+      "ordinary_causal_p99_delta": 1.5108584193512797e-05,
+      "mask_effect_path2_max": 9.548616409301758,
+      "mask_effect_path2_mean": 1.6287086009979248,
+      "largest_deltas": [
+        {
+          "response_token_index": 162,
+          "token": " ",
+          "delta": 2.3e-05
+        },
+        {
+          "response_token_index": 160,
+          "token": "Jonathan",
+          "delta": 2e-05
+        },
+        {
+          "response_token_index": 125,
+          "token": "3",
+          "delta": 1.7e-05
+        },
+        {
+          "response_token_index": 91,
+          "token": " Wed",
+          "delta": 1.4e-05
+        },
+        {
+          "response_token_index": 51,
+          "token": " On",
+          "delta": 1.2e-05
+        },
+        {
+          "response_token_index": 100,
+          "token": " miles",
+          "delta": 1.2e-05
+        },
+        {
+          "response_token_index": 111,
+          "token": " ",
+          "delta": 1.1e-05
+        },
+        {
+          "response_token_index": 70,
+          "token": " distance",
+          "delta": 9e-06
+        }
+      ]
+    },
+    {
+      "id": "gsm8k-train/1771",
+      "prompt_tokens": 219,
+      "response_tokens": 270,
+      "paths": 4,
+      "max_logprob_delta": 7.772445678710938e-05,
+      "p99_logprob_delta": 1.9905550288967788e-05,
+      "path2_max_delta": 7.772445678710938e-05,
+      "ordinary_causal_max_delta": 3.0517578125e-05,
+      "ordinary_causal_p99_delta": 2.2495973098557442e-05,
+      "mask_effect_path2_max": 15.695100784301758,
+      "mask_effect_path2_mean": 2.987109661102295,
+      "largest_deltas": [
+        {
+          "response_token_index": 92,
+          "token": "2",
+          "delta": 7.8e-05
+        },
+        {
+          "response_token_index": 128,
+          "token": "3",
+          "delta": 4.5e-05
+        },
+        {
+          "response_token_index": 183,
+          "token": "text",
+          "delta": 2.5e-05
+        },
+        {
+          "response_token_index": 131,
+          "token": "3",
+          "delta": 1.8e-05
+        },
+        {
+          "response_token_index": 232,
+          "token": "5",
+          "delta": 1.4e-05
+        },
+        {
+          "response_token_index": 212,
+          "token": " \\$",
+          "delta": 1.3e-05
+        },
+        {
+          "response_token_index": 141,
+          "token": ":",
+          "delta": 1e-05
+        },
+        {
+          "response_token_index": 104,
+          "token": ":",
+          "delta": 9e-06
+        }
+      ]
+    }
+  ]
+}

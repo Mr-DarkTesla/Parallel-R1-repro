@@ -1,0 +1,160 @@
+{
+  "base_archive": "m1-tagweighted-control-greedy-pilot40.tgz",
+  "candidate_archive": "m1-tagweighted-greedy-pilot40.tgz",
+  "all": {
+    "acc_robust": {
+      "base": 52.5,
+      "candidate": 50.0,
+      "delta": -2.5,
+      "ci95": [
+        -20.0,
+        15.0
+      ],
+      "n": 40
+    },
+    "think_numbered_block": {
+      "base": 0.0,
+      "candidate": 92.5,
+      "delta": 92.5,
+      "ci95": [
+        82.5,
+        100.0
+      ],
+      "n": 40
+    },
+    "truncated": {
+      "base": 2.5,
+      "candidate": 5.0,
+      "delta": 2.5,
+      "ci95": [
+        -5.0,
+        10.0
+      ],
+      "n": 40
+    },
+    "tokens": {
+      "base": 308.88,
+      "candidate": 485.95,
+      "delta": 177.07,
+      "ci95": [
+        -52.77,
+        472.6
+      ],
+      "n": 40
+    },
+    "forward_passes": {
+      "base": 308.88,
+      "candidate": 441.9,
+      "delta": 133.03,
+      "ci95": [
+        -97.88,
+        429.75
+      ],
+      "n": 40
+    }
+  },
+  "GSM8K_DEV": {
+    "acc_robust": {
+      "base": 55.0,
+      "candidate": 40.0,
+      "delta": -15.0,
+      "ci95": [
+        -35.0,
+        5.0
+      ],
+      "n": 20
+    },
+    "think_numbered_block": {
+      "base": 0.0,
+      "candidate": 100.0,
+      "delta": 100.0,
+      "ci95": [
+        100.0,
+        100.0
+      ],
+      "n": 20
+    },
+    "truncated": {
+      "base": 5.0,
+      "candidate": 0.0,
+      "delta": -5.0,
+      "ci95": [
+        -15.0,
+        0.0
+      ],
+      "n": 20
+    },
+    "tokens": {
+      "base": 311.2,
+      "candidate": 258.7,
+      "delta": -52.5,
+      "ci95": [
+        -238.15,
+        51.75
+      ],
+      "n": 20
+    },
+    "forward_passes": {
+      "base": 311.2,
+      "candidate": 220.15,
+      "delta": -91.05,
+      "ci95": [
+        -277.55,
+        13.9
+      ],
+      "n": 20
+    }
+  },
+  "MATH_DEV": {
+    "acc_robust": {
+      "base": 50.0,
+      "candidate": 60.0,
+      "delta": 10.0,
+      "ci95": [
+        -20.0,
+        35.0
+      ],
+      "n": 20
+    },
+    "think_numbered_block": {
+      "base": 0.0,
+      "candidate": 85.0,
+      "delta": 85.0,
+      "ci95": [
+        70.0,
+        100.0
+      ],
+      "n": 20
+    },
+    "truncated": {
+      "base": 0.0,
+      "candidate": 10.0,
+      "delta": 10.0,
+      "ci95": [
+        0.0,
+        25.0
+      ],
+      "n": 20
+    },
+    "tokens": {
+      "base": 306.55,
+      "candidate": 713.2,
+      "delta": 406.65,
+      "ci95": [
+        17.9,
+        961.0
+      ],
+      "n": 20
+    },
+    "forward_passes": {
+      "base": 306.55,
+      "candidate": 663.65,
+      "delta": 357.1,
+      "ci95": [
+        -36.5,
+        915.75
+      ],
+      "n": 20
+    }
+  }
+}

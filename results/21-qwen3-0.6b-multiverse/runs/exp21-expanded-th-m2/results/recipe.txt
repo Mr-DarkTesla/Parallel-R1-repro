@@ -1,0 +1,10 @@
+train=/work/exp21/expanded_th/sft_expanded_th_m2_tagged_train.parquet rows=2251 bytes=899145 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+val=/work/exp21/expanded_th/sft_expanded_th_m2_tagged_val.parquet rows=50 bytes=32730 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+steps_per_epoch=70 epochs=1 updates=64 rows_processed=2048 distinct_rows_processed=2048
+model=/work/assets/models/Qwen3-0.6B-mv vocab_size=151936 dtype=torch.bfloat16 tied=True
+Sat Oct 10 10:19:42 MSK 2026
+3c39df93c8d9ebed64beaf35644c3eddd6bca591
+?? scripts/exp21/__pycache__/
+?? verl/outputs/
+?? verl/verl/utils/dataset/__pycache__/multiverse_structure.cpython-310.pyc
+GPUs=0 updates=64 global_batch=32 micro_batch_per_gpu=4 max_length=4096 lr=1e-5 epochs=1 overrides=+data.structure=multiverse optim.tag_lr_mult=100

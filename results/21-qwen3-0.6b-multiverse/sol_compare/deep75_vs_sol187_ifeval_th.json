@@ -1,0 +1,289 @@
+{
+ "base": "results/21-qwen3-0.6b-multiverse/eval_runs/sol187-ifeval-th",
+ "cands": [
+  "results/21-qwen3-0.6b-multiverse/eval_runs/deep75-ifeval-th"
+ ],
+ "protocol": {
+  "suite": "frozen",
+  "mode": "thinking",
+  "budget": 16384,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "generator": "scripts/bench/generate_plain.py",
+  "prompts": "/work/bench_data/plain",
+  "ifeval_scorer_seed": 0
+ },
+ "cross_prompt": false,
+ "proposed_margin_pp": 2.0,
+ "margin_note": "working proposal, not confirmed by the user; applies per benchmark/source",
+ "benchmarks": {
+  "ifeval": {
+   "samples_per_problem": {
+    "IFEVAL": 1
+   },
+   "metrics": {
+    "deep75-ifeval-th": {
+     "acc": {
+      "base": 40.67,
+      "cand": 43.99,
+      "delta": 3.33,
+      "ci95": [
+       -1.11,
+       7.39
+      ],
+      "problems": 541,
+      "discordant_problems": 25.5
+     },
+     "prompt_level_loose_acc": {
+      "base": 44.73,
+      "cand": 46.03,
+      "delta": 1.29,
+      "ci95": [
+       -2.96,
+       5.55
+      ],
+      "problems": 541,
+      "discordant_problems": 25.7
+     },
+     "inst_level_strict_acc": {
+      "base": 50.72,
+      "cand": 55.04,
+      "delta": 4.32,
+      "ci95": [
+       0.6,
+       7.81
+      ],
+      "problems": 541,
+      "discordant_problems": 35.7
+     },
+     "truncated": {
+      "base": 0.37,
+      "cand": 0.0,
+      "delta": -0.37,
+      "ci95": [
+       -0.92,
+       0.0
+      ],
+      "problems": 541,
+      "discordant_problems": 0.4
+     },
+     "parallel": {
+      "base": 1.29,
+      "cand": 2.03,
+      "delta": 0.74,
+      "ci95": [
+       -0.55,
+       2.03
+      ],
+      "problems": 541,
+      "discordant_problems": 2.6
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 541,
+      "discordant_problems": 0.0
+     },
+     "mv_valid": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 541,
+      "discordant_problems": 0.0
+     },
+     "mv_numbered": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 541,
+      "discordant_problems": 0.0
+     },
+     "no_final_answer": {
+      "base": 100.0,
+      "cand": 99.82,
+      "delta": -0.18,
+      "ci95": [
+       -0.55,
+       0.0
+      ],
+      "problems": 541,
+      "discordant_problems": 0.2
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {
+    "ifeval_group=change_case": {
+     "deep75-ifeval-th": {
+      "base": 35.96,
+      "cand": 42.7,
+      "delta": 6.74,
+      "ci95": [
+       -2.25,
+       16.28
+      ],
+      "problems": 84,
+      "discordant_problems": 21.4
+     }
+    },
+    "ifeval_group=combination": {
+     "deep75-ifeval-th": {
+      "base": 23.08,
+      "cand": 27.69,
+      "delta": 4.62,
+      "ci95": [
+       -7.69,
+       16.92
+      ],
+      "problems": 65,
+      "discordant_problems": 26.2
+     }
+    },
+    "ifeval_group=detectable_content": {
+     "deep75-ifeval-th": {
+      "base": 64.15,
+      "cand": 62.26,
+      "delta": -1.89,
+      "ci95": [
+       -18.52,
+       14.55
+      ],
+      "problems": 52,
+      "discordant_problems": 36.5
+     }
+    },
+    "ifeval_group=detectable_format": {
+     "deep75-ifeval-th": {
+      "base": 66.24,
+      "cand": 71.34,
+      "delta": 5.1,
+      "ci95": [
+       -3.77,
+       13.92
+      ],
+      "problems": 155,
+      "discordant_problems": 31.0
+     }
+    },
+    "ifeval_group=keywords": {
+     "deep75-ifeval-th": {
+      "base": 55.21,
+      "cand": 58.9,
+      "delta": 3.68,
+      "ci95": [
+       -3.68,
+       11.18
+      ],
+      "problems": 148,
+      "discordant_problems": 23.6
+     }
+    },
+    "ifeval_group=language": {
+     "deep75-ifeval-th": {
+      "base": 51.61,
+      "cand": 45.16,
+      "delta": -6.45,
+      "ci95": [
+       -29.03,
+       16.13
+      ],
+      "problems": 31,
+      "discordant_problems": 38.7
+     }
+    },
+    "ifeval_group=length_constraints": {
+     "deep75-ifeval-th": {
+      "base": 47.55,
+      "cand": 46.15,
+      "delta": -1.4,
+      "ci95": [
+       -8.7,
+       5.67
+      ],
+      "problems": 133,
+      "discordant_problems": 21.1
+     }
+    },
+    "ifeval_group=punctuation": {
+     "deep75-ifeval-th": {
+      "base": 45.45,
+      "cand": 51.52,
+      "delta": 6.06,
+      "ci95": [
+       -6.06,
+       18.18
+      ],
+      "problems": 66,
+      "discordant_problems": 24.2
+     }
+    },
+    "ifeval_group=startend": {
+     "deep75-ifeval-th": {
+      "base": 50.75,
+      "cand": 71.64,
+      "delta": 20.9,
+      "ci95": [
+       5.97,
+       34.85
+      ],
+      "problems": 66,
+      "discordant_problems": 42.4
+     }
+    }
+   },
+   "numeric_metrics": {
+    "deep75-ifeval-th": {
+     "chars": {
+      "base": 1050.07,
+      "cand": 1335.77,
+      "delta": 285.71,
+      "ci95": [
+       41.25,
+       475.79
+      ],
+      "problems": 541
+     },
+     "tokens": {
+      "base": 274.44,
+      "cand": 298.56,
+      "delta": 24.12,
+      "ci95": [
+       -79.86,
+       101.46
+      ],
+      "problems": 541
+     },
+     "forward_passes": {
+      "base": 274.44,
+      "cand": 298.56,
+      "delta": 24.12,
+      "ci95": [
+       -79.86,
+       101.46
+      ],
+      "problems": 541
+     }
+    }
+   },
+   "mean_tokens": {
+    "base": 274.4,
+    "deep75-ifeval-th": 298.6
+   },
+   "primary": "acc (IFEval: prompt-level strict)"
+  }
+ },
+ "not_compared": []
+}

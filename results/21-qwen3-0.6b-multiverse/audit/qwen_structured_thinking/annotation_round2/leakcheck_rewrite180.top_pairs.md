@@ -1,0 +1,78 @@
+## strongest
+
+- cand `math-train/5756` vs `math_train_replay(info)/math-train/5756` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 14, 'ng8': 19, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is the probability that a positive integer less than or equal to 24 is a factor of 24? Express your answer as a common fraction. || ans=\frac{1}{3}
+  - E: What is the probability that a positive integer less than or equal to 24 is a factor of 24? Express your answer as a common fraction. || ans=\frac{1}{3}
+- cand `math-train/2916` vs `math_train_replay(info)/math-train/2916` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 23, 'ng8': 27, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 0.964, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: The length of the median to the hypotenuse of an isosceles, right triangle is $10$ units. What is the length of a leg of the triangle, in units? Express your answer in simplest radical form. || ans=10\sqrt{2}
+  - E: The length of the median to the hypotenuse of an isosceles, right triangle is $10$ units. What is the length of a leg of the triangle, in units? Express your answer in simplest radical form. || ans=10\sqrt{2}
+- cand `math-train/3220` vs `math_train_replay(info)/math-train/3220` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 18, 'ng8': 18, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 0.783, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is the area, in square units, of a triangle with vertices at $(0,0)$, $(0,5)$, and $(7,12)$? Express your answer as a decimal to the nearest tenth. || ans=17.5
+  - E: What is the area, in square units, of a triangle with vertices at $(0,0)$, $(0,5)$, and $(7,12)$? Express your answer as a decimal to the nearest tenth. || ans=17.5
+- cand `math-train/2953` vs `math_train_replay(info)/math-train/2953` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 28, 'ng8': 33, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A sphere is inscribed in a cube with edge length 9 inches. Then a smaller cube is inscribed in the sphere. How many cubic inches are in the volume of the inscribed cube? Express your answer in simplest radical form. || ans=81\sqrt{3}
+  - E: A sphere is inscribed in a cube with edge length 9 inches. Then a smaller cube is inscribed in the sphere. How many cubic inches are in the volume of the inscribed cube? Express your answer in simplest radical form. || ans=81\sqrt{3}
+- cand `math-train/2274` vs `math_train_replay(info)/math-train/2274` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 25, 'ng8': 25, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 0.833, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A fair 6-sided die is rolled. If I roll $n$, then I win $n^2$ dollars. What is the expected value of my win? Express your answer as a dollar value rounded to the nearest cent. || ans=\$15.17
+  - E: A fair 6-sided die is rolled. If I roll $n$, then I win $n^2$ dollars. What is the expected value of my win? Express your answer as a dollar value rounded to the nearest cent. || ans=\$15.17
+- cand `math-train/3014` vs `math_train_replay(info)/math-train/3014` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 24, 'ng8': 28, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 0.966, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A sphere is inscribed in a cube. Given that one edge of the cube is 6 inches, how many cubic inches are in the volume of the inscribed sphere? Express your answer in terms of $\pi$. || ans=36\pi
+  - E: A sphere is inscribed in a cube. Given that one edge of the cube is 6 inches, how many cubic inches are in the volume of the inscribed sphere? Express your answer in terms of $\pi$. || ans=36\pi
+- cand `math-train/1707` vs `math_train_replay(info)/math-train/1707` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 14, 'ng8': 19, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Find the sum of the first six terms in the geometric sequence $\frac12,\frac14,\frac18,\dots$. Express your answer as a common fraction. || ans=\frac{63}{64}
+  - E: Find the sum of the first six terms in the geometric sequence $\frac12,\frac14,\frac18,\dots$. Express your answer as a common fraction. || ans=\frac{63}{64}
+- cand `math-train/2522` vs `math_train_replay(info)/math-train/2522` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 1, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Compute $\sin 510^\circ$. || ans=\frac{1}{2}
+  - E: Compute $\sin 510^\circ$. || ans=\frac{1}{2}
+- cand `math-train/2820` vs `math_train_replay(info)/math-train/2820` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 35, 'ng8': 40, 'jac': 0.533, 'anskw': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A dump truck delivered sand to a construction site. The sand formed a conical pile with a diameter of $8$ feet and a height that was $75\%$ of the diameter. How many cubic feet of sand were in the pile? Express your answer in terms of $\pi$. || ans=32 \pi
+  - E: A dump truck delivered sand to a construction site. The sand formed a conical pile with a diameter of $8$ feet and a height that was $75\%$ of the diameter. How many cubic feet of sand were in the pile? Express your answer in terms of $\pi$. || ans=32 \pi
+- cand `math-train/1089` vs `math_train_replay(info)/math-train/1089` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 3, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Find $r$ such that $\log_{81} (2r-1) = -1/2$. || ans=\frac{5}{9}
+  - E: Find $r$ such that $\log_{81} (2r-1) = -1/2$. || ans=\frac{5}{9}
+- cand `math-train/5824` vs `math_train_replay(info)/math-train/5824` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 6, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is left when $\frac{1}{8}$ is subtracted from $\frac{3}{4}$? || ans=\frac{5}{8}
+  - E: What is left when $\frac{1}{8}$ is subtracted from $\frac{3}{4}$? || ans=\frac{5}{8}
+- cand `math-train/1020` vs `math_train_replay(info)/math-train/1020` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 3, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Simplify $\frac{4}{3x^{-3}} \cdot \frac{3x^{2}}{2}$. || ans=2x^5
+  - E: Simplify $\frac{4}{3x^{-3}} \cdot \frac{3x^{2}}{2}$. || ans=2x^5
+- cand `math-train/1394` vs `math_train_replay(info)/math-train/1394` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 4, 'ng8': 9, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: For what values of $x$ is $x^2-2x>35$? Express your answer in interval notation. || ans=(-\infty, -5) \cup (7, \infty)
+  - E: For what values of $x$ is $x^2-2x>35$? Express your answer in interval notation. || ans=(-\infty, -5) \cup (7, \infty)
+- cand `math-train/584` vs `math_train_replay(info)/math-train/584` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 6, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Find all values of $r$ such that $\lfloor r \rfloor + r = 12.2$. || ans=r=6.2
+  - E: Find all values of $r$ such that $\lfloor r \rfloor + r = 12.2$. || ans=r=6.2
+- cand `math-train/7028` vs `math_train_replay(info)/math-train/7028` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 3, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is the period of $y = \sin x + \cos x$? || ans=2 \pi
+  - E: What is the period of $y = \sin x + \cos x$? || ans=2 \pi
+- cand `math-train/6013` vs `math_train_replay(info)/math-train/6013` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 8, 'ng8': 10, 'ng8_contain': 0.769, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is the median of the first ten positive integers? Express your answer as a decimal to the nearest tenth. || ans=5.5
+  - E: What is the median of the first ten positive integers? Express your answer as a decimal to the nearest tenth. || ans=5.5
+- cand `math-train/6350` vs `math_train_replay(info)/math-train/6350` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 6, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Express as a common fraction in simplest form: $$ \sqrt{6\frac{1}{4}} $$ || ans=\frac{5}{2}
+  - E: Express as a common fraction in simplest form: $$ \sqrt{6\frac{1}{4}} $$ || ans=\frac{5}{2}
+- cand `math-train/4335` vs `math_train_replay(info)/math-train/4335` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 4, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Find $s$ given that \[3 \log_2 s = \log_2 (3s).\] || ans=\sqrt{3}
+  - E: Find $s$ given that \[3 \log_2 s = \log_2 (3s).\] || ans=\sqrt{3}
+- cand `math-train/1183` vs `math_train_replay(info)/math-train/1183` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 2, 'ng8': 7, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Solve for $x$: $3^{2x} = \sqrt{27}$. Express your answer as a common fraction. || ans=\frac{3}{4}
+  - E: Solve for $x$: $3^{2x} = \sqrt{27}$. Express your answer as a common fraction. || ans=\frac{3}{4}
+- cand `math-train/1693` vs `math_train_replay(info)/math-train/1693` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 5, 'ng8': 10, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Solve for $z$ in the following equation: $2-iz = -1 + 3iz$. Express your answer in standard form. || ans=-\frac34i
+  - E: Solve for $z$ in the following equation: $2-iz = -1 + 3iz$. Express your answer in standard form. || ans=-\frac34i
+- cand `math-train/6376` vs `math_train_replay(info)/math-train/6376` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 15, 'ng8': 20, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Simplify this expression to a common fraction: $\frac{1}{\frac{1}{(\frac{1}{2})^{1}}+\frac{1}{(\frac{1}{2})^{2}}+\frac{1}{(\frac{1}{2})^{3}}}$ || ans=\frac{1}{14}
+  - E: Simplify this expression to a common fraction: $\frac{1}{\frac{1}{(\frac{1}{2})^{1}}+\frac{1}{(\frac{1}{2})^{2}}+\frac{1}{(\frac{1}{2})^{3}}}$ || ans=\frac{1}{14}
+- cand `math-train/4296` vs `math_train_replay(info)/math-train/4296` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 24, 'ng8': 29, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: When $f(x) = ax^3 - 6x^2 + bx - 5$ is divided by $x - 1,$ the remainder is $-5.$ When $f(x)$ is divided by $x + 2,$ the remainder is $-53.$ Find the ordered pair $(a,b).$ || ans=(2,4)
+  - E: When $f(x) = ax^3 - 6x^2 + bx - 5$ is divided by $x - 1,$ the remainder is $-5.$ When $f(x)$ is divided by $x + 2,$ the remainder is $-53.$ Find the ordered pair $(a,b).$ || ans=(2,4)
+- cand `math-train/382` vs `math_train_replay(info)/math-train/382` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 10, 'ng8': 15, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Solve for $z$ in the following equation: $1-iz = -1 + iz$ (where $i^2 = -1$). Simplify your answer as much as possible. || ans=-i
+  - E: Solve for $z$ in the following equation: $1-iz = -1 + iz$ (where $i^2 = -1$). Simplify your answer as much as possible. || ans=-i
+- cand `math-train/1449` vs `math_train_replay(info)/math-train/1449` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 5, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is $2a+3b$, where $a=2-i$ and $b=-1+i$? || ans=1+i
+  - E: What is $2a+3b$, where $a=2-i$ and $b=-1+i$? || ans=1+i
+- cand `math-train/3616` vs `math_train_replay(info)/math-train/3616` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 24, 'ng8': 29, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Express the following sum as a simple fraction in lowest terms. $$\frac{1}{1\times2} + \frac{1}{2\times3} + \frac{1}{3\times4} + \frac{1}{4\times5} + \frac{1}{5\times6}$$ || ans=\frac{5}{6}
+  - E: Express the following sum as a simple fraction in lowest terms. $$\frac{1}{1\times2} + \frac{1}{2\times3} + \frac{1}{3\times4} + \frac{1}{4\times5} + \frac{1}{5\times6}$$ || ans=\frac{5}{6}
+## borderline jac 0.45-0.7 (no exact/ng13)

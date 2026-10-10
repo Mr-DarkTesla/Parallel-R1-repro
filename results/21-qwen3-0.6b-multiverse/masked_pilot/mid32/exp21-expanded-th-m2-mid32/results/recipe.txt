@@ -1,0 +1,33 @@
+train=/work/exp21/expanded_th/sft_expanded_th_m2_tagged_train.parquet rows=2251 bytes=899145 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+val=/work/exp21/expanded_th/sft_expanded_th_m2_tagged_val.parquet rows=50 bytes=32730 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+steps_per_epoch=70 epochs=1 updates=32 rows_processed=1024 distinct_rows_processed=1024
+model=/work/assets/models/Qwen3-0.6B-mv vocab_size=151936 dtype=torch.bfloat16 tied=True
+Sat Oct 10 13:03:12 MSK 2026
+3c39df93c8d9ebed64beaf35644c3eddd6bca591
+ M verl/verl/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/__pycache__/protocol.cpython-310.pyc
+ M verl/verl/utils/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/__pycache__/config.cpython-310.pyc
+ M verl/verl/utils/__pycache__/device.cpython-310.pyc
+ M verl/verl/utils/__pycache__/logging_utils.cpython-310.pyc
+ M verl/verl/utils/__pycache__/py_functional.cpython-310.pyc
+ M verl/verl/utils/__pycache__/tokenizer.cpython-310.pyc
+ M verl/verl/utils/__pycache__/torch_functional.cpython-310.pyc
+?? scripts/exp21/__pycache__/
+?? scripts/exp21/run_expanded_thinking_after_eval_pod.sh
+?? scripts/exp21/run_expanded_thinking_control_eval_pod.sh
+?? scripts/exp21/run_expanded_thinking_control_pod.sh
+?? scripts/exp21/run_expanded_thinking_m2_control_after_lite_pod.sh
+?? scripts/exp21/run_expanded_thinking_masked_pilot_pod.sh
+?? scripts/exp21/run_expanded_thinking_mid32_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_after_eval_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_after_pilot_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_eval_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_lite16_after_pilot_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_lite16_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_masked_pilot_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_sft_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_tagboost64_pod.sh
+?? verl/outputs/
+?? verl/verl/utils/dataset/__pycache__/multiverse_structure.cpython-310.pyc
+GPUs=1 updates=32 global_batch=32 micro_batch_per_gpu=4 max_length=4096 lr=5e-6 epochs=1 overrides=+data.structure=multiverse optim.tag_lr_mult=100

@@ -1,0 +1,892 @@
+{
+  "model": "/tmp/exp21-expanded-th-runs/exp21-expanded-th-m1/model",
+  "validation": "/work/exp21/expanded_th/sft_expanded_th_m1_tagged_val.parquet",
+  "summary": {
+    "path_first": {
+      "structured": {
+        "n": 8,
+        "median_prob": 0.9995922446250916,
+        "top1_rate": 1.0
+      },
+      "causal": {
+        "n": 8,
+        "median_prob": 0.9995922446250916,
+        "top1_rate": 1.0
+      }
+    },
+    "path_later": {
+      "structured": {
+        "n": 8,
+        "median_prob": 0.9998392760753632,
+        "top1_rate": 1.0
+      },
+      "causal": {
+        "n": 8,
+        "median_prob": 1.0313191296518198e-06,
+        "top1_rate": 0.0
+      }
+    },
+    "path_close": {
+      "structured": {
+        "n": 16,
+        "median_prob": 0.999949038028717,
+        "top1_rate": 1.0
+      },
+      "causal": {
+        "n": 16,
+        "median_prob": 0.8177198171615601,
+        "top1_rate": 0.6875
+      }
+    },
+    "conclusion": {
+      "structured": {
+        "n": 8,
+        "median_prob": 0.9999576807022095,
+        "top1_rate": 1.0
+      },
+      "causal": {
+        "n": 8,
+        "median_prob": 0.9986361265182495,
+        "top1_rate": 1.0
+      }
+    },
+    "parallel_close": {
+      "structured": {
+        "n": 8,
+        "median_prob": 0.9999998807907104,
+        "top1_rate": 1.0
+      },
+      "causal": {
+        "n": 8,
+        "median_prob": 0.9999991655349731,
+        "top1_rate": 1.0
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "math-train/5856",
+      "path_count": 2,
+      "response_tokens": 253,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 88,
+          "scores": {
+            "structured": {
+              "prob": 0.9995230436325073,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9995230436325073,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 128,
+          "scores": {
+            "structured": {
+              "prob": 0.9999135732650757,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999135732650757,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 130,
+          "scores": {
+            "structured": {
+              "prob": 0.9996553659439087,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 1.0750341061793733e-06,
+              "rank": 647,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 170,
+          "scores": {
+            "structured": {
+              "prob": 0.9999313354492188,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.0005179729778319597,
+              "rank": 3,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 172,
+          "scores": {
+            "structured": {
+              "prob": 0.9999635219573975,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.9993184804916382,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 208,
+          "scores": {
+            "structured": {
+              "prob": 1.0,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999991655349731,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "math-train/4561",
+      "path_count": 2,
+      "response_tokens": 584,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 155,
+          "scores": {
+            "structured": {
+              "prob": 0.9996011853218079,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9996011853218079,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 272,
+          "scores": {
+            "structured": {
+              "prob": 0.9999585151672363,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999585151672363,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 274,
+          "scores": {
+            "structured": {
+              "prob": 0.9999303817749023,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 1.120043634728063e-06,
+              "rank": 119,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 400,
+          "scores": {
+            "structured": {
+              "prob": 0.9999293088912964,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 2.585514448583126e-05,
+              "rank": 6,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 402,
+          "scores": {
+            "structured": {
+              "prob": 0.999957799911499,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.9960281848907471,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 470,
+          "scores": {
+            "structured": {
+              "prob": 0.9999998807907104,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999966621398926,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "math-train/5462",
+      "path_count": 2,
+      "response_tokens": 304,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 107,
+          "scores": {
+            "structured": {
+              "prob": 0.9981651902198792,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9981651902198792,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 153,
+          "scores": {
+            "structured": {
+              "prob": 0.9999674558639526,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999674558639526,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 155,
+          "scores": {
+            "structured": {
+              "prob": 0.9999369382858276,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 9.876041531242663e-07,
+              "rank": 502,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 201,
+          "scores": {
+            "structured": {
+              "prob": 0.9999388456344604,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 2.429696723993402e-05,
+              "rank": 3,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 203,
+          "scores": {
+            "structured": {
+              "prob": 0.9997798800468445,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.9950834512710571,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 251,
+          "scores": {
+            "structured": {
+              "prob": 0.9999997615814209,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999991655349731,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "math-train/1880",
+      "path_count": 2,
+      "response_tokens": 297,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 89,
+          "scores": {
+            "structured": {
+              "prob": 0.9995953440666199,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9995953440666199,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 149,
+          "scores": {
+            "structured": {
+              "prob": 0.9999871253967285,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999871253967285,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 151,
+          "scores": {
+            "structured": {
+              "prob": 0.9999483823776245,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 7.7189434932734e-07,
+              "rank": 478,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 211,
+          "scores": {
+            "structured": {
+              "prob": 0.9999816417694092,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.5601291656494141,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 213,
+          "scores": {
+            "structured": {
+              "prob": 0.9999796152114868,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.9997304081916809,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 246,
+          "scores": {
+            "structured": {
+              "prob": 0.9999996423721313,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999973773956299,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "math-train/1147",
+      "path_count": 2,
+      "response_tokens": 344,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 106,
+          "scores": {
+            "structured": {
+              "prob": 0.9995891451835632,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9995891451835632,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 222,
+          "scores": {
+            "structured": {
+              "prob": 0.9999697208404541,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999697208404541,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 224,
+          "scores": {
+            "structured": {
+              "prob": 0.9998687505722046,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 1.2799654314221698e-06,
+              "rank": 810,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 270,
+          "scores": {
+            "structured": {
+              "prob": 0.9997683167457581,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.6355260610580444,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 272,
+          "scores": {
+            "structured": {
+              "prob": 0.9999575614929199,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.999030351638794,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 311,
+          "scores": {
+            "structured": {
+              "prob": 0.9999998807907104,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999995231628418,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gsm8k-train/2",
+      "path_count": 2,
+      "response_tokens": 227,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 68,
+          "scores": {
+            "structured": {
+              "prob": 0.9997958540916443,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9997958540916443,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 107,
+          "scores": {
+            "structured": {
+              "prob": 0.9999759197235107,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999759197235107,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 109,
+          "scores": {
+            "structured": {
+              "prob": 0.9997005462646484,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 4.751736781827276e-08,
+              "rank": 1255,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 158,
+          "scores": {
+            "structured": {
+              "prob": 0.9999724626541138,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 3.535520954756066e-05,
+              "rank": 2,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 160,
+          "scores": {
+            "structured": {
+              "prob": 0.9999521970748901,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.9982419013977051,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 202,
+          "scores": {
+            "structured": {
+              "prob": 0.9999998807907104,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999996423721313,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gsm8k-train/5367",
+      "path_count": 2,
+      "response_tokens": 324,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 87,
+          "scores": {
+            "structured": {
+              "prob": 0.9995158910751343,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9995158910751343,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 126,
+          "scores": {
+            "structured": {
+              "prob": 0.9999315738677979,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999315738677979,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 128,
+          "scores": {
+            "structured": {
+              "prob": 0.9998098015785217,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 7.695683734709746e-08,
+              "rank": 641,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 213,
+          "scores": {
+            "structured": {
+              "prob": 0.9998959302902222,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.4983336627483368,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 215,
+          "scores": {
+            "structured": {
+              "prob": 0.9999639987945557,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.9520478844642639,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 265,
+          "scores": {
+            "structured": {
+              "prob": 1.0,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999991655349731,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "gsm8k-train/4681",
+      "path_count": 2,
+      "response_tokens": 242,
+      "targets": [
+        {
+          "label": "path_first",
+          "response_token_index": 82,
+          "scores": {
+            "structured": {
+              "prob": 0.9997435212135315,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 0.9997435212135315,
+              "rank": 1,
+              "top1": "<Path>"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 131,
+          "scores": {
+            "structured": {
+              "prob": 0.9999395608901978,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.9999395608901978,
+              "rank": 1,
+              "top1": "</Path>"
+            }
+          }
+        },
+        {
+          "label": "path_later",
+          "response_token_index": 133,
+          "scores": {
+            "structured": {
+              "prob": 0.9996988773345947,
+              "rank": 1,
+              "top1": "<Path>"
+            },
+            "causal": {
+              "prob": 1.290201453230111e-05,
+              "rank": 115,
+              "top1": "2"
+            }
+          }
+        },
+        {
+          "label": "path_close",
+          "response_token_index": 183,
+          "scores": {
+            "structured": {
+              "prob": 0.9999651908874512,
+              "rank": 1,
+              "top1": "</Path>"
+            },
+            "causal": {
+              "prob": 0.11775239557027817,
+              "rank": 2,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "conclusion",
+          "response_token_index": 185,
+          "scores": {
+            "structured": {
+              "prob": 0.9999542236328125,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            },
+            "causal": {
+              "prob": 0.9998420476913452,
+              "rank": 1,
+              "top1": "<Conclusion>"
+            }
+          }
+        },
+        {
+          "label": "parallel_close",
+          "response_token_index": 214,
+          "scores": {
+            "structured": {
+              "prob": 0.9999997615814209,
+              "rank": 1,
+              "top1": "</Parallel>"
+            },
+            "causal": {
+              "prob": 0.9999984502792358,
+              "rank": 1,
+              "top1": "</Parallel>"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
