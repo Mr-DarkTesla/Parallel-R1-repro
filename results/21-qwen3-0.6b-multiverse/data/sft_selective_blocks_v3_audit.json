@@ -1,0 +1,43 @@
+{
+  "base": "sft_selective_blocks_v2",
+  "frontblock_source": "pair_expanded_m1_frontblock.jsonl",
+  "splits": {
+    "train": {
+      "rows": 2748,
+      "parallel_rows_replaced": 555,
+      "non_parallel_rows_unchanged": 2193,
+      "parallel_distinct_ids": 185,
+      "frontblock_transformed_rows": 489,
+      "frontblock_unchanged_rows": 66,
+      "source_counts": {
+        "math": 1578,
+        "gsm8k": 768,
+        "arc": 402
+      },
+      "kind_counts": {
+        "replay_nt": 879,
+        "replay_th": 804,
+        "parallel_th": 555,
+        "control_th": 510
+      }
+    },
+    "val": {
+      "rows": 63,
+      "parallel_rows_replaced": 24,
+      "non_parallel_rows_unchanged": 39,
+      "parallel_distinct_ids": 8,
+      "frontblock_transformed_rows": 18,
+      "frontblock_unchanged_rows": 6,
+      "source_counts": {
+        "math": 36,
+        "gsm8k": 21,
+        "arc": 6
+      },
+      "kind_counts": {
+        "parallel_th": 24,
+        "replay_nt": 21,
+        "replay_th": 18
+      }
+    }
+  }
+}
