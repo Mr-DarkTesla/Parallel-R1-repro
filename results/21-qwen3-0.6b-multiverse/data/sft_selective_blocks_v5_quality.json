@@ -1,0 +1,40 @@
+{
+  "train_rows": 2748,
+  "val_rows": 63,
+  "val_identical_to_v2": true,
+  "train_val_problem_ids_disjoint": true,
+  "v2_non_positive_rows_identical": true,
+  "positive_distinct_ids": 305,
+  "positive_copies_by_source": {
+    "math": 372,
+    "gsm8k": 183
+  },
+  "math_copy_distribution": {
+    "two": 180,
+    "three": 4
+  },
+  "gsm8k_copy_distribution": {
+    "one": 59,
+    "two": 62
+  },
+  "all_positive_answers_match_original_two_path_source": 579,
+  "answer_fields_match_pool": 579,
+  "post_parallel_merge_rows": 579,
+  "valid_two_path_blocks_inside_think": 579,
+  "all_tagged_rows_inside_think": 579,
+  "tags_outside_think": 0,
+  "train_kind_counts": {
+    "parallel_th": 555,
+    "replay_nt": 879,
+    "control_th": 510,
+    "replay_th": 804
+  },
+  "token_limit": {
+    "evidence": "m1_twopath_target_audit.json",
+    "same_positive_prompts_and_answers_as_audited_source": true,
+    "train_max_tokens": 3838,
+    "val_max_tokens": 3513,
+    "over_4096": 0
+  },
+  "leakcheck": "All v5 positive questions are v1 target questions from the prior leakchecked cleaned pool; see DATASET_POOL.md."
+}
