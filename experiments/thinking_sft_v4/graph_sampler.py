@@ -16,10 +16,13 @@ through </Plan> (so they run in any causal backend, e.g. vLLM, at positions base
 context holds a finished block (summary, the main text after it, a second block) runs in HFBackend with the
 contract mask (graph_attention_mask) and positions (graph_positions).
 
-Budget semantics follow the RL loop (parallel_thinking_loop_v3._plan_block): every call gets at most the
-sampled-token room left (`budget - T`); all branches of a block get the same room (they run in parallel, so T can
-exceed the budget by the branches of the last block); the plan is capped by plan_cap and each branch by
-branch_cap. A summary or main call with no room left ends the trajectory as trajectory_budget.
+Budget semantics follow the RL loop (parallel_thinking_loop_v3, response_length = budget): the room of a call is
+`budget - len(response so far)`, runtime-inserted tokens included (branches=, <Plan>, <Path> i:, </Parallel>
+<Summary>, inserted closing tags), exactly as the RL loop's `remaining` / `room - len(out['ids'])`. COUNT gets
+min(1, room), the plan min(plan_cap, room); every branch of a block gets min(branch_cap, left - len(<Path> i:) - 1)
+with `left` the room after </Plan> (they run in parallel, so the response can exceed the budget by the branches
+of the last block; the -1 keeps space for an inserted </Path>). A summary or main call with no room left ends the
+trajectory as trajectory_budget (RL: status ok, the response is cut at response_length).
 """
 import math
 from dataclasses import dataclass, field
@@ -360,7 +363,8 @@ class GraphSampler:
         return contract.main_node(t.blocks_done, self.max_blocks, t.allow_parallel)
 
     def room(self, t):
-        return self.budget - t.sampled
+        """Response tokens left, inserted ones counted (RL: response_length - len(response))."""
+        return self.budget - (len(t.ids) - t.prompt_len)
 
     def request(self, t, context, node, stop, max_tokens):
         t.requests_made += 1
@@ -383,11 +387,15 @@ class GraphSampler:
                      self.request(t, t.ids, contract.PLAN, stop, min(self.plan_cap, self.room(t))))]
         if t.stage == 'paths':
             stop = [self.tag['</Path>'], *self.eos]
-            cap = min(self.branch_cap, self.room(t))
+            assert len(t.ids) == t.prefix_end
+            left = self.room(t)  # shared by all branches (RL: left = room - len(out['ids']) after </Plan>)
             prefix = t.ids[:t.prefix_end]
-            return [('path', block, i, self.request(
-                t, prefix + [self.tag['<Path>']] + contract.path_prefix_ids(self.tokenizer, i), contract.PATH, stop,
-                cap)) for i in range(1, t.branches + 1)]
+            calls = []
+            for i in range(1, t.branches + 1):
+                own = [self.tag['<Path>']] + contract.path_prefix_ids(self.tokenizer, i)
+                cap = min(self.branch_cap, left - len(own) - 1)
+                calls.append(('path', block, i, self.request(t, prefix + own, contract.PATH, stop, cap)))
+            return calls
         if t.stage == 'summary':
             stop = [self.tag['</Summary>'], *self.eos]
             return [('summary', block, None, self.request(t, t.ids, contract.SUMMARY, stop, self.room(t)))]
@@ -448,7 +456,8 @@ class GraphSampler:
             return
         record = t.blocks[-1]
         if stage == 'count':
-            if request.max_tokens < 1:
+            if request.max_tokens < 1 or not tokens:
+                # no room, or the backend had none (VLLMBackend at max_model_len): RL's 'budget' stop
                 t.status = record['plan_status'] = contract.PLAN_BUDGET_EXHAUSTED
                 return
             t.calls.append(dict(node=contract.COUNT, block=block, sampled=len(tokens)))

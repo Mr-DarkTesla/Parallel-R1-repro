@@ -3,10 +3,14 @@
   python eval_graph.py --model CKPT --tasks math500_test.jsonl --gold math500_test_gold.jsonl \
       --mode both --backend vllm --out runs/eval_v4
 
-Task rows: id + question/problem/prompt; gold rows: id + answer/oracle/gold/final (a MATH solution is reduced to
-its last \\boxed{...}). Without --gold the answer is read from the task rows. Grading matches the RL reward
-(parallel_think_cost.py): the answer region is the text after the last </think> outside every block; its last
-\\boxed{} is compared with the gold by DAPO normalization, then math_verify when installed.
+Task rows: id (id/index/uid/unique_id/idx/task_id) + question/problem/prompt; gold rows: id + answer/oracle/gold/
+final (a MATH solution is reduced to its last \\boxed{...}). Without --gold the answer is read from the task rows.
+With --gold, rows are paired by id; pairing by row order happens only when neither file has an id in any row.
+Grading matches the RL reward (parallel_think_cost.compute_score): the answer region is the text after the last
+</think> outside every block; its last \\boxed{...} (math_dapo.last_boxed_only_string + remove_boxed, else the last
+'Final Answer:' line) is compared with the gold by DAPO normalization, then math_verify when installed; a
+trajectory that ended on a plan failure (invalid_plan, plan_incomplete, plan_budget_exhausted) is never correct
+(`answer_correct` keeps the ungated comparison). trajectory_budget stays gradable (RL status 'ok').
 
 Outputs in --out: report.json (per mode), samples_<mode>.jsonl, samples.md (10 samples per mode).
 """
@@ -24,7 +28,9 @@ from common import REPO, contract
 
 QUESTION_KEYS = ('question', 'problem', 'prompt', 'input', 'query')
 ANSWER_KEYS = ('answer', 'oracle', 'gold', 'final', 'final_answer', 'ground_truth', 'solution', 'target')
-ID_KEYS = ('id', 'index', 'uid', 'idx', 'task_id')
+ID_KEYS = ('id', 'index', 'uid', 'unique_id', 'idx', 'task_id')
+# Statuses the RL loop reports as trajectory_status != 'ok': the reward forces c = 0.
+ENDED = (contract.INVALID_PLAN, contract.PLAN_INCOMPLETE, contract.PLAN_BUDGET_EXHAUSTED)
 
 # ------------------------------------------------------------------------------------------------ grading
 
@@ -50,8 +56,26 @@ SPECIAL = re.compile(r'<\|[^|]*\|>')
 BLOCK = re.compile(r'<Parallel>.*?(</Parallel>|$)', re.S)
 
 
+def reward_boxed(text):
+    """As the RL reward: content of the last '\\boxed{' with matched braces (math_dapo.last_boxed_only_string +
+    remove_boxed), or None. No \\fbox, no bare '\\boxed x'."""
+    if MATH_DAPO is not None:
+        boxed = MATH_DAPO.last_boxed_only_string(text)
+        return None if boxed is None else MATH_DAPO.remove_boxed(boxed)
+    start = text.rfind('\\boxed{')  # same algorithm, only without the repo file
+    if start < 0:
+        return None
+    depth = 0
+    for index in range(start, len(text)):
+        depth += {'{': 1, '}': -1}.get(text[index], 0)
+        if text[index] == '}' and depth == 0:
+            return text[start + len('\\boxed{'):index]
+    return None
+
+
 def last_boxed(text):
-    """Content of the last \\boxed{...} / \\fbox{...} in text, or None."""
+    """Content of the last \\boxed{...} / \\fbox{...} in text, or None (reduces gold MATH solutions only; model
+    predictions go through reward_boxed)."""
     if text is None:
         return None
     start = max(text.rfind('\\boxed'), text.rfind('\\fbox'))
@@ -81,13 +105,20 @@ def answer_region(text):
 
 
 def extract_answer(region):
+    """As parallel_think_cost.extract_answer."""
     if region is None:
         return None
-    boxed = last_boxed(region)
+    boxed = reward_boxed(region)
     if boxed is not None:
         return boxed
     match = re.findall(r'(?i)Final Answer\s*:\s*([^\n]+)', region)
-    return match[-1].strip() if match else None
+    return match[-1] if match else None
+
+
+def graded(result, pred, gold):
+    """(correct, answer_correct): correct is the RL reward's c (0 after a plan failure)."""
+    answer_correct = equivalent(pred, gold)
+    return answer_correct and result['status'] not in ENDED, answer_correct
 
 
 def normalize(answer):
@@ -156,19 +187,37 @@ def gold_of(row):
     return boxed if boxed is not None else value.strip()
 
 
-def id_of(row, index):
+def explicit_id(row):
     value = pick(row, ID_KEYS)
     if value is None and isinstance(row.get('extra_info'), dict):
         value = row['extra_info'].get('index')
-    return str(value) if value is not None else str(index)
+    return None if value is None else str(value)
+
+
+def id_of(row, index):
+    value = explicit_id(row)
+    return value if value is not None else str(index)
 
 
 def load_items(tasks_path, gold_path=None, limit=None):
     tasks = read_jsonl(tasks_path)
     golds = {}
     if gold_path:
-        for index, row in enumerate(read_jsonl(gold_path)):
-            golds[id_of(row, index)] = gold_of(row)
+        gold_rows = read_jsonl(gold_path)
+        with_id = [sum(explicit_id(r) is not None for r in rows) for rows in (tasks, gold_rows)]
+        if with_id == [0, 0]:
+            print(f'eval_graph: neither {tasks_path} nor {gold_path} has an id key {ID_KEYS}: pairing golds by row '
+                  f'order', flush=True)
+            if len(tasks) != len(gold_rows):
+                raise ValueError(f'{len(tasks)} task rows but {len(gold_rows)} gold rows (paired by order)')
+        elif with_id != [len(tasks), len(gold_rows)]:
+            raise ValueError(f'id keys {ID_KEYS} in {with_id[0]}/{len(tasks)} task rows and {with_id[1]}/'
+                             f'{len(gold_rows)} gold rows: refusing to pair golds by row order')
+        for index, row in enumerate(gold_rows):
+            gold_id = id_of(row, index)
+            if gold_id in golds:
+                raise ValueError(f'duplicate gold id {gold_id} in {gold_path}')
+            golds[gold_id] = gold_of(row)
     items = []
     for index, row in enumerate(tasks):
         task_id = id_of(row, index)
@@ -237,6 +286,7 @@ def summarize(rows):
     report = dict(
         n=n,
         accuracy=sum(r['correct'] for r in rows) / n,
+        answer_accuracy_ungated=sum(r.get('answer_correct', r['correct']) for r in rows) / n,
         fork_rate=len(forked) / n,
         blocks_per_sample=len(blocks) / n,
         valid_plan_rate=(sum(b['plan_status'] == contract.VALID for b in blocks) / len(blocks)) if blocks else None,
@@ -290,7 +340,7 @@ def main(argv=None):
     parser.add_argument('--limit', type=int)
     parser.add_argument('--samples', type=int, default=1, help='samples per task')
     parser.add_argument('--out', required=True)
-    parser.add_argument('--budget', type=int, default=16384, help='sampled tokens per trajectory')
+    parser.add_argument('--budget', type=int, default=16384, help='response tokens per trajectory, inserted ones included (= RL response_length)')
     parser.add_argument('--branch-cap', type=int, default=4096)
     parser.add_argument('--plan-cap', type=int, default=256)
     parser.add_argument('--max-blocks', type=int, default=1, choices=(0, 1, 2))
@@ -331,8 +381,9 @@ def main(argv=None):
                 results = sampler.generate(prompts, seeds=seeds, allow_parallel=mode == 'graph')
                 for (item, j), result in zip(chunk, results):
                     pred = extract_answer(answer_region(result['text']))
+                    correct, answer_correct = graded(result, pred, item['gold'])
                     row = dict(id=item['id'], sample=j, question=item['question'], gold=item['gold'], pred=pred,
-                               correct=equivalent(pred, item['gold']), **result)
+                               correct=correct, answer_correct=answer_correct, **result)
                     row.pop('prompt_ids', None)
                     rows.append(row)
                     handle.write(json.dumps(row, ensure_ascii=False) + '\n')

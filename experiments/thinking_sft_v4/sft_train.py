@@ -31,7 +31,7 @@ import torch.nn.functional as F
 from torch.utils.checkpoint import checkpoint
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import CONTRACT_PATH, contract  # noqa: E402
+from common import BASE_MODEL, BASE_REVISION, CONTRACT_PATH, contract  # noqa: E402
 from sft_data import (CONTROL_KINDS, CONTROL_LOSS_KINDS, IGNORE, MODES, build_dataset, collate,  # noqa: E402
                       group_steps, id_in_val, read_jsonl, token_batches)
 from tags import ensure_tags  # noqa: E402
@@ -117,18 +117,36 @@ def sha256(path):
     return digest.hexdigest()
 
 
-def git_revision():
+HERE = Path(__file__).resolve().parent
+
+
+def _git(*args):
     try:
-        return subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=Path(__file__).parent, capture_output=True,
-                              text=True, timeout=10).stdout.strip() or None
+        result = subprocess.run(['git', *args], cwd=HERE, capture_output=True, text=True, timeout=10)
+        return result.stdout if result.returncode == 0 else None
     except Exception:
         return None
+
+
+def git_revision():
+    return (_git('rev-parse', 'HEAD') or '').strip() or None
+
+
+def code_state():
+    """HEAD, whether this package differs from it (uncommitted or untracked files), and sha256 of its .py files:
+    the code that trained a checkpoint, even from a dirty tree."""
+    status = _git('status', '--porcelain', '--', '.')
+    return dict(git=git_revision(), dirty=None if status is None else bool(status.strip()),
+                dirty_files=None if status is None else status.splitlines(),
+                package_sha256={path.name: sha256(path) for path in sorted(HERE.glob('*.py'))},
+                contract_sha256=contract.SHA256)
 
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     parser.add_argument('--model', required=True, help='HF id or local path (base model or SFT checkpoint)')
-    parser.add_argument('--revision', default=None, help='HF revision of --model')
+    parser.add_argument('--revision', default=None,
+                        help=f'HF revision of --model (default for {BASE_MODEL}: {BASE_REVISION}, as vm_selftest)')
     parser.add_argument('--data', required=True, type=Path)
     parser.add_argument('--val', type=Path, default=None)
     parser.add_argument('--val-frac', type=float, default=0.02, help='id-hash split when --val is not given')
@@ -230,6 +248,8 @@ def main(argv=None):
         return torch.autocast(device_type=device.type, dtype=torch.bfloat16, enabled=bf16)
 
     args.out.mkdir(parents=True, exist_ok=True)
+    if args.revision is None and args.model == BASE_MODEL:
+        args.revision = BASE_REVISION
     tokenizer = AutoTokenizer.from_pretrained(args.model, revision=args.revision)
     model = AutoModelForCausalLM.from_pretrained(args.model, revision=args.revision, torch_dtype=torch.float32,
                                                  attn_implementation=args.attn)
@@ -242,9 +262,11 @@ def main(argv=None):
     if args.val is not None:
         val, val_stats = load_samples(args.val, tokenizer, args.max_len, args.max_invalid_frac, 'val')
     else:
-        val = [s for s in train if id_in_val(s['id'], args.val_frac)]
-        train = [s for s in train if not id_in_val(s['id'], args.val_frac)]
-        val_stats = dict(split='id_hash', frac=args.val_frac, kept=len(val))
+        # split by problem (sft_data.group_key), so sibling rows of one prompt never straddle train and val
+        val = [s for s in train if id_in_val(s['group'], args.val_frac)]
+        train = [s for s in train if not id_in_val(s['group'], args.val_frac)]
+        val_stats = dict(split='group_hash', key='provenance.problem_id else sha256(prompt)', frac=args.val_frac,
+                         kept=len(val), groups=len({s['group'] for s in val}))
     if not train:
         raise SystemExit('no training samples')
     lengths = [s['length'] for s in train]
@@ -283,6 +305,11 @@ def main(argv=None):
                   val=str(args.val) if args.val else None, val_sha256=sha256(args.val) if args.val else None),
         args={k: (str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
         counts=dict(train=train_stats, val=val_stats, train_samples=len(train), val_samples=len(val)),
+        base_model=dict(name=args.model, requested_revision=args.revision,
+                        commit=getattr(model.config, '_commit_hash', None),
+                        tokenizer_commit=tokenizer.init_kwargs.get('_commit_hash'),
+                        local=Path(args.model).exists()),
+        code=code_state(),
         tags={k: v for k, v in tag_report.items()}, git=git_revision(), torch=torch.__version__,
         transformers=transformers_version, bf16=bf16, device=str(device), total_steps=total_steps)
     val_epochs = []

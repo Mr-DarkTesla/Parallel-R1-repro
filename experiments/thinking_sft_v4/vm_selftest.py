@@ -22,10 +22,10 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import exactness  # noqa: E402
 import sft_data as D  # noqa: E402
 import sft_train  # noqa: E402
-from common import contract  # noqa: E402
+from common import BASE_MODEL, BASE_REVISION, contract  # noqa: E402
 from tags import ensure_tags  # noqa: E402
 
-REVISION = 'c1899de289a04d12100db370d81485cdf75e47ca'
+REVISION = BASE_REVISION
 FIRST_TAG_ID = 151669
 BUILTIN = (
     '<think>\nOkay, we need all real x with x^2 - 5x + 6 = 0 and then the sum of the roots.\n\n'
@@ -52,7 +52,7 @@ class Checks:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', default='Qwen/Qwen3-0.6B')
+    parser.add_argument('--model', default=BASE_MODEL)
     parser.add_argument('--revision', default=REVISION, help="'' for a local --model path")
     parser.add_argument('--data', type=Path, default=None)
     parser.add_argument('--rows', type=int, default=200)
@@ -84,7 +84,10 @@ def main():
     check(ids == list(range(FIRST_TAG_ID, FIRST_TAG_ID + 8)), 'tag ids 151669..151676 in TAGS order', ids)
     check(report['status'] == 'initialized' and not report['resized'] and report['rows'] == 151936,
           'tags fit the padded rows', f'{report["status"]} rows={report["rows"]}')
-    check(report['tied'], 'tied embeddings')
+    # computed from the model: ensure_tags reports 'tied' only when it initialized the rows
+    output = model.get_output_embeddings()
+    tied = output is None or output.weight.data_ptr() == model.get_input_embeddings().weight.data_ptr()
+    check(tied, 'tied embeddings')
     check(report['max_offdiag_cos'] < 0.99, 'tag rows distinct', f'max cos {report["max_offdiag_cos"]:.3f}')
     tokens = contract.token_ids(tokenizer)
     check(tokens['<think>'] == 151667 and tokens['</think>'] == 151668, '<think>/</think> ids',

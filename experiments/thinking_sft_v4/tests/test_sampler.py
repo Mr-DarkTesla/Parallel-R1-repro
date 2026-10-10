@@ -475,3 +475,109 @@ def test_with_shared_bpe_fixtures():
     block = contract.format_block('cases', ['x > 0', 'x <= 0'], [' then f(x) = x', ' then f(x) = -x'], ' Both agree.')
     assert report['text'] == '<think>\nOkay, cases.\n\n' + block + '</think>\n\nThe answer is \\boxed{3}.<|im_end|>'
     assert report['status'] == gs.COMPLETE
+
+
+# ------------------------------------------------------------------------------------------------ review fixes
+
+def test_budget_counts_inserted_tokens_like_the_rl_loop(tok, model):
+    """room = budget - len(response), inserted tokens included (parallel_thinking_loop_v3: remaining / room -
+    len(out['ids'])); each branch gets min(branch_cap, left - len(<Path> i:) - 1)."""
+    main, plan = '<think>\nLet x.<Parallel>', 'decompose\n1: a\n2: b\n</Plan>'
+    head = len(enc(tok, main)) + len(enc(tok, 'branches=')) + 1 + 1  # main, branches=, count, <Plan>
+    # the plan gets exactly the 5 response tokens left after the inserted branches= and <Plan>
+    table = {k: v for k, v in FORK.items() if k[0] != 'plan'}
+    table[('plan', 1, None)] = plan
+    report = forced_sampler(tok, model, table, budget=head + 5).generate(['q'])[0]
+    assert report['status'] == contract.PLAN_BUDGET_EXHAUSTED and report['blocks'][0]['plan_tokens'] == 5
+    assert len(report['token_ids']) == head + 5
+    # 6 tokens left after </Plan>: every branch gets 6 - len(<Path>i:) - 1 = 2 (RL: left - len(prefix) - 1)
+    prefix_len = len(enc(tok, '<Path>1:'))
+    table = dict(FORK)
+    table.update({('path', 1, 1): ' a long first branch</Path>', ('path', 1, 2): ' a long second branch</Path>'})
+    budget = head + len(enc(tok, plan)) + 6
+    report = forced_sampler(tok, model, table, budget=budget, branch_cap=50).generate(['q'])[0]
+    block = report['blocks'][0]
+    assert [b['sampled'] for b in block['branches']] == [6 - prefix_len - 1] * 2
+    assert [b['stop'] for b in block['branches']] == ['budget', 'budget']
+    for start, end, _, _ in report['spans']:
+        assert end - start == 6  # <Path> i: 2 sampled </Path>(inserted): fits the room exactly
+    assert report['status'] == gs.TRAJECTORY_BUDGET and block['summary_tokens'] is None  # no room for a summary
+    # a main call is capped by the response length (inserted tokens of the block included)
+    table = summary_boost_table(FORK)
+    table[('main', 2, None)] = ' and then a very long continuation of the main chain'
+    report = forced_sampler(tok, model, table, budget=80, branch_cap=4).generate(['q'])[0]
+    assert report['status'] == gs.TRAJECTORY_BUDGET and len(report['token_ids']) == 80
+
+
+class EmptyCount:
+    """Backend that returns no tokens for COUNT, as VLLMBackend does when the context fills max_model_len."""
+    graph = True
+
+    def __init__(self, backend):
+        self.backend = backend
+
+    def generate(self, requests, sampling):
+        results = self.backend.generate(requests, sampling)
+        return [gs.Result([]) if r.node == contract.COUNT else res for r, res in zip(requests, results)]
+
+
+def test_count_without_room_in_the_backend_ends_the_trajectory(tok, model):
+    table = {('main', 1, None): FORK[('main', 1, None)]}
+    sampler = gs.GraphSampler(tok, EmptyCount(gs.HFBackend(model)), sampling=GREEDY, budget=80,
+                              force=forcing(tok, table))
+    report = sampler.generate(['q', 'r'])
+    assert [r['status'] for r in report] == [contract.PLAN_BUDGET_EXHAUSTED] * 2
+    assert all(r['blocks'][0]['plan_status'] == contract.PLAN_BUDGET_EXHAUSTED for r in report)
+
+
+def test_grading_matches_the_rl_reward():
+    import eval_graph as ev
+    region = ev.answer_region
+    # extraction: last '\boxed{' with matched braces, as math_dapo.last_boxed_only_string + remove_boxed
+    assert ev.extract_answer(region('</think>\\boxed{5} then \\fbox{6}')) == '5'
+    assert ev.extract_answer(region('</think>answer \\boxed{12}. Note: \\boxed is a macro')) == '12'
+    assert ev.extract_answer(region('</think>\\boxed 5 and {x}')) is None
+    assert ev.extract_answer(region('</think>Final Answer: 7 ')) == '7 '
+    if ev.MATH_DAPO is not None:
+        for text in ('\\boxed{a{b}c} and \\boxed{\\frac{1}{2}}', 'x', '\\boxed{unclosed', '\\boxed{}'):
+            boxed = ev.MATH_DAPO.last_boxed_only_string(text)
+            want = None if boxed is None else ev.MATH_DAPO.remove_boxed(boxed)
+            assert ev.reward_boxed(text) == want
+            saved, ev.MATH_DAPO = ev.MATH_DAPO, None
+            try:
+                assert ev.reward_boxed(text) == want  # the fallback copy agrees
+            finally:
+                ev.MATH_DAPO = saved
+    # a plan failure gives c = 0 (parallel_think_cost: trajectory_status != 'ok'), trajectory_budget stays gradable
+    text = '<think>\nx\n</think>\n\nSo \\boxed{4}<Parallel>branches=2<Plan>decompose\n1: a\n</Plan>'
+    pred = ev.extract_answer(region(text))
+    assert pred == '4'
+    for status in ev.ENDED:
+        assert ev.graded(dict(status=status), pred, '4') == (False, True)
+    for status in (gs.COMPLETE, gs.TRAJECTORY_BUDGET):
+        assert ev.graded(dict(status=status), pred, '4') == (True, True)
+
+
+def test_gold_pairing_by_id(tmp_path):
+    import json
+    import eval_graph as ev
+
+    def write(name, rows):
+        path = tmp_path / name
+        path.write_text('\n'.join(json.dumps(r) for r in rows))
+        return path
+
+    tasks = write('t.jsonl', [dict(unique_id='test/a/1.json', problem='p', answer='1'),
+                              dict(unique_id='test/a/2.json', problem='q', answer='2')])
+    gold = write('g.jsonl', [dict(unique_id='test/a/2.json', answer='2'), dict(unique_id='test/a/1.json', answer='1')])
+    items = ev.load_items(tasks, gold)
+    assert [(i['id'], i['question'], i['gold']) for i in items] == [('test/a/1.json', 'p', '1'),
+                                                                     ('test/a/2.json', 'q', '2')]
+    with pytest.raises(ValueError):  # ids on one side only: no silent pairing by order
+        ev.load_items(tasks, write('g2.jsonl', [dict(answer='1'), dict(answer='2')]))
+    with pytest.raises(ValueError):
+        ev.load_items(tasks, write('g3.jsonl', [dict(unique_id='test/a/1.json', answer='1'),
+                                                dict(unique_id='test/a/1.json', answer='2')]))
+    plain = ev.load_items(write('t4.jsonl', [dict(problem='p'), dict(problem='q')]),
+                          write('g4.jsonl', [dict(answer='1'), dict(answer='2')]))
+    assert [i['gold'] for i in plain] == ['1', '2']  # neither file has ids: by order, announced

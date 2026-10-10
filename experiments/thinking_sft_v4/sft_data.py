@@ -177,6 +177,15 @@ def validate_row(row):
     _check(think_closed, 'no_think_close')
     _check(state['pos'] == n - 1, 'truncated')
     take('<|im_end|>', what='im_end')
+    # A tag or control token split across adjacent text segments (main/answer runs included) is not caught per
+    # segment; re-tokenizing the assistant string would then give ids the sample does not have.
+    run = []
+    for s in segs + [None]:
+        if s is not None and s['text'] not in SPECIALS:
+            run.append(s['text'])
+            continue
+        _check(contract.plain_text(''.join(run)), 'tag_in_text', ''.join(run)[:80])
+        run = []
     _check(''.join(s['text'] for s in segs).endswith('<|im_end|>'), 'no_im_end')
     _check((row['mode'] == 'parallel') == bool(state['blocks']), 'mode_mismatch',
            f'{row["mode"]} with {len(state["blocks"])} blocks')
@@ -247,9 +256,9 @@ def tokenize_row(row, vocab):
             assert labels[span.start] == IGNORE
     else:
         positions = list(range(length))
-    return dict(id=row['id'], source=row['source'], mode=row['mode'], input_ids=input_ids, labels=labels,
-                position_ids=positions, spans=spans, control=control, length=length, prompt_length=len(prompt_ids),
-                n_loss=sum(label != IGNORE for label in labels))
+    return dict(id=row['id'], source=row['source'], mode=row['mode'], group=group_key(row), input_ids=input_ids,
+                labels=labels, position_ids=positions, spans=spans, control=control, length=length,
+                prompt_length=len(prompt_ids), n_loss=sum(label != IGNORE for label in labels))
 
 
 def read_jsonl(path):
@@ -293,8 +302,19 @@ def build_dataset(rows, tokenizer, max_len, strict=False):
     return samples, stats
 
 
-def id_in_val(sample_id, frac):
-    digest = int(hashlib.sha256(sample_id.encode()).hexdigest()[:8], 16)
+def group_key(row):
+    """Validation-split key shared by every row of one problem (parallel and sequential modes, several samples):
+    provenance problem_id when the generator records one, else the sha256 of the prompt."""
+    provenance = row.get('provenance') if isinstance(row.get('provenance'), dict) else {}
+    problem = provenance.get('problem_id')
+    if problem not in (None, ''):
+        return f'problem:{problem}'
+    return 'prompt:' + hashlib.sha256(row['prompt'].encode()).hexdigest()
+
+
+def id_in_val(key, frac):
+    """True if the split key (group_key of a sample) falls in the validation fraction."""
+    digest = int(hashlib.sha256(key.encode()).hexdigest()[:8], 16)
     return digest % 100000 < frac * 100000
 
 

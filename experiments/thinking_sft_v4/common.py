@@ -15,6 +15,10 @@ CONTRACT_PATH = Path(os.environ.get(
 EXPECTED_SHA256 = os.environ.get(
     'THINK_CONTRACT_SHA256', '2503e4a330752554464cceab138b9b65057ef2e64939c8632b9a4fe91d6e346e')
 
+# Hugging Face snapshot of Qwen/Qwen3-0.6B the VM self-test and the trainer use by default.
+BASE_MODEL = 'Qwen/Qwen3-0.6B'
+BASE_REVISION = 'c1899de289a04d12100db370d81485cdf75e47ca'
+
 
 def load_contract(path=CONTRACT_PATH):
     data = Path(path).read_bytes()

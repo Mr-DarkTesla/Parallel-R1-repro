@@ -436,3 +436,82 @@ def test_bf16_autocast_graph_forward_close_to_fp32():
             approx, _ = sft_train.token_losses(model, low)
     assert torch.isfinite(approx).all()
     assert (exact - approx).abs().max() < 0.1
+
+
+# ------------------------------------------------------------------------------------------------ review fixes
+
+def _split(row, old, pieces):
+    row = json.loads(json.dumps(row))
+    index = next(i for i, s in enumerate(row['segments']) if s['text'] == old)
+    template = row['segments'][index]
+    row['segments'][index:index + 1] = [dict(template, text=piece) for piece in pieces]
+    return row
+
+
+def test_tags_split_across_text_segments_are_rejected():
+    row = D.make_row('x', 'test', PROMPT, TWO)
+    for old, pieces in (('\nLet x be a real number.\n\n', ['\nLet x <Pa', 'th> real.\n\n']),
+                        ('\n\nanswer', ['\n\nanswer<|im_', 'start|>']),
+                        (' body two', [' body </Pa', 'th> two'])):
+        bad = _split(row, old, pieces)
+        with pytest.raises(D.DataError) as error:
+            D.validate_row(bad)
+        assert error.value.reason in ('tag_in_text', 'tag_in_path')
+    D.validate_row(_split(row, '\nLet x be a real number.\n\n', ['\nLet x be ', 'a real number.\n\n']))  # benign
+
+
+def test_validation_split_keeps_sibling_rows_together():
+    tokenizer, _ = tagged()
+    vocab = D.Vocab(tokenizer)
+    rows = []
+    for i in range(60):
+        prompt = f'Problem {i}: compute {i} + 1.'
+        rows += [D.make_row(f'prob{i}-par', 'test', prompt, TWO), D.make_row(f'prob{i}-seq', 'test', prompt, SEQUENTIAL)]
+    samples = [D.tokenize_row(row, vocab) for row in rows]
+    sides = {}
+    for s in samples:
+        sides.setdefault(s['id'].split('-')[0], set()).add(D.id_in_val(s['group'], 0.3))
+    assert all(len(side) == 1 for side in sides.values())
+    assert 0 < sum(True in side for side in sides.values()) < len(sides)
+    assert sum(D.id_in_val(s['id'], 0.3) != D.id_in_val(samples[k ^ 1]['id'], 0.3)
+               for k, s in enumerate(samples)) > 0  # the old id split separated siblings
+    with_id = D.make_row('a', 'test', PROMPT, TWO, provenance=dict(problem_id='math/7'))
+    other = D.make_row('b', 'test', 'a different prompt text', SEQUENTIAL, provenance=dict(problem_id='math/7'))
+    assert D.group_key(with_id) == D.group_key(other) == 'problem:math/7'
+
+
+def test_manifest_records_base_model_and_code(tmp_path):
+    tokenizer = build_tiny_tokenizer()
+    model = build_tiny_model(tokenizer)
+    base = tmp_path / 'base'
+    model.save_pretrained(base)
+    tokenizer.save_pretrained(base)
+    write_jsonl(tmp_path / 'train.jsonl', make_rows()[:4])
+    manifest = sft_train.main([
+        '--model', str(base), '--data', str(tmp_path / 'train.jsonl'), '--val-frac', '0', '--out',
+        str(tmp_path / 'run'), '--epochs', '1', '--micro-batch-tokens', '450', '--grad-accum-tokens', '300',
+        '--no-bf16', '--max-steps', '1'])
+    assert manifest['base_model']['name'] == str(base) and manifest['base_model']['local']
+    assert manifest['counts']['val']['split'] == 'group_hash'
+    code = manifest['code']
+    assert {'sft_data.py', 'sft_train.py', 'tags.py', 'common.py'} <= set(code['package_sha256'])
+    assert code['package_sha256']['sft_train.py'] == sft_train.sha256(Path(sft_train.__file__))
+    assert code['contract_sha256'] == contract.SHA256 and 'dirty' in code
+    saved = json.loads((tmp_path / 'run' / 'final' / 'train_manifest.json').read_text())
+    assert saved['code']['package_sha256'] == code['package_sha256']
+
+
+def test_vm_selftest_reports_failures_on_a_tagged_checkpoint(tmp_path, monkeypatch, capsys):
+    """A model whose tokenizer already has the tags (status present_unmarked) fails checks but finishes."""
+    import vm_selftest
+    tokenizer = build_tiny_tokenizer()
+    tokenizer.add_special_tokens({'additional_special_tokens': list(contract.TAGS)})
+    model = build_tiny_model(tokenizer)
+    model.save_pretrained(tmp_path)
+    tokenizer.save_pretrained(tmp_path)
+    monkeypatch.setattr(sys, 'argv', ['vm_selftest.py', '--model', str(tmp_path), '--revision', ''])
+    with pytest.raises(SystemExit) as exit_:
+        vm_selftest.main()
+    out = capsys.readouterr().out
+    assert exit_.value.code == 1 and '[PASS] tied embeddings' in out and 'FAILED' in out
+    assert '[PASS] fp32 exactness builtin' in out
