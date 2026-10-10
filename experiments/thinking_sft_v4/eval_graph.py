@@ -1,11 +1,14 @@
 """Evaluate an SFT'd parallel-thinking checkpoint with the exact graph sampler (graph_sampler.py).
 
-  python eval_graph.py --model CKPT --tasks math500_test.jsonl --gold math500_test_gold.jsonl \
-      --mode both --backend vllm --out runs/eval_v4
+  python eval_graph.py --model CKPT --tasks data/think_math500_pilot.parquet --mode both --backend vllm \
+      --out runs/eval_v4/math500_pilot
+  python eval_graph.py --model CKPT --tasks tasks.jsonl --gold gold.jsonl --mode graph --out runs/eval_v4/x
 
-Task rows: id (id/index/uid/unique_id/idx/task_id) + question/problem/prompt; gold rows: id + answer/oracle/gold/
-final (a MATH solution is reduced to its last \\boxed{...}). Without --gold the answer is read from the task rows.
-With --gold, rows are paired by id; pairing by row order happens only when neither file has an id in any row.
+Task rows (.jsonl or .parquet): an id (id/index/uid/unique_id/idx/task_id) and question/problem/prompt; a
+chat-message prompt (the RL parquet files of prepare_think.py, template already applied) is used verbatim, a bare
+question gets --prompt-template. Gold rows: id + answer/oracle/gold/final (a MATH solution is reduced to its last
+\\boxed{...}); without --gold the answer is read from the task rows (reward_model.ground_truth included). With
+--gold, rows are paired by id; pairing by row order happens only when neither file has an id in any row.
 Grading matches the RL reward (parallel_think_cost.compute_score): the answer region is the text after the last
 </think> outside every block; its last \\boxed{...} (math_dapo.last_boxed_only_string + remove_boxed, else the last
 'Final Answer:' line) is compared with the gold by DAPO normalization, then math_verify when installed; a
@@ -150,6 +153,10 @@ def equivalent(pred, gold):
 # ------------------------------------------------------------------------------------------------ data
 
 def read_jsonl(path):
+    """Rows of a .jsonl file, or of a .parquet file (the RL data of experiments/qwen06/prepare_think.py)."""
+    if str(path).endswith('.parquet'):
+        import pyarrow.parquet as pq
+        return pq.read_table(path).to_pylist()
     with open(path) as handle:
         return [json.loads(line) for line in handle if line.strip()]
 
@@ -162,14 +169,17 @@ def pick(row, keys):
 
 
 def question_of(row):
+    """(text, is_message): a chat-message prompt (RL parquet rows: the template is already applied) is used as the
+    user message verbatim; a bare question/problem gets --prompt-template."""
     value = pick(row, QUESTION_KEYS)
-    if isinstance(value, list):  # chat messages
+    message = isinstance(value, list)
+    if message:  # chat messages
         value = next((m['content'] for m in value if m.get('role') == 'user'), None)
     if isinstance(value, dict):
         value = pick(value, QUESTION_KEYS)
     if value is None:
         raise KeyError(f'no question in task row keys {sorted(row)}')
-    return str(value)
+    return str(value), message
 
 
 def gold_of(row):
@@ -224,7 +234,8 @@ def load_items(tasks_path, gold_path=None, limit=None):
         gold = golds.get(task_id) if gold_path else gold_of(row)
         if gold_path and task_id not in golds:
             raise KeyError(f'task {task_id} has no gold row')
-        items.append(dict(id=task_id, question=question_of(row), gold=gold))
+        question, message = question_of(row)
+        items.append(dict(id=task_id, question=question, message=message, gold=gold))
     return items[:limit] if limit else items
 
 
@@ -376,7 +387,8 @@ def main(argv=None):
         with open(path, 'w') as handle:
             for begin in range(0, len(jobs), args.chunk):
                 chunk = jobs[begin:begin + args.chunk]
-                prompts = [args.prompt_template.format(problem=item['question']) for item, _ in chunk]
+                prompts = [item['question'] if item['message'] else args.prompt_template.format(problem=item['question'])
+                           for item, _ in chunk]
                 seeds = [args.seed * 1_000_003 + (begin + k) for k in range(len(chunk))]
                 results = sampler.generate(prompts, seeds=seeds, allow_parallel=mode == 'graph')
                 for (item, j), result in zip(chunk, results):

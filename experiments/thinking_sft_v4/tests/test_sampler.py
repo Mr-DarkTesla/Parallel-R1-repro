@@ -581,3 +581,27 @@ def test_gold_pairing_by_id(tmp_path):
     plain = ev.load_items(write('t4.jsonl', [dict(problem='p'), dict(problem='q')]),
                           write('g4.jsonl', [dict(answer='1'), dict(answer='2')]))
     assert [i['gold'] for i in plain] == ['1', '2']  # neither file has ids: by order, announced
+
+
+def test_rl_parquet_rows_are_used_verbatim(tmp_path):
+    """prepare_think.py rows: templated chat prompt, reward_model.ground_truth, index (read as jsonl here; the VM
+    reads the .parquet files with pyarrow)."""
+    import json
+    import eval_graph as ev
+    templated = gs.DEFAULT_TEMPLATE.format(problem='What is 1+1?')
+    row = dict(data_source='math500', prompt=[{'role': 'user', 'content': templated}], ability='math',
+               reward_model={'ground_truth': '2', 'style': 'rule'}, extra_info={'index': 'test/a/1.json'},
+               index='test/a/1.json')
+    path = tmp_path / 'rl.jsonl'
+    path.write_text(json.dumps(row))
+    item, = ev.load_items(path)
+    assert item == dict(id='test/a/1.json', question=templated, message=True, gold='2')
+    bare, = ev.load_items(_write(tmp_path, [dict(id='q', problem='What is 1+1?', answer='2')]))
+    assert not bare['message'] and bare['question'] == 'What is 1+1?'
+
+
+def _write(tmp_path, rows):
+    import json
+    path = tmp_path / 'bare.jsonl'
+    path.write_text('\n'.join(json.dumps(r) for r in rows))
+    return path
