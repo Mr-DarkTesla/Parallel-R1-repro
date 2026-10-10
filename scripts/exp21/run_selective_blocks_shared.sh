@@ -21,7 +21,7 @@ test -e "$pilots/gsm8k_dev10.parquet" && test -e "$pilots/math_devnext10.parquet
 test -e "$repo/scripts/tag_validator.py" && test -e "$repo/scripts/bench/score.py"
 
 if [ ! -e "$run/DONE" ]; then
-    if [ -e "$run" ]; then
+    if [ -e "$run" ] && [ ! -e "$run/TRAINED" ]; then
         echo "Incomplete run exists at $run; inspect before resuming" >&2
         exit 1
     fi
