@@ -314,8 +314,14 @@ class FSDPParallelThinkingSFTTrainer:
         # optim.tag_lr_mult: learning rate multiplier for the embedding rows of the new tag tokens (tied with the output
         # rows). At lr 1e-5 for 64 updates AdamW moves an element by at most ~4e-4, so these rows stay at their init.
         self.tag_lr_mult = float(self.config.optim.get("tag_lr_mult", 1.0))
+        self.tag_rows_only = bool(self.config.optim.get("tag_rows_only", False))
         tag_tokens = [t for t in NEW_TAG_TOKENS if t in self.tokenizer.get_added_vocab()]
         self.tag_ids = [self.tokenizer.convert_tokens_to_ids(t) for t in tag_tokens]
+        if self.tag_rows_only:
+            assert fsdp_strategy == "fsdp2" and self.tag_ids
+            assert self.model_config.tie_word_embeddings
+            self.optimizer.param_groups[0]["weight_decay"] = 0.0
+            print(f"rank {self.device_mesh.get_rank()}: only tag rows trainable; no weight decay")
         if self.tag_lr_mult != 1.0:
             assert fsdp_strategy == "fsdp2", "tag_lr_mult needs per-parameter sharding (fsdp2), not FSDP1 flat parameters"
             assert all(self.tokenizer.encode(t, add_special_tokens=False) == [i] for t, i in zip(tag_tokens, self.tag_ids))
@@ -443,6 +449,17 @@ class FSDPParallelThinkingSFTTrainer:
         for micro_batch in micro_batches:
             loss = self._compute_loss_and_backward(batch=micro_batch, loss_scale=1 / n_micro_batches)
             step_loss += loss.item()
+
+        if self.tag_rows_only:
+            embedding = self.model.get_input_embeddings().weight
+            for parameter in self.fsdp_model.parameters():
+                if parameter is not embedding:
+                    parameter.grad = None
+            assert embedding.grad is not None
+            local, rows = local_rows(embedding.grad, self.tag_ids)
+            kept = local[rows].clone()
+            local.zero_()
+            local[rows] = kept
 
         if self.config.model.strategy == 'fsdp':
             grad_norm = self.fsdp_model.clip_grad_norm_(max_norm=self.config.optim.clip_grad)
