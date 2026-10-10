@@ -1,0 +1,169 @@
+{
+  "base_archive": "c0-greedy-pilot40.tgz",
+  "original_correct": 32,
+  "corrected_correct": 34,
+  "evidence": [
+    {
+      "key": [
+        "GSM8K_DEV",
+        "gsm8k-train/235",
+        0
+      ],
+      "raw_file": "c0_greedy_pilot/gsm10.jsonl",
+      "row": 5,
+      "final": "Final Answer: Each of them will get 9 apples.",
+      "manual_verdict": "correct"
+    },
+    {
+      "key": [
+        "MATH_DEV",
+        "math-test/103",
+        0
+      ],
+      "raw_file": "c0_greedy_pilot/mathnext10.jsonl",
+      "row": 3,
+      "final": "Final Answer: 2x(15x² - 4x + 10)",
+      "manual_verdict": "correct"
+    }
+  ],
+  "comparisons": {
+    "m1_tagweighted": {
+      "archive": "m1-tagweighted-greedy-pilot40.tgz",
+      "original": {
+        "base": 80.0,
+        "candidate": 50.0,
+        "delta": -30.0,
+        "ci95": [
+          -47.5,
+          -12.5
+        ],
+        "n": 40
+      },
+      "corrected": {
+        "base": 85.0,
+        "candidate": 50.0,
+        "delta": -35.0,
+        "ci95": [
+          -50.0,
+          -20.0
+        ],
+        "n": 40
+      }
+    },
+    "m1_control": {
+      "archive": "m1-tagweighted-control-greedy-pilot40.tgz",
+      "original": {
+        "base": 80.0,
+        "candidate": 52.5,
+        "delta": -27.5,
+        "ci95": [
+          -42.5,
+          -12.5
+        ],
+        "n": 40
+      },
+      "corrected": {
+        "base": 85.0,
+        "candidate": 52.5,
+        "delta": -32.5,
+        "ci95": [
+          -47.5,
+          -17.5
+        ],
+        "n": 40
+      }
+    },
+    "alpha_090": {
+      "archive": "interp_a090_masked_pilot.tgz",
+      "original": {
+        "base": 80.0,
+        "candidate": 55.0,
+        "delta": -25.0,
+        "ci95": [
+          -42.5,
+          -7.5
+        ],
+        "n": 40
+      },
+      "corrected": {
+        "base": 85.0,
+        "candidate": 55.0,
+        "delta": -30.0,
+        "ci95": [
+          -45.0,
+          -17.5
+        ],
+        "n": 40
+      }
+    },
+    "text1": {
+      "archive": "text1_masked_pilot.tgz",
+      "original": {
+        "base": 80.0,
+        "candidate": 47.5,
+        "delta": -32.5,
+        "ci95": [
+          -47.5,
+          -17.5
+        ],
+        "n": 40
+      },
+      "corrected": {
+        "base": 85.0,
+        "candidate": 47.5,
+        "delta": -37.5,
+        "ci95": [
+          -52.5,
+          -22.5
+        ],
+        "n": 40
+      }
+    },
+    "frontblock": {
+      "archive": "m1_frontblock_masked_pilot.tgz",
+      "original": {
+        "base": 80.0,
+        "candidate": 27.5,
+        "delta": -52.5,
+        "ci95": [
+          -67.5,
+          -37.5
+        ],
+        "n": 40
+      },
+      "corrected": {
+        "base": 85.0,
+        "candidate": 27.5,
+        "delta": -57.5,
+        "ci95": [
+          -72.5,
+          -42.5
+        ],
+        "n": 40
+      }
+    },
+    "merge_inside": {
+      "archive": "m1_merge_inside_masked_pilot.tgz",
+      "original": {
+        "base": 80.0,
+        "candidate": 37.5,
+        "delta": -42.5,
+        "ci95": [
+          -60.0,
+          -25.0
+        ],
+        "n": 40
+      },
+      "corrected": {
+        "base": 85.0,
+        "candidate": 37.5,
+        "delta": -47.5,
+        "ci95": [
+          -62.5,
+          -32.5
+        ],
+        "n": 40
+      }
+    }
+  }
+}

@@ -26,6 +26,7 @@ import pandas as pd
 
 sys.path.insert(0, __file__.rsplit("/", 2)[0])
 from tag_validator import validate  # noqa: E402
+from bench.answer_normalization import lone_number, normalize_superscripts  # noqa: E402
 from exp21.mv_format import forward_passes, parse as mv_parse  # noqa: E402
 from math_verify import parse, verify  # noqa: E402
 from verl.utils.reward_score.math_dapo import compute_score, last_boxed_only_string, remove_boxed  # noqa: E402
@@ -71,7 +72,14 @@ def correct_robust(source, answer, truth):
         lines = [line for line in parts[-1].splitlines() if line.strip()] if len(parts) > 1 else []
         candidate = lines[0] if lines else ""
     candidate = candidate.strip().strip("$").strip().rstrip(".")
-    return bool(candidate) and (verify(parse(f"${truth}$"), parse(f"${candidate}$")) or compute_score(f"Final Answer: {candidate}", truth)["acc"])
+    if not candidate:
+        return False
+    candidate = normalize_superscripts(candidate)
+    target = parse(f"${truth}$")
+    if verify(target, parse(f"${candidate}$")) or compute_score(f"Final Answer: {candidate}", truth)["acc"]:
+        return True
+    number = lone_number(candidate) if re.fullmatch(r"[-+]?\d+(?:\.\d+)?(?:/\d+)?%?", truth.strip()) else None
+    return bool(number) and verify(target, parse(f"${number}$"))
 
 
 results = [correct(s, a, t, i) for s, a, t, i in zip(sources, final, truths, test["extra_info"])]
