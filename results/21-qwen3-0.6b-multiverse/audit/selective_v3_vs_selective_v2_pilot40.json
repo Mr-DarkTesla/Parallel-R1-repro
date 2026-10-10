@@ -1,0 +1,168 @@
+{
+  "base_archive": "selective_v2_masked_pilot.tgz",
+  "candidate_archive": "selective_v3_masked_pilot.tgz",
+  "base_manual_corrections": [],
+  "candidate_manual_corrections": [
+    [
+      "MATH_DEV",
+      "math-test/29",
+      0
+    ]
+  ],
+  "all": {
+    "acc_robust": {
+      "base": 75.0,
+      "candidate": 35.0,
+      "delta": -40.0,
+      "ci95": [
+        -57.5,
+        -22.5
+      ],
+      "n": 40
+    },
+    "think_numbered_block": {
+      "base": 42.5,
+      "candidate": 87.5,
+      "delta": 45.0,
+      "ci95": [
+        27.5,
+        62.5
+      ],
+      "n": 40
+    },
+    "truncated": {
+      "base": 5.0,
+      "candidate": 2.5,
+      "delta": -2.5,
+      "ci95": [
+        -12.5,
+        5.0
+      ],
+      "n": 40
+    },
+    "tokens": {
+      "base": 597.17,
+      "candidate": 399.95,
+      "delta": -197.22,
+      "ci95": [
+        -530.35,
+        109.6
+      ],
+      "n": 40
+    },
+    "forward_passes": {
+      "base": 579.25,
+      "candidate": 358.38,
+      "delta": -220.88,
+      "ci95": [
+        -559.08,
+        89.75
+      ],
+      "n": 40
+    }
+  },
+  "GSM8K_DEV": {
+    "acc_robust": {
+      "base": 85.0,
+      "candidate": 40.0,
+      "delta": -45.0,
+      "ci95": [
+        -70.0,
+        -20.0
+      ],
+      "n": 20
+    },
+    "think_numbered_block": {
+      "base": 15.0,
+      "candidate": 80.0,
+      "delta": 65.0,
+      "ci95": [
+        45.0,
+        85.0
+      ],
+      "n": 20
+    },
+    "truncated": {
+      "base": 0.0,
+      "candidate": 0.0,
+      "delta": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "n": 20
+    },
+    "tokens": {
+      "base": 472.8,
+      "candidate": 302.25,
+      "delta": -170.55,
+      "ci95": [
+        -290.55,
+        -63.9
+      ],
+      "n": 20
+    },
+    "forward_passes": {
+      "base": 466.5,
+      "candidate": 269.3,
+      "delta": -197.2,
+      "ci95": [
+        -323.1,
+        -84.6
+      ],
+      "n": 20
+    }
+  },
+  "MATH_DEV": {
+    "acc_robust": {
+      "base": 65.0,
+      "candidate": 30.0,
+      "delta": -35.0,
+      "ci95": [
+        -60.0,
+        -10.0
+      ],
+      "n": 20
+    },
+    "think_numbered_block": {
+      "base": 70.0,
+      "candidate": 95.0,
+      "delta": 25.0,
+      "ci95": [
+        0.0,
+        50.0
+      ],
+      "n": 20
+    },
+    "truncated": {
+      "base": 10.0,
+      "candidate": 5.0,
+      "delta": -5.0,
+      "ci95": [
+        -20.0,
+        10.0
+      ],
+      "n": 20
+    },
+    "tokens": {
+      "base": 721.55,
+      "candidate": 497.65,
+      "delta": -223.9,
+      "ci95": [
+        -821.85,
+        353.3
+      ],
+      "n": 20
+    },
+    "forward_passes": {
+      "base": 692.0,
+      "candidate": 447.45,
+      "delta": -244.55,
+      "ci95": [
+        -852.15,
+        341.9
+      ],
+      "n": 20
+    }
+  }
+}

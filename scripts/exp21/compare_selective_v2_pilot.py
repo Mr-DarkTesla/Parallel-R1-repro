@@ -23,10 +23,15 @@ REFERENCES = {
 METRICS = ("acc_robust", "think_numbered_block", "truncated", "tokens", "forward_passes")
 
 
-def main():
-    candidate = load(ARCHIVES / CANDIDATE)
+def main(candidate_name=CANDIDATE, label="selective_v2", references=REFERENCES, candidate_corrections=()):
+    candidate = load(ARCHIVES / candidate_name)
     assert len(candidate) == 40
-    summary = {"archive": CANDIDATE, "by_source": {}}
+    if candidate_corrections:
+        candidate = {key: row.copy() for key, row in candidate.items()}
+        for key in candidate_corrections:
+            assert candidate[key]["acc_robust"] is True, key
+            candidate[key]["acc_robust"] = False
+    summary = {"archive": candidate_name, "by_source": {}}
     for source in ("all", *sorted({key[0] for key in candidate})):
         keys = [key for key in sorted(candidate) if source == "all" or key[0] == source]
         summary["by_source"][source] = {
@@ -39,26 +44,27 @@ def main():
             "mean_forward_passes": round(sum(candidate[key]["forward_passes"] for key in keys) / len(keys), 2),
         }
     AUDIT.mkdir(exist_ok=True)
-    (AUDIT / "selective_v2_pilot40_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
+    (AUDIT / f"{label}_pilot40_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 
-    for label, filename in REFERENCES.items():
+    for reference_label, filename in references.items():
         base = load(ARCHIVES / filename)
-        assert base.keys() == candidate.keys(), label
+        assert base.keys() == candidate.keys(), reference_label
         for key in base:
-            assert base[key]["input"] == candidate[key]["input"], (label, key)
-            assert base[key]["decoder"] == candidate[key]["decoder"] == "masked", (label, key)
-        if label == "c0_corrected":
+            assert base[key]["input"] == candidate[key]["input"], (reference_label, key)
+            assert base[key]["decoder"] == candidate[key]["decoder"] == "masked", (reference_label, key)
+        if reference_label == "c0_corrected":
             base = {key: row.copy() for key, row in base.items()}
             for key in FIXES:
                 assert base[key]["acc_robust"] is False
                 base[key]["acc_robust"] = True
-        result = {"base_archive": filename, "candidate_archive": CANDIDATE,
-                  "base_manual_corrections": [list(key) for key in FIXES] if label == "c0_corrected" else []}
+        result = {"base_archive": filename, "candidate_archive": candidate_name,
+                  "base_manual_corrections": [list(key) for key in FIXES] if reference_label == "c0_corrected" else [],
+                  "candidate_manual_corrections": [list(key) for key in candidate_corrections]}
         for source in summary["by_source"]:
             keys = [key for key in sorted(base) if source == "all" or key[0] == source]
             result[source] = {metric: compare(base, candidate, keys, metric) for metric in METRICS}
-        (AUDIT / f"selective_v2_vs_{label}_pilot40.json").write_text(json.dumps(result, indent=2) + "\n")
-        print(label, json.dumps(result["all"], ensure_ascii=False))
+        (AUDIT / f"{label}_vs_{reference_label}_pilot40.json").write_text(json.dumps(result, indent=2) + "\n")
+        print(reference_label, json.dumps(result["all"], ensure_ascii=False))
     print("summary", json.dumps(summary["by_source"], ensure_ascii=False))
 
 
