@@ -1,0 +1,16 @@
+# Dedicated persistent storage for selected Qwen3-0.6B exp21 model exports.
+# Do not delete the pre-existing work PVC or any older checkpoint.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vcharkin-exp21-checkpoints-pvc
+  namespace: shared-dzen-ml
+  labels:
+    app: vcharkin-exp21-checkpoints
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: openebs-remote-multi-dc
+  resources:
+    requests:
+      storage: 20Gi

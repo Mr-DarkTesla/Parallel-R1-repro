@@ -1,0 +1,78 @@
+{
+  "base": "sft_selective_blocks_v2",
+  "candidate": "sft_selective_blocks_v4",
+  "positive_source": "pair_expanded_m1_merge_inside.jsonl",
+  "source_before_merge": "pair_expanded_m1_two_paths.jsonl",
+  "splits": {
+    "train": {
+      "rows": 2748,
+      "parallel_th_replaced": 555,
+      "non_parallel_rows_unchanged": 2193,
+      "parallel_distinct_ids": 185,
+      "moved_into_conclusion_chars": 41370,
+      "original_paths_preserved": 555,
+      "final_answer_suffix_preserved": 555,
+      "number_multiset_preserved": 555,
+      "answer_fields_match_pool": 555,
+      "valid_two_path_blocks_inside_think": 555,
+      "all_tagged_rows_inside_think": 555,
+      "tags_outside_think": 0,
+      "source_counts": {
+        "math": 1578,
+        "gsm8k": 768,
+        "arc": 402
+      },
+      "kind_counts": {
+        "replay_nt": 879,
+        "replay_th": 804,
+        "parallel_th": 555,
+        "control_th": 510
+      },
+      "parallel_rows_by_source": {
+        "math": 372,
+        "gsm8k": 183
+      },
+      "control_rows_by_source": {
+        "arc": 78,
+        "math": 252,
+        "gsm8k": 180
+      }
+    },
+    "val": {
+      "rows": 63,
+      "parallel_th_replaced": 24,
+      "non_parallel_rows_unchanged": 39,
+      "parallel_distinct_ids": 8,
+      "moved_into_conclusion_chars": 2040,
+      "original_paths_preserved": 24,
+      "final_answer_suffix_preserved": 24,
+      "number_multiset_preserved": 24,
+      "answer_fields_match_pool": 24,
+      "valid_two_path_blocks_inside_think": 24,
+      "all_tagged_rows_inside_think": 24,
+      "tags_outside_think": 0,
+      "source_counts": {
+        "math": 36,
+        "gsm8k": 21,
+        "arc": 6
+      },
+      "kind_counts": {
+        "parallel_th": 24,
+        "replay_nt": 21,
+        "replay_th": 18
+      },
+      "parallel_rows_by_source": {
+        "math": 15,
+        "gsm8k": 9
+      },
+      "control_rows_by_source": {}
+    }
+  },
+  "token_limit": {
+    "evidence": "m1_merge_inside_target_audit.json",
+    "same_positive_prompts_and_answers_as_audited_source": true,
+    "train_max_tokens": 3838,
+    "val_max_tokens": 3513,
+    "over_4096": 0
+  }
+}

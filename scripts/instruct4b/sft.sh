@@ -5,8 +5,9 @@
 #   DATA_PATH=<train.parquet> VAL_PATH=<dev.parquet> RUN_NAME=<name> CUDA_VISIBLE_DEVICES=<g1>,<g2> bash scripts/instruct4b/sft.sh [hydra overrides]
 # Optional: MODEL (prepared init), STEPS (default 64), MICRO_BATCH (default 2 per GPU); exp 21 (Qwen3-0.6B, 1 GPU) also sets
 # NGPUS (default 2), BATCH (global batch, default 64), MAX_LENGTH (4096), LR (1e-5), MIN_FREE_GB (30),
-# RUN_ROOT (default /work/runs); defaults = the exp 13-20 recipe. Use an ephemeral RUN_ROOT only if the final
-# model and logs are copied to persistent storage before the pod stops.
+# RUN_ROOT (default /work/runs), SAVE_STEPS='8,16,32,48,64' (sorted, unique, includes STEPS). SAVE_STEPS writes
+# verified bf16 models to step_models/step_N/model; defaults = the exp 13-20 recipe. Use an ephemeral RUN_ROOT only if
+# final model and logs are copied to persistent storage before the pod stops.
 # Output: /work/runs/$RUN_NAME/{train.log, model/ (bf16 HF), results/{recipe.txt, rows.csv, sft_metrics.txt}, DONE}.
 # DONE: nothing is repeated. TRAINED (trainer exited 0): only the missing export is repeated. Otherwise the unfinished run dir
 # is renamed to $RUN_NAME.interrupted-<time> (logs kept) and training starts again from the same init: the trainer
@@ -17,6 +18,24 @@ model=${MODEL:-/work/assets/models/Qwen3-4B-instruct-add-special-token}
 steps=${STEPS:-64}
 micro=${MICRO_BATCH:-2}
 ngpus=${NGPUS:-2} batch=${BATCH:-64} max_length=${MAX_LENGTH:-4096} lr=${LR:-1e-5} min_free=${MIN_FREE_GB:-30}
+save_steps=${SAVE_STEPS:-}
+[[ "$steps" =~ ^[1-9][0-9]*$ ]] || { echo "STEPS must be a positive integer, got $steps"; exit 1; }
+checkpoint_override=()
+checkpoint_steps=()
+if [ -n "$save_steps" ]; then
+    [[ "$save_steps" =~ ^[1-9][0-9]*(,[1-9][0-9]*)*$ ]] || { echo "SAVE_STEPS must be comma-separated positive integers, got $save_steps"; exit 1; }
+    IFS=, read -r -a checkpoint_steps <<< "$save_steps"
+    previous_step=0
+    last_step=0
+    for checkpoint_step in "${checkpoint_steps[@]}"; do
+        [ "$checkpoint_step" -gt "$previous_step" ] || { echo "SAVE_STEPS must be sorted and unique: $save_steps"; exit 1; }
+        [ "$checkpoint_step" -le "$steps" ] || { echo "SAVE_STEPS cannot exceed STEPS=$steps: $save_steps"; exit 1; }
+        previous_step=$checkpoint_step
+        last_step=$checkpoint_step
+    done
+    [ "$last_step" = "$steps" ] || { echo "SAVE_STEPS must include final STEPS=$steps: $save_steps"; exit 1; }
+    checkpoint_override=("+trainer.checkpoint_steps=[$save_steps]")
+fi
 gpus=$(echo "$CUDA_VISIBLE_DEVICES" | tr ',' '\n' | grep -c .)
 [ "$gpus" = "$ngpus" ] || { echo "need $ngpus GPUs, got CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES"; exit 1; }
 repo=$(cd "$(dirname "$0")/../.." && pwd)
@@ -70,7 +89,7 @@ print(epochs)
 EOF
 )
     { date; git -C "$repo" rev-parse HEAD; git -C "$repo" status --short
-      echo "GPUs=$CUDA_VISIBLE_DEVICES updates=$steps global_batch=$batch micro_batch_per_gpu=$micro max_length=$max_length lr=$lr epochs=$epochs overrides=$*"; } >> "$run/results/recipe.txt"
+      echo "GPUs=$CUDA_VISIBLE_DEVICES updates=$steps save_steps=${save_steps:-final-only} global_batch=$batch micro_batch_per_gpu=$micro max_length=$max_length lr=$lr epochs=$epochs overrides=$*"; } >> "$run/results/recipe.txt"
 
     torchrun --standalone --nnodes=1 --nproc_per_node="$ngpus" -m verl.trainer.fsdp_parallel_sft_trainer \
         data.train_files="$DATA_PATH" \
@@ -99,16 +118,20 @@ EOF
         trainer.project_name=Parallel-R1-instruct4b \
         trainer.experiment_name="$RUN_NAME" \
         trainer.logger=['console'] \
-        trainer.default_hdfs_dir=null "$@" > "$run/train.log" 2>&1
+        trainer.default_hdfs_dir=null "${checkpoint_override[@]}" "$@" > "$run/train.log" 2>&1
     tr '\r' '\n' < "$run/train.log" | grep -a -o "step:[0-9]* - .*" > "$run/results/sft_metrics.txt"
     grep -q "^step:$steps - " "$run/results/sft_metrics.txt" || { echo "step $steps not logged"; exit 1; }
     touch "$run/TRAINED"
 fi
 
-# bf16 export, checked before the fp32 checkpoint is removed; model/ appears atomically, DONE only after it
-if [ ! -e "$run/model" ]; then
-    rm -rf "$run/model.tmp"
-    python - "$run/ckpt/global_step_$steps" "$run/model.tmp" "$model" <<'EOF'
+# bf16 export, checked before fp32 checkpoints are removed; models appear atomically, DONE only after all checks
+export_checkpoint() {
+    local source=$1 target=$2 temporary="$2.tmp"
+    if [ ! -e "$target" ]; then
+        [ -d "$source" ] || { echo "missing trainer checkpoint: $source"; exit 1; }
+        rm -rf "$temporary"
+        mkdir -p "$(dirname "$target")"
+        python - "$source" "$temporary" "$model" <<'EOF'
 import glob, sys
 
 import torch
@@ -129,7 +152,31 @@ for path in glob.glob(f"{target}/*.safetensors"):
 assert AutoTokenizer.from_pretrained(target).chat_template == AutoTokenizer.from_pretrained(init).chat_template
 print(f"export ok: {target}")
 EOF
-    mv "$run/model.tmp" "$run/model"
-fi
+        mv "$temporary" "$target"
+    fi
+    python - "$target" "$model" <<'EOF'
+import glob, sys
+
+import torch
+from safetensors import safe_open
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
+
+target, init = sys.argv[1:]
+model = AutoModelForCausalLM.from_pretrained(target, torch_dtype="auto")
+assert model.dtype == torch.bfloat16 and model.config.vocab_size == AutoConfig.from_pretrained(init).vocab_size
+assert model.config.tie_word_embeddings and model.get_output_embeddings().weight is model.get_input_embeddings().weight
+assert all(torch.isfinite(p).all() for p in model.parameters())
+for path in glob.glob(f"{target}/*.safetensors"):
+    with safe_open(path, "pt") as f:
+        assert len(list(f.keys())) > 0, path
+assert AutoTokenizer.from_pretrained(target).chat_template == AutoTokenizer.from_pretrained(init).chat_template
+print(f"export verified: {target}")
+EOF
+}
+
+for checkpoint_step in "${checkpoint_steps[@]}"; do
+    export_checkpoint "$run/ckpt/global_step_$checkpoint_step" "$run/step_models/step_$checkpoint_step/model"
+done
+export_checkpoint "$run/ckpt/global_step_$steps" "$run/model"
 date > "$run/DONE.tmp" && mv "$run/DONE.tmp" "$run/DONE"
-rm -rf "$run/ckpt"  # only this run's temporary fp32 trainer checkpoint
+rm -rf "$run/ckpt"  # only this run's temporary fp32 trainer checkpoints, after every export is verified

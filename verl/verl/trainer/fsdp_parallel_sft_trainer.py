@@ -588,6 +588,17 @@ class FSDPParallelThinkingSFTTrainer:
         self.total_training_steps = total_training_steps
         print(f"Total training steps: {self.total_training_steps}")
 
+        # Optional explicit saves for short runs. Final checkpoint is always saved below.
+        checkpoint_steps = self.config.trainer.get("checkpoint_steps", []) or []
+        checkpoint_steps = [int(step) for step in checkpoint_steps]
+        if checkpoint_steps != sorted(set(checkpoint_steps)):
+            raise ValueError(f"trainer.checkpoint_steps must be sorted and unique: {checkpoint_steps}")
+        if any(step < 1 or step > self.total_training_steps for step in checkpoint_steps):
+            raise ValueError(f"trainer.checkpoint_steps must be within 1..{self.total_training_steps}: {checkpoint_steps}")
+        self.checkpoint_steps = set(checkpoint_steps)
+        if rank == 0 and checkpoint_steps:
+            print(f"Saving explicit checkpoints at steps: {checkpoint_steps}")
+
         # TODO (zhangchi.usc1992) add back checkpoint manager.
         # Currently, it blocks when uploading to hdfs. So very slow.
 
@@ -604,6 +615,10 @@ class FSDPParallelThinkingSFTTrainer:
                 metric = self.training_step(data)
                 if rank == 0:
                     tracking.log(data=metric, step=global_step)
+
+                # Explicit checkpoints deliberately skip validation to keep short SFT runs cheap.
+                if global_step in self.checkpoint_steps and global_step < self.total_training_steps:
+                    self.save_checkpoint(step=global_step)
 
                 # for early exit validation
                 if global_step >= self.total_training_steps:
