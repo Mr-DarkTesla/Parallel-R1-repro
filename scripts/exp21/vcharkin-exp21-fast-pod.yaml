@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vcharkin-exp21-fast
+  namespace: shared-dzen-ml
+  labels:
+    app: vcharkin-exp21-fast
+    network-policy/gitlab: "true"
+    repository/git: "true"
+spec:
+  schedulerName: yunikorn
+  restartPolicy: Always
+  securityContext:
+    fsGroup: 100
+  nodeSelector:
+    kubernetes.io/os: linux
+  tolerations:
+    - key: hardware.vk.team/gpuonly
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+  containers:
+    - name: experiment
+      image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
+      imagePullPolicy: IfNotPresent
+      command: ["bash", "-lc", "sleep infinity"]
+      resources:
+        requests:
+          cpu: "32"
+          memory: 160Gi
+          nvidia.com/gpu: "2"
+          nvidia.com/gpu.h100.pa: "2"
+        limits:
+          cpu: "32"
+          memory: 160Gi
+          nvidia.com/gpu: "2"
+          nvidia.com/gpu.h100.pa: "2"
+      volumeMounts:
+        - name: work
+          mountPath: /work
+        - name: dshm
+          mountPath: /dev/shm
+  volumes:
+    - name: work
+      emptyDir: {}
+    - name: dshm
+      emptyDir:
+        medium: Memory
+        sizeLimit: 32Gi

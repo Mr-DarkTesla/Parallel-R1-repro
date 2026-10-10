@@ -1,0 +1,101 @@
+{
+  "model": "/work/assets/models/Qwen3-0.6B-mv",
+  "tag_ids": {
+    "<Parallel>": 151669,
+    "</Parallel>": 151670,
+    "<Goal>": 151671,
+    "</Goal>": 151672,
+    "<Outline>": 151673,
+    "</Outline>": 151674,
+    "<Path>": 151675,
+    "</Path>": 151676,
+    "<Conclusion>": 151677,
+    "</Conclusion>": 151678
+  },
+  "files": {
+    "/work/exp21/expanded_th/sft_expanded_th_m1_tagged_train.parquet": {
+      "rows": 2251,
+      "kinds": {
+        "replay_th": 588,
+        "replay_nt": 586,
+        "parallel_th": 1077
+      },
+      "max_tokens": 3838,
+      "over_4096": 0,
+      "token_length_p50": 495,
+      "tag_target_counts": {
+        "<Parallel>": 1077,
+        "</Parallel>": 1077,
+        "<Goal>": 1077,
+        "</Goal>": 1077,
+        "<Outline>": 2244,
+        "</Outline>": 2244,
+        "<Path>": 2244,
+        "</Path>": 2244,
+        "<Conclusion>": 1077,
+        "</Conclusion>": 1077
+      },
+      "masked_tag_target_counts": {},
+      "prompt_suffixes": {
+        "thinking": " common fraction.<|im_end|>\n<|im_start|>assistant\n",
+        "no_thinking": "im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+      }
+    },
+    "/work/exp21/expanded_th/sft_expanded_th_m2_tagged_train.parquet": {
+      "rows": 2251,
+      "kinds": {
+        "replay_th": 588,
+        "replay_nt": 586,
+        "parallel_th": 1077
+      },
+      "max_tokens": 3838,
+      "over_4096": 0,
+      "token_length_p50": 520,
+      "tag_target_counts": {
+        "<Parallel>": 1077,
+        "</Parallel>": 1077,
+        "<Goal>": 1077,
+        "</Goal>": 1077,
+        "<Outline>": 2280,
+        "</Outline>": 2280,
+        "<Path>": 2280,
+        "</Path>": 2280,
+        "<Conclusion>": 1077,
+        "</Conclusion>": 1077
+      },
+      "masked_tag_target_counts": {},
+      "prompt_suffixes": {
+        "thinking": "pared to Walmart?<|im_end|>\n<|im_start|>assistant\n",
+        "no_thinking": "im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n"
+      }
+    },
+    "/work/exp21/qwen_rewrite180/sft_qwen_rewrite180_tagged_train.parquet": {
+      "rows": 2232,
+      "kinds": {
+        "replay_nt": 588,
+        "parallel_th": 1062,
+        "replay_th": 582
+      },
+      "max_tokens": 3838,
+      "over_4096": 0,
+      "token_length_p50": 367,
+      "tag_target_counts": {
+        "<Parallel>": 1062,
+        "</Parallel>": 1062,
+        "<Goal>": 1062,
+        "</Goal>": 1062,
+        "<Outline>": 2124,
+        "</Outline>": 2124,
+        "<Path>": 2124,
+        "</Path>": 2124,
+        "<Conclusion>": 1062,
+        "</Conclusion>": 1062
+      },
+      "masked_tag_target_counts": {},
+      "prompt_suffixes": {
+        "no_thinking": "im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n",
+        "thinking": "ine's candy bars?<|im_end|>\n<|im_start|>assistant\n"
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "base": "/work/assets/models/Qwen3-0.6B-mv",
+  "tag_ids": {
+    "<Parallel>": 151669,
+    "</Parallel>": 151670,
+    "<Goal>": 151671,
+    "</Goal>": 151672,
+    "<Outline>": 151673,
+    "</Outline>": 151674,
+    "<Path>": 151675,
+    "</Path>": 151676,
+    "<Conclusion>": 151677,
+    "</Conclusion>": 151678
+  },
+  "models": {
+    "model:/tmp/exp21-expanded-th-runs/exp21-expanded-th-m1": {
+      "model": "/tmp/exp21-expanded-th-runs/exp21-expanded-th-m1/model",
+      "tied_config": true,
+      "old_norm_p50": 0.93568,
+      "old_norm_p99": 1.1582,
+      "old_drift_p50": 0.00018,
+      "old_drift_p99": 0.0046,
+      "tag_norms": {
+        "<Parallel>": 0.96202,
+        "</Parallel>": 1.00119,
+        "<Goal>": 0.97,
+        "</Goal>": 0.96843,
+        "<Outline>": 0.96641,
+        "</Outline>": 0.9814,
+        "<Path>": 0.97507,
+        "</Path>": 0.96536,
+        "<Conclusion>": 0.95922,
+        "</Conclusion>": 0.95926
+      },
+      "tag_drift": {
+        "<Parallel>": 0.28321,
+        "</Parallel>": 0.27859,
+        "<Goal>": 0.22883,
+        "</Goal>": 0.2527,
+        "<Outline>": 0.23947,
+        "</Outline>": 0.31064,
+        "<Path>": 0.25696,
+        "</Path>": 0.2116,
+        "<Conclusion>": 0.25882,
+        "</Conclusion>": 0.22926
+      },
+      "sampled_old_rows": 10000
+    },
+    "model:/tmp/exp21-expanded-th-runs/exp21-expanded-th-m2": {
+      "model": "/tmp/exp21-expanded-th-runs/exp21-expanded-th-m2/model",
+      "tied_config": true,
+      "old_norm_p50": 0.93563,
+      "old_norm_p99": 1.1582,
+      "old_drift_p50": 0.00014,
+      "old_drift_p99": 0.00432,
+      "tag_norms": {
+        "<Parallel>": 0.94963,
+        "</Parallel>": 0.99589,
+        "<Goal>": 0.96409,
+        "</Goal>": 0.96079,
+        "<Outline>": 0.96234,
+        "</Outline>": 0.97987,
+        "<Path>": 0.98148,
+        "</Path>": 0.96225,
+        "<Conclusion>": 0.96933,
+        "</Conclusion>": 0.96955
+      },
+      "tag_drift": {
+        "<Parallel>": 0.29981,
+        "</Parallel>": 0.27782,
+        "<Goal>": 0.21297,
+        "</Goal>": 0.23832,
+        "<Outline>": 0.22233,
+        "</Outline>": 0.26719,
+        "<Path>": 0.25937,
+        "</Path>": 0.2023,
+        "<Conclusion>": 0.26619,
+        "</Conclusion>": 0.24091
+      },
+      "sampled_old_rows": 10000
+    },
+    "model:/tmp/exp21-qwen-rewrite-runs/exp21-qwen-rewrite180": {
+      "model": "/tmp/exp21-qwen-rewrite-runs/exp21-qwen-rewrite180/model",
+      "tied_config": true,
+      "old_norm_p50": 0.93563,
+      "old_norm_p99": 1.1582,
+      "old_drift_p50": 0.00057,
+      "old_drift_p99": 0.0054,
+      "tag_norms": {
+        "<Parallel>": 0.96635,
+        "</Parallel>": 1.00389,
+        "<Goal>": 0.96985,
+        "</Goal>": 0.95561,
+        "<Outline>": 0.97399,
+        "</Outline>": 0.97723,
+        "<Path>": 0.95285,
+        "</Path>": 0.95243,
+        "<Conclusion>": 0.97021,
+        "</Conclusion>": 0.96056
+      },
+      "tag_drift": {
+        "<Parallel>": 0.26434,
+        "</Parallel>": 0.28616,
+        "<Goal>": 0.23334,
+        "</Goal>": 0.2177,
+        "<Outline>": 0.23401,
+        "</Outline>": 0.26096,
+        "<Path>": 0.24395,
+        "</Path>": 0.23944,
+        "<Conclusion>": 0.25727,
+        "</Conclusion>": 0.25427
+      },
+      "sampled_old_rows": 10000
+    }
+  }
+}
