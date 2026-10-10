@@ -1,0 +1,85 @@
+## strongest
+
+- cand `math-train/632` vs `math_train_replay(info)/math-train/632` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 18, 'ng8': 23, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: The slope of a line is $-2$ and its $x$-intercept is $(5,0).$ What is the $y$-intercept point of the line? Express your answer as an ordered pair. || ans=(0,10)
+  - E: The slope of a line is $-2$ and its $x$-intercept is $(5,0).$ What is the $y$-intercept point of the line? Express your answer as an ordered pair. || ans=(0,10)
+- cand `math-train/587` vs `math_train_replay(info)/math-train/587` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 8, 'ng8': 13, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: An infinite geometric series has common ratio $-1/5$ and sum $16.$ What is the first term of the series? || ans=\frac{96}{5}
+  - E: An infinite geometric series has common ratio $-1/5$ and sum $16.$ What is the first term of the series? || ans=\frac{96}{5}
+- cand `math-train/3334` vs `math_train_replay(info)/math-train/3334` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 20, 'ng8': 19, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 0.76, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A triangle has vertices at $(-3,2),(6,-2),(3,5)$. How many square units are in the area of the triangle? Express your answer as a decimal to the nearest tenth. || ans=25.5
+  - E: A triangle has vertices at $(-3,2),(6,-2),(3,5)$. How many square units are in the area of the triangle? Express your answer as a decimal to the nearest tenth. || ans=25.5
+- cand `math-train/4633` vs `math_train_replay(info)/math-train/4633` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 9, 'ng8': 14, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Find the shortest distance between the point $(6,12)$ and the parabola given by the equation $x = \frac{y^2}{2}.$ || ans=2 \sqrt{17}
+  - E: Find the shortest distance between the point $(6,12)$ and the parabola given by the equation $x = \frac{y^2}{2}.$ || ans=2 \sqrt{17}
+- cand `math-train/3998` vs `math_train_replay(info)/math-train/3998` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 18, 'ng8': 23, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Let $a_1,$ $a_2,$ $a_3$ be the first three terms of a geometric sequence. If $a_1 = 1,$ find the smallest possible value of $4a_2 + 5a_3.$ || ans=-\frac{4}{5}
+  - E: Let $a_1,$ $a_2,$ $a_3$ be the first three terms of a geometric sequence. If $a_1 = 1,$ find the smallest possible value of $4a_2 + 5a_3.$ || ans=-\frac{4}{5}
+- cand `math-train/153` vs `math_train_replay(info)/math-train/153` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 32, 'ng8': 34, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 0.919, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: It takes 15 men working steadily 4 days to dig the foundation for a new apartment. How many days would it have taken 25 men working at the same rate to dig the foundation? Express your answer as a decimal to the nearest tenth. || ans=2.4
+  - E: It takes 15 men working steadily 4 days to dig the foundation for a new apartment. How many days would it have taken 25 men working at the same rate to dig the foundation? Express your answer as a decimal to the nearest tenth. || ans=2.4
+- cand `math-train/4676` vs `math_train_replay(info)/math-train/4676` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 22, 'ng8': 27, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: The hyperbola \[\frac{(x-3)^2}{5^2} - \frac{(y-17)^2}{12^2} = 1\]has two foci, which have different $x-$coordinates. Find the coordinates of the one with the larger $x-$coordinate. || ans=(16,17)
+  - E: The hyperbola \[\frac{(x-3)^2}{5^2} - \frac{(y-17)^2}{12^2} = 1\]has two foci, which have different $x-$coordinates. Find the coordinates of the one with the larger $x-$coordinate. || ans=(16,17)
+- cand `math-train/1515` vs `math_train_replay(info)/math-train/1515` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 6, 'ng8': 11, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Find the fifth term of the geometric sequence with first term $2$ and second term $\frac{1}{4}$. || ans=\frac{1}{2048}
+  - E: Find the fifth term of the geometric sequence with first term $2$ and second term $\frac{1}{4}$. || ans=\frac{1}{2048}
+- cand `math-train/4781` vs `math_train_replay(info)/math-train/4781` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 30, 'ng8': 35, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A box contains tiles, numbered 1, 2, 3,..., 49, 50. Only tiles which are marked with a number congruent to $2 \pmod{5}$ are blue. One tile is chosen randomly from the box. What is the probability that the tile is blue? || ans=\frac{1}{5}
+  - E: A box contains tiles, numbered 1, 2, 3,..., 49, 50. Only tiles which are marked with a number congruent to $2 \pmod{5}$ are blue. One tile is chosen randomly from the box. What is the probability that the tile is blue? || ans=\frac{1}{5}
+- cand `math-train/20` vs `math_train_replay(info)/math-train/20` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 13, 'ng8': 18, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: At what point does the line containing the points $(1, 7)$ and $(3, 11)$ intersect the $y$-axis? Express your answer as an ordered pair. || ans=(0,5)
+  - E: At what point does the line containing the points $(1, 7)$ and $(3, 11)$ intersect the $y$-axis? Express your answer as an ordered pair. || ans=(0,5)
+- cand `math-train/1251` vs `math_train_replay(info)/math-train/1251` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 12, 'ng8': 17, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is the intersection point of the line $y = 2x + 5$ and the line perpendicular to it that passes through the point $(5, 5)$? || ans=(1, 7)
+  - E: What is the intersection point of the line $y = 2x + 5$ and the line perpendicular to it that passes through the point $(5, 5)$? || ans=(1, 7)
+- cand `math-train/7343` vs `math_train_replay(info)/math-train/7343` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 1, 'ng8': 1, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Compute $\tan \left (\operatorname{arccot} \frac{4}{7} \right).$ || ans=\frac{7}{4}
+  - E: Compute $\tan \left (\operatorname{arccot} \frac{4}{7} \right).$ || ans=\frac{7}{4}
+- cand `math-train/7478` vs `math_train_replay(info)/math-train/7478` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 21, 'ng8': 25, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Two lines are perpendicular. One line has a direction vector of $\begin{pmatrix} 3 \\ -7 \end{pmatrix}.$ The other line has a direction vector of $\begin{pmatrix} a \\ 2 \end{pmatrix}.$ Find $a.$ || ans=\frac{14}{3}
+  - E: Two lines are perpendicular. One line has a direction vector of $\begin{pmatrix} 3 \\ -7 \end{pmatrix}.$ The other line has a direction vector of $\begin{pmatrix} a \\ 2 \end{pmatrix}.$ Find $a.$ || ans=\frac{14}{3}
+- cand `math-train/1170` vs `math_train_replay(info)/math-train/1170` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 8, 'ng8': 13, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: An infinite geometric series has common ratio $1/8$ and sum 60. What is the first term of the series? || ans=\frac{105}{2}
+  - E: An infinite geometric series has common ratio $1/8$ and sum 60. What is the first term of the series? || ans=\frac{105}{2}
+- cand `math-train/5756` vs `math_train_replay(info)/math-train/5756` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 14, 'ng8': 19, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: What is the probability that a positive integer less than or equal to 24 is a factor of 24? Express your answer as a common fraction. || ans=\frac{1}{3}
+  - E: What is the probability that a positive integer less than or equal to 24 is a factor of 24? Express your answer as a common fraction. || ans=\frac{1}{3}
+- cand `math-train/589` vs `math_train_replay(info)/math-train/589` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 29, 'ng8': 34, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: If $a>0$ and $b>0,$ a new operation $\nabla$ is defined as follows: $$a \nabla b = \dfrac{a + b}{1 + ab}.$$For example, $$3 \nabla 6 = \frac{3 + 6}{1 + 3 \times 6} = \frac{9}{19}.$$Calculate $2 \nabla 5.$ || ans=\frac{7}{11}
+  - E: If $a>0$ and $b>0,$ a new operation $\nabla$ is defined as follows: $$a \nabla b = \dfrac{a + b}{1 + ab}.$$For example, $$3 \nabla 6 = \frac{3 + 6}{1 + 3 \times 6} = \frac{9}{19}.$$Calculate $2 \nabla 5.$ || ans=\frac{7}{11}
+- cand `math-train/800` vs `math_train_replay(info)/math-train/800` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 10, 'ng8': 15, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Given that the polynomial $x^2-kx+16$ has only positive integer roots, find the average of all distinct possibilities for $k$. || ans=\frac{35}{3}
+  - E: Given that the polynomial $x^2-kx+16$ has only positive integer roots, find the average of all distinct possibilities for $k$. || ans=\frac{35}{3}
+- cand `math-train/236` vs `math_train_replay(info)/math-train/236` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 35, 'ng8': 40, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: It takes four painters working at the same rate $1.25$ work-days to finish a job. If only three painters are available, how many work-days will it take them to finish the job, working at the same rate? Express your answer as a mixed number. || ans=1\frac{2}{3}
+  - E: It takes four painters working at the same rate $1.25$ work-days to finish a job. If only three painters are available, how many work-days will it take them to finish the job, working at the same rate? Express your answer as a mixed number. || ans=1\frac{2}{3}
+- cand `math-train/3507` vs `math_train_replay(info)/math-train/3507` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 23, 'ng8': 28, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Define a sequence of complex numbers by $z_1 = 0$ and \[z_{n + 1} = z_n^2 + i\]for all $n \ge 1.$ In the complex plane, how far from the origin is $z_{111}$? || ans=\sqrt{2}
+  - E: Define a sequence of complex numbers by $z_1 = 0$ and \[z_{n + 1} = z_n^2 + i\]for all $n \ge 1.$ In the complex plane, how far from the origin is $z_{111}$? || ans=\sqrt{2}
+- cand `math-train/5011` vs `math_train_replay(info)/math-train/5011` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 18, 'ng8': 22, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 0.957, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: One digit of the decimal representation of $\frac{5}{7}$ is randomly selected. What is the probability that the digit is a 4? Express your answer as a common fraction. || ans=\frac{1}{6}
+  - E: One digit of the decimal representation of $\frac{5}{7}$ is randomly selected. What is the probability that the digit is a 4? Express your answer as a common fraction. || ans=\frac{1}{6}
+- cand `math-train/2862` vs `math_train_replay(info)/math-train/2862` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 24, 'ng8': 29, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A right cylinder with a height of 5 inches has a radius of 2 inches. What is the area of the curved surface of the cylinder, in square inches? Express your answer in terms of $\pi$. || ans=20\pi
+  - E: A right cylinder with a height of 5 inches has a radius of 2 inches. What is the area of the curved surface of the cylinder, in square inches? Express your answer in terms of $\pi$. || ans=20\pi
+- cand `math-train/1014` vs `math_train_replay(info)/math-train/1014` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 6, 'ng8': 11, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Evaluate the infinite geometric series: $$\frac{1}{3}+\frac{1}{6}+\frac{1}{12}+\frac{1}{24}+\dots$$ || ans=\frac{2}{3}
+  - E: Evaluate the infinite geometric series: $$\frac{1}{3}+\frac{1}{6}+\frac{1}{12}+\frac{1}{24}+\dots$$ || ans=\frac{2}{3}
+- cand `math-train/3188` vs `math_train_replay(info)/math-train/3188` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 17, 'ng8': 22, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: A regular hexagon is inscribed in a circle of radius 2 units. In square units, what is the area of the hexagon? Express your answer in simplest radical form. || ans=6\sqrt{3}
+  - E: A regular hexagon is inscribed in a circle of radius 2 units. In square units, what is the area of the hexagon? Express your answer in simplest radical form. || ans=6\sqrt{3}
+- cand `math-train/427` vs `math_train_replay(info)/math-train/427` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 20, 'ng8': 23, 'anskw': 1.0, 'jac': 1.0, 'ng8_contain': 0.92, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: Find the equation whose graph is a parabola with vertex $(2,4)$, vertical axis of symmetry, and contains the point $(1,1)$. Express your answer in the form "$ax^2+bx+c$". || ans=-3x^2+12x-8
+  - E: Find the equation whose graph is a parabola with vertex $(2,4)$, vertical axis of symmetry, and contains the point $(1,1)$. Express your answer in the form "$ax^2+bx+c$". || ans=-3x^2+12x-8
+- cand `math-train/933` vs `math_train_replay(info)/math-train/933` signals={'leak': True, 'strong': True, 'exact': 1, 'ng13': 47, 'ng8': 52, 'anskw': 1.0, 'jac': 1.0, 'formula_or_nums_same_ans': 1, 'ng8_contain': 1.0, 'ng8_ok': True, 'dup': True, 'tier': 'dup'}
+  - C: At the beginning of my bike ride I feel good, so I can travel 20 miles per hour. Later, I get tired and travel only 12 miles per hour. If I travel a total of 122 miles in a total time of 8 hours, for how many hours did I feel good? Express your answer as a common fraction. || ans=\frac{13}{4}
+  - E: At the beginning of my bike ride I feel good, so I can travel 20 miles per hour. Later, I get tired and travel only 12 miles per hour. If I travel a total of 122 miles in a total time of 8 hours, for how many hours did I feel good? Express your answer as a common fraction. || ans=\frac{13}{4}
+## borderline jac 0.45-0.7 (no exact/ng13)
+
+- cand `math-train/3972` vs `math300/math300/270` signals={'leak': False, 'strong': False, 'jac': 0.5, 'ng8_ok': False, 'dup': False, 'tier': None}
+  - C: If \[1 \cdot 1987 + 2 \cdot 1986 + 3 \cdot 1985 + \dots + 1986 \cdot 2 + 1987 \cdot 1 = 1987 \cdot 994 \cdot x,\]compute the integer $x.$ || ans=663
+  - E: If \[f(n + 1) = (-1)^{n + 1} n - 2f(n)\]for $n \ge 1,$ and $f(1) = f(1986),$ compute \[f(1) + f(2) + f(3) + \dots + f(1985).\] || ans=331
+- cand `math-train/230` vs `limo/LIMO/590` signals={'leak': False, 'strong': False, 'jac': 0.5, 'ng8_ok': False, 'dup': False, 'tier': None}
+  - C: What is the value of $x$ for which $(2008+x)^2=x^2$? || ans=-1004
+  - E: Let $a = \pi/2008$ . Find the smallest positive integer $n$ such that \[2[\cos(a)\sin(a) + \cos(4a)\sin(2a) + \cos(9a)\sin(3a) + \cdots + \cos(n^2a)\sin(na)]\] is an integer. || ans=251

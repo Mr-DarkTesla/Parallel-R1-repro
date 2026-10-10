@@ -1,0 +1,41 @@
+{
+  "seed": 21,
+  "primary_distinct": 281,
+  "new_deep_distinct": 75,
+  "new_extra_distinct": 19,
+  "old_primary_copies": 1,
+  "new_deep_copies": 1,
+  "replay_nt": 300,
+  "replay_th": 300,
+  "total_rows": 881,
+  "split_rows": {
+    "train": 849,
+    "val": 32
+  },
+  "categories": {
+    "train": {
+      "replay_th": 283,
+      "primary_old": 179,
+      "primary_extra": 19,
+      "replay_nt": 293,
+      "primary_deep": 75
+    },
+    "val": {
+      "replay_th": 17,
+      "primary_old": 8,
+      "replay_nt": 7
+    }
+  },
+  "new_primary_in_val": 0,
+  "tag_free_control_exact_text": true,
+  "questions_and_order_matched": true,
+  "validation_ids_reused_from": "data/sft_sol_th_187_val.parquet",
+  "input_files": [
+    "audit/think_trace_sol/selected187.jsonl",
+    "audit/deep_trace_pilot/tagged24.jsonl",
+    "audit/deep_trace_round2/accepted51.jsonl",
+    "data/replay_nt.jsonl",
+    "data/replay_th.jsonl",
+    "results/21-qwen3-0.6b-multiverse/audit/sol_reserve_round3/accepted19.jsonl"
+  ]
+}

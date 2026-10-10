@@ -1,0 +1,32 @@
+{"id": "math-train/4324", "verdict": "reject", "reason": "Single telescoping product; splitting numerator and denominator would create artificial arithmetic branches."}
+{"id": "math-train/816", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Set x=10 to isolate A; Set x=-3 to isolate B."}
+{"id": "math-train/620", "verdict": "accept", "reason": "Two independent computations from shared problem facts: For the x terms, x^2-2x=(x-1)^2-1; For the y terms, y^2+4y=(y+2)^2-4."}
+{"id": "math-train/1985", "verdict": "accept", "reason": "Two independent computations from shared problem facts: More sons means 4, 5, or 6 sons; More daughters means 4, 5, or 6 daughters."}
+{"id": "math-train/7041", "verdict": "reject", "reason": "Single normal-distance computation; no second substantive independent quantity is needed."}
+{"id": "math-train/3483", "verdict": "accept", "reason": "Two independent computations from shared problem facts: The sum of the two roots is (-2-i sqrt(5))+(-2+i sqrt(5))=-4; Their product is (-2)^2-(i sqrt(5))^2=4-(-5)=9."}
+{"id": "math-train/1877", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Exactly five heads has C(7,5)=7!/(5!2!)=21 sequences; Exactly six heads has C(7,6)=7 sequences, and exactly seven heads has C(7,7)=1 sequence."}
+{"id": "math-train/3594", "verdict": "reject", "reason": "Unknown quadratic coefficients are coupled through shared equations; straightforward coefficient solution is sequential."}
+{"id": "gsm8k-train/4424", "verdict": "accept", "reason": "Two independent computations from shared problem facts: There are 200*0; There are 200*(1-0."}
+{"id": "math-train/685", "verdict": "accept", "reason": "Two independent computations from shared problem facts: The left side is (w+13)^2=w^2+26w+169; The right side is (3w+7)(2w+4)=6w^2+12w+14w+28=6w^2+26w+28."}
+{"id": "math-train/1145", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Multiply the first equation by 2 and the second by 5: 6x-10y=-22 and 35x+10y=-60; Multiply the first equation by 7 and the second by 3: 21x-35y=-77 and 21x+6y=-36."}
+{"id": "math-train/2792", "verdict": "reject", "reason": "Reflection and translation are elementary coordinate updates; neither offers substantial independent work."}
+{"id": "math-train/2415", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Face 6 contributes 6*(1/2)=3 to the expectation; The other faces contribute (1+2+3+4+5)*(1/10)=15/10=1."}
+{"id": "math-train/5755", "verdict": "accept", "reason": "Two independent computations from shared problem facts: The square side is L/4; The circle radius is L/(2*pi)."}
+{"id": "math-train/669", "verdict": "reject", "reason": "Degree-four cancellation determines c; degree-three verification depends on that result."}
+{"id": "math-train/2035", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Choose the three green positions among six draws; Any specified arrangement of three greens and three purples has probability (7/10)^3*(3/10)^3=(343*27)/1000000=9261/1000000."}
+{"id": "math-train/513", "verdict": "reject", "reason": "Single linear equation after direct substitution; no substantive independent branches."}
+{"id": "math-train/164", "verdict": "accept", "reason": "Two independent computations from shared problem facts: The numerator is 5x+9y=5*(3/5)+9*(7/9)=3+7=10; The denominator is 45xy=45*(3/5)*(7/9)=45*(21/45)=21."}
+{"id": "math-train/2003", "verdict": "accept", "reason": "Two independent computations from shared problem facts: The favorable count is C(4,3)+C(5,3)+C(6,3)=4+10+20=34, corresponding to red, white, and blue subsets; The total number of possible subsets is C(15,3)=15*14*13/(3*2*1)=455."}
+{"id": "math-train/5816", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Jar A retains 4-2=2 red buttons and 8-2=6 blue buttons; Jar B contains 2 red and 2 blue buttons."}
+{"id": "math-train/5661", "verdict": "reject", "reason": "Single rational product; arbitrary factor grouping would not provide meaningful independent work."}
+{"id": "math-train/1498", "verdict": "reject", "reason": "Shared segment fraction immediately yields both coordinates; two coordinate substitutions are too slight."}
+{"id": "math-train/4353", "verdict": "accept", "reason": "Two independent computations from shared problem facts: The first summand is 2/log_4(N)=2*log_N(4)=log_N(4^2)=log_N(16); The second summand is 3/log_5(N)=3*log_N(5)=log_N(5^3)=log_N(125)."}
+{"id": "math-train/7093", "verdict": "reject", "reason": "Trigonometric identity reduction has no clear independent two-part decomposition with confidently verified solution."}
+{"id": "math-train/5887", "verdict": "reject", "reason": "Two one-step repeating-decimal conversions are too slight to count as substantive computations."}
+{"id": "math-train/1784", "verdict": "reject", "reason": "Independence of daily snow events is unstated; probability of at least one snowy day is not determined by marginals alone."}
+{"id": "math-train/1179", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Double the first equation: 10u+4v=-14; Multiply the first equation by 3 and the second by 5: 15u+6v=-21 and 15u-20v=-125."}
+{"id": "math-train/6827", "verdict": "reject", "reason": "Quadrilateral ordering is not explicit; given A,B,C,D order crosses, while convex-hull interpretation differs. Reject ambiguity."}
+{"id": "gsm8k-train/3278", "verdict": "reject", "reason": "Corey’s gift depends directly on Mike’s stated gift; computation is short and sequential."}
+{"id": "math-train/2353", "verdict": "accept", "reason": "Two independent computations from shared problem facts: Faces 1 through 9 give nine one-digit outcomes; Faces 10 through 12 give three two-digit outcomes."}
+{"id": "math-train/995", "verdict": "reject", "reason": "Collinearity yields one determinant equation; no substantive independent branch structure."}
+{"id": "math-train/970", "verdict": "reject", "reason": "Cubing and solving one linear equation is sequential; no substantive independent branches."}
