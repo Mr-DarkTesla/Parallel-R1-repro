@@ -12,7 +12,7 @@ ARCHIVES = ROOT / "eval_archives"
 STEPS = (8, 16, 24, 32, 40, 48, 56, 64)
 GSM = "GSM8K_DEV"
 MATH = "MATH_DEV"
-CORRECTIONS = {
+ANSWER_PRESENT_CORRECTIONS = {
     8: [(GSM, name, 0) for name in (
         "gsm8k-train/132", "gsm8k-train/228", "gsm8k-train/288", "gsm8k-train/653"
     )] + [(MATH, name, 0) for name in (
@@ -26,6 +26,13 @@ CORRECTIONS = {
     48: [],
     56: [(GSM, "gsm8k-train/279", 0)],
     64: [],
+}
+# Step 8's ten extra correct values are bare or damaged output, including
+# one answer stranded in an unfinished <think>. They are not valid finals.
+# The three later corrections have a completed external Final Answer line.
+PROTOCOL_CORRECTIONS = {
+    step: ([] if step == 8 else keys)
+    for step, keys in ANSWER_PRESENT_CORRECTIONS.items()
 }
 USEFUL = {
     8: [], 16: [], 24: [], 32: [],
@@ -48,37 +55,43 @@ def main():
         "c0_corrected": corrected(load(ARCHIVES / "c0-greedy-pilot40.tgz"), FIXES),
         "selective_v2": load(ARCHIVES / "selective_v2_masked_pilot.tgz"),
     }
-    output = {"protocol": "same 40 masked greedy prompts; semantic answer review", "steps": {}}
+    output = {"protocol": "same 40 masked greedy prompts; protocol-valid final is primary; answer present anywhere is diagnostic", "steps": {}}
     for step in STEPS:
         filename = f"selective_v4_step{step}_masked_pilot.tgz"
         raw = load(ARCHIVES / filename)
-        rows = corrected(raw, CORRECTIONS[step])
-        assert len(rows) == 40
-        keys = sorted(rows)
+        protocol_rows = corrected(raw, PROTOCOL_CORRECTIONS[step])
+        answer_present_rows = corrected(raw, ANSWER_PRESENT_CORRECTIONS[step])
+        assert len(protocol_rows) == 40
+        keys = sorted(protocol_rows)
         for name, base in references.items():
-            assert base.keys() == rows.keys(), name
+            assert base.keys() == protocol_rows.keys(), name
             for key in keys:
-                assert base[key]["input"] == rows[key]["input"], (step, key)
-                assert base[key]["decoder"] == rows[key]["decoder"] == "masked"
+                assert base[key]["input"] == protocol_rows[key]["input"], (step, key)
+                assert base[key]["decoder"] == protocol_rows[key]["decoder"] == "masked"
         output["steps"][str(step)] = {
             "archive": filename,
-            "manual_corrections": [list(key) for key in CORRECTIONS[step]],
+            "protocol_corrections": [list(key) for key in PROTOCOL_CORRECTIONS[step]],
+            "answer_present_corrections": [list(key) for key in ANSWER_PRESENT_CORRECTIONS[step]],
             "robust_correct": sum(row["acc_robust"] for row in raw.values()),
-            "manual_correct": sum(row["acc_robust"] for row in rows.values()),
-            "numbered_blocks": sum(row["think_numbered_block"] for row in rows.values()),
+            "protocol_correct": sum(row["acc_robust"] for row in protocol_rows.values()),
+            "answer_present_correct": sum(row["acc_robust"] for row in answer_present_rows.values()),
+            "numbered_blocks": sum(row["think_numbered_block"] for row in protocol_rows.values()),
             "strict_useful_ids": USEFUL[step],
-            "outside_think": sum(row["outside_think_tags"] > 0 for row in rows.values()),
-            "truncated": sum(row["truncated"] for row in rows.values()),
-            "mean_tokens": round(sum(row["tokens"] for row in rows.values()) / 40, 2),
-            "mean_forward_passes": round(sum(row["forward_passes"] for row in rows.values()) / 40, 2),
-            "paired_accuracy": {name: compare(base, rows, keys, "acc_robust")
-                                for name, base in references.items()},
+            "outside_think": sum(row["outside_think_tags"] > 0 for row in protocol_rows.values()),
+            "truncated": sum(row["truncated"] for row in protocol_rows.values()),
+            "mean_tokens": round(sum(row["tokens"] for row in protocol_rows.values()) / 40, 2),
+            "mean_forward_passes": round(sum(row["forward_passes"] for row in protocol_rows.values()) / 40, 2),
+            "paired_protocol_accuracy": {name: compare(base, protocol_rows, keys, "acc_robust")
+                                         for name, base in references.items()},
+            "paired_answer_present_accuracy": {name: compare(base, answer_present_rows, keys, "acc_robust")
+                                               for name, base in references.items()},
         }
     path = ROOT / "audit/selective_v4_checkpoint_paired.json"
     path.write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n")
     for step, row in output["steps"].items():
-        print(step, row["manual_correct"], len(row["strict_useful_ids"]),
-              row["paired_accuracy"]["c0_corrected"]["delta"])
+        print(step, row["protocol_correct"], row["answer_present_correct"],
+              len(row["strict_useful_ids"]),
+              row["paired_protocol_accuracy"]["c0_corrected"]["delta"])
 
 
 if __name__ == "__main__":
