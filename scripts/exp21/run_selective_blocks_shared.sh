@@ -10,11 +10,12 @@ export CUDA_VISIBLE_DEVICES=0 PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1
 data=$work/exp21/expanded_th
 pilots=$work/exp21/masked_pilot
 runroot=/tmp/exp21-selective-runs
-name=exp21-m1-selective-text1
+name=${EXP21_RUN_NAME:-exp21-m1-selective-text1}
 run=$runroot/$name
-out=/tmp/exp21-selective-eval
-train=$data/sft_selective_blocks_m1_text1_train.parquet
-val=$data/sft_selective_blocks_m1_text1_val.parquet
+out=${EXP21_EVAL_OUT:-/tmp/exp21-selective-eval}
+prefix=${EXP21_DATA_PREFIX:-sft_selective_blocks_m1_text1}
+train=$data/${prefix}_train.parquet
+val=$data/${prefix}_val.parquet
 test -e "$train" && test -e "$val" && test -e "$work/assets/models/Qwen3-0.6B-mv/config.json"
 test -e "$pilots/gsm8k_dev10.parquet" && test -e "$pilots/math_devnext10.parquet"
 test -e "$repo/scripts/tag_validator.py" && test -e "$repo/scripts/bench/score.py"
