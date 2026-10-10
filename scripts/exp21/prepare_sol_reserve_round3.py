@@ -80,11 +80,18 @@ def main():
     write(ROOT / "accepted19.jsonl", accepted)
     write(ROOT / "accepted19_with_gold.jsonl", [r for r in with_gold if r["id"] in independently_tag_reviewed])
     write(ROOT / "accepted19_audit.jsonl", [r for r in audit if r["id"] in independently_tag_reviewed])
+    fast_review = read(ROOT / "fast_review11/verdicts.jsonl")
+    fast_ids = {r["id"] for r in fast_review if r["verdict"] == "accept"}
+    accepted_ids = {r["id"] for r in accepted}
+    assert len(fast_review) == len(fast_ids) == 11 and not fast_ids & accepted_ids
+    assert fast_ids | accepted_ids == {r["id"] for r in selected}
+    write(ROOT / "accepted30.jsonl", selected)
     (ROOT / "candidate30_summary.json").write_text(json.dumps({"reviewed_source_traces": 52,
         "independent_review_accepted_before_semantic_conclusion_gate": 34,
         "excluded_procedural_or_vague_conclusion": sorted(EXCLUDE_CONCLUSION),
         "candidate": len(selected), "independently_tag_reviewed_for_sft": len(accepted),
-        "root_tagged_a_pending_external_review": 11, "wrong_final_answers": 0,
+        "root_tagged_a_independently_reviewed": 11, "ready_after_second_review": 30,
+        "r3_sft_used": 19, "wrong_final_answers": 0,
         "grammar_valid": len(selected), "inside_think": len(selected), "source_preserved": len(selected)}, indent=2) + "\n")
     print(len(selected))
 

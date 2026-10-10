@@ -13,6 +13,9 @@ from mv_format import parse
 def convert(row):
     response = row["response"]
     finals = list(re.finditer(r"(?im)^[ \t]*(?:#{1,6}[ \t]*)?Final Answer[ \t]*:", response))
+    if not finals:
+        # One audited M2 trace puts the final answer in a Step heading and a boxed line.
+        finals = list(re.finditer(r"(?im)^#{1,6}[ \t]*Step[ \t]+\d+[ \t]*:[ \t]*Final Answer[ \t]*$", response))
     assert finals, row["id"]
     reasoning = response[:finals[-1].start()].rstrip()
     final = response[finals[-1].start():].strip()
