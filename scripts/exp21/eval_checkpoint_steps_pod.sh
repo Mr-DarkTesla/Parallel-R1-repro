@@ -17,7 +17,9 @@ cd "$repo/verl"
 export PYTHONPATH="$PWD"
 
 IFS=, read -r -a checkpoint_steps <<< "$steps"
-for step in "${checkpoint_steps[@]}"; do
+# Evaluate the final checkpoint first; earlier steps remain in the same fixed40 sweep.
+for ((step_index=${#checkpoint_steps[@]}-1; step_index>=0; step_index--)); do
+    step=${checkpoint_steps[$step_index]}
     model=$run/step_models/step_$step/model
     test -s "$model/config.json"
     export EXP21_TOKENIZER="$model"
