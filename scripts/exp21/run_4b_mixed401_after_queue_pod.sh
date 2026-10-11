@@ -9,10 +9,10 @@ exec 9>"$data/runner.lock"
 flock -n 9 || { echo 'mixed401 runner already active' >&2; exit 1; }
 trap 'rc=$?; printf "%s status=%s\n" "$(date -Is)" "$rc" > "$marker"' EXIT
 for _ in $(seq 1 7200); do
-    test -s /work/exp21/teacher_sft/LR1_EVAL_DONE && break
+    test -s /work/exp21/m1_rewrapped_sft/M1_RETRY_ATTEMPT_DONE && break
     sleep 5
 done
-test -s /work/exp21/teacher_sft/LR1_EVAL_DONE
+test -s /work/exp21/m1_rewrapped_sft/M1_RETRY_ATTEMPT_DONE
 if pgrep -f 'torchrun.*fsdp_parallel_sft_trainer|generate_masked_multiverse.py' >/dev/null; then
     echo 'another GPU task is active' >&2
     exit 1
