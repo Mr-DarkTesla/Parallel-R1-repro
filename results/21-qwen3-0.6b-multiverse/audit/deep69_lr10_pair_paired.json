@@ -1,0 +1,1787 @@
+{
+  "status": "final_reviewed",
+  "protocol": {
+    "pilot": "same 40 masked greedy prompts; 20 GSM8K_DEV and 20 MATH_DEV",
+    "external_accuracy": "reviewed correct standalone answer after closed </think>",
+    "strict_useful": "reviewed independent substantive paths with correct combination",
+    "ci": "10,000 paired bootstrap samples; binary deltas in percentage points"
+  },
+  "review_manifests": {
+    "lr10": "audit/deep69_lr10_pair_manual_reviews.json",
+    "deep69_lr100": "audit/deep69_pair_manual_reviews.json",
+    "recovery8": "audit/v4_recovery8_paired.json",
+    "c0_corrections": "scripts/exp21/audit_c0_pilot_scoring.py"
+  },
+  "baselines": {
+    "corrected_c0": {
+      "archive": "c0-greedy-pilot40.tgz",
+      "all": {
+        "n": 40,
+        "external_correct": 34,
+        "strict_useful": 0,
+        "response_level_numbered": 0,
+        "truncated": 4
+      },
+      "GSM8K_DEV": {
+        "n": 20,
+        "external_correct": 16,
+        "strict_useful": 0,
+        "response_level_numbered": 0,
+        "truncated": 2
+      },
+      "MATH_DEV": {
+        "n": 20,
+        "external_correct": 18,
+        "strict_useful": 0,
+        "response_level_numbered": 0,
+        "truncated": 2
+      }
+    },
+    "recovery8_step8": {
+      "archive": "v4_recovery8_step8_masked_pilot.tgz",
+      "strict_useful_ids": [
+        "math-test/9",
+        "math-test/36"
+      ],
+      "all": {
+        "n": 40,
+        "external_correct": 29,
+        "strict_useful": 2,
+        "response_level_numbered": 12,
+        "truncated": 2
+      },
+      "GSM8K_DEV": {
+        "n": 20,
+        "external_correct": 18,
+        "strict_useful": 0,
+        "response_level_numbered": 1,
+        "truncated": 1
+      },
+      "MATH_DEV": {
+        "n": 20,
+        "external_correct": 11,
+        "strict_useful": 2,
+        "response_level_numbered": 11,
+        "truncated": 1
+      }
+    },
+    "deep69_lr100": {
+      "deep69_tagged_lr100_step8": {
+        "archive": "deep69_tagged_p8_step8_masked_pilot.tgz",
+        "external_correct": 28,
+        "external_overrides": [
+          {
+            "key": [
+              "GSM8K_DEV",
+              "gsm8k-train/228",
+              0
+            ],
+            "value": true,
+            "evidence_file": "audit/deep69_tagged_p8_step8_answer_review.md",
+            "evidence_note": "Closed think is followed by the correct external answer 20 bags; robust parser missed it."
+          }
+        ],
+        "strict_useful_ids": [],
+        "strict_useful_evidence": [],
+        "manual_review_complete": true,
+        "all": {
+          "n": 40,
+          "external_correct": 28,
+          "strict_useful": 0,
+          "response_level_numbered": 14,
+          "truncated": 4
+        },
+        "GSM8K_DEV": {
+          "n": 20,
+          "external_correct": 15,
+          "strict_useful": 0,
+          "response_level_numbered": 1,
+          "truncated": 3
+        },
+        "MATH_DEV": {
+          "n": 20,
+          "external_correct": 13,
+          "strict_useful": 0,
+          "response_level_numbered": 13,
+          "truncated": 1
+        }
+      },
+      "deep69_plain_lr100_step8": {
+        "archive": "deep69_plain_p8_step8_masked_pilot.tgz",
+        "external_correct": 24,
+        "external_overrides": [
+          {
+            "key": [
+              "MATH_DEV",
+              "math-test/88",
+              0
+            ],
+            "value": true,
+            "evidence_file": "audit/deep69_plain_p8_step8_answer_review.md",
+            "evidence_note": "Reasoning fixes e=2 and the external answer 2 and 13 gives the correct d=13."
+          }
+        ],
+        "strict_useful_ids": [
+          "math-test/93"
+        ],
+        "strict_useful_evidence": [
+          {
+            "key": [
+              "MATH_DEV",
+              "math-test/93",
+              0
+            ],
+            "evidence_file": "audit/deep69_plain_p8_step8_answer_review.md",
+            "evidence_note": "Two independent algebraic relations combine correctly to the requested mean 5."
+          }
+        ],
+        "manual_review_complete": true,
+        "all": {
+          "n": 40,
+          "external_correct": 24,
+          "strict_useful": 1,
+          "response_level_numbered": 14,
+          "truncated": 4
+        },
+        "GSM8K_DEV": {
+          "n": 20,
+          "external_correct": 16,
+          "strict_useful": 0,
+          "response_level_numbered": 2,
+          "truncated": 1
+        },
+        "MATH_DEV": {
+          "n": 20,
+          "external_correct": 8,
+          "strict_useful": 1,
+          "response_level_numbered": 12,
+          "truncated": 3
+        }
+      }
+    }
+  },
+  "variants": {
+    "tagged_lr10_step8": {
+      "archive": "deep69_lr10_tagged_p8_step8_masked_pilot.tgz",
+      "external_correct": 26,
+      "external_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/228",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep69_lr10_tagged_p8_step8_answer_review.md",
+          "evidence_note": "The closed thinking is followed by the correct external answer 30 bags; robust parser missed it."
+        }
+      ],
+      "strict_useful_ids": [
+        "math-test/36"
+      ],
+      "strict_useful_evidence": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "evidence_file": "audit/deep69_lr10_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Independent lower and upper bound paths combine to the correct interval, with no solved answer before the block."
+        }
+      ],
+      "manual_review_complete": true,
+      "all": {
+        "n": 40,
+        "external_correct": 26,
+        "strict_useful": 1,
+        "response_level_numbered": 13,
+        "truncated": 3
+      },
+      "GSM8K_DEV": {
+        "n": 20,
+        "external_correct": 15,
+        "strict_useful": 0,
+        "response_level_numbered": 1,
+        "truncated": 3
+      },
+      "MATH_DEV": {
+        "n": 20,
+        "external_correct": 11,
+        "strict_useful": 1,
+        "response_level_numbered": 12,
+        "truncated": 0
+      },
+      "paired": {
+        "corrected_c0": {
+          "all": {
+            "external_accuracy": {
+              "base": 85.0,
+              "candidate": 65.0,
+              "delta": -20.0,
+              "ci95": [
+                -32.5,
+                -7.5
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 2.5,
+              "delta": 2.5,
+              "ci95": [
+                0.0,
+                7.5
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 0.0,
+              "candidate": 32.5,
+              "delta": 32.5,
+              "ci95": [
+                17.5,
+                47.5
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 7.5,
+              "delta": -2.5,
+              "ci95": [
+                -10.0,
+                5.0
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 1226.58,
+              "candidate": 620.08,
+              "delta": -606.5,
+              "ci95": [
+                -947.42,
+                -288.45
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 1226.58,
+              "candidate": 599.25,
+              "delta": -627.33,
+              "ci95": [
+                -974.2,
+                -306.0
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 80.0,
+              "candidate": 75.0,
+              "delta": -5.0,
+              "ci95": [
+                -15.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 0.0,
+              "candidate": 5.0,
+              "delta": 5.0,
+              "ci95": [
+                0.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 15.0,
+              "delta": 5.0,
+              "ci95": [
+                0.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 696.8,
+              "candidate": 787.0,
+              "delta": 90.2,
+              "ci95": [
+                -96.1,
+                314.2
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 696.8,
+              "candidate": 784.75,
+              "delta": 87.95,
+              "ci95": [
+                -98.35,
+                312.5
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 90.0,
+              "candidate": 55.0,
+              "delta": -35.0,
+              "ci95": [
+                -55.0,
+                -15.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 5.0,
+              "delta": 5.0,
+              "ci95": [
+                0.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 0.0,
+              "candidate": 60.0,
+              "delta": 60.0,
+              "ci95": [
+                40.0,
+                80.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 0.0,
+              "delta": -10.0,
+              "ci95": [
+                -25.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 1756.35,
+              "candidate": 453.15,
+              "delta": -1303.2,
+              "ci95": [
+                -1787.05,
+                -869.0
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 1756.35,
+              "candidate": 413.75,
+              "delta": -1342.6,
+              "ci95": [
+                -1823.05,
+                -910.7
+              ],
+              "n": 20
+            }
+          }
+        },
+        "recovery8_step8": {
+          "all": {
+            "external_accuracy": {
+              "base": 72.5,
+              "candidate": 65.0,
+              "delta": -7.5,
+              "ci95": [
+                -17.5,
+                2.5
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 5.0,
+              "candidate": 2.5,
+              "delta": -2.5,
+              "ci95": [
+                -7.5,
+                0.0
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 30.0,
+              "candidate": 32.5,
+              "delta": 2.5,
+              "ci95": [
+                -5.0,
+                12.5
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 7.5,
+              "delta": 2.5,
+              "ci95": [
+                -5.0,
+                10.0
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 650.12,
+              "candidate": 620.08,
+              "delta": -30.05,
+              "ci95": [
+                -280.82,
+                161.68
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 632.72,
+              "candidate": 599.25,
+              "delta": -33.48,
+              "ci95": [
+                -288.82,
+                161.1
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 90.0,
+              "candidate": 75.0,
+              "delta": -15.0,
+              "ci95": [
+                -30.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 5.0,
+              "candidate": 5.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 15.0,
+              "delta": 10.0,
+              "ci95": [
+                0.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 676.25,
+              "candidate": 787.0,
+              "delta": 110.75,
+              "ci95": [
+                -120.15,
+                366.95
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 674.0,
+              "candidate": 784.75,
+              "delta": 110.75,
+              "ci95": [
+                -120.15,
+                366.95
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 55.0,
+              "candidate": 55.0,
+              "delta": 0.0,
+              "ci95": [
+                -15.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 10.0,
+              "candidate": 5.0,
+              "delta": -5.0,
+              "ci95": [
+                -15.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 55.0,
+              "candidate": 60.0,
+              "delta": 5.0,
+              "ci95": [
+                -10.0,
+                20.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 0.0,
+              "delta": -5.0,
+              "ci95": [
+                -15.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 624.0,
+              "candidate": 453.15,
+              "delta": -170.85,
+              "ci95": [
+                -564.4,
+                38.15
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 591.45,
+              "candidate": 413.75,
+              "delta": -177.7,
+              "ci95": [
+                -583.4,
+                41.15
+              ],
+              "n": 20
+            }
+          }
+        },
+        "deep69_tagged_lr100_step8": {
+          "all": {
+            "external_accuracy": {
+              "base": 70.0,
+              "candidate": 65.0,
+              "delta": -5.0,
+              "ci95": [
+                -20.0,
+                10.0
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 2.5,
+              "delta": 2.5,
+              "ci95": [
+                0.0,
+                7.5
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 35.0,
+              "candidate": 32.5,
+              "delta": -2.5,
+              "ci95": [
+                -15.0,
+                10.0
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 7.5,
+              "delta": -2.5,
+              "ci95": [
+                -12.5,
+                5.0
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 768.18,
+              "candidate": 620.08,
+              "delta": -148.1,
+              "ci95": [
+                -402.32,
+                44.25
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 748.32,
+              "candidate": 599.25,
+              "delta": -149.07,
+              "ci95": [
+                -408.65,
+                48.58
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 75.0,
+              "candidate": 75.0,
+              "delta": 0.0,
+              "ci95": [
+                -20.0,
+                20.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 5.0,
+              "candidate": 5.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 15.0,
+              "candidate": 15.0,
+              "delta": 0.0,
+              "ci95": [
+                -15.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 794.7,
+              "candidate": 787.0,
+              "delta": -7.7,
+              "ci95": [
+                -162.85,
+                162.55
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 792.45,
+              "candidate": 784.75,
+              "delta": -7.7,
+              "ci95": [
+                -162.85,
+                162.55
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 65.0,
+              "candidate": 55.0,
+              "delta": -10.0,
+              "ci95": [
+                -35.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 5.0,
+              "delta": 5.0,
+              "ci95": [
+                0.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 65.0,
+              "candidate": 60.0,
+              "delta": -5.0,
+              "ci95": [
+                -30.0,
+                20.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 0.0,
+              "delta": -5.0,
+              "ci95": [
+                -15.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 741.65,
+              "candidate": 453.15,
+              "delta": -288.5,
+              "ci95": [
+                -773.9,
+                40.75
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 704.2,
+              "candidate": 413.75,
+              "delta": -290.45,
+              "ci95": [
+                -788.05,
+                51.85
+              ],
+              "n": 20
+            }
+          }
+        },
+        "plain_lr10_step8": {
+          "all": {
+            "external_accuracy": {
+              "base": 62.5,
+              "candidate": 65.0,
+              "delta": 2.5,
+              "ci95": [
+                -10.0,
+                15.0
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 5.0,
+              "candidate": 2.5,
+              "delta": -2.5,
+              "ci95": [
+                -7.5,
+                0.0
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 32.5,
+              "candidate": 32.5,
+              "delta": 0.0,
+              "ci95": [
+                -17.5,
+                17.5
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 15.0,
+              "candidate": 7.5,
+              "delta": -7.5,
+              "ci95": [
+                -17.5,
+                2.5
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 865.75,
+              "candidate": 620.08,
+              "delta": -245.68,
+              "ci95": [
+                -602.83,
+                56.98
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 849.22,
+              "candidate": 599.25,
+              "delta": -249.98,
+              "ci95": [
+                -610.15,
+                57.62
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 65.0,
+              "candidate": 75.0,
+              "delta": 10.0,
+              "ci95": [
+                0.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 15.0,
+              "candidate": 5.0,
+              "delta": -10.0,
+              "ci95": [
+                -25.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 15.0,
+              "candidate": 15.0,
+              "delta": 0.0,
+              "ci95": [
+                -15.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 842.85,
+              "candidate": 787.0,
+              "delta": -55.85,
+              "ci95": [
+                -298.2,
+                205.45
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 837.2,
+              "candidate": 784.75,
+              "delta": -52.45,
+              "ci95": [
+                -297.2,
+                213.85
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 60.0,
+              "candidate": 55.0,
+              "delta": -5.0,
+              "ci95": [
+                -25.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 10.0,
+              "candidate": 5.0,
+              "delta": -5.0,
+              "ci95": [
+                -15.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 50.0,
+              "candidate": 60.0,
+              "delta": 10.0,
+              "ci95": [
+                -20.0,
+                40.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 15.0,
+              "candidate": 0.0,
+              "delta": -15.0,
+              "ci95": [
+                -30.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 888.65,
+              "candidate": 453.15,
+              "delta": -435.5,
+              "ci95": [
+                -1082.55,
+                107.85
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 861.25,
+              "candidate": 413.75,
+              "delta": -447.5,
+              "ci95": [
+                -1103.35,
+                100.7
+              ],
+              "n": 20
+            }
+          }
+        }
+      }
+    },
+    "plain_lr10_step8": {
+      "archive": "deep69_lr10_plain_p8_step8_masked_pilot.tgz",
+      "external_correct": 25,
+      "external_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/88",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep69_lr10_plain_p8_step8_answer_review.md",
+          "evidence_note": "Reasoning fixes e=2 and the external answer 2 and 13 gives the correct d=13."
+        }
+      ],
+      "strict_useful_ids": [
+        "math-test/36",
+        "math-test/108"
+      ],
+      "strict_useful_evidence": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "evidence_file": "audit/deep69_lr10_plain_p8_step8_answer_review.md",
+          "evidence_note": "Independent lower and upper bound paths combine to the correct interval."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/108",
+            0
+          ],
+          "evidence_file": "audit/deep69_lr10_plain_p8_step8_answer_review.md",
+          "evidence_note": "Independent paths derive y=36 and x=18 and the conclusion verifies the requested ratio."
+        }
+      ],
+      "manual_review_complete": true,
+      "all": {
+        "n": 40,
+        "external_correct": 25,
+        "strict_useful": 2,
+        "response_level_numbered": 13,
+        "truncated": 6
+      },
+      "GSM8K_DEV": {
+        "n": 20,
+        "external_correct": 13,
+        "strict_useful": 0,
+        "response_level_numbered": 3,
+        "truncated": 3
+      },
+      "MATH_DEV": {
+        "n": 20,
+        "external_correct": 12,
+        "strict_useful": 2,
+        "response_level_numbered": 10,
+        "truncated": 3
+      },
+      "paired": {
+        "corrected_c0": {
+          "all": {
+            "external_accuracy": {
+              "base": 85.0,
+              "candidate": 62.5,
+              "delta": -22.5,
+              "ci95": [
+                -35.0,
+                -10.0
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 5.0,
+              "delta": 5.0,
+              "ci95": [
+                0.0,
+                12.5
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 0.0,
+              "candidate": 32.5,
+              "delta": 32.5,
+              "ci95": [
+                17.5,
+                47.5
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 15.0,
+              "delta": 5.0,
+              "ci95": [
+                -7.5,
+                17.5
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 1226.58,
+              "candidate": 865.75,
+              "delta": -360.82,
+              "ci95": [
+                -770.95,
+                39.78
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 1226.58,
+              "candidate": 849.22,
+              "delta": -377.35,
+              "ci95": [
+                -790.95,
+                26.55
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 80.0,
+              "candidate": 65.0,
+              "delta": -15.0,
+              "ci95": [
+                -30.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 0.0,
+              "candidate": 15.0,
+              "delta": 15.0,
+              "ci95": [
+                0.0,
+                30.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 15.0,
+              "delta": 5.0,
+              "ci95": [
+                -10.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 696.8,
+              "candidate": 842.85,
+              "delta": 146.05,
+              "ci95": [
+                -185.0,
+                480.6
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 696.8,
+              "candidate": 837.2,
+              "delta": 140.4,
+              "ci95": [
+                -195.0,
+                477.9
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 90.0,
+              "candidate": 60.0,
+              "delta": -30.0,
+              "ci95": [
+                -50.0,
+                -10.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 10.0,
+              "delta": 10.0,
+              "ci95": [
+                0.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 0.0,
+              "candidate": 50.0,
+              "delta": 50.0,
+              "ci95": [
+                30.0,
+                70.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 15.0,
+              "delta": 5.0,
+              "ci95": [
+                -10.0,
+                20.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 1756.35,
+              "candidate": 888.65,
+              "delta": -867.7,
+              "ci95": [
+                -1508.1,
+                -174.45
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 1756.35,
+              "candidate": 861.25,
+              "delta": -895.1,
+              "ci95": [
+                -1536.35,
+                -200.85
+              ],
+              "n": 20
+            }
+          }
+        },
+        "recovery8_step8": {
+          "all": {
+            "external_accuracy": {
+              "base": 72.5,
+              "candidate": 62.5,
+              "delta": -10.0,
+              "ci95": [
+                -25.0,
+                5.0
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 5.0,
+              "candidate": 5.0,
+              "delta": 0.0,
+              "ci95": [
+                -7.5,
+                7.5
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 30.0,
+              "candidate": 32.5,
+              "delta": 2.5,
+              "ci95": [
+                -12.5,
+                17.5
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 15.0,
+              "delta": 10.0,
+              "ci95": [
+                -2.5,
+                22.5
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 650.12,
+              "candidate": 865.75,
+              "delta": 215.62,
+              "ci95": [
+                -182.78,
+                623.15
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 632.72,
+              "candidate": 849.22,
+              "delta": 216.5,
+              "ci95": [
+                -186.28,
+                628.95
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 90.0,
+              "candidate": 65.0,
+              "delta": -25.0,
+              "ci95": [
+                -45.0,
+                -10.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 5.0,
+              "candidate": 15.0,
+              "delta": 10.0,
+              "ci95": [
+                0.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 15.0,
+              "delta": 10.0,
+              "ci95": [
+                -10.0,
+                30.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 676.25,
+              "candidate": 842.85,
+              "delta": 166.6,
+              "ci95": [
+                -197.25,
+                510.65
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 674.0,
+              "candidate": 837.2,
+              "delta": 163.2,
+              "ci95": [
+                -204.2,
+                509.65
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 55.0,
+              "candidate": 60.0,
+              "delta": 5.0,
+              "ci95": [
+                -15.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 10.0,
+              "candidate": 10.0,
+              "delta": 0.0,
+              "ci95": [
+                -15.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 55.0,
+              "candidate": 50.0,
+              "delta": -5.0,
+              "ci95": [
+                -35.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 15.0,
+              "delta": 10.0,
+              "ci95": [
+                -10.0,
+                30.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 624.0,
+              "candidate": 888.65,
+              "delta": 264.65,
+              "ci95": [
+                -453.05,
+                1017.4
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 591.45,
+              "candidate": 861.25,
+              "delta": 269.8,
+              "ci95": [
+                -457.35,
+                1030.8
+              ],
+              "n": 20
+            }
+          }
+        },
+        "deep69_plain_lr100_step8": {
+          "all": {
+            "external_accuracy": {
+              "base": 60.0,
+              "candidate": 62.5,
+              "delta": 2.5,
+              "ci95": [
+                -12.5,
+                20.0
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 2.5,
+              "candidate": 5.0,
+              "delta": 2.5,
+              "ci95": [
+                -5.0,
+                10.0
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 35.0,
+              "candidate": 32.5,
+              "delta": -2.5,
+              "ci95": [
+                -17.5,
+                12.5
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 10.0,
+              "candidate": 15.0,
+              "delta": 5.0,
+              "ci95": [
+                -7.5,
+                17.5
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 828.05,
+              "candidate": 865.75,
+              "delta": 37.7,
+              "ci95": [
+                -375.72,
+                448.92
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 809.95,
+              "candidate": 849.22,
+              "delta": 39.28,
+              "ci95": [
+                -374.9,
+                450.62
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 80.0,
+              "candidate": 65.0,
+              "delta": -15.0,
+              "ci95": [
+                -30.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 10.0,
+              "candidate": 15.0,
+              "delta": 5.0,
+              "ci95": [
+                0.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 5.0,
+              "candidate": 15.0,
+              "delta": 10.0,
+              "ci95": [
+                -10.0,
+                30.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 728.15,
+              "candidate": 842.85,
+              "delta": 114.7,
+              "ci95": [
+                -242.15,
+                472.95
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 723.25,
+              "candidate": 837.2,
+              "delta": 113.95,
+              "ci95": [
+                -243.55,
+                472.35
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 40.0,
+              "candidate": 60.0,
+              "delta": 20.0,
+              "ci95": [
+                -5.0,
+                45.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 5.0,
+              "candidate": 10.0,
+              "delta": 5.0,
+              "ci95": [
+                -10.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 60.0,
+              "candidate": 50.0,
+              "delta": -10.0,
+              "ci95": [
+                -35.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 15.0,
+              "candidate": 15.0,
+              "delta": 0.0,
+              "ci95": [
+                -20.0,
+                20.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 927.95,
+              "candidate": 888.65,
+              "delta": -39.3,
+              "ci95": [
+                -806.9,
+                726.15
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 896.65,
+              "candidate": 861.25,
+              "delta": -35.4,
+              "ci95": [
+                -804.65,
+                733.5
+              ],
+              "n": 20
+            }
+          }
+        },
+        "tagged_lr10_step8": {
+          "all": {
+            "external_accuracy": {
+              "base": 65.0,
+              "candidate": 62.5,
+              "delta": -2.5,
+              "ci95": [
+                -15.0,
+                10.0
+              ],
+              "n": 40
+            },
+            "strict_useful_blocks": {
+              "base": 2.5,
+              "candidate": 5.0,
+              "delta": 2.5,
+              "ci95": [
+                0.0,
+                7.5
+              ],
+              "n": 40
+            },
+            "response_level_numbered": {
+              "base": 32.5,
+              "candidate": 32.5,
+              "delta": 0.0,
+              "ci95": [
+                -17.5,
+                17.5
+              ],
+              "n": 40
+            },
+            "truncation": {
+              "base": 7.5,
+              "candidate": 15.0,
+              "delta": 7.5,
+              "ci95": [
+                -2.5,
+                17.5
+              ],
+              "n": 40
+            },
+            "tokens": {
+              "base": 620.08,
+              "candidate": 865.75,
+              "delta": 245.68,
+              "ci95": [
+                -57.02,
+                601.85
+              ],
+              "n": 40
+            },
+            "forward_passes": {
+              "base": 599.25,
+              "candidate": 849.22,
+              "delta": 249.98,
+              "ci95": [
+                -57.75,
+                610.05
+              ],
+              "n": 40
+            }
+          },
+          "GSM8K_DEV": {
+            "external_accuracy": {
+              "base": 75.0,
+              "candidate": 65.0,
+              "delta": -10.0,
+              "ci95": [
+                -25.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 0.0,
+              "candidate": 0.0,
+              "delta": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 5.0,
+              "candidate": 15.0,
+              "delta": 10.0,
+              "ci95": [
+                0.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 15.0,
+              "candidate": 15.0,
+              "delta": 0.0,
+              "ci95": [
+                -15.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 787.0,
+              "candidate": 842.85,
+              "delta": 55.85,
+              "ci95": [
+                -205.9,
+                298.2
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 784.75,
+              "candidate": 837.2,
+              "delta": 52.45,
+              "ci95": [
+                -213.9,
+                297.05
+              ],
+              "n": 20
+            }
+          },
+          "MATH_DEV": {
+            "external_accuracy": {
+              "base": 55.0,
+              "candidate": 60.0,
+              "delta": 5.0,
+              "ci95": [
+                -15.0,
+                25.0
+              ],
+              "n": 20
+            },
+            "strict_useful_blocks": {
+              "base": 5.0,
+              "candidate": 10.0,
+              "delta": 5.0,
+              "ci95": [
+                0.0,
+                15.0
+              ],
+              "n": 20
+            },
+            "response_level_numbered": {
+              "base": 60.0,
+              "candidate": 50.0,
+              "delta": -10.0,
+              "ci95": [
+                -40.0,
+                20.0
+              ],
+              "n": 20
+            },
+            "truncation": {
+              "base": 0.0,
+              "candidate": 15.0,
+              "delta": 15.0,
+              "ci95": [
+                0.0,
+                30.0
+              ],
+              "n": 20
+            },
+            "tokens": {
+              "base": 453.15,
+              "candidate": 888.65,
+              "delta": 435.5,
+              "ci95": [
+                -108.1,
+                1080.85
+              ],
+              "n": 20
+            },
+            "forward_passes": {
+              "base": 413.75,
+              "candidate": 861.25,
+              "delta": 447.5,
+              "ci95": [
+                -101.65,
+                1103.0
+              ],
+              "n": 20
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -23,6 +23,7 @@ from compare_masked_pilot_archives import load
 from compare_deep69_pair import (
     ARCHIVES,
     AUDIT,
+    CANDIDATES as DEEP69_ALL,
     ROOT,
     SOURCES,
     ci_compare,
@@ -122,7 +123,9 @@ def compare_to_references(label, rows, raw_rows, all_rows, raw_lookup):
 
 def main(lr10_manifest, output):
     lr10_entries = read_manifest(lr10_manifest, CANDIDATES.values(), "Deep69 LR10")
-    lr100_entries = read_manifest(DEEP69_REVIEWS, DEEP69_LR100.values(), "Deep69 LR100")
+    # The Deep69 source manifest covers both steps 4 and 8; this comparison
+    # reads its complete reviewed manifest and selects the step-8 entries.
+    lr100_entries = read_manifest(DEEP69_REVIEWS, DEEP69_ALL.values(), "Deep69 LR100")
     required = [ARCHIVES / name for name in (*CANDIDATES.values(), *DEEP69_LR100.values(),
                                              *BASE_ARCHIVES.values())]
     missing = [path.name for path in required if not path.is_file()]

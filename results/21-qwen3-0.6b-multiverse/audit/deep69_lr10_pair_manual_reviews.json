@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "archives": {
+    "deep69_lr10_tagged_p8_step8_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 26,
+      "external_overrides": [
+        {
+          "key": ["GSM8K_DEV", "gsm8k-train/228", 0],
+          "value": true,
+          "evidence_file": "audit/deep69_lr10_tagged_p8_step8_answer_review.md",
+          "evidence_note": "The closed thinking is followed by the correct external answer 30 bags; robust parser missed it."
+        }
+      ],
+      "strict_useful": [
+        {
+          "key": ["MATH_DEV", "math-test/36", 0],
+          "evidence_file": "audit/deep69_lr10_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Independent lower and upper bound paths combine to the correct interval, with no solved answer before the block."
+        }
+      ]
+    },
+    "deep69_lr10_plain_p8_step8_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 25,
+      "external_overrides": [
+        {
+          "key": ["MATH_DEV", "math-test/88", 0],
+          "value": true,
+          "evidence_file": "audit/deep69_lr10_plain_p8_step8_answer_review.md",
+          "evidence_note": "Reasoning fixes e=2 and the external answer 2 and 13 gives the correct d=13."
+        }
+      ],
+      "strict_useful": [
+        {
+          "key": ["MATH_DEV", "math-test/36", 0],
+          "evidence_file": "audit/deep69_lr10_plain_p8_step8_answer_review.md",
+          "evidence_note": "Independent lower and upper bound paths combine to the correct interval."
+        },
+        {
+          "key": ["MATH_DEV", "math-test/108", 0],
+          "evidence_file": "audit/deep69_lr10_plain_p8_step8_answer_review.md",
+          "evidence_note": "Independent paths derive y=36 and x=18 and the conclusion verifies the requested ratio."
+        }
+      ]
+    }
+  }
+}
