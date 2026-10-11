@@ -29,6 +29,7 @@ HEADER = ("Solve the following problem step by step.\n"
           "End your response with a line starting with Final Answer: followed by the final result.\n\nProblem: ")
 MAX_NEW_TOKENS = {"math": 4096, "gsm8k": 2048}
 REQUIRED_FIELDS = ("id", "source", "question", "answer", "answer_type")
+PLAN_FIELDS = ("id", "subgoal1", "subgoal2", "combine")
 
 
 def normalize(text):
@@ -79,6 +80,52 @@ def select_candidates(rows, math_count, gsm_count):
         have = {source: len(selected[source]) for source in counts}
         raise ValueError(f"candidate file cannot satisfy requested source counts: {have}")
     return [row for row in rows if row in selected[row["source"]]]
+
+
+def read_plans(path):
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    plans = {}
+    with path.open() as handle:
+        for number, line in enumerate(handle, 1):
+            if not line.strip():
+                raise ValueError(f"blank plan line {number}")
+            try:
+                plan = json.loads(line)
+            except json.JSONDecodeError as error:
+                raise ValueError(f"invalid plan JSON at line {number}") from error
+            if not isinstance(plan, dict) or any(field not in plan for field in PLAN_FIELDS):
+                raise ValueError(f"plan line {number} misses required fields")
+            if (not isinstance(plan["id"], str) or not plan["id"] or
+                    any(not isinstance(plan[field], str) or not normalize(plan[field])
+                        for field in PLAN_FIELDS[1:])):
+                raise ValueError(f"malformed plan line {number}")
+            if plan["id"] in plans:
+                raise ValueError(f"duplicate plan ID: {plan['id']}")
+            plans[plan["id"]] = {
+                "id": plan["id"],
+                **{field: normalize(plan[field]) for field in PLAN_FIELDS[1:]},
+            }
+    if not plans:
+        raise ValueError(f"empty plan JSONL: {path}")
+    return plans
+
+
+def select_plans(plans, candidates):
+    missing = [row["id"] for row in candidates if row["id"] not in plans]
+    if missing:
+        raise ValueError(f"selected candidates lack plans: {', '.join(missing)}")
+    return [plans[row["id"]] for row in candidates]
+
+
+def planned_prompt(question, plan):
+    return (mv_prompt(HEADER + question) +
+            "\n\nFor this problem, use exactly one <Parallel> block inside <think>. "
+            "Do not solve either subgoal or state the final answer before that block. "
+            "Its two Paths must independently compute these quantities:\n"
+            f"1. {plan['subgoal1']}\n"
+            f"2. {plan['subgoal2']}\n"
+            f"In <Conclusion>, {plan['combine']}")
 
 
 def parse_seeds(values):
@@ -155,8 +202,8 @@ def generate(model, tokenizer, prompt, max_new_tokens, seed, path_open, path_clo
     }
 
 
-def run_settings(args, candidates, seeds):
-    return {
+def run_settings(args, candidates, seeds, plans=None):
+    settings = {
         "decoder": "masked-autonomous-v2",
         "model": args.model,
         "candidates": str(args.candidates.resolve()),
@@ -174,6 +221,9 @@ def run_settings(args, candidates, seeds):
         "max_new_tokens": {"math": args.math_max_new_tokens, "gsm8k": args.gsm_max_new_tokens},
         "thinking": True,
     }
+    if plans is not None:
+        settings["plans"] = plans
+    return settings
 
 
 def row_settings(settings, source):
@@ -242,6 +292,8 @@ def parse_args():
     parser.add_argument("--top-k", type=int, default=20)
     parser.add_argument("--math-max-new-tokens", type=int, default=MAX_NEW_TOKENS["math"])
     parser.add_argument("--gsm-max-new-tokens", type=int, default=MAX_NEW_TOKENS["gsm8k"])
+    parser.add_argument("--plans", type=Path,
+                        help="JSONL records: id, subgoal1, subgoal2, combine")
     parser.add_argument("--thinking", action="store_true", default=True,
                         help="kept for explicit CLI readability; thinking is always enabled")
     args = parser.parse_args()
@@ -257,7 +309,8 @@ def parse_args():
 def main():
     args, seeds = parse_args()
     selected = select_candidates(read_candidates(args.candidates), args.math_count, args.gsm_count)
-    settings = run_settings(args, selected, seeds)
+    plans = select_plans(read_plans(args.plans), selected) if args.plans else None
+    settings = run_settings(args, selected, seeds, plans)
     meta_path = args.output.with_suffix(args.output.suffix + ".meta.json")
     done = prepare_resume(args.output, meta_path, settings)
     jobs = [(row, seed) for row in selected for seed in seeds if (row["id"], seed) not in done]
@@ -283,8 +336,10 @@ def main():
     sampling = {key: settings[key] for key in ("temperature", "top_p", "top_k")}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("a") as handle:
+        plans_by_id = {} if plans is None else {plan["id"]: plan for plan in plans}
         for row, seed in jobs:
-            prompt = mv_prompt(HEADER + row["question"])
+            plan = plans_by_id.get(row["id"])
+            prompt = mv_prompt(HEADER + row["question"]) if plan is None else planned_prompt(row["question"], plan)
             rendered = tokenizer.apply_chat_template(
                 [{"role": "user", "content": prompt}], add_generation_prompt=True,
                 tokenize=False, enable_thinking=True)
