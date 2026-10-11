@@ -1,0 +1,1169 @@
+{
+  "protocol": {
+    "pilot": "same 40 masked greedy prompts",
+    "unreviewed_external_accuracy": "archive acc_robust until a manual review manifest is supplied",
+    "paired_ci": "10,000 paired bootstrap samples from compare_masked_pilot_archives.py"
+  },
+  "review_manifest": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/audit/deep51_pair_manual_reviews.json",
+  "baselines": {
+    "corrected_c0": {
+      "archive": "c0-greedy-pilot40.tgz",
+      "external_correct": 34,
+      "external_corrections": [
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/235",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/103",
+          0
+        ]
+      ]
+    },
+    "recovery8_step8": {
+      "archive": "v4_recovery8_step8_masked_pilot.tgz",
+      "external_correct": 29,
+      "external_corrections": []
+    }
+  },
+  "variants": {
+    "tagged_step4": {
+      "archive": "deep51_tagged_p8_step4_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [],
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "external_correct": 27,
+      "response_level_numbered": 10,
+      "truncated": 6,
+      "outside_think": 0,
+      "mean_tokens": 863.5,
+      "mean_forward_passes": 847.75,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 67.5,
+            "delta": -17.5,
+            "ci95": [
+              -30.0,
+              -7.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 67.5,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 70.0,
+            "candidate": 67.5,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 62.5,
+            "candidate": 67.5,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              20.0
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 62.5,
+            "candidate": 67.5,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 25.0,
+            "delta": 25.0,
+            "ci95": [
+              12.5,
+              40.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 25.0,
+            "delta": -5.0,
+            "ci95": [
+              -20.0,
+              7.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 27.5,
+            "candidate": 25.0,
+            "delta": -2.5,
+            "ci95": [
+              -7.5,
+              0.0
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 15.0,
+            "candidate": 25.0,
+            "delta": 10.0,
+            "ci95": [
+              2.5,
+              20.0
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 15.0,
+            "candidate": 25.0,
+            "delta": 10.0,
+            "ci95": [
+              0.0,
+              22.5
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 15.0,
+            "delta": 5.0,
+            "ci95": [
+              -5.0,
+              15.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 15.0,
+            "delta": 10.0,
+            "ci95": [
+              0.0,
+              22.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 12.5,
+            "candidate": 15.0,
+            "delta": 2.5,
+            "ci95": [
+              -7.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 10.0,
+            "candidate": 15.0,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 12.5,
+            "candidate": 15.0,
+            "delta": 2.5,
+            "ci95": [
+              -10.0,
+              15.0
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 863.5,
+            "delta": -363.07,
+            "ci95": [
+              -691.8,
+              -76.65
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 863.5,
+            "delta": 213.38,
+            "ci95": [
+              -79.7,
+              490.43
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 889.8,
+            "candidate": 863.5,
+            "delta": -26.3,
+            "ci95": [
+              -161.65,
+              104.8
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 909.58,
+            "candidate": 863.5,
+            "delta": -46.08,
+            "ci95": [
+              -458.57,
+              327.88
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 883.0,
+            "candidate": 863.5,
+            "delta": -19.5,
+            "ci95": [
+              -402.82,
+              339.5
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 847.75,
+            "delta": -378.82,
+            "ci95": [
+              -711.45,
+              -88.65
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 847.75,
+            "delta": 215.03,
+            "ci95": [
+              -83.38,
+              494.85
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 873.38,
+            "candidate": 847.75,
+            "delta": -25.62,
+            "ci95": [
+              -160.25,
+              104.2
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 901.98,
+            "candidate": 847.75,
+            "delta": -54.23,
+            "ci95": [
+              -467.85,
+              320.9
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 874.17,
+            "candidate": 847.75,
+            "delta": -26.43,
+            "ci95": [
+              -413.88,
+              333.98
+            ],
+            "n": 40
+          }
+        }
+      }
+    },
+    "tagged_step8": {
+      "archive": "deep51_tagged_p8_step8_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct interval (-sqrt(3), sqrt(3)); automatic parser missed it."
+        }
+      ],
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "external_correct": 28,
+      "response_level_numbered": 11,
+      "truncated": 5,
+      "outside_think": 0,
+      "mean_tokens": 889.8,
+      "mean_forward_passes": 873.38,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 70.0,
+            "delta": -15.0,
+            "ci95": [
+              -30.0,
+              0.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 70.0,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 67.5,
+            "candidate": 70.0,
+            "delta": 2.5,
+            "ci95": [
+              -10.0,
+              15.0
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 62.5,
+            "candidate": 70.0,
+            "delta": 7.5,
+            "ci95": [
+              -7.5,
+              22.5
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 62.5,
+            "candidate": 70.0,
+            "delta": 7.5,
+            "ci95": [
+              -7.5,
+              22.5
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 27.5,
+            "delta": 27.5,
+            "ci95": [
+              15.0,
+              42.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 27.5,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 25.0,
+            "candidate": 27.5,
+            "delta": 2.5,
+            "ci95": [
+              0.0,
+              7.5
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 15.0,
+            "candidate": 27.5,
+            "delta": 12.5,
+            "ci95": [
+              2.5,
+              22.5
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 15.0,
+            "candidate": 27.5,
+            "delta": 12.5,
+            "ci95": [
+              2.5,
+              22.5
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 12.5,
+            "delta": 2.5,
+            "ci95": [
+              -10.0,
+              15.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 12.5,
+            "delta": 7.5,
+            "ci95": [
+              -5.0,
+              20.0
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 15.0,
+            "candidate": 12.5,
+            "delta": -2.5,
+            "ci95": [
+              -12.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 10.0,
+            "candidate": 12.5,
+            "delta": 2.5,
+            "ci95": [
+              -12.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 12.5,
+            "candidate": 12.5,
+            "delta": 0.0,
+            "ci95": [
+              -15.0,
+              15.0
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 889.8,
+            "delta": -336.77,
+            "ci95": [
+              -695.35,
+              -13.7
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 889.8,
+            "delta": 239.68,
+            "ci95": [
+              -68.4,
+              519.38
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 863.5,
+            "candidate": 889.8,
+            "delta": 26.3,
+            "ci95": [
+              -105.0,
+              161.28
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 909.58,
+            "candidate": 889.8,
+            "delta": -19.77,
+            "ci95": [
+              -445.95,
+              370.07
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 883.0,
+            "candidate": 889.8,
+            "delta": 6.8,
+            "ci95": [
+              -387.1,
+              374.68
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 873.38,
+            "delta": -353.2,
+            "ci95": [
+              -716.58,
+              -23.25
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 873.38,
+            "delta": 240.65,
+            "ci95": [
+              -70.9,
+              524.1
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 847.75,
+            "candidate": 873.38,
+            "delta": 25.62,
+            "ci95": [
+              -104.25,
+              159.85
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 901.98,
+            "candidate": 873.38,
+            "delta": -28.6,
+            "ci95": [
+              -458.62,
+              364.02
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 874.17,
+            "candidate": 873.38,
+            "delta": -0.8,
+            "ci95": [
+              -396.6,
+              368.75
+            ],
+            "n": 40
+          }
+        }
+      }
+    },
+    "plain_step4": {
+      "archive": "deep51_plain_p8_step4_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/9",
+            0
+          ],
+          "value": false,
+          "evidence_file": "audit/deep51_plain_p8_step4_answer_review.md",
+          "evidence_note": "The correct value occurs only inside a truncated unclosed think; no external answer exists."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_plain_p8_step4_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3))."
+        }
+      ],
+      "strict_useful_ids": [],
+      "external_correct": 25,
+      "response_level_numbered": 6,
+      "truncated": 4,
+      "outside_think": 0,
+      "mean_tokens": 909.58,
+      "mean_forward_passes": 901.98,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 62.5,
+            "delta": -22.5,
+            "ci95": [
+              -35.0,
+              -10.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 62.5,
+            "delta": -10.0,
+            "ci95": [
+              -22.5,
+              0.0
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 67.5,
+            "candidate": 62.5,
+            "delta": -5.0,
+            "ci95": [
+              -20.0,
+              7.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 70.0,
+            "candidate": 62.5,
+            "delta": -7.5,
+            "ci95": [
+              -22.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 62.5,
+            "candidate": 62.5,
+            "delta": 0.0,
+            "ci95": [
+              -10.0,
+              10.0
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 15.0,
+            "delta": 15.0,
+            "ci95": [
+              5.0,
+              27.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 15.0,
+            "delta": -15.0,
+            "ci95": [
+              -30.0,
+              0.0
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 25.0,
+            "candidate": 15.0,
+            "delta": -10.0,
+            "ci95": [
+              -20.0,
+              -2.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 27.5,
+            "candidate": 15.0,
+            "delta": -12.5,
+            "ci95": [
+              -22.5,
+              -2.5
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 15.0,
+            "candidate": 15.0,
+            "delta": 0.0,
+            "ci95": [
+              -10.0,
+              10.0
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 10.0,
+            "delta": 0.0,
+            "ci95": [
+              -12.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 10.0,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 15.0,
+            "candidate": 10.0,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 12.5,
+            "candidate": 10.0,
+            "delta": -2.5,
+            "ci95": [
+              -17.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 12.5,
+            "candidate": 10.0,
+            "delta": -2.5,
+            "ci95": [
+              -12.5,
+              7.5
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 909.58,
+            "delta": -317.0,
+            "ci95": [
+              -674.4,
+              22.4
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 909.58,
+            "delta": 259.45,
+            "ci95": [
+              -114.53,
+              664.42
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 863.5,
+            "candidate": 909.58,
+            "delta": 46.08,
+            "ci95": [
+              -328.07,
+              458.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 889.8,
+            "candidate": 909.58,
+            "delta": 19.77,
+            "ci95": [
+              -370.27,
+              445.93
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 883.0,
+            "candidate": 909.58,
+            "delta": 26.57,
+            "ci95": [
+              -301.0,
+              369.93
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 901.98,
+            "delta": -324.6,
+            "ci95": [
+              -683.77,
+              15.7
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 901.98,
+            "delta": 269.25,
+            "ci95": [
+              -109.17,
+              680.42
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 847.75,
+            "candidate": 901.98,
+            "delta": 54.23,
+            "ci95": [
+              -321.15,
+              467.73
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 873.38,
+            "candidate": 901.98,
+            "delta": 28.6,
+            "ci95": [
+              -364.2,
+              458.35
+            ],
+            "n": 40
+          },
+          "plain_step8": {
+            "base": 874.17,
+            "candidate": 901.98,
+            "delta": 27.8,
+            "ci95": [
+              -300.77,
+              376.2
+            ],
+            "n": 40
+          }
+        }
+      }
+    },
+    "plain_step8": {
+      "archive": "deep51_plain_p8_step8_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [],
+      "strict_useful_ids": [],
+      "external_correct": 25,
+      "response_level_numbered": 6,
+      "truncated": 5,
+      "outside_think": 0,
+      "mean_tokens": 883.0,
+      "mean_forward_passes": 874.17,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 62.5,
+            "delta": -22.5,
+            "ci95": [
+              -35.0,
+              -10.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 62.5,
+            "delta": -10.0,
+            "ci95": [
+              -22.5,
+              0.0
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 67.5,
+            "candidate": 62.5,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 70.0,
+            "candidate": 62.5,
+            "delta": -7.5,
+            "ci95": [
+              -22.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 62.5,
+            "candidate": 62.5,
+            "delta": 0.0,
+            "ci95": [
+              -10.0,
+              10.0
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 15.0,
+            "delta": 15.0,
+            "ci95": [
+              5.0,
+              27.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 15.0,
+            "delta": -15.0,
+            "ci95": [
+              -27.5,
+              -2.5
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 25.0,
+            "candidate": 15.0,
+            "delta": -10.0,
+            "ci95": [
+              -22.5,
+              0.0
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 27.5,
+            "candidate": 15.0,
+            "delta": -12.5,
+            "ci95": [
+              -22.5,
+              -2.5
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 15.0,
+            "candidate": 15.0,
+            "delta": 0.0,
+            "ci95": [
+              -10.0,
+              10.0
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 12.5,
+            "delta": 2.5,
+            "ci95": [
+              -7.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 12.5,
+            "delta": 7.5,
+            "ci95": [
+              -2.5,
+              20.0
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 15.0,
+            "candidate": 12.5,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 12.5,
+            "candidate": 12.5,
+            "delta": 0.0,
+            "ci95": [
+              -15.0,
+              15.0
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 10.0,
+            "candidate": 12.5,
+            "delta": 2.5,
+            "ci95": [
+              -7.5,
+              12.5
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 883.0,
+            "delta": -343.57,
+            "ci95": [
+              -706.62,
+              4.35
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 883.0,
+            "delta": 232.88,
+            "ci95": [
+              -136.65,
+              634.27
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 863.5,
+            "candidate": 883.0,
+            "delta": 19.5,
+            "ci95": [
+              -339.6,
+              402.27
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 889.8,
+            "candidate": 883.0,
+            "delta": -6.8,
+            "ci95": [
+              -374.88,
+              387.05
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 909.58,
+            "candidate": 883.0,
+            "delta": -26.57,
+            "ci95": [
+              -370.52,
+              300.73
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 874.17,
+            "delta": -352.4,
+            "ci95": [
+              -716.33,
+              -3.02
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 874.17,
+            "delta": 241.45,
+            "ci95": [
+              -131.88,
+              644.85
+            ],
+            "n": 40
+          },
+          "tagged_step4": {
+            "base": 847.75,
+            "candidate": 874.17,
+            "delta": 26.43,
+            "ci95": [
+              -334.02,
+              413.75
+            ],
+            "n": 40
+          },
+          "tagged_step8": {
+            "base": 873.38,
+            "candidate": 874.17,
+            "delta": 0.8,
+            "ci95": [
+              -368.95,
+              396.57
+            ],
+            "n": 40
+          },
+          "plain_step4": {
+            "base": 901.98,
+            "candidate": 874.17,
+            "delta": -27.8,
+            "ci95": [
+              -376.7,
+              300.3
+            ],
+            "n": 40
+          }
+        }
+      }
+    }
+  }
+}
