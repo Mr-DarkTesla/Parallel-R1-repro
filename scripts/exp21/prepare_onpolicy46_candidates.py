@@ -175,7 +175,9 @@ def main():
         if row.get("source") not in ("math", "gsm8k"):
             continue
         text = normalize(row["question"])
-        if text in trained_questions:
+        if re.search(r"\[asy\]", row["question"], re.IGNORECASE):
+            rejected["asy_question"].add(row["id"])
+        elif text in trained_questions:
             rejected["sft_question"].add(row["id"])
         elif text in pilot:
             rejected["pilot40_question"].add(row["id"])

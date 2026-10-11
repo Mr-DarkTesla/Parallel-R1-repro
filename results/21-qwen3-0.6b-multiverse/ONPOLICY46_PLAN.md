@@ -18,7 +18,9 @@ Question comparison uses Unicode NFKC followed by whitespace collapse. For each
 parquet prompt it compares both the full stored question and text after its last
 `Problem:` marker. The one ID-only validation manifest resolves each ID through
 the canonical pool before comparison. Candidate text must differ from every SFT
-and pilot question.
+and pilot question. Any question containing `[asy]` (case-insensitive) is
+excluded before ranking because its diagram code cannot be supplied reliably to
+the text rollout; its IDs and count appear under `asy_question` in the audit.
 The existing leakcheck policy rejects leaks against every non-info eval corpus
 and `dup` or `variant` against `math_test_full(info)`.
 
