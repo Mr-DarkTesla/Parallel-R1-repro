@@ -3,6 +3,70 @@
   "n": 40,
   "protocol": "same fixed40 prompts, thinking, masked greedy, same token budgets",
   "runs": {
+    "plain_step16": {
+      "metrics": {
+        "strict": 29.0,
+        "robust": 34.0,
+        "block": 0.0,
+        "truncated": 5.0,
+        "tokens": 1063.15,
+        "forward_passes": 1063.15
+      },
+      "vs_initial": {
+        "strict": {
+          "delta": 12.5,
+          "ci95": [
+            -7.5,
+            30.0
+          ],
+          "discordant": {
+            "lost": 5,
+            "gained": 10
+          },
+          "mcnemar_exact_p": 0.3017578125
+        },
+        "robust": {
+          "delta": 2.5,
+          "ci95": [
+            -10.0,
+            15.0
+          ],
+          "discordant": {
+            "lost": 3,
+            "gained": 4
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": -5.0,
+          "ci95": [
+            -17.5,
+            7.5
+          ]
+        },
+        "tokens": {
+          "delta": -602.77,
+          "ci95": [
+            -866.42,
+            -344.1
+          ]
+        },
+        "forward_passes": {
+          "delta": -602.77,
+          "ci95": [
+            -866.42,
+            -344.1
+          ]
+        }
+      }
+    },
     "tagged_step16": {
       "metrics": {
         "strict": 31.0,
@@ -196,7 +260,62 @@
       }
     }
   },
-  "pairwise": {},
+  "pairwise": {
+    "step16": {
+      "strict": {
+        "delta": 5.0,
+        "ci95": [
+          -7.5,
+          17.5
+        ],
+        "discordant": {
+          "lost": 2,
+          "gained": 4
+        },
+        "mcnemar_exact_p": 0.6875
+      },
+      "robust": {
+        "delta": 5.0,
+        "ci95": [
+          -5.0,
+          15.0
+        ],
+        "discordant": {
+          "lost": 1,
+          "gained": 3
+        },
+        "mcnemar_exact_p": 0.625
+      },
+      "block": {
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "truncated": {
+        "delta": -5.0,
+        "ci95": [
+          -15.0,
+          5.0
+        ]
+      },
+      "tokens": {
+        "delta": 124.67,
+        "ci95": [
+          -140.58,
+          393.83
+        ]
+      },
+      "forward_passes": {
+        "delta": 124.67,
+        "ci95": [
+          -140.58,
+          393.83
+        ]
+      }
+    }
+  },
   "baseline_metrics": {
     "strict": 24.0,
     "robust": 33.0,
