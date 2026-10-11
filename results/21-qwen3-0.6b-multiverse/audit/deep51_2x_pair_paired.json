@@ -1,0 +1,1075 @@
+{
+  "status": "final_reviewed",
+  "protocol": {
+    "pilot": "same 40 masked greedy prompts",
+    "unreviewed_external_accuracy": "archive acc_robust",
+    "final_requirement": "manual reviews for all 2x and all 1x variants",
+    "paired_ci": "10,000 paired bootstrap samples from compare_masked_pilot_archives.py"
+  },
+  "review_manifest": "audit/deep51_2x_pair_manual_reviews.json",
+  "baselines": {
+    "corrected_c0": {
+      "archive": "c0-greedy-pilot40.tgz",
+      "external_correct": 34,
+      "external_corrections": [
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/235",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/103",
+          0
+        ]
+      ]
+    },
+    "recovery8_step8": {
+      "archive": "v4_recovery8_step8_masked_pilot.tgz",
+      "external_correct": 29,
+      "external_corrections": []
+    }
+  },
+  "deep51_1x": {
+    "tagged_step4": {
+      "archive": "deep51_tagged_p8_step4_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [],
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "external_correct": 27,
+      "source_audit": "audit/deep51_pair_paired.json"
+    },
+    "tagged_step8": {
+      "archive": "deep51_tagged_p8_step8_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct interval (-sqrt(3), sqrt(3)); automatic parser missed it."
+        }
+      ],
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "external_correct": 28,
+      "source_audit": "audit/deep51_pair_paired.json"
+    },
+    "plain_step4": {
+      "archive": "deep51_plain_p8_step4_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/9",
+            0
+          ],
+          "value": false,
+          "evidence_file": "audit/deep51_plain_p8_step4_answer_review.md",
+          "evidence_note": "The correct value occurs only inside a truncated unclosed think; no external answer exists."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_plain_p8_step4_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3))."
+        }
+      ],
+      "strict_useful_ids": [],
+      "external_correct": 25,
+      "source_audit": "audit/deep51_pair_paired.json"
+    },
+    "plain_step8": {
+      "archive": "deep51_plain_p8_step8_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [],
+      "strict_useful_ids": [],
+      "external_correct": 25,
+      "source_audit": "audit/deep51_pair_paired.json"
+    }
+  },
+  "variants": {
+    "tagged_step4": {
+      "archive": "deep51_2x_tagged_p8_step4_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/82",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_tagged_p8_step4_answer_review.md",
+          "evidence_note": "The external mixed number 41 2/3 equals the target 125/3."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_tagged_p8_step4_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3))."
+        }
+      ],
+      "strict_useful_ids": [],
+      "external_correct": 27,
+      "response_level_numbered": 11,
+      "truncated": 3,
+      "outside_think": 0,
+      "mean_tokens": 704.85,
+      "mean_forward_passes": 690.33,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 67.5,
+            "delta": -17.5,
+            "ci95": [
+              -32.5,
+              -5.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 67.5,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step4": {
+            "base": 67.5,
+            "candidate": 67.5,
+            "delta": 0.0,
+            "ci95": [
+              -12.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step4": {
+            "base": 65.0,
+            "candidate": 67.5,
+            "delta": 2.5,
+            "ci95": [
+              -15.0,
+              17.5
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 27.5,
+            "delta": 27.5,
+            "ci95": [
+              15.0,
+              42.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 27.5,
+            "delta": -2.5,
+            "ci95": [
+              -17.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step4": {
+            "base": 25.0,
+            "candidate": 27.5,
+            "delta": 2.5,
+            "ci95": [
+              0.0,
+              7.5
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step4": {
+            "base": 20.0,
+            "candidate": 27.5,
+            "delta": 7.5,
+            "ci95": [
+              -5.0,
+              20.0
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 7.5,
+            "delta": -2.5,
+            "ci95": [
+              -12.5,
+              5.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 7.5,
+            "delta": 2.5,
+            "ci95": [
+              -5.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step4": {
+            "base": 15.0,
+            "candidate": 7.5,
+            "delta": -7.5,
+            "ci95": [
+              -17.5,
+              0.0
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step4": {
+            "base": 10.0,
+            "candidate": 7.5,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 704.85,
+            "delta": -521.73,
+            "ci95": [
+              -883.08,
+              -207.12
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 704.85,
+            "delta": 54.73,
+            "ci95": [
+              -207.8,
+              253.43
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step4": {
+            "base": 863.5,
+            "candidate": 704.85,
+            "delta": -158.65,
+            "ci95": [
+              -386.15,
+              3.9
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step4": {
+            "base": 818.6,
+            "candidate": 704.85,
+            "delta": -113.75,
+            "ci95": [
+              -414.95,
+              140.55
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 690.33,
+            "delta": -536.25,
+            "ci95": [
+              -899.42,
+              -217.68
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 690.33,
+            "delta": 57.6,
+            "ci95": [
+              -207.55,
+              258.5
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step4": {
+            "base": 847.75,
+            "candidate": 690.33,
+            "delta": -157.43,
+            "ci95": [
+              -385.55,
+              5.95
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step4": {
+            "base": 803.8,
+            "candidate": 690.33,
+            "delta": -113.47,
+            "ci95": [
+              -417.25,
+              142.07
+            ],
+            "n": 40
+          }
+        }
+      }
+    },
+    "tagged_step8": {
+      "archive": "deep51_2x_tagged_p8_step8_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3)); parser missed it."
+        }
+      ],
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "external_correct": 27,
+      "response_level_numbered": 11,
+      "truncated": 6,
+      "outside_think": 0,
+      "mean_tokens": 814.9,
+      "mean_forward_passes": 796.27,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 67.5,
+            "delta": -17.5,
+            "ci95": [
+              -30.0,
+              -7.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 67.5,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              10.0
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step8": {
+            "base": 70.0,
+            "candidate": 67.5,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step8": {
+            "base": 62.5,
+            "candidate": 67.5,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 27.5,
+            "delta": 27.5,
+            "ci95": [
+              15.0,
+              42.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 27.5,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step8": {
+            "base": 27.5,
+            "candidate": 27.5,
+            "delta": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step8": {
+            "base": 20.0,
+            "candidate": 27.5,
+            "delta": 7.5,
+            "ci95": [
+              -7.5,
+              22.5
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 15.0,
+            "delta": 5.0,
+            "ci95": [
+              -5.0,
+              15.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 15.0,
+            "delta": 10.0,
+            "ci95": [
+              0.0,
+              22.5
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step8": {
+            "base": 12.5,
+            "candidate": 15.0,
+            "delta": 2.5,
+            "ci95": [
+              -7.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step8": {
+            "base": 5.0,
+            "candidate": 15.0,
+            "delta": 10.0,
+            "ci95": [
+              0.0,
+              22.5
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 814.9,
+            "delta": -411.68,
+            "ci95": [
+              -733.23,
+              -127.45
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 814.9,
+            "delta": 164.78,
+            "ci95": [
+              -122.6,
+              438.1
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step8": {
+            "base": 889.8,
+            "candidate": 814.9,
+            "delta": -74.9,
+            "ci95": [
+              -212.85,
+              55.55
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step8": {
+            "base": 616.12,
+            "candidate": 814.9,
+            "delta": 198.78,
+            "ci95": [
+              -101.97,
+              496.23
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 796.27,
+            "delta": -430.3,
+            "ci95": [
+              -757.25,
+              -139.4
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 796.27,
+            "delta": 163.55,
+            "ci95": [
+              -129.03,
+              438.9
+            ],
+            "n": 40
+          },
+          "deep51_1x_tagged_step8": {
+            "base": 873.38,
+            "candidate": 796.27,
+            "delta": -77.1,
+            "ci95": [
+              -214.75,
+              53.33
+            ],
+            "n": 40
+          },
+          "deep51_2x_plain_step8": {
+            "base": 607.95,
+            "candidate": 796.27,
+            "delta": 188.32,
+            "ci95": [
+              -115.53,
+              487.1
+            ],
+            "n": 40
+          }
+        }
+      }
+    },
+    "plain_step4": {
+      "archive": "deep51_2x_plain_p8_step4_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_plain_p8_step4_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3))."
+        }
+      ],
+      "strict_useful_ids": [],
+      "external_correct": 26,
+      "response_level_numbered": 8,
+      "truncated": 4,
+      "outside_think": 0,
+      "mean_tokens": 818.6,
+      "mean_forward_passes": 803.8,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 65.0,
+            "delta": -20.0,
+            "ci95": [
+              -35.0,
+              -5.0
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 65.0,
+            "delta": -7.5,
+            "ci95": [
+              -20.0,
+              5.0
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step4": {
+            "base": 62.5,
+            "candidate": 65.0,
+            "delta": 2.5,
+            "ci95": [
+              -12.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step4": {
+            "base": 67.5,
+            "candidate": 65.0,
+            "delta": -2.5,
+            "ci95": [
+              -17.5,
+              15.0
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 20.0,
+            "delta": 20.0,
+            "ci95": [
+              7.5,
+              32.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 20.0,
+            "delta": -10.0,
+            "ci95": [
+              -25.0,
+              5.0
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step4": {
+            "base": 15.0,
+            "candidate": 20.0,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step4": {
+            "base": 27.5,
+            "candidate": 20.0,
+            "delta": -7.5,
+            "ci95": [
+              -20.0,
+              5.0
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 10.0,
+            "delta": 0.0,
+            "ci95": [
+              -15.0,
+              12.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 10.0,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step4": {
+            "base": 10.0,
+            "candidate": 10.0,
+            "delta": 0.0,
+            "ci95": [
+              -15.0,
+              12.5
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step4": {
+            "base": 7.5,
+            "candidate": 10.0,
+            "delta": 2.5,
+            "ci95": [
+              -10.0,
+              15.0
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 818.6,
+            "delta": -407.98,
+            "ci95": [
+              -801.7,
+              -29.38
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 818.6,
+            "delta": 168.47,
+            "ci95": [
+              -170.57,
+              523.48
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step4": {
+            "base": 909.58,
+            "candidate": 818.6,
+            "delta": -90.97,
+            "ci95": [
+              -517.58,
+              313.48
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step4": {
+            "base": 704.85,
+            "candidate": 818.6,
+            "delta": 113.75,
+            "ci95": [
+              -140.75,
+              414.9
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 803.8,
+            "delta": -422.77,
+            "ci95": [
+              -818.45,
+              -42.42
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 803.8,
+            "delta": 171.07,
+            "ci95": [
+              -171.97,
+              533.75
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step4": {
+            "base": 901.98,
+            "candidate": 803.8,
+            "delta": -98.17,
+            "ci95": [
+              -528.33,
+              306.85
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step4": {
+            "base": 690.33,
+            "candidate": 803.8,
+            "delta": 113.47,
+            "ci95": [
+              -142.12,
+              416.98
+            ],
+            "n": 40
+          }
+        }
+      }
+    },
+    "plain_step8": {
+      "archive": "deep51_2x_plain_p8_step8_masked_pilot.tgz",
+      "manual_review_complete": true,
+      "external_accuracy_source": "manual_external_review",
+      "external_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/279",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_plain_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct external answer $10 each gift."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_plain_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3))."
+        }
+      ],
+      "strict_useful_ids": [],
+      "external_correct": 25,
+      "response_level_numbered": 8,
+      "truncated": 2,
+      "outside_think": 0,
+      "mean_tokens": 616.12,
+      "mean_forward_passes": 607.95,
+      "paired": {
+        "external_accuracy": {
+          "corrected_c0": {
+            "base": 85.0,
+            "candidate": 62.5,
+            "delta": -22.5,
+            "ci95": [
+              -37.5,
+              -7.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 72.5,
+            "candidate": 62.5,
+            "delta": -10.0,
+            "ci95": [
+              -22.5,
+              2.5
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step8": {
+            "base": 62.5,
+            "candidate": 62.5,
+            "delta": 0.0,
+            "ci95": [
+              -10.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step8": {
+            "base": 67.5,
+            "candidate": 62.5,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              7.5
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "corrected_c0": {
+            "base": 0.0,
+            "candidate": 20.0,
+            "delta": 20.0,
+            "ci95": [
+              7.5,
+              32.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 30.0,
+            "candidate": 20.0,
+            "delta": -10.0,
+            "ci95": [
+              -27.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step8": {
+            "base": 15.0,
+            "candidate": 20.0,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step8": {
+            "base": 27.5,
+            "candidate": 20.0,
+            "delta": -7.5,
+            "ci95": [
+              -22.5,
+              7.5
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "corrected_c0": {
+            "base": 10.0,
+            "candidate": 5.0,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 5.0,
+            "candidate": 5.0,
+            "delta": 0.0,
+            "ci95": [
+              -10.0,
+              10.0
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step8": {
+            "base": 12.5,
+            "candidate": 5.0,
+            "delta": -7.5,
+            "ci95": [
+              -20.0,
+              5.0
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step8": {
+            "base": 15.0,
+            "candidate": 5.0,
+            "delta": -10.0,
+            "ci95": [
+              -22.5,
+              0.0
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 616.12,
+            "delta": -610.45,
+            "ci95": [
+              -978.62,
+              -275.93
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 650.12,
+            "candidate": 616.12,
+            "delta": -34.0,
+            "ci95": [
+              -329.12,
+              262.15
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step8": {
+            "base": 883.0,
+            "candidate": 616.12,
+            "delta": -266.88,
+            "ci95": [
+              -649.08,
+              91.88
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step8": {
+            "base": 814.9,
+            "candidate": 616.12,
+            "delta": -198.78,
+            "ci95": [
+              -496.4,
+              101.75
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "corrected_c0": {
+            "base": 1226.58,
+            "candidate": 607.95,
+            "delta": -618.62,
+            "ci95": [
+              -988.58,
+              -281.73
+            ],
+            "n": 40
+          },
+          "recovery8_step8": {
+            "base": 632.73,
+            "candidate": 607.95,
+            "delta": -24.77,
+            "ci95": [
+              -324.27,
+              275.43
+            ],
+            "n": 40
+          },
+          "deep51_1x_plain_step8": {
+            "base": 874.17,
+            "candidate": 607.95,
+            "delta": -266.23,
+            "ci95": [
+              -650.05,
+              91.53
+            ],
+            "n": 40
+          },
+          "deep51_2x_tagged_step8": {
+            "base": 796.27,
+            "candidate": 607.95,
+            "delta": -188.32,
+            "ci95": [
+              -487.43,
+              114.95
+            ],
+            "n": 40
+          }
+        }
+      }
+    }
+  }
+}
