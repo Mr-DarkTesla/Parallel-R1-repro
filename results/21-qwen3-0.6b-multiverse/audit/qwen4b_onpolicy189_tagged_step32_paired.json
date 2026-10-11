@@ -1,0 +1,112 @@
+{
+  "protocol": "masked_fixed40_same_questions_prompts",
+  "parent": "mixed401_tagged_step128",
+  "candidate": "onpolicy189_tagged_step32",
+  "parent_metrics": {
+    "robust": {
+      "count": 32,
+      "percent": 80.0
+    },
+    "full_numbered_block": {
+      "count": 38,
+      "percent": 95.0
+    },
+    "truncated": {
+      "count": 0,
+      "percent": 0.0
+    },
+    "tokens": {
+      "mean": 287.27
+    },
+    "forward_passes": {
+      "mean": 242.62
+    }
+  },
+  "candidate_metrics": {
+    "robust": {
+      "count": 32,
+      "percent": 80.0
+    },
+    "full_numbered_block": {
+      "count": 39,
+      "percent": 97.5
+    },
+    "truncated": {
+      "count": 0,
+      "percent": 0.0
+    },
+    "tokens": {
+      "mean": 280.85
+    },
+    "forward_passes": {
+      "mean": 236.6
+    }
+  },
+  "paired_candidate_minus_parent": {
+    "robust": {
+      "reference": 80.0,
+      "candidate": 80.0,
+      "delta": 0.0,
+      "ci95": [
+        -12.5,
+        12.5
+      ],
+      "unit": "percentage_points",
+      "n": 40,
+      "discordant": {
+        "lost": 3,
+        "gained": 3
+      },
+      "mcnemar_exact_p": 1.0
+    },
+    "full_numbered_block": {
+      "reference": 95.0,
+      "candidate": 97.5,
+      "delta": 2.5,
+      "ci95": [
+        -5.0,
+        10.0
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    },
+    "truncated": {
+      "reference": 0.0,
+      "candidate": 0.0,
+      "delta": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    },
+    "tokens": {
+      "reference": 287.27,
+      "candidate": 280.85,
+      "delta": -6.42,
+      "ci95": [
+        -30.73,
+        13.88
+      ],
+      "unit": "tokens",
+      "n": 40
+    },
+    "forward_passes": {
+      "reference": 242.62,
+      "candidate": 236.6,
+      "delta": -6.03,
+      "ci95": [
+        -29.38,
+        13.85
+      ],
+      "unit": "ideal_forward_passes",
+      "n": 40
+    }
+  },
+  "semantic_strict_useful": {
+    "parent": 12,
+    "candidate": 9,
+    "reviewed": 40
+  }
+}
