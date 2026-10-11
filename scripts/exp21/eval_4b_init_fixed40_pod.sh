@@ -7,7 +7,7 @@ for _ in $(seq 1 900); do
     sleep 5
 done
 test -s /work/exp21/qwen4b_teacher/GENERATE_DONE
-model=/work/assets/models/Qwen3-4B-instruct-add-special-token
+model=/tmp/exp21-qwen3-4b-mv10
 out=/tmp/exp21-4b-init-fixed40
 pilots=/work/exp21/masked_pilot
 test -s "$model/config.json"
