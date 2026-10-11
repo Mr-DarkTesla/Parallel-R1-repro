@@ -39,6 +39,7 @@ MANUAL_REJECT = {
     "math-train/1339", "math-train/2719", "math-train/1937",
     "math-train/2685",
 }
+BAD_GOLD = {"gsm8k-train/108"}  # As documented in DATASET_SOL_THINKING_PILOT.md.
 
 
 def normalize(text):
@@ -175,7 +176,7 @@ def main():
         reasons = [name for name, group in blocked.items()
                    if row["id"] in group["ids"] or text in group["texts"]]
         hits.update(reasons)
-        if not reasons and row["id"] not in MANUAL_REJECT:
+        if not reasons and row["id"] not in MANUAL_REJECT and row["id"] not in BAD_GOLD:
             match = pattern(row)
             if match:
                 eligible.append((row, *match))
@@ -215,6 +216,7 @@ def main():
         "complete_clean46_train_unique_ids": len(train_ids),
         "complete_clean46_train_overlap": 0,
         "manual_structural_rejects": len(MANUAL_REJECT),
+        "known_bad_gold_rejects": len(BAD_GOLD),
         "structural_candidates_after_exclusions": len(eligible),
         "preview": len(preview),
         "preview_by_source_type": dict(Counter(f"{row['source']}/{row['answer_type']}" for row in preview)),
