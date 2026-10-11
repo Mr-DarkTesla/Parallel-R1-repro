@@ -1,0 +1,62 @@
+{
+  "protocol": "same 40 holdout problems; one independent manual reviewer per arm",
+  "bootstrap": "10k paired resamples, stratified 20 GSM8K + 20 MATH",
+  "metrics": {
+    "final_correct": {
+      "clean46": 72.5,
+      "mixed401": 70.0,
+      "mixed401_minus_clean46": -2.5,
+      "ci95": [
+        -10.0,
+        5.0
+      ],
+      "n": 40
+    },
+    "full_agreed_block": {
+      "clean46": 95.0,
+      "mixed401": 92.5,
+      "mixed401_minus_clean46": -2.5,
+      "ci95": [
+        -7.5,
+        0.0
+      ],
+      "n": 40
+    },
+    "useful_with_correct_final": {
+      "clean46": 30.0,
+      "mixed401": 17.5,
+      "mixed401_minus_clean46": -12.5,
+      "ci95": [
+        -25.0,
+        0.0
+      ],
+      "n": 40
+    }
+  },
+  "by_source": {
+    "gsm8k": {
+      "clean46": {
+        "final_correct": 17,
+        "full_agreed_block": 20,
+        "useful_with_correct_final": 8
+      },
+      "mixed401": {
+        "final_correct": 17,
+        "full_agreed_block": 19,
+        "useful_with_correct_final": 6
+      }
+    },
+    "math": {
+      "clean46": {
+        "final_correct": 12,
+        "full_agreed_block": 18,
+        "useful_with_correct_final": 4
+      },
+      "mixed401": {
+        "final_correct": 11,
+        "full_agreed_block": 18,
+        "useful_with_correct_final": 1
+      }
+    }
+  }
+}

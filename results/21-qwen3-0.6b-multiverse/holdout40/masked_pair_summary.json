@@ -1,0 +1,268 @@
+{
+  "protocol": "masked greedy thinking; GSM8K 2048 tokens, MATH 4096 tokens",
+  "source_counts": {
+    "gsm8k": 20,
+    "math": 20
+  },
+  "metric_notes": {
+    "acc_robust": "correct final value from automatic scorer",
+    "think_full_block": "syntactic block within <think>; semantic usefulness requires manual review",
+    "forward_passes": "ideal parallel decoder forward passes; model_forward_calls are separate"
+  },
+  "overall": {
+    "acc_robust": {
+      "clean46": 72.5,
+      "mixed401": 70.0,
+      "mixed401_minus_clean46": -2.5,
+      "ci95": [
+        -10.0,
+        5.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_wellformed": {
+      "clean46": 100.0,
+      "mixed401": 100.0,
+      "mixed401_minus_clean46": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_has_parallel": {
+      "clean46": 100.0,
+      "mixed401": 100.0,
+      "mixed401_minus_clean46": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_full_block": {
+      "clean46": 100.0,
+      "mixed401": 100.0,
+      "mixed401_minus_clean46": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_numbered_block": {
+      "clean46": 95.0,
+      "mixed401": 92.5,
+      "mixed401_minus_clean46": -2.5,
+      "ci95": [
+        -7.5,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "truncated": {
+      "clean46": 0.0,
+      "mixed401": 0.0,
+      "mixed401_minus_clean46": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "tokens": {
+      "clean46": 274.77,
+      "mixed401": 294.1,
+      "mixed401_minus_clean46": 19.32,
+      "ci95": [
+        9.8,
+        29.38
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "forward_passes": {
+      "clean46": 232.45,
+      "mixed401": 252.12,
+      "mixed401_minus_clean46": 19.68,
+      "ci95": [
+        9.45,
+        30.5
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    }
+  },
+  "by_source": {
+    "gsm8k": {
+      "acc_robust": {
+        "clean46": 85.0,
+        "mixed401": 85.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_wellformed": {
+        "clean46": 100.0,
+        "mixed401": 100.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_has_parallel": {
+        "clean46": 100.0,
+        "mixed401": 100.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_full_block": {
+        "clean46": 100.0,
+        "mixed401": 100.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_numbered_block": {
+        "clean46": 100.0,
+        "mixed401": 95.0,
+        "mixed401_minus_clean46": -5.0,
+        "ci95": [
+          -15.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "truncated": {
+        "clean46": 0.0,
+        "mixed401": 0.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "tokens": {
+        "clean46": 224.1,
+        "mixed401": 244.95,
+        "mixed401_minus_clean46": 20.85,
+        "ci95": [
+          8.7,
+          34.0
+        ],
+        "n": 20
+      },
+      "forward_passes": {
+        "clean46": 180.45,
+        "mixed401": 205.2,
+        "mixed401_minus_clean46": 24.75,
+        "ci95": [
+          10.7,
+          40.15
+        ],
+        "n": 20
+      }
+    },
+    "math": {
+      "acc_robust": {
+        "clean46": 60.0,
+        "mixed401": 55.0,
+        "mixed401_minus_clean46": -5.0,
+        "ci95": [
+          -20.0,
+          10.0
+        ],
+        "n": 20
+      },
+      "think_wellformed": {
+        "clean46": 100.0,
+        "mixed401": 100.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_has_parallel": {
+        "clean46": 100.0,
+        "mixed401": 100.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_full_block": {
+        "clean46": 100.0,
+        "mixed401": 100.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_numbered_block": {
+        "clean46": 90.0,
+        "mixed401": 90.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "truncated": {
+        "clean46": 0.0,
+        "mixed401": 0.0,
+        "mixed401_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "tokens": {
+        "clean46": 325.45,
+        "mixed401": 343.25,
+        "mixed401_minus_clean46": 17.8,
+        "ci95": [
+          3.4,
+          33.3
+        ],
+        "n": 20
+      },
+      "forward_passes": {
+        "clean46": 284.45,
+        "mixed401": 299.05,
+        "mixed401_minus_clean46": 14.6,
+        "ci95": [
+          0.5,
+          29.95
+        ],
+        "n": 20
+      }
+    }
+  }
+}
