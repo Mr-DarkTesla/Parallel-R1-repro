@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "archives": {
+    "deep51_2x_tagged_p8_step8_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 27,
+      "external_overrides": [
+        {
+          "key": ["MATH_DEV", "math-test/36", 0],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3)); parser missed it."
+        }
+      ],
+      "strict_useful": [
+        {
+          "key": ["MATH_DEV", "math-test/9", 0],
+          "evidence_file": "audit/deep51_2x_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Two independent correct sign cases and a conclusion selecting the smaller root."
+        }
+      ]
+    },
+    "deep51_2x_plain_p8_step8_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 25,
+      "external_overrides": [
+        {
+          "key": ["GSM8K_DEV", "gsm8k-train/279", 0],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_plain_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct external answer $10 each gift."
+        },
+        {
+          "key": ["MATH_DEV", "math-test/36", 0],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_plain_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3))."
+        }
+      ],
+      "strict_useful": []
+    }
+  }
+}
