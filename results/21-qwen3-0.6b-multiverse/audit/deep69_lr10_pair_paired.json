@@ -163,19 +163,8 @@
   "variants": {
     "tagged_lr10_step8": {
       "archive": "deep69_lr10_tagged_p8_step8_masked_pilot.tgz",
-      "external_correct": 26,
-      "external_overrides": [
-        {
-          "key": [
-            "GSM8K_DEV",
-            "gsm8k-train/228",
-            0
-          ],
-          "value": true,
-          "evidence_file": "audit/deep69_lr10_tagged_p8_step8_answer_review.md",
-          "evidence_note": "The closed thinking is followed by the correct external answer 30 bags; robust parser missed it."
-        }
-      ],
+      "external_correct": 25,
+      "external_overrides": [],
       "strict_useful_ids": [
         "math-test/36"
       ],
@@ -193,14 +182,14 @@
       "manual_review_complete": true,
       "all": {
         "n": 40,
-        "external_correct": 26,
+        "external_correct": 25,
         "strict_useful": 1,
         "response_level_numbered": 13,
         "truncated": 3
       },
       "GSM8K_DEV": {
         "n": 20,
-        "external_correct": 15,
+        "external_correct": 14,
         "strict_useful": 0,
         "response_level_numbered": 1,
         "truncated": 3
@@ -217,11 +206,11 @@
           "all": {
             "external_accuracy": {
               "base": 85.0,
-              "candidate": 65.0,
-              "delta": -20.0,
+              "candidate": 62.5,
+              "delta": -22.5,
               "ci95": [
-                -32.5,
-                -7.5
+                -35.0,
+                -10.0
               ],
               "n": 40
             },
@@ -279,10 +268,10 @@
           "GSM8K_DEV": {
             "external_accuracy": {
               "base": 80.0,
-              "candidate": 75.0,
-              "delta": -5.0,
+              "candidate": 70.0,
+              "delta": -10.0,
               "ci95": [
-                -15.0,
+                -25.0,
                 0.0
               ],
               "n": 20
@@ -405,11 +394,11 @@
           "all": {
             "external_accuracy": {
               "base": 72.5,
-              "candidate": 65.0,
-              "delta": -7.5,
+              "candidate": 62.5,
+              "delta": -10.0,
               "ci95": [
-                -17.5,
-                2.5
+                -22.5,
+                0.0
               ],
               "n": 40
             },
@@ -467,11 +456,11 @@
           "GSM8K_DEV": {
             "external_accuracy": {
               "base": 90.0,
-              "candidate": 75.0,
-              "delta": -15.0,
+              "candidate": 70.0,
+              "delta": -20.0,
               "ci95": [
-                -30.0,
-                0.0
+                -40.0,
+                -5.0
               ],
               "n": 20
             },
@@ -593,11 +582,11 @@
           "all": {
             "external_accuracy": {
               "base": 70.0,
-              "candidate": 65.0,
-              "delta": -5.0,
+              "candidate": 62.5,
+              "delta": -7.5,
               "ci95": [
-                -20.0,
-                10.0
+                -22.5,
+                7.5
               ],
               "n": 40
             },
@@ -655,11 +644,11 @@
           "GSM8K_DEV": {
             "external_accuracy": {
               "base": 75.0,
-              "candidate": 75.0,
-              "delta": 0.0,
+              "candidate": 70.0,
+              "delta": -5.0,
               "ci95": [
-                -20.0,
-                20.0
+                -25.0,
+                15.0
               ],
               "n": 20
             },
@@ -781,11 +770,11 @@
           "all": {
             "external_accuracy": {
               "base": 62.5,
-              "candidate": 65.0,
-              "delta": 2.5,
+              "candidate": 62.5,
+              "delta": 0.0,
               "ci95": [
-                -10.0,
-                15.0
+                -12.5,
+                12.5
               ],
               "n": 40
             },
@@ -843,11 +832,11 @@
           "GSM8K_DEV": {
             "external_accuracy": {
               "base": 65.0,
-              "candidate": 75.0,
-              "delta": 10.0,
+              "candidate": 70.0,
+              "delta": 5.0,
               "ci95": [
                 0.0,
-                25.0
+                15.0
               ],
               "n": 20
             },
@@ -1596,12 +1585,12 @@
         "tagged_lr10_step8": {
           "all": {
             "external_accuracy": {
-              "base": 65.0,
+              "base": 62.5,
               "candidate": 62.5,
-              "delta": -2.5,
+              "delta": 0.0,
               "ci95": [
-                -15.0,
-                10.0
+                -12.5,
+                12.5
               ],
               "n": 40
             },
@@ -1658,11 +1647,11 @@
           },
           "GSM8K_DEV": {
             "external_accuracy": {
-              "base": 75.0,
+              "base": 70.0,
               "candidate": 65.0,
-              "delta": -10.0,
+              "delta": -5.0,
               "ci95": [
-                -25.0,
+                -15.0,
                 0.0
               ],
               "n": 20
