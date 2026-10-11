@@ -1,6 +1,25 @@
 {
   "schema_version": 1,
   "archives": {
+    "deep51_2x_tagged_p8_step4_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 27,
+      "external_overrides": [
+        {
+          "key": ["GSM8K_DEV", "gsm8k-train/82", 0],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_tagged_p8_step4_answer_review.md",
+          "evidence_note": "The external mixed number 41 2/3 equals the target 125/3."
+        },
+        {
+          "key": ["MATH_DEV", "math-test/36", 0],
+          "value": true,
+          "evidence_file": "audit/deep51_2x_tagged_p8_step4_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct open interval (-sqrt(3), sqrt(3))."
+        }
+      ],
+      "strict_useful": []
+    },
     "deep51_2x_tagged_p8_step8_masked_pilot.tgz": {
       "review_complete": true,
       "expected_external_correct": 27,

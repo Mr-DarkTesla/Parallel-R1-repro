@@ -83,3 +83,10 @@ nohup bash /work/parallel-r1/scripts/exp21/run_deep51_2x_pair_pod.sh \
 [ручной разбор](audit/deep51_2x_plain_p8_step8_answer_review.md).
 Парное сравнение с tagged будет рассчитано после проверки обоих
 шагов 4.
+
+Tagged step4: 27/40 верных внешних ответов, 11/40 полных
+нумерованных блоков, 0/40 строго полезных, 3/40 обрезанных ответа,
+0 тегов вне `<think>`. Ручная проверка исправила два ложных
+отрицания парсера: `gsm8k-train/82` и `math-test/36`.
+[Сырые ответы](eval_archives/deep51_2x_tagged_p8_step4_masked_pilot.tgz),
+[разбор](audit/deep51_2x_tagged_p8_step4_answer_review.md).
