@@ -153,6 +153,9 @@ def verify_same_pilot(reference, candidate, reference_name, candidate_name):
 
 
 def main(reviews_path, output_path):
+    if reviews_path is not None:
+        require(reviews_path.is_relative_to(ROOT.resolve()),
+                "review manifest must be inside the result directory")
     needed = [ARCHIVES / name for name in (*CANDIDATES.values(), *BASELINES.values())]
     missing = [path.name for path in needed if not path.is_file()]
     require(not missing, "missing pilot archives: " + ", ".join(missing))
@@ -190,7 +193,7 @@ def main(reviews_path, output_path):
             "unreviewed_external_accuracy": "archive acc_robust until a manual review manifest is supplied",
             "paired_ci": "10,000 paired bootstrap samples from compare_masked_pilot_archives.py",
         },
-        "review_manifest": str(reviews_path) if reviews_path else None,
+        "review_manifest": str(reviews_path.relative_to(ROOT.resolve())) if reviews_path else None,
         "baselines": {
             "corrected_c0": {"archive": BASELINES["corrected_c0"], "external_correct": 34,
                              "external_corrections": [list(key) for key in FIXES]},
