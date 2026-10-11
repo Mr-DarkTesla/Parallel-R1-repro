@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Matched one-GPU eight-step SFT for screened Sol 6.1 teacher trajectories.
+# Matched one-GPU SFT for 196 reviewed Sol 6.1 teacher trajectories.
 # Expects CPU-built data; it never builds data and is not a queue launcher.
 set -euo pipefail
 
@@ -10,6 +10,8 @@ data=${EXP21_TEACHER_DATA:-$work/exp21/teacher_sft}
 model=${EXP21_PARENT_MODEL:-/checkpoints/exp21-v4-recovery8/step_8/model}
 runroot=${EXP21_RUN_ROOT:-/tmp/exp21-selective-runs}
 min_accepted=${EXP21_MIN_ACCEPTED:-150}
+steps=${EXP21_STEPS:-24}
+save_steps=${EXP21_SAVE_STEPS:-4,8,12,16,20,24}
 
 [[ "$min_accepted" =~ ^[1-9][0-9]*$ ]] || { echo "EXP21_MIN_ACCEPTED must be a positive integer" >&2; exit 1; }
 exec 9>/tmp/exp21-teacher-sft.lock
@@ -48,10 +50,10 @@ source "$venv/bin/activate"
 export CUDA_VISIBLE_DEVICES=0 PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1
 cd "$repo"
 for arm in tagged plain; do
-    RUN_ROOT="$runroot" RUN_NAME="exp21-teacher-sol61-${arm}-p8" \
+    RUN_ROOT="$runroot" RUN_NAME="exp21-teacher-sol61-${arm}-p${steps}" \
     MODEL="$model" DATA_PATH="$data/sft_teacher_${arm}_train.parquet" \
     VAL_PATH="$data/sft_teacher_val.parquet" \
-    NGPUS=1 STEPS=8 SAVE_STEPS=1,2,3,4,5,6,7,8 LR=3e-6 BATCH=32 MICRO_BATCH=4 \
+    NGPUS=1 STEPS="$steps" SAVE_STEPS="$save_steps" LR=3e-6 BATCH=32 MICRO_BATCH=4 \
     MAX_LENGTH=4096 MIN_FREE_GB=10 \
     bash scripts/instruct4b/sft.sh +data.structure=multiverse \
         +data.parallel_text_loss_weight=1.0 optim.tag_lr_mult=100

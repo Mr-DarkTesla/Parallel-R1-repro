@@ -1,0 +1,99 @@
+{
+  "status": "validated_cpu_only",
+  "sources": {
+    "data/pair_final_m1.jsonl": 187,
+    "data/more_m1_matched180.jsonl": 180
+  },
+  "positive_distinct": 367,
+  "primary_copies": 3,
+  "replay": {
+    "replay_nt": {
+      "distinct": 300,
+      "copies": 2
+    },
+    "replay_th": {
+      "distinct": 300,
+      "copies": 2
+    }
+  },
+  "rows_each_arm": {
+    "total": 2301,
+    "train": 2251,
+    "val": 50
+  },
+  "validation": {
+    "reused_prefix": "data/sft_expanded_val_ids",
+    "new_primary_in_val": 0,
+    "train_val_id_overlap": 0
+  },
+  "transform": {
+    "tagged": "<think> wraps exact raw pre-Final Answer text",
+    "plain": "removes only Multiverse XML tags; keeps think wrapper, paths, outlines, conclusion and all other text",
+    "raw_reconstruction": "367/367",
+    "external_final_answer_byte_exact": "367/367",
+    "grammar_and_placement": "367/367 numbered one-block answers inside <think>",
+    "math_verify": "367/367"
+  },
+  "pairing": {
+    "same_ids_order_prompts_thinking_mode": true,
+    "same_ids_order_prompts_as_prior_expanded_builder": true,
+    "replay_identical": true,
+    "plain_primary_kind": "control_th"
+  },
+  "lengths": {
+    "tagged": 3838,
+    "plain": 3838
+  },
+  "split_counts": {
+    "train": {
+      "rows": 2251,
+      "kinds": {
+        "replay_th": 588,
+        "replay_nt": 586,
+        "parallel_th": 1077
+      }
+    },
+    "val": {
+      "rows": 50,
+      "kinds": {
+        "parallel_th": 24,
+        "replay_nt": 14,
+        "replay_th": 12
+      }
+    }
+  },
+  "leakage_provenance": {
+    "187_source_card": "DATASET_M1.md; cleaned pool and leak_clean_recheck.json",
+    "180_source_card": "DATASET_M1_MORE.md; more_matched180_verify.json",
+    "cross_source_id_overlap": 0,
+    "positive_replay_id_overlap": 21,
+    "positive/replay_prompt_policy": "same prior builder: Multiverse and ordinary prompts may share an ID; validation holds all rows for each held-out ID"
+  },
+  "review_evidence": {
+    "matched180_self_review": {
+      "rows": 20,
+      "file": "audit/more_m1_matched180_self20.jsonl"
+    },
+    "matched180_independent_review": {
+      "rows": 30,
+      "file": "audit/more_m1_matched180_review30.jsonl"
+    },
+    "disjoint": true
+  },
+  "training_recommendation": {
+    "candidate_and_plain_control": "paired 16-step run",
+    "batch_size": 32,
+    "learning_rate": "3e-6",
+    "save_steps": [
+      4,
+      8,
+      12,
+      16
+    ],
+    "launch_status": "not launched"
+  },
+  "commands": {
+    "build": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/cycle2_owner/.venv/bin/python scripts/exp21/build_m1_rewrapped_sft.py --tokenizer /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/exp21_06b/data/q06_mv_tokenizer",
+    "validate": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/cycle2_owner/.venv/bin/python scripts/exp21/build_m1_rewrapped_sft.py --tokenizer /Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/exp21_06b/data/q06_mv_tokenizer"
+  }
+}

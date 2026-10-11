@@ -243,14 +243,18 @@ masked greedy-пилоте с ручной проверкой полезност
 | 2 | selective v5, шаг 56 | 2 | 28 | `/checkpoints/exp21-m1-selective-v5/step_56/model` |
 | 3 | selective v4, шаг 56 | 2 | 27 | `/checkpoints/exp21-m1-selective-v4/step_56/model` |
 | 4 | selective v4, шаг 64 | 2 | 26 | `/checkpoints/exp21-m1-selective-v4/step_64/model` |
-| 5 | M1 two-path tagweighted | 2 | 20 | `/checkpoints/exp21-global-top5/m1-twopath-tagweighted/model` |
+| 5 | agent-authored tagged, шаг 8 | 2 | 23 | `/checkpoints/exp21-global-top5/agent-authored-tagged-p8-step8/model` |
 
-Пятый экспорт скопирован с нашего старого PVC `/work/exp21/models/`
-на собственный 40-GiB `/checkpoints`. У каждой из пяти моделей
+Первоначальный пятый экспорт M1 был скопирован с нашего старого PVC
+`/work/exp21/models/` на собственный 40-GiB `/checkpoints`. После
+полного ревью нового шага 8 его 2/40 полезных блока и 23/40 верных
+внешних ответов вытеснили M1 с 2/40 и 20/40. Новый BF16 экспорт
+перенесён из `/tmp` на `/checkpoints`; у каждой из пяти моделей
 проверены конфигурация, токенизатор и непустые веса. Текущий
 машинный список: `/checkpoints/exp21-global-top5/GLOBAL_TOP5.json`,
 [копия в репозитории](audit/global_top5_manifest.json).
-После копирования на томе 20 GiB свободно. Более ранние экспорты
+Исходный M1 на `/work` сохранён; его старая копия на `/checkpoints`
+пока оставлена как история, вне защищённой пятёрки. Более ранние экспорты
 v4/v5 и парные контроли физически пока сохранены как история
 экспериментов, но не являются защищённой пятёркой.
 
