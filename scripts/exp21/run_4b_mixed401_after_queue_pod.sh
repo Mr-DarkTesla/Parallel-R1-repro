@@ -40,19 +40,19 @@ export CUDA_VISIBLE_DEVICES=0 PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1
 for arm in tagged plain; do
     parent=/tmp/exp21-selective-runs/exp21-4b-sol61-${arm}-p16/step_models/step_16/model
     test -s "$parent/config.json"
-    RUN_ROOT=/tmp/exp21-selective-runs RUN_NAME=exp21-4b-mixed401-${arm}-p64 \
+    RUN_ROOT=/tmp/exp21-selective-runs RUN_NAME=exp21-4b-mixed401-${arm}-p128 \
     MODEL="$parent" DATA_PATH="$data/${arm}_train.parquet" \
     VAL_PATH="$data/${arm}_val.parquet" \
-    NGPUS=1 STEPS=64 SAVE_STEPS=16,32,64 LR=3e-6 BATCH=16 MICRO_BATCH=1 \
+    NGPUS=1 STEPS=128 SAVE_STEPS=32,64,96,128 LR=3e-6 BATCH=16 MICRO_BATCH=1 \
     MAX_LENGTH=4096 MIN_FREE_GB=30 \
     bash scripts/instruct4b/sft.sh +data.structure=multiverse \
         +data.parallel_text_loss_weight=1.0 optim.tag_lr_mult=100
 done
 date -Is > "$data/TRAIN_PAIR_DONE"
 for arm in tagged plain; do
-    run=/tmp/exp21-selective-runs/exp21-4b-mixed401-${arm}-p64
+    run=/tmp/exp21-selective-runs/exp21-4b-mixed401-${arm}-p128
     test -s "$run/DONE"
     EXP21_RUN="$run" EXP21_EVAL_ROOT="/tmp/exp21-4b-mixed401-${arm}-eval" \
-        EXP21_STEPS=64 bash scripts/exp21/eval_checkpoint_steps_pod.sh
+        EXP21_STEPS=128 bash scripts/exp21/eval_checkpoint_steps_pod.sh
 done
 date -Is > "$data/EVAL_DONE"
