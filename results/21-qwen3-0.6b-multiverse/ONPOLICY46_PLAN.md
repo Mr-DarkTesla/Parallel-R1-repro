@@ -74,3 +74,24 @@ unique accepted tasks, including one GSM8K, with no answer or placement
 violation among accepted rows. Otherwise record the failure and stop before
 SFT. This early gate is a resource decision, not a claim about the full
 candidate pool or model quality.
+
+## Execution log
+
+The selector produced 256 clean candidates: 128 GSM8K and 128 MATH,
+including 64 integer, 40 expression and 24 fraction answers in MATH.
+It excluded 583 questions containing `[asy]` and 1,424 questions already
+represented in SFT texts before ranking. Selection and rejection IDs are
+recorded in [candidate audit](data/onpolicy46_candidates.audit.json);
+the [candidate JSONL](data/onpolicy46_candidates.jsonl) contains gold answers
+only for later grading.
+
+After the previous fixed40 evaluations completed and the one owned GPU was
+free, the 32+32 questions × seeds 0,1 rollout was started on
+`vcharkin-exp-vm-0` via `generate_onpolicy_masked.py`. Pod shell PID
+`40644`; persistent output and log are
+`/work/exp21/onpolicy46/recovery8_step8_masked_pilot128.jsonl` and
+`/work/exp21/onpolicy46/recovery8_step8_masked_pilot128.log`.
+The output is incomplete until 128 distinct `(id, seed)` rows exist and the
+process exits successfully. A CPU prefilter smoke test on the first eight
+complete rows yielded one provisional MATH row; this is diagnostic only,
+not the pilot's final acceptance count.
