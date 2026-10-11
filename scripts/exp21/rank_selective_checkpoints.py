@@ -12,9 +12,14 @@ STEPS = {8, 16, 24, 32, 40, 48, 56, 64}
 def rank(row: dict, step: int) -> tuple[int, int, int, int, int, int]:
     useful = row.get("strict_useful_count")
     if useful is None:
+        useful = row.get("strictly_useful_count")
+    if useful is None:
         useful = len(row["strict_useful_ids"])
+    numbered = row.get("numbered_blocks")
+    if numbered is None:
+        numbered = row["response_level_numbered"]
     return (
-        int(row["numbered_blocks"] > 0),
+        int(numbered > 0),
         int(useful),
         int(row["external_final_correct"]),
         -int(row["truncated"]),
