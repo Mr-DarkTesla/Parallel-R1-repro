@@ -30,4 +30,19 @@ PARENT_STEP=v4-56 bash /work/parallel-r1/scripts/exp21/run_deep51_pair_pod.sh
 модели, ≤2/40 обрезаний и ноль тегов вне `<think>`.
 Полный dev и frozen до этого порога закрыты.
 
-Статус: данные и скрипт готовы; обе ветви ещё не запускались.
+Исходной моделью выбран recovery8 step8:
+`/checkpoints/exp21-v4-recovery8/step_8/model`. На фиксированном
+пилоте он дал 29/40 верных внешних ответов, 2/40 полезных блока и
+2/40 обрезания; подробнее в [журнале](SELECTIVE_BLOCKS_V4_RECOVERY8_RUN.md).
+Данные и аудит переданы на наш pod. После завершения recovery8-оценки
+запущена последовательная пара:
+
+```bash
+nohup env PARENT_STEP=8 \
+  bash /work/parallel-r1/scripts/exp21/run_deep51_pair_pod.sh \
+  > /tmp/exp21-deep51-p8-train.log 2>&1 < /dev/null &
+```
+
+PID при запуске `19747`. Результаты будут в
+`/tmp/exp21-selective-runs/exp21-deep51-{tagged,plain}-p8/`.
+На момент записи обучение ещё идёт; метрик генерации нет.
