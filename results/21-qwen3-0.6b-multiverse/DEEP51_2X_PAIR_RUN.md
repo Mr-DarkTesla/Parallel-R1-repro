@@ -74,3 +74,12 @@ nohup bash /work/parallel-r1/scripts/exp21/run_deep51_2x_pair_pod.sh \
 и [ручной разбор](audit/deep51_2x_tagged_p8_step8_answer_review.md)
 сохранены. Этот шаг не проходит заранее заданный порог; остальные
 три пилота и парное сравнение ещё выполняются.
+
+Контроль plain step8: 25/40 верных внешних ответов, 8/40 полных
+нумерованных блоков, 0/40 строго полезных, 2/40 обрезанных ответа,
+0 тегов вне `<think>`. `acc_robust=23/40` не принял два правильных
+ответа: `gsm8k-train/279` и интервал `math-test/36`.
+[Сырые ответы](eval_archives/deep51_2x_plain_p8_step8_masked_pilot.tgz),
+[ручной разбор](audit/deep51_2x_plain_p8_step8_answer_review.md).
+Парное сравнение с tagged будет рассчитано после проверки обоих
+шагов 4.
