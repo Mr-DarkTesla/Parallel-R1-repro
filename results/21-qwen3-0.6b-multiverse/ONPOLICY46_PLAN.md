@@ -105,3 +105,13 @@ The [review](audit/onpolicy46_first32_primary_review.md),
 [provisional rows](audit/onpolicy46_first32_provisional.jsonl), and
 [filter summary](audit/onpolicy46_first32_summary.json) are interim
 evidence only. The predeclared continuation gate applies to all 128 rows.
+
+A second in-progress snapshot at 64 rows had 13 provisional after
+automatic checks. Manual review accepted 3/13 unique tasks, including
+two GSM8K: the first two above and `gsm8k-train/4597` seed 0.
+The latter GSM8K verdict received an independent second review.
+The [64-row filter summary](audit/onpolicy46_first64_summary.json),
+[provisional rows](audit/onpolicy46_first64_provisional.jsonl), and
+[review sheets](audit/onpolicy46_first64_review_a.md) for
+[rows 10–13](audit/onpolicy46_first64_review_b.md) are interim only.
+The 128-row gate still decides whether to proceed.

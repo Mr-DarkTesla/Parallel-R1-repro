@@ -1,0 +1,24 @@
+{
+  "rollouts": 64,
+  "provisional": 13,
+  "rejected": 51,
+  "rejection_reasons": {
+    "not_exactly_one_complete_parallel_block": 28,
+    "think_not_closed_once": 3,
+    "truncated": 3,
+    "wrong_external_final": 28
+  },
+  "by_source": {
+    "gsm8k": {
+      "provisional": 7,
+      "rejected": 33
+    },
+    "math": {
+      "provisional": 6,
+      "rejected": 18
+    }
+  },
+  "rollouts_path": "/work/exp21/onpolicy46/pilot_first64_snapshot.jsonl",
+  "candidates_path": "/work/parallel-r1/results/21-qwen3-0.6b-multiverse/data/onpolicy46_candidates.jsonl",
+  "semantic_path_independence": "unreviewed; blind manual audit required"
+}
