@@ -1,0 +1,79 @@
+{
+  "protocol": "matched-masked-greedy-fixed40",
+  "old_M2_full_CE": {
+    "n": 40,
+    "acc_robust": 20.0,
+    "think_numbered_block": 20.0,
+    "truncated": 0.0,
+    "tokens": 15101.0,
+    "forward_passes": 14166.0
+  },
+  "span_focused_steps": {
+    "16": {
+      "n": 40,
+      "acc_robust": 9.0,
+      "think_numbered_block": 4.0,
+      "truncated": 13.0,
+      "tokens": 51871.0,
+      "forward_passes": 51568.0
+    },
+    "32": {
+      "n": 40,
+      "acc_robust": 10.0,
+      "think_numbered_block": 21.0,
+      "truncated": 1.0,
+      "tokens": 22369.0,
+      "forward_passes": 21170.0
+    },
+    "64": {
+      "n": 40,
+      "acc_robust": 16.0,
+      "think_numbered_block": 21.0,
+      "truncated": 1.0,
+      "tokens": 18287.0,
+      "forward_passes": 17231.0
+    }
+  },
+  "paired_step64_minus_old_M2": {
+    "acc_robust": {
+      "mean_delta": -0.1,
+      "ci95": [
+        -0.3,
+        0.1
+      ]
+    },
+    "think_numbered_block": {
+      "mean_delta": 0.025,
+      "ci95": [
+        -0.175,
+        0.225
+      ]
+    },
+    "truncated": {
+      "mean_delta": 0.025,
+      "ci95": [
+        0.0,
+        0.075
+      ]
+    },
+    "tokens": {
+      "mean_delta": 79.65,
+      "ci95": [
+        -59.575,
+        277.5
+      ]
+    },
+    "forward_passes": {
+      "mean_delta": 76.625,
+      "ci95": [
+        -62.45,
+        274.3
+      ]
+    }
+  },
+  "bootstrap": {
+    "resamples": 10000,
+    "seed": 20261011,
+    "sample_unit": "problem_id"
+  }
+}

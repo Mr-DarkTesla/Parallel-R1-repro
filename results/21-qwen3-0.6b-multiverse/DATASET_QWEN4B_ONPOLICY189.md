@@ -27,6 +27,12 @@
 что SFT. Gold есть в файле только для последующей оценки и не
 попадает в запрос модели.
 
+Обёртка `scripts/exp21/run_qwen4b_onpolicy189_pod.sh` запускает эти
+команды после завершения focus34, проверяет отсутствие другого GPU
+процесса и пишет сырые ответы и отсев на отдельный persistent
+checkpoint PVC. Она держит только `CUDA_VISIBLE_DEVICES=0` и
+поддерживает возобновление генерации по исходным `(id, seed)`.
+
 ```bash
 cd /tmp/exp21-eval-clean-299074e
 source /work/venv/bin/activate
