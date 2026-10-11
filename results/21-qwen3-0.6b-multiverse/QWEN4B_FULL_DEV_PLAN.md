@@ -1,5 +1,41 @@
 # Qwen3-4B: full matched dev and IFEval after focus34
 
+## Текущий запуск: clean46 после distill447, 11 октября 21:13 МСК
+
+Виктор просит перейти к полной оценке без новых SFT. Ниже остаётся
+описание универсального runner, первоначально подготовленного для
+focus34. Сейчас выбран clean46 tagged step32; равный plain step32 и
+исходная Qwen3-4B нужны для сравнения. Запускать только после маркеров
+`/work/exp21/q06_distill447/EVAL_DONE` и
+`ATTEMPT_DONE status=0`, убедившись, что прежний GPU-процесс завершён.
+Проверено на личном pod: clean46 `EVAL_DONE`, обе модели step32, база,
+чистый кодовый worktree `/tmp/exp21-eval-code` с коммитом `14880be`.
+`scripts/exp21/run_clean46_full_dev_after_q06_pod.sh` ждёт завершения
+текущего q06 runner и запускает приведённую команду только при его
+успешном `EVAL_DONE`, на проверенном личном pod. Само ожидание GPU
+не использует; при ошибке предыдущего этапа оно завершается.
+
+```bash
+EXP21_REPO=/tmp/exp21-eval-code \
+FOCUS34_ROOT=/work/exp21/q06_distill447 \
+QWEN4B_FULL_DEV_ROOT=/checkpoints/exp21-qwen4b-clean46-full-dev \
+SELECTED_RUN=/tmp/exp21-selective-runs/exp21-4b-clean46-tagged-p32 \
+PLAIN_RUN=/tmp/exp21-selective-runs/exp21-4b-clean46-plain-p32 \
+SELECTED_STEP=32 PLAIN_STEP=32 INCLUDE_BASE=1 RUN_MASKED_BLOCKS=0 \
+EVAL_BUDGET=16384 EXP21_GPU=0 \
+bash /tmp/exp21-eval-code/scripts/exp21/run_qwen4b_selected_full_dev_pod.sh
+```
+
+`FOCUS34_ROOT` здесь задаёт только маркер готовности предыдущей
+GPU-работы; в этом запуске он указывает на distill447. Каждый
+обычный тест сравнивает все модели на тех же запросах и режиме.
+IFEval является отдельно запрошенным тестом; прочие frozen-наборы
+остаются закрытыми. Выходы в собственном `/checkpoints` возобновляемы.
+После clean46 проверить mixed401 tagged тем же протоколом, если
+clean46 не даст ясного преимущества; для него завести отдельный root
+и повторно использовать уже полученные базовые оценки только после
+проверки совпадения промптов, бюджета и версии оценщика.
+
 ## Decision and scope
 
 The runner evaluates the selected focus34 tagged checkpoint and its focus34
