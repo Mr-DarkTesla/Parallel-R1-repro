@@ -4,6 +4,8 @@
 
 Сборщик `scripts/exp21/build_agent_parallel_pair.py` получил явные `--positive-count 150` и [гейт ревью](audit/agent_parallel_150_review_gate.json). Обе ветви содержат те же 150 ID, порядок и промпты. Для каждой положительной задачи три копии; плюс в обе ветви одинаково добавлены 55 собственных правильных thinking и 54 no-thinking replay исходной 4B. Итого **559 train и 50 val строк на плечо**. Plain удаляет только теги, оставляя весь текст. Tagged обучается Multiverse-маской и отдельным `optim.tag_lr_mult=100`; plain обычной causal-маской. Максимальная точная длина по шаблону чата: 1603 токена train, 3513 val, лимит 4096. Отчёт сборки: `data/agent_parallel150_pair/sft_build_report.json` со статусом `ready_for_paired_sft`; четыре parquet лежат там же. Они уже скопированы на собственный persistent `/checkpoints/exp21-agent-parallel150`, свободно 19 GiB на момент копирования.
 
+Фактический [CPU-preflight на личном pod](audit/agent_parallel150_pod_preflight.json) повторно прочитал оба parquet каждым плечом с токенизатором родительской 4B модели: 559/50 строк, одинаковые ID/порядок/промпты, те же максимумы 1603/3513. Единственный GPU-сборщик не затронут.
+
 Команда локальной сборки:
 
 ```bash
