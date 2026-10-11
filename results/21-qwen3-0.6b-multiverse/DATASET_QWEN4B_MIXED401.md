@@ -1,0 +1,37 @@
+# 4B: парное продолжение на 401 проверенной траектории
+
+Статус 11 октября 2026: CPU-сборка и проверки завершены; парный SFT
+поставлен после текущей последовательной очереди на одной нашей H100.
+Это продолжение двух соответствующих 4B Sol196 моделей шага 16.
+Новый опыт не подменяет исходный сравнимый baseline.
+
+В каждом плече 401 различная задача с блоком внутри `<think>`:
+367 проверенных Claude M1 решений из [карточки](DATASET_M1_REWRAPPED367.md)
+и 34 дважды проверенных 4B решений из [карточки](DATASET_QWEN4B_REWRITE34.md).
+4B задачи отобраны из очищенного пула и не совпадают по ID с M1.
+M1 предъявляется три раза, 4B четыре раза. Добавлены те же 298
+собственных верных no-thinking и 300 thinking ответов Qwen, каждый
+дважды. Два no-thinking replay ID удалены, поскольку входят в 4B-34:
+`math-train/1514`, `math-train/424`.
+
+В tagged и plain одинаковы задачи, порядок, промпты, thinking-режим,
+все слова и числа. Plain удаляет только десять типов структурных тегов.
+На плечо: 2383 train-строки и 50 прежних отложенных validation-строк.
+Пересечения train/validation по ID и полному промпту нет. Максимальная
+длина 3838 токенов при лимите 4096. Внешние ответы M1 и 4B до сборки
+прошли `math_verify`; 4B-34 также прошло независимое смысловое ревью.
+
+Файлы: `data/qwen4b_mixed401_{tagged,plain}_{train,val}.parquet`,
+`data/qwen4b_mixed401_{positive,positive_plain,replay_nt}.jsonl`;
+сборщик `scripts/exp21/build_qwen4b_mixed_pair.py`, машинный отчёт
+`audit/qwen4b_mixed401_report.json`. Повторить CPU-сборку:
+
+```bash
+uv run --offline --no-project --with pandas --with pyarrow --with 'transformers>=4.50,<5' --with jinja2 python scripts/exp21/build_qwen4b_mixed_pair.py
+```
+
+Рецепт обучения: `scripts/exp21/run_4b_mixed401_after_queue_pod.sh`,
+основной lr `3e-6`, один H100, global batch 16, 64 шага, одинаковые
+чекпоинты 16/32/64, множитель lr строк тегов 100. Сначала сравнивается
+шаг 64 tagged/plain на одинаковом fixed40, затем при необходимости
+промежуточные шаги. Оценка идёт через Multiverse mask/positions.

@@ -1,0 +1,30 @@
+{
+  "status": "ready_for_paired_sft",
+  "sources": {
+    "m1": 367,
+    "qwen4b": 34
+  },
+  "distinct_positive": 401,
+  "reviewed_qwen4b": 34,
+  "copies": {
+    "m1": 3,
+    "qwen4b": 4,
+    "replay_nt": 2,
+    "replay_th": 2
+  },
+  "replay_nt_filtered_ids": [
+    "math-train/1514",
+    "math-train/424"
+  ],
+  "rows_per_arm": {
+    "train": 2383,
+    "val": 50
+  },
+  "max_total_tokens": {
+    "tagged": 3838,
+    "plain": 3838
+  },
+  "val_overlap": 0,
+  "plain_only_removes_tags": true,
+  "command": "python scripts/exp21/build_qwen4b_mixed_pair.py"
+}
