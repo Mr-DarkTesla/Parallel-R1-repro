@@ -23,6 +23,7 @@ from compare_deep69_lr10_pair import (
 from compare_deep69_pair import (
     ARCHIVES,
     AUDIT,
+    CANDIDATES as DEEP69_ALL,
     ROOT,
     SOURCES,
     ci_compare,
@@ -80,7 +81,7 @@ def load_reviewed(archives, entries):
 
 def main(manifest, output, include_lr10):
     entries = read_manifest(manifest, CANDIDATES.values(), "Deep69 recovery recipe")
-    lr100_entries = read_manifest(DEEP69_REVIEWS, DEEP69_LR100.values(), "Deep69 LR100")
+    lr100_entries = read_manifest(DEEP69_REVIEWS, DEEP69_ALL.values(), "Deep69 LR100")
     required = [ARCHIVES / name for name in (*CANDIDATES.values(), *DEEP69_LR100.values(),
                                              *BASE_ARCHIVES.values())]
     lr10_entries = None
