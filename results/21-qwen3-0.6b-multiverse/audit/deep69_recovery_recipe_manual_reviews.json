@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "archives": {
+    "deep69_recovery_recipe_tagged_p8_step4_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 31,
+      "external_overrides": [],
+      "strict_useful": []
+    },
+    "deep69_recovery_recipe_tagged_p8_step8_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 25,
+      "external_overrides": [],
+      "strict_useful": [
+        {
+          "key": ["MATH_DEV", "math-test/9", 0],
+          "evidence_file": "audit/deep69_recovery_recipe_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Independent correct signed cases give 3/2 and -1/8; the conclusion and external answer select -1/8. Independently rechecked in full including pre-block text."
+        }
+      ]
+    }
+  }
+}

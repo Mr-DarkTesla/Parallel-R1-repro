@@ -82,3 +82,9 @@ loss](eval_archives/deep69_recovery_recipe_tagged_p8_train_meta.tgz)
 8 запущена на том же GPU; PID `39051`, лог pod
 `/tmp/exp21-deep69-recovery-recipe-eval.log`, каталог
 `/tmp/exp21-deep69-recovery-recipe-eval`.
+
+Оба шага завершили генерацию и ручное чтение 40 ответов каждый.
+[Итог, сырые архивы и интервалы](DEEP69_RECOVERY_RECIPE_RUN.md): шаг 4
+31/40 верных внешних ответов, 0 полезных блоков, три обрезания;
+шаг 8 25/40, один полезный блок, три обрезания. Оба не выполнили
+порог, полный dev/IFEval/frozen не запускались.
