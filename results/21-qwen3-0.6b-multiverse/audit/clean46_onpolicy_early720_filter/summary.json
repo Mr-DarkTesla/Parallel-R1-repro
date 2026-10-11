@@ -1,0 +1,26 @@
+{
+  "rollouts": 720,
+  "provisional": 422,
+  "rejected": 298,
+  "rejection_reasons": {
+    "multiverse_tag_outside_think": 2,
+    "not_exactly_one_complete_parallel_block": 14,
+    "parallel_block_not_numbered": 16,
+    "think_not_closed_once": 19,
+    "truncated": 2,
+    "wrong_external_final": 260
+  },
+  "by_source": {
+    "gsm8k": {
+      "provisional": 314,
+      "rejected": 150
+    },
+    "math": {
+      "provisional": 108,
+      "rejected": 148
+    }
+  },
+  "rollouts_path": "/tmp/exp21-onpolicy-early720.jsonl",
+  "candidates_path": "/checkpoints/exp21-clean46-onpolicy143/candidates.jsonl",
+  "semantic_path_independence": "unreviewed; blind manual audit required"
+}
