@@ -95,3 +95,13 @@ The output is incomplete until 128 distinct `(id, seed)` rows exist and the
 process exits successfully. A CPU prefilter smoke test on the first eight
 complete rows yielded one provisional MATH row; this is diagnostic only,
 not the pilot's final acceptance count.
+
+The first 32 complete rows were snapshotted while generation continued.
+The automatic checks passed 5/32. Blind semantic review accepted 2/5:
+`math-train/110` seed 1 and `gsm8k-train/2528` seed 0. Two provisional
+rows had incorrect or duplicate paths, and one had already computed its
+answer before the block. Both GSM8K verdicts were independently reviewed.
+The [review](audit/onpolicy46_first32_primary_review.md),
+[provisional rows](audit/onpolicy46_first32_provisional.jsonl), and
+[filter summary](audit/onpolicy46_first32_summary.json) are interim
+evidence only. The predeclared continuation gate applies to all 128 rows.
