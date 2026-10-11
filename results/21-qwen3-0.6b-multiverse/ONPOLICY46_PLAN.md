@@ -115,3 +115,12 @@ The [64-row filter summary](audit/onpolicy46_first64_summary.json),
 [review sheets](audit/onpolicy46_first64_review_a.md) for
 [rows 10–13](audit/onpolicy46_first64_review_b.md) are interim only.
 The 128-row gate still decides whether to proceed.
+
+At 96 rows, 19 passed automatic checks; blind review kept the same
+3 unique tasks and rejected 16 for duplicate, missing, or false paths,
+or an answer already computed before the block. Every provisional
+row's external answer was correct. The [96-row summary](audit/onpolicy46_first96_summary.json),
+[provisional rows](audit/onpolicy46_first96_provisional.jsonl), and
+[reviews for rows 14–16](audit/onpolicy46_first96_review_a.md) and
+[17–19](audit/onpolicy46_first96_review_b.md) record the interim result.
+The continuation threshold remains four unique accepted tasks at 128 rows.
