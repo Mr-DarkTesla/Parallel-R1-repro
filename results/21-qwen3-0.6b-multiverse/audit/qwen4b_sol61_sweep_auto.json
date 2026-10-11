@@ -66,6 +66,70 @@
           ]
         }
       }
+    },
+    "tagged_step8": {
+      "metrics": {
+        "strict": 27.0,
+        "robust": 34.0,
+        "block": 0.0,
+        "truncated": 5.0,
+        "tokens": 1354.88,
+        "forward_passes": 1354.88
+      },
+      "vs_initial": {
+        "strict": {
+          "delta": 7.5,
+          "ci95": [
+            -12.5,
+            25.0
+          ],
+          "discordant": {
+            "lost": 6,
+            "gained": 9
+          },
+          "mcnemar_exact_p": 0.60723876953125
+        },
+        "robust": {
+          "delta": 2.5,
+          "ci95": [
+            -12.5,
+            17.5
+          ],
+          "discordant": {
+            "lost": 4,
+            "gained": 5
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": -5.0,
+          "ci95": [
+            -17.5,
+            10.0
+          ]
+        },
+        "tokens": {
+          "delta": -311.05,
+          "ci95": [
+            -565.43,
+            -38.67
+          ]
+        },
+        "forward_passes": {
+          "delta": -311.05,
+          "ci95": [
+            -565.43,
+            -38.67
+          ]
+        }
+      }
     }
   },
   "pairwise": {},
