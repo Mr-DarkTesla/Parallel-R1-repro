@@ -15,6 +15,10 @@ fi
 source /work/venv/bin/activate
 export CUDA_VISIBLE_DEVICES=0 PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1
 cd /work/parallel-r1
+python3 scripts/exp21/evict_own_file_cache_pod.py \
+    /tmp/exp21-selective-runs/exp21-m1-rewrapped-tagged-p70 \
+    /tmp/exp21-selective-runs/exp21-m1-rewrapped-plain-p70 \
+    /tmp/exp21-selective-runs/exp21-teacher-sol61-tagged-lr1-p24
 RUN_ROOT=/tmp/exp21-selective-runs RUN_NAME=exp21-teacher-sol61-tagged-lr1-p24 \
 MODEL=/checkpoints/exp21-v4-recovery8/step_8/model \
 DATA_PATH="$data/sft_teacher_tagged_train.parquet" \

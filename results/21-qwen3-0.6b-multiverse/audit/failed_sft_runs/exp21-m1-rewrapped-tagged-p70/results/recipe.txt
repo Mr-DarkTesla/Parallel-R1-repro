@@ -1,0 +1,92 @@
+train=/work/exp21/m1_rewrapped_sft/sft_m1_rewrapped_tagged_train.parquet rows=2251 bytes=885929 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+val=/work/exp21/m1_rewrapped_sft/sft_m1_rewrapped_tagged_val.parquet rows=50 bytes=32553 columns=['data_source', 'id', 'source', 'extra_info', 'index']
+steps_per_epoch=70 epochs=1 updates=70 rows_processed=2240 distinct_rows_processed=2240
+model=/checkpoints/exp21-v4-recovery8/step_8/model vocab_size=151936 dtype=torch.bfloat16 tied=True
+Sun Oct 11 09:29:42 MSK 2026
+3c39df93c8d9ebed64beaf35644c3eddd6bca591
+ M scripts/exp21/generate_masked_multiverse.py
+ M scripts/instruct4b/sft.sh
+ M verl/verl/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/__pycache__/protocol.cpython-310.pyc
+ M verl/verl/models/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/models/__pycache__/registry.cpython-310.pyc
+ M verl/verl/trainer/__pycache__/fsdp_parallel_sft_trainer.cpython-310.pyc
+ M verl/verl/trainer/config/sft_trainer.yaml
+ M verl/verl/trainer/fsdp_parallel_sft_trainer.py
+ M verl/verl/utils/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/__pycache__/config.cpython-310.pyc
+ M verl/verl/utils/__pycache__/device.cpython-310.pyc
+ M verl/verl/utils/__pycache__/fs.cpython-310.pyc
+ M verl/verl/utils/__pycache__/hdfs_io.cpython-310.pyc
+ M verl/verl/utils/__pycache__/import_utils.cpython-310.pyc
+ M verl/verl/utils/__pycache__/logging_utils.cpython-310.pyc
+ M verl/verl/utils/__pycache__/model.cpython-310.pyc
+ M verl/verl/utils/__pycache__/py_functional.cpython-310.pyc
+ M verl/verl/utils/__pycache__/tokenizer.cpython-310.pyc
+ M verl/verl/utils/__pycache__/torch_functional.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/parallel_thinking_sft_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/rl_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/rm_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/__pycache__/sft_dataset.cpython-310.pyc
+ M verl/verl/utils/dataset/parallel_thinking_sft_dataset.py
+ M verl/verl/utils/reward_score/__pycache__/__init__.cpython-310.pyc
+ M verl/verl/utils/reward_score/__pycache__/math_dapo.cpython-310.pyc
+?? results/21-qwen3-0.6b-multiverse/data/onpolicy46_candidates.jsonl
+?? results/21-qwen3-0.6b-multiverse/data/onpolicy46_decomp_pilot_candidates.jsonl
+?? results/21-qwen3-0.6b-multiverse/data/onpolicy46_decomp_pilot_plans.jsonl
+?? results/21-qwen3-0.6b-multiverse/data/onpolicy_agent_authored_gsm16.jsonl
+?? results/21-qwen3-0.6b-multiverse/data/onpolicy_agent_authored_math16.jsonl
+?? scripts/bench/__pycache__/
+?? scripts/bench/answer_normalization.py
+?? scripts/exp21/__pycache__/
+?? scripts/exp21/check_weighted_sft_mask.py
+?? scripts/exp21/eval_4b_init_fixed40_pod.sh
+?? scripts/exp21/eval_checkpoint_steps_pod.sh
+?? scripts/exp21/filter_onpolicy_rollouts.py
+?? scripts/exp21/generate_onpolicy_masked.py
+?? scripts/exp21/prepare_agent_authored_rollouts.py
+?? scripts/exp21/retain_top5_checkpoints.py
+?? scripts/exp21/run_4b_teacher_after_baseline_pod.sh
+?? scripts/exp21/run_4b_teacher_pair_pod.sh
+?? scripts/exp21/run_agent_authored_pair_pod.sh
+?? scripts/exp21/run_agent_authored_sweep_pod.sh
+?? scripts/exp21/run_deep51_2x_pair_pod.sh
+?? scripts/exp21/run_deep51_pair_pod.sh
+?? scripts/exp21/run_deep69_lr10_pair_pod.sh
+?? scripts/exp21/run_deep69_pair_pod.sh
+?? scripts/exp21/run_deep69_recovery_recipe_pod.sh
+?? scripts/exp21/run_expanded_thinking_after_eval_pod.sh
+?? scripts/exp21/run_expanded_thinking_control_eval_pod.sh
+?? scripts/exp21/run_expanded_thinking_control_pod.sh
+?? scripts/exp21/run_expanded_thinking_greedy_pilot_pod.sh
+?? scripts/exp21/run_expanded_thinking_m1_replay3_greedy_pilot_pod.sh
+?? scripts/exp21/run_expanded_thinking_m1_replay3_pod.sh
+?? scripts/exp21/run_expanded_thinking_m1_tagweighted_control_pod.sh
+?? scripts/exp21/run_expanded_thinking_m1_tagweighted_pod.sh
+?? scripts/exp21/run_expanded_thinking_m1_twopath_pod.sh
+?? scripts/exp21/run_expanded_thinking_m2_control_after_lite_pod.sh
+?? scripts/exp21/run_expanded_thinking_masked_pilot_pod.sh
+?? scripts/exp21/run_m1_after_4b_pod.sh
+?? scripts/exp21/run_m1_rewrapped_pair_pod.sh
+?? scripts/exp21/run_m1_twopath_masked_dev100_pod.sh
+?? scripts/exp21/run_m1_twopath_tagrows_only_pod.sh
+?? scripts/exp21/run_m1_twopath_tagweighted_lowlr_fast.sh
+?? scripts/exp21/run_post_train_fixed40_pod.sh
+?? scripts/exp21/run_qwen4b_teacher_pilot_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_after_eval_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_after_pilot_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_eval_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_lite16_after_pilot_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_lite16_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_masked_pilot_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_sft_pod.sh
+?? scripts/exp21/run_qwen_rewrite180_tagboost64_pod.sh
+?? scripts/exp21/run_selective_blocks_shared.sh
+?? scripts/exp21/run_teacher_lr1_after_queue_pod.sh
+?? scripts/exp21/run_teacher_pair_pod.sh
+?? scripts/exp21/run_teacher_step24_pilot_pod.sh
+?? scripts/exp21/run_v4_recovery8_pod.sh
+?? verl/outputs/
+?? verl/verl/utils/dataset/__pycache__/multiverse_structure.cpython-310.pyc
+GPUs=0 updates=70 save_steps=16,35,70 global_batch=32 micro_batch_per_gpu=4 max_length=4096 lr=3e-6 epochs=1 overrides=+data.structure=multiverse +data.parallel_text_loss_weight=1.0 optim.tag_lr_mult=100

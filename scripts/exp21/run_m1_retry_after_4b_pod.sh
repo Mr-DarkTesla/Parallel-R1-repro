@@ -16,6 +16,11 @@ if pgrep -f 'torchrun.*fsdp_parallel_sft_trainer|generate_masked_multiverse.py' 
     exit 1
 fi
 cd /work/parallel-r1
+python3 scripts/exp21/evict_own_file_cache_pod.py \
+    /tmp/exp21-selective-runs/exp21-4b-sol61-tagged-p16 \
+    /tmp/exp21-selective-runs/exp21-4b-sol61-plain-p16 \
+    /tmp/exp21-selective-runs/exp21-m1-rewrapped-tagged-p70 \
+    /tmp/exp21-selective-runs/exp21-teacher-sol61-tagged-lr1-p24
 bash scripts/exp21/run_m1_rewrapped_pair_pod.sh
 
 for arm in tagged plain; do

@@ -1,0 +1,93 @@
+{
+  "status": "ready_for_sft",
+  "ready_for_sft": true,
+  "rows_per_arm": 34,
+  "base_strict_rows": 25,
+  "rewrite_double_review_rows": 9,
+  "selected_ids": [
+    "gsm8k-train/532",
+    "gsm8k-train/3572",
+    "gsm8k-train/2788",
+    "gsm8k-train/7121",
+    "gsm8k-train/3099",
+    "gsm8k-train/3381",
+    "gsm8k-train/7034",
+    "gsm8k-train/3238",
+    "gsm8k-train/6283",
+    "gsm8k-train/3242",
+    "gsm8k-train/3526",
+    "math-train/3495",
+    "math-train/3186",
+    "math-train/164",
+    "math-train/1491",
+    "math-train/2299",
+    "math-train/285",
+    "math-train/6059",
+    "math-train/2240",
+    "math-train/1245",
+    "math-train/958",
+    "math-train/424",
+    "math-train/212",
+    "math-train/1514",
+    "math-train/7138",
+    "gsm8k-train/4051",
+    "gsm8k-train/5845",
+    "gsm8k-train/144",
+    "gsm8k-train/1093",
+    "gsm8k-train/61",
+    "gsm8k-train/1046",
+    "math-train/2318",
+    "math-train/684",
+    "math-train/6693"
+  ],
+  "by_source": {
+    "gsm8k": 17,
+    "math": 17
+  },
+  "reviews": {
+    "personally_read_rows": 33,
+    "primary_accepted": 12,
+    "independent_useful": 14,
+    "intersection": 9
+  },
+  "checks": {
+    "math_verify": 34,
+    "grammar_inside_think": 34,
+    "external_final_answer_verbatim_from_source": 34,
+    "same_pair_order_and_metadata": true,
+    "plain_only_removes_10_tags": true,
+    "unique_ids_and_questions": 34,
+    "frozen_validation_id_overlap": 0,
+    "frozen_validation_question_overlap": 0,
+    "personally_read_rows_at_least_20": 33,
+    "independently_reviewed_final_rows_at_least_30": 34,
+    "legacy_replay_nt_ids_not_mixed": [
+      "math-train/1514",
+      "math-train/424"
+    ],
+    "max_total_tokens": {
+      "tagged": 824,
+      "plain": 800
+    }
+  },
+  "external_final_source_splices": [
+    "gsm8k-train/4051"
+  ],
+  "inputs": {
+    "base_tagged": "results/21-qwen3-0.6b-multiverse/data/qwen4b_teacher_final_tagged.jsonl",
+    "base_plain": "results/21-qwen3-0.6b-multiverse/data/qwen4b_teacher_final_plain.jsonl",
+    "base_independent_review": "results/21-qwen3-0.6b-multiverse/audit/qwen4b_teacher_conversion_independent_review.jsonl",
+    "rewrite_gsm": "results/21-qwen3-0.6b-multiverse/audit/qwen4b_rewrite_gsm_proposals.jsonl",
+    "rewrite_math": "results/21-qwen3-0.6b-multiverse/audit/qwen4b_rewrite_math_proposals.jsonl",
+    "primary_review": "results/21-qwen3-0.6b-multiverse/audit/qwen4b_rewrite_primary33.md",
+    "independent_review": "results/21-qwen3-0.6b-multiverse/audit/qwen4b_rewrite_independent_review.jsonl",
+    "pool": "results/21-qwen3-0.6b-multiverse/data/qwen4b_teacher_pool320.jsonl",
+    "frozen_validation": "results/21-qwen3-0.6b-multiverse/data/sft_v4_recovery8_val.parquet"
+  },
+  "outputs": {
+    "tagged": "results/21-qwen3-0.6b-multiverse/data/qwen4b_rewrite_reviewed_tagged.jsonl",
+    "plain": "results/21-qwen3-0.6b-multiverse/data/qwen4b_rewrite_reviewed_plain.jsonl",
+    "excluded": "results/21-qwen3-0.6b-multiverse/audit/qwen4b_rewrite_pair_excluded.jsonl"
+  },
+  "command": "uv run --offline --no-project --with pandas --with pyarrow --with 'tokenizers==0.23.2' --with 'math-verify==0.9.0' python scripts/exp21/build_qwen4b_rewrite_pair.py"
+}
