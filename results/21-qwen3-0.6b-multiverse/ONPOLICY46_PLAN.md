@@ -124,3 +124,10 @@ row's external answer was correct. The [96-row summary](audit/onpolicy46_first96
 [reviews for rows 14–16](audit/onpolicy46_first96_review_a.md) and
 [17–19](audit/onpolicy46_first96_review_b.md) record the interim result.
 The continuation threshold remains four unique accepted tasks at 128 rows.
+
+Final 128-row result: 25 passed automatic checks, but blind review
+accepted only 3 unique tasks (1 MATH integer, 2 GSM8K). The
+predeclared four-task continuation gate failed. The complete
+[run report](ONPOLICY46_PILOT128_RUN.md) includes raw outputs,
+filter counts, review sheets and the stop decision. No full rollout
+or SFT was started from this recipe.
