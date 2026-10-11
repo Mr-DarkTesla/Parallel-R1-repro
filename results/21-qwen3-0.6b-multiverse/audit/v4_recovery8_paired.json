@@ -1,0 +1,394 @@
+{
+  "protocol": {
+    "pilot": "same 40 masked greedy prompts",
+    "accuracy": "reviewed correct external answer after closed </think>",
+    "ci": "10,000 paired bootstrap samples from compare_masked_pilot_archives.py"
+  },
+  "references": {
+    "c0_corrected": {
+      "archive": "c0-greedy-pilot40.tgz",
+      "external_corrections": [
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/235",
+          0
+        ],
+        [
+          "MATH_DEV",
+          "math-test/103",
+          0
+        ]
+      ],
+      "external_correct": 34
+    },
+    "v4_step56": {
+      "archive": "selective_v4_step56_masked_pilot.tgz",
+      "external_corrections": [
+        [
+          "GSM8K_DEV",
+          "gsm8k-train/279",
+          0
+        ]
+      ],
+      "external_correct": 27
+    },
+    "selective_v2": {
+      "archive": "selective_v2_masked_pilot.tgz",
+      "external_corrections": [],
+      "external_correct": 30
+    }
+  },
+  "steps": {
+    "4": {
+      "archive": "v4_recovery8_step4_masked_pilot.tgz",
+      "review_file": "audit/v4_recovery8_step4_answer_review.md",
+      "external_correct": 27,
+      "response_level_numbered": 14,
+      "strict_useful_ids": [
+        "math-test/9"
+      ],
+      "truncated": 4,
+      "outside_think": 0,
+      "mean_tokens": 706.38,
+      "mean_forward_passes": 688.52,
+      "paired": {
+        "external_accuracy": {
+          "c0_corrected": {
+            "base": 85.0,
+            "candidate": 67.5,
+            "delta": -17.5,
+            "ci95": [
+              -32.5,
+              -5.0
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 67.5,
+            "candidate": 67.5,
+            "delta": 0.0,
+            "ci95": [
+              -12.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 75.0,
+            "candidate": 67.5,
+            "delta": -7.5,
+            "ci95": [
+              -20.0,
+              5.0
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "c0_corrected": {
+            "base": 0.0,
+            "candidate": 35.0,
+            "delta": 35.0,
+            "ci95": [
+              20.0,
+              50.0
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 47.5,
+            "candidate": 35.0,
+            "delta": -12.5,
+            "ci95": [
+              -27.5,
+              2.5
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 42.5,
+            "candidate": 35.0,
+            "delta": -7.5,
+            "ci95": [
+              -22.5,
+              7.5
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "c0_corrected": {
+            "base": 10.0,
+            "candidate": 10.0,
+            "delta": 0.0,
+            "ci95": [
+              -12.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 10.0,
+            "candidate": 10.0,
+            "delta": 0.0,
+            "ci95": [
+              -12.5,
+              12.5
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 5.0,
+            "candidate": 10.0,
+            "delta": 5.0,
+            "ci95": [
+              -5.0,
+              15.0
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "c0_corrected": {
+            "base": 1226.58,
+            "candidate": 706.38,
+            "delta": -520.2,
+            "ci95": [
+              -872.62,
+              -195.1
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 693.05,
+            "candidate": 706.38,
+            "delta": 13.32,
+            "ci95": [
+              -327.0,
+              341.43
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 597.17,
+            "candidate": 706.38,
+            "delta": 109.2,
+            "ci95": [
+              -152.12,
+              337.35
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "c0_corrected": {
+            "base": 1226.58,
+            "candidate": 688.52,
+            "delta": -538.05,
+            "ci95": [
+              -896.12,
+              -208.2
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 666.45,
+            "candidate": 688.52,
+            "delta": 22.07,
+            "ci95": [
+              -324.02,
+              357.55
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 579.25,
+            "candidate": 688.52,
+            "delta": 109.28,
+            "ci95": [
+              -156.25,
+              343.12
+            ],
+            "n": 40
+          }
+        }
+      }
+    },
+    "8": {
+      "archive": "v4_recovery8_step8_masked_pilot.tgz",
+      "review_file": "audit/v4_recovery8_step8_answer_review.md",
+      "external_correct": 29,
+      "response_level_numbered": 12,
+      "strict_useful_ids": [
+        "math-test/9",
+        "math-test/36"
+      ],
+      "truncated": 2,
+      "outside_think": 0,
+      "mean_tokens": 650.12,
+      "mean_forward_passes": 632.73,
+      "paired": {
+        "external_accuracy": {
+          "c0_corrected": {
+            "base": 85.0,
+            "candidate": 72.5,
+            "delta": -12.5,
+            "ci95": [
+              -27.5,
+              0.0
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 67.5,
+            "candidate": 72.5,
+            "delta": 5.0,
+            "ci95": [
+              -7.5,
+              17.5
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 75.0,
+            "candidate": 72.5,
+            "delta": -2.5,
+            "ci95": [
+              -15.0,
+              10.0
+            ],
+            "n": 40
+          }
+        },
+        "response_level_numbered": {
+          "c0_corrected": {
+            "base": 0.0,
+            "candidate": 30.0,
+            "delta": 30.0,
+            "ci95": [
+              17.5,
+              45.0
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 47.5,
+            "candidate": 30.0,
+            "delta": -17.5,
+            "ci95": [
+              -32.5,
+              -5.0
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 42.5,
+            "candidate": 30.0,
+            "delta": -12.5,
+            "ci95": [
+              -27.5,
+              2.5
+            ],
+            "n": 40
+          }
+        },
+        "truncation": {
+          "c0_corrected": {
+            "base": 10.0,
+            "candidate": 5.0,
+            "delta": -5.0,
+            "ci95": [
+              -15.0,
+              5.0
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 10.0,
+            "candidate": 5.0,
+            "delta": -5.0,
+            "ci95": [
+              -17.5,
+              7.5
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 5.0,
+            "candidate": 5.0,
+            "delta": 0.0,
+            "ci95": [
+              -10.0,
+              10.0
+            ],
+            "n": 40
+          }
+        },
+        "tokens": {
+          "c0_corrected": {
+            "base": 1226.58,
+            "candidate": 650.12,
+            "delta": -576.45,
+            "ci95": [
+              -964.98,
+              -208.78
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 693.05,
+            "candidate": 650.12,
+            "delta": -42.92,
+            "ci95": [
+              -390.35,
+              300.43
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 597.17,
+            "candidate": 650.12,
+            "delta": 52.95,
+            "ci95": [
+              -314.0,
+              391.4
+            ],
+            "n": 40
+          }
+        },
+        "forward_passes": {
+          "c0_corrected": {
+            "base": 1226.58,
+            "candidate": 632.73,
+            "delta": -593.85,
+            "ci95": [
+              -986.48,
+              -222.15
+            ],
+            "n": 40
+          },
+          "v4_step56": {
+            "base": 666.45,
+            "candidate": 632.73,
+            "delta": -33.73,
+            "ci95": [
+              -384.15,
+              314.75
+            ],
+            "n": 40
+          },
+          "selective_v2": {
+            "base": 579.25,
+            "candidate": 632.73,
+            "delta": 53.48,
+            "ci95": [
+              -317.07,
+              395.7
+            ],
+            "n": 40
+          }
+        }
+      }
+    }
+  }
+}
