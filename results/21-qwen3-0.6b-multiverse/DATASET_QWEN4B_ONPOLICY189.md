@@ -1,56 +1,61 @@
-# 189 новых задач для собственных траекторий Qwen3-4B
+# Qwen3-4B on-policy 189: готовый парный SFT-набор
 
-11 октября 2026. Пока подготовлен **список задач**, а не обучающие
-ответы. В нём 94 MATH и 95 GSM8K из прежнего очищенного пула.
-Порядок унаследован от `data/onpolicy46_candidates.jsonl`.
+Статус на 11 октября 2026: masked-генерация от Qwen3-4B mixed401 выполнена
+для всех 189 кандидатов. Собраны tagged и plain наборы, по 247 train и 50 val
+строк на плечо. Парный SFT запущен; это не результат обучения.
 
-Сборщик `scripts/exp21/prepare_qwen4b_onpolicy189.py` исключил:
+## Источник и защита от утечек
 
-- 64 задачи прежнего on-policy пилота 0.6B;
-- 4 задачи 4B focus34, одна из них уже входила в прежний пилот;
-- все ID и нормализованные условия из 4B mixed401 train/val, 78
-  сохранённых SFT parquet и fixed40. Дополнительных совпадений с ними
-  не нашлось.
+- Кандидатный пул: 189 задач, 95 GSM8K и 94 MATH, в порядке
+  `onpolicy46_candidates.jsonl`.
+- Источник модели: tagged checkpoint Qwen3-4B mixed401, step 128; у каждой
+  задачи сгенерирована одна masked-траектория.
+- `qwen4b_onpolicy189_candidates.audit.json` исключает пересечения с
+  onpolicy46, focus34, mixed401, сохранёнными SFT и fixed40. Проверены ID и
+  нормализованные условия; среди выбранных задач совпадений нет.
+- `leakcheck.py` проверил 189 задач против eval-корпуса: 0 блокирующих утечек.
+  Сигналы с информационными наборами не являются пропуском проверки.
 
-Итого удалено 67 различных задач из исходных 256. Сравнивались ID и
-условия после Unicode NFKC и нормализации пробелов; совпадение ID
-без совпадения текста для независимо пронумерованных GSM8K не
-подменяет проверку самого условия. `leakcheck.py` проверил все 189
-задач против eval-корпуса и полного MATH test по прежнему протоколу:
-**0 блокирующих утечек**. Точные пути, числа и причины отсева в
-`data/qwen4b_onpolicy189_candidates.audit.json`.
+## Автоматический и ручной отбор
 
-Список уже скопирован на наш pod `vcharkin-exp-vm-0` в
-`/tmp/exp21-qwen4b-onpolicy189-candidates.jsonl` и содержит 189 строк.
-Проверенная исходная tagged 4B сохранена на нашем checkpoint PVC.
-Генератор ниже применяет ту же маску независимых путей и позиции,
-что SFT. Gold есть в файле только для последующей оценки и не
-попадает в запрос модели.
+Из 189 генераций автоматический фильтр оставил 119 provisional и отклонил 70.
+Причины отклонения пересекаются: `wrong_external_final` встречается у 61
+строки, также встречаются незакрытый `<think>`, усечение, ненумерованные пути и
+неполный Parallel-блок. Поэтому нельзя называть эти 119 или исходные 189
+«90% качественных».
 
-Обёртка `scripts/exp21/run_qwen4b_onpolicy189_pod.sh` запускает эти
-команды после завершения focus34, проверяет отсутствие другого GPU
-процесса и пишет сырые ответы и отсев на отдельный persistent
-checkpoint PVC. Она держит только `CUDA_VISIBLE_DEVICES=0` и
-поддерживает возобновление генерации по исходным `(id, seed)`.
+Все 119 provisional строк прочитаны по строгому критерию: два разных,
+нетривиальных и верных независимых Path, Conclusion существенно объединяет их,
+внешний ответ верен, а полный Parallel-блок находится внутри `<think>`.
+Ранний срез прошёл первичное ручное чтение 22 строк и независимое чтение тех же
+22; затем покрытие расширено до всех 119 строк отдельными ревью. Итог: 41 PASS,
+78 FAIL. У 78 FAIL внешний ответ часто верен, но пути зависимы, тривиальны или
+математически неверны.
 
-```bash
-cd /tmp/exp21-eval-clean-299074e
-source /work/venv/bin/activate
-CUDA_VISIBLE_DEVICES=0 HF_HUB_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 \
-python scripts/exp21/generate_onpolicy_masked.py \
-  /checkpoints/exp21-global-top5/qwen4b-mixed401-tagged-step128/model \
-  /tmp/exp21-qwen4b-onpolicy189-candidates.jsonl \
-  /checkpoints/exp21-qwen4b-onpolicy189/rollouts.jsonl \
-  --math-count 94 --gsm-count 95 --seeds 0 \
-  --temperature 0.6 --top-p 0.95 --top-k 20
+Приняты 41 строки: 27 GSM8K и 14 MATH; типы ответов: 30 integer, 7 expression,
+4 fraction. Решения и причины лежат в
+`audit/qwen4b_onpolicy189_semantic_manifest.json` и ревью
+`audit/qwen4b_onpolicy189_{early30_independent_review,review_a,review_b,review_c,review_d}.md`.
 
-python scripts/exp21/filter_onpolicy_rollouts.py \
-  /checkpoints/exp21-qwen4b-onpolicy189/rollouts.jsonl \
-  /checkpoints/exp21-qwen4b-onpolicy189/filter \
-  --candidates /tmp/exp21-qwen4b-onpolicy189-candidates.jsonl
-```
+## Состав парных наборов
 
-Автоматический фильтр проверяет финал, усечение, грамматику и
-положение блока внутри `<think>`. Каждый оставшийся пример всё ещё
-требует смысловой проверки независимости и полезности путей до SFT.
-Ни генерация, ни обучение на этих 189 задачах пока не запускались.
+Каждое плечо получает:
+
+- 123 positive: 41 принятая on-policy траектория, по 3 копии;
+- 64 корректных, clean и неусечённых 4B thinking replay;
+- 60 корректных, clean и неусечённых 4B native no-thinking replay.
+
+Итого 247 train строк и 50 val строк на плечо. Tagged и plain имеют одинаковый
+порядок и слова: plain получается только удалением тегов. Максимальная полная
+длина: train 1580, val 3513 токенов. Пересечений train с val и fixed40 по
+нормализованному условию нет.
+
+Артефакты: `data/qwen4b_onpolicy189_{tagged,plain}_{train,val}.parquet`,
+`audit/qwen4b_onpolicy189_pair_report.json`,
+`eval_archives/qwen4b_onpolicy189_seed0/`.
+
+## Проверяемый источник чисел
+
+`audit/qwen4b_onpolicy189_pair_report.json` фиксирует состав, порядок, длины и
+пересечения. `eval_archives/qwen4b_onpolicy189_seed0/summary.json` фиксирует
+189 генераций, 119 provisional и 70 автоматических отклонений.

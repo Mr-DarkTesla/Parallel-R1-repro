@@ -1,0 +1,134 @@
+{
+  "status": "ready_for_paired_onpolicy_sft",
+  "inputs": {
+    "candidates": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/data/qwen4b_onpolicy189_candidates.jsonl",
+    "candidate_audit": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/data/qwen4b_onpolicy189_candidates.audit.json",
+    "rollouts": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/eval_archives/qwen4b_onpolicy189_seed0/rollouts.jsonl",
+    "accepted_manifest": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/audit/qwen4b_onpolicy189_semantic_manifest.json",
+    "provisional": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/eval_archives/qwen4b_onpolicy189_seed0/provisional_candidates.jsonl",
+    "fixed40": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/eval_archives/qwen4b_init_fixed40.tgz",
+    "replay_thinking": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/data/qwen4b_teacher_graded320.jsonl",
+    "replay_no_thinking": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/eval_archives/qwen4b_native189/no_thinking_regraded.jsonl",
+    "tokenizer": "/Users/v.charkin/Documents/ChatGPT/R1/outputs/instruct4b-2026-10-06/exp21_06b/data/q06_mv_tokenizer/tokenizer.json"
+  },
+  "accepted": {
+    "count": 41,
+    "ids": [
+      "gsm8k-train/1362",
+      "gsm8k-train/346",
+      "gsm8k-train/4921",
+      "gsm8k-train/5711",
+      "gsm8k-train/6149",
+      "gsm8k-train/2619",
+      "gsm8k-train/6195",
+      "gsm8k-train/982",
+      "gsm8k-train/1295",
+      "gsm8k-train/4340",
+      "gsm8k-train/467",
+      "gsm8k-train/4013",
+      "math-train/7012",
+      "gsm8k-train/4374",
+      "math-train/446",
+      "math-train/5843",
+      "gsm8k-train/6259",
+      "gsm8k-train/5074",
+      "gsm8k-train/1856",
+      "gsm8k-train/1952",
+      "gsm8k-train/3674",
+      "gsm8k-train/6080",
+      "math-train/3849",
+      "gsm8k-train/1746",
+      "math-train/3154",
+      "gsm8k-train/6713",
+      "gsm8k-train/6845",
+      "math-train/529",
+      "gsm8k-train/3750",
+      "gsm8k-train/5759",
+      "gsm8k-train/6557",
+      "gsm8k-train/5025",
+      "gsm8k-train/1103",
+      "math-train/5764",
+      "math-train/5746",
+      "math-train/5658",
+      "math-train/1366",
+      "math-train/7110",
+      "math-train/1828",
+      "math-train/1007",
+      "math-train/2361"
+    ],
+    "semantic_path_independence": "reviewed"
+  },
+  "rows_per_arm": {
+    "train": 247,
+    "val": 50
+  },
+  "train": {
+    "positive_copies": 3,
+    "positive_rows": 123,
+    "replay_thinking": 64,
+    "replay_no_thinking": 60,
+    "replay_provenance": {
+      "thinking": {
+        "declared": "Qwen/Qwen3-4B_teacher_graded320_thinking",
+        "record_status": "correct_clean_untruncated",
+        "filter": {
+          "source_rows": 320,
+          "usable_rows": 146,
+          "excluded_rows": 174,
+          "excluded_grade_rows": 157,
+          "excluded_structural_rows": 17,
+          "excluded_reasons": {
+            "not_correct": 157,
+            "not_clean": 114,
+            "truncated": 144,
+            "tagged_or_final_invalid": 17
+          },
+          "excluded_overlap_rows": 0,
+          "selected_rows": 64
+        }
+      },
+      "no_thinking": {
+        "declared": "Qwen/Qwen3-4B_native189_no-thinking_seed0_T0.6_max512_62_final_lines_appended_reverified",
+        "record_status": "correct_clean_untruncated",
+        "filter": {
+          "source_rows": 189,
+          "usable_rows": 98,
+          "excluded_rows": 91,
+          "excluded_grade_rows": 91,
+          "excluded_structural_rows": 0,
+          "excluded_reasons": {
+            "not_correct": 91,
+            "not_clean": 19,
+            "truncated": 44
+          },
+          "excluded_overlap_rows": 28,
+          "selected_rows": 60
+        }
+      }
+    },
+    "kind_counts": {
+      "parallel_th": 123,
+      "replay_th": 64,
+      "replay_nt": 60
+    }
+  },
+  "checks": {
+    "same_order": true,
+    "plain_equals_tagged_after_removing_only_tags": true,
+    "accepted_structural_filter_evidence": 41,
+    "candidate_eval_leakcheck": "passed",
+    "train_validation_question_overlap": 0,
+    "train_fixed40_question_overlap": 0,
+    "max_total_tokens": {
+      "tagged": {
+        "train": 1580,
+        "val": 3513
+      },
+      "plain": {
+        "train": 1580,
+        "val": 3513
+      }
+    }
+  },
+  "seed": "qwen4b-onpolicy189-pair-20261011"
+}

@@ -1,0 +1,26 @@
+# Rejected math-plan IDs, assignment C
+
+- `math-train/5622`: single proportional calculation.
+- `math-train/3683`: symmetric relations feed one dependent identity; no independent branches.
+- `math-train/6535`: single linear equation.
+- `math-train/1366`: direct Vieta application.
+- `math-train/4724`: single base conversion.
+- `math-train/6067`: single arithmetic product.
+- `math-train/732`: equate exponents, then solve one linear equation.
+- `math-train/7110`: one coordinate conversion.
+- `math-train/6936`: range analysis depends on one algebraic simplification.
+- `math-train/6713`: single decimal subtraction.
+- `math-train/7299`: direct spherical-coordinate formula.
+- `math-train/3157`: tangent slope depends on the radius slope.
+- `math-train/530`: both equations must be combined before integer search.
+- `math-train/1828`: direct linearity-of-expectation calculation.
+- `math-train/2368`: elementary sequential-card probability.
+- `math-train/758`: one quadratic time equation.
+- `math-train/6249`: single ratio allocation.
+- `math-train/7087`: all angle cases require one shared trigonometric reduction.
+- `math-train/7157`: direct period formula.
+- `math-train/7492`: all work depends on one coupled trigonometric reduction.
+- `math-train/3668`: focal distance depends on prior semiaxis calculation.
+- `math-train/1007`: direct distance formula.
+- `math-train/4713`: one binary multiplication.
+- `math-train/6390`: single percentage calculation.
