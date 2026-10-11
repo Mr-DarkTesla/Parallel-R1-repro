@@ -127,6 +127,8 @@ dev-наборов и выполнил 10 000 парных bootstrap-повто�
 на GSM8K 0% против 0,17% у plain. Средняя разница длины tagged−plain:
 GSM8K −27,4 токена, MATH +7,1, ARC −0,6, MMLU-Pro −33,7.
 Парный отчёт: `full_dev/comparisons/selected_vs_plain_dev_no-thinking.json`.
-Сырые 1184/964/1196/999 строки plain no-thinking проверены в архиве
-`full_dev/qwen4b-plain-dev-no-thinking.tgz`; соответствующий tagged
-набор пока остаётся на pod. Исходная 4B и IFEval plain ещё оцениваются.
+Сырые 1184/964/1196/999 строки plain и tagged no-thinking проверены
+в архивах `full_dev/qwen4b-{plain,selected}-dev-no-thinking.tgz`.
+Два режима IFEval tagged также архивированы: по 541 строке и сводке
+в `full_dev/qwen4b-selected-frozen-{thinking,no-thinking}.tgz`.
+Исходная 4B и IFEval plain ещё оцениваются.
