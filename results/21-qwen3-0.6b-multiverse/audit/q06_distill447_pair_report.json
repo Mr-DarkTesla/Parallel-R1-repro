@@ -1,0 +1,45 @@
+{
+  "status": "ready_for_paired_sft",
+  "target": "Qwen/Qwen3-0.6B",
+  "distinct_positive": 447,
+  "train_distinct_positive": 439,
+  "val_distinct_positive": 8,
+  "sources": {
+    "m1": 367,
+    "qwen4b_reviewed": 34,
+    "qwen4b_clean46": 46
+  },
+  "copies": {
+    "m1": 3,
+    "qwen4b_reviewed": 4,
+    "qwen4b_clean46": 6,
+    "q06_replay_thinking": 2,
+    "q06_replay_no_thinking": 2
+  },
+  "rows_per_arm": {
+    "train": 2659,
+    "val": 50
+  },
+  "train_kind_counts": {
+    "parallel_th": 1489,
+    "replay_th": 588,
+    "replay_nt": 582
+  },
+  "max_total_tokens": {
+    "tagged": {
+      "train": 3838,
+      "val": 3513
+    },
+    "plain": {
+      "train": 3838,
+      "val": 3513
+    }
+  },
+  "train_val_question_overlap": 0,
+  "fixed40_question_overlap": 0,
+  "old_new_question_overlap": 0,
+  "plain_only_removes_tags": true,
+  "lengths_reused_from_unchanged_source_rows": true,
+  "seed": 210447,
+  "command": "python scripts/exp21/prepare_q06_distill447_pair.py"
+}
