@@ -71,3 +71,14 @@ plain arm и меняет относительно прежнего Deep69 не�
 ```bash
 bash /work/parallel-r1/scripts/exp21/run_deep69_recovery_recipe_pod.sh
 ```
+
+Рецепт запущен после завершения LR10-пилота и проверки свободного GPU
+на собственном `vcharkin-exp-vm-0`, shell PID `38110`. Обучение
+закончило все восемь шагов; validation loss `0,2448859`. Экспорты
+BF16 шагов 4 и 8 проверены по наличию конфигурации, а скрипт
+поставил маркер `DONE`. [Рецепт, метрики, лог и проверка весов
+loss](eval_archives/deep69_recovery_recipe_tagged_p8_train_meta.tgz)
+сохранены локально. Последовательная masked greedy-оценка шагов 4 и
+8 запущена на том же GPU; PID `39051`, лог pod
+`/tmp/exp21-deep69-recovery-recipe-eval.log`, каталог
+`/tmp/exp21-deep69-recovery-recipe-eval`.
