@@ -78,6 +78,204 @@
         }
       }
     },
+    "plain_step16": {
+      "archive": "q06_distill447_plain_step16",
+      "model": "/tmp/exp21-selective-runs/exp21-q06-distill447-plain-p128/step_models/step_16/model",
+      "metrics": {
+        "strict": 19,
+        "robust": 27,
+        "block": 0,
+        "truncated": 8,
+        "tokens": 1526.95,
+        "forward_passes": 1526.95
+      },
+      "vs_original": {
+        "strict": {
+          "delta": -10.0,
+          "ci95": [
+            -22.5,
+            2.5
+          ],
+          "discordant": {
+            "lost": 6,
+            "gained": 2
+          },
+          "mcnemar_exact_p": 0.2890625
+        },
+        "robust": {
+          "delta": -17.5,
+          "ci95": [
+            -32.5,
+            -2.5
+          ],
+          "discordant": {
+            "lost": 9,
+            "gained": 2
+          },
+          "mcnemar_exact_p": 0.0654296875
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": 10.0,
+          "ci95": [
+            -2.5,
+            22.5
+          ]
+        },
+        "tokens": {
+          "delta": 300.38,
+          "ci95": [
+            4.83,
+            603.95
+          ]
+        },
+        "forward_passes": {
+          "delta": 300.38,
+          "ci95": [
+            4.83,
+            603.95
+          ]
+        }
+      }
+    },
+    "plain_step32": {
+      "archive": "q06_distill447_plain_step32",
+      "model": "/tmp/exp21-selective-runs/exp21-q06-distill447-plain-p128/step_models/step_32/model",
+      "metrics": {
+        "strict": 15,
+        "robust": 15,
+        "block": 0,
+        "truncated": 10,
+        "tokens": 1026.33,
+        "forward_passes": 1026.33
+      },
+      "vs_original": {
+        "strict": {
+          "delta": -20.0,
+          "ci95": [
+            -37.5,
+            -2.5
+          ],
+          "discordant": {
+            "lost": 12,
+            "gained": 4
+          },
+          "mcnemar_exact_p": 0.076812744140625
+        },
+        "robust": {
+          "delta": -47.5,
+          "ci95": [
+            -65.0,
+            -30.0
+          ],
+          "discordant": {
+            "lost": 20,
+            "gained": 1
+          },
+          "mcnemar_exact_p": 2.09808349609375e-05
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": 15.0,
+          "ci95": [
+            2.5,
+            27.5
+          ]
+        },
+        "tokens": {
+          "delta": -200.25,
+          "ci95": [
+            -596.62,
+            231.2
+          ]
+        },
+        "forward_passes": {
+          "delta": -200.25,
+          "ci95": [
+            -596.62,
+            231.2
+          ]
+        }
+      }
+    },
+    "plain_step64": {
+      "archive": "q06_distill447_plain_step64",
+      "model": "/tmp/exp21-selective-runs/exp21-q06-distill447-plain-p128/step_models/step_64/model",
+      "metrics": {
+        "strict": 16,
+        "robust": 16,
+        "block": 0,
+        "truncated": 8,
+        "tokens": 910.27,
+        "forward_passes": 910.27
+      },
+      "vs_original": {
+        "strict": {
+          "delta": -17.5,
+          "ci95": [
+            -40.0,
+            5.0
+          ],
+          "discordant": {
+            "lost": 15,
+            "gained": 8
+          },
+          "mcnemar_exact_p": 0.21003961563110352
+        },
+        "robust": {
+          "delta": -45.0,
+          "ci95": [
+            -62.5,
+            -27.5
+          ],
+          "discordant": {
+            "lost": 19,
+            "gained": 1
+          },
+          "mcnemar_exact_p": 4.00543212890625e-05
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": 10.0,
+          "ci95": [
+            -2.5,
+            22.5
+          ]
+        },
+        "tokens": {
+          "delta": -316.3,
+          "ci95": [
+            -695.88,
+            71.2
+          ]
+        },
+        "forward_passes": {
+          "delta": -316.3,
+          "ci95": [
+            -695.88,
+            71.2
+          ]
+        }
+      }
+    },
     "plain_step96": {
       "archive": "q06_distill447_plain_step96",
       "model": "/tmp/exp21-selective-runs/exp21-q06-distill447-plain-p128/step_models/step_96/model",
@@ -476,6 +674,168 @@
     }
   },
   "tagged_vs_plain": {
+    "step16": {
+      "strict": {
+        "delta": -5.0,
+        "ci95": [
+          -20.0,
+          10.0
+        ],
+        "discordant": {
+          "lost": 6,
+          "gained": 4
+        },
+        "mcnemar_exact_p": 0.75390625
+      },
+      "robust": {
+        "delta": 5.0,
+        "ci95": [
+          -7.5,
+          17.5
+        ],
+        "discordant": {
+          "lost": 3,
+          "gained": 5
+        },
+        "mcnemar_exact_p": 0.7265625
+      },
+      "block": {
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "truncated": {
+        "delta": 0.0,
+        "ci95": [
+          -12.5,
+          12.5
+        ]
+      },
+      "tokens": {
+        "delta": 24.48,
+        "ci95": [
+          -308.43,
+          360.0
+        ]
+      },
+      "forward_passes": {
+        "delta": 24.48,
+        "ci95": [
+          -308.43,
+          360.0
+        ]
+      }
+    },
+    "step32": {
+      "strict": {
+        "delta": 7.5,
+        "ci95": [
+          -12.5,
+          27.5
+        ],
+        "discordant": {
+          "lost": 6,
+          "gained": 9
+        },
+        "mcnemar_exact_p": 0.60723876953125
+      },
+      "robust": {
+        "delta": 7.5,
+        "ci95": [
+          -12.5,
+          27.5
+        ],
+        "discordant": {
+          "lost": 6,
+          "gained": 9
+        },
+        "mcnemar_exact_p": 0.60723876953125
+      },
+      "block": {
+        "delta": 70.0,
+        "ci95": [
+          55.0,
+          85.0
+        ]
+      },
+      "truncated": {
+        "delta": -22.5,
+        "ci95": [
+          -37.5,
+          -7.5
+        ]
+      },
+      "tokens": {
+        "delta": -599.02,
+        "ci95": [
+          -1129.65,
+          -107.72
+        ]
+      },
+      "forward_passes": {
+        "delta": -635.77,
+        "ci95": [
+          -1171.55,
+          -142.5
+        ]
+      }
+    },
+    "step64": {
+      "strict": {
+        "delta": 2.5,
+        "ci95": [
+          -17.5,
+          22.5
+        ],
+        "discordant": {
+          "lost": 8,
+          "gained": 9
+        },
+        "mcnemar_exact_p": 1.0
+      },
+      "robust": {
+        "delta": 2.5,
+        "ci95": [
+          -17.5,
+          22.5
+        ],
+        "discordant": {
+          "lost": 8,
+          "gained": 9
+        },
+        "mcnemar_exact_p": 1.0
+      },
+      "block": {
+        "delta": 90.0,
+        "ci95": [
+          80.0,
+          97.5
+        ]
+      },
+      "truncated": {
+        "delta": -12.5,
+        "ci95": [
+          -25.0,
+          0.0
+        ]
+      },
+      "tokens": {
+        "delta": -414.82,
+        "ci95": [
+          -849.8,
+          -43.88
+        ]
+      },
+      "forward_passes": {
+        "delta": -462.75,
+        "ci95": [
+          -896.27,
+          -91.17
+        ]
+      }
+    },
     "step96": {
       "strict": {
         "delta": 5.0,
