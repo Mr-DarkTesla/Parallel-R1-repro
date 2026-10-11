@@ -48,3 +48,12 @@ Multiverse, seed 1, batch 32, microbatch 4, основной lr `3e-6`,
 [`run_deep69_lr10_pair_pod.sh`](../../scripts/exp21/run_deep69_lr10_pair_pod.sh).
 Shell PID `35138`, лог `/tmp/exp21-deep69-lr10-p8-train.log`.
 Ветви обучаются последовательно на одной H100.
+
+Обе ветви завершили 8 шагов, BF16 шаг 8 проверен на pod.
+Validation loss: tagged `0.29838`, plain `0.30081`; по ней
+вариант не выбираем. [Рецепты и логи](eval_archives/deep69_lr10_pair_p8_train_meta.tgz)
+сохранены локально. После проверки свободного GPU запущен
+последовательный masked greedy-пилот tagged/plain на тех же 40
+задачах; shell PID `36427`, лог
+`/tmp/exp21-deep69-lr10-eval-all.log`,
+[скрипт](../../scripts/exp21/run_deep69_lr10_pilot_pod.sh).
