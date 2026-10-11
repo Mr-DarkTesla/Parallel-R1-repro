@@ -1,0 +1,107 @@
+{
+  "models": {
+    "base": "/tmp/exp21-qwen3-4b-mv10",
+    "tagged16": "/tmp/exp21-selective-runs/exp21-4b-sol61-tagged-p16/step_models/step_16/model",
+    "plain16": "/tmp/exp21-selective-runs/exp21-4b-sol61-plain-p16/step_models/step_16/model"
+  },
+  "method": "CPU safetensors slices; existing-row median samples five disjoint 1024-row bands",
+  "tag_ids": {
+    "<Parallel>": 151669,
+    "</Parallel>": 151670,
+    "<Goal>": 151671,
+    "</Goal>": 151672,
+    "<Outline>": 151673,
+    "</Outline>": 151674,
+    "<Path>": 151675,
+    "</Path>": 151676,
+    "<Conclusion>": 151677,
+    "</Conclusion>": 151678
+  },
+  "sampled_existing_norm_median": {
+    "base": 1.112946,
+    "tagged16": 1.112946,
+    "plain16": 1.112946
+  },
+  "tags": {
+    "<Parallel>": {
+      "base_norm": 1.098721,
+      "tagged16_norm": 1.099312,
+      "plain16_norm": 1.10028,
+      "tagged16_delta_l2": 0.076359,
+      "plain16_delta_l2": 0.06876,
+      "tagged_plain_delta_l2": 0.09486
+    },
+    "</Parallel>": {
+      "base_norm": 1.098725,
+      "tagged16_norm": 1.107289,
+      "plain16_norm": 1.099191,
+      "tagged16_delta_l2": 0.081008,
+      "plain16_delta_l2": 0.0646,
+      "tagged_plain_delta_l2": 0.096593
+    },
+    "<Goal>": {
+      "base_norm": 1.098657,
+      "tagged16_norm": 1.10356,
+      "plain16_norm": 1.098001,
+      "tagged16_delta_l2": 0.07597,
+      "plain16_delta_l2": 0.057966,
+      "tagged_plain_delta_l2": 0.091393
+    },
+    "</Goal>": {
+      "base_norm": 1.098757,
+      "tagged16_norm": 1.106394,
+      "plain16_norm": 1.102277,
+      "tagged16_delta_l2": 0.081666,
+      "plain16_delta_l2": 0.063456,
+      "tagged_plain_delta_l2": 0.08615
+    },
+    "<Outline>": {
+      "base_norm": 1.098552,
+      "tagged16_norm": 1.104503,
+      "plain16_norm": 1.09939,
+      "tagged16_delta_l2": 0.08533,
+      "plain16_delta_l2": 0.070423,
+      "tagged_plain_delta_l2": 0.10837
+    },
+    "</Outline>": {
+      "base_norm": 1.098656,
+      "tagged16_norm": 1.109502,
+      "plain16_norm": 1.100965,
+      "tagged16_delta_l2": 0.087575,
+      "plain16_delta_l2": 0.063221,
+      "tagged_plain_delta_l2": 0.096665
+    },
+    "<Path>": {
+      "base_norm": 1.09859,
+      "tagged16_norm": 1.112271,
+      "plain16_norm": 1.098964,
+      "tagged16_delta_l2": 0.09217,
+      "plain16_delta_l2": 0.067298,
+      "tagged_plain_delta_l2": 0.115674
+    },
+    "</Path>": {
+      "base_norm": 1.098687,
+      "tagged16_norm": 1.110696,
+      "plain16_norm": 1.095821,
+      "tagged16_delta_l2": 0.086406,
+      "plain16_delta_l2": 0.054584,
+      "tagged_plain_delta_l2": 0.108335
+    },
+    "<Conclusion>": {
+      "base_norm": 1.0987,
+      "tagged16_norm": 1.106841,
+      "plain16_norm": 1.09936,
+      "tagged16_delta_l2": 0.084652,
+      "plain16_delta_l2": 0.062873,
+      "tagged_plain_delta_l2": 0.092807
+    },
+    "</Conclusion>": {
+      "base_norm": 1.098638,
+      "tagged16_norm": 1.112461,
+      "plain16_norm": 1.100042,
+      "tagged16_delta_l2": 0.092848,
+      "plain16_delta_l2": 0.063781,
+      "tagged_plain_delta_l2": 0.105366
+    }
+  }
+}
