@@ -14,7 +14,6 @@ Example (run on the prepared GPU pod, not locally):
 """
 
 import argparse
-import hashlib
 import json
 import os
 import sys
@@ -97,15 +96,17 @@ def sampled_token(logits, generator, temperature, top_p, top_k):
 
     logits = logits / temperature
     if top_k:
-        cutoff = torch.topk(logits, top_k).values[-1]
-        logits = logits.masked_fill(logits < cutoff, -torch.inf)
-    sorted_logits, sorted_indices = torch.sort(logits, descending=True)
+        candidates, token_ids = torch.topk(logits, min(top_k, logits.numel()))
+    else:
+        candidates, token_ids = logits, torch.arange(logits.numel(), device=logits.device)
+    sorted_logits, order = torch.sort(candidates, descending=True)
     cumulative = torch.softmax(sorted_logits, dim=-1).cumsum(dim=-1)
     remove = cumulative > top_p
     remove[1:] = remove[:-1].clone()
     remove[0] = False
-    logits = logits.scatter(0, sorted_indices, sorted_logits.masked_fill(remove, -torch.inf))
-    return torch.multinomial(torch.softmax(logits, dim=-1), 1, generator=generator).item()
+    sampled = torch.multinomial(torch.softmax(sorted_logits.masked_fill(remove, -torch.inf), dim=-1), 1,
+                              generator=generator).item()
+    return token_ids[order[sampled]].item()
 
 
 def generate(model, tokenizer, prompt, max_new_tokens, seed, path_open, path_close, settings):
@@ -154,17 +155,16 @@ def generate(model, tokenizer, prompt, max_new_tokens, seed, path_open, path_clo
     }
 
 
-def candidate_digest(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
-
-
 def run_settings(args, candidates, seeds):
     return {
         "decoder": "masked-autonomous-v2",
         "model": args.model,
         "candidates": str(args.candidates.resolve()),
-        "candidate_sha256": candidate_digest(args.candidates),
-        "selection": [{key: row[key] for key in ("id", "source", "answer_type")} for row in candidates],
+        "selection": [
+            {key: row[key] for key in ("id", "source", "answer_type")}
+            | {"normalized_question": normalize(row["question"])}
+            for row in candidates
+        ],
         "math_count": args.math_count,
         "gsm_count": args.gsm_count,
         "seeds": seeds,
@@ -280,6 +280,7 @@ def main():
     if tokenizer.eos_token_id is None:
         raise ValueError("model tokenizer lacks eos_token_id")
 
+    sampling = {key: settings[key] for key in ("temperature", "top_p", "top_k")}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("a") as handle:
         for row, seed in jobs:
