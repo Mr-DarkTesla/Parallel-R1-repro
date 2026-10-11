@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Pair M1-367 and reviewed Qwen4B-34 with exact-text plain control."""
 import json
+import re
 import subprocess
 import sys
+import unicodedata
 from pathlib import Path
 
 import pandas as pd
@@ -29,6 +31,10 @@ def write(path, rows):
     path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows))
 
 
+def normalized(text):
+    return re.sub(r"\s+", " ", unicodedata.normalize("NFKC", text)).strip().casefold()
+
+
 def main():
     m1 = read(DATA / "m1_rewrapped_tagged.jsonl")
     m1_plain = read(DATA / "m1_rewrapped_plain.jsonl")
@@ -44,7 +50,7 @@ def main():
     positive = sorted(m1 + q4, key=lambda row: row["id"])
     plain_positive = sorted(m1_plain + q4_plain, key=lambda row: row["id"])
     assert len(positive) == len({r["id"] for r in positive}) == 401
-    assert len({r["question"].strip() for r in positive}) == 401
+    assert len({normalized(r["question"]) for r in positive}) == 401
     assert [r["id"] for r in positive] == [r["id"] for r in plain_positive]
     assert all(ANY_TAG.sub("", a["response"]) == b["response"]
                for a, b in zip(positive, plain_positive))
@@ -104,8 +110,8 @@ def main():
                 lengths[arm] = max(lengths[arm], size)
                 assert size <= 4096, (a["id"], arm, size)
     assert not {r["id"] for r in left["train"]} & {r["id"] for r in left["val"]}
-    assert not {r["extra_info"]["question"] for r in left["train"]} & \
-        {r["extra_info"]["question"] for r in left["val"]}
+    assert not {normalized(r["extra_info"]["question"]) for r in left["train"]} & \
+        {normalized(r["extra_info"]["question"]) for r in left["val"]}
     assert {r["id"] for r in left["val"]} == set(pd.read_parquet(f"{VAL}_val.parquet")["id"])
     result = {"status": "ready_for_paired_sft", "sources": {"m1": 367, "qwen4b": 34},
               "distinct_positive": 401, "reviewed_qwen4b": 34,
@@ -113,6 +119,7 @@ def main():
               "replay_nt_filtered_ids": sorted(FORBIDDEN_REPLAY),
               "rows_per_arm": {split: len(left[split]) for split in left},
               "max_total_tokens": lengths, "val_overlap": 0,
+              "normalized_unique_positive_questions": 401,
               "plain_only_removes_tags": True,
               "command": "python scripts/exp21/build_qwen4b_mixed_pair.py"}
     (AUDIT / "qwen4b_mixed401_report.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
