@@ -1,0 +1,1160 @@
+{
+  "schema_version": 1,
+  "definitions": {
+    "external_final": "Retention metric: a mathematically correct standalone answer after closed </think>, regardless of damaged reasoning markup.",
+    "clean_external_final": "Conservative diagnostic: closed think plus an unambiguous standalone correct external answer, excluding damaged reasoning markup and ambiguous notation.",
+    "answer_anywhere": "A reviewed correct value anywhere in the response, including a truncated reasoning trace.",
+    "response_level_numbered": "Automatic think_numbered_block over the entire response.",
+    "strictly_useful": "Two substantive correct independent paths and correct combination, without computing the answer before the block."
+  },
+  "steps": {
+    "8": {
+      "review_complete": true,
+      "archive": "selective_v5_step8_masked_pilot.tgz",
+      "review_file": "audit/selective_v5_step8_answer_review.md",
+      "external_final_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/132",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/228",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/235",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/260",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/278",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/288",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/300",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/317",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/369",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/379",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/43",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/462",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/580",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/653",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/684",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/103",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/129",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/130",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/137",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/45",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/51",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/53",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/65",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/71",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/88",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/93",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        }
+      ],
+      "clean_external_final_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/132",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/228",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/235",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/260",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/278",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/288",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/300",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/317",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/369",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/379",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/43",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/462",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/580",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/653",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/684",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/103",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/129",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/130",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/137",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/45",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/51",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/53",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/65",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/71",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/88",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/93",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        }
+      ],
+      "answer_anywhere_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/132",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/228",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/235",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/260",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/278",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/288",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/300",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/317",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/369",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/379",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/43",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/462",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/580",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/653",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/684",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/103",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/129",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/130",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/137",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/45",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/51",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/53",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/65",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/71",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/88",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/93",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review states that all 34 completed external answers except gsm8k-train/232 are correct; this is a completed parser-negative row."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/98",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step8_answer_review.md",
+          "evidence_note": "The review explicitly says this truncated row reaches the correct pair (9,11), counted only as answer anywhere."
+        }
+      ],
+      "strict_useful": [],
+      "expected_counts": {
+        "strict_parser_correct": 6,
+        "external_final_correct": 33,
+        "clean_external_final_correct": 33,
+        "answer_anywhere_correct": 34,
+        "response_level_numbered": 0,
+        "strictly_useful": 0
+      },
+      "review_notes": "Full 40-row answer review; no Multiverse block was produced."
+    },
+    "16": {
+      "review_complete": true,
+      "archive": "selective_v5_step16_masked_pilot.tgz",
+      "review_file": "audit/selective_v5_step16_answer_review.md",
+      "external_final_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/228",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step16_answer_review.md",
+          "evidence_note": "The review explicitly identifies parser false negative 20 with a completed external answer."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/235",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step16_answer_review.md",
+          "evidence_note": "The review explicitly identifies parser false negative 9 with a completed external answer."
+        }
+      ],
+      "clean_external_final_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/228",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step16_answer_review.md",
+          "evidence_note": "The review explicitly identifies parser false negative 20 with a completed external answer."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/235",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step16_answer_review.md",
+          "evidence_note": "The review explicitly identifies parser false negative 9 with a completed external answer."
+        }
+      ],
+      "answer_anywhere_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/228",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step16_answer_review.md",
+          "evidence_note": "The review explicitly identifies parser false negative 20."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/235",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step16_answer_review.md",
+          "evidence_note": "The review explicitly identifies parser false negative 9."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/317",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step16_answer_review.md",
+          "evidence_note": "The review explicitly identifies correct value 28 inside truncated reasoning, counted only as answer anywhere."
+        }
+      ],
+      "strict_useful": [],
+      "expected_counts": {
+        "strict_parser_correct": 29,
+        "external_final_correct": 31,
+        "clean_external_final_correct": 31,
+        "answer_anywhere_correct": 32,
+        "response_level_numbered": 0,
+        "strictly_useful": 0
+      },
+      "review_notes": "Full 40-row answer and block review."
+    },
+    "24": {
+      "review_complete": true,
+      "archive": "selective_v5_step24_masked_pilot.tgz",
+      "review_file": "audit/selective_v5_step24_answer_review.md",
+      "external_final_overrides": [],
+      "clean_external_final_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/29",
+            0
+          ],
+          "value": false,
+          "evidence_file": "audit/selective_v5_step24_answer_review.md",
+          "evidence_note": "The review lists this correct external answer among four outputs with damaged markup; the clean external metric excludes it."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/38",
+            0
+          ],
+          "value": false,
+          "evidence_file": "audit/selective_v5_step24_answer_review.md",
+          "evidence_note": "The review lists this correct external answer among four outputs with damaged markup; the clean external metric excludes it."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/130",
+            0
+          ],
+          "value": false,
+          "evidence_file": "audit/selective_v5_step24_answer_review.md",
+          "evidence_note": "The review lists this correct external answer among four outputs with damaged markup; the clean external metric excludes it."
+        },
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/137",
+            0
+          ],
+          "value": false,
+          "evidence_file": "audit/selective_v5_step24_answer_review.md",
+          "evidence_note": "The review lists this correct external answer among four outputs with damaged markup; the clean external metric excludes it."
+        }
+      ],
+      "answer_anywhere_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/580",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step24_answer_review.md",
+          "evidence_note": "The review explicitly says the truncated row contains the correct value 80/3, counted only as answer anywhere."
+        },
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/684",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step24_answer_review.md",
+          "evidence_note": "The review explicitly places the intermediate value 2400 in the diagnostic answer-anywhere count, although the model later disputes it."
+        }
+      ],
+      "strict_useful": [],
+      "expected_counts": {
+        "strict_parser_correct": 27,
+        "external_final_correct": 27,
+        "clean_external_final_correct": 23,
+        "answer_anywhere_correct": 29,
+        "response_level_numbered": 5,
+        "strictly_useful": 0
+      },
+      "review_notes": "Response-level numbered count is the automatic whole-response metric 5, not the six locally closed blocks."
+    },
+    "32": {
+      "review_complete": true,
+      "archive": "selective_v5_step32_masked_pilot.tgz",
+      "review_file": "audit/selective_v5_step32_answer_review.md",
+      "external_final_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step32_answer_review.md",
+          "evidence_note": "The review semantically accepts the bracket-free external text as the same open interval; the retention metric follows that reviewed verdict."
+        }
+      ],
+      "clean_external_final_overrides": [],
+      "answer_anywhere_overrides": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step32_answer_review.md",
+          "evidence_note": "The review says the exact open interval appears inside reasoning; the external text omits interval brackets, so only answer-anywhere is corrected."
+        }
+      ],
+      "strict_useful": [],
+      "expected_counts": {
+        "strict_parser_correct": 26,
+        "external_final_correct": 27,
+        "clean_external_final_correct": 26,
+        "answer_anywhere_correct": 27,
+        "response_level_numbered": 5,
+        "strictly_useful": 0
+      },
+      "review_notes": "The ambiguous bracket-free external notation is excluded from clean external final."
+    },
+    "40": {
+      "review_complete": true,
+      "archive": "selective_v5_step40_masked_pilot.tgz",
+      "review_file": "audit/selective_v5_step40_answer_review.md",
+      "external_final_overrides": [],
+      "clean_external_final_overrides": [],
+      "answer_anywhere_overrides": [],
+      "strict_useful": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/36",
+            0
+          ],
+          "evidence_file": "audit/selective_v5_step40_answer_review.md",
+          "evidence_note": "The review identifies this as the only strictly useful independent block and explains both independent boundary checks."
+        }
+      ],
+      "expected_counts": {
+        "strict_parser_correct": 25,
+        "external_final_correct": 25,
+        "clean_external_final_correct": 25,
+        "answer_anywhere_correct": 25,
+        "response_level_numbered": 15,
+        "strictly_useful": 1
+      },
+      "review_notes": "Full 40-row answer and block review."
+    },
+    "48": {
+      "review_complete": true,
+      "archive": "selective_v5_step48_masked_pilot.tgz",
+      "review_file": "audit/selective_v5_step48_answer_review.md",
+      "external_final_overrides": [],
+      "clean_external_final_overrides": [],
+      "answer_anywhere_overrides": [
+        {
+          "key": [
+            "GSM8K_DEV",
+            "gsm8k-train/684",
+            0
+          ],
+          "value": true,
+          "evidence_file": "audit/selective_v5_step48_answer_review.md",
+          "evidence_note": "The review explicitly says this truncated row repeatedly contains the correct intermediate value 2400, counted only as answer anywhere."
+        }
+      ],
+      "strict_useful": [
+        {
+          "key": [
+            "MATH_DEV",
+            "math-test/9",
+            0
+          ],
+          "evidence_file": "audit/selective_v5_step48_answer_review.md",
+          "evidence_note": "The review identifies this as the only strictly useful block and verifies its two independent absolute-value sign cases."
+        }
+      ],
+      "expected_counts": {
+        "strict_parser_correct": 25,
+        "external_final_correct": 25,
+        "clean_external_final_correct": 25,
+        "answer_anywhere_correct": 26,
+        "response_level_numbered": 19,
+        "strictly_useful": 1
+      },
+      "review_notes": "Full 40-row answer and block review."
+    },
+    "56": {
+      "review_complete": false,
+      "archive": "selective_v5_step56_masked_pilot.tgz",
+      "review_file": null,
+      "clean_external_final_overrides": null,
+      "answer_anywhere_overrides": null,
+      "strict_useful": null,
+      "expected_counts": null,
+      "review_notes": "PENDING: do not fill counts before all 40 archive rows are manually reviewed.",
+      "external_final_overrides": null
+    },
+    "64": {
+      "review_complete": true,
+      "archive": "selective_v5_step64_masked_pilot.tgz",
+      "review_file": "audit/selective_v5_step64_semantic_review.md",
+      "external_final_overrides": [],
+      "clean_external_final_overrides": [],
+      "answer_anywhere_overrides": [],
+      "strict_useful": [],
+      "expected_counts": {
+        "strict_parser_correct": 26,
+        "external_final_correct": 26,
+        "clean_external_final_correct": 26,
+        "answer_anywhere_correct": 26,
+        "response_level_numbered": 17,
+        "strictly_useful": 0
+      },
+      "review_notes": "The review reports no parser false positives or false negatives and zero strictly useful blocks."
+    }
+  }
+}
