@@ -132,3 +132,20 @@ GSM8K −27,4 токена, MATH +7,1, ARC −0,6, MMLU-Pro −33,7.
 Два режима IFEval tagged также архивированы: по 541 строке и сводке
 в `full_dev/qwen4b-selected-frozen-{thinking,no-thinking}.tgz`.
 Исходная 4B и IFEval plain ещё оцениваются.
+
+## IFEval: парное сравнение, 23:17 МСК
+
+Строгая доля запросов, удовлетворяющих всем инструкциям, по 541
+запросу в каждом режиме. В таблице разница tagged−plain с парным
+95% bootstrap-интервалом:
+
+| Режим | Plain | Tagged | Разница, п.п. | 95% ДИ |
+| --- | ---: | ---: | ---: | ---: |
+| thinking | 75,42% | 73,94% | −1,48 | [−4,99; +2,03] |
+| no-thinking | 75,97% | 78,93% | +2,96 | [−0,18; +5,91] |
+
+Оба интервала включают ноль. Парные JSON:
+`full_dev/comparisons/selected_vs_plain_ifeval_{thinking,no-thinking}.json`.
+Сырые 541 ответа и сводка каждого плеча проверены в четырёх
+архивах `full_dev/qwen4b-{plain,selected}-frozen-{thinking,no-thinking}.tgz`.
+Исходная 4B уже начала dev thinking; её парное сравнение ещё впереди.
