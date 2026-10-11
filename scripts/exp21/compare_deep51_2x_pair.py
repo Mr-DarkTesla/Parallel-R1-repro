@@ -136,6 +136,9 @@ def comparison_references(label, baselines, one_x_rows, two_x_rows):
 
 
 def main(reviews_path, output_path, final):
+    if reviews_path is not None:
+        require(reviews_path.is_relative_to(ROOT.resolve()),
+                "review manifest must be inside the result directory")
     required = [ARCHIVES / name for name in (
         *TWO_X.values(), *ONE_X.values(), *BASELINES.values())]
     missing = [path.name for path in required if not path.is_file()]
@@ -190,7 +193,7 @@ def main(reviews_path, output_path, final):
             "final_requirement": "manual reviews for all 2x and all 1x variants",
             "paired_ci": "10,000 paired bootstrap samples from compare_masked_pilot_archives.py",
         },
-        "review_manifest": str(reviews_path) if reviews_path else None,
+        "review_manifest": str(reviews_path.relative_to(ROOT.resolve())) if reviews_path else None,
         "baselines": {
             "corrected_c0": {"archive": BASELINES["corrected_c0"], "external_correct": 34,
                              "external_corrections": [list(key) for key in FIXES]},
