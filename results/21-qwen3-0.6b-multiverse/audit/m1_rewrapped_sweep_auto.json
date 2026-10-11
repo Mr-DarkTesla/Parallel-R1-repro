@@ -1,0 +1,381 @@
+{
+  "protocol": "same fixed40 prompts, thinking, masked greedy, 2048 GSM8K / 4096 MATH tokens",
+  "notes": [
+    "C0 robust answer has two documented manual parser corrections.",
+    "Other robust answers are automatic parser output pending manual review.",
+    "block counts complete numbered syntax only, not semantic usefulness."
+  ],
+  "original": {
+    "strict": 23,
+    "robust": 34,
+    "block": 0,
+    "truncated": 4,
+    "tokens": 1226.58,
+    "forward_passes": 1226.58
+  },
+  "parent_v4_recovery8_step8": {
+    "strict": 23,
+    "robust": 29,
+    "block": 12,
+    "truncated": 2,
+    "tokens": 650.12,
+    "forward_passes": 632.73
+  },
+  "runs": {
+    "tagged_step16": {
+      "metrics": {
+        "strict": 24,
+        "robust": 25,
+        "block": 16,
+        "truncated": 3,
+        "tokens": 533.67,
+        "forward_passes": 510.88
+      },
+      "vs_original": {
+        "strict": {
+          "delta": 2.5,
+          "ci95": [
+            -12.5,
+            17.5
+          ],
+          "discordant": {
+            "lost": 5,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "robust": {
+          "delta": -22.5,
+          "ci95": [
+            -37.5,
+            -7.5
+          ],
+          "discordant": {
+            "lost": 10,
+            "gained": 1
+          },
+          "mcnemar_exact_p": 0.01171875
+        },
+        "block": {
+          "delta": 40.0,
+          "ci95": [
+            25.0,
+            55.0
+          ]
+        },
+        "truncated": {
+          "delta": -2.5,
+          "ci95": [
+            -7.5,
+            0.0
+          ]
+        },
+        "tokens": {
+          "delta": -692.9,
+          "ci95": [
+            -922.75,
+            -484.07
+          ]
+        },
+        "forward_passes": {
+          "delta": -715.7,
+          "ci95": [
+            -948.27,
+            -503.4
+          ]
+        }
+      },
+      "vs_parent": {
+        "strict": {
+          "delta": 2.5,
+          "ci95": [
+            -15.0,
+            20.0
+          ],
+          "discordant": {
+            "lost": 7,
+            "gained": 8
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "robust": {
+          "delta": -10.0,
+          "ci95": [
+            -27.5,
+            7.5
+          ],
+          "discordant": {
+            "lost": 9,
+            "gained": 5
+          },
+          "mcnemar_exact_p": 0.4239501953125
+        },
+        "block": {
+          "delta": 10.0,
+          "ci95": [
+            -10.0,
+            30.0
+          ]
+        },
+        "truncated": {
+          "delta": 2.5,
+          "ci95": [
+            -5.0,
+            12.5
+          ]
+        },
+        "tokens": {
+          "delta": -116.45,
+          "ci95": [
+            -442.35,
+            240.97
+          ]
+        },
+        "forward_passes": {
+          "delta": -121.85,
+          "ci95": [
+            -448.65,
+            237.65
+          ]
+        }
+      }
+    },
+    "tagged_step35": {
+      "metrics": {
+        "strict": 16,
+        "robust": 16,
+        "block": 34,
+        "truncated": 0,
+        "tokens": 335.05,
+        "forward_passes": 293.32
+      },
+      "vs_original": {
+        "strict": {
+          "delta": -17.5,
+          "ci95": [
+            -37.5,
+            2.5
+          ],
+          "discordant": {
+            "lost": 13,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 0.1670684814453125
+        },
+        "robust": {
+          "delta": -45.0,
+          "ci95": [
+            -60.0,
+            -30.0
+          ],
+          "discordant": {
+            "lost": 18,
+            "gained": 0
+          },
+          "mcnemar_exact_p": 7.62939453125e-06
+        },
+        "block": {
+          "delta": 85.0,
+          "ci95": [
+            72.5,
+            95.0
+          ]
+        },
+        "truncated": {
+          "delta": -10.0,
+          "ci95": [
+            -20.0,
+            -2.5
+          ]
+        },
+        "tokens": {
+          "delta": -891.52,
+          "ci95": [
+            -1185.03,
+            -630.65
+          ]
+        },
+        "forward_passes": {
+          "delta": -933.25,
+          "ci95": [
+            -1229.33,
+            -669.42
+          ]
+        }
+      },
+      "vs_parent": {
+        "strict": {
+          "delta": -17.5,
+          "ci95": [
+            -37.5,
+            5.0
+          ],
+          "discordant": {
+            "lost": 14,
+            "gained": 7
+          },
+          "mcnemar_exact_p": 0.18924713134765625
+        },
+        "robust": {
+          "delta": -32.5,
+          "ci95": [
+            -50.0,
+            -12.5
+          ],
+          "discordant": {
+            "lost": 16,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 0.004425048828125
+        },
+        "block": {
+          "delta": 55.0,
+          "ci95": [
+            37.5,
+            72.5
+          ]
+        },
+        "truncated": {
+          "delta": -5.0,
+          "ci95": [
+            -12.5,
+            0.0
+          ]
+        },
+        "tokens": {
+          "delta": -315.07,
+          "ci95": [
+            -561.08,
+            -126.65
+          ]
+        },
+        "forward_passes": {
+          "delta": -339.4,
+          "ci95": [
+            -588.05,
+            -148.62
+          ]
+        }
+      }
+    },
+    "tagged_step70": {
+      "metrics": {
+        "strict": 21,
+        "robust": 21,
+        "block": 37,
+        "truncated": 1,
+        "tokens": 353.73,
+        "forward_passes": 305.7
+      },
+      "vs_original": {
+        "strict": {
+          "delta": -5.0,
+          "ci95": [
+            -25.0,
+            15.0
+          ],
+          "discordant": {
+            "lost": 9,
+            "gained": 7
+          },
+          "mcnemar_exact_p": 0.803619384765625
+        },
+        "robust": {
+          "delta": -32.5,
+          "ci95": [
+            -50.0,
+            -15.0
+          ],
+          "discordant": {
+            "lost": 15,
+            "gained": 2
+          },
+          "mcnemar_exact_p": 0.002349853515625
+        },
+        "block": {
+          "delta": 92.5,
+          "ci95": [
+            82.5,
+            100.0
+          ]
+        },
+        "truncated": {
+          "delta": -7.5,
+          "ci95": [
+            -17.5,
+            2.5
+          ]
+        },
+        "tokens": {
+          "delta": -872.85,
+          "ci95": [
+            -1198.67,
+            -579.92
+          ]
+        },
+        "forward_passes": {
+          "delta": -920.88,
+          "ci95": [
+            -1248.78,
+            -623.2
+          ]
+        }
+      },
+      "vs_parent": {
+        "strict": {
+          "delta": -5.0,
+          "ci95": [
+            -22.5,
+            12.5
+          ],
+          "discordant": {
+            "lost": 8,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 0.79052734375
+        },
+        "robust": {
+          "delta": -20.0,
+          "ci95": [
+            -37.5,
+            -2.5
+          ],
+          "discordant": {
+            "lost": 11,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 0.057373046875
+        },
+        "block": {
+          "delta": 62.5,
+          "ci95": [
+            47.5,
+            77.5
+          ]
+        },
+        "truncated": {
+          "delta": -2.5,
+          "ci95": [
+            -10.0,
+            5.0
+          ]
+        },
+        "tokens": {
+          "delta": -296.4,
+          "ci95": [
+            -551.77,
+            -78.25
+          ]
+        },
+        "forward_passes": {
+          "delta": -327.02,
+          "ci95": [
+            -583.8,
+            -107.45
+          ]
+        }
+      }
+    }
+  },
+  "tagged_vs_plain": {}
+}

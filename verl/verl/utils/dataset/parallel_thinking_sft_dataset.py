@@ -56,6 +56,11 @@ class ParallelThinkingSFTDataset(Dataset):
         assert self.structure in ("parallel_r1", "multiverse")
         self.parallel_text_loss_weight = float(config.get("parallel_text_loss_weight", 1.0))
         assert 0 < self.parallel_text_loss_weight <= 1
+        # "all" is the historical tag-weighting recipe. "parallel_block" keeps
+        # the complete, validated Multiverse block at weight 1 and downweights
+        # only the surrounding response text.
+        self.parallel_text_loss_scope = config.get("parallel_text_loss_scope", "all")
+        assert self.parallel_text_loss_scope in ("all", "parallel_block")
 
         assert truncation in ["error", "left", "right"]
         self.truncation = truncation
@@ -91,6 +96,11 @@ class ParallelThinkingSFTDataset(Dataset):
             self.loss_tag_ids = {self.tokenizer.convert_tokens_to_ids(f"<{name}>") for name in names}
             assert all(self.tokenizer.encode(f"<{name}>", add_special_tokens=False) ==
                        [self.tokenizer.convert_tokens_to_ids(f"<{name}>")] for name in names)
+        if self.parallel_text_loss_scope == "parallel_block":
+            assert self.structure == "multiverse" and self.truncation == "error"
+            self.think_start_ids = self.tokenizer.encode("<think>", add_special_tokens=False)
+            self.think_end_ids = self.tokenizer.encode("</think>", add_special_tokens=False)
+            assert self.think_start_ids and self.think_end_ids
 
         self._download()
         self._read_files_and_tokenize()
@@ -196,6 +206,42 @@ class ParallelThinkingSFTDataset(Dataset):
             i += 1
 
         return mask
+
+    @staticmethod
+    def _token_sequence_starts(ids: List[int], needle: List[int]) -> List[int]:
+        """Return every token index at which ``needle`` occurs in ``ids``."""
+        if not needle:
+            return []
+        limit = len(ids) - len(needle) + 1
+        return [i for i in range(max(0, limit)) if ids[i:i + len(needle)] == needle]
+
+    def _validated_parallel_block_span(self, response_ids: torch.Tensor):
+        """Return one inclusive ``<Parallel>`` span inside one ``<think>``, or None.
+
+        This operates on response token ids, before padding.  It deliberately
+        rejects nested or repeated Parallel blocks: the focused-loss recipe is
+        defined only for one unambiguous top-level block.
+        """
+        ids = response_ids.tolist()
+        starts = [i for i, token in enumerate(ids) if token == self.start_parallel_token]
+        ends = [i for i, token in enumerate(ids) if token == self.end_parallel_token]
+        if len(starts) != 1 or len(ends) != 1 or starts[0] >= ends[0]:
+            return None
+
+        think_starts = self._token_sequence_starts(ids, self.think_start_ids)
+        think_ends = self._token_sequence_starts(ids, self.think_end_ids)
+        if len(think_starts) != 1 or len(think_ends) != 1:
+            return None
+        if not (think_starts[0] + len(self.think_start_ids) <= starts[0]
+                and ends[0] + 1 <= think_ends[0]):
+            return None
+
+        try:
+            multiverse_structure(ids, self.structure_tags)
+        except ValueError:
+            return None
+        return starts[0], ends[0]
+
     def generate_multiverse_attention_mask(self, input_ids, device='cpu'):
         seq_len = len(input_ids)
         # Start with a lower triangular matrix (causal mask)
@@ -481,12 +527,20 @@ class ParallelThinkingSFTDataset(Dataset):
         loss_mask[min(prompt_length + response_length, loss_mask.size(0)) - 1] = 0
         if self.parallel_text_loss_weight != 1.0:
             loss_mask = loss_mask.float()
-        if self.parallel_text_loss_weight != 1.0 and self.row_kind[item] in ("parallel_th", "control_th"):
+        weighted_kinds = (("parallel_th", "control_th") if self.parallel_text_loss_scope == "all"
+                          else ("parallel_th",))
+        if self.parallel_text_loss_weight != 1.0 and self.row_kind[item] in weighted_kinds:
             first, last = prompt_length - 1, prompt_length + response_length - 1
             loss_mask[first:last] = self.parallel_text_loss_weight
-            for i, token in enumerate(response_ids.tolist()):
-                if token in self.loss_tag_ids:
-                    loss_mask[first + i] = 1.0
+            if self.parallel_text_loss_scope == "all":
+                for i, token in enumerate(response_ids.tolist()):
+                    if token in self.loss_tag_ids:
+                        loss_mask[first + i] = 1.0
+            else:
+                span = self._validated_parallel_block_span(response_ids)
+                if span is not None:
+                    block_start, block_end = span
+                    loss_mask[first + block_start:first + block_end + 1] = 1.0
 
         # print(float_attention_mask.shape)
         # print(loss_mask.shape)
