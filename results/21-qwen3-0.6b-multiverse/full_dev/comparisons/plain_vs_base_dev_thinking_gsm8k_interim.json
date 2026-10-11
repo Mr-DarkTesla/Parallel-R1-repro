@@ -1,0 +1,160 @@
+{
+ "base": "/tmp/exp21-gsm-dev-pair/base",
+ "cands": [
+  "/tmp/exp21-gsm-dev-pair/plain"
+ ],
+ "protocol": {
+  "suite": "dev",
+  "mode": "thinking",
+  "budget": 16384,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "generator": "scripts/instruct4b_eval/generate.py",
+  "prompts": "/work/bench_data/instruct4b/eval/dev/plain",
+  "ifeval_scorer_seed": 0
+ },
+ "cross_prompt": false,
+ "proposed_margin_pp": 2.0,
+ "margin_note": "working proposal, not confirmed by the user; applies per benchmark/source",
+ "benchmarks": {
+  "gsm8k_dev": {
+   "samples_per_problem": {
+    "GSM8K_DEV": 4
+   },
+   "metrics": {
+    "plain": {
+     "acc_robust": {
+      "base": 98.06,
+      "cand": 93.67,
+      "delta": -4.39,
+      "ci95": [
+       -6.25,
+       -2.79
+      ],
+      "problems": 296,
+      "discordant_problems": 15.9
+     },
+     "acc": {
+      "base": 78.55,
+      "cand": 64.36,
+      "delta": -14.19,
+      "ci95": [
+       -17.91,
+       -10.39
+      ],
+      "problems": 296,
+      "discordant_problems": 69.9
+     },
+     "truncated": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "parallel": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "valid_tags": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "mv_valid": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "mv_numbered": {
+      "base": 0.0,
+      "cand": 0.0,
+      "delta": 0.0,
+      "ci95": [
+       0.0,
+       0.0
+      ],
+      "problems": 296,
+      "discordant_problems": 0.0
+     },
+     "no_final_answer": {
+      "base": 0.93,
+      "cand": 0.68,
+      "delta": -0.25,
+      "ci95": [
+       -1.1,
+       0.51
+      ],
+      "problems": 296,
+      "discordant_problems": 5.7
+     }
+    }
+   },
+   "by_source": {},
+   "slices": {},
+   "numeric_metrics": {
+    "plain": {
+     "chars": {
+      "base": 3490.32,
+      "cand": 1992.97,
+      "delta": -1497.34,
+      "ci95": [
+       -1796.74,
+       -1224.4
+      ],
+      "problems": 296
+     },
+     "tokens": {
+      "base": 1059.66,
+      "cand": 633.17,
+      "delta": -426.49,
+      "ci95": [
+       -509.38,
+       -352.56
+      ],
+      "problems": 296
+     },
+     "forward_passes": {
+      "base": 1059.66,
+      "cand": 633.17,
+      "delta": -426.49,
+      "ci95": [
+       -509.38,
+       -352.56
+      ],
+      "problems": 296
+     }
+    }
+   },
+   "mean_tokens": {
+    "base": 1059.7,
+    "plain": 633.2
+   },
+   "primary": "acc_robust"
+  }
+ },
+ "not_compared": []
+}
