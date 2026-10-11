@@ -1,0 +1,83 @@
+{
+  "protocol": "same fixed40 prompts, thinking, masked greedy, 2048 GSM8K / 4096 MATH tokens",
+  "metrics": "strict external answer, robust answer with two documented C0 parser fixes, complete numbered block inside think, truncation, generated tokens, ideal sequential forward passes",
+  "intervals": "10,000 paired bootstrap samples, seed 0; binary deltas in percentage points",
+  "semantic_review": "pending human judgment; complete grammar is not usefulness",
+  "original": {
+    "strict": 23,
+    "robust": 34,
+    "block": 0,
+    "truncated": 4,
+    "tokens": 1226.58,
+    "forward_passes": 1226.58
+  },
+  "runs": {
+    "tagged_step128": {
+      "archive": "q06_distill447_tagged_step128",
+      "model": "/tmp/exp21-selective-runs/exp21-q06-distill447-tagged-p128/step_models/step_128/model",
+      "metrics": {
+        "strict": 21,
+        "robust": 22,
+        "block": 35,
+        "truncated": 2,
+        "tokens": 485.82,
+        "forward_passes": 436.98
+      },
+      "vs_original": {
+        "strict": {
+          "delta": -5.0,
+          "ci95": [
+            -27.5,
+            17.5
+          ],
+          "discordant": {
+            "lost": 12,
+            "gained": 10
+          },
+          "mcnemar_exact_p": 0.8318119049072266
+        },
+        "robust": {
+          "delta": -30.0,
+          "ci95": [
+            -45.0,
+            -15.0
+          ],
+          "discordant": {
+            "lost": 13,
+            "gained": 1
+          },
+          "mcnemar_exact_p": 0.0018310546875
+        },
+        "block": {
+          "delta": 87.5,
+          "ci95": [
+            77.5,
+            97.5
+          ]
+        },
+        "truncated": {
+          "delta": -5.0,
+          "ci95": [
+            -12.5,
+            0.0
+          ]
+        },
+        "tokens": {
+          "delta": -740.75,
+          "ci95": [
+            -964.65,
+            -528.52
+          ]
+        },
+        "forward_passes": {
+          "delta": -789.6,
+          "ci95": [
+            -1015.8,
+            -577.35
+          ]
+        }
+      }
+    }
+  },
+  "tagged_vs_plain": {}
+}
