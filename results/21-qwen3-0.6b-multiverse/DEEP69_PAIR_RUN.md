@@ -57,3 +57,13 @@ bash /work/parallel-r1/scripts/exp21/run_deep69_pair_pod.sh
 tagged step8, plain step8, tagged step4, plain step4. Скрипт
 [`run_deep69_pilot_pod.sh`](../../scripts/exp21/run_deep69_pilot_pod.sh),
 shell PID `31794`, лог `/tmp/exp21-deep69-eval-all.log`.
+
+Первым завершился tagged step8. Независимое чтение всех 40 ответов
+дало 28/40 верных внешних ответов: `acc_robust=27/40` пропустил
+правильный `gsm8k-train/228`. Модель попыталась начать 17 блоков,
+14 полных и нумерованных, но **0 строго полезных**: встречаются
+математические ошибки, дублирование путей и готовый ответ до блока.
+Обрезано 4/40, тегов вне `<think>` нет. Шаг 8 не проходит
+заранее заданный порог. [Сырые ответы](eval_archives/deep69_tagged_p8_step8_masked_pilot.tgz),
+[ручной разбор](audit/deep69_tagged_p8_step8_answer_review.md).
+Контроль и шаги 4 ещё оцениваются.
