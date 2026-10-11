@@ -1,0 +1,80 @@
+{
+  "baseline": "qwen4b_init_fixed40",
+  "n": 40,
+  "protocol": "same fixed40 prompts, thinking, masked greedy, same token budgets",
+  "runs": {
+    "tagged_step4": {
+      "metrics": {
+        "strict": 27.0,
+        "robust": 32.0,
+        "block": 0.0,
+        "truncated": 7.0,
+        "tokens": 1600.17,
+        "forward_passes": 1600.17
+      },
+      "vs_initial": {
+        "strict": {
+          "delta": 7.5,
+          "ci95": [
+            -10.0,
+            25.0
+          ],
+          "discordant": {
+            "lost": 5,
+            "gained": 8
+          },
+          "mcnemar_exact_p": 0.5810546875
+        },
+        "robust": {
+          "delta": -2.5,
+          "ci95": [
+            -15.0,
+            10.0
+          ],
+          "discordant": {
+            "lost": 4,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": 0.0,
+          "ci95": [
+            -12.5,
+            12.5
+          ]
+        },
+        "tokens": {
+          "delta": -65.75,
+          "ci95": [
+            -287.15,
+            142.01
+          ]
+        },
+        "forward_passes": {
+          "delta": -65.75,
+          "ci95": [
+            -287.15,
+            142.01
+          ]
+        }
+      }
+    }
+  },
+  "pairwise": {},
+  "baseline_metrics": {
+    "strict": 24.0,
+    "robust": 33.0,
+    "block": 0.0,
+    "truncated": 7.0,
+    "tokens": 1665.92,
+    "forward_passes": 1665.92
+  }
+}
