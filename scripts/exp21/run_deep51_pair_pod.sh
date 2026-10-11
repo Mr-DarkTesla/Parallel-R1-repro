@@ -2,14 +2,18 @@
 # Matched eight-step tagged/plain SFT arms from one reviewed recovery8 model.
 set -euo pipefail
 
-: "${PARENT_STEP:?set PARENT_STEP to 4 or 8 after reviewing recovery8 pilots}"
-[[ "$PARENT_STEP" == 4 || "$PARENT_STEP" == 8 ]]
+: "${PARENT_STEP:?set PARENT_STEP to 4, 8 or v4-56 after reviewing recovery8 pilots}"
+[[ "$PARENT_STEP" == 4 || "$PARENT_STEP" == 8 || "$PARENT_STEP" == v4-56 ]]
 
 repo=${EXP21_REPO:-/work/parallel-r1}
 work=${EXP21_WORK:-/work}
 venv=${EXP21_VENV:-/work/venv}
 data=$work/exp21/expanded_th
-model=/checkpoints/exp21-v4-recovery8/step_${PARENT_STEP}/model
+if [[ "$PARENT_STEP" == v4-56 ]]; then
+    model=/checkpoints/exp21-m1-selective-v4/step_56/model
+else
+    model=/checkpoints/exp21-v4-recovery8/step_${PARENT_STEP}/model
+fi
 runroot=/tmp/exp21-selective-runs
 
 test -s /tmp/exp21-v4-recovery8-eval/DONE || {
