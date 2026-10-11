@@ -20,6 +20,8 @@ AUDIT = RUN / "audit"
 TOKENIZER = ROOT.parents[2] / "ChatGPT/R1/outputs/instruct4b-2026-10-06/exp21_06b/data/q06_mv_tokenizer"
 OUT = DATA / "qwen4b_mixed401"
 VAL = DATA / "sft_expanded_val_ids"
+PILOT = RUN / "masked_pilot/masked_pilot"
+PILOT_PARTS = ("gsm8k_dev10", "gsm8k_devnext10", "math_dev10", "math_devnext10")
 FORBIDDEN_REPLAY = {"math-train/1514", "math-train/424"}
 
 
@@ -33,6 +35,18 @@ def write(path, rows):
 
 def normalized(text):
     return re.sub(r"\s+", " ", unicodedata.normalize("NFKC", text)).strip().casefold()
+
+
+def raw_question(prompt):
+    return prompt.rsplit("\n\nProblem: ", 1)[1]
+
+
+def fixed40_questions():
+    rows = [row for part in PILOT_PARTS
+            for row in pd.read_parquet(PILOT / f"{part}.parquet").to_dict("records")]
+    assert len(rows) == 40
+    return [(row["extra_info"]["id"], normalized(raw_question(row["prompt"][0]["content"])))
+            for row in rows]
 
 
 def main():
@@ -112,6 +126,14 @@ def main():
     assert not {r["id"] for r in left["train"]} & {r["id"] for r in left["val"]}
     assert not {normalized(r["extra_info"]["question"]) for r in left["train"]} & \
         {normalized(r["extra_info"]["question"]) for r in left["val"]}
+    fixed40 = fixed40_questions()
+    train_questions = {normalized(raw_question(r["extra_info"]["question"]))
+                       for r in left["train"]}
+    fixed40_overlap = sorted(train_questions & {question for _, question in fixed40})
+    assert not fixed40_overlap, fixed40_overlap
+    # GSM8K train and dev use separate numbering; matching raw IDs may name different questions.
+    fixed40_id_collisions = sorted({r["id"] for r in left["train"]} &
+                                   {identifier for identifier, _ in fixed40})
     assert {r["id"] for r in left["val"]} == set(pd.read_parquet(f"{VAL}_val.parquet")["id"])
     result = {"status": "ready_for_paired_sft", "sources": {"m1": 367, "qwen4b": 34},
               "distinct_positive": 401, "reviewed_qwen4b": 34,
@@ -119,6 +141,8 @@ def main():
               "replay_nt_filtered_ids": sorted(FORBIDDEN_REPLAY),
               "rows_per_arm": {split: len(left[split]) for split in left},
               "max_total_tokens": lengths, "val_overlap": 0,
+              "fixed40_question_overlap": len(fixed40_overlap),
+              "fixed40_raw_id_collisions_different_questions": fixed40_id_collisions,
               "normalized_unique_positive_questions": 401,
               "plain_only_removes_tags": True,
               "command": "python scripts/exp21/build_qwen4b_mixed_pair.py"}

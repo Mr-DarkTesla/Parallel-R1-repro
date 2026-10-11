@@ -31,7 +31,16 @@ for ((step_index=${#checkpoint_steps[@]}-1; step_index>=0; step_index--)); do
     for source in gsm8k_dev10 gsm8k_devnext10 math_dev10 math_devnext10; do
         test -s "$pilots/$source.parquet"
         case "$source" in math_*) budget=4096 ;; *) budget=2048 ;; esac
-        if [ -s "$out/$source-block-rows.jsonl" ]; then continue; fi
+        if [ -s "$out/$source-block-rows.jsonl" ]; then
+            python - "$out/$source.jsonl.meta.json" "$model" "$pilots/$source.parquet" "$budget" <<'PY'
+import json, sys
+meta = json.load(open(sys.argv[1]))
+assert meta["model"] == sys.argv[2] and meta["data"] == sys.argv[3], meta
+assert meta["count"] == 10 and meta["max_tokens"] == int(sys.argv[4]), meta
+assert meta["mode"] == "thinking" and meta["policy"] == "greedy", meta
+PY
+            continue
+        fi
         python ../scripts/exp21/generate_masked_multiverse.py \
             "$model" "$pilots/$source.parquet" "$out/$source.jsonl" 10 "$budget" thinking greedy \
             > "$out/$source.log" 2>&1

@@ -5,6 +5,8 @@ set -euo pipefail
 data=/work/exp21/qwen4b_mixed401
 marker=$data/ATTEMPT_DONE
 mkdir -p "$data"
+exec 9>"$data/runner.lock"
+flock -n 9 || { echo 'mixed401 runner already active' >&2; exit 1; }
 trap 'rc=$?; printf "%s status=%s\n" "$(date -Is)" "$rc" > "$marker"' EXIT
 for _ in $(seq 1 7200); do
     test -s /work/exp21/teacher_sft/LR1_EVAL_DONE && break
@@ -26,6 +28,7 @@ r=json.load(open(sys.argv[1]))
 assert r['status']=='ready_for_paired_sft' and r['distinct_positive']==401
 assert r['rows_per_arm']=={'train':2383,'val':50}
 assert r['plain_only_removes_tags'] and r['val_overlap']==0
+assert r['fixed40_question_overlap']==0
 PY
 
 cd /work/parallel-r1
@@ -52,7 +55,7 @@ date -Is > "$data/TRAIN_PAIR_DONE"
 for arm in tagged plain; do
     run=/tmp/exp21-selective-runs/exp21-4b-mixed401-${arm}-p128
     test -s "$run/DONE"
-    EXP21_RUN="$run" EXP21_EVAL_ROOT="/tmp/exp21-4b-mixed401-${arm}-eval" \
+    EXP21_RUN="$run" EXP21_EVAL_ROOT="/tmp/exp21-4b-mixed401-${arm}-p128-eval" \
         EXP21_STEPS=128 bash scripts/exp21/eval_checkpoint_steps_pod.sh
 done
 date -Is > "$data/EVAL_DONE"
