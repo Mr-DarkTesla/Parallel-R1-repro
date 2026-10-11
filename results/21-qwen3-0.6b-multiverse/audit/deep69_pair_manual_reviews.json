@@ -1,6 +1,25 @@
 {
   "schema_version": 1,
   "archives": {
+    "deep69_tagged_p8_step4_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 24,
+      "external_overrides": [
+        {
+          "key": ["GSM8K_DEV", "gsm8k-train/279", 0],
+          "value": true,
+          "evidence_file": "audit/deep69_tagged_p8_step4_answer_review.md",
+          "evidence_note": "External $10 each gift is the correct amount per gift."
+        },
+        {
+          "key": ["MATH_DEV", "math-test/93", 0],
+          "value": true,
+          "evidence_file": "audit/deep69_tagged_p8_step4_answer_review.md",
+          "evidence_note": "External mean 5 is correct; a=10, b=2, c=3 is a valid instance."
+        }
+      ],
+      "strict_useful": []
+    },
     "deep69_tagged_p8_step8_masked_pilot.tgz": {
       "review_complete": true,
       "expected_external_correct": 28,
