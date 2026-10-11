@@ -1,0 +1,46 @@
+{
+  "parent": "qwen4b-mixed401-tagged-step128",
+  "candidate": "qwen4b-clean46-tagged-step32",
+  "criterion": "strict useful independently computed block; prior review criterion applied to both",
+  "n": 40,
+  "parent_useful_ids": [
+    "gsm8k-train/132",
+    "gsm8k-train/232",
+    "gsm8k-train/260",
+    "gsm8k-train/288",
+    "gsm8k-train/374",
+    "gsm8k-train/379",
+    "gsm8k-train/462",
+    "gsm8k-train/653",
+    "math-test/103",
+    "math-test/36",
+    "math-test/9",
+    "math-test/93"
+  ],
+  "candidate_useful_ids": [
+    "gsm8k-train/132",
+    "gsm8k-train/232",
+    "gsm8k-train/260",
+    "gsm8k-train/288",
+    "gsm8k-train/374",
+    "gsm8k-train/379",
+    "gsm8k-train/462",
+    "gsm8k-train/580",
+    "gsm8k-train/653",
+    "gsm8k-train/684",
+    "math-test/36",
+    "math-test/9",
+    "math-test/93"
+  ],
+  "paired": {
+    "reference": 30.0,
+    "candidate": 32.5,
+    "delta": 2.5,
+    "ci95": [
+      -5.0,
+      10.0
+    ],
+    "unit": "percentage_points",
+    "n": 40
+  }
+}

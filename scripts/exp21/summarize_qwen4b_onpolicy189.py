@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Summarize paired Qwen3-4B on-policy189 fixed40 checkpoint archives.
+"""Summarize paired Qwen3-4B fixed40 checkpoint archives.
 
 The script is deliberately limited to automatic fixed40 measurements.  A
 well-formed numbered block is a structural property, not evidence that its
@@ -31,21 +31,22 @@ ARCHIVES = ROOT / "eval_archives"
 OUTPUT = ROOT / "audit/qwen4b_onpolicy189_paired.json"
 ARMS = ("tagged", "plain")
 STEPS = (8, 16, 32)
-METRICS = ("robust", "full_numbered_block", "truncated", "tokens", "forward_passes")
+METRICS = ("strict", "robust", "full_numbered_block", "truncated", "tokens", "forward_passes")
 NUMERIC_METRICS = {"tokens", "forward_passes"}
 BASE_LABEL = "initial"
+VARIANT = "onpolicy189"
 
 
 def candidate_label(arm, step):
-    return f"onpolicy189_{arm}_step{step}"
+    return f"{VARIANT}_{arm}_step{step}"
 
 
 def archive_name(arm, step):
-    return f"qwen4b_onpolicy189_{arm}_step{step}"
+    return f"qwen4b_{VARIANT}_{arm}_step{step}"
 
 
 def expected_model(arm, step):
-    return (f"/tmp/exp21-selective-runs/exp21-4b-onpolicy189-{arm}-p32/"
+    return (f"/tmp/exp21-selective-runs/exp21-4b-{VARIANT}-{arm}-p32/"
             f"step_models/step_{step}/model")
 
 
@@ -99,6 +100,7 @@ def load_onpolicy_archive(archives, arm, step):
                     require(score[field] == block.get(field),
                             f"{label}/{stem}: score/block {field} mismatch at {key}")
             robust = row_truth(block, "acc_robust", f"{label}/{stem} {key}")
+            strict = row_truth(score, "acc", f"{label}/{stem} {key}")
             full = row_truth(block, "think_full_block", f"{label}/{stem} {key}")
             numbered = row_truth(block, "think_numbered_block", f"{label}/{stem} {key}")
             truncated = row_truth(block, "truncated", f"{label}/{stem} {key}")
@@ -108,6 +110,7 @@ def load_onpolicy_archive(archives, arm, step):
             rows[key] = {
                 "question": score["problem"],
                 "input": score["input"],
+                "strict": strict,
                 "robust": robust,
                 "full_numbered_block": full and numbered,
                 "truncated": truncated,
@@ -148,6 +151,7 @@ def complete_reference_rows(rows, archives, label):
             require(block.get("decoder") == "masked",
                     f"{label}/{stem}: non-masked block row at {key}")
             robust = row_truth(block, "acc_robust", f"{label}/{stem} {key}")
+            strict = row_truth(score, "acc", f"{label}/{stem} {key}")
             full = row_truth(block, "think_full_block", f"{label}/{stem} {key}")
             numbered = row_truth(block, "think_numbered_block", f"{label}/{stem} {key}")
             truncated = row_truth(block, "truncated", f"{label}/{stem} {key}")
@@ -159,6 +163,7 @@ def complete_reference_rows(rows, archives, label):
                     and rows[key]["forward_passes"] == passes,
                     f"{label}/{stem}: shared-loader row mismatch at {key}")
             rows[key]["question"] = score["problem"]
+            rows[key]["strict"] = strict
             rows[key]["full_numbered_block"] = full and numbered
             seen.add(key)
     require(seen == set(rows), f"{label}: question rows differ")
@@ -170,6 +175,7 @@ def load_reference_archive(archives, label):
     rows = {key: {
         "question": row["input"],
         "input": row["input"],
+        "strict": False,
         "robust": row["robust"],
         "full_numbered_block": row["block"],
         "truncated": row["truncated"],
@@ -262,6 +268,7 @@ def build_result(archives):
             "intervals": "10,000 deterministic paired bootstrap resamples; binary deltas in percentage points",
         },
         "metric_definitions": {
+            "strict": "automatic archive acc; exact final-answer format and correctness",
             "robust": "automatic archive acc_robust; no human semantic conclusion",
             "full_numbered_block": "think_full_block and think_numbered_block inside <think>; structural only",
             "truncated": "archive truncation flag",
@@ -328,7 +335,7 @@ def self_test():
         result = build_result(archives)
         require(set(result["variants"]) == {candidate_label(arm, step) for step in STEPS for arm in ARMS},
                 "fixture variants missing")
-        require(result["variants"]["onpolicy189_tagged_step8"]["metrics"]["full_numbered_block"]["count"] == 12,
+        require(result["variants"][candidate_label("tagged", 8)]["metrics"]["full_numbered_block"]["count"] == 12,
                 "fixture full numbered metric drift")
         require(result["tagged_vs_plain_by_step"]["step32"]["robust"]["n"] == 40,
                 "fixture paired bootstrap n drift")
@@ -358,11 +365,14 @@ def self_test():
 
 
 def main():
+    global VARIANT
     parser = argparse.ArgumentParser()
+    parser.add_argument("--variant", choices=("onpolicy189", "clean46"), default="onpolicy189")
     parser.add_argument("--archives", type=Path, default=ARCHIVES)
     parser.add_argument("--output", type=Path, default=OUTPUT)
     parser.add_argument("--self-test", action="store_true")
     args = parser.parse_args()
+    VARIANT = args.variant
     if args.self_test:
         self_test()
         return
