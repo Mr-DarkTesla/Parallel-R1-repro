@@ -1,0 +1,19 @@
+{
+  "status": "ready",
+  "model": "/work/assets/models/Qwen3-0.6B-mv",
+  "files": [
+    "sft_expanded_th_m2_tagged_train.parquet",
+    "sft_expanded_th_m2_tagged_val.parquet"
+  ],
+  "counts": {
+    "train_replay_th": 588,
+    "train_replay_nt": 586,
+    "train_parallel_th": 1077,
+    "positive_spans_valid": 1101,
+    "val_parallel_th": 24,
+    "val_replay_nt": 14,
+    "val_replay_th": 12
+  },
+  "positive_expected": 1101,
+  "failures": []
+}
