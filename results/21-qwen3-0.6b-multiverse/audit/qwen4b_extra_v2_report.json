@@ -1,0 +1,55 @@
+{
+  "status": "pending_or_failed_final_review",
+  "ready_for_sft": false,
+  "author_rows": 0,
+  "auto_accepted": 0,
+  "auto_rejected": 0,
+  "manual_screen": {
+    "rows": 81,
+    "unique_ids": 81,
+    "by_structure": {
+      "sequential_chain": 29,
+      "one_component_formula": 31,
+      "dependent_intermediate": 12,
+      "single_equation": 8,
+      "recurrence": 1
+    }
+  },
+  "by_source": {},
+  "checks": {
+    "grammar_inside_think": 0,
+    "math_verify": 0,
+    "independence_heuristic": 0,
+    "numeric_invariants": 0,
+    "under_4096": 0,
+    "max_tokens": 0,
+    "plain_only_removes_tags": 0,
+    "leakcheck": {
+      "n_candidates": 0,
+      "n_leaky_vs_our_evals": 0,
+      "leaky_questions_per_set": {},
+      "strong_leaky_questions_per_set": {},
+      "n_dup_vs_our_evals": 0,
+      "n_dup_or_variant_vs_our_evals": 0,
+      "questions_per_set_by_best_tier": {},
+      "dup_questions_per_set": {},
+      "signal_counts_per_set(pairs)": {},
+      "boilerplate_13grams": 161,
+      "boilerplate_8grams": 804
+    }
+  },
+  "final_review": {
+    "pool_v1_strict": 19,
+    "pool_v2_auto": 0,
+    "input_rows": 19,
+    "review_rows": 0,
+    "strictly_useful": 0,
+    "useful_fraction": null
+  },
+  "outputs": {
+    "tagged": "results/21-qwen3-0.6b-multiverse/data/qwen4b_extra_v2_tagged.jsonl",
+    "plain": "results/21-qwen3-0.6b-multiverse/data/qwen4b_extra_v2_plain.jsonl",
+    "review_input": null
+  },
+  "command": "uv run --offline --no-project --with tokenizers==0.23.2 --with math-verify==0.9.0 python scripts/exp21/finalize_qwen4b_extra_v2.py"
+}
