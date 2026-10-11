@@ -3,6 +3,70 @@
   "n": 40,
   "protocol": "same fixed40 prompts, thinking, masked greedy, same token budgets",
   "runs": {
+    "tagged_step16": {
+      "metrics": {
+        "strict": 31.0,
+        "robust": 36.0,
+        "block": 0.0,
+        "truncated": 3.0,
+        "tokens": 1187.83,
+        "forward_passes": 1187.83
+      },
+      "vs_initial": {
+        "strict": {
+          "delta": 17.5,
+          "ci95": [
+            -2.5,
+            37.5
+          ],
+          "discordant": {
+            "lost": 5,
+            "gained": 12
+          },
+          "mcnemar_exact_p": 0.143463134765625
+        },
+        "robust": {
+          "delta": 7.5,
+          "ci95": [
+            -7.5,
+            22.5
+          ],
+          "discordant": {
+            "lost": 3,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 0.5078125
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": -10.0,
+          "ci95": [
+            -22.5,
+            2.5
+          ]
+        },
+        "tokens": {
+          "delta": -478.1,
+          "ci95": [
+            -765.43,
+            -176.27
+          ]
+        },
+        "forward_passes": {
+          "delta": -478.1,
+          "ci95": [
+            -765.43,
+            -176.27
+          ]
+        }
+      }
+    },
     "tagged_step4": {
       "metrics": {
         "strict": 27.0,
