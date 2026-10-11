@@ -48,3 +48,12 @@ bash /work/parallel-r1/scripts/exp21/run_deep69_pair_pod.sh
 `/tmp/exp21-deep69-p8-train.log`, стартовый shell PID `30151`.
 Выходные BF16 шагов 4 и 8 пока будут в `/tmp` до оценки и решения
 о постоянном хранении.
+
+Обе ветви завершили восемь шагов. Экспорты BF16 шагов 4 и 8
+проверены на pod. Validation loss: tagged `0.29927`, plain `0.29998`;
+по ней вариант не выбираем. [Логи и рецепт обоих плеч](eval_archives/deep69_pair_p8_train_meta.tgz)
+сохранены в репозитории. После проверки `DONE` и свободного GPU
+запущен последовательный пилот на фиксированных 40 задачах:
+tagged step8, plain step8, tagged step4, plain step4. Скрипт
+[`run_deep69_pilot_pod.sh`](../../scripts/exp21/run_deep69_pilot_pod.sh),
+shell PID `31794`, лог `/tmp/exp21-deep69-eval-all.log`.
