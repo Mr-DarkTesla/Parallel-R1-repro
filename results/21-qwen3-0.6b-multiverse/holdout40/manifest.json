@@ -1,0 +1,70 @@
+{
+  "seed": 21,
+  "selection": "20 unique problems per source after fixed40 and training exclusions",
+  "dev_plain_dir": "/work/bench_data/instruct4b/eval/dev/plain",
+  "fixed40_dir": "/work/exp21/masked_pilot",
+  "train_parquets": [
+    "/work/exp21/qwen4b_mixed401/tagged_train.parquet",
+    "/work/exp21/qwen4b_clean46/tagged_train.parquet"
+  ],
+  "fixed40_ids": 40,
+  "train_ids": 1090,
+  "sources": {
+    "gsm8k": {
+      "dev_rows": 1184,
+      "unique_problems": 296,
+      "eligible_problems": 263,
+      "selected_ids": [
+        "gsm8k-train/3480",
+        "gsm8k-train/6556",
+        "gsm8k-train/4986",
+        "gsm8k-train/7262",
+        "gsm8k-train/4190",
+        "gsm8k-train/7232",
+        "gsm8k-train/953",
+        "gsm8k-train/3682",
+        "gsm8k-train/873",
+        "gsm8k-train/4366",
+        "gsm8k-train/1037",
+        "gsm8k-train/1133",
+        "gsm8k-train/5843",
+        "gsm8k-train/6615",
+        "gsm8k-train/2138",
+        "gsm8k-train/3163",
+        "gsm8k-train/4343",
+        "gsm8k-train/4351",
+        "gsm8k-train/1675",
+        "gsm8k-train/6735"
+      ],
+      "output": "/checkpoints/exp21-masked-holdout40/gsm8k_holdout20.parquet"
+    },
+    "math": {
+      "dev_rows": 964,
+      "unique_problems": 482,
+      "eligible_problems": 462,
+      "selected_ids": [
+        "math-test/1709",
+        "math-test/2178",
+        "math-test/1151",
+        "math-test/4138",
+        "math-test/3222",
+        "math-test/1917",
+        "math-test/4519",
+        "math-test/1621",
+        "math-test/4686",
+        "math-test/4330",
+        "math-test/877",
+        "math-test/2755",
+        "math-test/4866",
+        "math-test/927",
+        "math-test/1410",
+        "math-test/2125",
+        "math-test/2251",
+        "math-test/1261",
+        "math-test/2597",
+        "math-test/4078"
+      ],
+      "output": "/checkpoints/exp21-masked-holdout40/math_holdout20.parquet"
+    }
+  }
+}
