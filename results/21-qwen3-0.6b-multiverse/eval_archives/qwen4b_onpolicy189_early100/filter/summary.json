@@ -1,0 +1,24 @@
+{
+  "rollouts": 100,
+  "provisional": 65,
+  "rejected": 35,
+  "rejection_reasons": {
+    "parallel_block_not_numbered": 6,
+    "think_not_closed_once": 2,
+    "truncated": 1,
+    "wrong_external_final": 28
+  },
+  "by_source": {
+    "gsm8k": {
+      "provisional": 46,
+      "rejected": 18
+    },
+    "math": {
+      "provisional": 19,
+      "rejected": 17
+    }
+  },
+  "rollouts_path": "/checkpoints/exp21-qwen4b-onpolicy189/early100/rollouts.jsonl",
+  "candidates_path": "/tmp/exp21-qwen4b-onpolicy189-candidates.jsonl",
+  "semantic_path_independence": "unreviewed; blind manual audit required"
+}
