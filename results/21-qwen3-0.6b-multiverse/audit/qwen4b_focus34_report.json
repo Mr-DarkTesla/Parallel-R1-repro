@@ -1,0 +1,45 @@
+{
+  "status": "ready_for_paired_continuation",
+  "parent": "qwen4b_mixed401_{tagged,plain}_step128",
+  "rows_per_arm": {
+    "train": 231,
+    "val": 50
+  },
+  "train": {
+    "reviewed_positive_unique": 34,
+    "positive_copies_each": 3,
+    "positive_rows": 102,
+    "qwen4b_replay_unique": 129,
+    "replay_rows": 129,
+    "kind_counts": {
+      "parallel_th": 102,
+      "replay_th": 129
+    }
+  },
+  "validation": {
+    "source": "qwen4b_mixed401_{tagged,plain}_val.parquet",
+    "rows_copied": 50
+  },
+  "checks": {
+    "reviewed_math_verify_provenance": "34/34",
+    "replay_grade_gen_math_verify_provenance": "129/129",
+    "same_row_order": true,
+    "plain_equals_tagged_after_removing_only_10_tag_types": true,
+    "tagged_blocks_inside_think": 34,
+    "replay_untagged": 129,
+    "fixed40_normalized_question_overlap": 0,
+    "validation_normalized_question_overlap": 0,
+    "fixed40_raw_id_collisions_different_questions": [],
+    "max_total_tokens": {
+      "tagged": {
+        "train": 1603,
+        "val": 3513
+      },
+      "plain": {
+        "train": 1603,
+        "val": 3513
+      }
+    }
+  },
+  "command": "uv run --offline --no-project --with pandas --with pyarrow --with tokenizers==0.23.2 python scripts/exp21/build_qwen4b_focus34_pair.py"
+}

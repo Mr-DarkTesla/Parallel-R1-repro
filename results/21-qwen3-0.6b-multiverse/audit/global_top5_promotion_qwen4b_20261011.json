@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-11",
+  "scope": "owned shared-dzen-ml/vcharkin-exp-vm-0 and /checkpoints PVC only",
+  "candidate": {
+    "name": "qwen4b-mixed401-tagged-step128",
+    "source": "/tmp/exp21-selective-runs/exp21-4b-mixed401-tagged-p128/step_models/step_128/model",
+    "persistent_path": "/checkpoints/exp21-global-top5/qwen4b-mixed401-tagged-step128/model",
+    "size_gib_rounded": 7.6,
+    "fixed40_correct_external": 32,
+    "fixed40_grammatical_blocks": 38,
+    "fixed40_manual_strict_useful": 12,
+    "fixed40_truncated": 0,
+    "manual_review": "all 20 GSM8K and all 20 MATH; MATH independently re-audited after an arithmetic error in first review"
+  },
+  "replaced": {
+    "name": "agent-authored-tagged-p8-step8",
+    "persistent_path": "/checkpoints/exp21-global-top5/agent-authored-tagged-p8-step8/model",
+    "fixed40_manual_strict_useful": 2,
+    "fixed40_correct_external": 23
+  },
+  "procedure": [
+    "Copied candidate BF16 export to a temporary directory on the owned checkpoint PVC; required config, tokenizer config and both nonempty safetensors shards before atomic directory rename.",
+    "Copied proposed five-entry manifest to GLOBAL_TOP5.json.tmp and ran reconcile_global_top5_pod.py --manifest on it; dry-run listed exactly one export parent for removal.",
+    "Atomically renamed manifest, ran reconcile_global_top5_pod.py --apply on the owned PVC, then repeated dry-run."
+  ],
+  "final_inventory": {
+    "kept_models": 5,
+    "all_models": 5,
+    "extra_models": 0,
+    "free_gib_rounded": 26
+  },
+  "pod_and_pvc_deleted": false,
+  "raw_eval_and_train_logs_preserved": true
+}
