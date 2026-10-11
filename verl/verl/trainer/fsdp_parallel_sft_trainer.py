@@ -52,6 +52,7 @@ from verl.utils.fsdp_utils import (
     MixedPrecisionPolicy,
     apply_fsdp2,
     fsdp2_load_full_state_dict,
+    get_fsdp_full_state_dict,
     get_fsdp_wrap_policy,
     get_init_weight_context_manager,
     init_fn,
@@ -544,18 +545,20 @@ class FSDPParallelThinkingSFTTrainer:
                 self.tokenizer.save_pretrained(path)
         elif fsdp_strategy == "fsdp2":
             # FSDP2 checkpoint saving
-            from torch.distributed.checkpoint.state_dict import StateDictOptions, get_model_state_dict
-
-            # Get full state dict with FSDP2
-            options = StateDictOptions(full_state_dict=True, cpu_offload=True)
-            state_dict = get_model_state_dict(self.fsdp_model, options=options)
+            state_dict = get_fsdp_full_state_dict(self.fsdp_model, offload_to_cpu=True, rank0_only=True)
 
             # save huggingface model
             if self.device_mesh.get_rank() == 0:
+                # Exports are BF16. Convert each CPU tensor before serialization
+                # rather than keeping a second full FP32 copy during the save.
+                for name, tensor in state_dict.items():
+                    if tensor.is_floating_point() and tensor.dtype != torch.bfloat16:
+                        state_dict[name] = tensor.to(dtype=torch.bfloat16)
                 os.makedirs(path, exist_ok=True)
                 self.model.save_pretrained(path, state_dict=state_dict)
                 self.model_config.save_pretrained(path)
                 self.tokenizer.save_pretrained(path)
+            del state_dict
         else:
             raise NotImplementedError(f"not implement {fsdp_strategy}")
 

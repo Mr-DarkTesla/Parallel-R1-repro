@@ -4,10 +4,10 @@ set -euo pipefail
 
 data=/work/exp21/teacher_sft
 for _ in $(seq 1 7200); do
-    test -s /work/exp21/m1_rewrapped_sft/POST_TRAIN_EVAL_DONE && break
+    test -s /work/exp21/m1_rewrapped_sft/M1_RETRY_ATTEMPT_DONE && break
     sleep 5
 done
-test -s /work/exp21/m1_rewrapped_sft/POST_TRAIN_EVAL_DONE
+test -s /work/exp21/m1_rewrapped_sft/M1_RETRY_ATTEMPT_DONE
 if pgrep -f 'torchrun.*fsdp_parallel_sft_trainer' >/dev/null; then
     echo 'prior SFT trainer remains active' >&2
     exit 1

@@ -50,7 +50,7 @@ export PYTHONPATH=$PWD  # the venv also has an editable verl from /work/setup-sr
 python -c "import os, verl; assert verl.__file__.startswith(os.getcwd()), verl.__file__"
 
 if [ ! -e "$run/TRAINED" ]; then
-    # fp32 trainer checkpoint (16 GB) and bf16 export (8 GB) exist together for a moment
+    # Trainer checkpoint and bf16 export exist together briefly; leave room for both.
     [ "$(df --output=avail -BG "$run_root" | tail -1 | tr -dc 0-9)" -ge "$min_free" ] || { echo "need $min_free GB free on $run_root"; exit 1; }
     mkdir -p "$run/results"
     # Rows of each update: the trainer's DistributedSampler (seed 0, epoch-wise shuffle, drop_last) on $ngpus ranks
