@@ -1,0 +1,1182 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "fixed40": "same 20 GSM8K_DEV and 20 MATH_DEV questions, prompts, IDs, and samples",
+    "generation": "thinking, masked-autonomous-v2, masked decoder, greedy, seed 0",
+    "limits": "2048 GSM8K and 4096 MATH max_tokens; 0 <= ideal forward passes <= tokens <= max_tokens",
+    "intervals": "10,000 deterministic paired bootstrap resamples; binary deltas in percentage points"
+  },
+  "metric_definitions": {
+    "robust": "automatic archive acc_robust; no human semantic conclusion",
+    "full_numbered_block": "think_full_block and think_numbered_block inside <think>; structural only",
+    "truncated": "archive truncation flag",
+    "tokens": "mean generated tokens",
+    "forward_passes": "mean ideal sequential decoding passes under grammatical parallel paths; not measured hardware runtime"
+  },
+  "semantic_review": {
+    "status": "pending_human_review",
+    "rule": "Do not infer semantic usefulness or path independence from parser fields."
+  },
+  "provenance": {
+    "base4b": {
+      "archive": "qwen4b_init_fixed40",
+      "model": "/tmp/exp21-qwen3-4b-mv10"
+    },
+    "mixed401_parents": {
+      "tagged": {
+        "archive": "qwen4b_mixed401_tagged_step128",
+        "model": "/tmp/exp21-selective-runs/exp21-4b-mixed401-tagged-p128/step_models/step_128/model"
+      },
+      "plain": {
+        "archive": "qwen4b_mixed401_plain_step128",
+        "model": "/tmp/exp21-selective-runs/exp21-4b-mixed401-plain-p128/step_models/step_128/model"
+      }
+    }
+  },
+  "base4b": {
+    "metrics": {
+      "robust": {
+        "count": 33,
+        "percent": 82.5
+      },
+      "full_numbered_block": {
+        "count": 0,
+        "percent": 0.0
+      },
+      "truncated": {
+        "count": 7,
+        "percent": 17.5
+      },
+      "tokens": {
+        "mean": 1665.92
+      },
+      "forward_passes": {
+        "mean": 1665.92
+      }
+    }
+  },
+  "parents": {
+    "tagged": {
+      "metrics": {
+        "robust": {
+          "count": 32,
+          "percent": 80.0
+        },
+        "full_numbered_block": {
+          "count": 38,
+          "percent": 95.0
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 287.27
+        },
+        "forward_passes": {
+          "mean": 242.62
+        }
+      }
+    },
+    "plain": {
+      "metrics": {
+        "robust": {
+          "count": 31,
+          "percent": 77.5
+        },
+        "full_numbered_block": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 269.07
+        },
+        "forward_passes": {
+          "mean": 269.07
+        }
+      }
+    }
+  },
+  "variants": {
+    "onpolicy189_tagged_step8": {
+      "archive": "qwen4b_onpolicy189_tagged_step8",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-onpolicy189-tagged-p32/step_models/step_8/model",
+      "metrics": {
+        "robust": {
+          "count": 31,
+          "percent": 77.5
+        },
+        "full_numbered_block": {
+          "count": 39,
+          "percent": 97.5
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 283.98
+        },
+        "forward_passes": {
+          "mean": 241.28
+        }
+      },
+      "vs_base4b": {
+        "robust": {
+          "reference": 82.5,
+          "candidate": 77.5,
+          "delta": -5.0,
+          "ci95": [
+            -20.0,
+            7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 5,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 0.7265625
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 97.5,
+          "delta": 97.5,
+          "ci95": [
+            92.5,
+            100.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 283.98,
+          "delta": -1381.95,
+          "ci95": [
+            -1680.67,
+            -1115.25
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 241.28,
+          "delta": -1424.65,
+          "ci95": [
+            -1724.5,
+            -1156.25
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_parent_mixed401_step128": {
+        "robust": {
+          "reference": 80.0,
+          "candidate": 77.5,
+          "delta": -2.5,
+          "ci95": [
+            -10.0,
+            5.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 2,
+            "gained": 1
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 95.0,
+          "candidate": 97.5,
+          "delta": 2.5,
+          "ci95": [
+            0.0,
+            7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 287.27,
+          "candidate": 283.98,
+          "delta": -3.3,
+          "ci95": [
+            -19.35,
+            10.95
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 242.62,
+          "candidate": 241.28,
+          "delta": -1.35,
+          "ci95": [
+            -15.93,
+            11.7
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "onpolicy189_plain_step8": {
+      "archive": "qwen4b_onpolicy189_plain_step8",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-onpolicy189-plain-p32/step_models/step_8/model",
+      "metrics": {
+        "robust": {
+          "count": 30,
+          "percent": 75.0
+        },
+        "full_numbered_block": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 276.12
+        },
+        "forward_passes": {
+          "mean": 276.12
+        }
+      },
+      "vs_base4b": {
+        "robust": {
+          "reference": 82.5,
+          "candidate": 75.0,
+          "delta": -7.5,
+          "ci95": [
+            -22.5,
+            7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 6,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 0.5078125
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 276.12,
+          "delta": -1389.8,
+          "ci95": [
+            -1688.2,
+            -1122.95
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 276.12,
+          "delta": -1389.8,
+          "ci95": [
+            -1688.2,
+            -1122.95
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_parent_mixed401_step128": {
+        "robust": {
+          "reference": 77.5,
+          "candidate": 75.0,
+          "delta": -2.5,
+          "ci95": [
+            -7.5,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 1,
+            "gained": 0
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 269.07,
+          "candidate": 276.12,
+          "delta": 7.05,
+          "ci95": [
+            -2.98,
+            19.85
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 269.07,
+          "candidate": 276.12,
+          "delta": 7.05,
+          "ci95": [
+            -2.98,
+            19.85
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "onpolicy189_tagged_step16": {
+      "archive": "qwen4b_onpolicy189_tagged_step16",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-onpolicy189-tagged-p32/step_models/step_16/model",
+      "metrics": {
+        "robust": {
+          "count": 34,
+          "percent": 85.0
+        },
+        "full_numbered_block": {
+          "count": 40,
+          "percent": 100.0
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 285.52
+        },
+        "forward_passes": {
+          "mean": 241.28
+        }
+      },
+      "vs_base4b": {
+        "robust": {
+          "reference": 82.5,
+          "candidate": 85.0,
+          "delta": 2.5,
+          "ci95": [
+            -12.5,
+            17.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 5
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 100.0,
+          "delta": 100.0,
+          "ci95": [
+            100.0,
+            100.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 285.52,
+          "delta": -1380.4,
+          "ci95": [
+            -1683.38,
+            -1110.75
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 241.28,
+          "delta": -1424.65,
+          "ci95": [
+            -1730.08,
+            -1152.25
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_parent_mixed401_step128": {
+        "robust": {
+          "reference": 80.0,
+          "candidate": 85.0,
+          "delta": 5.0,
+          "ci95": [
+            -5.0,
+            15.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 1,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 0.625
+        },
+        "full_numbered_block": {
+          "reference": 95.0,
+          "candidate": 100.0,
+          "delta": 5.0,
+          "ci95": [
+            0.0,
+            12.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 287.27,
+          "candidate": 285.52,
+          "delta": -1.75,
+          "ci95": [
+            -14.22,
+            10.6
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 242.62,
+          "candidate": 241.28,
+          "delta": -1.35,
+          "ci95": [
+            -13.1,
+            10.0
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "onpolicy189_plain_step16": {
+      "archive": "qwen4b_onpolicy189_plain_step16",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-onpolicy189-plain-p32/step_models/step_16/model",
+      "metrics": {
+        "robust": {
+          "count": 28,
+          "percent": 70.0
+        },
+        "full_numbered_block": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "truncated": {
+          "count": 1,
+          "percent": 2.5
+        },
+        "tokens": {
+          "mean": 321.48
+        },
+        "forward_passes": {
+          "mean": 321.48
+        }
+      },
+      "vs_base4b": {
+        "robust": {
+          "reference": 82.5,
+          "candidate": 70.0,
+          "delta": -12.5,
+          "ci95": [
+            -27.5,
+            2.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 8,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 0.2265625
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 2.5,
+          "delta": -15.0,
+          "ci95": [
+            -27.5,
+            -5.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 321.48,
+          "delta": -1344.45,
+          "ci95": [
+            -1641.65,
+            -1071.92
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 321.48,
+          "delta": -1344.45,
+          "ci95": [
+            -1641.65,
+            -1071.92
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_parent_mixed401_step128": {
+        "robust": {
+          "reference": 77.5,
+          "candidate": 70.0,
+          "delta": -7.5,
+          "ci95": [
+            -17.5,
+            2.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 1
+          },
+          "mcnemar_exact_p": 0.375
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 2.5,
+          "delta": 2.5,
+          "ci95": [
+            0.0,
+            7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 269.07,
+          "candidate": 321.48,
+          "delta": 52.4,
+          "ci95": [
+            -15.1,
+            157.5
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 269.07,
+          "candidate": 321.48,
+          "delta": 52.4,
+          "ci95": [
+            -15.1,
+            157.5
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "onpolicy189_tagged_step32": {
+      "archive": "qwen4b_onpolicy189_tagged_step32",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-onpolicy189-tagged-p32/step_models/step_32/model",
+      "metrics": {
+        "robust": {
+          "count": 32,
+          "percent": 80.0
+        },
+        "full_numbered_block": {
+          "count": 39,
+          "percent": 97.5
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 280.85
+        },
+        "forward_passes": {
+          "mean": 236.6
+        }
+      },
+      "vs_base4b": {
+        "robust": {
+          "reference": 82.5,
+          "candidate": 80.0,
+          "delta": -2.5,
+          "ci95": [
+            -17.5,
+            12.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 6,
+            "gained": 5
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 97.5,
+          "delta": 97.5,
+          "ci95": [
+            92.5,
+            100.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 280.85,
+          "delta": -1385.08,
+          "ci95": [
+            -1692.47,
+            -1112.1
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 236.6,
+          "delta": -1429.33,
+          "ci95": [
+            -1738.8,
+            -1154.12
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_parent_mixed401_step128": {
+        "robust": {
+          "reference": 80.0,
+          "candidate": 80.0,
+          "delta": 0.0,
+          "ci95": [
+            -12.5,
+            12.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 3,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 95.0,
+          "candidate": 97.5,
+          "delta": 2.5,
+          "ci95": [
+            -5.0,
+            10.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 287.27,
+          "candidate": 280.85,
+          "delta": -6.42,
+          "ci95": [
+            -30.73,
+            13.88
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 242.62,
+          "candidate": 236.6,
+          "delta": -6.03,
+          "ci95": [
+            -29.38,
+            13.85
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "onpolicy189_plain_step32": {
+      "archive": "qwen4b_onpolicy189_plain_step32",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-onpolicy189-plain-p32/step_models/step_32/model",
+      "metrics": {
+        "robust": {
+          "count": 32,
+          "percent": 80.0
+        },
+        "full_numbered_block": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 274.23
+        },
+        "forward_passes": {
+          "mean": 274.23
+        }
+      },
+      "vs_base4b": {
+        "robust": {
+          "reference": 82.5,
+          "candidate": 80.0,
+          "delta": -2.5,
+          "ci95": [
+            -15.0,
+            10.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 274.23,
+          "delta": -1391.7,
+          "ci95": [
+            -1690.92,
+            -1124.33
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 274.23,
+          "delta": -1391.7,
+          "ci95": [
+            -1690.92,
+            -1124.33
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_parent_mixed401_step128": {
+        "robust": {
+          "reference": 77.5,
+          "candidate": 80.0,
+          "delta": 2.5,
+          "ci95": [
+            0.0,
+            7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 0,
+            "gained": 1
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 269.07,
+          "candidate": 274.23,
+          "delta": 5.15,
+          "ci95": [
+            -6.38,
+            20.12
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 269.07,
+          "candidate": 274.23,
+          "delta": 5.15,
+          "ci95": [
+            -6.38,
+            20.12
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    }
+  },
+  "tagged_vs_plain_by_step": {
+    "step8": {
+      "robust": {
+        "reference": 75.0,
+        "candidate": 77.5,
+        "delta": 2.5,
+        "ci95": [
+          -12.5,
+          17.5
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 4,
+          "gained": 5
+        },
+        "mcnemar_exact_p": 1.0
+      },
+      "full_numbered_block": {
+        "reference": 0.0,
+        "candidate": 97.5,
+        "delta": 97.5,
+        "ci95": [
+          92.5,
+          100.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "truncated": {
+        "reference": 0.0,
+        "candidate": 0.0,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "tokens": {
+        "reference": 276.12,
+        "candidate": 283.98,
+        "delta": 7.85,
+        "ci95": [
+          -25.77,
+          38.55
+        ],
+        "unit": "tokens",
+        "n": 40
+      },
+      "forward_passes": {
+        "reference": 276.12,
+        "candidate": 241.28,
+        "delta": -34.85,
+        "ci95": [
+          -66.17,
+          -8.05
+        ],
+        "unit": "ideal_forward_passes",
+        "n": 40
+      }
+    },
+    "step16": {
+      "robust": {
+        "reference": 70.0,
+        "candidate": 85.0,
+        "delta": 15.0,
+        "ci95": [
+          2.5,
+          27.5
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 1,
+          "gained": 7
+        },
+        "mcnemar_exact_p": 0.0703125
+      },
+      "full_numbered_block": {
+        "reference": 0.0,
+        "candidate": 100.0,
+        "delta": 100.0,
+        "ci95": [
+          100.0,
+          100.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "truncated": {
+        "reference": 2.5,
+        "candidate": 0.0,
+        "delta": -2.5,
+        "ci95": [
+          -7.5,
+          0.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "tokens": {
+        "reference": 321.48,
+        "candidate": 285.52,
+        "delta": -35.95,
+        "ci95": [
+          -136.5,
+          23.73
+        ],
+        "unit": "tokens",
+        "n": 40
+      },
+      "forward_passes": {
+        "reference": 321.48,
+        "candidate": 241.28,
+        "delta": -80.2,
+        "ci95": [
+          -179.45,
+          -21.1
+        ],
+        "unit": "ideal_forward_passes",
+        "n": 40
+      }
+    },
+    "step32": {
+      "robust": {
+        "reference": 80.0,
+        "candidate": 80.0,
+        "delta": 0.0,
+        "ci95": [
+          -12.5,
+          12.5
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 3,
+          "gained": 3
+        },
+        "mcnemar_exact_p": 1.0
+      },
+      "full_numbered_block": {
+        "reference": 0.0,
+        "candidate": 97.5,
+        "delta": 97.5,
+        "ci95": [
+          92.5,
+          100.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "truncated": {
+        "reference": 0.0,
+        "candidate": 0.0,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "tokens": {
+        "reference": 274.23,
+        "candidate": 280.85,
+        "delta": 6.62,
+        "ci95": [
+          -19.85,
+          27.75
+        ],
+        "unit": "tokens",
+        "n": 40
+      },
+      "forward_passes": {
+        "reference": 274.23,
+        "candidate": 236.6,
+        "delta": -37.62,
+        "ci95": [
+          -65.2,
+          -15.65
+        ],
+        "unit": "ideal_forward_passes",
+        "n": 40
+      }
+    }
+  }
+}
