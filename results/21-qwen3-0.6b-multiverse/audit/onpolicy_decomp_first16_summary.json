@@ -1,0 +1,25 @@
+{
+  "rollouts": 16,
+  "provisional": 2,
+  "rejected": 14,
+  "rejection_reasons": {
+    "not_exactly_one_complete_parallel_block": 8,
+    "parallel_block_not_numbered": 2,
+    "think_not_closed_once": 1,
+    "truncated": 1,
+    "wrong_external_final": 8
+  },
+  "by_source": {
+    "gsm8k": {
+      "provisional": 1,
+      "rejected": 9
+    },
+    "math": {
+      "provisional": 1,
+      "rejected": 5
+    }
+  },
+  "rollouts_path": "/work/exp21/onpolicy_decomp/first16_snapshot.jsonl",
+  "candidates_path": "/work/parallel-r1/results/21-qwen3-0.6b-multiverse/data/onpolicy46_decomp_pilot_candidates.jsonl",
+  "semantic_path_independence": "unreviewed; blind manual audit required"
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-11",
+  "scope": "exp21 Qwen3-0.6B Multiverse; global project top five",
+  "pilot": "same fixed40 masked greedy, manual strict semantic audit",
+  "ranking": "complete numbered block; useful blocks; correct external answers; fewer truncations; fewer tags outside think",
+  "models": [
+    {
+      "rank": 1,
+      "name": "v4-recovery8-step8",
+      "path": "/checkpoints/exp21-v4-recovery8/step_8/model",
+      "strict_useful_of_40": 2,
+      "correct_external_of_40": 29,
+      "truncated_of_40": 2,
+      "outside_think_tags_of_40": 0
+    },
+    {
+      "rank": 2,
+      "name": "selective-v5-step56",
+      "path": "/checkpoints/exp21-m1-selective-v5/step_56/model",
+      "strict_useful_of_40": 2,
+      "correct_external_of_40": 28,
+      "truncated_of_40": 5,
+      "outside_think_tags_of_40": 0
+    },
+    {
+      "rank": 3,
+      "name": "selective-v4-step56",
+      "path": "/checkpoints/exp21-m1-selective-v4/step_56/model",
+      "strict_useful_of_40": 2,
+      "correct_external_of_40": 27,
+      "truncated_of_40": 4,
+      "outside_think_tags_of_40": 0
+    },
+    {
+      "rank": 4,
+      "name": "selective-v4-step64",
+      "path": "/checkpoints/exp21-m1-selective-v4/step_64/model",
+      "strict_useful_of_40": 2,
+      "correct_external_of_40": 26,
+      "truncated_of_40": 2,
+      "outside_think_tags_of_40": 1
+    },
+    {
+      "rank": 5,
+      "name": "m1-twopath-tagweighted",
+      "path": "/checkpoints/exp21-global-top5/m1-twopath-tagweighted/model",
+      "strict_useful_of_40": 2,
+      "correct_external_of_40": 20,
+      "truncated_of_40": 2,
+      "outside_think_tags_of_40": 0
+    }
+  ]
+}

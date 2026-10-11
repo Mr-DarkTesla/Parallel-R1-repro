@@ -1,0 +1,407 @@
+{
+  "decoder": "masked-autonomous-v2",
+  "model": "/checkpoints/exp21-v4-recovery8/step_8/model",
+  "candidates": "/work/parallel-r1/results/21-qwen3-0.6b-multiverse/data/onpolicy46_decomp_pilot_candidates.jsonl",
+  "selection": [
+    {
+      "id": "math-train/110",
+      "source": "math",
+      "answer_type": "integer",
+      "normalized_question": "Evaluate $(2 + 1)(2^2 + 1^2)(2^4 + 1^4)$."
+    },
+    {
+      "id": "gsm8k-train/5851",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Gilbert, the bearded dragon, eats 4 crickets per week when the temperature averages 90 degrees F per day, but he eats twice as many crickets per week when the temperature averages 100 degrees F. How many crickets will he eat over 15 weeks if the temperature averages 90 degrees F for 80% of the time, and 100 degrees F for the remainder of the time?"
+    },
+    {
+      "id": "gsm8k-train/2281",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Willow’s daughter had a slumber party with 3 of her friends. For breakfast, they wanted pancakes. Willow’s pancake recipe makes 1 serving of 4 pancakes. Each of the girls wanted a serving and a half of pancakes. Willow’s son wanted 3 servings of pancakes. How many single pancakes will Willow make for the girls and her son?"
+    },
+    {
+      "id": "gsm8k-train/6467",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "The temperature in New York in June 2020 was 80 degrees. If the temperature in Miami on this day was 10 degrees hotter than the temperature in New York, and 25 degrees cooler than the temperature in San Diego, what was the average temperature for the three cities?"
+    },
+    {
+      "id": "gsm8k-train/1170",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Andy is running late. School starts at 8:00 AM and it normally takes him 30 minutes to get there, but today he had to stop for 3 minutes each at 4 red lights and wait 10 minutes to get past construction. If he left his house at 7:15, how many minutes late will he be?"
+    },
+    {
+      "id": "gsm8k-train/2528",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "A rectangle has a length of 3 inches and a width of 6 inches. A square has a width of 5 inches. What is the difference in area between the two shapes?"
+    },
+    {
+      "id": "math-train/3947",
+      "source": "math",
+      "answer_type": "integer",
+      "normalized_question": "What is the sum of all the solutions of $x = \\left|2x-|60-2x|\\right|$?"
+    },
+    {
+      "id": "math-train/6412",
+      "source": "math",
+      "answer_type": "fraction",
+      "normalized_question": "Find $\\frac{9}{10}+\\frac{5}{6}$. Express your answer as a fraction in simplest form."
+    },
+    {
+      "id": "gsm8k-train/4597",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Mason is mixing up some salad dressing. He takes a bowl that holds 150 ml and fills it 2/3rds with oil and 1/3rd with vinegar. The oil weighs 5 g/ml and the vinegar weighs 4 g/ml. How many grams does the salad dressing weigh?"
+    },
+    {
+      "id": "gsm8k-train/3721",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Jessica is having a sweet tooth and bought 10 chocolate bars, 10 packs of gummy bears, and 20 bags of chocolate chips. Her total rang up to $150. If the cost of a pack of gummy bears is $2 and a bag of chocolate chips costs $5, how much does 1 chocolate bar cost?"
+    },
+    {
+      "id": "math-train/1024",
+      "source": "math",
+      "answer_type": "integer",
+      "normalized_question": "Compute: $\\frac{1}{5} + \\frac{2}{5} + \\frac{3}{5} + \\dots + \\frac{9}{5} + \\frac{10}{5}$."
+    },
+    {
+      "id": "gsm8k-train/6410",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Moore's family compared mobile phone plans to get the best deal. At T-Mobile, the family plan costs $50 per month for the first two lines and $16 for each additional line. At M-Mobile, the family plan costs $45 for the first two lines and $14 for each additional line. Moore's family needs to purchase 5 cell phone lines. How much cheaper is the M-Mobile than T-Mobile?"
+    },
+    {
+      "id": "math-train/4730",
+      "source": "math",
+      "answer_type": "integer",
+      "normalized_question": "What is the greatest common divisor of $121^2 + 233^2 + 345^2$ and $120^2 + 232^2 + 346^2$?"
+    },
+    {
+      "id": "gsm8k-train/201",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Archibald eats 1 apple a day for two weeks. Over the next three weeks, he eats the same number of apples as the total of the first two weeks. Over the next two weeks, he eats 3 apples a day. Over these 7 weeks, how many apples does he average a week?"
+    },
+    {
+      "id": "math-train/1982",
+      "source": "math",
+      "answer_type": "expression",
+      "normalized_question": "A very bizarre weighted coin comes up heads with probability $\\frac12$, tails with probability $\\frac13$, and rests on its edge with probability $\\frac16$. If it comes up heads, I win 1 dollar. If it comes up tails, I win 3 dollars. But if it lands on its edge, I lose 5 dollars. What is the expected winnings from flipping this coin? Express your answer as a dollar value, rounded to the nearest cent."
+    },
+    {
+      "id": "gsm8k-train/5392",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Marcy can make 3 spears out of a sapling and 9 spears out of a log. How many spears can she make out of 6 saplings and a log?"
+    },
+    {
+      "id": "math-train/5531",
+      "source": "math",
+      "answer_type": "integer",
+      "normalized_question": "When $0.42\\overline{153}$ is expressed as a fraction in the form $\\frac{x}{99900}$, what is the value of $x$?"
+    },
+    {
+      "id": "gsm8k-train/4780",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Last week, Arman worked 35 hours for 5 days at $10 per hour. This week, he will receive an increase of $0.5 per hour if he can work for 40 hours. Suppose he can work for 40 hours this week, how much will Arman receive for working two weeks?"
+    },
+    {
+      "id": "gsm8k-train/6229",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "It’s Meghan’s turn to pick up her team's coffee order. She needs 2 drip coffees that are $2.25 each and one double shot espresso that’s $3.50. She needs 2 lattes that are $4.00 and needs to add vanilla syrup to one of those for an additional $0.50. She also needs 2 cold brew coffees that are $2.50 each and 1 cappuccino for $3.50. How much is the coffee order?"
+    },
+    {
+      "id": "math-train/251",
+      "source": "math",
+      "answer_type": "integer",
+      "normalized_question": "Suppose that $f(x)$ and $g(x)$ are functions on $\\mathbb{R}$ such that the range of $f$ is $[-5,3]$, and the range of $g$ is $[-2,1]$. The range of $f(x) \\cdot g(x)$ is $[a,b]$. What is the largest possible value of $b$?"
+    },
+    {
+      "id": "gsm8k-train/3862",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "When Doctor Lindsay works in her office, she usually sees 4 adult patients and 3 child patients every hour. If the cost for an adult's office visit is $50, and the cost for a child's office visit is $25, how much money, in dollars, does Doctor Lyndsay receive in a typical 8-hour day for seeing all her patients?"
+    },
+    {
+      "id": "gsm8k-train/6020",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Carrie and her mom go to the mall to buy new clothes for school. Carrie buys 4 shirts, 2 pairs of pants, and 2 jackets. Each shirt costs $8. Each pair of pants costs $18. Each jacket costs $60. If Carrie’s mom pays for half of the total cost of all the clothes, how much does Carrie pay for the clothes?"
+    },
+    {
+      "id": "gsm8k-train/5215",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Anya washes 32 hairs down the drain when she washes her hair and brushes out half that amount when she brushes it. How many hairs does Anya have to grow back to always have one more hair than she started with after washing, brushing, and growing it?"
+    },
+    {
+      "id": "gsm8k-train/3576",
+      "source": "gsm8k",
+      "answer_type": "integer",
+      "normalized_question": "Billy and Margaret are competing with each other to see who can swim 10 laps the fastest. Billy swims his first 5 laps in 2 minutes, swims the next 3 laps in 4 minutes, swims the next lap in 1 minute, then swims his final lap. Margaret finishes swimming all of her laps in 10 minutes. Billy wins the competition by finishing his laps 30 seconds before Margaret does. In seconds, how long did it take Billy to swim his final lap?"
+    },
+    {
+      "id": "math-train/7012",
+      "source": "math",
+      "answer_type": "expression",
+      "normalized_question": "The line $y = \\frac{1}{2} x + 4$ is paramterized by the form \\[\\begin{pmatrix} x \\\\ y \\end{pmatrix} = \\begin{pmatrix} -7 \\\\ s \\end{pmatrix} + t \\begin{pmatrix} l \\\\ -5 \\end{pmatrix}.\\]Enter the ordered pair $(s,l).$"
+    },
+    {
+      "id": "math-train/5103",
+      "source": "math",
+      "answer_type": "expression",
+      "normalized_question": "A roll of quarters contains $40$ quarters and a roll of dimes contains $50$ dimes. James has a jar that contains $83$ quarters and $159$ dimes. Lindsay has a jar that contains $129$ quarters and $266$ dimes. James and Lindsay pool these quarters and dimes and make complete rolls with as many of the coins as possible. In dollars, how much are the leftover quarters and dimes worth?"
+    },
+    {
+      "id": "math-train/3533",
+      "source": "math",
+      "answer_type": "expression",
+      "normalized_question": "Find all values of $z$ such that $z^4 - 4z^2 + 3 = 0$. Enter all the solutions, separated by commas."
+    },
+    {
+      "id": "math-train/986",
+      "source": "math",
+      "answer_type": "expression",
+      "normalized_question": "Simplify $(2x)^4 + (3x)(x^3)$."
+    },
+    {
+      "id": "math-train/3849",
+      "source": "math",
+      "answer_type": "expression",
+      "normalized_question": "Multiply $(x^4 +18 x^2 + 324) (x^2-18)$."
+    },
+    {
+      "id": "math-train/3440",
+      "source": "math",
+      "answer_type": "fraction",
+      "normalized_question": "What is the value of $\\left(1 - \\frac{1}{2}\\right)\\left(1-\\frac{1}{3}\\right)\\left(1-\\frac{1}{4}\\right)\\left(1-\\frac{1}{5}\\right) \\dotsm \\left(1-\\frac{1}{50}\\right)$? Express your answer as a common fraction."
+    },
+    {
+      "id": "math-train/505",
+      "source": "math",
+      "answer_type": "fraction",
+      "normalized_question": "What is the value of the sum $\\frac{2}{3}+\\frac{2^2}{3^2}+\\frac{2^3}{3^3}+ \\ldots +\\frac{2^{10}}{3^{10}}$? Express your answer as a common fraction."
+    },
+    {
+      "id": "math-train/2368",
+      "source": "math",
+      "answer_type": "fraction",
+      "normalized_question": "Two cards are chosen at random from a standard 52-card deck. What is the probability that the first card is a heart and the second card is a 10?"
+    }
+  ],
+  "math_count": 16,
+  "gsm_count": 16,
+  "seeds": [
+    0,
+    1
+  ],
+  "temperature": 0.6,
+  "top_p": 0.95,
+  "top_k": 20,
+  "max_new_tokens": {
+    "math": 4096,
+    "gsm8k": 2048
+  },
+  "thinking": true,
+  "plans": [
+    {
+      "id": "math-train/110",
+      "subgoal1": "Evaluate the factor $(2+1)(2^2+1^2)$.",
+      "subgoal2": "Evaluate the factor $(2^4+1^4)$.",
+      "combine": "Multiply the two factor values."
+    },
+    {
+      "id": "gsm8k-train/5851",
+      "subgoal1": "the cricket consumption during the lower-temperature share of the period",
+      "subgoal2": "the cricket consumption during the higher-temperature share of the period",
+      "combine": "add the two period contributions"
+    },
+    {
+      "id": "gsm8k-train/2281",
+      "subgoal1": "the pancakes required for the girls",
+      "subgoal2": "the pancakes required for the son",
+      "combine": "add the two household requirements"
+    },
+    {
+      "id": "gsm8k-train/6467",
+      "subgoal1": "Miami's temperature relative to New York",
+      "subgoal2": "San Diego's temperature relative to New York",
+      "combine": "take the arithmetic mean of New York and the two derived temperatures"
+    },
+    {
+      "id": "gsm8k-train/1170",
+      "subgoal1": "the total delay from the red lights",
+      "subgoal2": "the total delay from construction",
+      "combine": "add both delays to the normal trip and compare the arrival time with school start"
+    },
+    {
+      "id": "gsm8k-train/2528",
+      "subgoal1": "the area of the rectangle",
+      "subgoal2": "the area of the square",
+      "combine": "subtract the smaller area from the larger area"
+    },
+    {
+      "id": "math-train/3947",
+      "subgoal1": "Solve the nested absolute-value equation in the case $60-2x\\ge0$, retaining only solutions valid for that case.",
+      "subgoal2": "Solve it in the case $60-2x<0$, retaining only solutions valid for that case.",
+      "combine": "Take the union of the valid case solutions and add them."
+    },
+    {
+      "id": "math-train/6412",
+      "subgoal1": "Rewrite $\\frac{9}{10}$ using a common denominator for the two addends.",
+      "subgoal2": "Rewrite $\\frac{5}{6}$ using that same common denominator.",
+      "combine": "Add the two rewritten fractions and reduce the result."
+    },
+    {
+      "id": "gsm8k-train/4597",
+      "subgoal1": "the mass contributed by the oil",
+      "subgoal2": "the mass contributed by the vinegar",
+      "combine": "add the two ingredient masses"
+    },
+    {
+      "id": "gsm8k-train/3721",
+      "subgoal1": "the total cost of the gummy bears",
+      "subgoal2": "the total cost of the chocolate chips",
+      "combine": "solve the total-cost equation after accounting for both known category costs"
+    },
+    {
+      "id": "math-train/1024",
+      "subgoal1": "Sum the first half of the displayed fractional terms, from $\\frac15$ through $\\frac55$.",
+      "subgoal2": "Sum the second half, from $\\frac65$ through $\\frac{10}{5}$.",
+      "combine": "Add the two partial sums."
+    },
+    {
+      "id": "gsm8k-train/6410",
+      "subgoal1": "the monthly cost of the required lines under the first plan",
+      "subgoal2": "the monthly cost of the required lines under the second plan",
+      "combine": "subtract the second plan cost from the first plan cost"
+    },
+    {
+      "id": "math-train/4730",
+      "subgoal1": "Evaluate the first integer whose divisibility is relevant: $121^2+233^2+345^2$.",
+      "subgoal2": "Evaluate the second integer: $120^2+232^2+346^2$.",
+      "combine": "Take the greatest common divisor of the two evaluated integers."
+    },
+    {
+      "id": "gsm8k-train/201",
+      "subgoal1": "the apples eaten during the first five weeks",
+      "subgoal2": "the apples eaten during the final two weeks",
+      "combine": "add the two interval totals and divide by the total number of weeks"
+    },
+    {
+      "id": "math-train/1982",
+      "subgoal1": "Compute the expected contribution from the favorable heads and tails outcomes.",
+      "subgoal2": "Compute the expected contribution from the edge outcome, including its loss sign.",
+      "combine": "Add the two expected contributions and apply the requested cent rounding."
+    },
+    {
+      "id": "gsm8k-train/5392",
+      "subgoal1": "the spears made from the saplings",
+      "subgoal2": "the spears made from the log",
+      "combine": "add the two source totals"
+    },
+    {
+      "id": "math-train/5531",
+      "subgoal1": "Convert the nonrepeating prefix of $0.42\\overline{153}$ into its contribution with denominator $99900$.",
+      "subgoal2": "Convert the repeating-block tail into its contribution with denominator $99900$.",
+      "combine": "Add the two numerator contributions."
+    },
+    {
+      "id": "gsm8k-train/4780",
+      "subgoal1": "the pay earned during the first week",
+      "subgoal2": "the pay earned during the second week",
+      "combine": "add the two weekly earnings"
+    },
+    {
+      "id": "gsm8k-train/6229",
+      "subgoal1": "the cost of the drip coffees and espresso order",
+      "subgoal2": "the cost of the latte, cold-brew, and cappuccino order",
+      "combine": "add the two order subtotals"
+    },
+    {
+      "id": "math-train/251",
+      "subgoal1": "Compute the endpoint product candidate formed from the nonnegative ends of the two ranges.",
+      "subgoal2": "Compute the endpoint product candidate formed from the negative ends of the two ranges.",
+      "combine": "Select the larger of the two candidate products."
+    },
+    {
+      "id": "gsm8k-train/3862",
+      "subgoal1": "the revenue from adult visits during the day",
+      "subgoal2": "the revenue from child visits during the day",
+      "combine": "add the two revenue streams"
+    },
+    {
+      "id": "gsm8k-train/6020",
+      "subgoal1": "the total cost of the shirts and pants",
+      "subgoal2": "the total cost of the jackets",
+      "combine": "add the clothing subtotals and apply the stated payment share"
+    },
+    {
+      "id": "gsm8k-train/5215",
+      "subgoal1": "the hairs lost while washing",
+      "subgoal2": "the hairs lost while brushing",
+      "combine": "add both losses and compare with the required one-hair increase"
+    },
+    {
+      "id": "gsm8k-train/3576",
+      "subgoal1": "Billy's elapsed time for the completed laps",
+      "subgoal2": "the target total time implied by Margaret's finish and the winning margin",
+      "combine": "subtract the completed-lap time from the target total time"
+    },
+    {
+      "id": "math-train/7012",
+      "subgoal1": "Derive the direction-vector condition required for the parametrized line to be parallel to $y=\\frac12x+4$.",
+      "subgoal2": "Impose the condition that the base point $(-7,s)$ lies on the given line.",
+      "combine": "Solve the two independent line conditions for the ordered pair $(s,l)$."
+    },
+    {
+      "id": "math-train/5103",
+      "subgoal1": "Find the leftover quarters after forming as many complete quarter rolls as possible.",
+      "subgoal2": "Find the leftover dimes after forming as many complete dime rolls as possible.",
+      "combine": "Add the monetary values of the two remainders."
+    },
+    {
+      "id": "math-train/3533",
+      "subgoal1": "Solve the polynomial through the branch $z^2=1$.",
+      "subgoal2": "Solve it through the branch $z^2=3$.",
+      "combine": "Take the union of the roots from the two branches."
+    },
+    {
+      "id": "math-train/986",
+      "subgoal1": "Expand the monomial contribution $(2x)^4$.",
+      "subgoal2": "Expand the monomial contribution $(3x)(x^3)$.",
+      "combine": "Add the two like-power contributions."
+    },
+    {
+      "id": "math-train/3849",
+      "subgoal1": "Multiply $(x^4+18x^2+324)$ by the $x^2$ term of the second factor.",
+      "subgoal2": "Multiply $(x^4+18x^2+324)$ by the constant term of the second factor.",
+      "combine": "Add the two expanded products and collect like powers."
+    },
+    {
+      "id": "math-train/3440",
+      "subgoal1": "Simplify the product of all numerators after rewriting each factor as a fraction.",
+      "subgoal2": "Simplify the product of all denominators from those same factors.",
+      "combine": "Divide the numerator product by the denominator product and cancel common factors."
+    },
+    {
+      "id": "math-train/505",
+      "subgoal1": "Sum the first five terms of the displayed finite geometric series.",
+      "subgoal2": "Sum the last five terms of that series.",
+      "combine": "Add the two partial sums."
+    },
+    {
+      "id": "math-train/2368",
+      "subgoal1": "Compute the probability through the case where the first card is both a heart and a ten.",
+      "subgoal2": "Compute it through the disjoint case where the first card is a heart but not a ten.",
+      "combine": "Add the two disjoint conditional probabilities."
+    }
+  ]
+}

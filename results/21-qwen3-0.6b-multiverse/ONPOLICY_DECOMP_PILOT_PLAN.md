@@ -55,3 +55,23 @@ Training and checkpoint selection wait until the data gate passes.
 The existing five best v4 and five best v5 models on `/checkpoints`
 remain protected; a future SFT must export intermediate BF16 steps
 and keep its top five after equal pilot evaluation.
+
+## Execution log
+
+After confirming no GPU process from the generic pilot remained,
+the 64-trace generator started once on `vcharkin-exp-vm-0` using
+`generate_onpolicy_masked.py --math-count 16 --gsm-count 16
+--seeds 0 1 --temperature 0.6 --top-p 0.95 --top-k 20
+--plans results/21-qwen3-0.6b-multiverse/data/onpolicy46_decomp_pilot_plans.jsonl`.
+Output and metadata are under `/work/exp21/onpolicy_decomp/` with
+prefix `recovery8_step8_planned_pilot64`. The shell initially
+backgrounded the setup chain, so writing the PID file raced with
+directory creation. The generator itself started exactly once;
+its actual PID `41383` was verified with `ps` and recorded in the
+PID file. Three output rows existed at that check. No pod or model
+was restarted.
+
+The run completed all 64 traces. [Full report](ONPOLICY_DECOMP_PILOT64_RUN.md):
+7/64 passed automatic filters, but only 1/64 was a strictly useful
+two-path block after independent adjudication. The predeclared gate
+failed; larger rollout and SFT for this recipe were stopped.

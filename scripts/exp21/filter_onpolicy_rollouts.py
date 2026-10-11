@@ -48,6 +48,11 @@ def answer_checker():
         if not candidate:
             return False
         candidate = normalize_superscripts(candidate)
+        # Some MATH keys display an exact value and then the requested rounded
+        # currency value (e.g. \frac23 \approx \$0.67). Score the displayed
+        # rounded value when the question asks for cents.
+        if r"\approx" in truth:
+            truth = truth.rsplit(r"\approx", 1)[-1].replace(r"\$", "").strip()
         target = parse(f"${truth}$")
         if verify(target, parse(f"${candidate}$")) or compute_score(f"Final Answer: {candidate}", truth)["acc"]:
             return True
