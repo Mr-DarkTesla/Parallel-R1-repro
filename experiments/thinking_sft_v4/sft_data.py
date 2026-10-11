@@ -6,7 +6,9 @@ Row schema (one per line):
 
 The assistant text is the concatenation of the segment texts; it starts with '<think>' and ends with a
 '<|im_end|>' segment. Every tag, <think>, </think> and <|im_end|> is its own segment. A branch is the run
-'<Path>', 'i:', body..., '</Path>' carrying block/path (1-based); every other segment has block=path=None.
+'<Path>', 'i:', body..., '</Path>' carrying block/path (1-based); every other segment has path=None, and
+block=None, except that the block-level segments of block b (<Parallel>, branches=, the count, <Plan>, the plan,
+</Plan>, </Parallel>, <Summary>, the summary, </Summary>) may carry block=b (the 4B generator writes them so).
 Runtime-inserted segments ('branches=', '<Plan>', '<Path>', 'i:', '</Parallel>', '<Summary>') have loss=False,
 everything else loss=True. Segments are encoded one by one (add_special_tokens=False) and concatenated, as the
 runtime inserts its pieces as separate encodes; the prompt is the Qwen3 chat template with enable_thinking=True.
@@ -118,21 +120,23 @@ def validate_row(row):
     n = len(segs)
     state = dict(pos=0, blocks=[])
 
-    def take(text=None, loss=True, block=None, path=None, what=''):
+    def take(text=None, loss=True, block=None, path=None, what='', level=None):
+        """level=b: a block-level segment of block b, whose block may be None or b (path must be None)."""
         _check(state['pos'] < n, 'truncated', what)
         s = segs[state['pos']]
         if text is not None:
             _check(s['text'] == text, 'unexpected_segment', f'want {text!r} got {s["text"][:40]!r} at {state["pos"]}')
         _check(s['loss'] is loss, 'bad_loss', f'{s["text"][:40]!r} at {state["pos"]} should have loss={loss}')
-        _check(s['block'] == block and s['path'] == path, 'bad_block_path',
+        _check((s['block'] == block or (level is not None and s['block'] == level)) and s['path'] == path,
+               'bad_block_path',
                f'{s["text"][:40]!r} at {state["pos"]}: ({s["block"]}, {s["path"]}) != ({block}, {path})')
         state['pos'] += 1
         return s['text']
 
-    def body(block=None, path=None, stop=None, what=''):
+    def body(block=None, path=None, stop=None, what='', level=None):
         texts = []
         while state['pos'] < n and segs[state['pos']]['text'] not in SPECIALS:
-            texts.append(take(None, True, block, path, what))
+            texts.append(take(None, True, block, path, what, level))
         _check(state['pos'] < n and segs[state['pos']]['text'] == stop, 'unterminated_' + what,
                segs[state['pos']]['text'][:40] if state['pos'] < n else 'end')
         text = ''.join(texts)
@@ -150,25 +154,25 @@ def validate_row(row):
         elif text == '<Parallel>':
             b = len(state['blocks']) + 1
             _check(b <= contract.MAX_BLOCKS, 'too_many_blocks')
-            take('<Parallel>')
-            take(contract.BRANCHES, loss=False)
-            count = take(None, True, what='count')
+            take('<Parallel>', level=b)
+            take(contract.BRANCHES, loss=False, level=b)
+            count = take(None, True, what='count', level=b)
             _check(count in contract.COUNTS, 'bad_count', count[:20])
             branches = int(count)
-            take('<Plan>', loss=False)
-            plan_text = body(stop='</Plan>', what='plan')
+            take('<Plan>', loss=False, level=b)
+            plan_text = body(stop='</Plan>', what='plan', level=b)
             plan = contract.parse_plan(plan_text, branches)
             _check(plan is not None, 'invalid_plan', plan_text[:120])
-            take('</Plan>')
+            take('</Plan>', level=b)
             for k in range(1, branches + 1):
                 take('<Path>', False, b, k)
                 take(contract.path_prefix(k), False, b, k, what='path_prefix')
                 body(b, k, stop='</Path>', what='path')
                 take('</Path>', True, b, k)
-            take('</Parallel>', loss=False)
-            take('<Summary>', loss=False)
-            body(stop='</Summary>', what='summary')
-            take('</Summary>')
+            take('</Parallel>', loss=False, level=b)
+            take('<Summary>', loss=False, level=b)
+            body(stop='</Summary>', what='summary', level=b)
+            take('</Summary>', level=b)
             state['blocks'].append(dict(kind=plan.kind, branches=branches))
         elif text in SPECIALS:
             raise DataError('unexpected_' + text.strip('<>/|'), f'at {state["pos"]}')
@@ -304,11 +308,14 @@ def build_dataset(rows, tokenizer, max_len, strict=False):
 
 def group_key(row):
     """Validation-split key shared by every row of one problem (parallel and sequential modes, several samples):
-    provenance problem_id when the generator records one, else the sha256 of the prompt."""
+    provenance problem_id when the generator records one, else provenance task_id, else the sha256 of the prompt."""
     provenance = row.get('provenance') if isinstance(row.get('provenance'), dict) else {}
     problem = provenance.get('problem_id')
     if problem not in (None, ''):
         return f'problem:{problem}'
+    task = provenance.get('task_id')
+    if task not in (None, ''):
+        return f'task:{task}'
     return 'prompt:' + hashlib.sha256(row['prompt'].encode()).hexdigest()
 
 
@@ -320,18 +327,24 @@ def id_in_val(key, frac):
 
 # ----------------------------------------------------------------------------------------------- batching
 
-def collate(samples, pad_id, dtype=torch.float32, device=None):
+def collate(samples, pad_id, dtype=torch.float32, device=None, pad_multiple=1):
     """Right-padded batch with an additive (B, 1, T, T) mask in `dtype` (0 = attend, finfo.min = blocked).
 
     Real queries see their sample's contract.graph_attention_mask and never a padded key; a padded query
-    attends to itself only (no fully masked row, so no NaN). Padded positions continue the last position."""
+    attends to itself only (no fully masked row, so no NaN). Padded positions continue the last position.
+    T is the longest length rounded up to `pad_multiple` (the trainer uses 16 on CUDA so SDPA's memory-efficient
+    kernel gets an aligned mask and does not copy it per layer; the extra positions are ordinary padding).
+
+    Memory: the mask is written directly in `dtype` (bf16 under autocast: T*T*2 bytes, 0.5 GB at T=16384; the
+    old fp32 build was 1 GB plus a (B, T, T) bool), with only one (L, L) bool per sample alive while building."""
     lengths = [s['length'] for s in samples]
     B, T = len(samples), max(lengths)
+    T = -(-T // pad_multiple) * pad_multiple
     input_ids = torch.full((B, T), pad_id, dtype=torch.long)
     labels = torch.full((B, T), IGNORE, dtype=torch.long)
     position_ids = torch.zeros((B, T), dtype=torch.long)
     control = torch.full((B, T), -1, dtype=torch.long)
-    allowed = torch.zeros((B, T, T), dtype=torch.bool, device=device)
+    mask = torch.full((B, 1, T, T), torch.finfo(dtype).min, dtype=dtype, device=device)
     for b, s in enumerate(samples):
         L = s['length']
         input_ids[b, :L] = torch.tensor(s['input_ids'])
@@ -340,11 +353,11 @@ def collate(samples, pad_id, dtype=torch.float32, device=None):
         last = s['position_ids'][-1]
         position_ids[b, L:] = torch.arange(last + 1, last + 1 + T - L)
         control[b, :L] = torch.tensor(s['control'])
-        allowed[b, :L, :L] = contract.graph_attention_mask(L, s['spans'], device=device)
+        allowed = contract.graph_attention_mask(L, s['spans'], device=device)
+        mask[b, 0, :L, :L].masked_fill_(allowed, 0.0)
+        del allowed
         pad = torch.arange(L, T, device=device)
-        allowed[b, pad, pad] = True
-    mask = torch.zeros((B, 1, T, T), dtype=dtype, device=device)
-    mask.masked_fill_(~allowed[:, None], torch.finfo(dtype).min)
+        mask[b, 0, pad, pad] = 0.0
     batch = dict(input_ids=input_ids, labels=labels, position_ids=position_ids, control=control)
     if device is not None:
         batch = {key: value.to(device) for key, value in batch.items()}

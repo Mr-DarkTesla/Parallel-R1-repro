@@ -8,7 +8,8 @@
     eager_reference    a from-scratch fp32 Qwen3 forward with an explicit visibility matrix (brute force)
     causal_control     plain causal forward: must DIFFER on later branches (shows the test is sensitive)
 
-Used by tests/test_sft.py (tiny model) and vm_selftest.py (real Qwen3-0.6B).
+Used by tests/test_sft.py (tiny model) and vm_selftest.py (real Qwen3-4B by default; clip_sample keeps the real
+rows short enough for the fp32 references).
 """
 import copy
 
@@ -51,6 +52,28 @@ def _blocks(sample):
     for span in sample['spans']:
         blocks.setdefault(span.block, []).append(span)
     return [sorted(spans) for _, spans in sorted(blocks.items())]
+
+
+def clip_sample(sample, max_tokens):
+    """Prefix of a parallel sample for the exactness checks: everything through its first block's branches and
+    then up to max_tokens (stopping before a second block). None if the first block's branches plus one token
+    do not fit. A prefix of a causal-with-isolation sequence is exact: its graph positions are the prefix of the
+    full ones, and every kept token attends only to kept tokens."""
+    blocks = _blocks(sample)
+    if not blocks:
+        return None
+    end = blocks[0][-1].end
+    limit = min(sample['length'], max_tokens)
+    if len(blocks) > 1:
+        limit = min(limit, blocks[1][0].start)
+    if limit <= end:
+        return None
+    clipped = dict(sample)
+    for key in ('input_ids', 'labels', 'control', 'position_ids'):
+        clipped[key] = sample[key][:limit]
+    clipped.update(spans=list(blocks[0]), length=limit, id=f'{sample["id"]}[:{limit}]',
+                   n_loss=sum(label != -100 for label in clipped['labels']))
+    return clipped
 
 
 def path_reference(model, sample, logits):

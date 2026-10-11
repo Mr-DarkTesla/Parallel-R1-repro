@@ -1,13 +1,23 @@
-"""GPU-VM self-test of the SFT data path and graph forward on the REAL Qwen3-0.6B. Exit code 1 on any failure.
+"""GPU-VM self-test of the SFT data path and graph forward on the REAL model (default Qwen/Qwen3-4B at the pinned
+revision, common.BASE_MODEL / BASE_REVISION). Exit code 1 on any failure.
 
-    python vm_selftest.py [--data sft_train.jsonl] [--rows 200] [--show 3] [--model Qwen/Qwen3-0.6B]
+    python vm_selftest.py [--data train.jsonl] [--rows 200] [--show 3]
+    python vm_selftest.py --model Qwen/Qwen3-0.6B            # the 0.6B snapshot (its pinned revision is used)
+    python vm_selftest.py --model /path/to/ckpt --revision ''  # a local directory
 
-Checks: ensure_tags gives the eight tags ids 151669..151676 in contract.TAGS order without a resize; <think>,
-</think>, <|im_end|>, the counts 2-4 are single tokens; the chat template ends with '<|im_start|>assistant\\n'
-for enable_thinking=True; the transformers 4D-mask semantics; the first --rows JSONL rows tokenize (drop reasons
-printed, a few samples rendered with no-loss tokens in [[...]]); the graph forward equals the independent
-references (exactness.py) in fp32 (atol 1e-3) and reports bf16 / autocast deviations; one gradient-checkpointed
-bf16-autocast training step is finite.
+Checks: ensure_tags adds the eight tags as consecutive ids right after the base vocabulary, in contract.TAGS
+order (tags.py: add_special_tokens appends at len(tokenizer)); for the Qwen3 vocabulary (len 151669, which the 4B
+and 0.6B tokenizers share) that is 151669..151676 inside the padded 151936 embedding rows without a resize, and
+the Qwen3 constants (<think> 151667, </think> 151668, <|im_end|> 151645) are checked too. Another tokenizer gets
+its actual ids reported ([INFO]) instead of failing on those constants. Then: <think>, </think>, <|im_end|> and
+the counts 2-4 are single tokens; the chat template ends with '<|im_start|>assistant\\n' for enable_thinking=True;
+the transformers 4D-mask semantics; the first --rows JSONL rows tokenize (drop reasons printed, a few samples
+rendered with no-loss tokens in [[...]]); the graph forward equals the independent references (exactness.py) in
+fp32 (atol 1e-3) on the built-in row and on up to --exact-rows real parallel rows clipped to --max-exact-tokens
+(exactness.clip_sample: first block + continuation; bounded so the fp32 4B references fit), and reports bf16 /
+autocast deviations; one gradient-checkpointed bf16-autocast training step with the chunked loss is finite. All
+forwards use the trainer's SDPA kernel choice (--sdpa-backend efficient: memory-efficient kernel only).
+Memory: fp32 4B weights 16 GB + grads 16 GB (no optimizer); the long-row fit is sft_train.py --memory-report.
 """
 import argparse
 import json
@@ -22,11 +32,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import exactness  # noqa: E402
 import sft_data as D  # noqa: E402
 import sft_train  # noqa: E402
-from common import BASE_MODEL, BASE_REVISION, contract  # noqa: E402
+from common import BASE_MODEL, contract, default_revision  # noqa: E402
 from tags import ensure_tags  # noqa: E402
 
-REVISION = BASE_REVISION
+# Qwen3 vocabulary (shared by the 0.6B and 4B tokenizers): base length, padded embedding rows, control ids.
 FIRST_TAG_ID = 151669
+QWEN3_ROWS = 151936
+QWEN3_IDS = {'<think>': 151667, '</think>': 151668, '<|im_end|>': 151645}
 BUILTIN = (
     '<think>\nOkay, we need all real x with x^2 - 5x + 6 = 0 and then the sum of the roots.\n\n'
     '<Parallel>branches=3<Plan>methods\n1: factor the quadratic\n2: use the quadratic formula\n'
@@ -53,14 +65,19 @@ class Checks:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', default=BASE_MODEL)
-    parser.add_argument('--revision', default=REVISION, help="'' for a local --model path")
+    parser.add_argument('--revision', default=None,
+                        help="HF revision (default: the pinned one for a known model id); '' for a local path")
     parser.add_argument('--data', type=Path, default=None)
     parser.add_argument('--rows', type=int, default=200)
     parser.add_argument('--show', type=int, default=3)
-    parser.add_argument('--max-len', type=int, default=8192)
+    parser.add_argument('--max-len', type=int, default=16384)
     parser.add_argument('--attn', default='sdpa', choices=('sdpa', 'eager'))
     parser.add_argument('--atol', type=float, default=1e-3)
-    parser.add_argument('--max-exact-tokens', type=int, default=2048, help='skip longer data rows in the exactness test')
+    parser.add_argument('--max-exact-tokens', type=int, default=3072,
+                        help='real rows are clipped to this many tokens for the fp32 exactness test')
+    parser.add_argument('--exact-rows', type=int, default=2, help='real parallel rows in the exactness test')
+    parser.add_argument('--sdpa-backend', choices=('efficient', 'auto'), default='efficient',
+                        help='as sft_train: efficient = only the memory-efficient SDPA kernel on CUDA')
     args = parser.parse_args()
     check = Checks()
     from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -68,31 +85,48 @@ def main():
     torch.backends.cudnn.allow_tf32 = False
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     check(device.type == 'cuda', 'cuda available')
+    print(f'[INFO] sdpa backends: {sft_train.configure_sdpa(args.sdpa_backend, device.type == "cuda")}')
     try:
         check(True, 'transformers 4D-mask semantics', sft_train.check_transformers())
     except AssertionError as error:
         check(False, 'transformers 4D-mask semantics', str(error))
 
-    revision = args.revision or None
+    revision = default_revision(args.model) if args.revision is None else (args.revision or None)
+    print(f'model {args.model} revision {revision}')
     tokenizer = AutoTokenizer.from_pretrained(args.model, revision=revision)
     model = AutoModelForCausalLM.from_pretrained(args.model, revision=revision, torch_dtype=torch.float32,
                                                  attn_implementation=args.attn)
-    check(len(tokenizer) == FIRST_TAG_ID, 'base tokenizer length', len(tokenizer))
+    base_len = len(tokenizer)
+    qwen3 = base_len == FIRST_TAG_ID
+    kind = 'Qwen3 vocabulary' if qwen3 else 'NOT the Qwen3 vocabulary: ids are reported, Qwen3 constants not enforced'
+    print(f'[INFO] base tokenizer length {base_len} ({kind}), embedding rows '
+          f'{model.get_input_embeddings().weight.size(0)}')
     report = ensure_tags(tokenizer, model)
     print(json.dumps({k: v for k, v in report.items() if k != 'token_ids'}, indent=1))
     ids = [report['tag_ids'][tag] for tag in contract.TAGS]
-    check(ids == list(range(FIRST_TAG_ID, FIRST_TAG_ID + 8)), 'tag ids 151669..151676 in TAGS order', ids)
-    check(report['status'] == 'initialized' and not report['resized'] and report['rows'] == 151936,
-          'tags fit the padded rows', f'{report["status"]} rows={report["rows"]}')
+    check(ids == list(range(base_len, base_len + 8)), f'tag ids {base_len}..{base_len + 7} (after the base vocab) '
+          f'in TAGS order', ids)
+    print(f'[INFO] tag ids {dict(zip(contract.TAGS, ids))}; Qwen3 expectation 151669..151676: '
+          f'{"match" if ids == list(range(FIRST_TAG_ID, FIRST_TAG_ID + 8)) else "DIFFERENT"}')
+    check(report['status'] == 'initialized', 'tags added and initialized', report['status'])
+    if qwen3:
+        check(not report['resized'] and report['rows'] == QWEN3_ROWS, 'tags fit the padded rows (151936)',
+              f'resized={report["resized"]} rows={report["rows"]}')
+    else:
+        print(f'[INFO] rows {report["rows_before"]} -> {report["rows"]} (resized={report["resized"]})')
     # computed from the model: ensure_tags reports 'tied' only when it initialized the rows
     output = model.get_output_embeddings()
     tied = output is None or output.weight.data_ptr() == model.get_input_embeddings().weight.data_ptr()
     check(tied, 'tied embeddings')
     check(report['max_offdiag_cos'] < 0.99, 'tag rows distinct', f'max cos {report["max_offdiag_cos"]:.3f}')
     tokens = contract.token_ids(tokenizer)
-    check(tokens['<think>'] == 151667 and tokens['</think>'] == 151668, '<think>/</think> ids',
-          (tokens['<think>'], tokens['</think>']))
-    check(tokenizer.encode('<|im_end|>', add_special_tokens=False) == [151645], '<|im_end|> single token')
+    im_end = tokenizer.encode('<|im_end|>', add_special_tokens=False)
+    check(len(im_end) == 1, '<|im_end|> single token', im_end)
+    actual = {'<think>': tokens['<think>'], '</think>': tokens['</think>'], '<|im_end|>': im_end[0]}
+    if qwen3:
+        check(actual == QWEN3_IDS, 'Qwen3 control ids <think>/</think>/<|im_end|>', actual)
+    else:
+        print(f'[INFO] control ids {actual} (Qwen3: {QWEN3_IDS})')
     counts = contract.count_ids(tokenizer)
     check(len(counts) == 3, 'counts 2-4 single tokens', counts)
     print('branches= ->', contract.branches_ids(tokenizer), [tokenizer.decode([i]) for i in contract.branches_ids(tokenizer)])
@@ -123,8 +157,11 @@ def main():
             text = D.render(s, tokenizer)
             print(f'--- {s["id"]} ({s["mode"]}, {s["length"]} tokens, {s["n_loss"]} in loss)\n'
                   f'{text if len(text) < 6000 else text[:3000] + " ..... " + text[-2500:]}')
-        parallel = [s for s in data if s['mode'] == 'parallel' and s['length'] <= args.max_exact_tokens]
-        samples += parallel[:2]
+        clipped = [exactness.clip_sample(s, args.max_exact_tokens) for s in data if s['mode'] == 'parallel']
+        clipped = [s for s in clipped if s is not None]
+        print(f'[INFO] {len(clipped)} real parallel rows have their first block within {args.max_exact_tokens} '
+              f'tokens; {min(len(clipped), args.exact_rows)} used for exactness')
+        samples += clipped[:args.exact_rows]
 
     model.to(device).eval()
     pad = vocab.pad_id
@@ -152,7 +189,7 @@ def main():
     model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant': False})
     batch = D.collate(samples[:2] if len(samples) > 1 else samples, pad, dtype=torch.bfloat16, device=device)
     with torch.autocast(device_type=device.type, dtype=torch.bfloat16):
-        losses, _ = sft_train.token_losses(model, batch)
+        losses, _ = sft_train.token_losses(model, batch, chunk=512)
     losses.mean().backward()
     norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1e9).item()
     check(torch.isfinite(losses).all().item() and 0 < norm < float('inf'), 'autocast + grad-ckpt train step',

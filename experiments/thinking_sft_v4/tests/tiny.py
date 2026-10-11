@@ -1,4 +1,4 @@
-"""Tiny offline stand-ins for Qwen3-0.6B: a byte-level BPE tokenizer with a Qwen3-like ChatML template and a
+"""Tiny offline stand-ins for Qwen3 (0.6B / 4B): a byte-level BPE tokenizer with a Qwen3-like ChatML template and a
 randomly initialized Qwen3ForCausalLM. Shared by the SFT tests and the generator tests (stable API):
 
     build_tiny_tokenizer() -> PreTrainedTokenizerFast   (the eight contract tags NOT added yet)

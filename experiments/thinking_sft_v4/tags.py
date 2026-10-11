@@ -1,8 +1,10 @@
 """Add the eight contract tags to a tokenizer + model and initialize their embedding rows.
 
 The tags are added exactly as the RL side does (experiments/qwen06/prepare_think.py):
-tokenizer.add_special_tokens({'additional_special_tokens': list(contract.TAGS)}), so on Qwen3-0.6B they become
-151669..151676 in contract.TAGS order and fit into the padded embedding rows (151936) without a resize.
+tokenizer.add_special_tokens({'additional_special_tokens': list(contract.TAGS)}): they are appended at
+len(tokenizer), so on the Qwen3 vocabulary (Qwen3-4B and Qwen3-0.6B share it: 151669 tokens) they become
+151669..151676 in contract.TAGS order and fit into the padded embedding rows (151936) without a resize. Another
+tokenizer gets len(tokenizer)..len(tokenizer)+7 (check_ids only requires consecutive ids in TAGS order).
 
 Each new tag row (input embedding, and lm_head when untied) starts at the mean of the rows of the tag's text
 pieces ('<', 'Parallel', '>' encoded separately) plus seeded gaussian noise scaled to the mean row std, so tags

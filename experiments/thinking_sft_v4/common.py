@@ -15,10 +15,18 @@ CONTRACT_PATH = Path(os.environ.get(
 EXPECTED_SHA256 = os.environ.get(
     'THINK_CONTRACT_SHA256', '2503e4a330752554464cceab138b9b65057ef2e64939c8632b9a4fe91d6e346e')
 
-# Hugging Face snapshot of Qwen/Qwen3-0.6B the VM self-test and the trainer use by default.
-BASE_MODEL = 'Qwen/Qwen3-0.6B'
-BASE_REVISION = 'c1899de289a04d12100db370d81485cdf75e47ca'
+# Hugging Face snapshots the VM self-test and the trainer use by default (thinking mode, post-trained). The 4B
+# model is the current target; the 0.6B one stays usable with --model Qwen/Qwen3-0.6B (its revision is filled in).
+BASE_MODEL = 'Qwen/Qwen3-4B'
+BASE_REVISION = '1cfa9a7208912126459214e8b04321603b3df60c'
+SMALL_MODEL = 'Qwen/Qwen3-0.6B'
+SMALL_REVISION = 'c1899de289a04d12100db370d81485cdf75e47ca'
+KNOWN_REVISIONS = {BASE_MODEL: BASE_REVISION, SMALL_MODEL: SMALL_REVISION}
 
+
+def default_revision(model):
+    """Pinned revision for a known HF id, None otherwise (local paths, other models)."""
+    return KNOWN_REVISIONS.get(str(model))
 
 def load_contract(path=CONTRACT_PATH):
     data = Path(path).read_bytes()
