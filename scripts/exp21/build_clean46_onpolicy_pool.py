@@ -42,6 +42,12 @@ def main():
     clean_ids = set(json.loads(args.clean46_manifest.read_text())["accepted_ids"])
     if len(clean_ids) != 46:
         raise ValueError("expected 46 clean46 positive IDs")
+    train_path = args.candidates.parent / "qwen4b_onpolicy189_clean46_tagged_train.parquet"
+    val_path = args.candidates.parent / "qwen4b_onpolicy189_tagged_val.parquet"
+    full_train_ids = set(pd.read_parquet(train_path)["id"])
+    val_ids = set(pd.read_parquet(val_path)["id"])
+    if not clean_ids <= full_train_ids:
+        raise ValueError("clean46 positive IDs are not all in the complete train set")
 
     holdout_ids, holdout_questions = set(), set()
     for source in ("gsm8k", "math"):
@@ -64,6 +70,8 @@ def main():
         raise ValueError("selection accounting or duplicate IDs failed")
     if any(r["id"] in holdout_ids or normalize(r["question"]) in holdout_questions for r in kept):
         raise ValueError("selected question overlaps masked holdout")
+    if any(r["id"] in val_ids for r in kept):
+        raise ValueError("selected question overlaps clean46 validation")
     if len(kept) < 100:
         raise ValueError(f"too few distinct unseen questions: {len(kept)}")
 
@@ -83,6 +91,13 @@ def main():
         "selected_count": len(kept),
         "selected_by_source": dict(Counter(row["source"] for row in kept)),
         "selected_ids": [row["id"] for row in kept],
+        "complete_clean46_train": str(train_path),
+        "complete_clean46_val": str(val_path),
+        "replay_seen_ids": [row["id"] for row in kept if row["id"] in full_train_ids],
+        "replay_seen_by_source": dict(Counter(row["source"] for row in kept if row["id"] in full_train_ids)),
+        "fully_unseen_ids": [row["id"] for row in kept if row["id"] not in full_train_ids],
+        "fully_unseen_by_source": dict(Counter(row["source"] for row in kept if row["id"] not in full_train_ids)),
+        "validation_overlap": 0,
         "gold_answers_in_prompt": False,
     }
     args.audit.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
