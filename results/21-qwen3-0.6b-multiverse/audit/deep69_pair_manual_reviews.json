@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "archives": {
+    "deep69_tagged_p8_step8_masked_pilot.tgz": {
+      "review_complete": true,
+      "expected_external_correct": 28,
+      "external_overrides": [
+        {
+          "key": ["GSM8K_DEV", "gsm8k-train/228", 0],
+          "value": true,
+          "evidence_file": "audit/deep69_tagged_p8_step8_answer_review.md",
+          "evidence_note": "Closed think is followed by the correct external answer 20 bags; robust parser missed it."
+        }
+      ],
+      "strict_useful": []
+    }
+  }
+}
