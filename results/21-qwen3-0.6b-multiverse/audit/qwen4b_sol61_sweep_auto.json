@@ -67,6 +67,70 @@
         }
       }
     },
+    "plain_step4": {
+      "metrics": {
+        "strict": 30.0,
+        "robust": 34.0,
+        "block": 0.0,
+        "truncated": 4.0,
+        "tokens": 1299.25,
+        "forward_passes": 1299.25
+      },
+      "vs_initial": {
+        "strict": {
+          "delta": 15.0,
+          "ci95": [
+            -5.0,
+            35.0
+          ],
+          "discordant": {
+            "lost": 6,
+            "gained": 12
+          },
+          "mcnemar_exact_p": 0.237884521484375
+        },
+        "robust": {
+          "delta": 2.5,
+          "ci95": [
+            -12.5,
+            17.5
+          ],
+          "discordant": {
+            "lost": 5,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "block": {
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "truncated": {
+          "delta": -7.5,
+          "ci95": [
+            -20.0,
+            5.0
+          ]
+        },
+        "tokens": {
+          "delta": -366.68,
+          "ci95": [
+            -578.48,
+            -163.99
+          ]
+        },
+        "forward_passes": {
+          "delta": -366.68,
+          "ci95": [
+            -578.48,
+            -163.99
+          ]
+        }
+      }
+    },
     "plain_step8": {
       "metrics": {
         "strict": 29.0,
@@ -325,6 +389,60 @@
     }
   },
   "pairwise": {
+    "step4": {
+      "strict": {
+        "delta": -7.5,
+        "ci95": [
+          -25.0,
+          10.0
+        ],
+        "discordant": {
+          "lost": 8,
+          "gained": 5
+        },
+        "mcnemar_exact_p": 0.5810546875
+      },
+      "robust": {
+        "delta": -5.0,
+        "ci95": [
+          -20.0,
+          7.5
+        ],
+        "discordant": {
+          "lost": 5,
+          "gained": 3
+        },
+        "mcnemar_exact_p": 0.7265625
+      },
+      "block": {
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "truncated": {
+        "delta": 7.5,
+        "ci95": [
+          -2.5,
+          17.5
+        ]
+      },
+      "tokens": {
+        "delta": 300.93,
+        "ci95": [
+          88.02,
+          517.13
+        ]
+      },
+      "forward_passes": {
+        "delta": 300.93,
+        "ci95": [
+          88.02,
+          517.13
+        ]
+      }
+    },
     "step8": {
       "strict": {
         "delta": -5.0,
