@@ -13,7 +13,6 @@ trap 'rc=$?; printf "%s status=%s\n" "$(date -Is)" "$rc" > "$marker"' EXIT
 
 test -s "$model/config.json"
 test -s /checkpoints/exp21-global-top5/GLOBAL_TOP5.json
-test -s /work/exp21/qwen4b_clean46/EVAL_DONE
 if pgrep -f 'torchrun.*fsdp_parallel_sft_trainer|generate_masked_multiverse.py|generate_onpolicy_masked.py|scripts/instruct4b_eval/generate.py|scripts/bench/generate_plain.py' >/dev/null; then
     echo 'another GPU job is active on the owned pod' >&2
     exit 1
