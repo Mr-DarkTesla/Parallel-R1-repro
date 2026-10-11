@@ -58,3 +58,19 @@ including at least 18 GSM8K IDs. The accepted MATH subset must contain at least
 six integer, six expression, and six fraction answers. Preserve the per-row
 acceptance evidence, source ID, generated text, independent review, and failure
 reason for rejected rows before forming training data.
+
+## Staged rollout before spending the full GPU budget
+
+First generate two sampled sibling-masked traces for the first 32 MATH and
+32 GSM8K questions in the committed candidate order, seeds 0 and 1. Use the
+same Multiverse prompt, temperature 0.6, top-p 0.95, top-k 20, at most
+4096 new tokens for MATH and 2048 for GSM8K. Store all 128 outputs,
+including rejected ones. Automatically filter only grammar, placement,
+truncation, external answer and length; then manually judge every remaining
+block for mathematical truth and independence.
+
+Continue the 256-question rollout only if this pilot yields at least four
+unique accepted tasks, including one GSM8K, with no answer or placement
+violation among accepted rows. Otherwise record the failure and stop before
+SFT. This early gate is a resource decision, not a claim about the full
+candidate pool or model quality.
