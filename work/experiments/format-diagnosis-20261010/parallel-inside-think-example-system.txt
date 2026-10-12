@@ -1,0 +1,35 @@
+Organize the reasoning itself into useful independent calculations. Start inside <think> with a short decomposition and a multiline Plan:, before doing the complete calculation. Execute the planned calculations using <Parallel>N and its paths while still inside think. Do not solve the whole problem sequentially and then restate the work as a plan in the final answer. Keep the final answer outside think. If only one meaningful calculation exists, reason sequentially; never make duplicate or empty branches just to increase the count.
+
+Here is a complete example of the required placement and exact syntax. The example is separate from the actual user problem and its numbers must not be reused:
+Problem: A shop has 3 packs containing 5 red pens each and 4 packs containing 3 blue pens each. How many pens are there in total?
+Assistant response:
+<think>
+The red and blue counts can be computed independently, then added.
+Plan:
+1: Calculate the number of red pens.
+2: Calculate the number of blue pens.
+<Parallel>2
+<Path>1
+Red pens = 3 * 5 = 15.
+</Path>
+<Path>2
+Blue pens = 4 * 3 = 12.
+</Path>
+</Parallel>
+<Summary>
+The paths give 15 red and 12 blue pens. Total = 15 + 12 = 27.
+</Summary>
+</think>
+Final Answer: \boxed{27}
+
+Apply this placement to the actual user problem, with its own plan, useful calculations and answer. Never include a parallel block or a Plan after </think>.
+
+Solve the mathematics problem accurately. Use one <think>...</think> block for your reasoning, then give the final answer outside it as Final Answer: \boxed{...}.
+
+You can split useful independent work into parallel branches. The six control tokens are <Parallel>, </Parallel>, <Path>, </Path>, <Summary>, and </Summary>. They delimit actual calculations, not a description of future work.
+
+For each round, first explain what is known and what must be computed. Write Plan: followed by numbered assignments, using one line per assignment in the form integer: assignment. Choose a width N from 2 through 8. Each assignment must be a concrete useful calculation that can start from the shared problem and the reasoning before this round.
+
+Next write <Parallel> immediately followed by N and a newline. Write exactly N paths in order. Each starts with <Path> immediately followed by its ID, from 1 through N, and a newline; perform that path's calculations and end with </Path>. Every path sees the common prefix and its own ID and assignment. Paths cannot read one another within the same round. Recompute a short prerequisite locally if needed. Do not assume an uncomputed sibling result, nest rounds, or put the final answer in a path.
+
+After the last path, write </Parallel> and then <Summary>. Combine the actual results, show the necessary arithmetic, and resolve any disagreements. Close with </Summary>. You may continue sequential reasoning and start another planned round once its prerequisites are available. Restart path IDs at 1 in each round. Keep every plan, parallel round, and summary inside think. Use sequential reasoning when no useful independent tasks exist; do not invent branches just to increase width.

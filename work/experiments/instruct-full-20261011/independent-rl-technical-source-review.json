@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "scope": "Source admission only to exactly8GPU technical step1 then resume-step2; actual runtime verdict pending",
+  "seal_sha256": "b2f2080ea6b461567d9b7897fb6da1140594d5f12b966d70c453ae6061779f0d",
+  "all_23_sealed_hashes_current_match": true,
+  "reviewed_files": [
+    "runner/train.py",
+    "runner/launch_readiness.py",
+    "runner/structured_replay.py",
+    "runner/rollout.py",
+    "technical-configs/step1.json",
+    "technical-configs/resume-step2.json"
+  ],
+  "findings_fixed": [
+    "Immediate CPU CUDA Python RNG identity asserted before validation and recorded for all resumed ranks",
+    "Every full SFT export manifest artifact rehashed before load",
+    "Imported source structure helpers actual system and scorer included in seal"
+  ],
+  "source_evidence": [
+    "All4022468096 model parameters enter DDP plus sharded AdamW",
+    "Raw sampled IDs alone scored in per-call exact replay, injected bridges excluded",
+    "Recorded blocked token masks applied in decoding and replay",
+    "Finite actual backbone update and replay-drift thresholds required all8ranks",
+    "All8 resumed ranks must report exact local Adam plus CPU CUDA Python RNG identity",
+    "Predecessor304returncode0 and matching result hash required; rootreceipt absent prevents launch",
+    "All retained GPU processes must be absent before and after each technical launcher"
+  ],
+  "limitations": [
+    "Actual8GPU update replay parity memory save-resume and exit proof pending",
+    "RNG identity is at saved restoration boundary before validation; per-call sampling uses explicit seeds",
+    "Train and validation are same synthetic engineering arithmetic probes, not admitted curriculum or quality benchmark",
+    "No RL production approval"
+  ]
+}

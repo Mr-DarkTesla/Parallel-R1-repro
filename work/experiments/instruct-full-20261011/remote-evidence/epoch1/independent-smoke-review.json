@@ -1,0 +1,57 @@
+{
+  "verdict": "PASS",
+  "scope": "Engineering admission to full 4B Instruct SFT production; not quality or downstream RL production verdict",
+  "trainable_parameters": 4022468096,
+  "smoke_metrics": [
+    {
+      "step": 1,
+      "loss": 0.8937490582466125,
+      "grad_norm": 37.76103973388672,
+      "transformer_update_l2": 0.0009024688042700291,
+      "full_model": true
+    },
+    {
+      "step": 2,
+      "loss": 1.092498540878296,
+      "grad_norm": 12.908525466918945,
+      "transformer_update_l2": 0.00032585894223302603,
+      "full_model": true
+    }
+  ],
+  "export_tensor_count": 398,
+  "export_changed_tensor_count": 344,
+  "changed_layer_tensors": 343,
+  "actual_fsdp_isolation": {
+    "passed": true,
+    "sibling_logits_max_abs_diff": 0.0,
+    "merged_suffix_max_abs_diff": 0.85546875,
+    "perturbed_index": 3343,
+    "compared_third_span": [
+      3607,
+      3739
+    ],
+    "source_id": "gsm_infinite/526",
+    "actual_full_fsdp_model": true,
+    "rank": 0
+  },
+  "cpu_longest_examples": 32,
+  "source_review": "Core trainer/compiler/dataset unchanged; run_train.sh reread after isolated probe mode and GPU inventory additions; production flags remain identical",
+  "evidence_sha256": {
+    "smoke-export-proof.json": "f38b6a4ac825dbb2b815b48a88a70cef38db61d1e9812d35e91ff428993095b1",
+    "runs/isolation/isolation-proof.json": "bc16fe875fb06ae0acd0136edc90eb6327bfdadd8bdf782b7e31ef11dfae832e",
+    "independent-review/cpu-source-review.json": "8a05dd639a6286b1c01a6fb7381238b33c15a674fcc0f3e497d33408ee844024",
+    "runs/smoke/initialization-proof.json": "d947e2c3304c6222ab534270afa266e38d2b142f066624de368fb55a4afa33fe",
+    "runs/smoke/metrics.jsonl": "a2c4464400e1b8b9daaea0606c75b1193af755a37848a5a6c929348d655778e8",
+    "run_train.sh": "8f87c15be700b093742535af2c24a1ae8e3b6d2b333697854e248327cba82be1",
+    "isolation.py": "54fabe90697f5618d08dd9bee529f64943ac420b4a3c4ed5647463a29a87ed03"
+  },
+  "production_conditions": [
+    "Use same hashed source/data/native Instruct tokenizer and checkpoint",
+    "Matched SFT quality comparison precedes RL production",
+    "Deep new data remain quarantined until actual independent substantive audit"
+  ],
+  "coverage_note": "Epoch1 currently 42 optimizer batches x64 =2688 sample exposures of2700; full means all model parameters trained",
+  "reviewer_gpu_jobs": 0,
+  "passed": true,
+  "engineering_report_sha256": "dd5877d2687929b52c02d42211304e931da8b709d76ae9414b063eda97dac271"
+}

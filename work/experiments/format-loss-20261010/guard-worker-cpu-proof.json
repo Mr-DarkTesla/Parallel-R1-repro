@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "CPU_only": true,
+  "GPU_launched": false,
+  "at": "2026-10-10T09:40:29.749651+00:00",
+  "cases": [
+    {
+      "phase": "main",
+      "output": [
+        151668,
+        151643
+      ],
+      "passed": true
+    },
+    {
+      "phase": "width",
+      "output": [
+        18,
+        198
+      ],
+      "passed": true
+    },
+    {
+      "phase": "path",
+      "output": [
+        151670
+      ],
+      "passed": true
+    },
+    {
+      "phase": "summary",
+      "output": [
+        151674
+      ],
+      "passed": true
+    }
+  ],
+  "tokenizer": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/runs/production/final",
+  "worker_sha256": "f42310063082cc6153c092c068623a86430c5b04c8428907174f19cd4d6edf4f",
+  "limitation": "Scripted CPU logits and mocked attention/ownership; no GPU/model correctness claim"
+}

@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "at": "2026-10-10T09:30:45.088678+00:00",
+  "CPU_only": true,
+  "GPU_launched": false,
+  "split_counts": {
+    "train": 2700,
+    "val": 300
+  },
+  "counts": {
+    "examples": 3000,
+    "supervised_tokens": 2399025,
+    "structural_tokens": 82341,
+    "forced_or_prompt_tokens": 3942537
+  },
+  "structural_fraction": 0.034322693594272674,
+  "special_token_counts": {
+    "<|im_start|>": {
+      "excluded": 9000
+    },
+    "<Parallel>": {
+      "excluded": 6000,
+      "format_supervised": 3486
+    },
+    "</Parallel>": {
+      "excluded": 9486
+    },
+    "<Path>": {
+      "excluded": 17475
+    },
+    "</Path>": {
+      "excluded": 6000,
+      "format_supervised": 11475
+    },
+    "<Summary>": {
+      "excluded": 9486
+    },
+    "</Summary>": {
+      "excluded": 6000,
+      "format_supervised": 3486
+    },
+    "<|im_end|>": {
+      "excluded": 6000,
+      "format_supervised": 3000
+    }
+  },
+  "shift": "TARGET weights shift once [1:] at CE; numerical gradient test PASS",
+  "normalization": "sum weighted CE divided by sum weights within each sample; equal sample weighting unchanged",
+  "phases": {
+    "epoch1": "sampled structural tokens only",
+    "epoch2_3": "structural x5/content x1"
+  },
+  "sha256": {
+    "baseline_train.py": "bdeabce08d10423708fb0b21a2319b755616df34e5c8070145815b9d6ba0b28d",
+    "format_loss.py": "6e11b33bd9eb1eecb2c9e090c03b05b36b932c2b7aae361485f55f1a2c852d0e",
+    "prepare_variant.py": "03ae948afc1e5276d00f9270995038c81a488410095f114c1168d5aaac2a495f",
+    "test_format_loss.py": "974349f87f257c05e99976089d84b03ce6d02822fc046bd2938af5dcf0972f01",
+    "train.py": "44066115cc380a6dd96b38a63857799d83259b25fac00d33daac1288473ea290"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "source": {
+    "model": "Qwen/Qwen3-4B-Base",
+    "revision": "906bfd4b4dc7f14ee4320094d8b41684abff8539"
+  },
+  "old_recipe": "Full model FULL_SHARD SFT, not token-row warmup",
+  "native_vocab_len": 151669,
+  "new_vocab_len": 151675,
+  "model_vocab_size": 151936,
+  "added_tags": {
+    "<Path>": 151669,
+    "</Path>": 151670,
+    "<Parallel>": 151671,
+    "</Parallel>": 151672,
+    "<Summary>": 151673,
+    "</Summary>": 151674
+  },
+  "changed_initial_rows": {
+    "model.embed_tokens.weight": {
+      "tag_ids": [
+        151669,
+        151670,
+        151671,
+        151672,
+        151673,
+        151674
+      ],
+      "rows_sha256": "f8930bb60abb3385835f13c8b8ff35f6043c5f67b280b59600ee896aabf9b62b",
+      "shape": [
+        151936,
+        2560
+      ]
+    }
+  },
+  "source_tensor_count": 398,
+  "full_model_training": true,
+  "no_think": true,
+  "prompt_mode": "plain Instruction/Problem/Solution, explicit training/inference template",
+  "data_lengths": {
+    "train": {
+      "n": 2700,
+      "max": 3805,
+      "min": 617
+    },
+    "val": {
+      "n": 300,
+      "max": 3499,
+      "min": 589
+    }
+  },
+  "source_data_sha256": {
+    "train": "7379ecfc7053771313df1bc63c6324a3f3f8ee72bdfc818015bdc35ae600b24a",
+    "val": "d5a868ef8fc42a50f21a7e9cb657da1a894b882ddeabb256b6f1eeb6112a23c5"
+  }
+}
