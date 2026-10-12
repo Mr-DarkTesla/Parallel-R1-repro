@@ -35,6 +35,14 @@ Memory (4B = 4.02e9 params, tied embeddings; numbers for --optim adamw):
     grads) on the N longest training rows and prints torch.cuda.max_memory_allocated per phase.
 Rows longer than --max-len (default 16384) are dropped and counted (reason too_long), never truncated.
 
+Tag schedule (optional, README "Tag warmup"): --tag-warmup-steps K > 0 first runs K optimizer steps (stage=tag_warmup
+in metrics.jsonl, not counted in the main schedule) in which only the eight tag rows of the tied embedding matrix
+are trained: every other parameter has requires_grad=False, a gradient hook zeroes the other rows, and RowAdam
+(Adam moments for the 8 rows only) runs at --tag-lr with a 10% warmup, then constant, no weight decay. Stage 2 is
+the unchanged full run with a fresh optimizer; --tag-lr-mult M != 1 steps the tag rows there with a separate RowAdam
+at M x the main lr (TagLrBoost: scaling their gradient would not change an Adam step). Every training record logs
+tag_row_norm, tag_row_delta and loss_tag (CE on targets <Parallel>, count digit, </Plan>, </Path>, </Summary>).
+
 transformers 4.51.3 / Qwen3: a 4D attention_mask is used as-is (assumed additive: _prepare_4d_causal_attention_
 mask_with_cache_position returns it unchanged), AttentionMaskConverter._ignore_causal_mask_sdpa returns False for
 any 4D mask (so SDPA never switches to is_causal), and _unmask_unattended (CUDA only) only touches fully masked
@@ -63,7 +71,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from common import BASE_MODEL, CONTRACT_PATH, KNOWN_REVISIONS, contract, default_revision  # noqa: E402
 from sft_data import (CONTROL_KINDS, CONTROL_LOSS_KINDS, IGNORE, MODES, build_dataset, collate,  # noqa: E402
                       group_steps, id_in_val, read_jsonl, token_batches)
-from tags import ensure_tags  # noqa: E402
+from tags import ensure_tags, tag_matrices, tag_row_ids  # noqa: E402
 
 
 def check_transformers():
@@ -155,8 +163,13 @@ def build_optimizer(params, args, cuda):
     raise ValueError(f'unknown optimizer {args.optim}')
 
 
+# Targets that are contract tags or the branch count (kinds 0..4 of CONTROL_KINDS): logged as loss_tag.
+TAG_TARGET_KINDS = CONTROL_KINDS[:5]
+assert TAG_TARGET_KINDS == ('<Parallel>', 'count', '</Plan>', '</Path>', '</Summary>'), TAG_TARGET_KINDS
+
+
 class Meter:
-    """Sums of per-token losses by mode and control kind."""
+    """Sums of per-token losses by mode and control kind; 'tag' = targets in TAG_TARGET_KINDS (loss_tag)."""
 
     def __init__(self):
         self.sum, self.count = defaultdict(float), defaultdict(int)
@@ -170,6 +183,7 @@ class Meter:
         for index, mode in enumerate(MODES):
             groups[mode] = modes == index
         groups['control'] = (control >= 0) & (control < len(CONTROL_LOSS_KINDS))
+        groups['tag'] = (control >= 0) & (control < len(TAG_TARGET_KINDS))
         for index, kind in enumerate(CONTROL_KINDS):
             groups['ctrl:' + kind] = control == index
         for name, chosen in groups.items():
@@ -184,7 +198,213 @@ class Meter:
             key = prefix if name == 'all' else f'{prefix}_{name}'
             out[key] = total / self.count[name]
         out[f'{prefix}_tokens'] = self.count.get('all', 0)
+        out[f'{prefix}_tag_tokens'] = self.count.get('tag', 0)
         return out
+
+
+# ------------------------------------------------------------------------------------- tag-row schedule
+
+class RowAdam:
+    """Adam without weight decay on a few rows of some matrices (the eight tag rows of the embedding matrix,
+    and of lm_head when untied). Keeps its own fp32 moments of shape [len(rows), hidden] per matrix: 2 x 8 x 2560
+    x 4 B = 160 KiB on the 4B model, instead of AdamW states for the whole 151936-row matrix (2.9 GiB). The update
+    is torch.optim.AdamW(weight_decay=0)'s on those rows (tests/test_tag_warmup.py); other rows are never written.
+    step(lr, grads) takes the rows' gradients ([len(rows), hidden] each, in self.weights order)."""
+
+    def __init__(self, weights, rows, betas=(0.9, 0.95), eps=1e-8):
+        self.weights = list(weights)
+        self.rows = torch.as_tensor(list(rows), dtype=torch.long, device=self.weights[0].device)
+        self.betas, self.eps, self.t = tuple(betas), eps, 0
+        self.exp_avg = [torch.zeros(len(self.rows), w.size(1), dtype=torch.float32, device=w.device)
+                        for w in self.weights]
+        self.exp_avg_sq = [torch.zeros_like(m) for m in self.exp_avg]
+
+    def state_bytes(self):
+        return sum(m.numel() * m.element_size() for m in self.exp_avg + self.exp_avg_sq)
+
+    @torch.no_grad()
+    def step(self, lr, grads):
+        self.t += 1
+        beta1, beta2 = self.betas
+        step_size = lr / (1 - beta1 ** self.t)
+        correction2 = math.sqrt(1 - beta2 ** self.t)
+        for weight, grad, m, v in zip(self.weights, grads, self.exp_avg, self.exp_avg_sq):
+            grad = grad.float()
+            m.lerp_(grad, 1 - beta1)
+            v.mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
+            denom = (v.sqrt() / correction2).add_(self.eps)
+            rows = weight.index_select(0, self.rows).float().addcdiv_(m, denom, value=-step_size)
+            weight.index_copy_(0, self.rows, rows.to(weight.dtype))
+
+
+def row_grads(weights, rows):
+    """[len(rows), hidden] gradient copies of the given rows (zeros when a matrix has no grad)."""
+    index = torch.as_tensor(list(rows), dtype=torch.long, device=weights[0].device)
+    return [w.grad.index_select(0, index) if w.grad is not None else
+            torch.zeros(len(index), w.size(1), dtype=w.dtype, device=w.device) for w in weights]
+
+
+def tag_row_stats(weights, rows, initial):
+    """tag_row_norm: mean L2 norm of the tag rows of the input embedding; tag_row_delta: mean L2 distance of
+    those rows from their values before training (after ensure_tags)."""
+    with torch.no_grad():
+        current = weights[0].detach()[list(rows)].float()
+        return dict(tag_row_norm=current.norm(dim=-1).mean().item(),
+                    tag_row_delta=(current - initial[0].float()).norm(dim=-1).mean().item())
+
+
+def freeze_to_tag_rows(model, rows):
+    """Stage 1: only the matrices holding the tag rows keep requires_grad (with tied embeddings: the one embedding
+    matrix), and a post-accumulate hook zeroes every other row of their gradient in place (no gradient-sized
+    copy). Returns undo(), which removes the hooks and restores every parameter's requires_grad."""
+    weights = tag_matrices(model)
+    previous = [(p, p.requires_grad) for p in model.parameters()]
+    keep = {id(w) for w in weights}
+    for p, _ in previous:
+        p.requires_grad_(id(p) in keep)
+    handles = []
+    for weight in weights:
+        mask = torch.zeros(weight.size(0), 1, dtype=weight.dtype, device=weight.device)
+        mask[list(rows)] = 1
+
+        def zero_other_rows(param, mask=mask):
+            param.grad.mul_(mask)
+        handles.append(weight.register_post_accumulate_grad_hook(zero_other_rows))
+
+    def undo():
+        for handle in handles:
+            handle.remove()
+        for p, flag in previous:
+            p.requires_grad_(flag)
+    return undo
+
+
+def tag_warmup_plan(plans, lengths, args):
+    """Stage-1 optimizer steps: the first --tag-warmup-steps steps of the main run's shuffled stream (epoch plans
+    in order; further reshuffles if K exceeds the whole run). The main schedule is not changed by them."""
+    stream = [step for plan in plans for step in plan]
+    extra = 0
+    while len(stream) < args.tag_warmup_steps:
+        stream += group_steps(token_batches(lengths, args.micro_batch_tokens,
+                                            seed=args.seed * 1000 + len(plans) + extra),
+                              lengths, args.grad_accum_tokens)
+        extra += 1
+    return stream[:args.tag_warmup_steps]
+
+
+def tag_lr_factor(step, total):
+    """Stage-1 lr factor of 1-based step: linear warmup over ceil(10% of the steps), then constant."""
+    warmup = max(1, math.ceil(0.1 * total))
+    return min(1.0, step / warmup)
+
+
+def run_tag_warmup(model, train, steps, rows, initial, args, device, dtype, autocast, pad_id, log):
+    """Stage 1 (--tag-warmup-steps K > 0): K optimizer steps that update ONLY the eight tag rows. Same collate,
+    chunked loss and per-step normalization as the main run; RowAdam at --tag-lr (own warmup, then constant),
+    weight decay 0; gradients clipped to --grad-clip (the norm is that of the tag rows: the rest is zeroed).
+    Logged as stage=tag_warmup with tag_step 1..K; the main run's step counter and schedule are unaffected.
+    Memory: no gradient or optimizer state for anything but the embedding matrix (see README)."""
+    weights = tag_matrices(model)
+    undo = freeze_to_tag_rows(model, rows)
+    adam = RowAdam(weights, rows, args.betas)
+    start, first, last = time.time(), None, None
+    try:
+        for number, micro_batches in enumerate(steps, 1):
+            step_start = time.time()
+            n_loss = sum(train[i]['n_loss'] for batch in micro_batches for i in batch)
+            n_tokens = sum(train[i]['length'] for batch in micro_batches for i in batch)
+            meter = Meter()
+            _reset_peak(device)
+            for indices in micro_batches:
+                batch = collate([train[i] for i in indices], pad_id, dtype=dtype, device=device,
+                                pad_multiple=args.pad_multiple)
+                with autocast():
+                    losses, selection = token_losses(model, batch, args.loss_chunk)
+                (losses.sum() / max(1, n_loss)).backward()
+                meter.add(losses, selection, batch)
+                del batch, losses, selection
+            grad_norm = torch.nn.utils.clip_grad_norm_(weights, args.grad_clip).item()
+            lr = args.tag_lr * tag_lr_factor(number, len(steps))
+            adam.step(lr, row_grads(weights, rows))
+            for weight in weights:
+                weight.grad = None
+            record = dict(stage='tag_warmup', tag_step=number, lr=lr, grad_norm=grad_norm, tokens=n_tokens,
+                          loss_tokens_step=n_loss, micro_batches=len(micro_batches),
+                          tokens_per_s=n_tokens / max(time.time() - step_start, 1e-9), elapsed=time.time() - start,
+                          max_mem_gb=(_cuda_mem(device) or {}).get('peak_gb'),
+                          **tag_row_stats(weights, rows, initial), **meter.means('loss'))
+            first = first or record
+            last = record
+            if number % args.log_every == 0 or number == len(steps):
+                log(record)
+    finally:
+        undo()
+    keys = ('loss', 'loss_tag', 'tag_row_norm', 'tag_row_delta')
+    return dict(steps_run=len(steps), seconds=time.time() - start, optimizer_state_bytes=adam.state_bytes(),
+                first={k: first.get(k) for k in keys} if first else None,
+                last={k: last.get(k) for k in keys} if last else None)
+
+
+class TagLrBoost:
+    """Stage 2 with --tag-lr-mult M != 1: the tag rows get M x the main lr. Scaling their gradient would not do it
+    (Adam's step does not depend on the gradient scale), so the tag rows are taken out of the main optimizer and
+    stepped by a RowAdam at M x the current main lr:
+      before_step() (after clipping): copy the tag rows' gradients, zero them in .grad (the main AdamW's moments
+        for these rows stay 0, so its update there is 0) and save the rows;
+      after_step(lr) (after the main step): write the saved rows back (so the main optimizer's weight decay,
+        or an 8-bit optimizer's quantization noise, never touches them), then RowAdam.step(M * lr).
+    The tag rows thus get no weight decay. Memory: the 160 KiB moments plus two [8, hidden] copies per step."""
+
+    def __init__(self, model, rows, mult, betas):
+        self.weights, self.rows, self.mult = tag_matrices(model), list(rows), mult
+        self.index = torch.as_tensor(self.rows, dtype=torch.long, device=self.weights[0].device)
+        self.adam = RowAdam(self.weights, self.rows, betas)
+        self.grads = self.saved = None
+
+    @torch.no_grad()
+    def before_step(self):
+        self.grads = row_grads(self.weights, self.rows)
+        for weight in self.weights:
+            if weight.grad is not None:
+                weight.grad.index_fill_(0, self.index, 0.0)
+        self.saved = [weight.detach().index_select(0, self.index) for weight in self.weights]
+
+    @torch.no_grad()
+    def after_step(self, lr):
+        for weight, saved in zip(self.weights, self.saved):
+            weight.index_copy_(0, self.index, saved)
+        self.adam.step(self.mult * lr, self.grads)
+        self.grads = self.saved = None
+
+
+def fingerprint(tensor):
+    """Integer checksums of a tensor's bits, computed on its device in chunks (no full copy): (sum of the
+    elements' bit patterns, position-weighted sum). Changing any single element changes the first sum."""
+    bits = tensor.detach().contiguous().view(-1)
+    bits = bits.view({8: torch.int64, 4: torch.int32, 2: torch.int16, 1: torch.uint8}[bits.element_size()])
+    total = torch.zeros(2, dtype=torch.int64, device=bits.device)
+    chunk = 1 << 24
+    for begin in range(0, bits.numel(), chunk):
+        part = bits[begin:begin + chunk].to(torch.int64)
+        weight = torch.arange(begin, begin + part.numel(), dtype=torch.int64, device=bits.device) % 1000003 + 1
+        total[0] += part.sum()
+        total[1] += (part * weight).sum()
+    return tuple(total.tolist())
+
+
+def frozen_fingerprints(model, rows):
+    """fingerprint() of every parameter, the matrices holding tag rows without those rows (they are consecutive)."""
+    first, end = min(rows), max(rows) + 1
+    assert list(rows) == list(range(first, end)), rows
+    tagged = {id(w) for w in tag_matrices(model)}
+    out = {}
+    for name, p in model.named_parameters():
+        if id(p) in tagged:
+            out[name + '[:tags]'] = fingerprint(p[:first])
+            out[name + '[tags:]'] = fingerprint(p[end:])
+        else:
+            out[name] = fingerprint(p)
+    return out
 
 
 def sha256(path):
@@ -274,6 +494,19 @@ def parse_args(argv=None):
     parser.add_argument('--init-existing-tags', action='store_true',
                         help='initialize tag rows even if the tokenizer already has the tags but no init marker')
     parser.add_argument('--max-steps', type=int, default=0, help='stop after N optimizer steps (debug)')
+    parser.add_argument('--tag-warmup-steps', type=int, default=0, metavar='K',
+                        help='stage 1: K optimizer steps that update ONLY the eight tag rows of the embedding '
+                             'matrix (all else frozen), RowAdam at --tag-lr, before the full run; 0 = off. Not '
+                             'counted in the main schedule (README: 60 for the 4B run)')
+    parser.add_argument('--tag-lr', type=float, default=1e-3,
+                        help='stage-1 lr: linear warmup over 10%% of --tag-warmup-steps, then constant; no weight '
+                             'decay')
+    parser.add_argument('--tag-lr-mult', type=float, default=1.0, metavar='M',
+                        help='stage 2: the tag rows are stepped by a separate Adam at M x the main lr (taken out of '
+                             'the main optimizer, no weight decay); 1 = off (they are ordinary AdamW rows)')
+    parser.add_argument('--freeze-check', action='store_true',
+                        help='after stage 1, assert every parameter except the tag rows is bit-identical to before '
+                             '(on-device checksums) and the tag rows changed')
     return parser.parse_args(argv)
 
 
@@ -358,27 +591,26 @@ def static_estimate(model, optim):
                 static_gb=(8 + per) * n / GB)
 
 
+def static_estimate_tag_warmup(model, rows):
+    """Stage 1 (--tag-warmup-steps): fp32 weights, a gradient only for the matrices holding tag rows (the one
+    embedding matrix when tied), RowAdam moments for the tag rows only."""
+    n = sum(p.numel() for p in model.parameters())
+    grads = sum(w.numel() for w in tag_matrices(model))
+    states = sum(2 * len(rows) * w.size(1) for w in tag_matrices(model))
+    return dict(params=n, weights_gb=4 * n / GB, grads_gb=4 * grads / GB, optimizer_gb=4 * states / GB,
+                static_gb=4 * (n + grads + states) / GB)
+
+
 PHASES = ('forward1', 'backward1', 'forward2', 'backward2', 'optimizer')
 
 
-def memory_report(model, optimizer, params, samples, pad_id, args, device, dtype, autocast):
-    """--memory-report N: N optimizer steps; step i accumulates two micro-batches, each the i-th longest sample
-    alone, so the second forward/backward run with the fp32 grads already allocated (the worst case of the full
-    run, where a 16k row can be any micro-batch of a step). Records torch.cuda.max_memory_allocated per phase:
-    forward1/2 (incl. the chunked loss), backward1/2, optimizer (clip + step + zero_grad). Step 1 allocates the
-    optimizer states, so steps >= 2 show the steady state. Weights change: nothing is saved."""
-    order = sorted(range(len(samples)), key=lambda i: -samples[i]['length'])[:args.memory_report]
-    total = torch.cuda.get_device_properties(device).total_memory / GB if device.type == 'cuda' else None
-    report = dict(device=str(device), total_gb=total, estimate=static_estimate(model, args.optim),
-                  after_load=_cuda_mem(device), grad_ckpt=args.grad_ckpt, loss_chunk=args.loss_chunk,
-                  optim=args.optim, sdpa=args.sdpa_backend, bf16=dtype == torch.bfloat16,
-                  pad_multiple=args.pad_multiple, micro_batches_per_step=2, steps=[])
-    print('memory report: static estimate (GiB)', json.dumps({k: round(v, 2) if isinstance(v, float) else v
-                                                              for k, v in report['estimate'].items()}))
-    model.train()
+def _memory_steps(model, step_fn, samples, order, pad_id, args, device, dtype, autocast, total, label):
+    """Optimizer steps of two micro-batches each (the i-th longest sample twice); step_fn() clips, steps and
+    clears the grads. Returns one record per step with torch.cuda peaks per phase."""
+    records = []
     for number, index in enumerate(order, 1):
         sample = samples[index]
-        record = dict(step=number, id=sample['id'], mode=sample['mode'], length=sample['length'],
+        record = dict(stage=label, step=number, id=sample['id'], mode=sample['mode'], length=sample['length'],
                       loss_tokens=sample['n_loss'])
         start = time.time()
         for micro in (1, 2):
@@ -394,25 +626,76 @@ def memory_report(model, optimizer, params, samples, pad_id, args, device, dtype
             del losses, loss, batch
             record[f'backward{micro}'] = _cuda_mem(device)
         _reset_peak(device)
-        torch.nn.utils.clip_grad_norm_(params, args.grad_clip)
-        optimizer.step()
-        optimizer.zero_grad(set_to_none=True)
+        step_fn()
         record['optimizer'] = _cuda_mem(device)
         record['seconds'] = time.time() - start
         if device.type == 'cuda':
             record['peak_gb'] = max(record[phase]['peak_gb'] for phase in PHASES)
             record['headroom_gb'] = total - record['peak_gb']
-        report['steps'].append(record)
+        records.append(record)
         print('memory report:', json.dumps(record))
+    return records
+
+
+def memory_report(model, samples, rows, pad_id, args, device, dtype, autocast, cuda):
+    """--memory-report N: N optimizer steps; step i accumulates two micro-batches, each the i-th longest sample
+    alone, so the second forward/backward run with the fp32 grads already allocated (the worst case of the full
+    run, where a 16k row can be any micro-batch of a step). Records torch.cuda.max_memory_allocated per phase:
+    forward1/2 (incl. the chunked loss), backward1/2, optimizer (clip + step + zero_grad). Step 1 allocates the
+    optimizer states, so steps >= 2 show the steady state. With --tag-warmup-steps > 0 the same N steps first run
+    as stage 1 (tag rows only: report['tag_warmup']), then as the full run. Weights change: nothing is saved."""
+    order = sorted(range(len(samples)), key=lambda i: -samples[i]['length'])[:args.memory_report]
+    total = torch.cuda.get_device_properties(device).total_memory / GB if device.type == 'cuda' else None
+    report = dict(device=str(device), total_gb=total, estimate=static_estimate(model, args.optim),
+                  after_load=_cuda_mem(device), grad_ckpt=args.grad_ckpt, loss_chunk=args.loss_chunk,
+                  optim=args.optim, sdpa=args.sdpa_backend, bf16=dtype == torch.bfloat16,
+                  pad_multiple=args.pad_multiple, micro_batches_per_step=2, tag_lr_mult=args.tag_lr_mult, steps=[])
+    model.train()
+    stages = []
+    if args.tag_warmup_steps > 0:
+        weights = tag_matrices(model)
+        undo = freeze_to_tag_rows(model, rows)
+        adam = RowAdam(weights, rows, args.betas)
+
+        def tag_step():
+            torch.nn.utils.clip_grad_norm_(weights, args.grad_clip)
+            adam.step(args.tag_lr, row_grads(weights, rows))
+            for weight in weights:
+                weight.grad = None
+        estimate = static_estimate_tag_warmup(model, rows)
+        print('memory report: stage 1 (tag rows only) static estimate (GiB)',
+              json.dumps({k: round(v, 3) if isinstance(v, float) else v for k, v in estimate.items()}))
+        report['tag_warmup'] = dict(estimate=estimate, steps=_memory_steps(
+            model, tag_step, samples, order, pad_id, args, device, dtype, autocast, total, 'tag_warmup'))
+        undo()
+        stages.append(('stage 1 (tag rows only)', report['tag_warmup']))
+    print('memory report: static estimate (GiB)', json.dumps({k: round(v, 2) if isinstance(v, float) else v
+                                                              for k, v in report['estimate'].items()}))
+    params = [p for p in model.parameters() if p.requires_grad]
+    optimizer = build_optimizer(params, args, cuda)
+    boost = TagLrBoost(model, rows, args.tag_lr_mult, args.betas) if args.tag_lr_mult != 1 else None
+
+    def main_step():
+        torch.nn.utils.clip_grad_norm_(params, args.grad_clip)
+        if boost:
+            boost.before_step()
+        optimizer.step()
+        if boost:
+            boost.after_step(args.lr)
+        optimizer.zero_grad(set_to_none=True)
+    report['steps'] = _memory_steps(model, main_step, samples, order, pad_id, args, device, dtype, autocast, total,
+                                    'main')
+    stages.append(('full run', report))
     if device.type == 'cuda' and report['steps']:
-        report['peak_gb'] = max(step['peak_gb'] for step in report['steps'])
-        report['fits'] = report['peak_gb'] < 0.95 * total
-        print(f'memory report: peak {report["peak_gb"]:.2f} GiB of {total:.2f} GiB '
-              f'({"fits" if report["fits"] else "DOES NOT FIT (or < 5% headroom)"}) on rows of '
-              f'{report["steps"][0]["length"]} tokens; peaks per phase (GiB):')
-        for step in report['steps']:
-            phases = '  '.join(f'{phase} {step[phase]["peak_gb"]:6.2f}' for phase in PHASES)
-            print(f'  step {step["step"]} len {step["length"]:6d}: {phases}  ({step["seconds"]:.1f} s)')
+        for name, part in stages:
+            part['peak_gb'] = max(step['peak_gb'] for step in part['steps'])
+            part['fits'] = part['peak_gb'] < 0.95 * total
+            print(f'memory report, {name}: peak {part["peak_gb"]:.2f} GiB of {total:.2f} GiB '
+                  f'({"fits" if part["fits"] else "DOES NOT FIT (or < 5% headroom)"}) on rows of '
+                  f'{part["steps"][0]["length"]} tokens; peaks per phase (GiB):')
+            for step in part['steps']:
+                phases = '  '.join(f'{phase} {step[phase]["peak_gb"]:6.2f}' for phase in PHASES)
+                print(f'  step {step["step"]} len {step["length"]:6d}: {phases}  ({step["seconds"]:.1f} s)')
     else:
         print('memory report: no CUDA device, phases ran but memory is not measured')
     (args.out / 'memory_report.json').write_text(json.dumps(report, indent=2) + '\n')
@@ -421,6 +704,8 @@ def memory_report(model, optimizer, params, samples, pad_id, args, device, dtype
 
 def main(argv=None):
     args = parse_args(argv)
+    if args.tag_warmup_steps < 0 or args.tag_lr <= 0 or args.tag_lr_mult <= 0:
+        raise SystemExit('--tag-warmup-steps must be >= 0, --tag-lr and --tag-lr-mult > 0')
     os.environ.setdefault('PYTORCH_CUDA_ALLOC_CONF', 'expandable_segments:True')  # before the first allocation
     from transformers import AutoModelForCausalLM, AutoTokenizer
     transformers_version = check_transformers()
@@ -449,6 +734,7 @@ def main(argv=None):
     tag_report = ensure_tags(tokenizer, model, seed=args.seed, init_existing=args.init_existing_tags)
     print('tags:', json.dumps({k: v for k, v in tag_report.items() if k not in ('pieces', 'token_ids')}))
     model.to(device)
+    rows = tag_row_ids(tokenizer)
     pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else tokenizer.eos_token_id
 
     train, train_stats = load_samples(args.data, tokenizer, args.max_len, args.max_invalid_frac, 'train')
@@ -463,9 +749,7 @@ def main(argv=None):
         if args.grad_ckpt:
             model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant': False})
         model.config.use_cache = False
-        params = [p for p in model.parameters() if p.requires_grad]
-        return memory_report(model, build_optimizer(params, args, cuda), params, train, pad_id, args, device, dtype,
-                             autocast)
+        return memory_report(model, train, rows, pad_id, args, device, dtype, autocast, cuda)
     if args.val is not None:
         val, val_stats = load_samples(args.val, tokenizer, args.max_len, args.max_invalid_frac, 'val')
     else:
@@ -497,9 +781,6 @@ def main(argv=None):
         model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant': False})
     model.config.use_cache = False
     model.train()
-    params = [p for p in model.parameters() if p.requires_grad]
-    optimizer = build_optimizer(params, args, cuda)
-    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda(total_steps, warmup, args.min_lr_ratio))
 
     metrics_path = args.out / 'metrics.jsonl'
     metrics = open(metrics_path, 'a')
@@ -508,6 +789,50 @@ def main(argv=None):
         metrics.write(json.dumps(record) + '\n')
         metrics.flush()
         print(json.dumps({k: (round(v, 5) if isinstance(v, float) else v) for k, v in record.items()}))
+
+    # Two-stage tag schedule: stage 1 (optional) trains only the eight tag rows; stage 2 is the full run below.
+    tag_weights = tag_matrices(model)
+    tag_initial = [w.detach()[rows].clone() for w in tag_weights]
+    with torch.no_grad():
+        base_row_norm = tag_weights[0][:rows[0]].float().norm(dim=-1).mean().item()
+    tag_schedule = dict(
+        rows=rows, matrices='embedding (tied lm_head)' if len(tag_weights) == 1 else 'embedding + lm_head',
+        base_row_norm=base_row_norm, initial=tag_row_stats(tag_weights, rows, tag_initial),
+        stage1=dict(steps=args.tag_warmup_steps, lr=args.tag_lr, enabled=args.tag_warmup_steps > 0,
+                    lr_warmup_steps=max(1, math.ceil(0.1 * args.tag_warmup_steps)),
+                    schedule='linear warmup over 10% of the steps, then constant', weight_decay=0.0,
+                    betas=list(args.betas), grad_clip=args.grad_clip,
+                    optimizer='RowAdam: Adam on the tag rows only, own fp32 moments',
+                    trainable='only the tag rows (all other parameters requires_grad=False, other rows of the '
+                              'tag matrices zeroed by a gradient hook)',
+                    data='the first K optimizer steps of the main shuffled stream (same collate and loss); not '
+                         'counted in the main schedule', freeze_check=args.freeze_check),
+        stage2=dict(tag_lr_mult=args.tag_lr_mult, lr=args.lr,
+                    tag_rows=('ordinary rows of the main optimizer' if args.tag_lr_mult == 1 else
+                              f'excluded from the main optimizer (grads zeroed, rows restored after its step: no '
+                              f'weight decay) and stepped by RowAdam at {args.tag_lr_mult} x the main lr')))
+    if args.tag_warmup_steps > 0:
+        before = evaluate(model, val, pad_id, args, device, dtype, autocast)
+        if before:
+            log(dict(stage='tag_warmup', tag_step=0, **before))
+        prints = frozen_fingerprints(model, rows) if args.freeze_check else None
+        summary = run_tag_warmup(model, train, tag_warmup_plan(plans, lengths, args), rows, tag_initial, args,
+                                 device, dtype, autocast, pad_id, log)
+        if args.freeze_check:
+            after = frozen_fingerprints(model, rows)
+            changed = sorted(name for name in prints if prints[name] != after[name])
+            if changed:
+                raise AssertionError(f'--freeze-check: stage 1 changed frozen parameters {changed}')
+            moved = [not torch.equal(w.detach()[rows], initial) for w, initial in zip(tag_weights, tag_initial)]
+            if not all(moved):
+                raise AssertionError('--freeze-check: stage 1 did not change the tag rows')
+            summary['freeze_check'] = f'passed ({len(prints)} tensors bit-identical, tag rows changed)'
+            print('freeze check:', summary['freeze_check'])
+        tag_schedule['stage1'].update(summary)
+    params = [p for p in model.parameters() if p.requires_grad]
+    optimizer = build_optimizer(params, args, cuda)  # fresh: stage 1 leaves no optimizer state behind
+    scheduler = torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda(total_steps, warmup, args.min_lr_ratio))
+    boost = TagLrBoost(model, rows, args.tag_lr_mult, args.betas) if args.tag_lr_mult != 1 else None
 
     manifest = dict(
         contract=dict(path=str(CONTRACT_PATH), sha256=contract.SHA256, version=contract.CONTRACT_VERSION,
@@ -524,12 +849,14 @@ def main(argv=None):
         tags={k: v for k, v in tag_report.items()}, git=git_revision(), torch=torch.__version__,
         transformers=transformers_version, bf16=bf16, device=str(device), total_steps=total_steps,
         memory=dict(estimate=static_estimate(model, args.optim), grad_ckpt=args.grad_ckpt, loss_chunk=args.loss_chunk,
-                    optim=args.optim, sdpa=args.sdpa_backend, pad_multiple=args.pad_multiple))
+                    optim=args.optim, sdpa=args.sdpa_backend, pad_multiple=args.pad_multiple,
+                    tag_warmup_estimate=static_estimate_tag_warmup(model, rows)),
+        tag_schedule=tag_schedule)
     val_epochs = []
     step, start = 0, time.time()
     initial = evaluate(model, val, pad_id, args, device, dtype, autocast)
     if initial:
-        log(dict(step=0, epoch=0, **initial))
+        log(dict(step=0, epoch=0, stage='main', **initial))
     done = False
     for epoch, plan in enumerate(plans, 1):
         for micro_batches in plan:
@@ -547,31 +874,38 @@ def main(argv=None):
                 meter.add(losses, selection, batch)
                 del batch, losses, selection
             grad_norm = torch.nn.utils.clip_grad_norm_(params, args.grad_clip).item()
-            optimizer.step()
             lr = scheduler.get_last_lr()[0]
+            if boost:
+                boost.before_step()
+            optimizer.step()
+            if boost:
+                boost.after_step(lr)
             scheduler.step()
             optimizer.zero_grad(set_to_none=True)
             step += 1
             elapsed = time.time() - step_start
             if step % args.log_every == 0 or step == total_steps:
-                log(dict(step=step, epoch=epoch, lr=lr, grad_norm=grad_norm, tokens=n_tokens, loss_tokens_step=n_loss,
-                         micro_batches=len(micro_batches), tokens_per_s=n_tokens / max(elapsed, 1e-9),
-                         elapsed=time.time() - start, max_mem_gb=(_cuda_mem(device) or {}).get('peak_gb'),
-                         **meter.means('loss')))
+                log(dict(stage='main', step=step, epoch=epoch, lr=lr, grad_norm=grad_norm, tokens=n_tokens,
+                         loss_tokens_step=n_loss, micro_batches=len(micro_batches),
+                         tokens_per_s=n_tokens / max(elapsed, 1e-9), elapsed=time.time() - start,
+                         max_mem_gb=(_cuda_mem(device) or {}).get('peak_gb'),
+                         **tag_row_stats(tag_weights, rows, tag_initial), **meter.means('loss')))
             if args.eval_every and step % args.eval_every == 0:
-                log(dict(step=step, epoch=epoch, **evaluate(model, val, pad_id, args, device, dtype, autocast)))
+                log(dict(stage='main', step=step, epoch=epoch,
+                         **evaluate(model, val, pad_id, args, device, dtype, autocast)))
             if step >= total_steps:
                 done = True
                 break
         result = evaluate(model, val, pad_id, args, device, dtype, autocast)
         val_epochs.append(dict(epoch=epoch, step=step, **result))
-        log(dict(step=step, epoch=epoch, end_of_epoch=True, **result))
+        log(dict(stage='main', step=step, epoch=epoch, end_of_epoch=True, **result))
         (args.out / 'val_epochs.json').write_text(json.dumps(val_epochs, indent=2) + '\n')
         if args.save_every_epoch and not done and epoch < len(plans):
             save_checkpoint(model, tokenizer, args.out / f'epoch{epoch}', args.save_dtype,
                             dict(manifest, steps=step, epoch=epoch, val_epochs=val_epochs))
         if done:
             break
+    tag_schedule['final'] = tag_row_stats(tag_weights, rows, tag_initial)
     manifest.update(steps=step, val_epochs=val_epochs, train_seconds=time.time() - start)
     save_checkpoint(model, tokenizer, args.out / 'final', args.save_dtype, manifest)
     (args.out / 'train_manifest.json').write_text(json.dumps(manifest, indent=2, default=str) + '\n')

@@ -103,3 +103,38 @@ python eval_graph.py --model runs/sft_v4_4b/final --tasks ~/parallel-r1/data/thi
 
 `metrics.jsonl` logs `max_mem_gb` (the peak of each optimizer step) and `tokens_per_s`. The checkpoint goes to
 `runs/sft_v4_4b/final` as bf16 safetensors, with the tokenizer (tags added) and `train_manifest.json`.
+
+## Tag warmup (two-stage schedule for the eight new tag rows)
+
+At lr 1e-5 the freshly initialized tag rows (mean of their spelling pieces plus noise) barely move. Stage 1 trains
+them alone first; stage 2 is the unchanged full run. One invocation runs both:
+
+```bash
+python sft_train.py --data $D/train.jsonl --val $D/val.jsonl --out runs/sft_v4_4b \
+    --epochs 3 --lr 1e-5 --min-lr-ratio 0.1 --warmup-ratio 0.03 --target-steps-per-epoch 90 \
+    --max-len 16384 --save-every-epoch --eval-every 30 \
+    --tag-warmup-steps 60 --tag-lr 1e-3 --freeze-check      # recommended; add --tag-lr-mult 10 to try faster tags
+# memory of both stages: --memory-report 3 --tag-warmup-steps 60 (stage 1 is reported under "tag_warmup")
+```
+
+- **Stage 1** (`--tag-warmup-steps K`, default 0 = off; recommended 60): K optimizer steps on the first K steps of the
+  main shuffled stream (same collate, chunked loss, normalization, `--grad-clip`). Every parameter has
+  `requires_grad=False` except the tied embedding matrix, whose gradient is masked in place to the eight tag rows by
+  a hook. `RowAdam` (Adam, weight decay 0, fp32 moments only for the [8, 2560] slice) runs at `--tag-lr` (default
+  1e-3) with a linear warmup over 10% of K, then constant. Logged as `stage=tag_warmup`, `tag_step` 1..K; the main
+  run's steps, warmup and cosine schedule are exactly as without it. `--freeze-check` asserts afterwards (on-device
+  checksums) that every other row and parameter is bit-identical and the tag rows changed.
+- **Stage 2**: the full run, fresh optimizer. `--tag-lr-mult M` (default 1 = off; 10 is the option to try) gives the
+  tag rows M x the current main lr. Scaling their gradient would do nothing under Adam, so their gradient rows are
+  zeroed before the main AdamW step, the rows are restored after it (no main weight decay or 8-bit noise reaches
+  them) and a separate `RowAdam` steps them at M x lr. Other parameters get the ordinary AdamW update.
+- **Logs**: every train record has `tag_row_norm` (mean L2 norm of the 8 rows; the manifest has `base_row_norm` of
+  ordinary rows for scale), `tag_row_delta` (mean distance from the initialized rows) and `loss_tag` /
+  `val_loss_tag` (CE on targets `<Parallel>`, count digit, `</Plan>`, `</Path>`, `</Summary>`, from the chunked loss).
+  `train_manifest.json` (also in each checkpoint) has `tag_schedule` with both stages' settings and stage-1 results.
+- **Stage-1 memory on 4B** (static): fp32 weights 15.0 GiB + one gradient, the embedding matrix's 1.45 GiB (no
+  other parameter requires grad) + 160 KiB of Adam moments = **16.4 GiB**, against 60.0 GiB for the full run (15 GiB
+  of grads and 30 GiB of AdamW states disappear). Activations are those of a full step (the backward still runs
+  through all 36 layers to reach the embedding, minus the weight gradients), so expect a peak of roughly 27-30 GiB.
+  A stage-1 step skips the weight-gradient matmuls, about 3/4 of a full step's time; 60 steps cost about half an
+  epoch at 90 steps per epoch.

@@ -119,3 +119,18 @@ def ensure_tags(tokenizer, model, seed=0, noise=0.5, init_existing=False):
     setattr(model.config, MARKER, dict(tags=list(contract.TAGS), ids=tag_rows, init='mean_of_pieces+noise',
                                        noise=noise, seed=seed, contract_revision=contract.CONTRACT_REVISION))
     return report
+
+
+def tag_row_ids(tokenizer):
+    """The eight tag rows (embedding row = token id) in contract.TAGS order; consecutive (check_ids)."""
+    tags = check_ids(tokenizer)['tag_ids']
+    return [tags[tag] for tag in contract.TAGS]
+
+
+def tag_matrices(model):
+    """The matrices that hold tag rows: the input embedding, plus lm_head when it is not tied to it."""
+    embeddings = model.get_input_embeddings().weight
+    output = model.get_output_embeddings()
+    if output is None or output.weight is embeddings or output.weight.data_ptr() == embeddings.data_ptr():
+        return [embeddings]
+    return [embeddings, output.weight]
