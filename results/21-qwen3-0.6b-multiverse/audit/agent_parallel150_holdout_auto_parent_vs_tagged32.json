@@ -1,0 +1,303 @@
+{
+  "protocol": "masked greedy thinking; GSM8K 2048 tokens, MATH 4096 tokens",
+  "source_counts": {
+    "gsm8k": 20,
+    "math": 20
+  },
+  "metric_notes": {
+    "acc_robust": "correct final value from automatic scorer",
+    "think_full_block": "syntactic block within <think>; semantic usefulness requires manual review",
+    "forward_passes": "ideal parallel decoder forward passes; model_forward_calls are separate"
+  },
+  "arms": [
+    "clean46",
+    "tagged32"
+  ],
+  "overall": {
+    "acc_robust": {
+      "clean46": 72.5,
+      "tagged32": 67.5,
+      "tagged32_minus_clean46": -5.0,
+      "ci95": [
+        -17.5,
+        7.5
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_wellformed": {
+      "clean46": 100.0,
+      "tagged32": 97.5,
+      "tagged32_minus_clean46": -2.5,
+      "ci95": [
+        -7.5,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_has_parallel": {
+      "clean46": 100.0,
+      "tagged32": 100.0,
+      "tagged32_minus_clean46": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_full_block": {
+      "clean46": 100.0,
+      "tagged32": 87.5,
+      "tagged32_minus_clean46": -12.5,
+      "ci95": [
+        -22.5,
+        -5.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "think_numbered_block": {
+      "clean46": 95.0,
+      "tagged32": 85.0,
+      "tagged32_minus_clean46": -10.0,
+      "ci95": [
+        -20.0,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "truncated": {
+      "clean46": 0.0,
+      "tagged32": 0.0,
+      "tagged32_minus_clean46": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "tokens": {
+      "clean46": 274.77,
+      "tagged32": 282.48,
+      "tagged32_minus_clean46": 7.7,
+      "ci95": [
+        -57.77,
+        111.28
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "forward_passes": {
+      "clean46": 232.45,
+      "tagged32": 248.75,
+      "tagged32_minus_clean46": 16.3,
+      "ci95": [
+        -49.27,
+        120.53
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    },
+    "acc": {
+      "clean46": 70.0,
+      "tagged32": 62.5,
+      "tagged32_minus_clean46": -7.5,
+      "ci95": [
+        -20.0,
+        5.0
+      ],
+      "n": 40,
+      "bootstrap": "10k paired, stratified by source (20 GSM8K + 20 MATH)"
+    }
+  },
+  "by_source": {
+    "gsm8k": {
+      "acc_robust": {
+        "clean46": 85.0,
+        "tagged32": 85.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          -15.0,
+          15.0
+        ],
+        "n": 20
+      },
+      "think_wellformed": {
+        "clean46": 100.0,
+        "tagged32": 100.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_has_parallel": {
+        "clean46": 100.0,
+        "tagged32": 100.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_full_block": {
+        "clean46": 100.0,
+        "tagged32": 100.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_numbered_block": {
+        "clean46": 100.0,
+        "tagged32": 100.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "truncated": {
+        "clean46": 0.0,
+        "tagged32": 0.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "tokens": {
+        "clean46": 224.1,
+        "tagged32": 181.05,
+        "tagged32_minus_clean46": -43.05,
+        "ci95": [
+          -60.75,
+          -25.3
+        ],
+        "n": 20
+      },
+      "forward_passes": {
+        "clean46": 180.45,
+        "tagged32": 144.5,
+        "tagged32_minus_clean46": -35.95,
+        "ci95": [
+          -54.05,
+          -18.2
+        ],
+        "n": 20
+      },
+      "acc": {
+        "clean46": 85.0,
+        "tagged32": 80.0,
+        "tagged32_minus_clean46": -5.0,
+        "ci95": [
+          -20.0,
+          10.0
+        ],
+        "n": 20
+      }
+    },
+    "math": {
+      "acc_robust": {
+        "clean46": 60.0,
+        "tagged32": 50.0,
+        "tagged32_minus_clean46": -10.0,
+        "ci95": [
+          -30.0,
+          10.0
+        ],
+        "n": 20
+      },
+      "think_wellformed": {
+        "clean46": 100.0,
+        "tagged32": 95.0,
+        "tagged32_minus_clean46": -5.0,
+        "ci95": [
+          -15.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_has_parallel": {
+        "clean46": 100.0,
+        "tagged32": 100.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "think_full_block": {
+        "clean46": 100.0,
+        "tagged32": 75.0,
+        "tagged32_minus_clean46": -25.0,
+        "ci95": [
+          -45.0,
+          -10.0
+        ],
+        "n": 20
+      },
+      "think_numbered_block": {
+        "clean46": 90.0,
+        "tagged32": 70.0,
+        "tagged32_minus_clean46": -20.0,
+        "ci95": [
+          -45.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "truncated": {
+        "clean46": 0.0,
+        "tagged32": 0.0,
+        "tagged32_minus_clean46": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "n": 20
+      },
+      "tokens": {
+        "clean46": 325.45,
+        "tagged32": 383.9,
+        "tagged32_minus_clean46": 58.45,
+        "ci95": [
+          -68.65,
+          264.8
+        ],
+        "n": 20
+      },
+      "forward_passes": {
+        "clean46": 284.45,
+        "tagged32": 353.0,
+        "tagged32_minus_clean46": 68.55,
+        "ci95": [
+          -60.7,
+          275.65
+        ],
+        "n": 20
+      },
+      "acc": {
+        "clean46": 55.0,
+        "tagged32": 45.0,
+        "tagged32_minus_clean46": -10.0,
+        "ci95": [
+          -30.0,
+          10.0
+        ],
+        "n": 20
+      }
+    }
+  }
+}

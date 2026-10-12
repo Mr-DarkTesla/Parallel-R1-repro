@@ -1,0 +1,164 @@
+{
+  "protocol": "same fresh masked greedy dev40; two blind readers per arm, 20 rows each",
+  "criterion": "correct final plus complete block inside think with independent distinct necessary correct paths and valid conclusion",
+  "counts": {
+    "parent": {
+      "gsm8k": {
+        "useful": 7,
+        "correct_final_manual": 17,
+        "strict_final_manual": 17,
+        "full_block_manual": 20
+      },
+      "math": {
+        "useful": 6,
+        "correct_final_manual": 12,
+        "strict_final_manual": 12,
+        "full_block_manual": 18
+      }
+    },
+    "plain16": {
+      "gsm8k": {
+        "useful": 9,
+        "correct_final_manual": 16,
+        "strict_final_manual": 16,
+        "full_block_manual": 18
+      },
+      "math": {
+        "useful": 3,
+        "correct_final_manual": 10,
+        "strict_final_manual": 10,
+        "full_block_manual": 17
+      }
+    },
+    "tagged32": {
+      "gsm8k": {
+        "useful": 7,
+        "correct_final_manual": 17,
+        "strict_final_manual": 17,
+        "full_block_manual": 18
+      },
+      "math": {
+        "useful": 4,
+        "correct_final_manual": 10,
+        "strict_final_manual": 10,
+        "full_block_manual": 13
+      }
+    }
+  },
+  "paired": {
+    "plain16_minus_parent": {
+      "useful": {
+        "delta_pp": -2.5,
+        "ci95_pp": [
+          -12.5,
+          7.5
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "correct_final_manual": {
+        "delta_pp": -7.5,
+        "ci95_pp": [
+          -15.0,
+          0.0
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "strict_final_manual": {
+        "delta_pp": -7.5,
+        "ci95_pp": [
+          -15.0,
+          0.0
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "full_block_manual": {
+        "delta_pp": -7.5,
+        "ci95_pp": [
+          -17.5,
+          0.0
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      }
+    },
+    "tagged32_minus_parent": {
+      "useful": {
+        "delta_pp": -5.0,
+        "ci95_pp": [
+          -20.0,
+          10.0
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "correct_final_manual": {
+        "delta_pp": -5.0,
+        "ci95_pp": [
+          -17.5,
+          7.5
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "strict_final_manual": {
+        "delta_pp": -5.0,
+        "ci95_pp": [
+          -17.5,
+          7.5
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "full_block_manual": {
+        "delta_pp": -17.5,
+        "ci95_pp": [
+          -30.0,
+          -7.5
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      }
+    },
+    "tagged32_minus_plain16": {
+      "useful": {
+        "delta_pp": -2.5,
+        "ci95_pp": [
+          -20.0,
+          12.5
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "correct_final_manual": {
+        "delta_pp": 2.5,
+        "ci95_pp": [
+          -10.0,
+          15.0
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "strict_final_manual": {
+        "delta_pp": 2.5,
+        "ci95_pp": [
+          -10.0,
+          15.0
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      },
+      "full_block_manual": {
+        "delta_pp": -10.0,
+        "ci95_pp": [
+          -22.5,
+          2.5
+        ],
+        "n": 40,
+        "bootstrap": "10,000 paired draws, stratified 20 GSM8K + 20 MATH"
+      }
+    }
+  }
+}

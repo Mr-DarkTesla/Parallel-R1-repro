@@ -12,4 +12,15 @@
 uv run --offline --no-project --with math-verify --with tokenizers==0.23.2 --with pandas --with pyarrow --with transformers --with jinja2 python scripts/exp21/build_agent_parallel_pair.py --accepted results/21-qwen3-0.6b-multiverse/data/agent_parallel_150_accepted.jsonl --out-prefix results/21-qwen3-0.6b-multiverse/data/agent_parallel150_pair/sft --positive-count 150 --review-report results/21-qwen3-0.6b-multiverse/audit/agent_parallel_150_review_gate.json
 ```
 
-**SFT на этих данных ещё не запущен.** После успешного окончания прежнего on-policy генератора можно использовать уже проверенный [однопроцессный runner](QWEN4B_AGENT_PARALLEL91_RUN.md) с `EXP21_PAIR_DATA=/checkpoints/exp21-agent-parallel150` и уникальным `EXP21_RUN_PREFIX=exp21-4b-agent-parallel150`. Оба плеча должны начинаться с одного clean46 tagged step32 parent, иметь по 32 шага, batch 16, lr `5e-7`, одинаковые ступени 8/16/32 и fixed40. Архивировать сырые ответы, считать ручную полезность блоков и парные ДИ до решения о полном dev. 91-задачная пара остаётся контролем размера данных; её запускать только последовательно, если он нужен после оценки 150.
+Парная SFT проведена 12 октября после окончания on-policy генератора:
+оба плеча начинались с одного clean46 tagged step32, прошли по 32 шага
+с batch 16 и lr `5e-7`, а шаги 8/16/32 оценены на одинаковом masked
+fixed40. [Полный результат, ручное чтение и парные интервалы](QWEN4B_AGENT_PARALLEL150_RUN.md).
+Максимальная точность tagged step32: 35/40 верных значений, но только
+11/40 полезных блоков; plain step16 сохранил 14/40 полезных блоков.
+На отдельном masked dev40 слепое чтение приняло 13/40 полезных ответов
+родителя, 12/40 plain16 и 11/40 tagged32. Эти результаты не
+подтверждают, что большее количество качественных меток повысило
+главный критерий. Партия из 91 задачи осталась невыполненным контролем
+размера данных; после отрицательного результата 150-задачной пары
+приоритет у полного отчёта по выбранной модели, а не ещё одной SFT.
