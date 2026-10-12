@@ -77,6 +77,13 @@ REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"    # v0 | v1_low
 ALLOW_PARALLEL=false REWARD=v0 bash repo/experiments/qwen06/run_rl.sh think "$MODEL"   # последовательный baseline
 ```
 
+Qwen3-4B на одной H100 NVL 94 GB: `OFFLOAD=true` держит fp32-веса и Adam актора (~64 GB) в RAM между обновлениями, без него 4B вместе с vLLM не помещается. `check_checkpoint.py` принимает 0.6B и 4B. Шаг на 4B идёт порядка получаса, поэтому сначала короткий прогон:
+
+```bash
+OFFLOAD=true BATCH=16 MINI=16 STEPS=30 RUN_NAME=qwen3-4b-think-v0-short REWARD=v0 \
+  bash repo/experiments/qwen06/run_rl.sh think "$SFT_CHECKPOINT"
+```
+
 `prepare_think.py` раскладывает данные по ролям, которые заморозила сторона SFT (dataset-plan.md и manifest.json у Codex, seed 20261009). С `--roles DIR` он читает готовые `<role>.jsonl` (ответы можно положить в `<role>.gold.jsonl`), а `--manifest` сверяет их sha256. Без `--roles` те же роли собираются из Hugging Face как запасной вариант: там отсеиваются только точные дубли и задачи с `[asy]`, без фильтра почти-дублей по триграммам, поэтому id отличаются от замороженных.
 
 | Роль | Файл | Зачем |

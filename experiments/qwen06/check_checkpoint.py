@@ -5,6 +5,8 @@ import json
 import tarfile
 from pathlib import Path
 
+QWEN3_ARCHS = {(1024, 28): 'Qwen3-0.6B', (2560, 36): 'Qwen3-4B'}  # (hidden_size, num_hidden_layers)
+
 
 def validate(path, plan=False):
     from transformers import AutoConfig, AutoTokenizer
@@ -13,8 +15,8 @@ def validate(path, plan=False):
     from verl.parallel_thinking_generation_v3 import contract
     config = AutoConfig.from_pretrained(path, local_files_only=True)
     tokenizer = AutoTokenizer.from_pretrained(path, local_files_only=True)
-    if config.model_type != 'qwen3' or config.hidden_size != 1024 or config.num_hidden_layers != 28:
-        raise ValueError('Expected Qwen3-0.6B architecture (1024 hidden, 28 layers)')
+    if config.model_type != 'qwen3' or (config.hidden_size, config.num_hidden_layers) not in QWEN3_ARCHS:
+        raise ValueError(f'Expected a Qwen3 architecture from {sorted(QWEN3_ARCHS.values())}')
     ids = [tokenizer.encode(token, add_special_tokens=False) for token in TOKENS]
     if any(len(x) != 1 for x in ids) or len({x[0] for x in ids}) != 6:
         raise ValueError('Six distinct atomic Parallel/Path/Summary opening and closing tokens are required')
@@ -36,7 +38,8 @@ def validate(path, plan=False):
     if embedding_shape != [config.vocab_size, config.hidden_size]:
         raise ValueError(f'Embedding shape {embedding_shape} does not match config')
     tokenizer.apply_chat_template([{'role': 'user', 'content': '2+2?'}], tokenize=True, add_generation_prompt=True)
-    report = dict(model_path=str(path.resolve()), model_type=config.model_type, vocab_size=config.vocab_size,
+    report = dict(model_path=str(path.resolve()), model_type=config.model_type,
+                  architecture=QWEN3_ARCHS[config.hidden_size, config.num_hidden_layers], vocab_size=config.vocab_size,
                   tokenizer_size=len(tokenizer), special_tokens=dict(zip(TOKENS, ids)), embedding_shape=embedding_shape)
     print(json.dumps(report, indent=2))
     return report

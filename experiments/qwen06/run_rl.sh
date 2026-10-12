@@ -62,6 +62,11 @@ MAX_BLOCKS=${MAX_BLOCKS:-$DEFAULT_BLOCKS}
 NUM_PATHS=${NUM_PATHS:-2}
 PROMPT=${PROMPT:-2000}
 WORKERS=${WORKERS:-4}
+# Qwen3-4B on one H100: OFFLOAD=true keeps the fp32 weights and Adam (~64 GB) in CPU RAM between updates.
+OFFLOAD=${OFFLOAD:-false}
+case "$OFFLOAD" in true|false) ;; *) echo 'OFFLOAD must be true or false'; exit 2;; esac
+GPU_MEM=${GPU_MEM:-0.45}
+MAX_NUM_SEQS=${MAX_NUM_SEQS:-64}
 REWARD_ARGS=()
 if [[ "$SMOKE" == 1 ]]; then
   TRAIN="$ROOT/data/${MODE}_smoke_train.parquet"
@@ -86,11 +91,11 @@ exec "$PY" -m verl.trainer.main_ppo \
   actor_rollout_ref.actor.ppo_mini_batch_size="$MINI" actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=1 \
   actor_rollout_ref.actor.use_dynamic_bsz=False actor_rollout_ref.actor.use_kl_loss=False \
   actor_rollout_ref.actor.use_torch_compile=False \
-  actor_rollout_ref.actor.fsdp_config.param_offload=False actor_rollout_ref.actor.fsdp_config.optimizer_offload=False \
+  actor_rollout_ref.actor.fsdp_config.param_offload="$OFFLOAD" actor_rollout_ref.actor.fsdp_config.optimizer_offload="$OFFLOAD" \
   actor_rollout_ref.rollout.n="$ROLLOUT_N" actor_rollout_ref.rollout.name=vllm actor_rollout_ref.rollout.mode=async \
   actor_rollout_ref.rollout.tensor_model_parallel_size=1 actor_rollout_ref.rollout.log_prob_micro_batch_size_per_gpu=1 \
-  actor_rollout_ref.rollout.gpu_memory_utilization=0.45 actor_rollout_ref.rollout.enforce_eager=True \
-  actor_rollout_ref.rollout.max_num_seqs=64 actor_rollout_ref.rollout.temperature=1.0 \
+  actor_rollout_ref.rollout.gpu_memory_utilization="$GPU_MEM" actor_rollout_ref.rollout.enforce_eager=True \
+  actor_rollout_ref.rollout.max_num_seqs="$MAX_NUM_SEQS" actor_rollout_ref.rollout.temperature=1.0 \
   actor_rollout_ref.rollout.agent.num_workers="$WORKERS" \
   actor_rollout_ref.rollout.agent.max_path_response_length="$RESPONSE" \
   actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking="$MAX_BLOCKS" \
