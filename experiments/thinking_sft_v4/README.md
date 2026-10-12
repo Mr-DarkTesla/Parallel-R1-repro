@@ -224,3 +224,39 @@ python sft_train.py --data $D/train.jsonl --val $D/val.jsonl --out runs/sft_v4_4
   through all 36 layers to reach the embedding, minus the weight gradients), so expect a peak of roughly 27-30 GiB.
   A stage-1 step skips the weight-gradient matmuls, about 3/4 of a full step's time; 60 steps cost about half an
   epoch at 90 steps per epoch.
+
+## Multi-block probe (`multiblock_probe.py`): traces with two sequential `<Parallel>` blocks
+
+A small GPU probe that shows what two-block records look like: block 1 -> summary 1 -> one more paragraph -> block 2
+-> summary 2 -> rest -> `</think>` -> answer. Default ids: `math-intermediate_algebra-train-1130` plus 11 pool ids
+(MATH cases/candidates asking "how many" / "(sum of) all possible values", one Countdown whose pool branches all
+found no expression); the list and the reason for each are in `DEFAULT_IDS`, `config.json` and `stats.json`.
+
+- Block 1: the pool record's prefix (first paragraph) always; its plan and branches only if every branch check
+  passed and a planner coverage audit says the plan covers the problem, otherwise (and always for 1130, whose pool
+  plan misses the interval (2, oo)) Codex's planner request on question + prefix and new 4B branches on the
+  mini-problems. Mergers: non-thinking, Results only, explicit steps, no Final Answer / `\boxed` (<= 1024 tokens).
+- Then the 4B (thinking) writes one paragraph after `</Summary>`, the planner decides FORK / NO_FORK for a SECOND
+  block from the question + everything so far as plain text (plan items, Result lines, summary 1, the paragraph; it
+  is told not to redo block-1 work), and the 4B finishes (<= 4096 tokens). NO_FORK gives a single-block record,
+  kept for comparison. Generation context is causal (the serialized text with tags as plain text), not the graph.
+- One model per stage process (planner, then the 4B, planner, 4B), so it fits one H100 NVL. Output:
+  `records.jsonl` (contract format, block ids 1 and 2, validated by `sft_data`, graded with Codex's scorer),
+  `traces/<id>.md` (runtime-inserted pieces as `[[...]]`), `traces.md`, `stats.json` (block-2 decision, correctness,
+  lengths, critical path vs sampled tokens, gold-in-prompt audit), `calls.jsonl` (every prompt and output).
+- The trainer validator already accepts two blocks (`contract.MAX_BLOCKS = 2`); no contract or validator change.
+- Expected time: ~15-25 min (four model loads ~8-10 min, generation a few minutes; the long pole is the final
+  4096-token continuation).
+
+```bash
+source ~/parallel-r1/.venv/bin/activate
+cd ~/parallel-r1/repo && git fetch origin && git checkout claude/project-thread-cc9a3o && git pull --ff-only
+cd experiments/thinking_sft_v4
+POOL=~/parallel-r1/data/pool-20261012          # all.raw.jsonl + details.jsonl (read only)
+P=~/parallel-r1/data/multiblock_probe
+python -m pytest tests/test_multiblock_probe.py -q
+tmux new -d -s multiblock "python multiblock_probe.py run --pool $POOL --out $P 2>&1 | tee -a $P.log"
+# progress: $P/<stage>.log; re-running the same command resumes (finished stages are skipped)
+cat $P/stats.json; less $P/traces.md $P/traces/math-intermediate_algebra-train-1130.md
+# only 1130: add --ids math-intermediate_algebra-train-1130 (use a fresh --out)
+```
