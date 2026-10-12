@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "scope": "Independent CPU source and actual inference-proof artifact review, not independent GPU reproduction or resident Adam training gate",
+  "proof_sha256": "9203737e6c5d75f8dfd12db2277d9ba340e17ad23823f6f4b6fe9e11d0577108",
+  "proof_source_sha256": "f1fc40aa5779c021b7f0fc99cada535749e7a3161c4c4bd63fbed2c0f712fba8",
+  "models": [
+    {
+      "model": "baseline",
+      "peak_allocated_bytes": 17773915136,
+      "width8_F": {
+        "2": 196,
+        "8": 73
+      },
+      "width8_replay_drift": {
+        "maximum": 0.0002307891845703125,
+        "mean": 7.698270565015264e-06,
+        "p95": 3.0517578125e-05
+      },
+      "sampled_trace_count": 2
+    },
+    {
+      "model": "r1-step32",
+      "peak_allocated_bytes": 17773915136,
+      "width8_F": {
+        "2": 196,
+        "8": 73
+      },
+      "width8_replay_drift": {
+        "maximum": 0.00030517578125,
+        "mean": 8.389684808207676e-06,
+        "p95": 3.0517578125e-05
+      },
+      "sampled_trace_count": 2
+    },
+    {
+      "model": "r2-step32",
+      "peak_allocated_bytes": 17773915136,
+      "width8_F": {
+        "2": 196,
+        "8": 73
+      },
+      "width8_replay_drift": {
+        "maximum": 0.000759124755859375,
+        "mean": 9.054608199221548e-06,
+        "p95": 3.0517578125e-05
+      },
+      "sampled_trace_count": 2
+    }
+  ],
+  "source_findings": [
+    "Instrumentation wraps actual model.forward and records input shapes; width8 fixture asserts allinput rows8 and one subgroup, F=max forced lengths.",
+    "Perrow seeds, oldlogprobs and replay comparisons; sibling prompt perturbation and masked padding value perturbation check independence.",
+    "Actual sampled calls compared across max2/max8: exact actions, masks, prefixes, phase/seed/blocked tokens; replay covers every policy position and structured sibling attention/positions checked.",
+    "Raw original traces saved separately by owner; no scorer or benchmark gold used to choose training or modify weights."
+  ],
+  "limitations": [
+    "Only inference; no resident optimizer/Adam state, update, distributed all8 training or optimizer memory proof.",
+    "Peak memory about17.77GB per proof model; this is inference footprint rather than full training peak.",
+    "Artifact supplied by owner exact local mirror; proof SHA and source match seals, no reviewer GPU jobs."
+  ]
+}

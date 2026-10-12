@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "scope": "Independent CPU static review of exact corrected Cloud evaluation launcher, wrappers, plans and shared fullwidth8 worker; not actual runtime completion",
+  "inputs_sha256": {
+    "work/experiments/rl-instruct-20261011/eval24-handoff/launch_eval.py": "3d04d291ca2848658723529bb48ab845ea8f5b8c394f429691bb45f85b317bfb",
+    "work/experiments/rl-instruct-20261011/eval24-handoff/tmp2.sh": "4579ced29f7f1c7197033208fd8a1c54f0d3b5573559c778793271ae6cbc92c0",
+    "work/experiments/rl-instruct-20261011/eval24-handoff/tmp3.sh": "31c26016b61ec899164f82ac1df0601c90f765cefc7542a928a70b70bded0e7b",
+    "work/experiments/rl-instruct-20261011/eval24-handoff/tmp2/plan.json": "2f6874cb2511b95201ca45d969ee981e25946e8348511bfbe59191926fb02c0d",
+    "work/experiments/rl-instruct-20261011/eval24-handoff/tmp3/plan.json": "8015f1ea5382fc2b99ce679eec006d8995df24aeb635bd20fa5ea8b287e1679f",
+    "work/experiments/rl-instruct-20261011/math500-fullwidth8/worker.py": "24bcc77cc9df4ddef230223058803ed0015a23b58bcfcd800e418559d8ed1afd",
+    "work/experiments/rl-instruct-20261011/math500-fullwidth8/controller.py": "f70114dd1c229a7b2fe0b75fddcffe7a840b6a29cec0c64935007a5912418091",
+    "work/experiments/rl-instruct-20261011/math500-fullwidth8/seal.json": "e8f67e37b586cf319bad115ac998cb5f96c0b039ed56e14442246e6a545c2163"
+  },
+  "launcher_sha256": "3d04d291ca2848658723529bb48ab845ea8f5b8c394f429691bb45f85b317bfb",
+  "worker_sha256": "24bcc77cc9df4ddef230223058803ed0015a23b58bcfcd800e418559d8ed1afd",
+  "checks": [
+    "Wrapper pins exact plan SHA; checked against both actual mirrored plan bytes. Launcher asserts before plan read or controller lock.",
+    "Exact launcher SHA and immutable source manifest checked before worker launch, including frozen scorer, fixed 500-question suite, fullwidth8 worker and production runtime source hashes.",
+    "Only exact tmp2/tmp3 hostnames accepted; exactly8 GPU inventory and no compute processes required. Launcher contains no kill/stop operation.",
+    "Width8 inference proof must be passed and exact hash equal corrected-main drain status proof; gate waits corrected_fullwidth8_scores_running.",
+    "Checkpoint integrity file hash, passed verdict, exact checkpoint/hf path and complete metadata step64/world8/model/optimizer/RNG required; file hashes rechecked.",
+    "Both existing R1/R2 checkpoint64 weights reused; complete.json metadata and parent/hf identity must match. Model manifest captured before workers and rehashed after all8 exit0.",
+    "Shared worker scores native visible opener+raw and formatchecks raw; errors fail closed; every fork single subgroup max8; physical model.forward count independently instrumented.",
+    "Terminal acceptance requires exactly500 unique suite IDs, all8 worker exits0, no scorer errors, unchanged model manifest, perrow actual forward parity and everyfork subgroup1/max8.",
+    "Both protocol seeds, response/path/context budgets and fixed question suite same; selection_allowed false. No train/reward or benchmark selection logic added."
+  ],
+  "limitations": [
+    "Source mirror supplied by owner after direct SSH approval-service timeout; every reviewed file content hashed locally.",
+    "Actual inference proof, live GPU state, integrity-file bytes and complete runtime outputs are checked by reviewed launcher; not independently observed in this static review.",
+    "Existing sparse/cap2 scores remain a different protocol. No new accuracy or successful eval completion claimed.",
+    "Source manifest dependencies absent from mirror were hash bindings inspected in plans, not newly source-audited. Shared worker/controller matching provided seal checked in separate worker review."
+  ]
+}

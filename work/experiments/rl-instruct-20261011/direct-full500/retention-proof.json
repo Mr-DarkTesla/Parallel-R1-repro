@@ -1,0 +1,44 @@
+{
+  "passed": true,
+  "verified_at": "2026-10-11T10:23:35.958098+00:00",
+  "worker_source_sha256": "0626748aab5a65ad62275f3f77fa463660ed6003bd89330e7da121f121c51e27",
+  "deadline": null,
+  "automatic_cleanup": false,
+  "worker_loop": "while True",
+  "task_timeout_seconds": 1209600,
+  "child_start_new_session": true,
+  "child_stdin_devnull": true,
+  "child_stdout_logfile": true,
+  "normal_agent_or_ssh_exit_not_task_dependency": true,
+  "cloud_preemption_restart_covered": false,
+  "lanes": {
+    "tmp2": {
+      "worker_pid": 118701,
+      "last_ready_parent_state": "stopped",
+      "live_status": {
+        "state": "running",
+        "task": "306-instruct-rl-strong-width-stage16",
+        "pid": 128314,
+        "worker_pid": 118701,
+        "started": 1791712558.5774028,
+        "heartbeat": "2026-10-11T10:23:35.303456+00:00",
+        "log": "${PROJECT_ROOT}/work/experiments/night-20261010/cloud-continued/tmp2/306-instruct-rl-strong-width-stage16.log"
+      },
+      "ready_sha256": "204ff2f750344662a31ae7333c3b64180cad5a11be6169d6e83c98da556e6daf"
+    },
+    "tmp3": {
+      "worker_pid": 123242,
+      "last_ready_parent_state": "stopped",
+      "live_status": {
+        "state": "running",
+        "task": "231-instruct-math500-worker1-repair",
+        "pid": 128064,
+        "worker_pid": 123242,
+        "started": 1791712632.5201106,
+        "heartbeat": "2026-10-11T10:23:34.874035+00:00",
+        "log": "${PROJECT_ROOT}/work/experiments/night-20261010/cloud-continued/tmp3/231-instruct-math500-worker1-repair.log"
+      },
+      "ready_sha256": "a994871ff1133509d24f2b877147ea76d11bc0142d63e5c88dfe840de967e177"
+    }
+  }
+}

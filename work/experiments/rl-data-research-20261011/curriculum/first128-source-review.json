@@ -1,0 +1,27 @@
+{
+  "reviewed": 128,
+  "state": "requires_independent_review_and_quarantine",
+  "method": "Read all 128 prompts and references; explicit algebra/arithmetic checks on suspicious rows; not a complete independently solved correctness certificate",
+  "findings": [
+    {"id":"bigmath/cn_k12/38185","reason":"Prompt embeds boxed gold answer150"},
+    {"id":"bigmath/cn_k12/81744","reason":"a=0 yields empty A, a valid subset of B; gold omits0"},
+    {"id":"bigmath/cn_k12/193963","reason":"Malformed exponent expression; negative gold conflicts with apparent positive even-power interpretation"},
+    {"id":"bigmath/cn_k12/31069","reason":"Gold2r is merely diameter identity; asked quantitative diameter from surface area a"},
+    {"id":"bigmath/cn_k12/172173","reason":"Top three students asserted1/6of60=10; contradictory translation"},
+    {"id":"bigmath/cn_k12/21576","reason":"1+q^2/2=2q gives q=2+-sqrt2, requestedratio1/q; goldsqrt2-1 unsupported and positiveqnotunique"},
+    {"id":"bigmath/cn_k12/11366","reason":"Gold10or15 omits later meeting-gap times23and26 after endpoint stops"},
+    {"id":"bigmath/cn_k12/143876","reason":"Function has x^3 numerator/x^2 denominator on R and is unbounded; purported globalmaximum/minimum undefined"},
+    {"id":"bigmath/orca_math/114174","reason":"Total200, pureFuji150,pureGala30,cross20 =>10%, gold66.67%"},
+    {"id":"bigmath/orca_math/28622","reason":"Prior-year square side/output unspecified"},
+    {"id":"bigmath/orca_math/88030","reason":"26total implies malt52/3; male6contradicts10male setup"},
+    {"id":"bigmath/orca_math/205198","reason":"Shorter piece80*3/8=30; gold50longerpiece"},
+    {"id":"bigmath/orca_math/146108","reason":"Final5 includesparsley1andnewbasil1, initialbasil3; gold1)"},
+    {"id":"bigmath/orca_math/79260","reason":"Sales108+150+195=453; retail120+150/.85+195/.8=540.220588; goldsales notretail"},
+    {"id":"bigmath/orca_math/204431","reason":"Overallaverage2000/142.857142857=14h total =>return4h, gold7 appliesreturn-only ambiguity"},
+    {"id":"bigmath/orca_math/188848","reason":"9kids vs18kids inconsistent; perapple spending not explicitlyall360"},
+    {"id":"bigmath/orca_math/151840","reason":"Requirednumber concentrate cans unspecified; cansize cannot bedetermined"},
+    {"id":"bigmath/orca_math/68836","reason":"Union houses not stated all60own dog or cat; inferred30cats depends on missingcoverage assumption"},
+    {"id":"bigmath/orca_math/73586","reason":"Ambiguous pronoun He loses35 withCharles14/Willie48; gold48 ignores loss"}
+  ],
+  "next_action":"Independent review must reject or repair with recorded derivation; preserve original references in ledger, create new data revision; never silently modify candidate gold"
+}

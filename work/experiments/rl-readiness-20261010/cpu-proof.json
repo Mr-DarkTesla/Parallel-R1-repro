@@ -1,0 +1,1165 @@
+{
+  "passed": true,
+  "model": "synthetic tiny Qwen3 SDPA FP32",
+  "dtype": "fp32",
+  "device": "cpu",
+  "structural_cases": [
+    {
+      "tokens": 109,
+      "sampled": 82,
+      "forced": 24,
+      "rounds": 4,
+      "width": 2,
+      "F": 70,
+      "T": 82
+    },
+    {
+      "tokens": 129,
+      "sampled": 94,
+      "forced": 32,
+      "rounds": 4,
+      "width": 3,
+      "F": 70,
+      "T": 94
+    },
+    {
+      "tokens": 149,
+      "sampled": 106,
+      "forced": 40,
+      "rounds": 4,
+      "width": 4,
+      "F": 70,
+      "T": 106
+    },
+    {
+      "tokens": 189,
+      "sampled": 130,
+      "forced": 56,
+      "rounds": 4,
+      "width": 6,
+      "F": 70,
+      "T": 130
+    },
+    {
+      "tokens": 229,
+      "sampled": 154,
+      "forced": 72,
+      "rounds": 4,
+      "width": 8,
+      "F": 70,
+      "T": 154
+    }
+  ],
+  "call_parity": [
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 1.430511474609375e-06,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 9.5367431640625e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 2
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 9.5367431640625e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 2
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 9.5367431640625e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 1,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 1
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 3,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 3
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 4.76837158203125e-07,
+      "decoder_forwards": 6
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 4,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 4
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2
+    }
+  ],
+  "maximum_abs_logp_delta": 1.430511474609375e-06,
+  "tolerance": 2e-05,
+  "total_calls": 157,
+  "actual_decoder_forward_proof": true,
+  "training_launch_ready": false,
+  "remaining": "Distributed actor and weight synchronization smoke still required",
+  "source_sha256": {
+    "structured_replay.py": "f1d731572190d978b980a2e91e4ed9e34f470e30be6c1177a13673ec93536a1e",
+    "source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f",
+    "audit_semantics.py": "5587fbd1493f677887ac8bb40a1e9e8e672cc078041e526845dda7b2ef799a72"
+  }
+}

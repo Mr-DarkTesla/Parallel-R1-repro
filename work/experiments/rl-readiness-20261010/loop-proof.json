@@ -1,0 +1,132 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "width": 2,
+      "mode": "normal",
+      "forks": 4,
+      "replaced_raw_actions": 0,
+      "sampled_tokens": 127,
+      "forced_tokens": 36
+    },
+    {
+      "width": 2,
+      "mode": "eos",
+      "forks": 4,
+      "replaced_raw_actions": 12,
+      "sampled_tokens": 127,
+      "forced_tokens": 36
+    },
+    {
+      "width": 2,
+      "mode": "wrong-control",
+      "forks": 4,
+      "replaced_raw_actions": 12,
+      "sampled_tokens": 127,
+      "forced_tokens": 36
+    },
+    {
+      "width": 3,
+      "mode": "normal",
+      "forks": 4,
+      "replaced_raw_actions": 0,
+      "sampled_tokens": 155,
+      "forced_tokens": 48
+    },
+    {
+      "width": 3,
+      "mode": "eos",
+      "forks": 4,
+      "replaced_raw_actions": 16,
+      "sampled_tokens": 155,
+      "forced_tokens": 48
+    },
+    {
+      "width": 3,
+      "mode": "wrong-control",
+      "forks": 4,
+      "replaced_raw_actions": 16,
+      "sampled_tokens": 155,
+      "forced_tokens": 48
+    },
+    {
+      "width": 4,
+      "mode": "normal",
+      "forks": 4,
+      "replaced_raw_actions": 0,
+      "sampled_tokens": 183,
+      "forced_tokens": 60
+    },
+    {
+      "width": 4,
+      "mode": "eos",
+      "forks": 4,
+      "replaced_raw_actions": 20,
+      "sampled_tokens": 183,
+      "forced_tokens": 60
+    },
+    {
+      "width": 4,
+      "mode": "wrong-control",
+      "forks": 4,
+      "replaced_raw_actions": 20,
+      "sampled_tokens": 183,
+      "forced_tokens": 60
+    },
+    {
+      "width": 6,
+      "mode": "normal",
+      "forks": 4,
+      "replaced_raw_actions": 0,
+      "sampled_tokens": 239,
+      "forced_tokens": 84
+    },
+    {
+      "width": 6,
+      "mode": "eos",
+      "forks": 4,
+      "replaced_raw_actions": 28,
+      "sampled_tokens": 239,
+      "forced_tokens": 84
+    },
+    {
+      "width": 6,
+      "mode": "wrong-control",
+      "forks": 4,
+      "replaced_raw_actions": 28,
+      "sampled_tokens": 239,
+      "forced_tokens": 84
+    },
+    {
+      "width": 8,
+      "mode": "normal",
+      "forks": 4,
+      "replaced_raw_actions": 0,
+      "sampled_tokens": 295,
+      "forced_tokens": 108
+    },
+    {
+      "width": 8,
+      "mode": "eos",
+      "forks": 4,
+      "replaced_raw_actions": 36,
+      "sampled_tokens": 295,
+      "forced_tokens": 108
+    },
+    {
+      "width": 8,
+      "mode": "wrong-control",
+      "forks": 4,
+      "replaced_raw_actions": 36,
+      "sampled_tokens": 295,
+      "forced_tokens": 108
+    }
+  ],
+  "actual_frozen_loop_tested": true,
+  "token_policy": "Raw sampled controls are scored; assembled stop replacements are never relabeled as sampled actions",
+  "hashes": {
+    "source/counted_loop.py": "e2d36f53ddd2157d1cc22beb167bad82f337f2d4ff560cda066712bb0fd0d14e",
+    "source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f",
+    "audit_loop.py": "592ff4b1e1171f7fae090e9a2771c138b53ba7908b286c5745fe7b26c2a24051"
+  }
+}

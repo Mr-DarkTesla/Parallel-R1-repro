@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "scope": "Independent static worker delta review only; controller/config final binding review pending hardening",
+  "worker_sha256": "24bcc77cc9df4ddef230223058803ed0015a23b58bcfcd800e418559d8ed1afd",
+  "controller_sha256": "f70114dd1c229a7b2fe0b75fddcffe7a840b6a29cec0c64935007a5912418091",
+  "seal_sha256": "e8f67e37b586cf319bad115ac998cb5f96c0b039ed56e14442246e6a545c2163",
+  "verified": [
+    "Exact mirrored source hashes equal supplied seal. Python AST parses without importing torch or launching workers.",
+    "FP32 SDPA model, offline tokenizer, native Instruct prefix, fixed index seed42161011+index*1000; response4096/path768/context16384.",
+    "Scorer receives native visible <think> opener plus response; format_flags receives raw response. Missing native closure therefore cannot be accepted as final branch box.",
+    "Actual model.forward counter increment before execute and difference equals stats actual physical forwards.",
+    "Every fork asserts max_paths8, one physical subgroup, requested rows\u22648; runtime proof still required for successful width8 execution.",
+    "Scorer technical error raises; rank slicing modulo8, exact question IDs preserved; selection_allowed false."
+  ],
+  "limits": [
+    "Static worker source approval is not completion of MATH500, not proof of actual width8 memory or train replay, and not a quality claim.",
+    "No active remote workers modified; source inspected via owner-delivered exact local mirror after independent SSH approval-service timeout.",
+    "Main controller plan and external drain/inference proof absent from this mirror; separate controller launch review required."
+  ]
+}
