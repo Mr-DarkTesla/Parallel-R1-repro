@@ -20,6 +20,8 @@ import os
 import random
 import re
 import sys
+import importlib.util
+from pathlib import Path
 
 import numpy as np
 import pandas as pd
@@ -29,7 +31,18 @@ from tag_validator import validate  # noqa: E402
 from bench.answer_normalization import lone_number, normalize_superscripts  # noqa: E402
 from exp21.mv_format import forward_passes, parse as mv_parse  # noqa: E402
 from math_verify import parse, verify  # noqa: E402
-from verl.utils.reward_score.math_dapo import compute_score, last_boxed_only_string, remove_boxed  # noqa: E402
+if os.environ.get("EXP21_LIGHT_SCORE") == "1":
+    # The standalone evaluator needs only this self-contained reward file.
+    # Avoid loading the training package and its Ray dependency in eval pods.
+    reward_path = Path(__file__).resolve().parents[2] / "verl/verl/utils/reward_score/math_dapo.py"
+    reward_spec = importlib.util.spec_from_file_location("exp21_math_dapo", reward_path)
+    reward_module = importlib.util.module_from_spec(reward_spec)
+    reward_spec.loader.exec_module(reward_module)
+    compute_score = reward_module.compute_score
+    last_boxed_only_string = reward_module.last_boxed_only_string
+    remove_boxed = reward_module.remove_boxed
+else:
+    from verl.utils.reward_score.math_dapo import compute_score, last_boxed_only_string, remove_boxed  # noqa: E402
 
 generations_path, test_path, output_path, *rows_path = sys.argv[1:]
 generations = pd.read_json(generations_path, lines=True)

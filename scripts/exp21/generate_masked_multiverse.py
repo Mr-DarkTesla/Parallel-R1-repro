@@ -37,10 +37,12 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close, policy
                 state.expected_paths = path_count(tok.decode(response, skip_special_tokens=False)) or 1
             position, visible = state.append(token)
             response.append(token)
-            rowmask = torch.zeros(1, 1, 1, len(prompt_ids) + len(response),
-                                  dtype=torch.bfloat16, device="cuda")
-            rowmask[..., len(prompt_ids):].masked_fill_(
-                ~torch.tensor(visible, device="cuda"), torch.finfo(torch.bfloat16).min)
+            rowmask = None
+            if not all(visible):
+                rowmask = torch.zeros(1, 1, 1, len(prompt_ids) + len(response),
+                                      dtype=torch.bfloat16, device="cuda")
+                rowmask[..., len(prompt_ids):].masked_fill_(
+                    ~torch.tensor(visible, device="cuda"), torch.finfo(torch.bfloat16).min)
             out = model(input_ids=torch.tensor([[token]], device="cuda"), past_key_values=past,
                         attention_mask=rowmask,
                         position_ids=torch.tensor([[len(prompt_ids) + position]], device="cuda"),

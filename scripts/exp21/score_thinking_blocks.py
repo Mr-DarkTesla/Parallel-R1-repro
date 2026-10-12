@@ -16,7 +16,10 @@ def read_rows(path):
 
 
 def thought_span(prompt, output):
-    prefix_opens = prompt.rfind("<think>") > prompt.rfind("</think>")
+    # User instructions may mention <think>; only the assistant prefix can
+    # leave an actual thinking tag open before generation starts.
+    assistant_prefix = prompt.rsplit("<|im_start|>assistant", 1)[-1]
+    prefix_opens = assistant_prefix.rfind("<think>") > assistant_prefix.rfind("</think>")
     start = output.find("<think>")
     if prefix_opens:
         body_start = 0

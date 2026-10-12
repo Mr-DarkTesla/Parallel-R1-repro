@@ -21,10 +21,10 @@ exec 9>"$root/${stage}.lock"
 flock -n 9 || { echo "another $stage runner holds the lock" >&2; exit 1; }
 gpu_count=$(nvidia-smi --list-gpus | wc -l)
 case "$gpu_count" in 1|4) ;; *) echo "expected one or four owned GPUs, got $gpu_count" >&2; exit 1 ;; esac
-source "$venv/bin/activate"
+if test "$venv" != system; then source "$venv/bin/activate"; fi
 export PYTHONDONTWRITEBYTECODE=1 EXP21_FSYNC_EVERY_ROW=1
 export PYTHONPATH="$python_extra:$repo/verl:$ifeval_pkg"
-export EXP21_TOKENIZER="$model" SCORE_IFEVAL_SEED=0
+export EXP21_TOKENIZER="$model" SCORE_IFEVAL_SEED=0 EXP21_LIGHT_SCORE=1
 cd "$repo/verl"
 
 run_one() {
