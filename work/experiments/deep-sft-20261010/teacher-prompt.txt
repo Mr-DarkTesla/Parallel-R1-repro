@@ -1,0 +1,96 @@
+Write a correct worked solution in the exact parallel execution format below.
+This is training data for a small mathematical coordinator. Preserve correctness
+while teaching frequent, short, useful forks along the problem's dependency DAG.
+Return only the worked solution. Never output <think> or </think>.
+
+SCHEDULING
+Work backward from the requested answer and identify the RELEVANT dependency
+graph. Schedule it in several frontier stages. Across this dataset target about
+FOUR sequential rounds and FOUR sibling paths per round, with natural variation
+(usually 3--5 rounds and 3--5 paths, sometimes 2 or 6). These are distribution
+targets, not permission to invent work. Do not compress all chains into one long
+fork merely to minimize barrier count. Look inside independent long chains:
+first establish their prerequisites in parallel, synchronize, then fork the
+dependent next calculations. Later rounds should consume established outputs
+from earlier rounds. Avoid recomputing a prerequisite just to avoid a real
+dependency barrier. Every ordinary path must contribute a distinct, needed
+computed quantity; every later round must advance the reasoning.
+
+Keep each path to one coherent short stage, normally 1--3 actual arithmetic
+operations and about 30--80 student tokens. A Path is NOT a complete independent solution of
+the whole problem. Where several category chains feed a total, advance these
+chains together, stage by stage. A count and a rate can be established in one
+stage and their products in the next. Totals, adjustments and the requested
+ratio/difference can form later stages. Do not artificially split a single
+operation, read a given number in its own path, add identities/zero operations,
+pad a fork with irrelevant outputs, or repeat the same answer in several paths.
+If the problem genuinely has fewer stages/independent outputs, return its
+honest smaller schedule rather than manufacture branches; such examples will
+be retained separately instead of misrepresented as deep training data.
+
+A sibling sees ONLY the original problem, shared text BEFORE its current fork,
+and its assignment. It cannot read another sibling. Shared setup and Plans
+must not calculate the unknown results assigned to siblings. A Summary must
+accurately list the actual established outputs with unchanged variable meanings,
+and expose them for later rounds. Numeric results that must be combined before
+another fork belong in that Summary. Do not silently jump to the final answer.
+Useful independent verification branches are allowed: explicitly assign a
+substantive needed quantity and independently recompute it from pre-fork inputs.
+Different strategies are useful, but the same method is also allowed when it
+provides a real check. Compare results explicitly in Summary and resolve any
+disagreement. Normally use at most one verification branch per round and keep
+most branches doing distinct needed work. Repeating the same numerical result
+is not itself an error; copying it or padding a fork with identities is.
+Prefer no verification if it would be decorative. Every output must be consumed
+downstream or in the
+explicit comparison. Carefully recheck arithmetic in Summary and the final merge.
+
+For a problem with explicitly named simultaneous update stages, use stable
+plain ASCII result labels Name_s, where Name is the exact section/team/station
+name and s is the source stage integer (Name_0 denotes its initial value).
+In each Path write its derived result as Name_s = numeric substitution = value.
+Do not use LaTeX to decorate these labels. Summary compactly lists Name_s = value
+for each updated amount, making those amounts available to the next stage.
+Keep each Plan assignment to the intended result label and a few useful words.
+Do not repeat full derivations in Summary. Stable labels support an independent
+programmatic arithmetic check; never output labels for nonexistent entities.
+
+STYLE
+Use concise meaningful names defined once. Show each governing relation with
+numeric substitution and correct result, explain which quantity it computes.
+Avoid long narration. Shared setup/Plan/Summary should be especially compact;
+do not repeat derivations. Every path must show a nontrivial actual arithmetic
+operation with explicit numeric operands. Preserve units, meanings, domains,
+and supplied conventions. Missing categories are zero ONLY when the supplied
+problem explicitly says so. Do not infer facts or force a reference answer.
+
+FORMAT
+Begin with one short explanatory sentence. BEFORE EVERY fork write one short
+sentence saying what the next stage establishes, followed by:
+Plan:
+1: the useful computed output assigned to path 1
+2: the useful computed output assigned to path 2
+... exactly N assignments ...
+<Parallel>N
+<Path>1
+The first path's short computation.
+</Path><Path>2
+The second path's short computation.
+</Path>... exactly N paths in ID order ...</Parallel><Summary>
+The actual established outputs, any necessary merge and what becomes available.
+</Summary>
+
+N is a single digit from 2 through 8. IDs restart at 1 each round. Do not nest
+forks, add attributes, use code fences, put global Final Answer in a path, or
+omit closing tags. No whitespace is needed between sibling closing/opening
+tags. Each <Path>ID and <Parallel>N has a newline after its integer.
+After all reasoning, write the standalone heading:
+Final solution:
+Then 1--2 concise sentences deriving the requested quantity from the already
+established results. Finish with exactly one standalone last line:
+Final Answer: \boxed{the exact mathematical answer}
+Do not put units in the box. If inconsistent or essentially underdetermined,
+write Final Answer: unresolved rather than fabricate a solution.
+
+PROBLEM
+{{INSERT_PROBLEM_HERE}}

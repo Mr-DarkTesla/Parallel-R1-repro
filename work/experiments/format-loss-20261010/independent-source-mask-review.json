@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "stage": "independent_CPU_source_and_all_data_format_loss_review",
+  "at": "2026-10-10T09:30:50.469141+00:00",
+  "source_sha256": {
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/format-loss-20261010/format_loss.py": "6e11b33bd9eb1eecb2c9e090c03b05b36b932c2b7aae361485f55f1a2c852d0e",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/format-loss-20261010/train.py": "44066115cc380a6dd96b38a63857799d83259b25fac00d33daac1288473ea290",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/format-loss-20261010/baseline_train.py": "bdeabce08d10423708fb0b21a2319b755616df34e5c8070145815b9d6ba0b28d",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/format-loss-20261010/prepare_variant.py": "03ae948afc1e5276d00f9270995038c81a488410095f114c1168d5aaac2a495f",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/format-loss-20261010/test_format_loss.py": "974349f87f257c05e99976089d84b03ce6d02822fc046bd2938af5dcf0972f01",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/instruct-token-warmup-20261010/data.py": "7a9415bc70d8c237452a47dadb0c1b8ca5e9bbd8f4d877f3c1c599cc47315919",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/instruct-token-warmup-20261010/tokenizer-proof.json": "8f22168b1599c13569b9535a39005f80024d6d3a322d966fb68acdb4e793d878",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/instruct-token-warmup-20261010/system.txt": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/instruct-token-warmup-20261010/initial-rows.safetensors": "5b6ce3197f97884eeba09a83ecdff74143cade70494d8dba79c4c7dc464dc65f",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/train.jsonl": "7379ecfc7053771313df1bc63c6324a3f3f8ee72bdfc818015bdc35ae600b24a",
+    "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/val.jsonl": "d5a868ef8fc42a50f21a7e9cb657da1a894b882ddeabb256b6f1eeb6112a23c5"
+  },
+  "checks": {
+    "baseline_hash_exact": true,
+    "prepared_train_source_exact": true,
+    "all3000_real_tokenizer_masks_preserve_baseline_tokens_attention_positions": true,
+    "all_forced_and_prompt_targets_zero": true,
+    "epoch1_syntax_only_epoch2plus_5x_content1": true,
+    "weighted_mean_sum_weights_intentional": true,
+    "native_EOS_supervised_all_samples": true,
+    "positive_finite_objectives_all_samples": true,
+    "validation_original_unweighted_teacherCE": true,
+    "canonical_mean_init_LR5e4_six_tied_rows_15360_only": true,
+    "actual_torch_gradient_and_coordinate_unittests_four_passed": true,
+    "no_GPU_or_approvals_or_launch": true,
+    "smoke_steps_cover_both_objectives_source_verified": true
+  },
+  "statistics": {
+    "rows_train": 2700,
+    "syntax_tokens_train": 74031,
+    "content_tokens_train": 2087932,
+    "forced_boundary_spills": 0,
+    "rows_val": 300,
+    "syntax_tokens_val": 8310,
+    "content_tokens_val": 228752
+  },
+  "syntax_tokens_minmax": {
+    "train": [
+      9,
+      54
+    ],
+    "val": [
+      9,
+      45
+    ]
+  },
+  "limitations": [
+    "This CPU PASS validates source and masks, not actual GPU training or format quality; fresh actual smoke and independent review remain necessary before production.",
+    "All native model/output rows and transformer layers are frozen, beyond merely final layer. Six new tied embeddings can steer context including forced/input tags in system; they cannot guarantee learned Plan,width or think-close behavior.",
+    "Syntax-only means named broader protocol syntax including final prefix/box braces/nativeEOS, not only six XML token targets.",
+    "Standalone whitespace/newline not adjacent to covered syntax is semantic unless explicitly covered; exact width newline is covered.",
+    "Token crossing syntax into a nonwhitespace content byte deliberately remains semantic weight1, or zero during syntax-only epoch; no answer value or arithmetic amplification via BPE.",
+    "Runtime normalization of wrongly sampled terminals and permissive post-think forks remain unchanged; this loss candidate does not fix runtime behavior.",
+    "Loss phase changes after epoch1; weighted training loss across phases is not directly comparable. Validation unweightedCE remains comparable."
+  ],
+  "source_revision_note": "Rechecked exact prepared-source identity after smoke step2 weighted-objective addition; all other pins unchanged, all3000 masks remain validated."
+}

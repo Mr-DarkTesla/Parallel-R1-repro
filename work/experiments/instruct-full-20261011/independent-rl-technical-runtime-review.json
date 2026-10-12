@@ -1,0 +1,109 @@
+{
+  "passed": true,
+  "scope": "Actual retained8GPU technical step1 then exact8GPU resume-step2 admission; not production quality result",
+  "technical_proof_sha256": "d699d3aba08e140f36355040c9d98c2f98e72a5ce3add997d30f556c48a81b2c",
+  "technical_result_sha256": "a9cc1e50c197e9da2c94ed16c24513949355e599d364075064d13aa3127e810f",
+  "technical_seal_sha256": "b2f2080ea6b461567d9b7897fb6da1140594d5f12b966d70c453ae6061779f0d",
+  "world_size": 8,
+  "steps": {
+    "1": {
+      "all8_finite_actual_updates": true,
+      "update_l2_per_rank": [
+        2.692564579302359e-05,
+        2.692564579302359e-05,
+        2.692564579302359e-05,
+        2.692564579302359e-05,
+        2.692564579302359e-05,
+        2.692564579302359e-05,
+        2.692564579302359e-05,
+        2.692564579302359e-05
+      ],
+      "max_replay_drift_per_rank": [
+        6.103515625e-05,
+        8.20159912109375e-05,
+        8.392333984375e-05,
+        7.82012939453125e-05,
+        8.7738037109375e-05,
+        9.918212890625e-05,
+        8.96453857421875e-05,
+        7.43865966796875e-05
+      ],
+      "peak_gpu_bytes_per_rank": [
+        53117827584,
+        53135664128,
+        53119841280,
+        53115621888,
+        53115935744,
+        53119030272,
+        53122178560,
+        53116269568
+      ],
+      "exact_all8_adam_cpu_cuda_python_rng_resume": false,
+      "trajectory_count": 32,
+      "raw_policy_calls_checked": 244,
+      "sampled_actions_checked": 15103,
+      "forced_tokens_excluded": 348,
+      "actual_postthink_guard_calls": 32,
+      "prefix_and_raw_action_mask_exact": true
+    },
+    "2": {
+      "all8_finite_actual_updates": true,
+      "update_l2_per_rank": [
+        2.1756108800135706e-05,
+        2.1756108800135706e-05,
+        2.1756108800135706e-05,
+        2.1756108800135706e-05,
+        2.1756108800135706e-05,
+        2.1756108800135706e-05,
+        2.1756108800135706e-05,
+        2.1756108800135706e-05
+      ],
+      "max_replay_drift_per_rank": [
+        7.62939453125e-05,
+        7.2479248046875e-05,
+        0.000118255615234375,
+        6.67572021484375e-05,
+        6.29425048828125e-05,
+        6.29425048828125e-05,
+        9.34600830078125e-05,
+        0.0003261566162109375
+      ],
+      "peak_gpu_bytes_per_rank": [
+        57157735424,
+        57176044544,
+        57180181504,
+        57188371456,
+        57171649024,
+        57170825728,
+        57167011840,
+        57168512512
+      ],
+      "exact_all8_adam_cpu_cuda_python_rng_resume": true,
+      "trajectory_count": 32,
+      "raw_policy_calls_checked": 242,
+      "sampled_actions_checked": 16964,
+      "forced_tokens_excluded": 351,
+      "actual_postthink_guard_calls": 30,
+      "prefix_and_raw_action_mask_exact": true
+    }
+  },
+  "clean_launcher_and_nccl_exit": true,
+  "gpus_empty_after_each_launcher": "Asserted by hashed technical launcher before emitting passed; next production launcher rechecks fresh empty inventory",
+  "rng_boundary": "Exact saved state restored before validation; per-call actions use explicit seeds",
+  "evidence_sha256": {
+    "work/experiments/night-20261010/cloud-continued/tmp2/results/305-instruct-rl-technical-step-resume.json": "a9cc1e50c197e9da2c94ed16c24513949355e599d364075064d13aa3127e810f",
+    "work/experiments/rl-instruct-20261011/technical-launch.json": "d699d3aba08e140f36355040c9d98c2f98e72a5ce3add997d30f556c48a81b2c",
+    "work/experiments/rl-instruct-20261011/technical-config-seal.json": "b2f2080ea6b461567d9b7897fb6da1140594d5f12b966d70c453ae6061779f0d",
+    "work/experiments/rl-instruct-20261011/technical-root-approved.json": "eacd74d1cad1a0f8d1b804e790d02ebb1aaae353b2c66ff7849ed9093770cbed",
+    "work/experiments/instruct-full-20261011/independent-rl-technical-source-review.json": "ea37cf31bace7ffc3164d178a380bdee12336d149a9a733f6afad46979670939",
+    "work/experiments/instruct-full-20261011/audit_rl_runtime.py": "32ef8709889c1241da9d95d8a1154eeb7491d006fd412798884afcd8b6e1116e",
+    "work/experiments/rl-instruct-20261011/runs/technical-step1/result.json": "74f1880fa53169ae2e11579e94f8f9c7303533435186466fc0ebf845f4aa76ec",
+    "work/experiments/rl-instruct-20261011/runs/technical-step1/metrics.jsonl": "bdb4d2decbdfb0e6dc2530899eac15370f155197db2d849af38104380a89c422",
+    "work/experiments/rl-instruct-20261011/runs/technical-step1/checkpoint-0001/complete.json": "2255657998b85a5b141d9b2843f10a1cca3b59e6cbdb36e398abf60b9acbd417",
+    "work/experiments/rl-instruct-20261011/runs/technical-step1/config.json": "a6b6b11817c904f19ced95fab333fea1b5b3d805eb0788a800dfa4fdee27d35d",
+    "work/experiments/rl-instruct-20261011/runs/technical-resume-step2/result.json": "22fce6e2cfd6b902a194166300872eadc8c11d138d4b62d524d3870ce2f59669",
+    "work/experiments/rl-instruct-20261011/runs/technical-resume-step2/metrics.jsonl": "df8ff668098bd7309835a97bb08cf904c75486d07778afddf4fb526fffb219f3",
+    "work/experiments/rl-instruct-20261011/runs/technical-resume-step2/checkpoint-0002/complete.json": "b3c8ea726cb195d5e233ed473a10c11ffa013ba9114c0b5bfa5f7058ffe2cfd2",
+    "work/experiments/rl-instruct-20261011/runs/technical-resume-step2/config.json": "b7bb819b6a6bced7e8988b504d7b88e8818b35097a411bde7273c19ac3f38a7e"
+  }
+}

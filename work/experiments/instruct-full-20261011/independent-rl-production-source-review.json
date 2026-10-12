@@ -1,0 +1,36 @@
+{
+  "passed": true,
+  "scope": "Source admission to user-authorized stage16 R2/R1, conditional actual8GPU technical305 PASS and concrete root lane receipts",
+  "production_seal_sha256": "94cb83ff0271a12a4c07a91b6b96dce181dbbcb0349f1a1a11ee87c37494c17d",
+  "config_sha256": {
+    "strong_width-stage16": "4e479a5b8ef0b3f11e5eed219982f29d01cf9960983dd5cfe517a64d9bc79098",
+    "forward_only-stage16": "677e49c3114395fb3075800d87c50d8c239ec2d1068d047bb4508ffb38bd2d9b"
+  },
+  "matched_arms": [
+    "same verified full4B Instruct SFT epoch1 checkpoint",
+    "same native Instruct system and exact guarded rollout/replay",
+    "same admitted revision2 train128 val32 pilot16",
+    "same seeds FP32 group4 LR1e-6 budget4096 path768 maxcontext16384",
+    "only reward mode lane and output differ"
+  ],
+  "source_delta_from_technical": [
+    "clean source dataset label",
+    "checkpoint validation/save at4 8 16"
+  ],
+  "actual_gate_requirements": [
+    "technical-launch passed on tmp2",
+    "305 exact result returncode0 and root receipt binds proof/result hashes",
+    "all8 GPUs empty before and after launcher",
+    "all production source/data/model hashes match frozen artifacts",
+    "tmp3 arm additionally requires231 repair terminalPASS"
+  ],
+  "continuation_fix_verified": "Selected HF model shards config all Adam and RNG rank files complete marker initial config and initial/selected clean val summaries are SHA-pinned by resume manifest and rechecked before64load",
+  "data_review_scope": "Read current admitted manifest and176 parser preflight; substantive answer/decontamination admission relies on separate independent receipts in that frozen manifest",
+  "reward_scope": "Constant strong width/round bonus with correctness-weighted actual instrumented decoder model-call cost; no bonus annealing; inference F remains logical critical-depth proxy",
+  "limitations": [
+    "Runtime305 finite replay update memory save/resume and cleanup proof still pending",
+    "Stage16 result accuracy versus initial SFT not known",
+    "Continuation64 requires actual stage16 selected clean-val checkpoint and new root configuration receipt",
+    "No MATH500-based checkpoint selection"
+  ]
+}

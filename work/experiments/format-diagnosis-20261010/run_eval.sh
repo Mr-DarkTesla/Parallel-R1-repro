@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT=/home/jovyan/shares/SR004.nfs3/larin/tmp/r1
+cd "$ROOT"
+E="$ROOT/work/experiments/instruct-token-warmup-20261010/evaluations"
+export TMPDIR="$ROOT/t/warm4beval"
+mkdir -p "$TMPDIR"
+export OMP_NUM_THREADS=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+export PYTHONPATH="$E:$E/runtime"
+PY="${PARALLEL_R1_PYTHON:-$ROOT/.venv/bin/python}"
+exec "$PY" -B "$E/evaluate.py" "$@"
