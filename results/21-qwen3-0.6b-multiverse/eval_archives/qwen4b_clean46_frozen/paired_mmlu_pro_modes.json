@@ -1,0 +1,26 @@
+{
+  "method": "paired percentile bootstrap, resampling MMLU-Pro problems; seed 21; 10000 draws",
+  "n": 2000,
+  "acc": {
+    "no_thinking_percent": 43.75,
+    "thinking_percent": 50.8,
+    "difference_pp": 7.05,
+    "ci95_pp": [
+      4.55,
+      9.5
+    ],
+    "thinking_only_correct": 388,
+    "no_thinking_only_correct": 247
+  },
+  "acc_robust": {
+    "no_thinking_percent": 43.75,
+    "thinking_percent": 50.85,
+    "difference_pp": 7.1,
+    "ci95_pp": [
+      4.6,
+      9.55
+    ],
+    "thinking_only_correct": 389,
+    "no_thinking_only_correct": 247
+  }
+}
