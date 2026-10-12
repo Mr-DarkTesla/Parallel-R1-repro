@@ -1,8 +1,8 @@
 {
-  "date": "2026-10-11",
+  "date": "2026-10-12",
   "scope": "exp21 Multiverse; global project top five",
-  "pilot": "same fixed40 masked greedy, manual strict semantic audit",
-  "ranking": "complete numbered block; useful blocks; correct external answers; fewer truncations; fewer tags outside think",
+  "pilot": "same fixed40 masked greedy plus independent masked dev40 where available, manual strict semantic audit",
+  "ranking": "strict useful blocks on fixed40, checked on separate masked dev40; correct answers and truncation break ties",
   "models": [
     {
       "rank": 1,
@@ -16,6 +16,28 @@
     },
     {
       "rank": 2,
+      "name": "qwen4b-agent150-plain-step16",
+      "path": "/checkpoints/exp21-global-top5/qwen4b-agent150-plain-step16/model",
+      "strict_useful_of_40": 14,
+      "correct_external_of_40": 29,
+      "strict_final_of_40": 29,
+      "truncated_of_40": 0,
+      "outside_think_tags_of_40": 1,
+      "fresh_holdout_useful_of_40": 12
+    },
+    {
+      "rank": 3,
+      "name": "qwen4b-agent150-tagged-step32",
+      "path": "/checkpoints/exp21-global-top5/qwen4b-agent150-tagged-step32/model",
+      "strict_useful_of_40": 11,
+      "correct_external_of_40": 35,
+      "strict_final_of_40": 32,
+      "truncated_of_40": 0,
+      "outside_think_tags_of_40": 1,
+      "fresh_holdout_useful_of_40": 11
+    },
+    {
+      "rank": 4,
       "name": "qwen4b-mixed401-tagged-step128",
       "path": "/checkpoints/exp21-global-top5/qwen4b-mixed401-tagged-step128/model",
       "strict_useful_of_40": 12,
@@ -24,30 +46,12 @@
       "outside_think_tags_of_40": 0
     },
     {
-      "rank": 3,
+      "rank": 5,
       "name": "v4-recovery8-step8",
       "path": "/checkpoints/exp21-v4-recovery8/step_8/model",
       "strict_useful_of_40": 2,
       "correct_external_of_40": 29,
       "truncated_of_40": 2,
-      "outside_think_tags_of_40": 0
-    },
-    {
-      "rank": 4,
-      "name": "selective-v5-step56",
-      "path": "/checkpoints/exp21-m1-selective-v5/step_56/model",
-      "strict_useful_of_40": 2,
-      "correct_external_of_40": 28,
-      "truncated_of_40": 5,
-      "outside_think_tags_of_40": 0
-    },
-    {
-      "rank": 5,
-      "name": "selective-v4-step56",
-      "path": "/checkpoints/exp21-m1-selective-v4/step_56/model",
-      "strict_useful_of_40": 2,
-      "correct_external_of_40": 27,
-      "truncated_of_40": 4,
       "outside_think_tags_of_40": 0
     }
   ]

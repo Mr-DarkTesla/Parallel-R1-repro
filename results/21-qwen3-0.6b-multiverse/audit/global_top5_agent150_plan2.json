@@ -1,0 +1,24 @@
+{
+  "mode": "dry-run",
+  "root": "/checkpoints",
+  "manifest": "/checkpoints/exp21-global-top5/GLOBAL_TOP5.json",
+  "kept_model_dirs": [
+    "/checkpoints/exp21-global-top5/qwen4b-agent150-plain-step16/model",
+    "/checkpoints/exp21-global-top5/qwen4b-agent150-tagged-step32/model",
+    "/checkpoints/exp21-global-top5/qwen4b-clean46-tagged-step32/model",
+    "/checkpoints/exp21-global-top5/qwen4b-mixed401-tagged-step128/model",
+    "/checkpoints/exp21-v4-recovery8/step_8/model"
+  ],
+  "removed_model_dirs": [
+    "/checkpoints/exp21-m1-selective-v5/step_56/model"
+  ],
+  "removed_export_parents": [
+    "/checkpoints/exp21-m1-selective-v5/step_56"
+  ],
+  "counts": {
+    "kept_models": 5,
+    "all_models": 6,
+    "removed_models": 1,
+    "removed_export_parents": 1
+  }
+}

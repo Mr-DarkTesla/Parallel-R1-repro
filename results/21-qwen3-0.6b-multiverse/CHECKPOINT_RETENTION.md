@@ -338,3 +338,45 @@ Tagged шаг 32 дал 39/40 полных нумерованных блоков
 | 3 | recovery8, шаг 8 | 2 | 29 | `/checkpoints/exp21-v4-recovery8/step_8/model` |
 | 4 | selective v5, шаг 56 | 2 | 28 | `/checkpoints/exp21-m1-selective-v5/step_56/model` |
 | 5 | selective v4, шаг 56 | 2 | 27 | `/checkpoints/exp21-m1-selective-v4/step_56/model` |
+
+## Пересмотр общего TOP-5 после авторских 150 задач, 12 октября 04:23 МСК
+
+Новые 4B plain16 и tagged32 оценены по тому же masked fixed40 и на
+отдельном masked dev40. Лучшим 4B остаётся clean46: 13/40 полезных
+блоков на обеих проверках; plain16 дал 14/40 и 12/40, tagged32
+11/40 и 11/40, mixed401 ранее 12/40 и 7/40. Интервалы малых
+разностей включают ноль; ранги ниже отражают устойчивость на двух
+наборах, а не доказанное превосходство каждой соседней пары.
+Низкие 0.6B экспорты имеют по 2/40 на fixed40 и не проверялись на
+новом 4B holdout. При этом они явно уступают новым кандидатам по
+основному fixed40 критерию.
+
+Сначала [инвентарь](audit/global_top5_agent150_precheck.json)
+подтвердил ровно пять моделей и ноль лишних. Временные 4B экспорты
+шагов 16 и 32 проверены после копирования по config, tokenizer и
+непустым safetensors; `oom_kill=5` не вырос. Перед копированием
+точечно освобождён файловый кэш двух наших `/tmp/exp21-*` каталогов:
+64,36 GB файлов, cgroup memory 136,919→80,476 GB, файлы не удалены.
+
+Замена шла по одной модели. После добавления plain16 точный
+[план 1](audit/global_top5_agent150_plan1.json) назвал только
+`/checkpoints/exp21-m1-selective-v4/step_56/model`; выполнен
+[план 1](audit/global_top5_agent150_apply1.json),
+[проверка](audit/global_top5_agent150_post1.json) нашла пять моделей.
+После добавления tagged32 [план 2](audit/global_top5_agent150_plan2.json)
+назвал только `/checkpoints/exp21-m1-selective-v5/step_56/model`;
+выполнен [план 2](audit/global_top5_agent150_apply2.json),
+[итоговый инвентарь](audit/global_top5_agent150_post2.json) снова
+нашёл **ровно пять полных моделей и ноль лишних**. PVC и pod не
+удалялись; журналы, датасеты и сырые ответы сохранены. На
+`/checkpoints` осталось 6,1 GiB свободно, GPU пуста.
+
+| Ранг | Модель | Полезно fixed40 / fresh40 | Верное значение fixed40 / fresh40 | Постоянный путь |
+|---:|---|---:|---:|---|
+| 1 | 4B clean46 tagged step32 | 13 / 13 | 30 / 29 | `/checkpoints/exp21-global-top5/qwen4b-clean46-tagged-step32/model` |
+| 2 | 4B authored150 plain step16 | 14 / 12 | 29 / 26 | `/checkpoints/exp21-global-top5/qwen4b-agent150-plain-step16/model` |
+| 3 | 4B authored150 tagged step32 | 11 / 11 | 35 / 27 | `/checkpoints/exp21-global-top5/qwen4b-agent150-tagged-step32/model` |
+| 4 | 4B mixed401 tagged step128 | 12 / 7 | 32 / 28 | `/checkpoints/exp21-global-top5/qwen4b-mixed401-tagged-step128/model` |
+| 5 | 0.6B recovery8 step8 | 2 / нет оценки | 29 / нет оценки | `/checkpoints/exp21-v4-recovery8/step_8/model` |
+
+Актуальный [машинный манифест](audit/global_top5_manifest.json).
