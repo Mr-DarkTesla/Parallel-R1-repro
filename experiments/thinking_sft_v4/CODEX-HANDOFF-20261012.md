@@ -124,6 +124,7 @@ OFFLOAD=true BATCH=16 MINI=16 STEPS=30 RUN_NAME=qwen3-4b-think-v0-short REWARD=v
 
 ## 7. Не сегодня
 
-- Пробник двух последовательных блоков `<Parallel>` (пример math-intermediate_algebra-train-1130) ещё пишется
-  Claude, к SFT не нужен.
+- Пробник двух последовательных блоков `<Parallel>` готов (`multiblock_probe.py`, 8e6c407; команда в конце README,
+  12 задач включая math-intermediate_algebra-train-1130, ~15–30 мин GPU). К SFT не нужен: запускать только когда GPU
+  свободен (не во время SFT/RL), результат показать maxim как пример двух блоков.
 - Контрольный SFT без тегов, проверка перекрытия веток и пересечения с тестами — после первого RL.
