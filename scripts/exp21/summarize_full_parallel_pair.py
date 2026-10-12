@@ -82,6 +82,9 @@ def summarize(new, reference):
         result["masked"][field] = round(100 * sum(bool(row[field]) for row in new) / len(new), 2)
     result["masked"]["full_blocks"] = sum(bool(row["think_full_block"]) for row in new)
     result["masked"]["numbered_blocks"] = sum(bool(row["think_numbered_block"]) for row in new)
+    correct_blocks = sum(bool(row["think_numbered_block"] and row["acc_robust"]) for row in new)
+    result["masked"]["numbered_correct_count"] = correct_blocks
+    result["masked"]["numbered_correct_percent"] = round(100 * correct_blocks / len(new), 2)
     return result
 
 
@@ -120,7 +123,7 @@ def main():
         for source, models in sources.items():
             selected = models["selected"]
             print(bench, source, selected["questions"], selected["masked"]["acc_robust"],
-                  selected["masked"]["think_full_block"], selected["masked"]["tokens"],
+                  selected["masked"]["think_numbered_block"], selected["masked"]["tokens"],
                   selected["masked"]["forward_passes"])
 
 
