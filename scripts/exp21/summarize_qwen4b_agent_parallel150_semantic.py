@@ -22,9 +22,13 @@ REVIEW_FIELDS = {
 VARIANTS = {
     "clean46_parent_step32": "rereview",
     "agent_parallel150_tagged_step8": "review",
+    "agent_parallel150_plain_step8": "review",
     "agent_parallel150_tagged_step16": "review",
+    "agent_parallel150_plain_step16": "review",
     "agent_parallel150_tagged_step32": "review",
 }
+PLAIN32_STRUCTURAL = AUDIT / "agent_parallel150_plain_step32_structural.jsonl"
+PLAIN32_ELIGIBLE_REVIEW = AUDIT / "agent_parallel150_plain_step32_eligible_review.jsonl"
 
 
 def require_schema(row, fields, context):
@@ -93,20 +97,77 @@ def counts(rows):
     }
 
 
+def load_plain32_sparse(audit, parent):
+    structural = read_jsonl(audit / PLAIN32_STRUCTURAL.name)
+    reviews = read_jsonl(audit / PLAIN32_ELIGIBLE_REVIEW.name)
+    require(len(structural) == 40, "plain32: expected 40 structural decisions")
+    require(len(reviews) == 3, "plain32: expected three independently reviewed eligible blocks")
+    eligible = {}
+    for index, row in enumerate(structural):
+        require_schema(row, {"id", "cohort", "full_numbered_block"}, f"plain32 structural[{index}]")
+        identifier = parent["order"][index]
+        require(row["id"] == identifier, f"plain32 structural[{index}]: ID/order drift")
+        require(row["cohort"] == parent["rows"][identifier]["cohort"],
+                f"plain32 structural[{index}]: cohort drift")
+        require(type(row["full_numbered_block"]) is bool, f"plain32 structural[{index}]: invalid flag")
+        if row["full_numbered_block"]:
+            eligible[identifier] = row
+    require(len(eligible) == 3, "plain32: structural count differs from automatic fixed40")
+    decisions = {}
+    for row in reviews:
+        require_schema(row, {"id", "independent_useful", "correct_final", "pass", "reason"},
+                       "plain32 eligible review")
+        identifier = row["id"]
+        require(identifier in eligible and identifier not in decisions,
+                f"plain32: unreviewed or duplicate eligible ID {identifier}")
+        require(all(type(row[field]) is bool for field in ("independent_useful", "correct_final", "pass")),
+                f"plain32: invalid review flag at {identifier}")
+        require(row["pass"] == (row["independent_useful"] and row["correct_final"]),
+                f"plain32: inconsistent decision at {identifier}")
+        require(isinstance(row["reason"], str) and row["reason"].strip(),
+                f"plain32: missing reason at {identifier}")
+        decisions[identifier] = row
+    require(set(decisions) == set(eligible), "plain32: not all eligible blocks reviewed")
+    return {
+        identifier: {"useful": decisions[identifier]["pass"] if identifier in decisions else False}
+        for identifier in parent["order"]
+    }
+
+
 def build_result(audit):
     rows = {label: load_variant(audit, label, review_kind) for label, review_kind in VARIANTS.items()}
     parent = rows["clean46_parent_step32"]
     for label, candidate in rows.items():
         same_fixed40(parent, candidate, f"parent vs {label}")
+    plain32 = load_plain32_sparse(audit, parent)
     return {
         "criterion": "independent distinct necessary intermediate facts and conclusion combining them; correct final",
-        "review": "two readers each reviewed 20 disjoint rows blind to gold/scorer; same rubric for all four variants",
+        "review": "two readers each reviewed 20 disjoint rows blind to gold/scorer; same rubric for all variants",
         "fixed40": 40,
         "variants": {label: counts(rows[label]["rows"]) for label in VARIANTS},
         "paired_vs_parent": {
             label: paired_interval(parent["rows"], rows[label]["rows"], "useful")
             for label in VARIANTS if label != "clean46_parent_step32"
         },
+        "paired_tagged_vs_plain": {
+            f"step{step}": paired_interval(
+                rows[f"agent_parallel150_plain_step{step}"]["rows"],
+                rows[f"agent_parallel150_tagged_step{step}"]["rows"], "useful"
+            )
+            for step in (8, 16)
+        },
+        "plain32_structural_gate": {
+            "full_numbered_block": 3,
+            "eligible_blocks_independently_reviewed": 3,
+            "useful": sum(row["useful"] for row in plain32.values()),
+            "other_rows": "ineligible by automatic full numbered block check; no semantic reading",
+        },
+        "paired_step32_tagged_vs_plain_structural_gate": paired_interval(
+            plain32, rows["agent_parallel150_tagged_step32"]["rows"], "useful"
+        ),
+        "paired_plain32_vs_parent_structural_gate": paired_interval(
+            parent["rows"], plain32, "useful"
+        ),
     }
 
 
@@ -134,6 +195,14 @@ def self_test(audit):
             "real-data step32 final count drift")
     require(result["paired_vs_parent"]["agent_parallel150_tagged_step8"]["n"] == 40,
             "real-data paired sample size drift")
+    require(result["variants"]["agent_parallel150_plain_step8"]["useful"] == 11,
+            "real-data plain step8 useful count drift")
+    require(result["variants"]["agent_parallel150_plain_step16"]["useful"] == 14,
+            "real-data plain step16 useful count drift")
+    require(result["paired_tagged_vs_plain"]["step16"]["n"] == 40,
+            "real-data tagged/plain sample size drift")
+    require(result["plain32_structural_gate"]["useful"] == 1,
+            "real-data plain32 useful count drift")
     print("self-test passed")
 
 

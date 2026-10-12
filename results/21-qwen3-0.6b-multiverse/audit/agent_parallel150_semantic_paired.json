@@ -1,6 +1,6 @@
 {
   "criterion": "independent distinct necessary intermediate facts and conclusion combining them; correct final",
-  "review": "two readers each reviewed 20 disjoint rows blind to gold/scorer; same rubric for all four variants",
+  "review": "two readers each reviewed 20 disjoint rows blind to gold/scorer; same rubric for all variants",
   "fixed40": 40,
   "variants": {
     "clean46_parent_step32": {
@@ -17,12 +17,26 @@
       "gsm8k_useful": 7,
       "math_useful": 3
     },
+    "agent_parallel150_plain_step8": {
+      "useful": 11,
+      "correct_final_manual": 30,
+      "full_block_inside_think_manual": 37,
+      "gsm8k_useful": 7,
+      "math_useful": 4
+    },
     "agent_parallel150_tagged_step16": {
       "useful": 10,
       "correct_final_manual": 32,
       "full_block_inside_think_manual": 35,
       "gsm8k_useful": 7,
       "math_useful": 3
+    },
+    "agent_parallel150_plain_step16": {
+      "useful": 14,
+      "correct_final_manual": 30,
+      "full_block_inside_think_manual": 36,
+      "gsm8k_useful": 6,
+      "math_useful": 8
     },
     "agent_parallel150_tagged_step32": {
       "useful": 11,
@@ -44,6 +58,17 @@
       "unit": "percentage_points",
       "n": 40
     },
+    "agent_parallel150_plain_step8": {
+      "reference": 32.5,
+      "candidate": 27.5,
+      "delta": -5.0,
+      "ci95": [
+        -12.5,
+        0.0
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    },
     "agent_parallel150_tagged_step16": {
       "reference": 32.5,
       "candidate": 25.0,
@@ -51,6 +76,17 @@
       "ci95": [
         -20.0,
         2.5
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    },
+    "agent_parallel150_plain_step16": {
+      "reference": 32.5,
+      "candidate": 35.0,
+      "delta": 2.5,
+      "ci95": [
+        -10.0,
+        15.0
       ],
       "unit": "percentage_points",
       "n": 40
@@ -66,5 +102,57 @@
       "unit": "percentage_points",
       "n": 40
     }
+  },
+  "paired_tagged_vs_plain": {
+    "step8": {
+      "reference": 27.5,
+      "candidate": 25.0,
+      "delta": -2.5,
+      "ci95": [
+        -12.5,
+        7.5
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    },
+    "step16": {
+      "reference": 35.0,
+      "candidate": 25.0,
+      "delta": -10.0,
+      "ci95": [
+        -25.0,
+        2.5
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    }
+  },
+  "plain32_structural_gate": {
+    "full_numbered_block": 3,
+    "eligible_blocks_independently_reviewed": 3,
+    "useful": 1,
+    "other_rows": "ineligible by automatic full numbered block check; no semantic reading"
+  },
+  "paired_step32_tagged_vs_plain_structural_gate": {
+    "reference": 2.5,
+    "candidate": 27.5,
+    "delta": 25.0,
+    "ci95": [
+      12.5,
+      40.0
+    ],
+    "unit": "percentage_points",
+    "n": 40
+  },
+  "paired_plain32_vs_parent_structural_gate": {
+    "reference": 32.5,
+    "candidate": 2.5,
+    "delta": -30.0,
+    "ci95": [
+      -45.0,
+      -17.5
+    ],
+    "unit": "percentage_points",
+    "n": 40
   }
 }

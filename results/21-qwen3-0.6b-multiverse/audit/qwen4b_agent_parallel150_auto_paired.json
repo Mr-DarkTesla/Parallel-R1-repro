@@ -1,0 +1,1425 @@
+{
+  "schema_version": 1,
+  "protocol": {
+    "fixed40": "same 20 GSM8K_DEV and 20 MATH_DEV questions, prompts, IDs, and samples",
+    "generation": "thinking, masked-autonomous-v2, masked decoder, greedy, seed 0",
+    "limits": "2048 GSM8K and 4096 MATH max_tokens; 0 <= ideal forward passes <= tokens <= max_tokens",
+    "intervals": "10,000 deterministic paired bootstrap resamples; binary deltas in percentage points"
+  },
+  "metric_definitions": {
+    "strict": "automatic archive acc; strict external final-answer accuracy",
+    "robust": "automatic archive acc_robust",
+    "full_numbered_block": "think_full_block and think_numbered_block inside <think>; structural only",
+    "truncated": "archive truncation flag",
+    "tokens": "mean generated tokens",
+    "forward_passes": "mean ideal sequential decoding passes"
+  },
+  "provenance": {
+    "initial_4b": {
+      "archive": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/eval_archives/qwen4b_init_fixed40",
+      "model": "/tmp/exp21-qwen3-4b-mv10"
+    },
+    "clean46_tagged_step32_parent": {
+      "archive": "/Users/v.charkin/Documents/dev/projects/parallel-r1-exp21/results/21-qwen3-0.6b-multiverse/eval_archives/qwen4b_clean46_tagged_step32",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-clean46-tagged-p32/step_models/step_32/model"
+    },
+    "agent_parallel150_roots": {
+      "tagged": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-tagged-fixed40",
+      "plain": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-plain-fixed40"
+    }
+  },
+  "initial_4b": {
+    "metrics": {
+      "strict": {
+        "count": 24,
+        "percent": 60.0
+      },
+      "robust": {
+        "count": 33,
+        "percent": 82.5
+      },
+      "full_numbered_block": {
+        "count": 0,
+        "percent": 0.0
+      },
+      "truncated": {
+        "count": 7,
+        "percent": 17.5
+      },
+      "tokens": {
+        "mean": 1665.92
+      },
+      "forward_passes": {
+        "mean": 1665.92
+      }
+    }
+  },
+  "clean46_tagged_step32_parent": {
+    "metrics": {
+      "strict": {
+        "count": 29,
+        "percent": 72.5
+      },
+      "robust": {
+        "count": 30,
+        "percent": 75.0
+      },
+      "full_numbered_block": {
+        "count": 39,
+        "percent": 97.5
+      },
+      "truncated": {
+        "count": 0,
+        "percent": 0.0
+      },
+      "tokens": {
+        "mean": 286.62
+      },
+      "forward_passes": {
+        "mean": 239.65
+      }
+    }
+  },
+  "variants": {
+    "agent_parallel150_tagged_step8": {
+      "archive": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-tagged-fixed40/step_8",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-agent-parallel150-tagged-p32/step_models/step_8/model",
+      "metrics": {
+        "strict": {
+          "count": 28,
+          "percent": 70.0
+        },
+        "robust": {
+          "count": 30,
+          "percent": 75.0
+        },
+        "full_numbered_block": {
+          "count": 37,
+          "percent": 92.5
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 271.6
+        },
+        "forward_passes": {
+          "mean": 220.97
+        }
+      },
+      "vs_initial_4b": {
+        "strict": {
+          "reference": 60.0,
+          "candidate": 70.0,
+          "delta": 10.0,
+          "ci95": [
+            -10.0,
+            30.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 7,
+            "gained": 11
+          },
+          "mcnemar_exact_p": 0.480682373046875
+        },
+        "robust": {
+          "reference": 82.5,
+          "candidate": 75.0,
+          "delta": -7.5,
+          "ci95": [
+            -22.5,
+            7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 7,
+            "gained": 4
+          },
+          "mcnemar_exact_p": 0.548828125
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 92.5,
+          "delta": 92.5,
+          "ci95": [
+            82.5,
+            100.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 271.6,
+          "delta": -1394.33,
+          "ci95": [
+            -1693.58,
+            -1130.28
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 220.97,
+          "delta": -1444.95,
+          "ci95": [
+            -1746.38,
+            -1178.08
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_clean46_tagged_step32_parent": {
+        "strict": {
+          "reference": 72.5,
+          "candidate": 70.0,
+          "delta": -2.5,
+          "ci95": [
+            -15.0,
+            10.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "robust": {
+          "reference": 75.0,
+          "candidate": 75.0,
+          "delta": 0.0,
+          "ci95": [
+            -12.5,
+            12.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 3,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 97.5,
+          "candidate": 92.5,
+          "delta": -5.0,
+          "ci95": [
+            -12.5,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 286.62,
+          "candidate": 271.6,
+          "delta": -15.03,
+          "ci95": [
+            -49.23,
+            12.03
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 239.65,
+          "candidate": 220.97,
+          "delta": -18.68,
+          "ci95": [
+            -51.9,
+            7.0
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "agent_parallel150_plain_step8": {
+      "archive": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-plain-fixed40/step_8",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-agent-parallel150-plain-p32/step_models/step_8/model",
+      "metrics": {
+        "strict": {
+          "count": 30,
+          "percent": 75.0
+        },
+        "robust": {
+          "count": 30,
+          "percent": 75.0
+        },
+        "full_numbered_block": {
+          "count": 36,
+          "percent": 90.0
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 272.18
+        },
+        "forward_passes": {
+          "mean": 230.22
+        }
+      },
+      "vs_initial_4b": {
+        "strict": {
+          "reference": 60.0,
+          "candidate": 75.0,
+          "delta": 15.0,
+          "ci95": [
+            -2.5,
+            32.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 10
+          },
+          "mcnemar_exact_p": 0.1795654296875
+        },
+        "robust": {
+          "reference": 82.5,
+          "candidate": 75.0,
+          "delta": -7.5,
+          "ci95": [
+            -25.0,
+            10.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 7,
+            "gained": 4
+          },
+          "mcnemar_exact_p": 0.548828125
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 90.0,
+          "delta": 90.0,
+          "ci95": [
+            80.0,
+            97.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 272.18,
+          "delta": -1393.75,
+          "ci95": [
+            -1699.17,
+            -1121.42
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 230.22,
+          "delta": -1435.7,
+          "ci95": [
+            -1743.35,
+            -1161.45
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_clean46_tagged_step32_parent": {
+        "strict": {
+          "reference": 72.5,
+          "candidate": 75.0,
+          "delta": 2.5,
+          "ci95": [
+            -7.5,
+            12.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 2,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "robust": {
+          "reference": 75.0,
+          "candidate": 75.0,
+          "delta": 0.0,
+          "ci95": [
+            -12.5,
+            12.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 3,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 97.5,
+          "candidate": 90.0,
+          "delta": -7.5,
+          "ci95": [
+            -17.5,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 286.62,
+          "candidate": 272.18,
+          "delta": -14.45,
+          "ci95": [
+            -46.9,
+            7.58
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 239.65,
+          "candidate": 230.22,
+          "delta": -9.43,
+          "ci95": [
+            -42.17,
+            13.12
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "agent_parallel150_tagged_step16": {
+      "archive": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-tagged-fixed40/step_16",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-agent-parallel150-tagged-p32/step_models/step_16/model",
+      "metrics": {
+        "strict": {
+          "count": 31,
+          "percent": 77.5
+        },
+        "robust": {
+          "count": 32,
+          "percent": 80.0
+        },
+        "full_numbered_block": {
+          "count": 35,
+          "percent": 87.5
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 252.28
+        },
+        "forward_passes": {
+          "mean": 203.07
+        }
+      },
+      "vs_initial_4b": {
+        "strict": {
+          "reference": 60.0,
+          "candidate": 77.5,
+          "delta": 17.5,
+          "ci95": [
+            0.0,
+            35.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 11
+          },
+          "mcnemar_exact_p": 0.11846923828125
+        },
+        "robust": {
+          "reference": 82.5,
+          "candidate": 80.0,
+          "delta": -2.5,
+          "ci95": [
+            -20.0,
+            15.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 6,
+            "gained": 5
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 87.5,
+          "delta": 87.5,
+          "ci95": [
+            77.5,
+            97.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 252.28,
+          "delta": -1413.65,
+          "ci95": [
+            -1722.58,
+            -1141.45
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 203.07,
+          "delta": -1462.85,
+          "ci95": [
+            -1773.78,
+            -1186.6
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_clean46_tagged_step32_parent": {
+        "strict": {
+          "reference": 72.5,
+          "candidate": 77.5,
+          "delta": 5.0,
+          "ci95": [
+            -12.5,
+            22.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 5,
+            "gained": 7
+          },
+          "mcnemar_exact_p": 0.7744140625
+        },
+        "robust": {
+          "reference": 75.0,
+          "candidate": 80.0,
+          "delta": 5.0,
+          "ci95": [
+            -10.0,
+            20.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 0.75390625
+        },
+        "full_numbered_block": {
+          "reference": 97.5,
+          "candidate": 87.5,
+          "delta": -10.0,
+          "ci95": [
+            -22.5,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 286.62,
+          "candidate": 252.28,
+          "delta": -34.35,
+          "ci95": [
+            -64.62,
+            -9.15
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 239.65,
+          "candidate": 203.07,
+          "delta": -36.58,
+          "ci95": [
+            -73.33,
+            -7.1
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "agent_parallel150_plain_step16": {
+      "archive": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-plain-fixed40/step_16",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-agent-parallel150-plain-p32/step_models/step_16/model",
+      "metrics": {
+        "strict": {
+          "count": 29,
+          "percent": 72.5
+        },
+        "robust": {
+          "count": 29,
+          "percent": 72.5
+        },
+        "full_numbered_block": {
+          "count": 35,
+          "percent": 87.5
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 281.7
+        },
+        "forward_passes": {
+          "mean": 241.15
+        }
+      },
+      "vs_initial_4b": {
+        "strict": {
+          "reference": 60.0,
+          "candidate": 72.5,
+          "delta": 12.5,
+          "ci95": [
+            -5.0,
+            30.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 5,
+            "gained": 10
+          },
+          "mcnemar_exact_p": 0.3017578125
+        },
+        "robust": {
+          "reference": 82.5,
+          "candidate": 72.5,
+          "delta": -10.0,
+          "ci95": [
+            -25.0,
+            5.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 7,
+            "gained": 3
+          },
+          "mcnemar_exact_p": 0.34375
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 87.5,
+          "delta": 87.5,
+          "ci95": [
+            77.5,
+            97.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 281.7,
+          "delta": -1384.22,
+          "ci95": [
+            -1686.4,
+            -1115.97
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 241.15,
+          "delta": -1424.78,
+          "ci95": [
+            -1729.92,
+            -1154.42
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_clean46_tagged_step32_parent": {
+        "strict": {
+          "reference": 72.5,
+          "candidate": 72.5,
+          "delta": 0.0,
+          "ci95": [
+            -10.0,
+            10.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 2,
+            "gained": 2
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "robust": {
+          "reference": 75.0,
+          "candidate": 72.5,
+          "delta": -2.5,
+          "ci95": [
+            -12.5,
+            7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 3,
+            "gained": 2
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 97.5,
+          "candidate": 87.5,
+          "delta": -10.0,
+          "ci95": [
+            -20.0,
+            -2.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 286.62,
+          "candidate": 281.7,
+          "delta": -4.92,
+          "ci95": [
+            -37.65,
+            17.12
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 239.65,
+          "candidate": 241.15,
+          "delta": 1.5,
+          "ci95": [
+            -31.07,
+            23.73
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "agent_parallel150_tagged_step32": {
+      "archive": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-tagged-fixed40/step_32",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-agent-parallel150-tagged-p32/step_models/step_32/model",
+      "metrics": {
+        "strict": {
+          "count": 32,
+          "percent": 80.0
+        },
+        "robust": {
+          "count": 35,
+          "percent": 87.5
+        },
+        "full_numbered_block": {
+          "count": 35,
+          "percent": 87.5
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 234.43
+        },
+        "forward_passes": {
+          "mean": 193.0
+        }
+      },
+      "vs_initial_4b": {
+        "strict": {
+          "reference": 60.0,
+          "candidate": 80.0,
+          "delta": 20.0,
+          "ci95": [
+            2.5,
+            37.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 3,
+            "gained": 11
+          },
+          "mcnemar_exact_p": 0.057373046875
+        },
+        "robust": {
+          "reference": 82.5,
+          "candidate": 87.5,
+          "delta": 5.0,
+          "ci95": [
+            -10.0,
+            20.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 3,
+            "gained": 5
+          },
+          "mcnemar_exact_p": 0.7265625
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 87.5,
+          "delta": 87.5,
+          "ci95": [
+            77.5,
+            97.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 234.43,
+          "delta": -1431.5,
+          "ci95": [
+            -1739.85,
+            -1159.8
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 193.0,
+          "delta": -1472.92,
+          "ci95": [
+            -1786.15,
+            -1196.25
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_clean46_tagged_step32_parent": {
+        "strict": {
+          "reference": 72.5,
+          "candidate": 80.0,
+          "delta": 7.5,
+          "ci95": [
+            -7.5,
+            22.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 7
+          },
+          "mcnemar_exact_p": 0.548828125
+        },
+        "robust": {
+          "reference": 75.0,
+          "candidate": 87.5,
+          "delta": 12.5,
+          "ci95": [
+            -2.5,
+            27.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 2,
+            "gained": 7
+          },
+          "mcnemar_exact_p": 0.1796875
+        },
+        "full_numbered_block": {
+          "reference": 97.5,
+          "candidate": 87.5,
+          "delta": -10.0,
+          "ci95": [
+            -22.5,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 286.62,
+          "candidate": 234.43,
+          "delta": -52.2,
+          "ci95": [
+            -74.42,
+            -31.73
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 239.65,
+          "candidate": 193.0,
+          "delta": -46.65,
+          "ci95": [
+            -68.35,
+            -26.27
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    },
+    "agent_parallel150_plain_step32": {
+      "archive": "/private/tmp/exp21-agent150-pair-raw/exp21-4b-agent-parallel150-plain-fixed40/step_32",
+      "model": "/tmp/exp21-selective-runs/exp21-4b-agent-parallel150-plain-p32/step_models/step_32/model",
+      "metrics": {
+        "strict": {
+          "count": 31,
+          "percent": 77.5
+        },
+        "robust": {
+          "count": 33,
+          "percent": 82.5
+        },
+        "full_numbered_block": {
+          "count": 3,
+          "percent": 7.5
+        },
+        "truncated": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "tokens": {
+          "mean": 208.43
+        },
+        "forward_passes": {
+          "mean": 196.22
+        }
+      },
+      "vs_initial_4b": {
+        "strict": {
+          "reference": 60.0,
+          "candidate": 77.5,
+          "delta": 17.5,
+          "ci95": [
+            0.0,
+            35.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 11
+          },
+          "mcnemar_exact_p": 0.11846923828125
+        },
+        "robust": {
+          "reference": 82.5,
+          "candidate": 82.5,
+          "delta": 0.0,
+          "ci95": [
+            -12.5,
+            15.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 4
+          },
+          "mcnemar_exact_p": 1.0
+        },
+        "full_numbered_block": {
+          "reference": 0.0,
+          "candidate": 7.5,
+          "delta": 7.5,
+          "ci95": [
+            0.0,
+            17.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 17.5,
+          "candidate": 0.0,
+          "delta": -17.5,
+          "ci95": [
+            -30.0,
+            -7.5
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 1665.92,
+          "candidate": 208.43,
+          "delta": -1457.5,
+          "ci95": [
+            -1756.9,
+            -1188.22
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 1665.92,
+          "candidate": 196.22,
+          "delta": -1469.7,
+          "ci95": [
+            -1773.1,
+            -1198.05
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      },
+      "vs_clean46_tagged_step32_parent": {
+        "strict": {
+          "reference": 72.5,
+          "candidate": 77.5,
+          "delta": 5.0,
+          "ci95": [
+            -10.0,
+            20.0
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 4,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 0.75390625
+        },
+        "robust": {
+          "reference": 75.0,
+          "candidate": 82.5,
+          "delta": 7.5,
+          "ci95": [
+            -7.5,
+            22.5
+          ],
+          "unit": "percentage_points",
+          "n": 40,
+          "discordant": {
+            "lost": 3,
+            "gained": 6
+          },
+          "mcnemar_exact_p": 0.5078125
+        },
+        "full_numbered_block": {
+          "reference": 97.5,
+          "candidate": 7.5,
+          "delta": -90.0,
+          "ci95": [
+            -97.5,
+            -80.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "truncated": {
+          "reference": 0.0,
+          "candidate": 0.0,
+          "delta": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "unit": "percentage_points",
+          "n": 40
+        },
+        "tokens": {
+          "reference": 286.62,
+          "candidate": 208.43,
+          "delta": -78.2,
+          "ci95": [
+            -108.4,
+            -50.25
+          ],
+          "unit": "tokens",
+          "n": 40
+        },
+        "forward_passes": {
+          "reference": 239.65,
+          "candidate": 196.22,
+          "delta": -43.42,
+          "ci95": [
+            -77.62,
+            -14.25
+          ],
+          "unit": "ideal_forward_passes",
+          "n": 40
+        }
+      }
+    }
+  },
+  "tagged_vs_matched_plain_by_step": {
+    "step8": {
+      "strict": {
+        "reference": 75.0,
+        "candidate": 70.0,
+        "delta": -5.0,
+        "ci95": [
+          -20.0,
+          7.5
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 5,
+          "gained": 3
+        },
+        "mcnemar_exact_p": 0.7265625
+      },
+      "robust": {
+        "reference": 75.0,
+        "candidate": 75.0,
+        "delta": 0.0,
+        "ci95": [
+          -15.0,
+          15.0
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 4,
+          "gained": 4
+        },
+        "mcnemar_exact_p": 1.0
+      },
+      "full_numbered_block": {
+        "reference": 90.0,
+        "candidate": 92.5,
+        "delta": 2.5,
+        "ci95": [
+          -7.5,
+          12.5
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "truncated": {
+        "reference": 0.0,
+        "candidate": 0.0,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "tokens": {
+        "reference": 272.18,
+        "candidate": 271.6,
+        "delta": -0.57,
+        "ci95": [
+          -18.12,
+          22.88
+        ],
+        "unit": "tokens",
+        "n": 40
+      },
+      "forward_passes": {
+        "reference": 230.22,
+        "candidate": 220.97,
+        "delta": -9.25,
+        "ci95": [
+          -27.3,
+          14.18
+        ],
+        "unit": "ideal_forward_passes",
+        "n": 40
+      }
+    },
+    "step16": {
+      "strict": {
+        "reference": 72.5,
+        "candidate": 77.5,
+        "delta": 5.0,
+        "ci95": [
+          -12.5,
+          22.5
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 5,
+          "gained": 7
+        },
+        "mcnemar_exact_p": 0.7744140625
+      },
+      "robust": {
+        "reference": 72.5,
+        "candidate": 80.0,
+        "delta": 7.5,
+        "ci95": [
+          -7.5,
+          22.5
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 4,
+          "gained": 7
+        },
+        "mcnemar_exact_p": 0.548828125
+      },
+      "full_numbered_block": {
+        "reference": 87.5,
+        "candidate": 87.5,
+        "delta": 0.0,
+        "ci95": [
+          -15.0,
+          15.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "truncated": {
+        "reference": 0.0,
+        "candidate": 0.0,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "tokens": {
+        "reference": 281.7,
+        "candidate": 252.28,
+        "delta": -29.43,
+        "ci95": [
+          -53.92,
+          -7.1
+        ],
+        "unit": "tokens",
+        "n": 40
+      },
+      "forward_passes": {
+        "reference": 241.15,
+        "candidate": 203.07,
+        "delta": -38.08,
+        "ci95": [
+          -59.5,
+          -18.02
+        ],
+        "unit": "ideal_forward_passes",
+        "n": 40
+      }
+    },
+    "step32": {
+      "strict": {
+        "reference": 77.5,
+        "candidate": 80.0,
+        "delta": 2.5,
+        "ci95": [
+          -12.5,
+          17.5
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 4,
+          "gained": 5
+        },
+        "mcnemar_exact_p": 1.0
+      },
+      "robust": {
+        "reference": 82.5,
+        "candidate": 87.5,
+        "delta": 5.0,
+        "ci95": [
+          -7.5,
+          20.0
+        ],
+        "unit": "percentage_points",
+        "n": 40,
+        "discordant": {
+          "lost": 3,
+          "gained": 5
+        },
+        "mcnemar_exact_p": 0.7265625
+      },
+      "full_numbered_block": {
+        "reference": 7.5,
+        "candidate": 87.5,
+        "delta": 80.0,
+        "ci95": [
+          67.5,
+          92.5
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "truncated": {
+        "reference": 0.0,
+        "candidate": 0.0,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "unit": "percentage_points",
+        "n": 40
+      },
+      "tokens": {
+        "reference": 208.43,
+        "candidate": 234.43,
+        "delta": 26.0,
+        "ci95": [
+          2.0,
+          48.73
+        ],
+        "unit": "tokens",
+        "n": 40
+      },
+      "forward_passes": {
+        "reference": 196.22,
+        "candidate": 193.0,
+        "delta": -3.23,
+        "ci95": [
+          -28.68,
+          23.48
+        ],
+        "unit": "ideal_forward_passes",
+        "n": 40
+      }
+    }
+  }
+}
