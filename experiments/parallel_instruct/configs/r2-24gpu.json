@@ -1,0 +1,33 @@
+{
+  "model": "/path/to/qwen3-4b-instruct-sft",
+  "train": "/path/to/train.jsonl",
+  "val": "/path/to/clean-val.jsonl",
+  "scorer": "/path/to/native-think-scorer.py",
+  "system": "/path/to/system.txt",
+  "expected_world_size": 24,
+  "processes_per_node": 8,
+  "global_batch": {
+    "prompts_per_step": 8,
+    "rollouts_per_prompt": 4,
+    "responses_per_step": 32
+  },
+  "steps": 500,
+  "checkpoint_steps": [
+    50,
+    100,
+    200,
+    300,
+    400,
+    500
+  ],
+  "reward_mode": "strong_width",
+  "lr": 1e-06,
+  "seed": 20261012,
+  "data_seed": 20261012,
+  "validation_seed": 91261011,
+  "response_budget": 4096,
+  "path_budget": 768,
+  "max_context": 16384,
+  "initial_step": 0,
+  "prompt_exposure_offset": 0
+}

@@ -1,0 +1,173 @@
+{
+  "passed": true,
+  "actual_gloo_ranks": 8,
+  "cross_rank_and_local_prompt_groups": true,
+  "reference": "Legacy four responses per prompt, globally averaged over prompts",
+  "ranks": [
+    {
+      "rank": 0,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    },
+    {
+      "rank": 1,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "passed": true,
+      "cases": [
+        {
+          "prompts": 2,
+          "group": 4,
+          "local_responses": 1,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        },
+        {
+          "prompts": 8,
+          "group": 4,
+          "local_responses": 4,
+          "gradient_error": 0.0,
+          "adam_error": 0.0
+        }
+      ]
+    }
+  ],
+  "scope": "CPU reward grouping, DDP gradient averaging and Adam; not a GPU/mask/memory or quality result",
+  "tested_source_sha256": {
+    "experiments/parallel_instruct/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+    "experiments/parallel_instruct/proof_distributed_batch.py": "af5d5ad60e1c38f24314f289aaf85e3d2d73d2029a6a0602c40fd38ae370c283"
+  }
+}
