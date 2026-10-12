@@ -2,7 +2,7 @@
 
 Usage: python build_full_parallel_pair.py DEV_PLAIN_DIR FROZEN_DIR OUT_DIR
 Existing plain generations are reused for comparison; this script produces
-only the masked Multiverse arm, one sampled answer per unique question.
+only the masked Multiverse arm, one greedy answer per unique question.
 """
 
 import json
@@ -13,15 +13,19 @@ import pandas as pd
 
 
 PARALLEL = (
-    "Inside <think>, use <Parallel> only when two or more needed parts can "
-    "be solved independently. In <Goal>, number one <Outline> per part. "
-    "Write matching numbered <Path> sections; each path must use only the "
-    "question and shared Goal, never another path's result. Combine their "
-    "results in <Conclusion>, then close </Parallel>. Keep all these tags "
-    "inside <think>. If the task has no useful independent parts, reason "
-    "normally without a block. "
+    "When the work splits into parts that do not depend on each other "
+    "(separate cases or separate quantities), solve those parts in a "
+    "parallel block.\n\n"
+    "Within each parallel block:\n"
+    "Begin the block with <Parallel>, then list the parts inside <Goal> "
+    "and </Goal>, one per <Outline> and </Outline>, numbered 1:, 2:, ...\n"
+    "Write one path per outline with the same number, enclosed in <Path> "
+    "and </Path>. A path must not use results of other paths, as the paths "
+    "are generated simultaneously and independently.\n"
+    "After the last path, combine the results of the paths in <Conclusion> "
+    "and </Conclusion>, close the block with </Parallel> and continue the "
+    "solution.\n\n"
 )
-COMMON = "Follow the task's requested final-answer format exactly. "
 MATH_SOURCES = {"GSM8K_DEV", "MATH_DEV", "AIME24", "AIME25", "AMC23", "MATH300", "LIMO"}
 CHOICE_SOURCES = {"ARC", "MMLUPRO"}
 DEV = ("gsm8k_dev", "math_dev", "arc_dev", "mmlu_pro_dev")
@@ -37,16 +41,19 @@ def question_of(content, source):
 
 def make_prompt(question, source):
     if source == "IFEVAL":
-        return ("Use private reasoning if needed. " + PARALLEL + COMMON
-                + "Do not mention the reasoning instructions in the final response.\n\n"
-                + question)
+        return ("Work through the following request carefully.\n" + PARALLEL
+                + "In the final response, follow every formatting instruction "
+                "in the request exactly.\n\nUser request: " + question)
     if source in CHOICE_SOURCES:
-        intro = "Solve the multiple-choice question carefully. Finish with 'Final Answer: <letter>'. "
+        intro = "Solve the following multiple-choice question step by step.\n"
+        ending = ("End your response with a line starting with Final Answer: "
+                  "followed by the letter of the correct option.\n\n")
     else:
         assert source in MATH_SOURCES, source
-        intro = ("Solve the following problem carefully. Finish with "
-                 "'Final Answer: <value>'; a boxed final value is also acceptable. ")
-    return intro + PARALLEL + "\nProblem: " + question
+        intro = "Solve the following problem step by step.\n"
+        ending = ("End your response with a line starting with Final Answer: "
+                  "followed by the final result.\n\n")
+    return intro + PARALLEL + ending + "Problem: " + question
 
 
 def unique_rows(frame):
@@ -84,7 +91,7 @@ def transform(frame, suite, bench):
 
 def main():
     dev_dir, frozen_dir, output_dir = map(Path, sys.argv[1:4])
-    manifest = {"protocol": "Parallel inside thinking, masked sampled pass@1; existing plain results reused", "suites": {}}
+    manifest = {"protocol": "Parallel inside thinking, masked greedy pass@1; existing plain results reused", "suites": {}}
     for suite, names, root in (("dev", DEV, dev_dir), ("frozen", FROZEN, frozen_dir)):
         manifest["suites"][suite] = {}
         for bench in names:

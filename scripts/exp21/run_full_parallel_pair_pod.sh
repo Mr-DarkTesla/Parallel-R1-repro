@@ -16,7 +16,7 @@ ifeval_pkg=${EXP21_IFEVAL_PKG:-/work/assets/ifeval/pkg}
 python_extra=${EXP21_PYTHON_EXTRA:-}
 test -s "$model/config.json"
 test -s "$root/input/manifest.json"
-mkdir -p "$root/output" "$root/logs" "$backup"
+mkdir -p "$root/output/$stage" "$root/logs" "$backup"
 exec 9>"$root/${stage}.lock"
 flock -n 9 || { echo "another $stage runner holds the lock" >&2; exit 1; }
 gpu_count=$(nvidia-smi --list-gpus | wc -l)
@@ -24,7 +24,7 @@ case "$gpu_count" in 1|4) ;; *) echo "expected one or four owned GPUs, got $gpu_
 if test "$venv" != system; then source "$venv/bin/activate"; fi
 export PYTHONDONTWRITEBYTECODE=1 EXP21_FSYNC_EVERY_ROW=1
 export PYTHONPATH="$python_extra:$repo/verl:$ifeval_pkg"
-export EXP21_TOKENIZER="$model" SCORE_IFEVAL_SEED=0 EXP21_LIGHT_SCORE=1
+export EXP21_TOKENIZER="$model" SCORE_IFEVAL_SEED=0 EXP21_LIGHT_SCORE=1 NLTK_DATA="$root/nltk_data"
 cd "$repo/verl"
 
 run_one() {
@@ -48,7 +48,7 @@ PY
         return
     fi
     echo "$(date -Is) START $stage/parallel/$bench count=$count budget=16384 gpu=$CUDA_VISIBLE_DEVICES" | tee -a "$root/progress.log"
-    python "$code/exp21/generate_masked_multiverse.py" "$model" "$input" "$raw" "$count" 16384 thinking sample >> "$out/generate.log" 2>&1
+    python "$code/exp21/generate_masked_multiverse.py" "$model" "$input" "$raw" "$count" 16384 thinking greedy >> "$out/generate.log" 2>&1
     test "$(wc -l < "$raw")" -eq "$count"
     python "$code/bench/score.py" "$raw" "$input" "$out/score.json.tmp" "$rows.tmp" >> "$out/score.log" 2>&1
     mv "$rows.tmp" "$rows"
@@ -95,13 +95,14 @@ worker_all() {
 
 snapshot() {
     while true; do
-        find "$root/output/$stage" -type f -name raw.jsonl -print0 2>/dev/null | while IFS= read -r -d '' raw; do
+        find "$root/output/$stage" -type f -name raw.jsonl -print0 | while IFS= read -r -d '' raw; do
             rel=${raw#"$root/output/"}
             target=$backup/snapshots/${rel%/*}
             mkdir -p "$target"
             cp "$raw" "$target/raw.jsonl.tmp"
             mv "$target/raw.jsonl.tmp" "$target/raw.jsonl"
         done
+        echo "$(date -Is) snapshot complete"
         sleep 180
     done
 }
