@@ -46,7 +46,7 @@ def main():
         results.append({
             "problem_id": row["problem_id"], "problem": row["problem"], "source": row["source"],
             "input": row["input"], "sample": row["sample"], "decoder": decoder,
-            "acc_robust": bool(row["acc_robust"]), "think_wellformed": wellformed,
+            "acc_robust": bool(row.get("acc_robust", row["acc"])), "think_wellformed": wellformed,
             "think_has_parallel": "<Parallel>" in thought,
             "think_full_block": bool(wellformed and inside["valid"] and inside["blocks"]),
             "think_numbered_block": bool(wellformed and numbered and inside["blocks"]),

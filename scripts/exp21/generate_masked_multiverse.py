@@ -101,6 +101,8 @@ def main():
                                    "rollout": {"decoder": "masked-autonomous-v2", "mode": mode,
                                                "policy": policy}}, ensure_ascii=False) + "\n")
             file.flush()
+            if os.environ.get("EXP21_FSYNC_EVERY_ROW") == "1":
+                os.fsync(file.fileno())
             print(len(seen), length, truncated, answer.count("<Path>"), flush=True)
             if len(seen) >= count:
                 break

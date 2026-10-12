@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vcharkin-exp21-full-parallel-4gpu
+  namespace: shared-dzen-ml
+  labels:
+    app: vcharkin-exp21-full-parallel-4gpu
+spec:
+  restartPolicy: Always
+  nodeSelector:
+    kubernetes.io/hostname: ml-kub-node802.i
+  securityContext:
+    fsGroup: 100
+  containers:
+    - name: exp21-eval
+      image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
+      command: ["bash", "-lc", "sleep infinity"]
+      resources:
+        limits:
+          cpu: "27"
+          memory: 160Gi
+          nvidia.com/gpu.h100.pa: "4"
+      volumeMounts:
+        - name: shared
+          mountPath: /shared-storage
+        - name: exp21-checkpoints
+          mountPath: /checkpoints
+        - name: dshm
+          mountPath: /dev/shm
+  volumes:
+    - name: shared
+      persistentVolumeClaim:
+        claimName: vcharkin-pvc-ebs
+    - name: exp21-checkpoints
+      persistentVolumeClaim:
+        claimName: vcharkin-exp21-checkpoints-pvc
+    - name: dshm
+      emptyDir:
+        medium: Memory
+        sizeLimit: 32Gi
