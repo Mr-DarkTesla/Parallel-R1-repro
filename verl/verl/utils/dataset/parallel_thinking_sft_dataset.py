@@ -19,6 +19,7 @@ Each parquet file contains
 """
 
 from typing import List, Union
+import json
 
 import pandas as pd
 import torch
@@ -66,6 +67,8 @@ class ParallelThinkingSFTDataset(Dataset):
         self.response_dict_keys = response_dict_keys if response_dict_keys else []
 
         self.max_length = max_length
+        self.prompt_messages_key = config.get("prompt_messages_key", None)
+        self.defer_parallel_mask = config.get("defer_parallel_mask", False)
 
         self.start_parallel_token = self.tokenizer.encode('<Parallel>')[0]
         self.end_parallel_token = self.tokenizer.encode('</Parallel>')[0]
@@ -96,6 +99,17 @@ class ParallelThinkingSFTDataset(Dataset):
             dataframe = pd.read_parquet(parquet_file)
             dataframes.append(dataframe)
         self.dataframe = pd.concat(dataframes)
+        self.prompt_messages = None
+        if self.prompt_messages_key:
+            self.prompt_messages = [
+                json.loads(value) if isinstance(value, str) else list(value)
+                for value in self.dataframe[self.prompt_messages_key].tolist()
+            ]
+            for messages in self.prompt_messages:
+                if not messages or messages[-1]["role"] != "user":
+                    raise ValueError("SFT prompt messages must end with a user message")
+                if any(message["role"] not in ("system", "user") for message in messages):
+                    raise ValueError("This single-response dataset only accepts system/user prompts")
         self.prompts = self.dataframe[self.prompt_key]
         for key in self.prompt_dict_keys:
             # type(x): pandas.core.series.Series
@@ -108,7 +122,7 @@ class ParallelThinkingSFTDataset(Dataset):
                 print(f"self.prompts={self.prompts}")
                 raise
         if isinstance(self.prompts, pd.DataFrame):
-            self.prompts = self.prompts.squeeze()
+            self.prompts = self.prompts.squeeze("columns")
         self.prompts = self.prompts.tolist()
         self.responses = self.dataframe[self.response_key]
         for key in self.response_dict_keys:
@@ -118,7 +132,7 @@ class ParallelThinkingSFTDataset(Dataset):
                 print(f"self.responses={self.responses}")
                 raise
         if isinstance(self.responses, pd.DataFrame):
-            self.responses = self.responses.squeeze()
+            self.responses = self.responses.squeeze("columns")
         self.responses = self.responses.tolist()
 
     def generate_parallel_thinking_reasponse_mask(self, response_ids: torch.Tensor, start: int = 0) -> torch.Tensor:
@@ -377,7 +391,7 @@ class ParallelThinkingSFTDataset(Dataset):
         response = self.responses[item]
 
         # apply chat template
-        prompt_chat = [{"role": "user", "content": prompt}]
+        prompt_chat = self.prompt_messages[item] if self.prompt_messages is not None else [{"role": "user", "content": prompt}]
         # print(prompt_chat)
         # string
         prompt_chat_str = tokenizer.apply_chat_template(prompt_chat, add_generation_prompt=True, tokenize=False)
@@ -423,6 +437,25 @@ class ParallelThinkingSFTDataset(Dataset):
             else:
                 raise NotImplementedError(f"Unknown truncation method {self.truncation}")
 
+        position_ids = self.compute_structured_position_ids(input_ids, start=prompt_length)
+        loss_mask = attention_mask_1d.clone()
+        if prompt_length > 1:
+            loss_mask[: min(prompt_length, loss_mask.size(0)) - 1] = 0
+        loss_mask[min(prompt_length + response_length, loss_mask.size(0)) - 1] = 0
+
+        if self.defer_parallel_mask:
+            if self.truncation != "error":
+                raise ValueError("Deferred parallel masks require truncation=error")
+            # Materialize the quadratic mask only for the current microbatch,
+            # after trimming padding, rather than for the entire optimizer batch.
+            return {
+                "input_ids": input_ids,
+                "attention_mask": attention_mask_1d,
+                "position_ids": position_ids,
+                "loss_mask": loss_mask,
+                "prompt_length": torch.tensor(prompt_length),
+            }
+
         attention_mask = self.generate_parallel_thinking_reasponse_mask(input_ids, start=prompt_length)
         # print(attention_mask)
 
@@ -435,15 +468,6 @@ class ParallelThinkingSFTDataset(Dataset):
         # attention_mask = torch.cat((prompt_attention_mask, response_attention_mask), dim=-1)
         float_attention_mask = torch.full_like(attention_mask, -torch.inf, dtype=torch.float)
         float_attention_mask = float_attention_mask.masked_fill(attention_mask, 0.0)
-
-        position_ids = self.compute_structured_position_ids(input_ids, start=prompt_length)
-
-        loss_mask = attention_mask_1d.clone()
-        if prompt_length > 1:
-            # mask out prompt for SFT.
-            loss_mask[: min(prompt_length, loss_mask.size(0)) - 1] = 0
-        # mask out the last token in response
-        loss_mask[min(prompt_length + response_length, loss_mask.size(0)) - 1] = 0
 
         # print(float_attention_mask.shape)
         # print(loss_mask.shape)

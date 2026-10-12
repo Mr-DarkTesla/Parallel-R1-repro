@@ -313,6 +313,19 @@ class FSDPParallelThinkingSFTTrainer:
             mask = batch["attention_mask"]
             batch["attention_mask"] = mask[..., :length, :length] if mask.ndim == 4 else mask[:, :length]
 
+        if self.config.data.get("defer_parallel_mask", False):
+            if use_sp or not self.config.data.parallel_attention:
+                raise ValueError("Deferred masks require Unseen attention without remove-padding/SP")
+            # Keep full optimizer batches linear in sequence length. Each mask
+            # uses the same parser as the eager dataset, including prompt scope.
+            masks = []
+            for ids, valid, start in zip(batch["input_ids"], batch["attention_mask"], batch["prompt_length"]):
+                allowed = self.train_dataset.generate_parallel_thinking_reasponse_mask(ids.cpu(), start=int(start))
+                valid = valid.cpu().bool()
+                allowed &= valid[:, None] & valid[None, :]
+                masks.append(torch.zeros(allowed.shape, dtype=torch.float32).masked_fill_(~allowed, -torch.inf))
+            batch["attention_mask"] = torch.stack(masks).unsqueeze(1)
+
         # Move inputs to GPU and prepare loss mask
         input_ids = batch["input_ids"].to(self.device_name)
         attention_mask = batch["attention_mask"].to(self.device_name)
