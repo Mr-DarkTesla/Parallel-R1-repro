@@ -470,3 +470,258 @@ def test_seeds_and_budgets_are_deterministic(tmp_path):
     kept = len(tokenizer.encode(job['bodies'][0], add_special_tokens=False))
     assert params['max_tokens'] == 16384 - 2048 - C.overhead(ctx, job['prefix'], job['plan']) - kept
     assert hashlib.sha256(a['pending'][0]['prompt'].encode()).hexdigest()
+
+
+# ------------------------------------------------------------------------- second pass (prompt v2, retry)
+
+def job_of(source, oracle='57', task=None):
+    task = dict(task or {}, src=source, question='q')
+    return dict(source=source, q=dict(task=task, gold=dict(oracle=oracle)))
+
+
+def test_rule_b_final_marker():
+    assert F.has_final_marker('Branch 1 gives 3*4+5.\nFinal Answer: 3*4+5')
+    assert F.has_final_marker('so the total is \\boxed{57}')
+    assert F.has_final_marker('FINAL ANSWER: 22') and F.has_final_marker('my final answer : 22')
+    assert not F.has_final_marker('The final answer is the sum of these three numbers.')  # left to rule (a)
+    assert not F.has_final_marker('12 + 10 = 22, so he has 22 apples.')
+
+
+def test_rule_a_numeric_values():
+    exec_job = job_of('exec', '-252')
+    summary = 'The Results are -255, -137 and 140. (-255) + (-137) = -392; -392 + 140 = -252. The total is -252.'
+    assert F.final_value_check(exec_job, summary, 'The total is \\boxed{-252}.') == (True, 'numeric')
+    # the smoke failure: the summary leaves the arithmetic to the answer call
+    lazy = 'The Results are -255, -137 and 140. The final answer is the sum of these three numbers.'
+    assert F.final_value_check(exec_job, lazy, 'The total is \\boxed{-252}.') == (False, 'numeric')
+    assert not F.final_value_check(exec_job, 'They add up to 252.', 'So \\boxed{-252}.')[0]   # sign matters
+    assert F.final_value_check(exec_job, 'That is a loss of $252.', 'So \\boxed{-252}.')[0]
+    assert not F.final_value_check(exec_job, '-392 + 140 = -152', 'So \\boxed{-252}.')[0]
+    assert not F.final_value_check(job_of('exec', '-5'), 'I compute 12-5 = 7.', 'So \\boxed{-5}.')[0]  # a minus
+    assert F.final_value_check(job_of('exec', '-5'), 'I compute 7 - 12 = -5.', 'So \\boxed{-5}.')[0]  # a sign
+    gsm = job_of('gsm', '1234.5')
+    assert F.final_value_check(gsm, 'Adding gives $1,234.50 in total.', 'He pays \\boxed{1234.5}.')[0]
+    assert F.final_value_check(gsm, 'Adding gives 1,234.5.', 'He pays \\boxed{\\$1,234.50}.')[0]  # gold fallback
+    assert F.final_value_check(job_of('gsm', '22'), '12 + 10 = 22 apples', '\\boxed{22}')[0]
+    assert F.final_value_check(job_of('gsm', '22'), 'x', 'no box') == (False, 'no_boxed')
+
+
+def test_rule_a_countdown_and_math():
+    cd = job_of('countdown', '((3*4)+5)')
+    answer = 'Branch 1 works.\nFinal Answer: 3*4+5'
+    assert F.final_value_check(cd, 'Branch 1 gives 3 * 4 + 5, which uses 3, 4 and 5.', answer)[0]
+    assert F.final_value_check(cd, 'I take (4 x 3) + 5: 4*3 = 12; 12 + 5 = 17.', answer)[0]  # same expression key
+    assert not F.final_value_check(cd, '3*4 = 12; 12 + 5 = 17.', answer)[0]               # steps only
+    assert not F.final_value_check(cd, 'Branch 1 reaches 17.', answer)[0]
+    math = job_of('math', '\\boxed{\\frac{3}{4}}')
+    assert F.final_value_check(math, 'So the ratio is 3/4.', 'It is \\boxed{\\dfrac{3}{4}}.') == (True, 'math_string')
+    assert F.final_value_check(math, 'so x = \\frac{3}{4}', 'It is \\boxed{\\frac34}.')[0]
+    assert F.final_value_check(math, 'so x is three quarters', 'It is \\boxed{\\frac{3}{4}}.') == (False,
+                                                                                               'math_string')
+    assert F.final_value_check(math, 'three quarters', '\\boxed{\\frac{3}{4}}', 'skip') == (True, 'skipped')
+    assert F.final_value_check(math, 'the side is 5 cm', 'It is \\boxed{5}.') == (True, 'numeric')
+    assert F.final_value_check(math, 'none', 'It is \\boxed{\\sqrt{2}}.')[0] is False
+    assert F.final_value_check(math, 'r = \\sqrt{2}', 'It is \\boxed{\\sqrt{2}}.')[0]
+    assert F.final_value_check(math, 'anything', 'It is \\boxed{x}.') == (True, 'skipped_short')
+    assert F.final_value_check(math, 'x = 1, 2, 10', 'So \\boxed{1,2,10}.') == (True, 'math_string')  # not 1210
+    assert F.final_value_check(math, 'x = 1 and 10', 'So \\boxed{1,2,10}.') == (False, 'math_string')
+    assert F.final_value_check(math, 'so it is (-∞, 2) ∪ (2, 4)', '\\boxed{(-\\infty, 2) \\cup (2, 4)}')[0]
+    assert F.final_value_check(math, 'p(x) = x² + 1', '\\boxed{x^2 + 1}')[0]
+    assert F.final_value_check(math, 'r = 2√6 / 3', '\\boxed{\\dfrac{2\\sqrt{6}}{3}}')[0]
+    assert F.final_value_check(math, '(6, 235°)', '\\boxed{(6, 235^\\circ)}')[0]
+    matrix = '\\boxed{\\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix}}'
+    assert F.final_value_check(math, '[[1, 0], [0, 1]]', matrix) == (True, 'skipped_matrix')
+    assert F.strict_reason(math, 'Final Answer: 5', '\\boxed{5}') == 'summary_final_marker'
+    assert F.strict_reason(math, 'the side is 4', '\\boxed{5}') == 'summary_missing_value'
+    assert F.strict_reason(math, 'the side is 5', '\\boxed{5}') is None
+
+
+def test_retry_cause():
+    trunc, exec_ = dict(kind=F.TRUNC), dict(kind=F.EXEC)
+    failed = lambda reason: dict(status='failed', reason=reason)  # noqa: E731
+    assert F.retry_cause(exec_, failed('summary:summary_input_products')) == 'merger'
+    assert F.retry_cause(exec_, failed('answer:wrong:wrong_numeric')) == 'merger'
+    assert F.retry_cause(exec_, failed('answer:v2:summary_missing_value')) == 'merger'
+    assert F.retry_cause(exec_, failed('summary_budget')) is None
+    assert F.retry_cause(trunc, failed('branch:branch_truncated')) == 'branch'
+    assert F.retry_cause(trunc, failed('branch_budget')) == 'branch'
+    assert F.retry_cause(exec_, dict(status='accepted')) is None
+    assert F.retry_cause(trunc, dict(status='waiting')) is None
+
+
+def first_pass_llm(request):
+    """fake_llm with three first-pass changes: the truncated GSM branch never finishes (branch failure), the Countdown
+    summaries carry their own Final Answer line (rule b) and the long-summary GSM summaries never state 22 (rule a)."""
+    key = request['key']
+    if key == 'gsm-t#raw|branch2':
+        return [dict(text='Two bags of five' + FILL, finish_reason='length')] * 2
+    if key == 'countdown-c#raw|summary':
+        return [stop('Branch 1 gives 3*4+5.\nFinal Answer: 3*4+5')] * 4
+    if key == 'gsm-l#raw|summary':
+        return [stop('The boxes give 12 and the bags give 10; I add them.')] * 4
+    return fake_llm(request)
+
+
+def retry_llm(request):
+    """Outputs of the v2 (retry) requests; asserts their shapes."""
+    key, content = request['key'], request['content']
+    job = key.split('|')[0]
+    assert '|v2|' in key and request['prompt_version'] == 'v2' and 'seed' in request['params']
+    if '|branch' in key:
+        assert job == 'gsm-t#raw' and request['thinking'] and request['params']['n'] == 4
+        return [dict(text='Two bags of five' + FILL, finish_reason='length'),
+                stop('Two bags with five apples each give 2 times 5 = 10, as I check slowly.' + FILL +
+                     '\n</think>\n\nResult: 10'),
+                stop('Two bags with five apples each give 2 times 5 = 10.' + FILL + '\n</think>\n\nResult: 10'),
+                stop('no')]
+    if key.endswith('|summary'):
+        assert not request['thinking'] and request['params']['n'] == 8 and request['params']['max_tokens'] <= 1024
+        assert 'one operation per step' in content and 'Final Answer" line' in content
+        if job.startswith('exec'):
+            assert 'produces' not in content and '(-25) + 40 = 15' in content
+            return [stop('The Results are 12, 15 and 30.\nFinal Answer: 57'),                       # rule (b)
+                    stop('The Results are 12, 15 and 30; the total is their sum.'),                 # rule (a)
+                    stop('The Results are 12, 15 and 30. 12 + 15 = 27; 27 + 30 = 57. The total is 57.'),
+                    stop('Recomputing 7 * 5 = 35 and 10 * 2 = 20: 12 + 15 = 27; 27 + 30 = 57.')] * 2
+        if job.startswith('countdown'):
+            assert 'names the chosen expression' in content
+            return [stop('Branch 1 found a valid expression and branch 2 found none, so I use it.')] * 8
+        if job == 'gsm-l#raw':
+            return [stop('Boxes 12, bags 10. 12 + 10 = 22.\nFinal Answer: 22')] * 8
+        return [stop('The boxes give 12 and the bags give 10. 12 + 10 = 22. He has 22 apples.')] * 8
+    assert '|answer' in key and request['params']['n'] == 1
+    assert ('value the reasoning summary reached' in content or 'expression the reasoning summary chose' in content)
+    if job.startswith('countdown'):
+        return [stop('Branch 1 works.\nFinal Answer: 3*4+5')]
+    return [stop('The total is \\boxed{57}.' if job.startswith('exec') else 'He has \\boxed{22} apples.')]
+
+
+def retry(work, backend, *extra):
+    return F.cmd_run(F.parse_args(['run', '--work-dir', str(work), '--retry-failed', '--checkpoint-every', '2',
+                                   *extra]), backend=backend)
+
+
+def test_retry_pass_and_assemble_merge(tmp_path):
+    work, jobs, _, rows = plan(tmp_path)
+    tokenizer = build_tiny_tokenizer()
+    manifest = run(work, FakeBackend(tokenizer, first_pass_llm))
+    assert manifest['job_states'] == {'accepted': 3, 'failed': 2}
+    first_sha = F.sha256_file(work / 'results.jsonl')
+
+    # 1. assemble --strict-v2 (default) on the first pass: two v1-accepted pairs are demoted
+    _, stats = assemble(work, tokenizer)
+    sv = stats['strict_v2']
+    assert sv['enabled'] and sv['first_pass_accepted_v1'] == {F.EXEC: 1, F.TRUNC: 1, F.LONG: 1}
+    assert sv['demoted_reasons'] == {f'{F.TRUNC}/answer:v2:summary_final_marker': 1,
+                                     f'{F.LONG}/answer:v2:summary_missing_value': 1}
+    assert sv['retry_candidates'] == {f'{F.EXEC}/merger': 1, f'{F.TRUNC}/merger': 1, f'{F.TRUNC}/branch': 1,
+                                      f'{F.LONG}/merger': 1}
+    assert sv['retry_outcomes'] == {f'{k}/not_run': n for k, n in ((F.EXEC, 1), (F.TRUNC, 2), (F.LONG, 1))}
+    assert stats['accepted'] == {F.EXEC: 1} and stats['repair_failed'] == {F.EXEC: 1, F.LONG: 1}
+    _, loose = F.cmd_assemble(F.parse_args(['assemble', '--work-dir', str(work), '--no-strict-v2']),
+                              tokenizer=tokenizer)
+    assert loose['accepted'] == {F.EXEC: 1, F.TRUNC: 1, F.LONG: 1} and 'demoted_by_strict_v2' not in loose['strict_v2']
+
+    # 2. run --retry-failed: only the candidates' v2 requests, into results.retry.jsonl
+    backend = FakeBackend(tokenizer, retry_llm)
+    manifest = retry(work, backend)
+    assert F.sha256_file(work / 'results.jsonl') == first_sha  # the first pass is untouched
+    assert manifest['selection']['candidates'] == sv['retry_candidates'] and manifest['jobs'] == 4
+    assert manifest['selection']['demoted_by_strict_v2'] == sv['demoted_reasons']
+    assert not any(k.startswith('exec-x#raw') for k in backend.requested)  # first-pass accepted: never retried
+    assert {k for k in backend.requested if not k.split('|')[-1].startswith('answer')} == {
+        'exec-y#raw|v2|summary', 'gsm-t#raw|v2|branch2', 'gsm-t#raw|v2|summary', 'countdown-c#raw|v2|summary',
+        'gsm-l#raw|v2|summary'}  # countdown keeps its accepted first-pass branch: no new branch request
+    retry_rows = F.read_results(work / F.RETRY_RESULTS)
+    assert set(retry_rows) == set(backend.requested) and all(r['prompt_version'] == 'v2' for r in retry_rows.values())
+    assert {r['job_id'] for r in retry_rows.values()} == {'exec-y#raw', 'gsm-t#raw', 'countdown-c#raw', 'gsm-l#raw'}
+    # the retried branch budget uses the 1,536-token reserve instead of 2,048
+    ctx = F.Ctx(tokenizer, json.loads((work / 'plan.json').read_text())['config'])
+    job = next(j for j in jobs if j['id'] == 'gsm-t#raw')
+    first_budget = F.read_results(work / 'results.jsonl')['gsm-t#raw|branch2']['params']['max_tokens']
+    assert retry_rows['gsm-t#raw|v2|branch2']['params']['max_tokens'] == first_budget + C.RESERVE - 1536
+    assert F.evaluate_v2(job, {**F.read_results(work / 'results.jsonl'), **retry_rows}, ctx)['status'] == 'accepted'
+
+    # resumable: a second retry run issues nothing; the first pass issues nothing either
+    idle = FakeBackend(tokenizer, retry_llm)
+    retry(work, idle)
+    assert idle.requested == []
+    idle = FakeBackend(tokenizer, first_pass_llm)
+    run(work, idle)
+    assert idle.requested == [] and F.sha256_file(work / 'results.jsonl') == first_sha
+
+    # 3. assemble merges: accepted first pass > accepted retry > repair_failed
+    merged, stats = assemble(work, tokenizer)
+    by_id = {r['id']: r for r in merged}
+    assert stats['accepted_by_pass'] == {f'{F.EXEC}/first': 1, f'{F.EXEC}/retry': 1, f'{F.TRUNC}/retry': 1}
+    assert stats['repair_failed'] == {F.LONG: 1}
+    assert stats['strict_v2']['retry_outcomes'] == {
+        f'{F.EXEC}/accepted': 1, f'{F.TRUNC}/accepted': 1,
+        f'{F.TRUNC}/failed:answer:summary_missing_value': 1, f'{F.LONG}/failed:summary:summary_final_marker': 1}
+    assert 'countdown-c#raw' not in by_id  # demoted, retry failed: branch_truncated rows are not exported
+
+    first = by_id['exec-x#raw']['provenance']['repair']
+    assert first['prompt_version'] == 'v1' and first['repair_pass'] == 'first' and first['strict_v2']
+
+    ey = by_id['exec-y#raw']
+    rep = ey['provenance']['repair']
+    assert rep['prompt_version'] == 'v2' and rep['repair_pass'] == 'retry' and not ey['provenance']['repair_failed']
+    assert rep['first_pass'] == dict(status='failed', reason='summary:summary_input_products',
+                                     demoted_by_strict_v2=False)
+    assert [s['reason'] for s in rep['attempts']['summary']['samples']][:4] == [
+        'summary_final_marker', 'ok', 'ok', 'summary_input_products']
+    assert rep['attempts']['answers'][1]['reason'] == 'summary_missing_value'
+    assert rep['attempts']['answers'][2]['reason'] == 'ok' and rep['accepted_index'] == 2
+    job = next(j for j in jobs if j['id'] == 'exec-y#raw')
+    assert ey['segments'][job['idx']['summary']]['text'] == \
+        'The Results are 12, 15 and 30. 12 + 15 = 27; 27 + 30 = 57. The total is 57.'
+    assert set(rep['prompt_sha256']) == {'exec-y#raw|v2|summary', 'exec-y#raw|v2|answer3'}
+    assert all(rep['seeds'].values()) and ey['provenance']['correct']
+    original = next(r for r in rows if r['id'] == 'exec-y#raw')
+    for i, (new, old) in enumerate(zip(ey['segments'], original['segments'])):
+        if i not in (job['idx']['summary'], job['idx']['answer']):
+            assert json.dumps(new) == json.dumps(old)
+
+    gt = by_id['gsm-t#raw']
+    rep = gt['provenance']['repair']
+    assert rep['repair_pass'] == 'retry' and rep['first_pass']['reason'] == 'branch:branch_truncated'
+    branch = rep['attempts']['branches'][1]
+    assert branch['retried'] and branch['accepted_key'] == 'gsm-t#raw|v2|branch2' and branch['accepted_index'] == 2
+    assert gt['provenance']['branch_checks'] == [dict(ok=True, reason='ok'), dict(ok=True, reason='ok')]
+    assert rep['node'] == 'branch2+summary+answer' and 'gsm-t#raw|v2|branch2' in rep['prompt_sha256']
+
+    gl = by_id['gsm-l#raw']
+    assert gl['provenance']['repair_failed'] and gl['segments'] == next(r for r in rows if r['id'] == 'gsm-l#raw')[
+        'segments']
+    rep = gl['provenance']['repair']
+    assert rep['reason'] == 'answer:v2:summary_missing_value' and rep['demoted_by_strict_v2']
+    assert rep['retry']['status'] == 'failed' and rep['retry']['reason'] == 'summary:summary_final_marker'
+
+    # --no-strict-v2: the v1-accepted pairs come back, retry results are used only for real first-pass failures
+    loose_rows, loose = F.cmd_assemble(F.parse_args(['assemble', '--work-dir', str(work), '--no-strict-v2']),
+                                       tokenizer=tokenizer)
+    assert loose['accepted_by_pass'] == {f'{F.EXEC}/first': 1, f'{F.EXEC}/retry': 1, f'{F.TRUNC}/first': 1,
+                                         f'{F.TRUNC}/retry': 1, f'{F.LONG}/first': 1}
+    assert loose['repair_failed'] == {}
+
+    # export + selection read the merged rows
+    out = tmp_path / 'repaired.jsonl'
+    assemble(work, tokenizer)
+    stats = F.cmd_export(F.parse_args(['export', '--work-dir', str(work), '--out', str(out)]))
+    assert stats['by_kind'] == {f'{F.EXEC}/repaired': 2, f'{F.TRUNC}/repaired': 1, f'{F.LONG}/failed': 1}
+    sel = select_records.main([str(tmp_path / 'all.raw.jsonl'), str(out), '--dry-run'])
+    assert sel['kept']['rows'] == 3 + 1 + 0  # exec-x, exec-y, gsm-t repaired + gsm-c clean; countdown raw dropped
+
+
+def test_retry_does_not_rewrite_first_pass_with_torn_line(tmp_path):
+    work, _, _, _ = plan(tmp_path)
+    tokenizer = build_tiny_tokenizer()
+    run(work, FakeBackend(tokenizer, first_pass_llm))
+    with open(work / 'results.jsonl', 'a') as handle:
+        handle.write('{"key": "torn')  # as if the first pass were still writing
+    sha = F.sha256_file(work / 'results.jsonl')
+    retry(work, FakeBackend(tokenizer, retry_llm), '--no-retry-branches')
+    assemble(work, tokenizer)
+    assert F.sha256_file(work / 'results.jsonl') == sha
+    manifest = [json.loads(x) for x in (work / F.RETRY_MANIFEST).read_text().splitlines()][-1]
+    assert manifest['selection']['branch_retry_disabled'] == {F.TRUNC: 1} and manifest['jobs'] == 3

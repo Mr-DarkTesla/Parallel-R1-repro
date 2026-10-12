@@ -6,6 +6,8 @@ the raw row in select_records.py (raw file first, repaired file second).
     python fast_repair.py plan --raw all.raw.jsonl --details details.jsonl --work-dir W [--branch-requests ...]
     python fast_repair.py run --work-dir W                 # GPU; resumable, checkpoints W/results.jsonl
     python fast_repair.py assemble --work-dir W            # CPU; W/assembled.jsonl + W/assemble_stats.json
+    python fast_repair.py run --work-dir W --retry-failed  # GPU; second pass (prompt v2) -> W/results.retry.jsonl
+    python fast_repair.py assemble --work-dir W            # merges both passes (--strict-v2 is the default)
     python fast_repair.py export --work-dir W --out W/repaired.jsonl
 
 Triage (`triage`, from Codex's per-record audit details.jsonl; reproduces the counts agreed with the user):
@@ -47,6 +49,28 @@ siblings' (gen.stage_branch rule); oracle/valid first, then shortest. Countdown 
 "ANY SUBSET" sentence when they lack it (the 1,536 older records). Without an exact request the record is skipped
 and counted (or, with --branch-request-fallback arm_d, Codex's in-context executor_prompt_d is used and marked).
 
+Second pass (`run --retry-failed`, prompt version v2; the first pass is prompt version v1 and stays as it ran):
+  * Rules (a)(b) (`strict_reason`), applied to every v2 pair and, with --strict-v2 (default on in assemble and in
+    the retry selection), to the first-pass pairs as well; they only filter answered pairs, so the first pass's
+    requests are unchanged. (a) the value the answer reports appears in the summary: exec/gsm the \boxed number
+    (Codex's numeric normalization) among the summary's signed numbers; countdown the Final Answer expression
+    (normalized string or the same expression_key); MATH a plain-number box like gsm, otherwise the normalized
+    string (norm_math, also with \frac{a}{b} -> a/b) -- not reliable for every LaTeX form, --math-value-check skip
+    turns that part off (matrices are skipped). (b) no 'Final Answer' (as written), \boxed/\fbox or 'final
+    answer:' (any case) in the summary; prose such as 'the final answer is the sum' is left to (a).
+  * Candidates (`retry_plan`, a pure function of jobs.jsonl + results.jsonl): first-pass failures of the summary or
+    answer stage (summary:* / answer:*, including pairs demoted by (a)(b); not summary_budget), and
+    branch_truncated jobs whose regenerated branches failed (branch:* / branch_budget; --no-retry-branches skips).
+  * Requests (`evaluate_v2`, keys '<id>|v2|<node>', own seeds): SUMMARY_NOTE_V2 (state each Result, then the
+    combining computation one operation per step with intermediate values, ending with the combined value, no
+    Final Answer line or \boxed; still no re-derivation and no production inputs for exec), n=8; ANSWER_NOTE_V2
+    (restate the value the summary reached). Truncated branches keep an acceptable first-pass sample; the others get
+    n=4 with the budget computed from a 1,536-token merger reserve instead of 2,048. Written to results.retry.jsonl;
+    results.jsonl is only read (never rewritten, even with a torn last line).
+  * assemble per job: accepted first pass, else accepted retry, else the first-pass failure (repair_failed row /
+    not exported). provenance.repair records prompt_version, repair_pass, strict_v2, first_pass / retry verdicts;
+    assemble_stats.json strict_v2 reports v1 accepted, demoted (by reason), candidates, retry outcomes.
+
 Sampling is the raw run's (gen.STUDENT_SAMPLING: temperature 0.6, top_p 0.95, top_k 20) with a per-request seed
 gen.seed_of('fast-repair', REVISION, key), recorded with every result; vLLM is built like gen.Engine (bf16,
 prefix caching, engine seed 0, Codex's exact top-k/top-p sampler patch). Every decision is a pure function of
@@ -62,6 +86,7 @@ import statistics
 import sys
 import time
 from collections import Counter, defaultdict
+from decimal import Decimal
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -92,6 +117,43 @@ ANSWER_NOTE = {
 }
 DEFAULTS = dict(summary_ratio=0.5, summary_max_tokens=1024, answer_max_tokens=512, branch_samples=2,
                 merger_samples=4, max_input_products=1, long_summary_sources=('gsm', 'math'))
+
+# ---- second pass (`run --retry-failed`): prompt version v2, used only for the retry pass (first pass = v1)
+PROMPT_V1, PROMPT_V2 = 'v1', 'v2'
+RETRY_RESULTS, RETRY_MANIFEST = 'results.retry.jsonl', 'run_retry_manifest.jsonl'
+# n=8 summaries; truncated branches without an acceptable first-pass sample: n=4 and a branch budget computed with a
+# 1,536-token merger reserve (= summary 1,024 + answer 512 caps) instead of Codex's 2,048.
+RETRY = dict(merger_samples=8, branch_samples=4, branch_reserve=1536)
+_V2_RULES = (
+    'Do not re-derive, recompute or re-check any Result from the original data, and do not restate how the tasks '
+    'were solved. If a Result is missing or the Results conflict, say so instead of solving that task yourself. Write '
+    'brief plain prose in the first person, as part of your own reasoning. Do not write a final response, a '
+    '"Final Answer" line, \\boxed{}, or any markup.')
+SUMMARY_NOTE_V2 = {
+    'default': (
+        '\n\nThe Results above are verified and final. Write the summary step of the reasoning that follows these '
+        'independent tasks. First state each Result you use, one short sentence each. Then carry out the remaining '
+        'combination explicitly, one operation per step, writing every intermediate value, for example: '
+        '(-25) + 40 = 15; 15 + (-7) = 8. End with one sentence that states the combined value. ' + _V2_RULES),
+    'countdown': (
+        '\n\nThe Results above are verified and final. Write the summary step of the reasoning that follows these '
+        'independent tasks. First state each Result, one short sentence each. Then choose one valid expression and '
+        'check it explicitly, one operation per step, writing every intermediate value, for example: 3*4 = 12; '
+        '12 + 5 = 17. End with one sentence that names the chosen expression written out in full. ' + _V2_RULES),
+}
+ANSWER_NOTE_V2 = {
+    'boxed': ('\n\nNow write the final response to the user: at most two sentences that state the value the reasoning '
+              'summary reached, ending with that same value in \\boxed{}. Do not repeat the calculations.'),
+    'countdown': ('\n\nNow write the final response to the user: one sentence, then a separate line beginning '
+                  'Final Answer: followed by the expression the reasoning summary chose. Use every given number '
+                  'exactly once, explicit * for multiplication, plain ASCII, no equals sign. Do not repeat the '
+                  'search.'),
+}
+# Rule (b): a summary must not carry the final response. "Final Answer" as written (the Countdown answer-line
+# marker), \boxed / \fbox, and "final answer:" in any case; prose such as "the final answer is the sum" is left to
+# rule (a).
+FINAL_MARKER = re.compile(r'Final Answer|\\boxed|\\fbox|(?i:final\s+answer\s*:)')
+COUNTDOWN_FINAL = re.compile(r'(?im)^\s*\**\s*Final Answer\s*:?\**\s*:?\s*([^\n]+?)\s*$')  # gen.grade's regex
 
 
 # ------------------------------------------------------------------------------------------------- small io
@@ -142,8 +204,10 @@ def write_jsonl(path, rows):
     return sha256_file(path)
 
 
-def read_results(path):
-    """{key: result}; a torn last line (a stop mid-write) is dropped and the file rewritten without it."""
+def read_results(path, repair=True):
+    """{key: result}; a torn last line (a stop mid-write) is dropped and, with repair=True (the writer's own file
+    before it appends), the file is rewritten without it. assemble and the retry pass read the first-pass file with
+    repair=False: they never modify it."""
     path = Path(path)
     if not path.exists():
         return {}
@@ -157,6 +221,8 @@ def read_results(path):
         except json.JSONDecodeError:
             if any(rest.strip() for rest in lines[number + 1:]):
                 raise
+            if not repair:
+                break
             tmp = path.with_name(path.name + '.tmp')
             tmp.write_bytes(b''.join(item + b'\n' for item in good))
             tmp.replace(path)
@@ -369,8 +435,156 @@ def answer_request(job, results, summary):
     return merger_context(job, results) + '\n\nReasoning summary:\n' + summary + note
 
 
+def summary_request_v2(job, results):
+    return merger_context(job, results) + SUMMARY_NOTE_V2['countdown' if job['source'] == 'countdown' else 'default']
+
+
+def answer_request_v2(job, results, summary):
+    note = ANSWER_NOTE_V2['countdown' if job['source'] == 'countdown' else 'boxed']
+    return merger_context(job, results) + '\n\nReasoning summary:\n' + summary + note
+
+
 def branch_request(job, index):
     return job['branch_requests'][str(index)]['text']
+
+
+# ------------------------------------------------------------------------------- strict-v2 acceptance (a)(b)
+
+def has_final_marker(text):
+    """Rule (b): the summary carries a final response ('Final Answer', \\boxed, 'final answer:')."""
+    return bool(FINAL_MARKER.search(text or ''))
+
+
+def signed_numbers(text):
+    """[(Decimal, start)] of the numbers in text with Codex's numeric normalization (audit_repair.numeric: no
+    thousands commas, no $, U+2212 as minus). A '-' is a sign only when it does not follow a digit, letter or closing
+    bracket ('(-255)', '= -252', but not '12-5')."""
+    text = (text or '').replace('\u2212', '-').replace('$', '')
+    text = re.sub(r'(?<=\d),(?=\d{3}(?!\d))', '', text)
+    out = []
+    for match in re.finditer(r'\d+(?:\.\d+)?', text):
+        start = match.start()
+        negative = start > 0 and text[start - 1] == '-' and (
+            start < 2 or not (text[start - 2].isalnum() or text[start - 2] in ')]}'))
+        out.append((Decimal(('-' if negative else '') + match.group()), start))
+    return out
+
+
+def value_in_text(value, text):
+    """The signed value appears in text; a negative value may also appear unsigned right after loss/deficit/
+    negative/minus ('a loss of $252')."""
+    for number, start in signed_numbers(text):
+        if number == value:
+            return True
+        if value < 0 and number == -value and re.search(r'(?i)\b(loss|deficit|negative|minus)\b',
+                                                        text[max(0, start - 40):start]):
+            return True
+    return False
+
+
+def norm_expression(text):
+    text = (text or '').replace('\u2212', '-')
+    text = re.sub(r'(?<=[\d)])\s*[x×·]\s*(?=[\d(])', '*', text)  # countdown_expr's multiplication normalization
+    return re.sub(r'\s+', '', text).strip('`$')
+
+
+def expression_in_text(expr, text):
+    """The Countdown expression appears in text after normalization: as a string (spaces removed, x/× as *), or as
+    an arithmetic run with the same quality_checks.expression_key (order/parentheses of + and * ignored)."""
+    target = norm_expression(expr)
+    if not target:
+        return False
+    if target in norm_expression(text):
+        return True
+    try:
+        key = C.expression_key(target)
+    except (ValueError, SyntaxError):
+        return False
+    spaced = re.sub(r'(?<=[\d)])\s*[x×·]\s*(?=[\d(])', '*', (text or '').replace('\u2212', '-'))
+    for run in re.findall(r'[0-9+\-*() ]{3,}', spaced):
+        run = run.replace(' ', '')
+        for cand in {run, run.strip('()'), run.lstrip('('), run.rstrip(')')}:
+            try:
+                if cand and C.expression_key(cand) == key:
+                    return True
+            except (ValueError, SyntaxError):
+                continue
+    return False
+
+
+SUPERSCRIPTS = '\u2070\u00b9\u00b2\u00b3\u2074\u2075\u2076\u2077\u2078\u2079'
+MATH_UNICODE = str.maketrans({'\u221e': '\\infty', '\u222a': '\\cup', '\u2212': '-',
+                              **{sup: '^' + d for sup, d in zip(SUPERSCRIPTS, '0123456789')}})
+
+
+def norm_math_v2(text):
+    """codex norm_math after unicode math (infinity, cup, minus, superscript digits) as LaTeX, \\sqrt{x} -> \\sqrt x,
+    \\frac{a}{b} -> a/b, \\text{..}/\\mathrm{..} unwrapped and degree signs dropped (both sides alike)."""
+    text = (text or '').replace('\u221a', '\\sqrt').replace('\u00b0', '').translate(MATH_UNICODE)
+    text = text.replace('^{\\circ}', '').replace('^\\circ', '').replace('\\circ', '')
+    text = re.sub(r'\\sqrt\s*\{([^{}]*)\}', r'\\sqrt \1', text)
+    text = re.sub(r'\\[dt]?frac\s*\{([^{}]*)\}\s*\{([^{}]*)\}', r'\1/\2', text)
+    text = re.sub(r'\\(?:text|mathrm|mathbf|textbf|operatorname)\s*\{([^{}]*)\}', r'\1', text)
+    text = text.replace('\\displaystyle', '').replace('\\%', '').replace('%', '')
+    return C.norm_math(text).rstrip('.')
+
+
+PLAIN_NUMBER = re.compile(r'-?(?:\d{1,3}(?:,\d{3})+|\d+)(?:\.\d+)?')
+
+
+def final_value_check(job, summary, answer, math_check='on'):
+    """Rule (a): (ok, how). The value the answer reports must appear in the summary.
+    exec/gsm: the \\boxed value as a Decimal (Codex's numeric(); the gold value when the box is not a plain number,
+    since the answer already passed the scorer) among the summary's signed numbers. countdown: the last
+    'Final Answer:' expression (gen.grade's regex), see expression_in_text. MATH: a plain-number box as for gsm;
+    otherwise the box after norm_math (or norm_math_v2) must be a substring of the summary normalized the same way.
+    That string match is not reliable for every LaTeX form (1/2 vs \\frac12 is covered, '0.5' vs '\\frac{1}{2}' or
+    a value written in words is not), so math_check='skip' turns the non-numeric MATH check off; matrices/arrays
+    (\\begin{..}) and one-character normalized answers are always skipped. On the raw pool's own correct parallel
+    records (long thinking summaries) the check passes 280/280 numeric and 262/266 string MATH answers (25
+    matrices skipped), exec 1311/1311, gsm 620/620, countdown 744/745."""
+    src = job['source']
+    if src == 'countdown':
+        found = COUNTDOWN_FINAL.findall(answer or '')
+        if not found:
+            return False, 'no_final_answer_line'
+        return expression_in_text(found[-1].strip().strip('`$'), summary), 'expression'
+    boxed = C.final_boxed_answer(answer)
+    if boxed is None:
+        return False, 'no_boxed'
+    if src in ('exec', 'gsm'):
+        value = C.numeric(boxed)
+        if value is None:
+            value = C.numeric(C.gold_answer(job['q']['task'], job['q']['gold']))
+    else:  # MATH: a plain number only ('1,2,10' is a list, not 1210)
+        plain = boxed.strip().replace('\\$', '').replace('$', '')
+        value = C.numeric(plain) if PLAIN_NUMBER.fullmatch(plain) else None
+    if value is not None:
+        return value_in_text(value, summary), 'numeric'
+    if src != 'math' or math_check == 'skip':
+        return True, 'skipped'
+    if '\\begin' in boxed:  # matrices/arrays: no reliable normalization (pmatrix vs [[..]] vs (a, b))
+        return True, 'skipped_matrix'
+    if len(norm_math_v2(boxed)) < 2:
+        return True, 'skipped_short'
+    for norm in (C.norm_math, norm_math_v2):
+        target = norm(boxed)
+        if len(target) >= 2 and target in norm(summary):
+            return True, 'math_string'
+    parts = [part for part in boxed.split(',') if part.strip()]
+    if len(parts) > 1 and not re.search(r'[()\[\]{}]', boxed):  # a list of answers: each must appear
+        flat = norm_math_v2(summary)
+        if all(norm_math_v2(part) and norm_math_v2(part) in flat for part in parts):
+            return True, 'math_string'
+    return False, 'math_string'
+
+
+def strict_reason(job, summary, answer, math_check='on'):
+    """None if the (summary, answer) pair passes rules (a) and (b), else the reason."""
+    if has_final_marker(summary):
+        return 'summary_final_marker'
+    ok, _ = final_value_check(job, summary, answer, math_check)
+    return None if ok else 'summary_missing_value'
 
 
 # ------------------------------------------------------------------------------------------------- evaluate
@@ -378,8 +592,9 @@ def branch_request(job, index):
 class Ctx:
     """Tokenizer-dependent helpers shared by run and assemble (the generator's tokenizer: no tags added)."""
 
-    def __init__(self, tokenizer, cfg, max_model_len=18432, request_seeds=True):
+    def __init__(self, tokenizer, cfg, max_model_len=18432, request_seeds=True, math_check='on'):
         self.tok, self.cfg, self.max_model_len, self.request_seeds = tokenizer, cfg, max_model_len, request_seeds
+        self.math_check = math_check
         self._cache = {}
 
     def ntok(self, text):
@@ -393,15 +608,18 @@ class Ctx:
         return self.tok.apply_chat_template([{'role': 'user', 'content': content}], tokenize=False,
                                             add_generation_prompt=True, enable_thinking=thinking)
 
-    def request(self, key, node, content, thinking, n, budget):
+    def request(self, key, node, content, thinking, n, budget, prompt_version=None):
         prompt = self.prompt(content, thinking)
         prompt_ids = self.tok.encode(prompt, add_special_tokens=False)
         max_tokens = min(budget, self.max_model_len - len(prompt_ids) - 8)
         params = dict(n=n, max_tokens=max_tokens, **C.STUDENT_SAMPLING)
         if self.request_seeds:
             params['seed'] = C.seed_of('fast-repair', REVISION, key)
-        return dict(key=key, node=node, content=content, thinking=thinking, prompt=prompt, prompt_ids=prompt_ids,
-                    params=params)
+        req = dict(key=key, node=node, content=content, thinking=thinking, prompt=prompt, prompt_ids=prompt_ids,
+                   params=params)
+        if prompt_version is not None:  # v2 (retry) requests only; first-pass requests are unchanged
+            req['prompt_version'] = prompt_version
+        return req
 
 
 def expression_key_of(line):
@@ -411,11 +629,13 @@ def expression_key_of(line):
         return None
 
 
-def evaluate(job, results, ctx):
-    """Pure decision for one job given the finished results so far.
+def evaluate(job, results, ctx, strict=False):
+    """Pure decision for one job given the finished results so far (first pass, prompt version v1).
 
     Returns dict(status='waiting', pending=[request...]) | dict(status='failed', reason, ...) |
-    dict(status='accepted', bodies, summary, answer, segments, n_tokens, ...)."""
+    dict(status='accepted', bodies, summary, answer, segments, n_tokens, keys, ...).
+    strict=True (assemble/retry --strict-v2) also applies rules (a)(b) to each answered pair, after correctness;
+    it never changes which requests are pending, so the first pass issues exactly the same requests."""
     cfg, q, plan = ctx.cfg, job['q'], job['plan']
     jid = job['id']
     bodies, lines = list(job['bodies']), list(job['results'])
@@ -525,6 +745,10 @@ def evaluate(job, results, ctx):
             correct, grade = C.final_grade(dict(q=q, final=dict(text=summary + '\n</think>\n\n' + answer)))
             if not correct:
                 reason = 'wrong:' + grade
+        if reason is None and strict:
+            bad = strict_reason(job, summary, answer, ctx.math_check)
+            if bad:
+                reason = 'v2:' + bad
         if reason is None:
             segs = rebuild_segments(job['segments'], job['idx'], bodies, summary, '\n\n' + answer)
             n_tokens = ctx.ntok(''.join(s['text'] for s in segs))
@@ -546,9 +770,208 @@ def evaluate(job, results, ctx):
         return dict(status='failed', reason='answer:' + reasons.most_common(1)[0][0], nodes=nodes)
     best = min(accepted, key=lambda a: (a['cost'], a['index']))
     nodes['summary']['accepted_index'] = best['index']
+    keys = [f'{jid}|branch{i + 1}' for i in job['truncated']] + [key, f'{jid}|answer{best["index"] + 1}']
     return dict(status='accepted', bodies=bodies, results=lines, summary=best['summary'], answer=best['answer'],
                 segments=best['segments'], n_tokens=best['n_tokens'], grade=best['grade'], nodes=nodes,
-                longest_branch_chars=longest)
+                longest_branch_chars=longest, keys=keys)
+
+
+def v2_key(jid, node):
+    return f'{jid}|v2|{node}'
+
+
+def retry_cause(job, state):
+    """Why a first-pass state is retried, or None: 'merger' for a summary/answer failure (also a pair demoted by
+    --strict-v2), 'branch' for a branch_truncated job whose regenerated branches failed (or had no budget). Budget
+    failures of the merger itself (summary_budget) are not retried: the retry has the same caps."""
+    if state['status'] != 'failed':
+        return None
+    reason = state['reason']
+    if reason.startswith(('summary:', 'answer:')):
+        return 'merger'
+    if job['kind'] == TRUNC and (reason.startswith('branch:') or reason == 'branch_budget'):
+        return 'branch'
+    return None
+
+
+def _branch_samples(job, results, i, key, used):
+    samples = []
+    if key not in results:
+        return samples
+    for k, out in enumerate(results[key]['outputs']):
+        ok, reason, body, line = C.check_branch(job['q'], job['plan'], i, out)
+        if ok and reason == 'ok_countdown_valid' and expression_key_of(line) in used:
+            ok, reason = False, 'countdown_duplicate_expression'
+        samples.append(dict(key=key, index=k, ok=ok, reason=reason, body=body, line=line,
+                            finish_reason=out['finish_reason'], n_tokens=out['n_tokens']))
+    return samples
+
+
+def _best_branch(samples):
+    good = sorted((s for s in samples if s['ok']),
+                  key=lambda s: (s['reason'] not in ('ok_oracle_verified', 'ok_countdown_valid'), s['n_tokens'],
+                                 s['key'], s['index']))
+    return good[0] if good else None
+
+
+def evaluate_v2(job, results, ctx):
+    """Retry pass (prompt version v2) for one job; `results` holds the first-pass AND the retry results (their keys
+    are disjoint: retry keys are '<id>|v2|<node>'). Same return shape as `evaluate`.
+
+    Truncated branches: a branch with an acceptable first-pass sample keeps it (no new request); the others get one
+    v2 request, n=RETRY['branch_samples'], budget (16,384 - RETRY['branch_reserve'] - overhead - kept bodies) / their
+    number. Merger: SUMMARY_NOTE_V2 / ANSWER_NOTE_V2, n=RETRY['merger_samples'] summaries; on top of the first-pass
+    rules a summary with a final-response marker (rule b) is not answered, and a pair whose summary does not contain
+    the answer's value (rule a) is rejected."""
+    cfg = dict(ctx.cfg, **RETRY)
+    q, plan, jid = job['q'], job['plan'], job['id']
+    bodies, lines = list(job['bodies']), list(job['results'])
+    nodes = dict(prompt_version=PROMPT_V2, branches={}, summary=None, answers={})
+    keys = []
+    if job['truncated']:
+        countdown = job['source'] == 'countdown'
+        used0 = {expression_key_of(line) for i, line in enumerate(lines)
+                 if i not in job['truncated'] and countdown and line and C.countdown_expr(line)}
+        used, reuse, need = set(used0), {}, []
+        for i in job['truncated']:  # phase 1: what the first pass already provides
+            best = _best_branch(_branch_samples(job, results, i, f'{jid}|branch{i + 1}', used))
+            if best is None:
+                need.append(i)
+                continue
+            reuse[i] = best
+            if best['reason'] == 'ok_countdown_valid':
+                used.add(expression_key_of(best['line']))
+        if need:
+            kept = sum(ctx.ntok(b) for i, b in enumerate(bodies) if i not in job['truncated']) + \
+                sum(ctx.ntok(s['body']) for s in reuse.values())
+            budget = (TOTAL - cfg['branch_reserve'] - C.overhead(ctx, job['prefix'], plan) - kept) // len(need)
+            pending = []
+            for i in need:
+                key = v2_key(jid, f'branch{i + 1}')
+                if key not in results:
+                    req = ctx.request(key, f'branch{i + 1}', branch_request(job, i), True, cfg['branch_samples'],
+                                      budget, PROMPT_V2)
+                    if req['params']['max_tokens'] < 64:
+                        return dict(status='failed', reason='branch_budget', nodes=nodes)
+                    pending.append(req)
+            if pending:
+                return dict(status='waiting', pending=pending, nodes=nodes)
+        used = set(used0)
+        for i in job['truncated']:  # phase 2: first-pass and retry samples together
+            samples = _branch_samples(job, results, i, f'{jid}|branch{i + 1}', used)
+            if i in need:
+                samples += _branch_samples(job, results, i, v2_key(jid, f'branch{i + 1}'), used)
+            best = _best_branch(samples)
+            nodes['branches'][i] = dict(key=best['key'] if best else None,
+                                        samples=[{k: v for k, v in s.items() if k not in ('body', 'line')}
+                                                 for s in samples],
+                                        accepted_index=best['index'] if best else None,
+                                        accepted_key=best['key'] if best else None,
+                                        reason=best['reason'] if best else None, retried=i in need)
+            if best is None:
+                worst = Counter(s['reason'] for s in samples).most_common(1)[0][0] if samples else 'no_samples'
+                return dict(status='failed', reason=f'branch:{worst}', nodes=nodes)
+            bodies[i], lines[i] = best['body'], best['line']
+            keys.append(best['key'])
+            if best['reason'] == 'ok_countdown_valid':
+                used.add(expression_key_of(lines[i]))
+    longest = max(map(len, bodies))
+    _, empty = C.parallel_segments(job['prefix'], plan, bodies, '', '\n\n')
+    remaining = TOTAL - ctx.ntok(empty) - C.MARGIN
+    key = v2_key(jid, 'summary')
+    if key not in results:
+        budget = min(cfg['summary_max_tokens'], remaining - cfg['answer_max_tokens'])
+        req = ctx.request(key, 'summary', summary_request_v2(job, lines), False, cfg['merger_samples'], budget,
+                          PROMPT_V2)
+        if req['params']['max_tokens'] < 32:
+            return dict(status='failed', reason='summary_budget', nodes=nodes)
+        return dict(status='waiting', pending=[req], nodes=nodes)
+    spec = q['task'].get('spec')
+    candidates, summary_samples, pending = [], [], []
+    for k, out in enumerate(results[key]['outputs']):
+        text = out['text'].strip()
+        reason = None
+        if out['finish_reason'] != 'stop':
+            reason = 'summary_truncated'
+        elif not text:
+            reason = 'summary_empty'
+        elif not contract.plain_text(text):
+            reason = 'summary_tags'
+        elif has_final_marker(text):
+            reason = 'summary_final_marker'
+        elif len(text) > cfg['summary_ratio'] * longest:
+            reason = 'summary_too_long'
+        elif spec and count_input_products(text, spec) > cfg['max_input_products']:
+            reason = 'summary_input_products'
+        summary_samples.append(dict(index=k, finish_reason=out['finish_reason'], n_tokens=out['n_tokens'],
+                                    chars=len(text), reason=reason or 'ok'))
+        if reason is None:
+            candidates.append((k, text))
+    nodes['summary'] = dict(key=key, samples=summary_samples)
+    if not candidates:
+        return dict(status='failed', reason='summary:' + Counter(s['reason'] for s in summary_samples)
+                    .most_common(1)[0][0], nodes=nodes)
+    for k, summary in candidates:
+        akey = v2_key(jid, f'answer{k + 1}')
+        if akey not in results:
+            budget = min(cfg['answer_max_tokens'], remaining - ctx.ntok(summary))
+            req = ctx.request(akey, f'answer{k + 1}', answer_request_v2(job, lines, summary), False, 1, budget,
+                              PROMPT_V2)
+            if req['params']['max_tokens'] >= 16:
+                pending.append(req)
+            else:
+                nodes['answers'][k] = dict(key=akey, reason='answer_budget')
+    if pending:
+        return dict(status='waiting', pending=pending, nodes=nodes)
+    accepted = []
+    for k, summary in candidates:
+        akey = v2_key(jid, f'answer{k + 1}')
+        if akey not in results:
+            continue
+        out = results[akey]['outputs'][0]
+        answer = out['text'].strip()
+        reason, grade, n_tokens, segs, how = None, None, None, None, None
+        if out['finish_reason'] != 'stop':
+            reason = 'answer_truncated'
+        elif not answer:
+            reason = 'answer_empty'
+        elif not contract.plain_text(answer):
+            reason = 'answer_tags'
+        elif spec and count_input_products(answer, spec) > cfg['max_input_products']:
+            reason = 'answer_input_products'
+        else:
+            correct, grade = C.final_grade(dict(q=q, final=dict(text=summary + '\n</think>\n\n' + answer)))
+            if not correct:
+                reason = 'wrong:' + grade
+            else:
+                ok, how = final_value_check(job, summary, answer, ctx.math_check)
+                if not ok:
+                    reason = 'summary_missing_value'
+        if reason is None:
+            segs = rebuild_segments(job['segments'], job['idx'], bodies, summary, '\n\n' + answer)
+            n_tokens = ctx.ntok(''.join(s['text'] for s in segs))
+            if n_tokens > TOTAL:
+                reason = 'over_budget'
+            else:
+                try:
+                    D.validate_row(dict(id=jid, source=job['source'], mode='parallel', prompt=job['q']['prompt'],
+                                        segments=segs, provenance={}))
+                except D.DataError as error:
+                    reason = 'invalid:' + error.reason
+        nodes['answers'][k] = dict(key=akey, finish_reason=out['finish_reason'], n_tokens=out['n_tokens'],
+                                   chars=len(answer), reason=reason or 'ok', grade=grade, value_check=how)
+        if reason is None:
+            accepted.append(dict(index=k, summary=summary, answer='\n\n' + answer, segments=segs, n_tokens=n_tokens,
+                                 grade=grade, cost=ctx.ntok(summary) + out['n_tokens']))
+    if not accepted:
+        reasons = Counter(a['reason'] for a in nodes['answers'].values())
+        return dict(status='failed', reason='answer:' + reasons.most_common(1)[0][0], nodes=nodes)
+    best = min(accepted, key=lambda a: (a['cost'], a['index']))
+    nodes['summary']['accepted_index'] = best['index']
+    keys += [key, v2_key(jid, f'answer{best["index"] + 1}')]
+    return dict(status='accepted', bodies=bodies, results=lines, summary=best['summary'], answer=best['answer'],
+                segments=best['segments'], n_tokens=best['n_tokens'], grade=best['grade'], nodes=nodes,
+                longest_branch_chars=longest, keys=keys)
 
 
 # ------------------------------------------------------------------------------------------------------ plan
@@ -841,17 +1264,19 @@ class VLLMBackend:
         return [(r['key'], self._outputs(o)) for r, o in zip(batch, results)]
 
 
-def run_jobs(jobs, results, backend, ctx, writer, log_every=64, limit=None):
+def run_jobs(jobs, results, backend, ctx, writer, log_every=64, limit=None, evaluator=None):
     """Drive every job to accepted/failed: add each job's ready requests, record finished ones, re-evaluate that job
-    (so a merger starts as soon as its branches finish). Returns the number of requests run."""
+    (so a merger starts as soon as its branches finish). Returns the number of requests run. evaluator(job, results,
+    ctx) defaults to the first pass's `evaluate`; the retry pass passes `evaluate_v2`."""
+    evaluator = evaluator or evaluate
     by_id = {job['id']: job for job in jobs}
-    inflight, meta, count, start = set(), {}, 0, time.time()
+    inflight, meta, owner, count, start = set(), {}, {}, 0, time.time()
     sampled = Counter()
 
     def refill(job_ids):
         added = 0
         for jid in job_ids:
-            state = evaluate(by_id[jid], results, ctx)
+            state = evaluator(by_id[jid], results, ctx)
             for req in state.get('pending', ()):
                 if req['key'] in inflight or req['key'] in results:
                     continue
@@ -860,6 +1285,7 @@ def run_jobs(jobs, results, backend, ctx, writer, log_every=64, limit=None):
                 backend.add(req)
                 inflight.add(req['key'])
                 meta[req['key']] = req
+                owner[req['key']] = jid
                 added += 1
         return added
 
@@ -870,10 +1296,12 @@ def run_jobs(jobs, results, backend, ctx, writer, log_every=64, limit=None):
         for key, outputs in backend.step():
             req = meta.pop(key)
             inflight.discard(key)
-            row = dict(key=key, job_id=key.rsplit('|', 1)[0], node=req['node'], thinking=req['thinking'],
+            row = dict(key=key, job_id=owner.pop(key), node=req['node'], thinking=req['thinking'],
                        params=req['params'], prompt_sha256=sha256_text(req['prompt']),
                        prompt_tokens=len(req['prompt_ids']), request=req['content'], outputs=outputs,
                        utc=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()))
+            if 'prompt_version' in req:
+                row['prompt_version'] = req['prompt_version']
             results[key] = row
             writer.write(row)
             count += 1
@@ -902,15 +1330,96 @@ def load_work(work_dir):
     return plan, jobs
 
 
+def make_backend(args):
+    return VLLMBackend(args.model, args.revision, args.max_model_len, args.gpu_memory_utilization, args.max_num_seqs,
+                       not args.no_fast_sampler, args.engine, args.checkpoint_every)
+
+
+def retry_plan(jobs, first, ctx, strict=True, branches=True):
+    """(candidates [(job, cause, first-pass state)], counts) of the retry pass: a pure function of jobs.jsonl and
+    the first-pass results (and --strict-v2), so `run --retry-failed` resumes exactly and `assemble` agrees."""
+    picked, counts = [], defaultdict(Counter)
+    for job in jobs:
+        state = evaluate(job, first, ctx, strict=strict)
+        cause = retry_cause(job, state)
+        if state['status'] == 'waiting':
+            counts['first_pass_incomplete'][job['kind']] += 1
+        elif state['status'] == 'accepted':
+            counts['first_pass_accepted'][job['kind']] += 1
+        elif cause is None:
+            counts['not_retryable'][f'{job["kind"]}/{state["reason"]}'] += 1
+        elif cause == 'branch' and not branches:
+            counts['branch_retry_disabled'][job['kind']] += 1
+        else:
+            if strict and cause == 'merger' and evaluate(job, first, ctx)['status'] == 'accepted':
+                counts['demoted_by_strict_v2'][f'{job["kind"]}/{state["reason"]}'] += 1
+            counts['candidates'][f'{job["kind"]}/{cause}'] += 1
+            picked.append((job, cause, state))
+    return picked, {k: dict(v) for k, v in counts.items()}
+
+
+def cmd_retry(args, backend=None):
+    """Second pass: only the merger (and, for branch_truncated jobs whose branches failed, those branches) of the
+    retry candidates, prompt version v2, written to results.retry.jsonl; results.jsonl is only read."""
+    plan, jobs = load_work(args.work_dir)
+    require_math_verify(jobs)
+    first_path = args.work_dir / 'results.jsonl'
+    first_sha = sha256_file(first_path) if first_path.exists() else None
+    first = read_results(first_path, repair=False)
+    retry_path = args.work_dir / RETRY_RESULTS
+    second = read_results(retry_path)
+    if set(first) & set(second):
+        raise SystemExit(f'{RETRY_RESULTS} shares keys with results.jsonl')
+    if backend is None:
+        backend = make_backend(args)
+    ctx = Ctx(backend.tokenizer, plan['config'], args.max_model_len, not args.no_request_seeds, args.math_value_check)
+    picked, counts = retry_plan(jobs, first, ctx, args.strict_v2, args.retry_branches)
+    if counts.get('first_pass_incomplete'):
+        print(f'WARNING: first pass unfinished for {counts["first_pass_incomplete"]} jobs; they are not retried',
+              flush=True)
+    candidates = [job for job, _, _ in picked]
+    if args.limit_jobs:
+        candidates = candidates[:args.limit_jobs]
+    manifest = dict(revision=REVISION, prompt_version=PROMPT_V2, retry=RETRY, strict_v2=args.strict_v2,
+                    retry_branches=args.retry_branches, math_value_check=args.math_value_check, model=args.model,
+                    revision_model=args.revision, vllm=getattr(backend, 'version', None), engine=args.engine,
+                    max_model_len=args.max_model_len, gpu_memory_utilization=args.gpu_memory_utilization,
+                    max_num_seqs=args.max_num_seqs, fast_sampler=not args.no_fast_sampler,
+                    request_seeds=not args.no_request_seeds, engine_seed=0, sampling=C.STUDENT_SAMPLING,
+                    first_pass_results=len(first), first_pass_sha256=first_sha, selection=counts,
+                    jobs=len(candidates), resumed_with=len(second),
+                    start=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()))
+    print(json.dumps(dict(selection=counts, jobs=len(candidates)), indent=1), flush=True)
+    results = dict(first)
+    results.update(second)
+    writer = ResultWriter(retry_path, args.checkpoint_every)
+    t0 = time.time()
+    try:
+        count, sampled = run_jobs(candidates, results, backend, ctx, writer, args.checkpoint_every, args.limit,
+                                  evaluator=evaluate_v2)
+    finally:
+        writer.close()
+    if first_path.exists() and sha256_file(first_path) != first_sha:
+        print('WARNING: results.jsonl changed during the retry pass (is the first pass still running?)', flush=True)
+    states = Counter(evaluate_v2(job, results, ctx)['status'] for job in candidates)
+    manifest.update(requests_this_run=count, sampled_tokens=sampled, minutes=round((time.time() - t0) / 60, 2),
+                    end=time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()), job_states=dict(states))
+    with (args.work_dir / RETRY_MANIFEST).open('a') as handle:
+        handle.write(json.dumps(manifest) + '\n')
+    print(json.dumps(manifest, indent=1))
+    return manifest
+
+
 def cmd_run(args, backend=None):
+    if args.retry_failed:
+        return cmd_retry(args, backend)
     plan, jobs = load_work(args.work_dir)
     require_math_verify(jobs)
     if args.limit_jobs:
         jobs = jobs[:args.limit_jobs]
     results = read_results(args.work_dir / 'results.jsonl')
     if backend is None:
-        backend = VLLMBackend(args.model, args.revision, args.max_model_len, args.gpu_memory_utilization,
-                              args.max_num_seqs, not args.no_fast_sampler, args.engine, args.checkpoint_every)
+        backend = make_backend(args)
     ctx = Ctx(backend.tokenizer, plan['config'], args.max_model_len, not args.no_request_seeds)
     manifest = dict(revision=REVISION, model=args.model, revision_model=args.revision,
                     vllm=getattr(backend, 'version', None), engine=args.engine, max_model_len=args.max_model_len,
@@ -949,9 +1458,11 @@ def recheck_kept_branch(q, plan, index, body):
     return dict(ok=ok, reason=reason)
 
 
-def assemble_job(job, original, state, ctx, run_info):
-    """(row or None, outcome dict). original: the raw row (its line sha256 must match the plan)."""
+def assemble_job(job, original, state, ctx, run_info, extra=None):
+    """(row or None, outcome dict). original: the raw row (its line sha256 must match the plan). extra: fields added
+    to provenance.repair (prompt_version, pass, strict_v2, first_pass / retry verdicts)."""
     kind = job['kind']
+    extra = dict(prompt_version=PROMPT_V1, repair_pass='first') if extra is None else extra
     if state['status'] == 'accepted':
         row = copy.deepcopy(original)
         row['segments'] = state['segments']
@@ -972,14 +1483,15 @@ def assemble_job(job, original, state, ctx, run_info):
         prov.update(model_finished=finished, correct=correct, grade=grade, branch_checks=checks,
                     n_tokens=n_tokens, over_budget=n_tokens > TOTAL, repair_failed=False)
         node = '+'.join([f'branch{i + 1}' for i in job['truncated']] + ['summary', 'answer'])
+        keys = state.get('keys') or prompt_keys(job, state)
         prov['repair'] = dict(
             kind=kind, node=node, status='accepted', model=run_info.get('model'),
             revision=run_info.get('revision_model'), repair_revision=REVISION, attempts=state['nodes'],
             accepted_index=state['nodes']['summary']['accepted_index'],
             original_sha256=job['original']['line_sha256'],
-            prompt_sha256={key: run_info['prompt_sha256'].get(key) for key in prompt_keys(job, state)},
+            prompt_sha256={key: run_info['prompt_sha256'].get(key) for key in keys},
             branch_request_sources={i: job['branch_requests'][str(i)]['source'] for i in job['truncated']},
-            sampling=C.STUDENT_SAMPLING, seeds={key: run_info['seeds'].get(key) for key in prompt_keys(job, state)},
+            sampling=C.STUDENT_SAMPLING, seeds={key: run_info['seeds'].get(key) for key in keys},
             lengths=dict(n_tokens_before=job['original']['n_tokens'], n_tokens_after=n_tokens,
                          summary_chars_before=job['original']['summary_chars'],
                          summary_chars_after=len(state['summary']),
@@ -990,11 +1502,12 @@ def assemble_job(job, original, state, ctx, run_info):
                                       answer=count_input_products(state['answer'], job['q']['task']['spec']),
                                       summary_before=job['original']['exec_summary_input_products'],
                                       answer_before=job['original']['exec_answer_input_products'])
-                                 if job['source'] == 'exec' else None))
+                                 if job['source'] == 'exec' else None),
+            **extra)
         D.validate_row(row)
         ok = finished and correct and all(c['ok'] for c in checks) and n_tokens <= TOTAL
         return row, dict(id=job['id'], kind=kind, status='accepted' if ok else 'recheck_failed',
-                         reason=None if ok else 'recheck', n_tokens=n_tokens)
+                         reason=None if ok else 'recheck', n_tokens=n_tokens, repair_pass=extra.get('repair_pass'))
     if state['status'] == 'failed' and kind in (EXEC, LONG):
         row = copy.deepcopy(original)
         row['provenance']['repair_failed'] = True
@@ -1002,9 +1515,11 @@ def assemble_job(job, original, state, ctx, run_info):
                                            attempts=state.get('nodes'),
                                            original_sha256=job['original']['line_sha256'],
                                            model=run_info.get('model'), revision=run_info.get('revision_model'),
-                                           repair_revision=REVISION)
-        return row, dict(id=job['id'], kind=kind, status='repair_failed', reason=state['reason'])
-    return None, dict(id=job['id'], kind=kind, status=state['status'], reason=state.get('reason', 'not_run'))
+                                           repair_revision=REVISION, **extra)
+        return row, dict(id=job['id'], kind=kind, status='repair_failed', reason=state['reason'],
+                         repair_pass=extra.get('repair_pass'))
+    return None, dict(id=job['id'], kind=kind, status=state['status'], reason=state.get('reason', 'not_run'),
+                      repair_pass=extra.get('repair_pass'))
 
 
 def prompt_keys(job, state):
@@ -1012,29 +1527,73 @@ def prompt_keys(job, state):
     return keys + [f'{job["id"]}|answer{state["nodes"]["summary"]["accepted_index"] + 1}']
 
 
-def assemble(work_dir, raw_path, tokenizer, max_model_len=18432):
+def read_manifests(path):
+    return [json.loads(x) for x in Path(path).read_text().splitlines() if x.strip()] if Path(path).exists() else []
+
+
+def assemble(work_dir, raw_path, tokenizer, max_model_len=18432, strict=True, math_check='on'):
+    """Merge the passes per job: an accepted first-pass result (v1; with strict=True it must also pass rules (a)(b),
+    possibly with another of its accepted samples), else an accepted retry result (v2, results.retry.jsonl), else the
+    first-pass failure (repair_failed row for exec/long-summary, nothing for branch_truncated). Reads both result
+    files without modifying them."""
     plan, jobs = load_work(work_dir)
     require_math_verify(jobs)
-    results = read_results(work_dir / 'results.jsonl')
+    first = read_results(work_dir / 'results.jsonl', repair=False)
+    second = read_results(work_dir / RETRY_RESULTS, repair=False)
+    both = dict(first)
+    both.update(second)
     if sha256_file(raw_path) != plan['raw']['sha256']:
         raise SystemExit('raw file differs from the planned one')
     originals = {row['id']: (line, row) for line, row in raw_lines(raw_path)}
-    runs = [json.loads(x) for x in (work_dir / 'run_manifest.jsonl').read_text().splitlines()] \
-        if (work_dir / 'run_manifest.jsonl').exists() else [{}]
+    runs = read_manifests(work_dir / 'run_manifest.jsonl') or [{}]
+    retry_runs = read_manifests(work_dir / RETRY_MANIFEST) or [{}]
     seeds_on = runs[-1].get('request_seeds', True)
-    ctx = Ctx(tokenizer, plan['config'], max_model_len, seeds_on)
+    ctx = Ctx(tokenizer, plan['config'], max_model_len, seeds_on, math_check)
+    shas = {k: r['prompt_sha256'] for k, r in both.items()}
+    seeds = {k: r['params'].get('seed') for k, r in both.items()}
     run_info = dict(model=runs[-1].get('model'), revision_model=runs[-1].get('revision_model'),
-                    prompt_sha256={k: r['prompt_sha256'] for k, r in results.items()},
-                    seeds={k: r['params'].get('seed') for k, r in results.items()})
+                    prompt_sha256=shas, seeds=seeds)
+    retry_info = dict(model=retry_runs[-1].get('model') or run_info['model'],
+                      revision_model=retry_runs[-1].get('revision_model') or run_info['revision_model'],
+                      prompt_sha256=shas, seeds=seeds)
     rows, outcomes = [], []
+    v2 = defaultdict(Counter)
     for job in jobs:
         line, original = originals[job['id']]
         if sha256_bytes(line) != job['original']['line_sha256'] or original['segments'] != job['segments']:
             raise SystemExit(f'{job["id"]}: raw row differs from the planned one')
-        state = evaluate(job, results, ctx)
+        kind = job['kind']
+        state = evaluate(job, first, ctx, strict=strict)
+        info = run_info
+        extra = dict(prompt_version=PROMPT_V1, repair_pass='first', strict_v2=strict)
+        if strict and state['status'] == 'failed':
+            loose = evaluate(job, first, ctx)
+            if loose['status'] == 'accepted':
+                v2['first_pass_accepted_v1'][kind] += 1
+                v2['demoted_by_strict_v2'][kind] += 1
+                v2['demoted_reasons'][f'{kind}/{state["reason"]}'] += 1
+                extra['demoted_by_strict_v2'] = True
+        elif state['status'] == 'accepted':
+            v2['first_pass_accepted_v1'][kind] += 1
+            if strict and evaluate(job, first, ctx)['summary'] != state['summary']:
+                v2['first_pass_other_sample_by_strict_v2'][kind] += 1
+        cause = retry_cause(job, state)
+        if cause:
+            v2['retry_candidates'][f'{kind}/{cause}'] += 1
+            again = evaluate_v2(job, both, ctx)
+            status = 'not_run' if again['status'] == 'waiting' else again['status']
+            v2['retry_outcomes'][f'{kind}/{status}' + (f':{again["reason"]}' if status == 'failed' else '')] += 1
+            if again['status'] == 'accepted':
+                extra = dict(prompt_version=PROMPT_V2, repair_pass='retry', strict_v2=strict, retry_config=RETRY,
+                             first_pass=dict(status='failed', reason=state['reason'],
+                                             demoted_by_strict_v2=bool(extra.get('demoted_by_strict_v2'))))
+                state, info = again, retry_info
+            else:
+                extra['retry'] = dict(prompt_version=PROMPT_V2, status=status, reason=again.get('reason'),
+                                      attempts=again.get('nodes') if status == 'failed' else None)
         if state['status'] == 'waiting':
             state = dict(status='not_run', reason='not_run')
-        row, outcome = assemble_job(job, original, state, ctx, run_info)
+        row, outcome = assemble_job(job, original, state, ctx, info, extra)
         outcomes.append(outcome)
         if row is not None:
             rows.append(row)
@@ -1048,11 +1607,15 @@ def assemble(work_dir, raw_path, tokenizer, max_model_len=18432):
         for key in ('summary_chars_before', 'summary_chars_after', 'answer_chars_before', 'answer_chars_after',
                     'n_tokens_before', 'n_tokens_after'):
             lengths[rep['kind']][key].append(rep['lengths'][key])
-    stats = dict(revision=REVISION, jobs=len(jobs), results=len(results),
+    stats = dict(revision=REVISION, jobs=len(jobs), results=len(first), retry_results=len(second),
                  outcomes={k: dict(v) for k, v in summary.items()},
                  accepted=dict(Counter(r['provenance']['repair']['kind'] for r in accepted)),
+                 accepted_by_pass=dict(Counter(f'{r["provenance"]["repair"]["kind"]}/'
+                                               f'{r["provenance"]["repair"]["repair_pass"]}' for r in accepted)),
                  repair_failed=dict(Counter(r['provenance']['repair']['kind'] for r in rows
                                             if r['provenance'].get('repair_failed'))),
+                 strict_v2=dict(enabled=strict, math_value_check=math_check,
+                                **{k: dict(v) for k, v in sorted(v2.items())}),
                  mean_lengths={kind: {k: round(statistics.fmean(v), 1) for k, v in d.items()}
                                for kind, d in lengths.items()})
     stats['assembled_sha256'] = write_jsonl(work_dir / 'assembled.jsonl', rows)
@@ -1071,7 +1634,7 @@ def cmd_assemble(args, tokenizer=None):
     plan = json.loads((args.work_dir / 'plan.json').read_text())
     raw_path = args.raw or Path(plan['raw']['path'])
     tokenizer = tokenizer or load_tokenizer(args.tokenizer, args.revision)
-    return assemble(args.work_dir, raw_path, tokenizer, args.max_model_len)
+    return assemble(args.work_dir, raw_path, tokenizer, args.max_model_len, args.strict_v2, args.math_value_check)
 
 
 def cmd_export(args):
@@ -1095,6 +1658,14 @@ def cmd_export(args):
 
 
 # ------------------------------------------------------------------------------------------------------ cli
+
+def strict_args(parser):
+    parser.add_argument('--strict-v2', action=argparse.BooleanOptionalAction, default=True,
+                        help='apply rules (a) final value in the summary and (b) no final-answer marker in the summary '
+                             'to first-pass results too (a first-pass pair failing them becomes a retry candidate)')
+    parser.add_argument('--math-value-check', choices=('on', 'skip'), default='on',
+                        help='rule (a) for non-numeric MATH answers (normalized string match); skip turns it off')
+
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.split('\n')[0])
@@ -1129,12 +1700,19 @@ def parse_args(argv=None):
     g.add_argument('--no-fast-sampler', action='store_true')
     g.add_argument('--limit', type=int, default=None, help='stop adding requests after this many (smoke test)')
     g.add_argument('--limit-jobs', type=int, default=None, help='only the first N jobs (smoke test)')
+    g.add_argument('--retry-failed', action='store_true',
+                   help='second pass: re-issue the merger (prompt v2, n=8) of failed/demoted jobs and the failed '
+                        'branches of branch_truncated jobs (n=4) into results.retry.jsonl; results.jsonl is only read')
+    g.add_argument('--retry-branches', action=argparse.BooleanOptionalAction, default=True,
+                   help='with --retry-failed: also retry branch_truncated jobs whose branches failed')
+    strict_args(g)
     a = sub.add_parser('assemble', help='CPU: build repaired rows')
     a.add_argument('--work-dir', type=Path, required=True)
     a.add_argument('--raw', type=Path, default=None)
     a.add_argument('--tokenizer', default=BASE_MODEL)
     a.add_argument('--revision', default=BASE_REVISION)
     a.add_argument('--max-model-len', type=int, default=18432)
+    strict_args(a)
     e = sub.add_parser('export', help='write repaired.jsonl')
     e.add_argument('--work-dir', type=Path, required=True)
     e.add_argument('--out', type=Path, required=True)

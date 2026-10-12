@@ -94,6 +94,18 @@ seq_unfinished 9 are dropped. Details (prompts, acceptance rules, budgets, seeds
 - Only the replaced texts change; prefix, plan and kept branches stay byte-identical. Provenance flags are
   recomputed (`model_finished`, `correct`, `grade`, `branch_checks`, `n_tokens`) and `provenance.repair` records kind,
   nodes, every sample's verdict, the accepted index, prompt hashes, seeds and lengths.
+- Second pass (`run --retry-failed`, prompt version v2, recorded as `provenance.repair.prompt_version`): smoke runs
+  showed v1 summaries that leave the arithmetic to the short answer call ("the final answer is the sum of these three
+  numbers", then a wrong sum) and a Countdown summary with its own "Final Answer:" line. v2 asks the summary to state
+  each Result and carry out the combination one operation per step with intermediate values, without a Final Answer
+  line or \boxed, and the answer call to restate the value the summary reached. New rules: (a) the answer's value
+  appears in the summary (exec/gsm number, Countdown expression, MATH normalized string; `--math-value-check skip`
+  turns off the non-numeric MATH match; matrices are skipped; on the raw pool's own correct parallel records it
+  passes exec 1311/1311, gsm 620/620, countdown 744/745, MATH 280/280 numeric and 262/266 string), (b) no "Final Answer" (as written), \boxed or "final answer:" (any case) in the summary.
+  `--strict-v2` (default on) applies them to first-pass results too. Retried: summary/answer failures and demoted
+  pairs (n=8 summaries), and branch_truncated jobs whose branches failed (n=4, budget from a 1,536-token reserve).
+  Results go to `results.retry.jsonl`; `results.jsonl` is never modified. `assemble` keeps an accepted first-pass
+  result, else an accepted retry result, else the repair_failed row; `assemble_stats.json` `strict_v2` has the counts.
 - Estimate (`fast-repair-plan.json`): merger-only 1,214 jobs, 1,214 summary + <=4,856 answer requests, ~5 min on an
   H100 NVL; with the branch requests 413 truncated records more (869 branch requests at n=2, ~7.5M expected
   generated tokens), ~30 min expected, <50 min upper bound (A100 80GB about 1.7x).
@@ -126,8 +138,12 @@ python fast_repair.py assemble --work-dir $W && cat $W/assemble_stats.json
 tmux new -d -s repair "python fast_repair.py run --work-dir $W 2>&1 | tee -a $W/run.log"
 #    (A100 80GB: same command; if the streaming engine API misbehaves use --engine chunks)
 
-# 4. assemble + export (CPU)
-python fast_repair.py assemble --work-dir $W
+# 4. after the full run: assemble with the v2 rules (CPU), retry pass (GPU), assemble again, export
+python fast_repair.py assemble --work-dir $W --strict-v2      # strict_v2 block: demoted pairs, retry candidates
+python fast_repair.py run --work-dir $W --retry-failed --limit-jobs 8      # smoke (resumes into the full retry)
+tmux new -d -s retry "python fast_repair.py run --work-dir $W --retry-failed 2>&1 | tee -a $W/retry.log"
+#    when it has finished (tail $W/retry.log; resumable from $W/results.retry.jsonl):
+python fast_repair.py assemble --work-dir $W --strict-v2                   # merges results.jsonl + results.retry.jsonl
 python fast_repair.py export --work-dir $W --out $W/repaired.jsonl
 
 # 5. selection: raw first, repaired second (repaired rows replace raw rows by id)
