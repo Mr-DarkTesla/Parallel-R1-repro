@@ -1,0 +1,14 @@
+{
+ "model": "/checkpoints/exp21-global-top5/qwen4b-clean46-tagged-step32/model",
+ "suite": "frozen",
+ "mode": "thinking",
+ "budget": 16384,
+ "temperature": 1.0,
+ "top_p": 1.0,
+ "generator": "scripts/bench/generate_plain.py",
+ "prompts": "/work/bench_data/plain",
+ "reused_from": null,
+ "ifeval_scorer_seed": 0,
+ "seeds": "0 for every row",
+ "commit": "14880be3942e861357c55f761354b8f84b4c5520"
+}
