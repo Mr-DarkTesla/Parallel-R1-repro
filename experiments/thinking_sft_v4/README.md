@@ -12,6 +12,7 @@ Full-parameter SFT of **Qwen/Qwen3-4B** (post-trained, thinking mode, revision
 | `sft_data.py` | row schema, validator, tokenization, graph positions, the additive 4D mask (`collate`) |
 | `sft_train.py` | trainer: chunked LM loss, gradient checkpointing, `--optim`, `--memory-report` |
 | `select_records.py` | keep rules, dedup, caps, grouped train/val split, stats JSON |
+| `fast_repair.py`, `codex_rules.py` | repair pass for the 5k pool (plan / run on one GPU / assemble / export); Codex's generation rules copied verbatim |
 | `exactness.py`, `vm_selftest.py` | independent references for the graph forward; GPU self-test |
 | `graph_sampler.py`, `eval_graph.py`, `selftest_sampler_vm.py` | exact graph sampler and evaluation |
 
@@ -70,6 +71,75 @@ cd ~/Parallel-R1-repro/experiments/thinking_sft_v4
 python select_records.py /path/to/thinking-sft-4b/all.raw.jsonl [repaired.jsonl] \
     --out-dir ~/parallel-r1/data/sft_v4_4b --val-frac 0.05 \
     --tokenizer Qwen/Qwen3-4B --max-len 16384     # on the VM: trainer token lengths + too_long
+```
+
+## Repair pass for the 5k pool (`fast_repair.py`)
+
+Input: `pool-20261012/all.raw.jsonl` (5,000 rows, sha256 `5b48bda7...`) and Codex's audit `details.jsonl`. Triage
+(reproduces the agreed counts; `plan` checks them): seq_clean 1,199 and par_clean 1,924 kept as they are;
+exec_summary_resolves 605 and GSM/MATH par_clean rows whose Summary is longer than 0.5x the longest branch (614)
+get a new merger; branch_truncated_only 416 get their truncated branches regenerated and then a new merger;
+wrong_final 541, plan_or_branch_solves_whole 122, branch_wrong_other 149, unfinished_final_or_mixed 35 and
+seq_unfinished 9 are dropped. Details (prompts, acceptance rules, budgets, seeds) are in the module docstring.
+
+- Merger: a non-thinking Summary call (n=4, <=1024 tokens) that sees the plan items and the branch Result lines only
+  (exec: no production inputs; GSM/MATH/Countdown: the question plus "these Results are verified, combine them"),
+  then a short non-thinking answer call per surviving summary. Accepted: both finished, final correct by Codex's
+  scorer, summary <= 0.5x the longest branch, exec summary and answer each repeat <= 1 input product, no tags,
+  <= 16,384 tokens, trainer validator. Shortest accepted pair wins; none -> the raw row is exported with
+  `provenance.repair_failed=true`, which `select_records.py` drops unless `--keep-repair-failed`.
+- Branch: the raw run's own request (from its `wave-*/raw_branches.jsonl`; the records do not store the planner's
+  mini-problems), thinking mode, n=2, budget = 16,384 - 2,048 summary reserve - the rest of the record, Codex's
+  `check_branch`. Without the raw run's files these records are skipped and counted.
+- Only the replaced texts change; prefix, plan and kept branches stay byte-identical. Provenance flags are
+  recomputed (`model_finished`, `correct`, `grade`, `branch_checks`, `n_tokens`) and `provenance.repair` records kind,
+  nodes, every sample's verdict, the accepted index, prompt hashes, seeds and lengths.
+- Estimate (`fast-repair-plan.json`): merger-only 1,214 jobs, 1,214 summary + <=4,856 answer requests, ~5 min on an
+  H100 NVL; with the branch requests 413 truncated records more (869 branch requests at n=2, ~7.5M expected
+  generated tokens), ~30 min expected, <50 min upper bound (A100 80GB about 1.7x).
+
+## VM commands: repair, select, train (one H100 NVL or A100 80GB)
+
+```bash
+# 0. environment: the venv of experiments/qwen06/bootstrap_vm.sh (vllm 0.8.5.post1, transformers 4.51.3, math-verify)
+source ~/parallel-r1/.venv/bin/activate
+cd ~/parallel-r1/repo && git fetch origin && git checkout claude/project-thread-cc9a3o && git pull --ff-only
+cd experiments/thinking_sft_v4
+POOL=~/parallel-r1/data/pool-20261012          # all.raw.jsonl + details.jsonl from the shared folder
+RAWRUN=/workspace/thinking-sft-v4-4b/runs/raw-full   # Codex's raw run (wave-*/raw_branches.jsonl), if available
+W=~/parallel-r1/data/fast_repair
+D=~/parallel-r1/data/sft_v4_4b
+mkdir -p $W
+sha256sum $POOL/all.raw.jsonl                   # 5b48bda734214f7dfb42886a7ad2f3fa08e6b8f0c477b4a2fd5aad03c9ae222d
+python -m pytest tests -q                       # CPU tests (FAST_REPAIR_POOL=$POOL also runs the real-pool checks)
+
+# 1. exact branch requests of the raw run (skip if $RAWRUN is not there; truncated records are then skipped)
+python fast_repair.py requests --raw-run-root $RAWRUN --out $W/branch_requests.jsonl
+
+# 2. plan (CPU, seconds): triage, jobs.jsonl, plan.json with counts and the time estimate
+python fast_repair.py plan --raw $POOL/all.raw.jsonl --details $POOL/details.jsonl --work-dir $W \
+    --branch-requests $W/branch_requests.jsonl          # drop this flag without step 1
+
+# 3. GPU: a smoke run on 8 jobs, inspect, then everything (resumes; results checkpointed to $W/results.jsonl)
+python fast_repair.py run --work-dir $W --limit-jobs 8
+python fast_repair.py assemble --work-dir $W && cat $W/assemble_stats.json
+tmux new -d -s repair "python fast_repair.py run --work-dir $W 2>&1 | tee -a $W/run.log"
+#    (A100 80GB: same command; if the streaming engine API misbehaves use --engine chunks)
+
+# 4. assemble + export (CPU)
+python fast_repair.py assemble --work-dir $W
+python fast_repair.py export --work-dir $W --out $W/repaired.jsonl
+
+# 5. selection: raw first, repaired second (repaired rows replace raw rows by id)
+python select_records.py $POOL/all.raw.jsonl $W/repaired.jsonl --out-dir $D --val-frac 0.05 \
+    --tokenizer Qwen/Qwen3-4B --max-len 16384
+
+# 6. trainer: self-test, memory report, full run (as in the next section)
+python vm_selftest.py --data $D/train.jsonl
+python sft_train.py --data $D/train.jsonl --val $D/val.jsonl --out runs/sft_v4_4b_mem --memory-report 3
+python sft_train.py --data $D/train.jsonl --val $D/val.jsonl --out runs/sft_v4_4b \
+    --epochs 3 --lr 1e-5 --min-lr-ratio 0.1 --warmup-ratio 0.03 --target-steps-per-epoch 90 \
+    --max-len 16384 --save-every-epoch --eval-every 30
 ```
 
 ## VM commands (one H100 NVL)

@@ -12,7 +12,10 @@ Rules, applied in this order; a dropped row is counted under the FIRST rule it f
 quality rule is also counted independently (`fails`) to show overlaps:
     malformed        not a JSON object with string id/source/mode and a provenance object
     duplicate_id     an id seen before (--on-duplicate first|last decides which copy is judged; default last, so
-                     pass the raw file first and a repaired file after it)
+                     pass the raw file first and a repaired file after it). A raw row replaced by a later row that
+                     carries provenance.repair (fast_repair.py) is counted as replaced_by_repair instead.
+    repair_failed    provenance.repair_failed is True: fast_repair.py could not repair the merger and exported the
+                     raw row flagged                               (--keep-repair-failed keeps it)
     model_finished   provenance.model_finished is True             (--allow-unfinished skips it)
     correct          provenance.correct is True                    (--allow-incorrect)
     over_budget      provenance.over_budget is False               (--allow-over-budget)
@@ -47,7 +50,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import sft_data as D  # noqa: E402
 from common import contract, default_revision  # noqa: E402
 
-QUALITY_RULES = ('model_finished', 'correct', 'over_budget', 'branch_checks', 'plan_status')
+QUALITY_RULES = ('repair_failed', 'model_finished', 'correct', 'over_budget', 'branch_checks', 'plan_status')
 
 
 def sha256_file(path):
@@ -75,6 +78,8 @@ def quality_failures(row, allow, reject_plan=()):
     """Names of the quality rules this row fails (rules in `allow` are skipped)."""
     p = row['provenance']
     failed = []
+    if 'repair_failed' not in allow and p.get('repair_failed') is True:
+        failed.append('repair_failed')
     if 'model_finished' not in allow and p.get('model_finished') is not True:
         failed.append('model_finished')
     if 'correct' not in allow and p.get('correct') is not True:
@@ -167,6 +172,8 @@ def parse_args(argv=None):
     parser.add_argument('--val-frac', type=float, default=0.05)
     parser.add_argument('--seed', type=int, default=0, help='hash seed for caps and the share (not the split)')
     parser.add_argument('--on-duplicate', choices=('first', 'last'), default='last')
+    parser.add_argument('--keep-repair-failed', action='store_true',
+                        help='keep rows fast_repair.py flagged provenance.repair_failed (skip the repair_failed rule)')
     parser.add_argument('--allow-unfinished', action='store_true', help='skip the model_finished rule')
     parser.add_argument('--allow-incorrect', action='store_true', help='skip the correct rule')
     parser.add_argument('--allow-over-budget', action='store_true', help='skip the over_budget rule')
@@ -189,7 +196,8 @@ def parse_args(argv=None):
 
 def select(args):
     allow = set()
-    for flag, rule in (('allow_unfinished', 'model_finished'), ('allow_incorrect', 'correct'),
+    for flag, rule in (('keep_repair_failed', 'repair_failed'), ('allow_unfinished', 'model_finished'),
+                       ('allow_incorrect', 'correct'),
                        ('allow_over_budget', 'over_budget'), ('allow_failed_branch_checks', 'branch_checks')):
         if getattr(args, flag):
             allow.add(rule)
@@ -218,7 +226,8 @@ def select(args):
         if row['id'] in positions:
             index = positions[row['id']]
             if args.on_duplicate == 'last':
-                drop('duplicate_id', rows[index], f'replaced by {path}:{number}')
+                repaired = isinstance(row['provenance'].get('repair'), dict)
+                drop('replaced_by_repair' if repaired else 'duplicate_id', rows[index], f'replaced by {path}:{number}')
                 rows[index] = row
             else:
                 drop('duplicate_id', row, f'{path}:{number}')
@@ -321,12 +330,12 @@ def select(args):
             out['trainer_tokens'] = length_stats([lengths[r['id']] for r in part])
         return out
 
-    rule_order = ['malformed', 'duplicate_id', *QUALITY_RULES]
+    rule_order = ['malformed', 'duplicate_id', 'replaced_by_repair', *QUALITY_RULES]
     ordered = {rule: dict(dropped[rule]) for rule in rule_order if rule in dropped}
     ordered.update({rule: dict(counts) for rule, counts in sorted(dropped.items()) if rule not in ordered})
     stats = dict(
         config=dict(inputs=[dict(path=str(p), sha256=sha256_file(p)) for p in args.inputs],
-                    rules=[rule for rule in QUALITY_RULES[:4] if rule not in allow] +
+                    rules=[rule for rule in QUALITY_RULES[:5] if rule not in allow] +
                           ([f'plan_status not in {list(reject_plan)}'] if reject_plan else []) +
                           ([] if args.no_validate else ['validate_row']) +
                           (['tokenize_row', f'max_len={args.max_len}'] if tokenizer is not None else []),
