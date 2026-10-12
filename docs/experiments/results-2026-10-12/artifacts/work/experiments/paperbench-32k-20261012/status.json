@@ -1,0 +1,8 @@
+{
+  "state": "failed",
+  "time": 1791808631.4223742,
+  "pid": 2548,
+  "host": "RUN_5482aee87e-mpiworker-2",
+  "error": "RuntimeError('rl rank6 failed rc1; preserve healthy children')",
+  "traceback": "Traceback (most recent call last):\n  File \"${PROJECT_ROOT}/work/experiments/paperbench-32k-20261012/launch.py\", line 38, in <module>\n    if code!=0:raise RuntimeError(f'{stage} rank{rank} failed rc{code}; preserve healthy children')\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: rl rank6 failed rc1; preserve healthy children\n"
+}

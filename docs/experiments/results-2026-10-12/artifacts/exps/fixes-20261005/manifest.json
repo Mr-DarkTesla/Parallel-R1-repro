@@ -1,0 +1,86 @@
+{
+  "root": "${PROJECT_ROOT}",
+  "queue": "${PROJECT_ROOT}/exps/fixes-20261005",
+  "code": "${PROJECT_ROOT}/exps/fixes-20261005/code/verl",
+  "venv": "${PROJECT_ROOT}/.venv",
+  "base": "${MODEL_ROOT}/Qwen3-0.6B-Base-special-v2",
+  "gpu_budget": 8,
+  "models": [
+    {
+      "id": "seen",
+      "name": "Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005",
+      "variant": "seen",
+      "existing": false,
+      "overrides": [
+        "model.enable_gradient_checkpointing=false",
+        "data.max_length=3072",
+        "data.parse_prompt_tags=false",
+        "data.micro_batch_size_per_gpu=4"
+      ],
+      "results": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005",
+      "checkpoint_root": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005"
+    },
+    {
+      "id": "unseen",
+      "name": "Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005",
+      "variant": "unseen",
+      "existing": false,
+      "overrides": [
+        "model.enable_gradient_checkpointing=false",
+        "data.max_length=3072",
+        "data.parse_prompt_tags=false",
+        "data.micro_batch_size_per_gpu=4"
+      ],
+      "results": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005",
+      "checkpoint_root": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005"
+    }
+  ],
+  "evals": [
+    {
+      "id": "old-seen-async",
+      "model": "old-seen",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-queue-20261005/global_step_230",
+      "overrides": [
+        "actor_rollout_ref.rollout.mode=async"
+      ]
+    },
+    {
+      "id": "old-seen-sync",
+      "model": "old-seen",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-queue-20261005/global_step_230",
+      "overrides": [
+        "actor_rollout_ref.rollout.mode=sync"
+      ]
+    },
+    {
+      "id": "seen-async",
+      "model": "seen",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/global_step_230",
+      "overrides": [
+        "actor_rollout_ref.rollout.mode=async"
+      ]
+    },
+    {
+      "id": "seen-sync",
+      "model": "seen",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/global_step_230",
+      "overrides": [
+        "actor_rollout_ref.rollout.mode=sync"
+      ]
+    },
+    {
+      "id": "unseen-async",
+      "model": "unseen",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005/global_step_230",
+      "overrides": [
+        "actor_rollout_ref.rollout.mode=async"
+      ]
+    }
+  ],
+  "protocol": "1916 samples: competition mean@16, MATH mean@1. Temperature1, response limit3000. Corrected accumulation and equal sample weights; full validation1319. Compare fixed-budget parallel versus ordinary autoregressive Seen. Select final defaults from accuracy, format and measured speed; one seed, not statistical proof."
+}

@@ -1,0 +1,46 @@
+{
+  "rank": 6,
+  "width": 7,
+  "bucket": 512,
+  "passed": true,
+  "shadow_fullmodel_every_linear_exact": true,
+  "shadow_receipt": {
+    "version": 0,
+    "linear_layers": 253,
+    "shadow_bytes": 8044544000,
+    "all_master_fp32": true,
+    "linear_weights_only": true,
+    "embedding_residual_norm_fp32": true,
+    "nonpersistent_buffers": true,
+    "stable_addresses": true
+  },
+  "phases": [
+    {
+      "version": 0,
+      "max_fullvocab_logit_error": 0.0,
+      "max_target_logprob_error": 0.0,
+      "mean_target_logprob_error": 0.0,
+      "p95_target_logprob_error": 0.0,
+      "seconds_paired_eager_graph": 1.0160882249474525
+    },
+    {
+      "version": 1,
+      "max_fullvocab_logit_error": 0.0,
+      "max_target_logprob_error": 0.0,
+      "mean_target_logprob_error": 0.0,
+      "p95_target_logprob_error": 0.0,
+      "seconds_paired_eager_graph": 0.971412300132215
+    }
+  ],
+  "sibling_isolation_max": 0.0,
+  "physical_counter_exact": true,
+  "physical_graph_replays": 34,
+  "capture_seconds": 0.5915242503397167,
+  "warm_forwards": 3,
+  "captured_fake_forward": 1,
+  "capture_not_rewarded": true,
+  "optimizer_updates": 0,
+  "peak_gpu_bytes": 53200318976,
+  "master_params_fp32": true,
+  "original_caps_preserved": true
+}

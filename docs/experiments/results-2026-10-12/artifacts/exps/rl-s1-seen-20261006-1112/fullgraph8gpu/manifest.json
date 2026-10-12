@@ -1,0 +1,46 @@
+{
+  "run": "rl-s1-seen-20261006-1112-fullgraph8gpu",
+  "commit": "ffa565735b2ef8fc2146da030c54b1e015800eb7",
+  "stage": "s1",
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "steps": 300,
+  "checkpoint": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/final",
+  "archive_sha256": "a77fa61860d10fdecb19c588a3814934fe1b323a77c001e619ad8f41b3545a18",
+  "data_sha256": {
+    "verl/data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet": "cee9b99e0645501b0dac3d885e66eae8d36e107c28a2f914864a68021aafc21e",
+    "verl/data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/train.parquet": "8fd253319384ede4e436d24a4f2884a632e8b1e71e1ee4bc1951ecb68007cec1"
+  },
+  "overrides": [
+    "ray_init.num_cpus=32",
+    "actor_rollout_ref.rollout.agent.num_workers=8",
+    "actor_rollout_ref.rollout.enforce_eager=false",
+    "actor_rollout_ref.model.enable_gradient_checkpointing=false",
+    "trainer.resume_mode=resume_path",
+    "trainer.resume_from_path=${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/flashinfer8gpu/results/checkpoints/global_step_120",
+    "trainer.val_before_train=true"
+  ],
+  "supersedes": "Resume flashinfer8gpu checkpoint 120 with original compiled FlashAttention kernels captured in full decode graphs; same optimizer/data/recipe",
+  "extra_env": {
+    "VLLM_ATTENTION_BACKEND": "FLASH_ATTN",
+    "CUDA_HOME": "${CUDA_HOME}",
+    "PYTHONPATH": "${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/flashinfer-deps",
+    "PARALLEL_R1_FULL_DECODE_GRAPH": "1"
+  },
+  "base_archive_commit": "e6850e0b589fe9805ac07bd02bf438dcd155dc1b",
+  "code_patch_sha256": "eb28bf6a3995de79a6e4d709df28fb0aa383399841f1c50c7e902151865c59ee",
+  "changed_file_sha256": {
+    "README.md": "b184f02a2cf8e3b24467a0438af4a9005188117800350645a1c20342fbc20bcd",
+    "tests/test_vllm_decode_graph.py": "b8405306234ef8d8ce6f2f2fb955aa54087fd79dc717baf2055c25f8624122b0",
+    "verl/verl/workers/rollout/vllm_rollout/decode_graph.py": "557b2268da1fbf797f57ea03a22a488911874cd8b013e2c511a5cec02993ee48",
+    "verl/verl/workers/rollout/vllm_rollout/vllm_rollout_spmd.py": "290383fb69ae07a08911eb3448d154c6fccb10cd9de518b3002a2cfd1f0201fe"
+  }
+}

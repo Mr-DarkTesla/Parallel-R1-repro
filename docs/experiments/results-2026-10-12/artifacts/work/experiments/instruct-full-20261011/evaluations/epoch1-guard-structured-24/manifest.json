@@ -1,0 +1,30 @@
+{
+  "model": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/epoch1/final",
+  "mode": "structured",
+  "system_file": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/system.txt",
+  "fixed_questions": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/evaluations/questions-24.jsonl",
+  "response_cap": 4096,
+  "path_cap": 2048,
+  "planned": 24,
+  "suite": "24",
+  "native_eos_ids": [
+    151643,
+    151645
+  ],
+  "diagnostic_only": true,
+  "checkpoint_selection_allowed": false,
+  "guard_protocol": "native think opener in prompt; sampled close ends thinking; all six XML tags blocked after close; nonmain close blocked; visible cap4096 with response budget4094",
+  "model_precision": "bf16",
+  "scorer_think_tag_fix": true,
+  "evaluator_sha256": "18a0a9f6245eba0b072fcc98be8bf26f0fdea440c443ba43d55ea234ebcabf93",
+  "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+  "questions_sha256": "0d925cc42ba83f2063c4691036cd2d88bca431882d92440bf4a1d43ffee9b35e",
+  "generation_config_sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+  "runtime_sha256": {
+    "native_eos.py": "e8ff0eaa8f50e35e9db75c8f848da538f3615a69adc208a205589f06277d3ae3",
+    "summary_metrics.py": "3eab70d837c464d490886866afc32cb965f4546d8a43a2daf8b1cbcef064f4c7",
+    "runtime/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "59489cc00c70e83ce6f66b199dab342d2a54150c7d88554c48d32b846d5a03ce",
+    "runtime/verl/workers/rollout/vllm_rollout/structured_worker.py": "0aa0a6233ac96e3d32ac00a51ddc71f3c394d6c7b2d8ff02e97f92d504206cb5",
+    "runtime/verl/utils/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+  }
+}

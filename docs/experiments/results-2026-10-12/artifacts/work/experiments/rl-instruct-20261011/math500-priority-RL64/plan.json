@@ -1,0 +1,51 @@
+{
+  "hostname": "RUN_9c5b5b8949-mpimaster-0",
+  "sft_status": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/math500-fullwidth8/status.json",
+  "baseline": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/epoch1/final",
+  "questions": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/evaluations/questions-500.jsonl",
+  "system": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/system.txt",
+  "scorer": "${PROJECT_ROOT}/work/experiments/unseen-wide5145-20261009/eval-math500-forced-think-20261009/score.py",
+  "protocol": {
+    "suite": "standard MATH500 full500",
+    "native_prefix": "exact fullSFT native template thinkingTrue opener inprompt",
+    "precision": "FP32",
+    "backend": "FP32 HF FULLWIDTH8 single subgroup",
+    "temperature": 1,
+    "top_p": 1,
+    "top_k": null,
+    "response_budget": 4096,
+    "path_budget": 768,
+    "max_context": 16384,
+    "seed": "42161011+question_index*1000",
+    "samples_per_question": 1,
+    "scorer": "frozen referenceblind MathVerify",
+    "actual_forward_calls": "instrumented model.forward plus exact runtimeledger parity",
+    "selection_allowed": false,
+    "train_reward_leakage": false,
+    "max_batched_paths": 8,
+    "scorer_view": "native visible <think> opener plus response; formatflags rawresponse"
+  },
+  "jobs": [
+    {
+      "id": "R1-checkpoint-0064",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0064/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0064/complete.json"
+    },
+    {
+      "id": "R2-checkpoint-0064",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0064/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0064/complete.json"
+    }
+  ],
+  "parent_pid": 1388032,
+  "baseline_worker_pids": [
+    1388056,
+    1388057,
+    1388058,
+    1388059,
+    1388060,
+    1388061,
+    1388062,
+    1388063
+  ]
+}

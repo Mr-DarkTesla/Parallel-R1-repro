@@ -1,0 +1,26 @@
+{
+  "trainer.validation_data_dir": [
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0333-review/rl-sft-math-accuracy40/smoke/validation",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0503-review/rl-sft-math-accuracy80/smoke/validation"
+  ],
+  "trainer.total_training_steps": [
+    2,
+    42
+  ],
+  "trainer.resume_mode": [
+    "disable",
+    "resume_path"
+  ],
+  "trainer.resume_from_path": [
+    null,
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy40/production/checkpoints/global_step_40"
+  ],
+  "trainer.default_local_dir": [
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0333-review/rl-sft-math-accuracy40/smoke/checkpoints",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0503-review/rl-sft-math-accuracy80/smoke/checkpoints"
+  ],
+  "trainer.rollout_data_dir": [
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0333-review/rl-sft-math-accuracy40/smoke/rollouts",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0503-review/rl-sft-math-accuracy80/smoke/rollouts"
+  ]
+}

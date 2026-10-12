@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "actual_visible_gpu_count": 8,
+  "steps": [
+    {
+      "step": 1,
+      "metrics": {
+        "night/accuracy": 0.3125,
+        "night/group_allwrong_fraction": 0.25,
+        "night/group_allcorrect_fraction": 0.0,
+        "night/adv_total_abs_mean": 0.328125,
+        "night/adv_total_min": -0.7875000238418579,
+        "night/adv_total_max": 0.7875000238418579,
+        "night/F_idealized_sampled_depth_all_mean": 444.9375,
+        "night/F_idealized_sampled_depth_correct_mean": 418.0,
+        "night/format_valid": 1.0,
+        "night/think_valid": 0.4375,
+        "night/truncated_all_mean": 0.0625,
+        "night/guided_first_width_all_mean": 4.0,
+        "night/merge_reserve_tokens_all_mean": 512.0,
+        "actor/grad_norm": 1.3184564113616943,
+        "actor/ppo_kl": 0.0,
+        "actor/pg_clipfrac": 0.0,
+        "actor/kl_loss": 0.0061440326971933246,
+        "timing_s/gen": 166.5577683513984,
+        "timing_s/step": 180.12771848682314,
+        "timing_s/save_checkpoint": null
+      }
+    },
+    {
+      "step": 2,
+      "metrics": {
+        "night/accuracy": 0.28125,
+        "night/group_allwrong_fraction": 0.375,
+        "night/group_allcorrect_fraction": 0.0,
+        "night/adv_total_abs_mean": 0.2789062559604645,
+        "night/adv_total_min": -0.7875000238418579,
+        "night/adv_total_max": 0.7875000238418579,
+        "night/F_idealized_sampled_depth_all_mean": 672.65625,
+        "night/F_idealized_sampled_depth_correct_mean": 811.3333333333334,
+        "night/format_valid": 1.0,
+        "night/think_valid": 0.46875,
+        "night/truncated_all_mean": 0.25,
+        "night/guided_first_width_all_mean": 4.0,
+        "night/merge_reserve_tokens_all_mean": 512.0,
+        "actor/grad_norm": 0.9385465979576111,
+        "actor/ppo_kl": 0.0,
+        "actor/pg_clipfrac": 0.0,
+        "actor/kl_loss": 0.00601191894384101,
+        "timing_s/gen": 191.86753173358738,
+        "timing_s/step": 206.43755256943405,
+        "timing_s/save_checkpoint": 4.164478470571339
+      }
+    }
+  ],
+  "checkpoint": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-instruct-accuracy-v2/smoke/checkpoints/global_step_2",
+  "checkpoint_model_shards": 8,
+  "checkpoint_optimizer_shards": 8,
+  "rollout_logp_alignment_directly_measured": false,
+  "format_semantics": "smoke uses historical parallel-only format; future production uses strict format schema2; accuracy unchanged"
+}

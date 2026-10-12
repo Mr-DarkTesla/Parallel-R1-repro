@@ -1,0 +1,96 @@
+{
+  "complete": true,
+  "plan": {
+    "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/global_step_230",
+    "mode": "async",
+    "baseline": "${PROJECT_ROOT}/exps/fixes-20261005/results/eval/seen-async",
+    "baseline_seconds": 736.949345,
+    "baseline_batch": 256,
+    "candidates": [
+      "batch1024-eager",
+      "batch1024-graphs"
+    ],
+    "code": "${PROJECT_ROOT}/exps/fixes-20261005/code/verl",
+    "note": "Two GPUs per run; same dataset1916, sampling and token budget. One stochastic pass; accuracy differences are not significance proof."
+  },
+  "results": [
+    {
+      "name": "batch1024-eager",
+      "exit_code": 0,
+      "seconds": 412.56271262001246,
+      "complete": true,
+      "counts": {
+        "APO_AIME25": 480,
+        "APO_AMC23": 640,
+        "APO_AIME24": 480,
+        "APO_MATH300": 316
+      },
+      "benchmarks": {
+        "APO_AIME24": {
+          "acc": 0.0020833333333333333,
+          "parallel_format": 0.84375,
+          "format_error": 0.05416666666666667,
+          "no_tags": 0.10208333333333333
+        },
+        "APO_AIME25": {
+          "acc": 0.0,
+          "parallel_format": 0.88125,
+          "format_error": 0.03958333333333333,
+          "no_tags": 0.07916666666666666
+        },
+        "APO_AMC23": {
+          "acc": 0.0953125,
+          "parallel_format": 0.884375,
+          "format_error": 0.06875,
+          "no_tags": 0.046875
+        },
+        "APO_MATH300": {
+          "acc": 0.25316455696202533,
+          "parallel_format": 0.9462025316455697,
+          "format_error": 0.0189873417721519,
+          "no_tags": 0.03481012658227848
+        }
+      },
+      "speedup_vs_previous": 1.7862722986281148
+    },
+    {
+      "name": "batch1024-graphs",
+      "exit_code": 0,
+      "seconds": 466.54590095207095,
+      "complete": true,
+      "counts": {
+        "APO_AIME25": 480,
+        "APO_AMC23": 640,
+        "APO_AIME24": 480,
+        "APO_MATH300": 316
+      },
+      "benchmarks": {
+        "APO_AIME24": {
+          "acc": 0.0020833333333333333,
+          "parallel_format": 0.8041666666666667,
+          "format_error": 0.08125,
+          "no_tags": 0.11458333333333333
+        },
+        "APO_AIME25": {
+          "acc": 0.008333333333333333,
+          "parallel_format": 0.86875,
+          "format_error": 0.03958333333333333,
+          "no_tags": 0.09166666666666666
+        },
+        "APO_AMC23": {
+          "acc": 0.1015625,
+          "parallel_format": 0.86875,
+          "format_error": 0.071875,
+          "no_tags": 0.059375
+        },
+        "APO_MATH300": {
+          "acc": 0.31962025316455694,
+          "parallel_format": 0.9556962025316456,
+          "format_error": 0.028481012658227847,
+          "no_tags": 0.015822784810126583
+        }
+      },
+      "speedup_vs_previous": 1.579585938910024
+    }
+  ]
+}

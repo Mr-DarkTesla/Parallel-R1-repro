@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "gpu": 0,
+  "gpu0_initial_free_mib": 81153,
+  "model": "${PROJECT_ROOT}/work/experiments/unseen-wide5145-20261009/runs/01_sft/final",
+  "actor_replay": {
+    "response_tokens": 8190,
+    "response_budget": 8192,
+    "padding_tokens": 2,
+    "prompt_tokens": 19,
+    "assembled_padded_tokens": 10192,
+    "width": 8,
+    "calls": 11,
+    "sampled_tokens": 8163,
+    "loss": 0.05702853575348854,
+    "grad_l2": 2.844059467315674,
+    "finite": true,
+    "seconds": 4.266103267669678,
+    "peak_allocated_gib": 8.42767333984375,
+    "peak_reserved_gib": 10.94921875
+  },
+  "cached_backend_sampled_label_replay": {
+    "physical_prompt_tokens": 8067,
+    "sampled_tokens": 8,
+    "mean_logp_error": 0.003679647110402584,
+    "max_logp_error": 0.02111637592315674,
+    "threshold": 0.15
+  },
+  "seconds": 36.631418228149414,
+  "scope": "One width8 padded long-context replay/backward and eight-token backend probe; no optimizer or checkpoint writes; not distributed FSDP validation."
+}

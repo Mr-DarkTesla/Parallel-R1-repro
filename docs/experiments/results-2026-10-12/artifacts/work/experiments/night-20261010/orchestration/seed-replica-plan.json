@@ -1,0 +1,110 @@
+{
+  "jobs": [
+    {
+      "name": "replica-math40-seed10042-smoke24",
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy40",
+      "suite": "24",
+      "seed_base": 10042
+    },
+    {
+      "name": "replica-fresh-seed10042-128",
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "suite": "128",
+      "seed_base": 10042
+    },
+    {
+      "name": "replica-math40-seed10042-128",
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy40",
+      "suite": "128",
+      "seed_base": 10042
+    },
+    {
+      "name": "replica-fresh-seed20042-128",
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "suite": "128",
+      "seed_base": 20042
+    },
+    {
+      "name": "replica-math40-seed20042-128",
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy40",
+      "suite": "128",
+      "seed_base": 20042
+    }
+  ],
+  "commands": [
+    [
+      "/usr/bin/python3",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate_seed_replica.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy40",
+      "--name",
+      "replica-math40-seed10042-smoke24",
+      "--suite",
+      "24",
+      "--mode",
+      "structured",
+      "--seed-base",
+      "10042"
+    ],
+    [
+      "/usr/bin/python3",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate_seed_replica.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "--name",
+      "replica-fresh-seed10042-128",
+      "--suite",
+      "128",
+      "--mode",
+      "structured",
+      "--seed-base",
+      "10042"
+    ],
+    [
+      "/usr/bin/python3",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate_seed_replica.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy40",
+      "--name",
+      "replica-math40-seed10042-128",
+      "--suite",
+      "128",
+      "--mode",
+      "structured",
+      "--seed-base",
+      "10042"
+    ],
+    [
+      "/usr/bin/python3",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate_seed_replica.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "--name",
+      "replica-fresh-seed20042-128",
+      "--suite",
+      "128",
+      "--mode",
+      "structured",
+      "--seed-base",
+      "20042"
+    ],
+    [
+      "/usr/bin/python3",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate_seed_replica.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy40",
+      "--name",
+      "replica-math40-seed20042-128",
+      "--suite",
+      "128",
+      "--mode",
+      "structured",
+      "--seed-base",
+      "20042"
+    ]
+  ],
+  "deadline": "2026-10-10T07:20:00Z",
+  "diagnostic_only": true,
+  "no_selection": true,
+  "pilot_gate": "24complete/nonzero correct/strict+parallel>=.8/exactRAWpositionsmaskseed"
+}

@@ -1,0 +1,43 @@
+{
+  "rank": 4,
+  "all_master_fp32": true,
+  "native_source": "${PROJECT_ROOT}/work/experiments/rl-acceleration-20261012/lanes/profile_precision/full-bf16/native",
+  "guard_thresholds_unchanged": {
+    "max": 0.01,
+    "mean": 0.002,
+    "p95": 0.005
+  },
+  "same_shape_cached_replay": {
+    "n": 1695,
+    "max": 0.0,
+    "mean": 0.0,
+    "p95": 0.0,
+    "ratio_min": 1.0,
+    "ratio_max": 1.0,
+    "clip_fraction": 0.0,
+    "ratio_abs_mean": 0.0,
+    "seconds": 47.1431276560761
+  },
+  "no_reduced_bf16_accum": {
+    "n": 1695,
+    "max": 0.22608566284179688,
+    "mean": 0.008175305090844631,
+    "p95": 0.05287398025393486,
+    "ratio_min": 0.8814303874969482,
+    "ratio_max": 1.253683090209961,
+    "clip_fraction": 0.0005899704992771149,
+    "ratio_abs_mean": 0.008227004669606686,
+    "seconds": 1.3046614597551525
+  },
+  "no_reduced_math_sdpa": {
+    "n": 1695,
+    "max": 0.20009803771972656,
+    "mean": 0.008683828637003899,
+    "p95": 0.06170841306447983,
+    "ratio_min": 0.8710949420928955,
+    "ratio_max": 1.2215224504470825,
+    "clip_fraction": 0.0005899704992771149,
+    "ratio_abs_mean": 0.008735244162380695,
+    "seconds": 2.5188404959626496
+  }
+}

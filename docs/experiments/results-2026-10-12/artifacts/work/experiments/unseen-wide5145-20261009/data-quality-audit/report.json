@@ -1,0 +1,274 @@
+{
+  "format_and_data_summary": {
+    "rows": 5145,
+    "by_source": {
+      "old": {
+        "think_exact_pair_and_opening": 2145,
+        "single_final_answer_line": 2145,
+        "boxed_final_answer": 2145,
+        "plain_final_answer": 0,
+        "final_after_think_and_last": 2145,
+        "all_control_blocks_inside_think": 2145,
+        "valid_plan_assignment_counts_and_ids": 2145,
+        "valid_control_headers_and_ordering": 2145,
+        "has_postthink_concluding_solution": 0,
+        "explicit_zero_convention_prefix": 0,
+        "rows": 2145,
+        "forks": 4486,
+        "paths": 11970,
+        "sequential": 76,
+        "gold_answer_match": 2145,
+        "grade_error": 0,
+        "width:2": 2647,
+        "flag:path_no_detected_numeric_operation": 3852,
+        "flag:numeric_result_or_given_in_plan": 4491,
+        "flagged_rows": 1956,
+        "width:3": 1087,
+        "width:5": 164,
+        "flag:short_path_lt100chars": 6701,
+        "width:4": 494,
+        "width:6": 54,
+        "width:7": 25,
+        "width:8": 15,
+        "loss_tokens": 2004540,
+        "control_tag_eos_tokens": 48319,
+        "count_id_newline_tokens": 32912,
+        "first_think_equal_example_mean_loss_fraction": 0.001249881896000257,
+        "protocol_tag_header_loss_fraction": 0.04052351162860307
+      },
+      "new": {
+        "think_exact_pair_and_opening": 3000,
+        "single_final_answer_line": 3000,
+        "boxed_final_answer": 3000,
+        "plain_final_answer": 0,
+        "final_after_think_and_last": 3000,
+        "all_control_blocks_inside_think": 3000,
+        "valid_plan_assignment_counts_and_ids": 3000,
+        "valid_control_headers_and_ordering": 3000,
+        "has_postthink_concluding_solution": 3000,
+        "explicit_zero_convention_prefix": 3000,
+        "rows": 3000,
+        "forks": 3486,
+        "paths": 11475,
+        "sequential": 7,
+        "gold_answer_match": 3000,
+        "grade_error": 0,
+        "width:4": 1493,
+        "flagged_rows": 474,
+        "width:3": 943,
+        "flag:numeric_result_or_given_in_plan": 694,
+        "width:2": 865,
+        "width:5": 166,
+        "flag:short_path_lt100chars": 328,
+        "width:6": 19,
+        "loss_tokens": 2438433,
+        "control_tag_eos_tokens": 45894,
+        "count_id_newline_tokens": 29922,
+        "first_think_equal_example_mean_loss_fraction": 0.0013064254919603626,
+        "protocol_tag_header_loss_fraction": 0.03109209890122058
+      }
+    },
+    "source_acceptance_checks": {
+      "('old', 'judge_accept_true')": 2145,
+      "('old', 'judge_no_issues')": 2145,
+      "('old', 'verification_mathverify')": 2145,
+      "('new', 'judge_accept_true')": 3000,
+      "('new', 'judge_no_issues')": 3000,
+      "('new', 'verification_mathverify')": 3000
+    },
+    "source_templates": {
+      "('old', 'crazy_zootopia')": 1036,
+      "('old', 'teachers_in_school')": 522,
+      "('old', 'movie_festival_awards')": 587,
+      "('new', 'crazy_zootopia')": 1512,
+      "('new', 'movie_festival_awards')": 732,
+      "('new', 'teachers_in_school')": 756
+    },
+    "normalized_problem_duplicate_groups": [],
+    "numeric_abstract_problem_duplicate_groups": [],
+    "normalized_response_duplicate_groups": [],
+    "similar_path_pairs_ge_0_80": 5061,
+    "exact_path_pairs": 1,
+    "flag_counts": {
+      "path_no_detected_numeric_operation": 3852,
+      "numeric_result_or_given_in_plan": 5185,
+      "short_path_lt100chars": 7029
+    },
+    "manual_samples": 32,
+    "limitations": [
+      "Automatic arithmetic/plan/similarity flags are heuristics, not semantic errors.",
+      "Gold-answer equivalence does not prove reasoning validity.",
+      "Source semantic judge was the same teacher model.",
+      "Manual selection is stratified/purposeful, not a random error-rate estimate."
+    ]
+  },
+  "quality_heuristics_with_denominators": {
+    "old": {
+      "no_numeric_operation_path_flags": {
+        "count": 3852,
+        "denominator_paths": 11970
+      },
+      "short_path_lt100char_flags": {
+        "count": 6701,
+        "denominator_paths": 11970
+      },
+      "plan_numeric_rhs_flags": {
+        "count": 4491,
+        "denominator_plan_assignments": 11970
+      },
+      "any_heuristic_flag_rows": {
+        "count": 1956,
+        "denominator_rows": 2145
+      },
+      "note": "Flags are review candidates, not proven errors; given constants in plans can be legitimate and short paths can be useful."
+    },
+    "new": {
+      "no_numeric_operation_path_flags": {
+        "count": 0,
+        "denominator_paths": 11475
+      },
+      "short_path_lt100char_flags": {
+        "count": 328,
+        "denominator_paths": 11475
+      },
+      "plan_numeric_rhs_flags": {
+        "count": 694,
+        "denominator_plan_assignments": 11475
+      },
+      "any_heuristic_flag_rows": {
+        "count": 474,
+        "denominator_rows": 3000
+      },
+      "note": "Flags are review candidates, not proven errors; given constants in plans can be legitimate and short paths can be useful. In particular, zero no-numeric-operation flags is largely guaranteed by the new deterministic source validator; 4+0 demonstrates that passing the regex does not prove substantive work."
+    }
+  },
+  "manual_sample": {
+    "old": {
+      "n": 22,
+      "rows_with_findings": 19,
+      "issue_categories": {
+        "unstated_zero_category_convention": 9,
+        "given_only_path": 1,
+        "given_only_or_alias_only_all_paths": 1,
+        "given_only_alias_paths": 16,
+        "negative_irrelevant_average": 4,
+        "unused_branch_output": 1,
+        "negative_irrelevant_count": 2,
+        "unused_branch_outputs": 5,
+        "excessive_fragmentation": 4,
+        "irrelevant_branch_work": 3
+      },
+      "interpretation": "Purposeful stratified sample includes shortest examples and highest heuristic/similarity flags; not a population error-rate estimate."
+    },
+    "new": {
+      "n": 10,
+      "rows_with_findings": 4,
+      "issue_categories": {
+        "negative_irrelevant_count": 1,
+        "low_value_verification_or_alias_parallelism": 1,
+        "given_only_disguised_as_plus_zero": 1,
+        "negative_irrelevant_average": 1
+      },
+      "interpretation": "Purposeful stratified sample includes shortest examples and highest heuristic/similarity flags; not a population error-rate estimate."
+    }
+  },
+  "high_confidence_manifest_entries": 35,
+  "high_confidence_manifest_unique_rows": 23,
+  "acceptance_pipeline": {
+    "old": {
+      "selected_accepted_journal_rows": 2145,
+      "all_final_grades_correct": true,
+      "all_structure_checks_valid": true,
+      "all_required_judge_flags_true": true,
+      "required_judge_fields": [
+        "mathematically_correct",
+        "complete",
+        "independent_paths",
+        "plan_faithful",
+        "summary_faithful",
+        "useful_parallelism",
+        "scheduling_faithful"
+      ],
+      "selected_teacher_prompt_hashes": {
+        "2c1393ca44d63efc3d23ac9d9465a4dc3d4530b66cebf3f438b3c43afb6f3bec": 2145
+      },
+      "current_approved_teacher_prompt": "${PROJECT_ROOT}/exps/deepseek-gsm-only-20261009/teacher-prompt-v5.txt",
+      "current_teacher_prompt_sha256": "2c1393ca44d63efc3d23ac9d9465a4dc3d4530b66cebf3f438b3c43afb6f3bec",
+      "journal_decisions_all_rows": {
+        "accepted": 2145,
+        "rejected": 273
+      },
+      "journal_rejection_categories_all_rows": {
+        "structure": 200,
+        "answer_verification": 6,
+        "semantic_judge_reject": 46,
+        "judge_not_finished": 21
+      },
+      "deterministic_global_nonnegative_solver": false,
+      "judge_model": "deepseek-v4.1-flash, same as teacher",
+      "judge_prompt": "${PROJECT_ROOT}/exps/deepseek-gsm-only-20261009/judge-prompt.txt"
+    },
+    "new": {
+      "selected_accepted_journal_rows": 3000,
+      "all_final_grades_correct": true,
+      "all_structure_checks_valid": true,
+      "all_required_judge_flags_true": true,
+      "required_judge_fields": [
+        "mathematically_correct",
+        "complete",
+        "independent_paths",
+        "plan_faithful",
+        "summary_faithful",
+        "useful_parallelism",
+        "scheduling_faithful",
+        "all_branch_outputs_used",
+        "no_given_only_paths",
+        "sufficient_explanation",
+        "verification_paths_valid"
+      ],
+      "selected_teacher_prompt_hashes": {
+        "8136ffd0d7f2a5e15cc942beb71c249b64ca381047f00cab7c1496f115c0f403": 34,
+        "e9455d5993162286be9ee24db5070268abd0b73c8e88da5fe37e1d13c7ac1ba5": 6,
+        "3f1e91b62b5f12e6a37d7a8d14abcda0e24ceb0d3ca7e605ef7c69540670d8d4": 2960
+      },
+      "current_approved_teacher_prompt": "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/prompt-wide-explicit.txt",
+      "current_teacher_prompt_sha256": "3f1e91b62b5f12e6a37d7a8d14abcda0e24ceb0d3ca7e605ef7c69540670d8d4",
+      "journal_decisions_all_rows": {
+        "rejected": 551,
+        "accepted": 3000
+      },
+      "journal_rejection_categories_all_rows": {
+        "AssertionError('structural_or_answer_check')": 3,
+        "deterministic_path_audit": 10,
+        "semantic_judge_reject": 236,
+        "AssertionError('judge_not_finished')": 1,
+        "structure": 248,
+        "judge_not_finished": 36,
+        "answer_verification": 17
+      },
+      "deterministic_global_nonnegative_solver": false,
+      "judge_model": "deepseek-v4.1-flash, same as teacher",
+      "judge_prompt": "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/judge-prompt.txt",
+      "prompt_provenance_note": "2960 rows use current production prompt; 34+6 accepted pilot/review rows retain two earlier recorded prompt hashes. All3000 have checked journal acceptances and required semantic flags."
+    }
+  },
+  "integrity_checks": {
+    "negative_witnesses": 8,
+    "zero_convention_counterexamples_checked": 2,
+    "all_high_confidence_issues_accepted_by_source_judge": true,
+    "original_source_hashes_unchanged": true,
+    "frozen_sft_code_hashes_unchanged": true,
+    "completed_sft_sha256_unchanged": true,
+    "new_initializer_created": false,
+    "training_or_gpu_run_started": false
+  },
+  "recommendation": [
+    "Do not alter the completed model/data. For the next controlled baseline, exclude the old2145 and train afresh on a context-validated new3000; compare against full5145. This tests mixing policy rather than assuming the old data caused all observed model errors.",
+    "Before regenerating teacher reasoning, independently validate SOURCE equations, nonnegative counts/averages and explicit missing-category conventions. Rewording a trace cannot repair an inconsistent problem.",
+    "Use the issue manifest as concrete review/regeneration candidates; do not drop all heuristic-flagged rows automatically.",
+    "New3000 is a better decomposition foundation but not clean: two manually checked new source contexts require negative values, and two examples still show low-value or plus-zero work.",
+    "Excluding old2145 removes all observed width7/8 coverage: create useful, nondecorative width7/8 examples and held-out coverage if these widths matter.",
+    "Treat MATH-500 transfer separately: all5145 examples come from three GSM-Infinite templates, not geometry/algebra/proof diversity.",
+    "Keep explicit first-think injection separate from dataset quality: it handles one boundary, not invalid contexts or decorative scheduling."
+  ]
+}

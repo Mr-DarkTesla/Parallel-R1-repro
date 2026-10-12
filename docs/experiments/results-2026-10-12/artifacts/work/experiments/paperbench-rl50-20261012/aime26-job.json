@@ -1,0 +1,18 @@
+{
+  "model": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/checkpoint-0050/hf",
+  "system": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/system.txt",
+  "scorer": "${PROJECT_ROOT}/work/experiments/unseen-wide5145-20261009/eval-math500-forced-think-20261009/score.py",
+  "questions": "${PROJECT_ROOT}/work/experiments/paperbench-rl50-20261012/data/aime26.jsonl",
+  "output": "${PROJECT_ROOT}/work/experiments/paperbench-rl50-20261012/runs/aime26",
+  "world_size": 8,
+  "samples_per_question": 1,
+  "temperature": 1,
+  "response_budget": 4096,
+  "path_budget": 768,
+  "max_context": 16384,
+  "max_batched_paths": 8,
+  "seed": 42161011,
+  "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+  "selection_allowed": false,
+  "benchmark": true
+}

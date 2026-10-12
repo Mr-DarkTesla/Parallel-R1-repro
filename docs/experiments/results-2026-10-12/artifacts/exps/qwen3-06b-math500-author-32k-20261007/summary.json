@@ -1,0 +1,56 @@
+{
+  "complete": true,
+  "finished": "2026-10-07T12:07:49.954911+00:00",
+  "profiles": {
+    "instant": {
+      "complete": true,
+      "mode": "instant",
+      "questions": 500,
+      "answers": 500,
+      "samples_per_question": 1,
+      "accuracy": 0.51,
+      "correct": 255,
+      "ci95": [
+        0.4662736879310782,
+        0.5535738252596908
+      ],
+      "ci_method": "Wilson two-sided 95%",
+      "invalid_answers": 0,
+      "scorer_errors": [],
+      "finish_reasons": {
+        "stop": 500,
+        "length": 0,
+        "abort": 0
+      },
+      "output_tokens": 310036,
+      "scoring": "Final-answer extraction independent of gold, Math-Verify 0.8.0 symbolic equivalence",
+      "traces_sha256": "0d8846cb8704ae36c21b33f662d5faa7aa690ca491b696f6ddb8d190662bdad9",
+      "extraction_tests": 10
+    },
+    "reasoning": {
+      "complete": true,
+      "mode": "reasoning",
+      "questions": 500,
+      "answers": 500,
+      "samples_per_question": 1,
+      "accuracy": 0.742,
+      "correct": 371,
+      "ci95": [
+        0.7019060194394218,
+        0.7784037997771869
+      ],
+      "ci_method": "Wilson two-sided 95%",
+      "invalid_answers": 5,
+      "scorer_errors": [],
+      "finish_reasons": {
+        "stop": 495,
+        "length": 5,
+        "abort": 0
+      },
+      "output_tokens": 2994264,
+      "scoring": "Final-answer extraction independent of gold, Math-Verify 0.8.0 symbolic equivalence",
+      "traces_sha256": "4822c125c260021f9fbe7da3ecd5f3545dd499c2adda137831c1d13f346e10d2",
+      "extraction_tests": 10
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-10T05:06:49.912984+00:00",
+  "verdict": "CPU/source/quality ready for root-authorized mandatory8GPU2step smoke; no bypass. Actual PPO smoke required before production.",
+  "quality_anchor": {
+    "complete128": 48,
+    "GSM": 30,
+    "MATH": 18,
+    "strict": 127,
+    "joint": 46
+  },
+  "captures": {
+    "tmp2": {
+      "captured_last_override_wins_differences_vs_completed_mathaccuracy40": {
+        "algorithm.adv_estimator": [
+          "night_accuracy",
+          "night_split_success"
+        ]
+      },
+      "same_reference_model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+      "same_runtime": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-code"
+    },
+    "tmp3": {
+      "captured_last_override_wins_differences_vs_completed_mathaccuracy40": {
+        "trainer.total_training_steps": [
+          "2",
+          "42"
+        ],
+        "trainer.resume_mode": [
+          null,
+          "resume_path"
+        ],
+        "trainer.resume_from_path": [
+          null,
+          "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy40/production/checkpoints/global_step_40"
+        ]
+      },
+      "same_reference_model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+      "same_runtime": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-code"
+    }
+  },
+  "source40_shards_model_optimizer": [
+    8,
+    8
+  ],
+  "optimizer_reference": "tmp3 originalmathaccuracy40 checkpoint40 + SAMEsplit80HF reference. tmp2 independent reset from SAMEsplit80HF anchor, only estimator changes.",
+  "train_data": "Previously independent source/noheldout/hash proof unchanged math_easy1675.",
+  "caveat": "Individual allwrong training batches allowed; two-smoke preflight unchanged. Paired validation cannot establish causal reward advantage from single adaptive seed."
+}

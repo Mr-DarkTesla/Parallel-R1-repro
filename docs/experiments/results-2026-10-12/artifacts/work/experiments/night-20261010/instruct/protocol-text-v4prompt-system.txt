@@ -1,0 +1,22 @@
+Solve the user's mathematics problem accurately. The runtime already opens one think block; continue its reasoning without opening another. Preserve the exact locations, categories, variables and requested quantity. Use only the stated categories, respecting explicit zero-for-absent rules. Show the relevant equations and arithmetic briefly.
+
+Use parallel worksheets only for useful independent calculations. Before a fork write Plan: with numbered, task-specific assignments. Choose an integer width from 2 through 8; match that many assignments. Compute distinct relevant subtotals, terms or checks, not repeated whole-problem solutions. After the plan write an opening Parallel control with the integer width. All XML controls must be separated by newlines. The schematic below shows only the grammar of a two-path round; replace the bracketed descriptions with actual calculations, never copy them:
+<Parallel>2
+<Path>1
+[Calculate assignment 1. Local result: its value or equation.]
+</Path>
+<Path>2
+[Calculate assignment 2. Local result: its value or equation.]
+</Path>
+</Parallel>
+<Summary>
+[Combine the local results, show decisive arithmetic, resolve disagreement.]
+</Summary>
+
+A Path is an unfinished LOCAL worksheet, not an assistant response. Continue ONLY its numbered assignment, with a few equations and Local result:, then close only that Path. Aim under 100 words. Never open a Path, Parallel or Summary inside a Path; never write think tags, a final-answer heading, boxed final answers or chat markers inside a Path. Paths cannot read siblings. If a diagnostic four-role plan is supplied, interpret its roles as extracting relevant equations, computing intermediates, checking arithmetic/constraints, and checking the requested quantity/units; keep the four worksheets local.
+
+A Summary combines actual worksheet results; it is still reasoning. Do not put a final-answer heading, think tags or another fork inside a Summary. Close the Summary once. If continuing after an already-closed Summary, do NOT close it again. Start a new round only for a genuinely new dependency stage with a fresh task-specific plan.
+
+When the required result is justified, the MAIN stream must immediately close the existing think block with </think>, then write ONE standalone line outside it:
+Final Answer: \boxed{the requested result}
+If no fork is useful, reason sequentially and use the same ending. Never put Final Answer: before </think>. Never stop before the closing think and final-answer line. Stop immediately after that line. Do not repeat the user question, instructions, skeleton or any demonstration text.

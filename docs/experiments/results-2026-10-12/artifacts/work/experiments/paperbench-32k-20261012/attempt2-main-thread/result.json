@@ -1,0 +1,169 @@
+{
+  "rl50": {
+    "passed": true,
+    "label": "RL50 keep77 + completed rerun53 at32k",
+    "samples_per_question": 1,
+    "response_limit": 32768,
+    "rows": 130,
+    "unknown": 0,
+    "by_dataset": {
+      "AIME2024": {
+        "n": 30,
+        "correct": 10,
+        "accuracy": 0.3333333333333333,
+        "format_valid": 26,
+        "format_and_fork_all": 0.8666666666666667,
+        "truncated": 0,
+        "mean_episode_forward_participation": 4556.966666666666,
+        "mean_tokens": 5621.2,
+        "format_conditioned": {
+          "n": 26,
+          "width": 3.9642857142857144,
+          "depth": 1.0769230769230769,
+          "forward_participation": 3304.5
+        }
+      },
+      "AIME2025": {
+        "n": 30,
+        "correct": 4,
+        "accuracy": 0.13333333333333333,
+        "format_valid": 25,
+        "format_and_fork_all": 0.8333333333333334,
+        "truncated": 0,
+        "mean_episode_forward_participation": 4420.366666666667,
+        "mean_tokens": 5622.166666666667,
+        "format_conditioned": {
+          "n": 25,
+          "width": 4.04,
+          "depth": 1,
+          "forward_participation": 3375.08
+        }
+      },
+      "AIME2026": {
+        "n": 30,
+        "correct": 4,
+        "accuracy": 0.13333333333333333,
+        "format_valid": 25,
+        "format_and_fork_all": 0.8,
+        "truncated": 0,
+        "mean_episode_forward_participation": 4530.866666666667,
+        "mean_tokens": 5838.866666666667,
+        "format_conditioned": {
+          "n": 25,
+          "width": 4.208333333333333,
+          "depth": 0.96,
+          "forward_participation": 3223.08
+        }
+      },
+      "AMC2023": {
+        "n": 40,
+        "correct": 25,
+        "accuracy": 0.625,
+        "format_valid": 38,
+        "format_and_fork_all": 0.95,
+        "truncated": 0,
+        "mean_episode_forward_participation": 2234.375,
+        "mean_tokens": 3118.225,
+        "format_conditioned": {
+          "n": 38,
+          "width": 4.25,
+          "depth": 1.0526315789473684,
+          "forward_participation": 2149.4736842105262
+        }
+      }
+    },
+    "all_gpu_children_exit0": true,
+    "time": 1791817174.5620604
+  },
+  "native": {
+    "passed": true,
+    "label": "Original Qwen3-4B native thinking BF16 vLLM32k",
+    "samples_per_question": 1,
+    "response_limit": 32768,
+    "rows": 130,
+    "unknown": 0,
+    "by_dataset": {
+      "AIME2024": {
+        "n": 30,
+        "correct": 22,
+        "accuracy": 0.7333333333333333,
+        "format_valid": 29,
+        "format_and_fork_all": 0.0,
+        "truncated": 1,
+        "mean_episode_forward_participation": 15463.266666666666,
+        "mean_tokens": 15462.266666666666,
+        "format_conditioned": {
+          "n": 29,
+          "width": null,
+          "depth": 0,
+          "forward_participation": 14866.51724137931
+        }
+      },
+      "AIME2025": {
+        "n": 30,
+        "correct": 19,
+        "accuracy": 0.6333333333333333,
+        "format_valid": 24,
+        "format_and_fork_all": 0.0,
+        "truncated": 6,
+        "mean_episode_forward_participation": 18348.1,
+        "mean_tokens": 18347.1,
+        "format_conditioned": {
+          "n": 24,
+          "width": null,
+          "depth": 0,
+          "forward_participation": 14742.875
+        }
+      },
+      "AIME2026": {
+        "n": 30,
+        "correct": 22,
+        "accuracy": 0.7333333333333333,
+        "format_valid": 29,
+        "format_and_fork_all": 0.0,
+        "truncated": 1,
+        "mean_episode_forward_participation": 15718.266666666666,
+        "mean_tokens": 15717.266666666666,
+        "format_conditioned": {
+          "n": 29,
+          "width": null,
+          "depth": 0,
+          "forward_participation": 15130.310344827587
+        }
+      },
+      "AMC2023": {
+        "n": 40,
+        "correct": 37,
+        "accuracy": 0.925,
+        "format_valid": 40,
+        "format_and_fork_all": 0.0,
+        "truncated": 0,
+        "mean_episode_forward_participation": 8980.95,
+        "mean_tokens": 8979.95,
+        "format_conditioned": {
+          "n": 40,
+          "width": null,
+          "depth": 0,
+          "forward_participation": 8980.95
+        }
+      }
+    },
+    "all_gpu_children_exit0": true,
+    "time": 1791817174.5625684
+  },
+  "repair": {
+    "main_thread_scoring": true,
+    "original_sources_unchanged": true,
+    "coverage": {
+      "complete130": true,
+      "rl53_plus_kept77": true,
+      "native130": true,
+      "all8_rl_native_exit0": true,
+      "technical_unknown": []
+    }
+  },
+  "notes": [
+    "RL50 FP32/native BF16 vLLM differ; no exact-compute claim",
+    "F participation differs from global backend forwards"
+  ]
+}

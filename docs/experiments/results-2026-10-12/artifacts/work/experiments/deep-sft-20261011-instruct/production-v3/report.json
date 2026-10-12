@@ -1,0 +1,74 @@
+{
+  "phase": "production",
+  "completed": 3036,
+  "accepted": 3000,
+  "rejected": 36,
+  "errors": {
+    "independent_substantive_quarantine": 1,
+    "drafting_or_serial_prefork_quarantine": 3,
+    "repaired_checks_no_valid_attempt": 3,
+    "source_relation_unproven": 24,
+    "independent_oracle_replay": 4,
+    "structure/missing_plan,missing_prefork_explanation,path_without_explicit_computation,plan_ids_or_count,unexpected_tags_between_blocks": 1
+  },
+  "selected_deep": 3000,
+  "width": {
+    "mean": 4.0009998333611065,
+    "median": 4.0,
+    "p95": 5.0,
+    "max": 5
+  },
+  "rounds": {
+    "mean": 4.000666666666667,
+    "median": 4.0,
+    "p95": 5.0,
+    "max": 5
+  },
+  "width_histogram": {
+    "3": 2954,
+    "4": 6082,
+    "5": 2966
+  },
+  "round_histogram": {
+    "3": 602,
+    "4": 1794,
+    "5": 604
+  },
+  "path_tokens": {
+    "mean": 37.90558100791337,
+    "median": 38.0,
+    "p95": 42.0,
+    "max": 53
+  },
+  "output_tokens": {
+    "mean": 1307.325,
+    "median": 1296.0,
+    "p95": 1776.2999999999984,
+    "max": 2206
+  },
+  "critical_path_tokens_proxy": {
+    "mean": 791.881,
+    "median": 786.5,
+    "p95": 1053.0499999999997,
+    "max": 1304
+  },
+  "explicit_scalar_equalities_checked": 51503,
+  "mathematically_reference_verified": 3000,
+  "no_think": false,
+  "instruct_think": true,
+  "all_sibling_ids_structurally_consistent": true,
+  "hashes": {
+    "teacher-prompt-v3.txt": "6c5c369539f00ac1c017f92a5421d1654f65477214a3a50831a68790df515955",
+    "production-v3-protocol.json": "a26111e73c9dd8b5b73efd3ebf358c90ff093f2645de2c4175a668a9300dfc7b",
+    "pool-manifest.json": "482b5f172f52a6c4ee74b871e941cd8e449a52ad2212b64fbbbedebdb3c7d7bd",
+    "pilot-tasks.jsonl": "afddde5d864f47a07afe75b1c924b37c02dfb32913d4de2aad19db2a288bdefd",
+    "journal.jsonl": "b6664eb9a1954007639b0508ea51f269adbbdec2a00f6e47d2b481b0b71d9ff3",
+    "accepted.jsonl": "01c805f8bc20c682e091f23a11825ce989313978d8ec09c3249378d4aa0433d1"
+  },
+  "limitations": [
+    "No same-teacher semantic judge; independent stratified substantive review required for final release.",
+    "Explicit arithmetic checker covers flat scalar equalities only.",
+    "Manual actual-trace review is mandatory before releasing production generation.",
+    "F is token critical-path proxy, not measured GPU latency."
+  ]
+}

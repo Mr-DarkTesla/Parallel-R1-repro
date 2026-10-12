@@ -1,0 +1,25 @@
+{
+  "observed_utc": "2026-10-07T23:19:25.797401+00:00",
+  "stage": "s2",
+  "step": 279,
+  "target_steps": 800,
+  "attempt": 1,
+  "queued": ["depth"],
+  "owned_bootstrap_controller_launcher_alive": true,
+  "gpu_count": 8,
+  "full_nonempty_checkpoint_steps": [100, 200],
+  "validation": [
+    {"step": 50, "rows": 572, "gsm_correct": 70, "gsm_n": 256, "math_correct": 96, "math_n": 316, "gsm_depth": 539.3203125, "gsm_parallel": 0.91796875, "gsm_forks": 1.62890625},
+    {"step": 100, "rows": 572, "gsm_correct": 114, "gsm_n": 256, "math_correct": 93, "math_n": 316, "gsm_depth": 513.91015625, "gsm_parallel": 0.671875, "gsm_forks": 0.9921875},
+    {"step": 150, "rows": 572, "gsm_correct": 134, "gsm_n": 256, "math_correct": 101, "math_n": 316, "gsm_depth": 422.21875, "gsm_parallel": 0.94921875, "gsm_forks": 1.41796875},
+    {"step": 200, "rows": 572, "gsm_correct": 154, "gsm_n": 256, "math_correct": 97, "math_n": 316, "gsm_depth": 417.86328125, "gsm_parallel": 0.97265625, "gsm_forks": 1.375},
+    {"step": 250, "rows": 572, "gsm_correct": 182, "gsm_n": 256, "math_correct": 113, "math_n": 316, "gsm_depth": 315.2109375, "gsm_parallel": 0.96875, "gsm_forks": 0.9765625, "gsm_format_ok": 1.0}
+  ],
+  "train_last20": {"rows": 5120, "groups": 640, "mixed_accuracy_fraction": 0.5390625, "acc": 0.75390625, "format_ok": 0.9982421875, "top_prediction_fraction": 0.2099609375},
+  "train_first50": {"response_tokens": 672.4884, "critical_depth": 581.1609, "forks": 1.8828, "entropy": 0.9826, "grad_norm": 1.0452, "step_seconds_including_eval_save": 32.861},
+  "train_last50": {"response_tokens": 400.4225, "critical_depth": 361.6069, "forks": 0.968, "entropy": 0.4166, "grad_norm": 1.2035, "step_seconds_including_eval_save": 22.8011},
+  "nonfinite_training_metrics": [],
+  "log_issue": "NFS temporary directory cleanup OSError Errno 16 in multiprocessing finalizers; ongoing progress, no restart or OOM. Keep observing, do not mutate frozen run.",
+  "decision": "Continue original S2 then depth queue unchanged. Held-out GSM improvement is sustained across five evaluations; no constant-answer collapse. Fork count is falling toward one despite high parallel usage, so do not claim S2 increases block count. MATH fluctuations are not evidence of degradation. No basis to replace dataset now.",
+  "eta": "S2 remaining about 3.3-3.6 hours at observed completed-cycle throughput, roughly 05:40-06:00 MSK. Second 800-step run has not started; its completion time remains uncertain."
+}

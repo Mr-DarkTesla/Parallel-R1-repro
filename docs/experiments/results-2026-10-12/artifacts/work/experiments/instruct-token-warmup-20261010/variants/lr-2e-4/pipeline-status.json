@@ -1,0 +1,169 @@
+{
+  "started_at": "2026-10-10T08:44:32.718378+00:00",
+  "pid": 123310,
+  "variant": "lr-2e-4",
+  "ready_sha256": "8431d950fdc4682ddac20ce5a1f180d281f5bceb0e743aeee5c86efadc090fd6",
+  "pipeline_sha256": "d4a951c40b48b9419eac521c026e123d7a27b72b7b7c62365fc0738a6417603d",
+  "state": "completed",
+  "completed": [
+    {
+      "label": "training-smoke",
+      "returncode": 0,
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/run_train.sh",
+        "smoke"
+      ],
+      "finished_at": "2026-10-10T08:45:45.693033+00:00"
+    },
+    {
+      "label": "production",
+      "returncode": 0,
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/run_train.sh",
+        "production"
+      ],
+      "finished_at": "2026-10-10T09:21:41.990914+00:00"
+    },
+    {
+      "label": "export-audit",
+      "returncode": 0,
+      "argv": [
+        "${PROJECT_ROOT}/work/experiments/night-20261010/cloud/tmp3/runtime/bin/python",
+        "-B",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/audit_export.py"
+      ],
+      "finished_at": "2026-10-10T09:22:02.915189+00:00"
+    },
+    {
+      "label": "lr-2e-4-trained-native-24",
+      "returncode": 0,
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/final",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/math-system.txt",
+        "--name",
+        "lr-2e-4-trained-native-24",
+        "--suite",
+        "24",
+        "--mode",
+        "native"
+      ],
+      "finished_at": "2026-10-10T09:27:21.573340+00:00"
+    },
+    {
+      "label": "lr-2e-4-trained-structured-24",
+      "returncode": 0,
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/final",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+        "--name",
+        "lr-2e-4-trained-structured-24",
+        "--suite",
+        "24",
+        "--mode",
+        "structured"
+      ],
+      "finished_at": "2026-10-10T09:34:23.418368+00:00"
+    },
+    {
+      "label": "lr-2e-4-trained-native-128",
+      "returncode": 0,
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/final",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/math-system.txt",
+        "--name",
+        "lr-2e-4-trained-native-128",
+        "--suite",
+        "128",
+        "--mode",
+        "native"
+      ],
+      "finished_at": "2026-10-10T09:59:06.736451+00:00"
+    },
+    {
+      "label": "lr-2e-4-trained-structured-128",
+      "returncode": 0,
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/final",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+        "--name",
+        "lr-2e-4-trained-structured-128",
+        "--suite",
+        "128",
+        "--mode",
+        "structured"
+      ],
+      "finished_at": "2026-10-10T10:24:38.956798+00:00"
+    }
+  ],
+  "production_from_canonical_mean_init": true,
+  "only_six_rows": true,
+  "base_learning_rate": 0.0002,
+  "commands": {
+    "smoke": [
+      "bash",
+      "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/run_train.sh",
+      "smoke"
+    ],
+    "production_AFTER_ROOT_SMOKE_REVIEW": [
+      "bash",
+      "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/run_train.sh",
+      "production"
+    ],
+    "export_audit": [
+      "${PROJECT_ROOT}/work/experiments/night-20261010/cloud/tmp3/runtime/bin/python",
+      "-B",
+      "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/audit_export.py"
+    ]
+  },
+  "at": "2026-10-10T10:24:40.891892+00:00",
+  "active": null,
+  "argv": [
+    "bash",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh",
+    "--model",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/final",
+    "--system-file",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+    "--name",
+    "lr-2e-4-trained-structured-128",
+    "--suite",
+    "128",
+    "--mode",
+    "structured"
+  ],
+  "active_pid": null,
+  "approval_request": null,
+  "approvals": {
+    "training_smoke": {
+      "path": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/root-smoke-approved.json",
+      "sha256": "08bd219f4942421b8127876fb81b5d10b3d5125d39869a18cef3dbf6b4dcad10",
+      "independent_review_path": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/independent-actual-smokes-review-mac-20261010.json",
+      "independent_review_sha256": "ad00811c852cfd1e57787666990b9aa27693168918e150982ceddd2272d8ace9"
+    },
+    "inference_smoke": {
+      "path": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/root-inference-approved.json",
+      "sha256": "624d407bcb5b6c3d93a6f4a9bf8656a40a963622f9e9b8046a50229da1146351",
+      "independent_review_path": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/independent-actual-inference-review-lr-2e-4-mac-20261010.json",
+      "independent_review_sha256": "6be480c93ebdc9ada630212de3e3b408ab9b696dc0ce464ddd5873afea5c2b0c"
+    }
+  },
+  "finished_at": "2026-10-10T10:24:40.891876+00:00"
+}

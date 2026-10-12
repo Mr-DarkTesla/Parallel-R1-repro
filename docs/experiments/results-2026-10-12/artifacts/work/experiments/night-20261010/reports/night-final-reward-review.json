@@ -1,0 +1,1150 @@
+{
+  "at_utc": "2026-10-10T08:16:12.720814+00:00",
+  "passed": true,
+  "identity": {
+    "controller_sha256": "3dd9f40e98ab255bb6b617f4b1b19358c9aa3117b085923df0e48e5dbfb2a13a",
+    "helper_sha256": "002f48552aeb3fb14ee8ace1d5af56682f0c39df2cc40e142f6ae9abab7fc277",
+    "final_freeze_sha256": "6d019ff177894749ef58dc37256b6a121160de0335d3136566b4092d000e329d",
+    "controller_pid_in_state": 1238649,
+    "freeze_unchanged_vs_report": true,
+    "freeze_hash_checks": {
+      "${PROJECT_ROOT}/work/experiments/night-20261010/orchestrator.py": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/orchestration/final_candidate.py": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate.py": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/postrun.py": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/export.py": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/questions-math500.jsonl": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/root0633-selection-independent.json": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/root0633-runtime-independent.json": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/sft-sirius-continuation4-refcorrected-128/summary.json": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-sirius-continuation4-refcorrected/export-proof.json": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/sft-math-split40-128/summary.json": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-split40/export-proof.json": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/sft-math-accuracy80-128/summary.json": true,
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy80/export-proof.json": true
+    },
+    "controller_cmdline": "/usr/bin/python3 ${PROJECT_ROOT}/work/experiments/night-20261010/orchestrator.py ",
+    "controller_cwd": "${PROJECT_ROOT}"
+  },
+  "results_and_progress_files_match_actual": true,
+  "proof_hash_checks": {
+    "root0718-final-metrics-independent.json": {
+      "sha256": "487b04c125cfffb3b012cc70cd278932ba5d04a98a929308ee7e87cb2b4bb7f2",
+      "matches_pinned": true
+    },
+    "root0718-final-runtime-independent.json": {
+      "sha256": "da1b96cd905b4d651b9534dc01bd5d89ba55a076872a99cfc5f54dd875a4aa7f",
+      "matches_pinned": true
+    },
+    "root0718-secondary-metrics-independent.json": {
+      "sha256": "bed59a97c3d0de673e3bd68e1f5a30c87f122a390effa8c4ede1dec4781b96a0",
+      "matches_pinned": true
+    },
+    "root0718-secondary-runtime-independent.json": {
+      "sha256": "5e518090f5dfd2faf8b932d8354f05e06df32ab4151cfc019d82cfc43d885cb6",
+      "matches_pinned": true
+    },
+    "root0718-raw-control-accounting.json": {
+      "sha256": "8549166bd167acaf5e632031eca8053de4321de3386927dcd710dd9e54d208bb",
+      "matches_pinned": true
+    },
+    "root0718-secondary-raw-control-accounting.json": {
+      "sha256": "47f706c6ee798918c2625d634408e9d11746939b4a85c252b864810bf022de46",
+      "matches_pinned": true
+    },
+    "root0718-monitor.json": {
+      "sha256": "be5a188a3bf28744ff6f58f0187cb707d077c5494ad67bfa2bcabc091e564c65",
+      "matches_pinned": true
+    }
+  },
+  "reward_definitions": {
+    "c": "clip(max(F-B0,0)/Fscale,0,1)",
+    "night_accuracy": "A=y-mean_group(y)",
+    "night_scalar_success": "A=y*(1-eta*c)-mean_group(y*(1-eta*c))",
+    "night_split_success": "A=y-mean_group(y)+eta*y*(mean_success(c)-c); efficiency0 when n_success<2",
+    "optional_structure": "y*b minus groupmean(y*b), boundedb<=.1; SFTarmsallb0; earlyinstructonly.05warmup",
+    "eta_guard": "eta strictly<1/G; .05validforG4/G8",
+    "grouping": "originalpromptUID, notbatchposition; no std normalization/whitening",
+    "scorer": "canonicalthink-independent reference-blind lastFinalAnswer/MathVerify; rawstrictformat separately"
+  },
+  "run_roster": [
+    {
+      "run": "rl-instruct-accuracy",
+      "runner_status": "smoke_failed",
+      "method": "night_accuracy",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/model",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": null,
+      "production_returncode": null,
+      "eligible_completed_SFT_run": false
+    },
+    {
+      "run": "rl-instruct-accuracy-v2",
+      "runner_status": "production_failed",
+      "method": "night_accuracy",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/model",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 130,
+      "eligible_completed_SFT_run": false,
+      "resolved_config": {
+        "estimator": "night_accuracy",
+        "eta": 0.05,
+        "B0": 512,
+        "Fscale": 4096,
+        "structure_bonus": 0.05,
+        "structure_until_step": 10,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 2048,
+        "path_cap": 256,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 62,
+        "gsm_correct": 28,
+        "math_correct": 34,
+        "strict": 86,
+        "joint": 0,
+        "forked": 0,
+        "gate_passed": false
+      }
+    },
+    {
+      "run": "rl-sft-accuracy",
+      "runner_status": "completed",
+      "method": "night_accuracy",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_accuracy",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 2048,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 29,
+        "gsm_correct": 20,
+        "math_correct": 9,
+        "strict": 124,
+        "joint": 29,
+        "forked": 125,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-math-accuracy40",
+      "runner_status": "completed",
+      "method": "night_accuracy",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/math_easy/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_accuracy",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 48,
+        "gsm_correct": 30,
+        "math_correct": 18,
+        "strict": 127,
+        "joint": 46,
+        "forked": 126,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-math-accuracy80",
+      "runner_status": "completed",
+      "method": "night_accuracy",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/math_easy/train.parquet",
+      "resume_start_step": 40,
+      "production_target_steps": 80,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_accuracy",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 45,
+        "gsm_correct": 26,
+        "math_correct": 19,
+        "strict": 123,
+        "joint": 33,
+        "forked": 103,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-math-split40",
+      "runner_status": "completed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/math_easy/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 40,
+        "gsm_correct": 24,
+        "math_correct": 16,
+        "strict": 127,
+        "joint": 40,
+        "forked": 128,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-mix-accuracy40",
+      "runner_status": "completed",
+      "method": "night_accuracy",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_accuracy",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 32,
+        "gsm_correct": 23,
+        "math_correct": 9,
+        "strict": 126,
+        "joint": 32,
+        "forked": 128,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-mix-g8-pilot",
+      "runner_status": "completed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage1",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 20,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 8,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 36,
+        "gsm_correct": 28,
+        "math_correct": 8,
+        "strict": 124,
+        "joint": 36,
+        "forked": 127,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-scalar",
+      "runner_status": "completed",
+      "method": "night_scalar_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_scalar_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 2048,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 26,
+        "gsm_correct": 20,
+        "math_correct": 6,
+        "strict": 126,
+        "joint": 26,
+        "forked": 126,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-sirius-continuation3",
+      "runner_status": "completed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-accuracy-stage1",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 39,
+        "gsm_correct": 29,
+        "math_correct": 10,
+        "strict": 126,
+        "joint": 38,
+        "forked": 126,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-sirius-continuation4",
+      "runner_status": "production_failed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/train.parquet",
+      "resume_start_step": 40,
+      "production_target_steps": 80,
+      "production_returncode": 130,
+      "eligible_completed_SFT_run": false,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      }
+    },
+    {
+      "run": "rl-sft-sirius-continuation4-refcorrected",
+      "runner_status": "completed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-accuracy-stage1",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/train.parquet",
+      "resume_start_step": 40,
+      "production_target_steps": 75,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 39,
+        "gsm_correct": 24,
+        "math_correct": 15,
+        "strict": 126,
+        "joint": 39,
+        "forked": 127,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-split",
+      "runner_status": "completed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 2048,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 32,
+        "gsm_correct": 22,
+        "math_correct": 10,
+        "strict": 124,
+        "joint": 31,
+        "forked": 123,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-split-stage2",
+      "runner_status": "completed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+      "resume_start_step": 40,
+      "production_target_steps": 80,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 2048,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 36,
+        "gsm_correct": 24,
+        "math_correct": 12,
+        "strict": 125,
+        "joint": 36,
+        "forked": 127,
+        "gate_passed": true
+      }
+    },
+    {
+      "run": "rl-sft-tmp3-continuation3",
+      "runner_status": "completed",
+      "method": "night_split_success",
+      "actor_reference_model_arg": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+      "train_dataset": "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/train.parquet",
+      "resume_start_step": 0,
+      "production_target_steps": 40,
+      "production_returncode": 0,
+      "eligible_completed_SFT_run": true,
+      "resolved_config": {
+        "estimator": "night_split_success",
+        "eta": 0.05,
+        "B0": 256,
+        "Fscale": 1024,
+        "structure_bonus": 0.0,
+        "structure_until_step": 0,
+        "KL_in_reward": false,
+        "group_n": 4,
+        "prompt_batch": 8,
+        "response_cap": 4096,
+        "path_cap": 1024,
+        "loss_agg_mode": "seq-mean-token-mean",
+        "actor_KL_coef": 0.001,
+        "lr": 1e-06,
+        "configured_seed": null
+      },
+      "validation128": {
+        "correct": 33,
+        "gsm_correct": 24,
+        "math_correct": 9,
+        "strict": 125,
+        "joint": 33,
+        "forked": 128,
+        "gate_passed": true
+      }
+    }
+  ],
+  "selection": {
+    "frozen_at": "2026-10-10T06:43:13.305429+00:00",
+    "rule": "perlane highest64MATHvalidation accuracy, then64GSM, thenlowercorrectF; onlycomplete/admitted originalseed42common128+exportproof+runnercompleted+qualitygate",
+    "primaries": {
+      "sirius": {
+        "state": "queued",
+        "chosen_run": "rl-sft-sirius-continuation4-refcorrected",
+        "chosen_validation_label": "sft-sirius-continuation4-refcorrected",
+        "protocol": "special",
+        "runtime_dir": "",
+        "system_file": "",
+        "export_model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-sirius-continuation4-refcorrected",
+        "math_validation_pass1": 0.234375,
+        "gsm_validation_pass1": 0.375,
+        "correct_F_mean": 354.79487179487177,
+        "selection": "highest64MATHvalidationaccuracy;GSMthenlowerFtie-break;MATH500unused"
+      },
+      "tmp2": {
+        "state": "queued",
+        "chosen_run": "rl-sft-math-split40",
+        "chosen_validation_label": "sft-math-split40",
+        "protocol": "special",
+        "runtime_dir": "",
+        "system_file": "",
+        "export_model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-split40",
+        "math_validation_pass1": 0.25,
+        "gsm_validation_pass1": 0.375,
+        "correct_F_mean": 367.15,
+        "selection": "highest64MATHvalidationaccuracy;GSMthenlowerFtie-break;MATH500unused"
+      },
+      "tmp3": {
+        "state": "queued",
+        "chosen_run": "rl-sft-math-accuracy80",
+        "chosen_validation_label": "sft-math-accuracy80",
+        "protocol": "special",
+        "runtime_dir": "",
+        "system_file": "",
+        "export_model": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-math-accuracy80",
+        "math_validation_pass1": 0.296875,
+        "gsm_validation_pass1": 0.40625,
+        "correct_F_mean": 308.6666666666667,
+        "selection": "highest64MATHvalidationaccuracy;GSMthenlowerFtie-break;MATH500unused"
+      }
+    },
+    "secondary_predeclared_reason": "Higher combined48/joint46 vs math80_45/joint33 on original validation; fixed secondary comparison, no test-driven choice",
+    "test500_used_for_selection": false
+  },
+  "final500": {
+    "new-sft-math500": {
+      "correct": 92,
+      "strict": 464,
+      "joint": 83,
+      "forked": 461,
+      "unfinished_thinking": 6,
+      "F_all_mean": 608.828,
+      "F_all_p95": 1270.05,
+      "F_correct_mean": 403.10869565217394,
+      "correct_nofork": 9,
+      "correct_forked_invalid": 0,
+      "worker_rc0": true
+    },
+    "old-mixed-sft-commonbudget-math500": {
+      "correct": 101,
+      "strict": 223,
+      "joint": 28,
+      "forked": 359,
+      "unfinished_thinking": 265,
+      "F_all_mean": 557.506,
+      "F_all_p95": 1212.8499999999992,
+      "F_correct_mean": 315.8514851485148,
+      "correct_nofork": 48,
+      "correct_forked_invalid": 25,
+      "worker_rc0": true
+    },
+    "final-sirius-math500": {
+      "correct": 115,
+      "strict": 477,
+      "joint": 108,
+      "forked": 483,
+      "unfinished_thinking": 1,
+      "F_all_mean": 535.596,
+      "F_all_p95": 1081.1999999999998,
+      "F_correct_mean": 397.10434782608695,
+      "correct_nofork": 5,
+      "correct_forked_invalid": 2,
+      "worker_rc0": true
+    },
+    "final-tmp2-math500": {
+      "correct": 102,
+      "strict": 487,
+      "joint": 102,
+      "forked": 498,
+      "unfinished_thinking": 4,
+      "F_all_mean": 539.604,
+      "F_all_p95": 1056.2999999999997,
+      "F_correct_mean": 382.53921568627453,
+      "correct_nofork": 0,
+      "correct_forked_invalid": 0,
+      "worker_rc0": true
+    },
+    "final-tmp3-math500": {
+      "correct": 130,
+      "strict": 483,
+      "joint": 71,
+      "forked": 351,
+      "unfinished_thinking": 2,
+      "F_all_mean": 486.75,
+      "F_all_p95": 1028.1,
+      "F_correct_mean": 370.82307692307694,
+      "correct_nofork": 55,
+      "correct_forked_invalid": 4,
+      "worker_rc0": true
+    },
+    "secondary-mathaccuracy40-math500": {
+      "correct": 102,
+      "strict": 488,
+      "joint": 89,
+      "forked": 461,
+      "unfinished_thinking": 2,
+      "F_all_mean": 523.254,
+      "F_all_p95": 1066.5999999999995,
+      "F_correct_mean": 396.22549019607845,
+      "correct_nofork": 12,
+      "correct_forked_invalid": 1,
+      "worker_rc0": true
+    }
+  },
+  "inference_seed_variability": [
+    {
+      "inference_seed_base": 42,
+      "fresh": {
+        "all": 25,
+        "gsm": 15,
+        "math": 10
+      },
+      "math40": {
+        "all": 48,
+        "gsm": 30,
+        "math": 18
+      }
+    },
+    {
+      "inference_seed_base": 10042,
+      "fresh": {
+        "all": 36,
+        "gsm": 21,
+        "math": 15
+      },
+      "math40": {
+        "all": 42,
+        "gsm": 30,
+        "math": 12
+      }
+    },
+    {
+      "inference_seed_base": 20042,
+      "fresh": {
+        "all": 37,
+        "gsm": 24,
+        "math": 13
+      },
+      "math40": {
+        "all": 40,
+        "gsm": 26,
+        "math": 14
+      }
+    }
+  ],
+  "GPU_alignment": {
+    "passed": true,
+    "comparisons": 32,
+    "max_abs_logit_delta": 0.0,
+    "max_RAW_replay_logprob_delta": 1.2293457984924316e-06,
+    "scope": "GPU logits/RAW replay at actual committed PPO weights plus private livealias refresh, not live trainer sync measurement",
+    "active_postoptimizer_trainer_weight_transfer_RPC_verified": false
+  },
+  "failed_or_excluded": [
+    {
+      "run": "instruct-special-token-guided-RL",
+      "status": "first smoke failed;v2 intentionally stopped after unguidedsteps11/12 producedzeroautoforks; checkpoint10 retained",
+      "validation_correct": 62,
+      "validation_joint": 0,
+      "eligible": false
+    },
+    {
+      "run": "native-BPE TEXT v1/v2/v3/v4prompt/phase",
+      "status": "no candidate passed unchanged pilot-quality gate; no TEXT PPO/long training admitted",
+      "eligible": false,
+      "known_accounting": "v2 gate reason saysno_joint thoughjoint2 existed; failure wasquality. Phase originalgate saysmissing_summary; recovered48 grading stillqualityFAIL. These labels must not be used as zeroaccuracy evidence."
+    },
+    {
+      "run": "Sirius continuation4 wrong-reference",
+      "status": "intentionally stopped(return130), optimizer/actor resumed but KLreference incorrectlyreset; corrected cleanstep40 restart selected instead",
+      "eligible": false
+    }
+  ],
+  "limitations": [
+    "Initial accuracy/split/scalar40 arms share freshSFT,easyGSM,G4,batch8,response2048/path1024,costB0256/scale1024,eta.05,LR1e-6,actorKL.001,bonus0; configured seeds do not guarantee paired rollout draws. Results29/32/26 of128 are exploratory, not robust method ordering.",
+    "Later math/mix runs use response4096 and changed curricula/anchors/reset or resume; G8pilot changes group size/rollout count. Do not pool as a controlled three-reward comparison.",
+    "All12 completed SFT-RL production oracles used canonical schema2, reference-blind lastFinalAnswer after stripping all think tags. Initial split steps1–2 predate schema2; all64 actual selected predictions match canonical exactly, hence no actual reward difference. No version selected answers by matching the reference. Strict-format bonus changes affected only excluded instruct warmups; all completed SFT-RL bonuses0. Historical think-gated grades remain separate.",
+    "No groupstd or finalwhitening in night estimators; constant sampleadvantage repeated only across sampledresponsemask. seq-mean-token-mean averages within each trajectory then trajectories; forced/compiler tokens carry no actorloss. ActorKLloss separate from reward.",
+    "F logical sampled criticaldepth is sequential main/width/summary plusmaxsiblinglength eachround; notsumoutputtokens. Branch backend runsserially: no measuredGPU-forward or wall-speedup claim.",
+    "Compiledjoint requirescorrectfinal+strictformat+executedfork+syntax/runtimeagreement. It is not semantic usefulness, faithfulmerge or RAWcontrolcompliance; nonEOS wrongPath/Summary controls may becompiler-normalized while RAWpolicylabels stayoriginal.",
+    "ActualGPU007 proves exactlogits/replay at committedpostoptimizerexport andprivatealiasrefresh, notactive trainerpostoptimizerweight-transferRPC. The latter remainsunmeasured.",
+    "Singletrainingseed, adaptivevalidation curriculum/selection and multiplecomparisons. ExactunadjustedMcNemar numbers are descriptive; inference-seedreplicas are nottraining-seedreplication and MATHdirection varies.",
+    "OldmixedvsnewSFT differs5145vs3000examples,train/valsplit,and180vs105SFTsteps. Same inferencebudget doesnotisolatedataqualitycausally. Old101 includes47correctunfinishedTHINK+1duplicateclose;historical54/basiccorrect51/joint28 distinct.",
+    "Finalmath80_130 includes55correctnofork+4correctinvalidfork; only71jointvsfresh83. No testreselection; secondarymath40waspredeclared based onvalidation.",
+    "No oldnight training/eval pending. TwoownedCloudjobs cleanup due09UTC; not yet executed bythisreview. NEW4B15360-row warmup is separateuserauthorizedexperiment outsideN andEXCLUDEDfromoldcleanup."
+  ],
+  "errors": [],
+  "report_inaccuracies_found": [],
+  "new4B_warmup_excluded_from_night_results_and09cleanup": true,
+  "reviewer_GPU_API_process_actions": false,
+  "source_files_written": [
+    "reports/night-final-reward-review.json",
+    "reports/night-final-reward-review.md"
+  ],
+  "cached_summary_checks": {
+    "new-sft-math500": {
+      "comparison": {
+        "matches": true,
+        "report_only_predeclared_role": "fresh_SFT_baseline"
+      },
+      "progress": {
+        "matches": true,
+        "report_only_predeclared_role": "fresh_SFT_baseline"
+      }
+    },
+    "old-mixed-sft-commonbudget-math500": {
+      "comparison": {
+        "matches": true,
+        "report_only_predeclared_role": "predeclared_old_mixed_SFT_matched_budget_baseline"
+      },
+      "progress": {
+        "matches": true,
+        "report_only_predeclared_role": "predeclared_old_mixed_SFT_matched_budget_baseline"
+      }
+    },
+    "final-sirius-math500": {
+      "comparison": {
+        "matches": true,
+        "report_only_predeclared_role": "frozen_Sirius_primary_corrected75"
+      },
+      "progress": {
+        "matches": true,
+        "report_only_predeclared_role": "frozen_Sirius_primary_corrected75"
+      }
+    },
+    "final-tmp2-math500": {
+      "comparison": {
+        "matches": true,
+        "report_only_predeclared_role": "frozen_tmp2_primary_MATHsplit40"
+      },
+      "progress": {
+        "matches": true,
+        "report_only_predeclared_role": "frozen_tmp2_primary_MATHsplit40"
+      }
+    },
+    "final-tmp3-math500": {
+      "comparison": {
+        "matches": true,
+        "report_only_predeclared_role": "frozen_tmp3_primary_MATHaccuracy80"
+      },
+      "progress": {
+        "matches": true,
+        "report_only_predeclared_role": "frozen_tmp3_primary_MATHaccuracy80"
+      }
+    },
+    "secondary-mathaccuracy40-math500": {
+      "comparison": {
+        "matches": true,
+        "report_only_predeclared_role": "predeclared_secondary_MATHaccuracy40"
+      },
+      "progress": {
+        "matches": true,
+        "report_only_predeclared_role": "predeclared_secondary_MATHaccuracy40"
+      }
+    }
+  },
+  "review_note": "Cached summaries contain report-only predeclared_role; all original summary fields match exactly after removing this annotation.",
+  "training_accuracy_semantics": {
+    "completed_SFT_runs": 12,
+    "manifests": {
+      "rl-sft-accuracy": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-accuracy/smoke/oracle-accuracy-schema-1105200.json",
+          "sha256": "58390ddff2f0baf7960c16af759f73afeab6a32863d0860c0afc58b24a63e737",
+          "pid": 1105200,
+          "started_at": "2026-10-09T23:20:42.189602+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-accuracy/production/oracle-accuracy-schema-1116946.json",
+          "sha256": "f7b3c6650b0e4d5d99bf5cb85e9e232010b97360eb3736fe55d357447cd885e0",
+          "pid": 1116946,
+          "started_at": "2026-10-09T23:27:38.207467+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-math-accuracy40": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy40/smoke/oracle-accuracy-schema-87580.json",
+          "sha256": "4f146b2331a954d7f44532a2d8a40ea3816f90fdaededc1839bacd9e065fca5c",
+          "pid": 87580,
+          "started_at": "2026-10-10T03:41:42.067327+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy40/production/oracle-accuracy-schema-98493.json",
+          "sha256": "056a4b679dc08c2f03703c486cbee013f513cce3d88f93245d05d9b399499a59",
+          "pid": 98493,
+          "started_at": "2026-10-10T03:48:09.997677+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-math-accuracy80": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy80/smoke/oracle-accuracy-schema-110217.json",
+          "sha256": "c811c4cd6ab7e397e930926b75a553acfcff5332b0f90dab30be2829e0acabce",
+          "pid": 110217,
+          "started_at": "2026-10-10T05:12:30.880829+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy80/production/oracle-accuracy-schema-121126.json",
+          "sha256": "440c0def37e7b037688df1e0ce7dbb60d12cc93c5a2a84ac1d22d555ed105db2",
+          "pid": 121126,
+          "started_at": "2026-10-10T05:19:50.247944+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-math-split40": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-split40/smoke/oracle-accuracy-schema-105705.json",
+          "sha256": "ece32bd63f561fe430bf55de3a9f7243409a868a4e4ca728237ac00f8d0e7189",
+          "pid": 105705,
+          "started_at": "2026-10-10T05:12:22.406196+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-split40/production/oracle-accuracy-schema-116616.json",
+          "sha256": "4fe933232f18f1dfef2f77f8b7cda379c653b698969e056383c2988f571ca4b0",
+          "pid": 116616,
+          "started_at": "2026-10-10T05:19:22.392249+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-mix-accuracy40": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-mix-accuracy40/smoke/oracle-accuracy-schema-83072.json",
+          "sha256": "ef77e351f1a6c29f3d4bbff38fe6c0f543b4fe6b6e5569017747e4c6af399ec3",
+          "pid": 83072,
+          "started_at": "2026-10-10T03:42:10.616962+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-mix-accuracy40/production/oracle-accuracy-schema-93982.json",
+          "sha256": "4b28470dab11d439fafa96f978ee279a2f347f79946018276460afe44908f4f4",
+          "pid": 93982,
+          "started_at": "2026-10-10T03:48:52.529463+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-mix-g8-pilot": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-mix-g8-pilot/smoke/oracle-accuracy-schema-58689.json",
+          "sha256": "a92dbc5f9c427de01e9524b5855ad933493b51287811469742cd0622a4baa522",
+          "pid": 58689,
+          "started_at": "2026-10-10T01:37:57.376396+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-mix-g8-pilot/production/oracle-accuracy-schema-69623.json",
+          "sha256": "8cd0b2421ed7ac0884be505c98d2647507cd89380a3d3f1114033595666bcaeb",
+          "pid": 69623,
+          "started_at": "2026-10-10T01:47:19.376965+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-scalar": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-scalar/smoke/oracle-accuracy-schema-1137939.json",
+          "sha256": "910928da6e84ed06e22be90174faac03a76fdbf6c12f7769f378da246f9f6394",
+          "pid": 1137939,
+          "started_at": "2026-10-10T00:53:12.057396+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-scalar/production/oracle-accuracy-schema-1148424.json",
+          "sha256": "e69d30cc8aa329b7ea58dfd842d3e6367652df15d98c9da0023c988f24f16f2f",
+          "pid": 1148424,
+          "started_at": "2026-10-10T01:00:32.953851+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-sirius-continuation3": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation3/smoke/oracle-accuracy-schema-1166143.json",
+          "sha256": "5e3cac2b893e9647af25f0c98443a090e79155fc9815673550304c47ce0e5427",
+          "pid": 1166143,
+          "started_at": "2026-10-10T02:25:01.908930+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation3/production/oracle-accuracy-schema-1176606.json",
+          "sha256": "62a1e4e027849a8a54e60ac5544e97cf113f6e85018497925a64b6bafcf8f15b",
+          "pid": 1176606,
+          "started_at": "2026-10-10T02:33:58.605609+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-sirius-continuation4-refcorrected": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected/smoke/oracle-accuracy-schema-1216306.json",
+          "sha256": "c3aa931c53688f5b706bd529c46c317a9c333bca73b64e10947b0d1ff2d9ac27",
+          "pid": 1216306,
+          "started_at": "2026-10-10T04:30:20.601532+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected/production/oracle-accuracy-schema-1227295.json",
+          "sha256": "c246d30e69e94a99ff93008a94bb9998cc79f8eb59172ccf259883090aa84ad7",
+          "pid": 1227295,
+          "started_at": "2026-10-10T04:39:17.930496+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-split": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-split/production/oracle-accuracy-schema-30111.json",
+          "sha256": "834fd4d5962ff640ee22dfcfc3e592f0e98dbef532ede55972723f26b7ae1fbf",
+          "pid": 30111,
+          "started_at": "2026-10-09T22:57:32.249584+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-split-stage2": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-split-stage2/smoke/oracle-accuracy-schema-42325.json",
+          "sha256": "9e2d4c2c275c308372c12b69c2f1025909783a6e134db405c292a25fc5a588a6",
+          "pid": 42325,
+          "started_at": "2026-10-10T00:24:05.573964+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-split-stage2/production/oracle-accuracy-schema-53230.json",
+          "sha256": "9218c494acf90db9b936a692127da818693902ccbb237cf5ef1bf619a57d28f3",
+          "pid": 53230,
+          "started_at": "2026-10-10T00:31:09.518360+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ],
+      "rl-sft-tmp3-continuation3": [
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-tmp3-continuation3/smoke/oracle-accuracy-schema-64940.json",
+          "sha256": "b6b7ab7765798140aff3f538d1424f028c8c3baafba87fc2d584120830a0a794",
+          "pid": 64940,
+          "started_at": "2026-10-10T01:43:14.991532+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        },
+        {
+          "path": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-tmp3-continuation3/production/oracle-accuracy-schema-75848.json",
+          "sha256": "43bbf4c30da196e7f6df358e075ef5839e8e660403c2788a0de9f2e82cf9ae12",
+          "pid": 75848,
+          "started_at": "2026-10-10T01:50:04.818035+00:00",
+          "accuracy_schema_version": 2,
+          "primary": "strip_all_think_tags_then_reference_blind_last_final_answer",
+          "historical": "raw_original_think_gate_and_last_final_answer",
+          "extractor_sha256": "5fac4a0592610408f6e95462d2487e548d27230cd9380005e42b799c898c8d6b"
+        }
+      ]
+    },
+    "all_completed_SFT_production_oracles_schema2": true,
+    "all_other_completed_SFT_smokes_schema2": true,
+    "exception": {
+      "run": "rl-sft-split",
+      "steps": [
+        1,
+        2
+      ],
+      "smoke_started_at": "2026-10-09T22:44:56.032591+00:00",
+      "schema2_extractor_written_at": "2026-10-09T22:48:46.395229+00:00",
+      "production_schema2_started_at": "2026-10-09T22:57:32.249584+00:00",
+      "legacy_prediction_vs_canonical_predictions_compared": 64,
+      "changed_predictions": 0,
+      "logged_correct": 5,
+      "interpretation": "Initial two smoke steps used pre-canonical extraction; all64 selected predictions exactly equal canonical predictions, so accuracy reward unchanged for these actual samples. Not a new MathVerify regrade; exact prediction identity with same verifier/reference suffices."
+    },
+    "reference_blind_all_versions": true,
+    "change": "Legacy respected last closing think boundary; canonical strips all think markup before same blind lastFinalAnswer/box selection. No matching-to-reference answer-candidate selection.",
+    "format_bonus": "Strict format semantics changed on excluded instruct warmups only. All12 completed SFT-RL runs had structure bonus0."
+  }
+}

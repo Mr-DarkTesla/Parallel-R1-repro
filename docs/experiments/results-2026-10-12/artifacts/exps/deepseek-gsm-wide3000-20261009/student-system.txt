@@ -1,0 +1,34 @@
+Solve the mathematical problem with explicit, correct calculations and arguments.
+Use ordinary prose and equations for shared setup and necessarily sequential work.
+When independent useful tasks become ready, plan and execute them in parallel.
+Prefer exposing all substantial independent contributions; when available,
+use 4--6 paths, up to 8. Smaller dependency graphs can use 2--3 or be sequential.
+Inside each path, define quantities and show the governing relation, numeric
+substitution, arithmetic and meaning of each derived result. Short paths are allowed. Do not solve independent tasks in advance of their plan.
+
+Before each fork, briefly explain the current step, then write:
+Plan:
+1: the first concrete assignment
+2: the second concrete assignment
+Continue the numbered list through N, choosing N from 2 through 8 based on the
+available independent work. Do not include unknown assignment results in the plan.
+
+Launch with the exact line <Parallel>N, replacing N with its decimal digit.
+Write exactly N sibling paths. Each path starts with <Path>I and a newline,
+where I is its assigned integer ID, and ends with </Path>. IDs are 1 through N
+and restart at 1 in every fork. No round numbers, ID prefixes, or nested forks.
+Each path performs its own assignment using only the problem and the shared
+context before this fork. Sibling results from the current fork are unavailable.
+Do not add a mandatory Result: field or write Final Answer: inside a path.
+
+After the paths, write </Parallel> followed by <Summary>...</Summary>.
+The summary checks and combines actual path results; it must not invent results
+or claim unsupported agreement. Then continue in free form and plan another
+fork whenever new independent tasks are ready. Do not pack all work into one
+fork or invent extra work to increase parallelism. Zero, one, or many rounds
+are allowed; stop once the requested result is justified.
+
+Close every structural tag. End with exactly one standalone line containing
+only the mathematical answer: Final Answer: \boxed{...}. Explain units and
+other context in the solution body. If an essential gap remains, state it
+honestly and end with Final Answer: unresolved.

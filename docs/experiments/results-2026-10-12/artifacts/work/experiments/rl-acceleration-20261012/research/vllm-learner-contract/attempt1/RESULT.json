@@ -1,0 +1,1849 @@
+{
+  "passed": true,
+  "all8_exit0": true,
+  "all8_GPU_empty": true,
+  "proofs": [
+    {
+      "three_policy_TIS": {
+        "actions": 13,
+        "max_abs_logratio": 0.12494277954101562,
+        "mean_abs_logratio": 0.032946073091947116,
+        "p95_abs_logratio": 0.08940773010253898,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 1.019380194983886,
+        "tis_min_weight": 0.9393360190794249,
+        "tis_max_weight": 1.1330836156472754,
+        "ESS": 12.973164180737442,
+        "ESS_fraction": 0.9979357062105725,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -2.5276074325120135e-05,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.0002374648756813258,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/orca_math/35121",
+      "problem_index": 0,
+      "width": 2,
+      "canonical_trace": {
+        "raw_actions": 13,
+        "forced_loss0": 9,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [
+          {
+            "call": 3,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 13
+          },
+          {
+            "call": 4,
+            "phase": "summary",
+            "raw": 151643,
+            "visible": 151674,
+            "response_index": 18
+          }
+        ],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "79f51ee9259865f299544c43375aa19bffd9b13b7d8ee96655d964509a68c461",
+            "mask_sha256": "f28cb1a6be8035947650f5105c78a5a439d650f3ae9bd8dac5e3f65006f9cc47",
+            "repeated_positions": false,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 450
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "d97855299737985d270c9d2634123fde8848975638bd5636d7c9691645f30246",
+            "mask_sha256": "2099c247962d0b5d6cba678f8449eddf4d8ebb81a0ac0d6d33a209321ad1acb5",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 451
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "ba56d525d1e93abcee5cb9da4d0cac1265d2658f2d33f8c4e7f98941b6ca5075",
+            "mask_sha256": "71ae8e28ade2aa91d643d5d67cbc8664dbecb50b66eabbc1abddbf2ad5625659",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 456
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "cd2f5af52192de50dea5ecc92123a2524f3062875aef3e1a97bb380a40ba49a1",
+            "mask_sha256": "390f2aa7b4ad5f38a30a97b4b6265d1f14f23b3a4c3d167d9b528d5db0087989",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 456
+          },
+          {
+            "call": 4,
+            "phase": "summary",
+            "position_sha256": "dd1d59d06bd9873d712c925e8d7de4e9c13108504f1f79c592e48b6eb86b1b65",
+            "mask_sha256": "1ba910af33f11b7b05fd3c640ede9af9b9165830bc306df88c649316acfb778d",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 467
+          },
+          {
+            "call": 5,
+            "phase": "main",
+            "position_sha256": "7cb7802b43f8546042ae42eb223e772cbdc7bcbc60ee909fa1e066376accca76",
+            "mask_sha256": "f69dd7ec2cac4aac5588bb51a72a38f1625405e74b8e80109089bfab2a1cbe14",
+            "repeated_positions": true,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 469
+          },
+          {
+            "call": 6,
+            "phase": "main",
+            "position_sha256": "839ea66d85a316338e248e738b24e569a044dea7f9b347c464d63b45a1fa5290",
+            "mask_sha256": "634d27f843596d1505eeb11a142cdb7af40942258ef4495aee77d05703f203fa",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 470
+          }
+        ],
+        "q_sha256": "852a2f0a7e5f0502455e2a4950e3effe185ebf987618cd92167352dcf846988b"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 13
+      },
+      "actual_actor_forwards": 22,
+      "episode_F": {
+        "0": 20,
+        "1": 6
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": null,
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58474278912,
+      "peak_reserved_bytes": 61188603904,
+      "wall_seconds": 51.37983059883118,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4087
+    },
+    {
+      "three_policy_TIS": {
+        "actions": 17,
+        "max_abs_logratio": 0.13533401489257812,
+        "mean_abs_logratio": 0.05543226354262408,
+        "p95_abs_logratio": 0.11969070434570311,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 1.015029264996295,
+        "tis_min_weight": 0.8926985570927956,
+        "tis_max_weight": 1.1449191405351664,
+        "ESS": 16.91720009114245,
+        "ESS_fraction": 0.9951294171260265,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -3.2912249935179716e-05,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.0002288817777298391,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/orca_math/3631",
+      "problem_index": 1,
+      "width": 3,
+      "canonical_trace": {
+        "raw_actions": 17,
+        "forced_loss0": 13,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [
+          {
+            "call": 3,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 13
+          },
+          {
+            "call": 5,
+            "phase": "summary",
+            "raw": 151643,
+            "visible": 151674,
+            "response_index": 26
+          }
+        ],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "5b6483934ad4f6e4ff224ee05669575af0ffc8caf6e32834054b29c6976f2d5a",
+            "mask_sha256": "8898fa007c9f92788ef209152916c99250b91be596566afab436b7de5dfa49ef",
+            "repeated_positions": false,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 430
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "9aeb4812d10ecc8a9eb78a9a613cc442792514b697dd0dbe69e2db6cbfb3985a",
+            "mask_sha256": "82dae89667404ea56bf351a31de8f31246acad5e5d5ba51477574dca19ff63be",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 431
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "c40e1cd89c0f882fc1bb5113dbbc1514f80fdc0a125c85d4140a9ad5b5b55e4f",
+            "mask_sha256": "6eed5b4db3ec5c28f49b4a1847e2685560d3d7c50b27547cccf6501ddb3d723a",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 436
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "764ba6a5e7c8fb1c28dcb9c05d38b1810d16e07f19698ed02f6ee099d9df3b91",
+            "mask_sha256": "b0c349946c12d0262e731014fddd26ba41a57a899d27c5e8474f523d57c66135",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 436
+          },
+          {
+            "call": 4,
+            "phase": "path",
+            "position_sha256": "fb0b85f8b41ac2acde5b0887bcace5a8b4e50d9a7abc7281874409a47ffc90fa",
+            "mask_sha256": "715a3cb79f800ff0b8298195bcbed5bb1fa9a066ff4ab8cb5157ffeb6cea9619",
+            "repeated_positions": false,
+            "targets": 4,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 436
+          },
+          {
+            "call": 5,
+            "phase": "summary",
+            "position_sha256": "7537dc750d053bf1f33edf85026bc71ae8f265a3acdd5666f21e7e6a824a62a9",
+            "mask_sha256": "93ff10b55019b94cf97cdb79925af604981a1aa474b78a092b8d4e1900136f80",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 455
+          },
+          {
+            "call": 6,
+            "phase": "main",
+            "position_sha256": "035fed3677e9a7781581f1e5ef51a05aed682273f88c8020fce3cb3d60f8fcfe",
+            "mask_sha256": "f2775f933291ab6a42c45ff4e9e61946ac57861fd9780ccc86a222598f2daeec",
+            "repeated_positions": true,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 457
+          },
+          {
+            "call": 7,
+            "phase": "main",
+            "position_sha256": "af8433e0db1b6c68af9166f06a71a383be0b4112ba886a74653e5ffcf54fa354",
+            "mask_sha256": "3191c5ef189e2e120f7afa4bcb279024e3c43c8cc7e8ba6a322b02b4e040716f",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 458
+          }
+        ],
+        "q_sha256": "ef5a1dcad670205c41764b655465fb9426a9cfc76df2f8c5105fd0a6bff3e7b3"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 17
+      },
+      "actual_actor_forwards": 24,
+      "episode_F": {
+        "0": 20,
+        "1": 6,
+        "2": 8
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": null,
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58474186752,
+      "peak_reserved_bytes": 61186506752,
+      "wall_seconds": 52.639100790023804,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4092
+    },
+    {
+      "three_policy_TIS": {
+        "actions": 22,
+        "max_abs_logratio": 0.14829444885253906,
+        "mean_abs_logratio": 0.052216963334517044,
+        "p95_abs_logratio": 0.13107223510742186,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 1.0040361708935819,
+        "tis_min_weight": 0.8761772313222437,
+        "tis_max_weight": 1.1598543638747036,
+        "ESS": 21.90580013593919,
+        "ESS_fraction": 0.995718187997236,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -4.2131035570491804e-05,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.0004069590650033206,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/cn_k12/145997",
+      "problem_index": 2,
+      "width": 4,
+      "canonical_trace": {
+        "raw_actions": 22,
+        "forced_loss0": 16,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [
+          {
+            "call": 3,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 13
+          },
+          {
+            "call": 6,
+            "phase": "summary",
+            "raw": 151643,
+            "visible": 151674,
+            "response_index": 34
+          }
+        ],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "4d1a187c7ef4e27616b805e78acaf13ef5d14885ae2e3cb572dd1969e7cd6c2d",
+            "mask_sha256": "abcb4e61d6b852194fe1c7740f7e363f06536d802862eb479b501d751727b4d1",
+            "repeated_positions": false,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 400
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "8a34ee7e5cade254bc1866209f326471f7f5ff8ff7a12eb81f78a60502345ad0",
+            "mask_sha256": "b41a90c0e155c29414a1f83e1da54a692f97835f701071f3581b24c721b46dc0",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 401
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "236356c01e1a88f1abaa8f2ef535c23221cb3daed7e79fbf80c02a2793e734e7",
+            "mask_sha256": "719da93ff8c3548c69b9ad09d24f2b11260d8bce151d9915272524caa7527417",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 406
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "c13c0eb42e6d997987dcaf77133b7c2a3ad4f33d99a1baa2527a588328924596",
+            "mask_sha256": "ce522b427d7bb4e725a716687b88cb131f23b0597a6c2f5ea69d3bccd9069eee",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 406
+          },
+          {
+            "call": 4,
+            "phase": "path",
+            "position_sha256": "6494698c9a96c854cfccbe1ca8d4624794ac1801d7ed47ab93ff5e840d884dda",
+            "mask_sha256": "abe2322ea76960fd01fc56f7fb92d0f1526a50c8b675d0ca95a2407a3b96cf56",
+            "repeated_positions": false,
+            "targets": 4,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 406
+          },
+          {
+            "call": 5,
+            "phase": "path",
+            "position_sha256": "604dee47931074535f7b45a83376424a3aa146da3ae9b6c466da98039f4de639",
+            "mask_sha256": "c3f26104823914566daab0d85a589aba13bd978af696b6f8bdd727b379988252",
+            "repeated_positions": false,
+            "targets": 5,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 406
+          },
+          {
+            "call": 6,
+            "phase": "summary",
+            "position_sha256": "8251494d2e32501d2967b1a6f26fa3ab73a1a09235f61a74e5cf76dae3e256f0",
+            "mask_sha256": "1693ee849bc97bc3bcaf8357b6518d5288aee564eaafd1f84b17677e9824a8e6",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 433
+          },
+          {
+            "call": 7,
+            "phase": "main",
+            "position_sha256": "4fd1e3c4dcaad7048df8a963ea0a908b4d7de8ad521b59ec0d15a4d51af47aa3",
+            "mask_sha256": "2ac6be00052e11d5ea7bc29807e9f02d7f5d7eaf5575551d9b98d51ece22d5a9",
+            "repeated_positions": true,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 435
+          },
+          {
+            "call": 8,
+            "phase": "main",
+            "position_sha256": "26161a7069628c097962d06b9d016efc3992386caac406efb32bd450c3f58ab4",
+            "mask_sha256": "3d63b5a5e74c5fa8cb5526664d7aef5c02f711b79fa39b489bf9c0068982ff2d",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 436
+          }
+        ],
+        "q_sha256": "edb49bc9d62a8123f7ae6830ea8386bd32d328b8e908d31f847a8962bd904840"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 22
+      },
+      "actual_actor_forwards": 26,
+      "episode_F": {
+        "0": 20,
+        "1": 6,
+        "2": 8,
+        "3": 10
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": null,
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58450404864,
+      "peak_reserved_bytes": 61131980800,
+      "wall_seconds": 51.716267108917236,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4097
+    },
+    {
+      "three_policy_TIS": {
+        "actions": 27,
+        "max_abs_logratio": 0.1604442596435547,
+        "mean_abs_logratio": 0.05891764605486834,
+        "p95_abs_logratio": 0.15007152557373046,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 1.0246330547870646,
+        "tis_min_weight": 0.899959238269532,
+        "tis_max_weight": 1.1740323303361593,
+        "ESS": 26.862911036035793,
+        "ESS_fraction": 0.9949226309642887,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -5.276697743283876e-05,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.0004583836707752198,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/cn_k12/90331",
+      "problem_index": 3,
+      "width": 6,
+      "canonical_trace": {
+        "raw_actions": 27,
+        "forced_loss0": 22,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [
+          {
+            "call": 3,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 13
+          },
+          {
+            "call": 7,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 40
+          },
+          {
+            "call": 8,
+            "phase": "summary",
+            "raw": 151643,
+            "visible": 151674,
+            "response_index": 45
+          }
+        ],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "4418417d1424609f1c9c63ab2dc59cf7fd56ad3b2f3eb46672f803fda6fc6418",
+            "mask_sha256": "d562d68457999038ab04c643bd8bf946f793d46e6b57b23ca843528611038a9d",
+            "repeated_positions": false,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 411
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "93e8459ff67eca081698277e3eb00ca7e8ae5cce82e24daf6a7c5a381545dc5f",
+            "mask_sha256": "e45648ea09b8c70fdec1fc2bd0f557cba7ec2bb0326d38f7799fcacd742b6f8f",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 412
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "3bf45fd16ea9c29b50b484bd3059aa9c55dabbca516600152729f10c7e99f6c8",
+            "mask_sha256": "bf52dc0fe9c32d693072e460be1c8a544a6f47a9e7deeeb2ced13f2ea40e5801",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 417
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "a7e62f2dddac5866f67f1654cde5ba3cf7e09bf5f9eedc8baa2fb255013f0988",
+            "mask_sha256": "2656571236ed881893212e851b63bbb484db96ac7d4ebedb54c445d4f2220a6c",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 417
+          },
+          {
+            "call": 4,
+            "phase": "path",
+            "position_sha256": "3961eab60bc55debdeaafb14c7c88aa0cfa18b34db8c77a9f1ba70fdfb580ae4",
+            "mask_sha256": "b20c751354367efcfbd8afe454022102774c5d85c106c517f1ca8dfe7a7332e8",
+            "repeated_positions": false,
+            "targets": 4,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 417
+          },
+          {
+            "call": 5,
+            "phase": "path",
+            "position_sha256": "f9744daf0201e080ebfbee90f664254d5f7fdafcb0e00fb06d3deaf0d0558b20",
+            "mask_sha256": "e23591a50c5faca15a87f636fdf42ac54b586bd8210592036249ad1aae17c0d6",
+            "repeated_positions": false,
+            "targets": 5,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 417
+          },
+          {
+            "call": 6,
+            "phase": "path",
+            "position_sha256": "3bf45fd16ea9c29b50b484bd3059aa9c55dabbca516600152729f10c7e99f6c8",
+            "mask_sha256": "bf52dc0fe9c32d693072e460be1c8a544a6f47a9e7deeeb2ced13f2ea40e5801",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 417
+          },
+          {
+            "call": 7,
+            "phase": "path",
+            "position_sha256": "a7e62f2dddac5866f67f1654cde5ba3cf7e09bf5f9eedc8baa2fb255013f0988",
+            "mask_sha256": "2656571236ed881893212e851b63bbb484db96ac7d4ebedb54c445d4f2220a6c",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 417
+          },
+          {
+            "call": 8,
+            "phase": "summary",
+            "position_sha256": "46622afeb45f846cc2092c98c73ed33cb08b3a8b40e24673750a6a880dcb6e3f",
+            "mask_sha256": "3dfa63f8f8b634f3c1ae95ef02da869401b11570062cf07c9e2aefd91e0a213d",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 455
+          },
+          {
+            "call": 9,
+            "phase": "main",
+            "position_sha256": "1b5789d7c0e28bf889f0c9872eb7bf1c214e4790fc4fe357af43abc250d310d8",
+            "mask_sha256": "c6a21c19dd5afdd23aa283baa40fde72e4bfa85d0687e34796ed20063ae61b4b",
+            "repeated_positions": true,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 457
+          },
+          {
+            "call": 10,
+            "phase": "main",
+            "position_sha256": "bc5c869c536c6a59ca598478dfe9ba0f1fda8cab58eba0b40f5d721b6658ba85",
+            "mask_sha256": "1d46dbbdecfab5fee2a29d32996a320c30808c2348b0c5ba8cd47b91111d4907",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 458
+          }
+        ],
+        "q_sha256": "07c3ad4359566f496768c77a17e9f74006a47bd0806bc20a73467ee030d2b619"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 27
+      },
+      "actual_actor_forwards": 26,
+      "episode_F": {
+        "0": 20,
+        "1": 6,
+        "2": 8,
+        "3": 10,
+        "4": 4,
+        "5": 6
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": null,
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58462040064,
+      "peak_reserved_bytes": 61159243776,
+      "wall_seconds": 52.27357864379883,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4102
+    },
+    {
+      "three_policy_TIS": {
+        "actions": 36,
+        "max_abs_logratio": 0.17514991760253906,
+        "mean_abs_logratio": 0.05437008539835612,
+        "p95_abs_logratio": 0.15187740325927734,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 1.0210470412982628,
+        "tis_min_weight": 0.8554073243402882,
+        "tis_max_weight": 1.191424818776656,
+        "ESS": 35.82656469564906,
+        "ESS_fraction": 0.9951823526569183,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -7.010973604337778e-05,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.00048561132280156016,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/orca_math/198321",
+      "problem_index": 4,
+      "width": 8,
+      "canonical_trace": {
+        "raw_actions": 36,
+        "forced_loss0": 29,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [
+          {
+            "call": 3,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 13
+          },
+          {
+            "call": 7,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 40
+          },
+          {
+            "call": 10,
+            "phase": "summary",
+            "raw": 151643,
+            "visible": 151674,
+            "response_index": 61
+          }
+        ],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "3961eab60bc55debdeaafb14c7c88aa0cfa18b34db8c77a9f1ba70fdfb580ae4",
+            "mask_sha256": "b20c751354367efcfbd8afe454022102774c5d85c106c517f1ca8dfe7a7332e8",
+            "repeated_positions": false,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 420
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "e8daaef770c062ad178bb986797aea3502032e4e5f04f4b652c1155b28798948",
+            "mask_sha256": "16e2edc1f155a81538c5cbceceba5a5906651d861e8a86262ac4f4b3c96ba3a3",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 421
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "876e5751c9daf7e94ec522247771afb623a37169d7fc926a43bb7c85593296fb",
+            "mask_sha256": "465d08e077ba1aacbead2e45c5563150bd698289da205fd05dd6b875b1aa560b",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "0fcb5384939c6ec8112d367cb2d59f390c0046f15d4f482804caa2b40bb8ffde",
+            "mask_sha256": "d34bc588b66d6da2aca4257fdd0163c781e7d363c44738286120aa4a12085400",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 4,
+            "phase": "path",
+            "position_sha256": "b496bab6cee668cdce2889646c99166fbae9ff65201ebc24fdba414db125bab2",
+            "mask_sha256": "a92bd9147ab7c279b1cee6cde3b670df230ef81779a242fea0e4af62f9f84874",
+            "repeated_positions": false,
+            "targets": 4,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 5,
+            "phase": "path",
+            "position_sha256": "5b6483934ad4f6e4ff224ee05669575af0ffc8caf6e32834054b29c6976f2d5a",
+            "mask_sha256": "8898fa007c9f92788ef209152916c99250b91be596566afab436b7de5dfa49ef",
+            "repeated_positions": false,
+            "targets": 5,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 6,
+            "phase": "path",
+            "position_sha256": "876e5751c9daf7e94ec522247771afb623a37169d7fc926a43bb7c85593296fb",
+            "mask_sha256": "465d08e077ba1aacbead2e45c5563150bd698289da205fd05dd6b875b1aa560b",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 7,
+            "phase": "path",
+            "position_sha256": "0fcb5384939c6ec8112d367cb2d59f390c0046f15d4f482804caa2b40bb8ffde",
+            "mask_sha256": "d34bc588b66d6da2aca4257fdd0163c781e7d363c44738286120aa4a12085400",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 8,
+            "phase": "path",
+            "position_sha256": "b496bab6cee668cdce2889646c99166fbae9ff65201ebc24fdba414db125bab2",
+            "mask_sha256": "a92bd9147ab7c279b1cee6cde3b670df230ef81779a242fea0e4af62f9f84874",
+            "repeated_positions": false,
+            "targets": 4,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 9,
+            "phase": "path",
+            "position_sha256": "5b6483934ad4f6e4ff224ee05669575af0ffc8caf6e32834054b29c6976f2d5a",
+            "mask_sha256": "8898fa007c9f92788ef209152916c99250b91be596566afab436b7de5dfa49ef",
+            "repeated_positions": false,
+            "targets": 5,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 426
+          },
+          {
+            "call": 10,
+            "phase": "summary",
+            "position_sha256": "dd06e647e25d9b419e1e703d93bebb1ea88153eb67f50eaf6b3afba73def297a",
+            "mask_sha256": "5e88f24b11c0bc5815c3e059673a8be8187b291e68a45a0c170d35b9ffb5c240",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 480
+          },
+          {
+            "call": 11,
+            "phase": "main",
+            "position_sha256": "c55a00881265098019e2e5fec958b1f19f434feb93b895834a9ebd76eb7c5a35",
+            "mask_sha256": "3e02ec5fd991fb063055f890db9ccdd2c33934ee983b514328b91f5c43b58094",
+            "repeated_positions": true,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 482
+          },
+          {
+            "call": 12,
+            "phase": "main",
+            "position_sha256": "b17cddeaf394138d423a8a32fe898e993c38b45aeb1e8423601a5505a7825f52",
+            "mask_sha256": "c60b4b3699bdf3e7f85809e224f3494d3347fc406ea9039004c658b215caa611",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 483
+          }
+        ],
+        "q_sha256": "03fb4ef5224fb7c84462c066372f3ee4605016cbf61f0ce2dc97f583018cf39e"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 36
+      },
+      "actual_actor_forwards": 26,
+      "episode_F": {
+        "0": 20,
+        "1": 6,
+        "2": 8,
+        "3": 10,
+        "4": 4,
+        "5": 6,
+        "6": 8,
+        "7": 10
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": null,
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58479015424,
+      "peak_reserved_bytes": 61213769728,
+      "wall_seconds": 50.58933758735657,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4107
+    },
+    {
+      "three_policy_TIS": {
+        "actions": 13,
+        "max_abs_logratio": 0.12048721313476562,
+        "mean_abs_logratio": 0.0442500481238732,
+        "p95_abs_logratio": 0.10776824951171872,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 0.9921212959353712,
+        "tis_min_weight": 0.9054810401413415,
+        "tis_max_weight": 1.128046316697314,
+        "ESS": 12.954041784097537,
+        "ESS_fraction": 0.9964647526228875,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -2.4600175720479456e-05,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.00021386146545410156,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/orca_math/78844",
+      "problem_index": 5,
+      "width": 2,
+      "canonical_trace": {
+        "raw_actions": 13,
+        "forced_loss0": 9,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [
+          {
+            "call": 3,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 13
+          },
+          {
+            "call": 4,
+            "phase": "summary",
+            "raw": 151643,
+            "visible": 151674,
+            "response_index": 18
+          }
+        ],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "c6e347780b8fe6e8e3664d1917de4271f0f63420652d441155f4e0367c3bd2c6",
+            "mask_sha256": "76ea00c696350442740e2281cbe33b9a47155c6eb7d5a22e4e794424420e02a1",
+            "repeated_positions": false,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 416
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "3bf45fd16ea9c29b50b484bd3059aa9c55dabbca516600152729f10c7e99f6c8",
+            "mask_sha256": "bf52dc0fe9c32d693072e460be1c8a544a6f47a9e7deeeb2ced13f2ea40e5801",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 417
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "14777b9614fea4b00800532ce577a59cfa4a0bf66537e28ec27265890b5a9de5",
+            "mask_sha256": "ff6a044b19949d5100471a03100f848545bc5681175d36bafcbc459832e2497d",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 422
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "44c895e930e5d9512f588225daa9882e2b54549660c9243c6e66de6035de56b9",
+            "mask_sha256": "b69e0dbc2b864ac9c5f458da163ee5f1f34ef668e259ec5503a721bc0ab376d5",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 422
+          },
+          {
+            "call": 4,
+            "phase": "summary",
+            "position_sha256": "cd7b963c41cf3782a537e894e2df0ce9309662a4ddad3a32a76375e9da1fad4a",
+            "mask_sha256": "76a2f091b9070aeb43f3775c9c6b6c00fd6603975ed8084cad66316739a6f846",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 433
+          },
+          {
+            "call": 5,
+            "phase": "main",
+            "position_sha256": "aeab17d051190c699ddfca9ca774ecffba68c4246e3e1b9a3b559e3a31c35ad5",
+            "mask_sha256": "c0bb19b632dad787deb25ba0dcc5f7465f829743fe1dea544d76a67f54d75568",
+            "repeated_positions": true,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 435
+          },
+          {
+            "call": 6,
+            "phase": "main",
+            "position_sha256": "10ba5ff8e0f4203d3c9643be8eb090d17be06b64ff452cb307a1f2fbc4c67fcb",
+            "mask_sha256": "04906cd8da67e6282584edb7650ed5d3133a238be52bb556af28f2a07a2167ff",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 436
+          }
+        ],
+        "q_sha256": "76c1aebe89d70189ceea7659a525126fb99fcc26667ce430d4108b3b3a8beaec"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 13
+      },
+      "actual_actor_forwards": 22,
+      "episode_F": {
+        "0": 20,
+        "1": 6
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": null,
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58454320640,
+      "peak_reserved_bytes": 61180215296,
+      "wall_seconds": 50.142579555511475,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4112
+    },
+    {
+      "three_policy_TIS": {
+        "actions": 27,
+        "max_abs_logratio": 0.193359375,
+        "mean_abs_logratio": 0.058743936044198496,
+        "p95_abs_logratio": 0.10975399017333984,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 1.0005286203966564,
+        "tis_min_weight": 0.8241857291643592,
+        "tis_max_weight": 1.1055318573988806,
+        "ESS": 26.869319925303405,
+        "ESS_fraction": 0.9951599972334594,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -5.152563608135097e-05,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.00036959009594284,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/orca_math/139817",
+      "problem_index": 6,
+      "width": 6,
+      "canonical_trace": {
+        "raw_actions": 27,
+        "forced_loss0": 22,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [
+          {
+            "call": 3,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 13
+          },
+          {
+            "call": 7,
+            "phase": "path",
+            "raw": 151643,
+            "visible": 151670,
+            "response_index": 40
+          },
+          {
+            "call": 8,
+            "phase": "summary",
+            "raw": 151643,
+            "visible": 151674,
+            "response_index": 45
+          }
+        ],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "c6ea825de2980d2c7dfbe0fdea1882379856b0cba7ee2587f9c6dfc719012f28",
+            "mask_sha256": "c83ae4c66ed893fe49b276378749d12eb39e1a510434cc67e87cb634b639c966",
+            "repeated_positions": false,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 461
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "96216fd78e1728ce384a3d020414c3e4c69b78d0b07f463f30df5d23f835468b",
+            "mask_sha256": "81d43c40d8bc8b754975e559fe060484c4b0830fe7f270d84d5ef1d84d3096a0",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 462
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "bc8a9ad34ba921fc3f63db311d1eb3cc7eff828ebda8fd2bc9f1ea5880c2d074",
+            "mask_sha256": "39d66402a40768ded0123806491c3a96d6cdc60dfcfdbd00069f97fa5abf473d",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 467
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "7ec5d2e5ff4bb15490ba363eedef6c91199aed91cb6c077c6ddbb6173bb418dd",
+            "mask_sha256": "ffe04d2daf91d8e262a3858e8e9beafed533efe5e14ffd1871f11325a3828c74",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 467
+          },
+          {
+            "call": 4,
+            "phase": "path",
+            "position_sha256": "6663c2c925f6f58bc06a3dae8d447f43b29efe3fdb33960afd6dac64bf7a124e",
+            "mask_sha256": "edc804fe015f10fb9092c673f2d5fda0be36f00cc0a1d679d7b0ec4af0412a56",
+            "repeated_positions": false,
+            "targets": 4,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 467
+          },
+          {
+            "call": 5,
+            "phase": "path",
+            "position_sha256": "df7cfc0dc4fcc69c7bc0b9ea4d0ffdc7b8533e127ef852736a61e4a6941f22d4",
+            "mask_sha256": "332b9871c37072212f179c586d49d512158bc35225e7a0b0ce25d27ef0dd1e3d",
+            "repeated_positions": false,
+            "targets": 5,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 467
+          },
+          {
+            "call": 6,
+            "phase": "path",
+            "position_sha256": "bc8a9ad34ba921fc3f63db311d1eb3cc7eff828ebda8fd2bc9f1ea5880c2d074",
+            "mask_sha256": "39d66402a40768ded0123806491c3a96d6cdc60dfcfdbd00069f97fa5abf473d",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 467
+          },
+          {
+            "call": 7,
+            "phase": "path",
+            "position_sha256": "7ec5d2e5ff4bb15490ba363eedef6c91199aed91cb6c077c6ddbb6173bb418dd",
+            "mask_sha256": "ffe04d2daf91d8e262a3858e8e9beafed533efe5e14ffd1871f11325a3828c74",
+            "repeated_positions": false,
+            "targets": 3,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 467
+          },
+          {
+            "call": 8,
+            "phase": "summary",
+            "position_sha256": "f65eb80554d6f1e966bcd8057341db320ea2180aca6b8819f8b475289d7cded8",
+            "mask_sha256": "ae6a7bfbbe0ad6451ee7906647c6b6339cb24df8b46e4730c8e04d2cedc09645",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 505
+          },
+          {
+            "call": 9,
+            "phase": "main",
+            "position_sha256": "376b72626237b50d81f232480f4c9f4b49f1be367ee45b97437c25c982f8d7b0",
+            "mask_sha256": "f5572a7dbe4da4af7be5043a7c4422b03db486f861a3e039a1d5212ecdf90694",
+            "repeated_positions": true,
+            "targets": 1,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 507
+          },
+          {
+            "call": 10,
+            "phase": "main",
+            "position_sha256": "38fa3679a67ba1dcd98263a421cb5866decf823abaa103f9ccd60a54820b4a75",
+            "mask_sha256": "d89b401876da6c2a30fc7eba2ba71e9416e42e357319c654033e06bca9585175",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 508
+          }
+        ],
+        "q_sha256": "c1a2094fd4726ef760ffbd6914b8cc92d0c8e17410291e097bddac088a22cfa5"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 27
+      },
+      "actual_actor_forwards": 26,
+      "episode_F": {
+        "0": 20,
+        "1": 6,
+        "2": 8,
+        "3": 10,
+        "4": 4,
+        "5": 6
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": null,
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58488649216,
+      "peak_reserved_bytes": 61201186816,
+      "wall_seconds": 52.042454957962036,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4117
+    },
+    {
+      "three_policy_TIS": {
+        "actions": 411,
+        "max_abs_logratio": 0.20552635192871094,
+        "mean_abs_logratio": 0.011108407719001862,
+        "p95_abs_logratio": 0.06534194946289062,
+        "tis_cap_fraction": 0.0,
+        "tis_mean_weight": 0.9997292506846627,
+        "tis_min_weight": 0.8898477121899095,
+        "tis_max_weight": 1.228171345219171,
+        "ESS": 410.69211161736763,
+        "ESS_fraction": 0.9992508798476099,
+        "lower": 0.0,
+        "upper": 2.0,
+        "batch_normalize": false,
+        "q_preserved": true,
+        "p0_detached": true
+      },
+      "pre_update_ratio1_exact": true,
+      "loss_value": -0.0007837080486297054,
+      "gradient_dtype": "torch.float32",
+      "gradient_abs_max": 0.00043791683856397867,
+      "gradient_finite": true,
+      "master_dtype": "torch.float32",
+      "teacher_current_logits_dtype": [
+        "torch.bfloat16"
+      ],
+      "fixed_denominator": 4096,
+      "response_scale": 0.03125,
+      "optimizer_updates": 0,
+      "parameter_mutations": 0,
+      "BF16_q_p0_drift_is_correction_not_geometry_failure": true,
+      "passed": true,
+      "mode": "probability",
+      "problem_id": "bigmath/cn_k12/184135",
+      "problem_index": 7,
+      "width": 8,
+      "canonical_trace": {
+        "raw_actions": 411,
+        "forced_loss0": 9,
+        "sampled_terminal_loss1": true,
+        "raw_visible_replacements": [],
+        "canonical_call_schemas": [
+          {
+            "call": 0,
+            "phase": "main",
+            "position_sha256": "8fe69d200611eab87b450fa19281654c4197603602d9be801cecc4ccdd5e9876",
+            "mask_sha256": "9ce445df457b855949cc0b7e18240ea109c30a62d1c59786af31d08e07c9c8ec",
+            "repeated_positions": false,
+            "targets": 79,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 398
+          },
+          {
+            "call": 1,
+            "phase": "width",
+            "position_sha256": "9635b477e080c1ee0965bf4f70c1bf1a9285ae7ca5d590bcc534c566fe0295a3",
+            "mask_sha256": "3ca1efbcc396f6325a64eff92df99db16011070b32392e4f42405bcbcc905cc3",
+            "repeated_positions": false,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 477
+          },
+          {
+            "call": 2,
+            "phase": "path",
+            "position_sha256": "531d7efa390a701de2af90ada2b083a1f7957fabe505fc38e1ec5384c8cab1be",
+            "mask_sha256": "d82e2d003977d7c4f9d09e62c45ea1ae89386e003231e9c51c8aa99528c90ea1",
+            "repeated_positions": false,
+            "targets": 91,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 482
+          },
+          {
+            "call": 3,
+            "phase": "path",
+            "position_sha256": "605a87c7758e477fca10cb83001f15de6739deb82f73e4eb58ac48567e1dc53f",
+            "mask_sha256": "562ce53f47b6f5593ce6f44832b5871727b360027e6baa4b1cc5bb3f18b116ca",
+            "repeated_positions": false,
+            "targets": 42,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 482
+          },
+          {
+            "call": 4,
+            "phase": "summary",
+            "position_sha256": "7f8c3578be50302de9bc8e3fc3ed8f289974b9dc65cb07f8eeb40d1cf9399d4b",
+            "mask_sha256": "05d0272e9cc6580033b697bc8bddf9c2225846fb311964498f6a56a3aa116db7",
+            "repeated_positions": true,
+            "targets": 113,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 621
+          },
+          {
+            "call": 5,
+            "phase": "main",
+            "position_sha256": "8917a46b81dc8bd90e1e75bf1bd35e985bce98eec299e0fb4cb6648effce2264",
+            "mask_sha256": "718d1a55c3a2084caa64628f42dff4851ac253869f540281f78d63271a08d50e",
+            "repeated_positions": true,
+            "targets": 2,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 734
+          },
+          {
+            "call": 6,
+            "phase": "main",
+            "position_sha256": "b794f6f09bf6f87a5e5512b68a234115a729e2b6fe6296131a55cd82d0c885ed",
+            "mask_sha256": "131ca4f9cfc29cf87043eb3729d5151a2c526116e322e349a5a47e9141581ade",
+            "repeated_positions": true,
+            "targets": 82,
+            "q_source": "original_actor_old_logprobs",
+            "prompt_length": 736
+          }
+        ],
+        "q_sha256": "607256b062e9e605e7eb5e06a10674d63b3403d4a1245444a26d93f50568dc28"
+      },
+      "actor_cached_q_guard": {
+        "max": 0.0,
+        "mean": 0.0,
+        "p95": 0.0,
+        "actions": 36
+      },
+      "actual_actor_forwards": 26,
+      "episode_F": {
+        "0": 20,
+        "1": 6,
+        "2": 8,
+        "3": 10,
+        "4": 4,
+        "5": 6,
+        "6": 8,
+        "7": 10
+      },
+      "full_vocab": 151936,
+      "full_vocab_normalizer": true,
+      "natural_n1_source": {
+        "source": "${PROJECT_ROOT}/work/experiments/rl-acceleration-20261012/research/vllm-structured-prototype/fixed32-attempt1/output/traces-rank-7.jsonl",
+        "sha256": "5c7c4a2983c8336e3e24f912431f7e32519f9195c31e8a55a264cf410b6e4e37",
+        "sample": 0,
+        "seed": 4073904032271957942,
+        "actor_version": "cp50/bfloat16/vllm-dag-v1",
+        "existing_qualified_fixed32_q": true,
+        "source_episode_F": 369
+      },
+      "unique_actor_parameters": 290,
+      "actor_serialized_state_entries": 291,
+      "peak_allocated_bytes": 58769740288,
+      "peak_reserved_bytes": 61245227008,
+      "wall_seconds": 50.5388879776001,
+      "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+      "input_receipt": {
+        "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+        "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "source_sha256": {
+          "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+          "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+          "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+          "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+          "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+          "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+          "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+          "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+          "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+          "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+          "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+          "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+          "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+          "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+          "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+          "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+          "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+          "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+          "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+          "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "host": "RUN_5482aee87e-mpiworker-2",
+      "pid": 4122
+    }
+  ],
+  "pilot_geometry": {
+    "geometry_guard": {
+      "max": 3.147125244140625e-05,
+      "mean": 1.0533766726439353e-05,
+      "p95": 2.841949026333168e-05,
+      "actions": 22
+    },
+    "HF_FP32_cached_full_guard": {
+      "max": 3.814697265625e-05,
+      "mean": 4.248185632604873e-06,
+      "p95": 1.6641604815959e-05,
+      "actions": 22
+    },
+    "classification": "independent FP32 mask/position geometry guard",
+    "BF16_vs_FP32_output_identity_required": false,
+    "passed": true,
+    "mode": "geometry",
+    "problem_id": "bigmath/orca_math/3631",
+    "problem_index": 1,
+    "width": 4,
+    "canonical_trace": {
+      "raw_actions": 22,
+      "forced_loss0": 16,
+      "sampled_terminal_loss1": true,
+      "raw_visible_replacements": [
+        {
+          "call": 3,
+          "phase": "path",
+          "raw": 151643,
+          "visible": 151670,
+          "response_index": 13
+        },
+        {
+          "call": 6,
+          "phase": "summary",
+          "raw": 151643,
+          "visible": 151674,
+          "response_index": 34
+        }
+      ],
+      "canonical_call_schemas": [
+        {
+          "call": 0,
+          "phase": "main",
+          "position_sha256": "5b6483934ad4f6e4ff224ee05669575af0ffc8caf6e32834054b29c6976f2d5a",
+          "mask_sha256": "8898fa007c9f92788ef209152916c99250b91be596566afab436b7de5dfa49ef",
+          "repeated_positions": false,
+          "targets": 1,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 430
+        },
+        {
+          "call": 1,
+          "phase": "width",
+          "position_sha256": "9aeb4812d10ecc8a9eb78a9a613cc442792514b697dd0dbe69e2db6cbfb3985a",
+          "mask_sha256": "82dae89667404ea56bf351a31de8f31246acad5e5d5ba51477574dca19ff63be",
+          "repeated_positions": false,
+          "targets": 2,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 431
+        },
+        {
+          "call": 2,
+          "phase": "path",
+          "position_sha256": "c40e1cd89c0f882fc1bb5113dbbc1514f80fdc0a125c85d4140a9ad5b5b55e4f",
+          "mask_sha256": "6eed5b4db3ec5c28f49b4a1847e2685560d3d7c50b27547cccf6501ddb3d723a",
+          "repeated_positions": false,
+          "targets": 2,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 436
+        },
+        {
+          "call": 3,
+          "phase": "path",
+          "position_sha256": "764ba6a5e7c8fb1c28dcb9c05d38b1810d16e07f19698ed02f6ee099d9df3b91",
+          "mask_sha256": "b0c349946c12d0262e731014fddd26ba41a57a899d27c5e8474f523d57c66135",
+          "repeated_positions": false,
+          "targets": 3,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 436
+        },
+        {
+          "call": 4,
+          "phase": "path",
+          "position_sha256": "fb0b85f8b41ac2acde5b0887bcace5a8b4e50d9a7abc7281874409a47ffc90fa",
+          "mask_sha256": "715a3cb79f800ff0b8298195bcbed5bb1fa9a066ff4ab8cb5157ffeb6cea9619",
+          "repeated_positions": false,
+          "targets": 4,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 436
+        },
+        {
+          "call": 5,
+          "phase": "path",
+          "position_sha256": "f5bf10a4e8145796cef34acd21ad77297ed1e015b44892416b056e36270844ea",
+          "mask_sha256": "97e3ba6b98d5e7c31354b9a40eb2f53a2615f02d4a929ca4e58ae4b7919ce35a",
+          "repeated_positions": false,
+          "targets": 5,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 436
+        },
+        {
+          "call": 6,
+          "phase": "summary",
+          "position_sha256": "87083829d4525f501ed05afe8a3c5c45f9ee5ffed48ed1dcf2ec7cf2a78c13e9",
+          "mask_sha256": "ebebaa7a5c18b460371bdbfa07317c107249c6724fe49788794cbd1d9a284ecd",
+          "repeated_positions": true,
+          "targets": 2,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 463
+        },
+        {
+          "call": 7,
+          "phase": "main",
+          "position_sha256": "8f8f78517bffa6502e03d5c9c07a10c1c171426f932a252a6ec94e91b5ff9f62",
+          "mask_sha256": "43e7542834f203f58513818b8193e8aa5c95f2affc247b62dc91d7f43c9fe04b",
+          "repeated_positions": true,
+          "targets": 1,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 465
+        },
+        {
+          "call": 8,
+          "phase": "main",
+          "position_sha256": "dead297a599d55148e942830c89a1e7ac118b1a62e4d6b7f95a5726bb3de494b",
+          "mask_sha256": "9a78d8de65e64d045cc9dc5a40e7ba81aa081440e0b0cfdacb0bb722dcad72b0",
+          "repeated_positions": true,
+          "targets": 2,
+          "q_source": "original_actor_old_logprobs",
+          "prompt_length": 466
+        }
+      ],
+      "q_sha256": "8dcea623fcc32a6010a45202a475a97052971a698125a025654f81839cdd3d7c"
+    },
+    "actor_cached_q_guard": {
+      "max": 0.0,
+      "mean": 0.0,
+      "p95": 0.0,
+      "actions": 22
+    },
+    "actual_actor_forwards": 26,
+    "episode_F": {
+      "0": 20,
+      "1": 6,
+      "2": 8,
+      "3": 10
+    },
+    "full_vocab": 151936,
+    "full_vocab_normalizer": true,
+    "natural_n1_source": null,
+    "unique_actor_parameters": 290,
+    "actor_serialized_state_entries": 291,
+    "peak_allocated_bytes": 51920062464,
+    "peak_reserved_bytes": 51971620864,
+    "wall_seconds": 40.56933283805847,
+    "scope": "Actual 4B n1 mathematical/mask contract; NOT full32 update, Adam, asynchronous IPC, or speed proof",
+    "input_receipt": {
+      "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+      "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+      "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+      "source_sha256": {
+        "src/probability_contract.py": "e12a61c4c646a118b56f0a719d2b54abebeaac25757db93f4ad27443df3a49f0",
+        "src/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
+        "src/engine_patch.py": "c8f21f8960f8848f22a78f4c3b1ddf86bcf22319136a5613b05a4b8aac32b0d1",
+        "src/cohort_decoder.py": "6942cdf138e9c17597a52e53033cb28e98ebdfcfb2dda3f995851ff6ed44e13f",
+        "src/proof_rollout_cpu.py": "4c264f156adff3f430be8df5a11ec957f39bead533c480e3a8e5a8621cb97240",
+        "src/structured_adapter.py": "cc0eb8c1546b776037359b187e76f1499d6537a343b5f0aa74fb41fda2536a50",
+        "src/proof_cpu.py": "ce4f1e3fca9f7ffba9fb91a83535ddda6b6badfb66d32968165ca15a49dc219d",
+        "src/structured_replay.py": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+        "src/proof_contract_cpu.py": "cee94b12efd76c3b20a6803650d7d5a4d50834317a3b88885e108874169c7995",
+        "src/formatting.py": "a3a6f9790264f96b8e89ef9b176529335e428cc0e962fcc88899d438cc00ee6f",
+        "src/lane_profile.py": "4d919b0dac9b1e5a8896faef4467a679527093edc02499b8b17a16d589130c02",
+        "src/gpu_probe.py": "501fe1edd47832709d8fa94542a16e59a5af799595baae536361e9a758dfe216",
+        "src/fixed32_worker.py": "71b2f1be7838173e14901d66ad445e793d9f523e657b88162461b06254964eff",
+        "src/gpu_contract.py": "49b379fd772cdf367e60051f96064f2fe5f79217059f1f4590fa156d33b751bc",
+        "src/rollout.py": "c82112f4ea5d3ee1106663321ae6995e3f1d31b7336e9e5ba936bd959f8d6677",
+        "src/tis_loss.py": "c1f7541f509bb1cda6873d1b4c14eb31da0bbf12ef06f154ba04fdf4ffd08114",
+        "src/slot_decoder.py": "4c42030c4c0d7ec6d89a403b27df27b09f4f175abd05e39655bc37373619be82",
+        "src/dag_backend.py": "56274b51eb68ef5ea0b638e122cb763614a5420b950e0e2f62cdb661ce689907",
+        "src/structured_runner.py": "a89427b9f48cc2df2f27ec4f7448d89db238a00e6ab87defca8478e2dd39695e",
+        "src/source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+      }
+    },
+    "host": "RUN_5482aee87e-mpiworker-2",
+    "pid": 3976
+  },
+  "scope": "n1 actor\u2192BF16 teacher math/mask/probability proof; not Adam/IPC/full32/speed"
+}

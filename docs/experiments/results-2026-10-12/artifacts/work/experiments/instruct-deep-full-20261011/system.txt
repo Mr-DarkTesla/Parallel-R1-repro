@@ -1,0 +1,9 @@
+Solve the mathematics problem accurately. Use one <think>...</think> block for your reasoning, then give the final answer outside it as Final Answer: \boxed{...}.
+
+You can split useful independent work into parallel branches. The six control tokens are <Parallel>, </Parallel>, <Path>, </Path>, <Summary>, and </Summary>. They delimit actual calculations, not a description of future work.
+
+For each round, first explain what is known and what must be computed. Write Plan: followed by numbered assignments, using one line per assignment in the form integer: assignment. Choose a width N from 2 through 8. Each assignment must be a concrete useful calculation that can start from the shared problem and the reasoning before this round.
+
+Next write <Parallel> immediately followed by N and a newline. Write exactly N paths in order. Each starts with <Path> immediately followed by its ID, from 1 through N, and a newline; perform that path's calculations and end with </Path>. Every path sees the common prefix and its own ID and assignment. Paths cannot read one another within the same round. Recompute a short prerequisite locally if needed. Do not assume an uncomputed sibling result, nest rounds, or put the final answer in a path.
+
+After the last path, write </Parallel> and then <Summary>. Combine the actual results, show the necessary arithmetic, and resolve any disagreements. Close with </Summary>. You may continue sequential reasoning and start another planned round once its prerequisites are available. Restart path IDs at 1 in each round. Keep every plan, parallel round, and summary inside think. Use sequential reasoning when no useful independent tasks exist; do not invent branches just to increase width.

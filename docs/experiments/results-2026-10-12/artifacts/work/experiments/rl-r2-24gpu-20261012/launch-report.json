@@ -1,0 +1,48 @@
+{
+  "job_id": "RUN_bb32c0eace",
+  "checked_at": 1791760896.2233803,
+  "state": {
+    "state": "validating",
+    "step": 0,
+    "planned": 32
+  },
+  "actual_smoke_optimizer_updates": 2,
+  "actual_production_iterations": 0,
+  "actual_production_updates": 0,
+  "production_steps_requested": 500,
+  "train_tasks": 1024,
+  "global_prompts": 24,
+  "responses_per_prompt": 4,
+  "checkpoint_steps": [
+    50,
+    100,
+    200,
+    300,
+    400,
+    500
+  ],
+  "exports": "single model.safetensors; no optimizer/RNG",
+  "independent_of_chat": true,
+  "smoke_passed": true,
+  "smoke_fixture_cases": 480,
+  "proof_sha256": "29f6dc3fa6793dded9fe9f11de23975d9d546d699bd9aa8071f05be3d6a5f037",
+  "production_children": 24,
+  "production_baseline": {
+    "step": 0,
+    "completed": 32,
+    "correct": 16,
+    "accuracy": 0.5,
+    "format_valid": 29,
+    "parallel_valid": 29,
+    "fork_tasks": 32,
+    "mean_width": 2.727272727272727,
+    "mean_rounds": 1.03125,
+    "mean_actual_forward_calls": 541.28125,
+    "mean_sampled_tokens": 696.53125,
+    "protocol": "Exact FP32 HF fullwidth8, temperature1 top_p1 nofilter; fixed clean validation seed",
+    "benchmark": false,
+    "model": "original fullInstruct SFT epoch1; before new RL"
+  },
+  "training_rollouts_written": 94,
+  "phase_observed": "production training rollouts iteration1; baseline32 completed"
+}

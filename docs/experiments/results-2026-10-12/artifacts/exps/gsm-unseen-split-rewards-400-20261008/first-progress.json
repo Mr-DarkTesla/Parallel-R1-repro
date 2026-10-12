@@ -1,0 +1,108 @@
+{
+  "status": {
+    "state": "running",
+    "observed_utc": "2026-10-08T06:43:39.939908+00:00",
+    "controller_pid": 900429,
+    "stage": "gated_depth",
+    "attempt": 1,
+    "pid": 900616,
+    "step": 53,
+    "target_steps": 400,
+    "initialized_from": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005/final",
+    "resumed_from": null,
+    "gpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "queued": [
+      "parallel_gain"
+    ]
+  },
+  "smoke": {
+    "gated_depth": {
+      "complete": true,
+      "steps": 2,
+      "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-split-rewards-400-20261008/smoke-gated_depth/results/checkpoints/global_step_2/actor/huggingface",
+      "full_state": true,
+      "finite_weights": true,
+      "finite_forward": true,
+      "validation": {
+        "gsm_infinite_heldout": {
+          "acc": 0.25,
+          "critical_depth": 670.25,
+          "parallel": 1.0,
+          "forks": 2.25,
+          "format_ok": 1.0,
+          "answers": 8
+        }
+      }
+    },
+    "parallel_gain": {
+      "complete": true,
+      "steps": 2,
+      "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-split-rewards-400-20261008/smoke-parallel_gain/results/checkpoints/global_step_2/actor/huggingface",
+      "full_state": true,
+      "finite_weights": true,
+      "finite_forward": true,
+      "validation": {
+        "gsm_infinite_heldout": {
+          "acc": 0.125,
+          "critical_depth": 769.25,
+          "parallel": 0.875,
+          "forks": 1.375,
+          "format_ok": 1.0,
+          "answers": 8
+        }
+      }
+    }
+  },
+  "last_metrics": {
+    "reward/accuracy_mean": 0.28515625,
+    "reward/aux_mean": -0.012938280589878559,
+    "reward/total_mean": 0.2722179591655731,
+    "advantage/accuracy_abs_mean": 0.615379273891449,
+    "advantage/aux_abs_mean": 0.013816991820931435,
+    "grpo/mixed_accuracy_group_fraction": 0.75,
+    "actor/grad_norm": 1.0390875935554504,
+    "response_length/mean": 553.234375,
+    "parallel/critical_depth_mean": 465.55078125,
+    "parallel/ratio": 0.984375,
+    "parallel/forks_mean": 1.9921875,
+    "timing_s/step": 22.444644312374294
+  },
+  "mean_last20": {
+    "reward/accuracy_mean": 0.3318359375,
+    "reward/aux_mean": -0.014545605378225445,
+    "reward/total_mean": 0.3172903284430504,
+    "advantage/accuracy_abs_mean": 0.6539158791303634,
+    "advantage/aux_abs_mean": 0.014417412271723152,
+    "grpo/mixed_accuracy_group_fraction": 0.809375,
+    "actor/grad_norm": 1.081709823012352,
+    "response_length/mean": 568.5548828125,
+    "parallel/critical_depth_mean": 485.73671875,
+    "parallel/ratio": 0.948828125,
+    "parallel/forks_mean": 1.90234375,
+    "timing_s/step": 26.073688519652933
+  },
+  "completed_steps": 53,
+  "val50": {
+    "APO_MATH300": {
+      "rows": 316,
+      "acc": 0.28164556962025317,
+      "depth": 601.8322784810126,
+      "parallel": 0.9683544303797469
+    },
+    "gsm_infinite_heldout": {
+      "rows": 256,
+      "acc": 0.35546875,
+      "depth": 521.296875,
+      "parallel": 0.953125
+    }
+  }
+}

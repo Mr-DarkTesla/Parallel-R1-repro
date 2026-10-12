@@ -1,0 +1,19 @@
+{
+  "model": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/raw",
+  "mode": "structured",
+  "guided_first_width": 0,
+  "sampling": {
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "top_k": -1
+  },
+  "system_file": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/protocol-text-system.txt",
+  "pilot_code": "${PROJECT_ROOT}/work/experiments/night-20261010/text-rl-code/verl",
+  "fixed_questions": "${PROJECT_ROOT}/work/experiments/night-20261010/pilots/fixed24-questions.jsonl",
+  "response_cap": 4096,
+  "path_cap": 256,
+  "merge_reserve": 512,
+  "text_protocol": true,
+  "backend": "text_native_hf_serial",
+  "planned": 24
+}

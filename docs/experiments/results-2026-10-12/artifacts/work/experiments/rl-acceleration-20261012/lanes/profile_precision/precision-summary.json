@@ -1,0 +1,42 @@
+{
+  "fp32-control": {
+    "ranks": 8,
+    "pass_all": true,
+    "max": 0.0001201629638671875,
+    "worst_rank_mean": 4.856178748013917e-06,
+    "worst_rank_p95": 2.47955322265625e-05
+  },
+  "tf32-native": {
+    "ranks": 8,
+    "pass_all": false,
+    "max": 0.132720947265625,
+    "worst_rank_mean": 0.0026032286696135998,
+    "worst_rank_p95": 0.013930120505392551,
+    "correct": 14,
+    "reference_correct": 13,
+    "exact_response_count": 0,
+    "T": 22675
+  },
+  "bf16-native": {
+    "ranks": 8,
+    "pass_all": false,
+    "max": 0.17393875122070312,
+    "worst_rank_mean": 0.005113103426992893,
+    "worst_rank_p95": 0.025956913828849792,
+    "correct": 13,
+    "reference_correct": 13,
+    "exact_response_count": 0,
+    "T": 15321
+  },
+  "bf16-attention-native": {
+    "ranks": 8,
+    "pass_all": false,
+    "max": 0.27329444885253906,
+    "worst_rank_mean": 0.0047472394071519375,
+    "worst_rank_p95": 0.025078177452087402,
+    "correct": 12,
+    "reference_correct": 13,
+    "exact_response_count": 0,
+    "T": 15316
+  }
+}

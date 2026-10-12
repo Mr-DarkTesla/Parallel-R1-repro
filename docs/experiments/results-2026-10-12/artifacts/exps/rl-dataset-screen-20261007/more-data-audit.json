@@ -1,0 +1,111 @@
+{
+  "seed": 20261007,
+  "math_rows": 12500,
+  "sft_rows": 5910,
+  "filter": "normalized exact and number-masked word-trigram Jaccard >=0.65; does not establish absence of semantic paraphrases",
+  "datasets": {
+    "bigmath_orca": {
+      "selected": 256,
+      "rejected": [
+        {
+          "id": "71589",
+          "match": "SFT/369",
+          "kind": "number_masked_word_trigram_jaccard",
+          "similarity": 0.654320987654321
+        },
+        {
+          "id": "42538",
+          "match": "SFT/3435",
+          "kind": "normalized_exact"
+        },
+        {
+          "id": "103221",
+          "match": "SFT/3381",
+          "kind": "normalized_exact"
+        },
+        {
+          "id": "178921",
+          "match": "SFT/2499",
+          "kind": "normalized_exact"
+        },
+        {
+          "id": "213704",
+          "match": "SFT/5272",
+          "kind": "normalized_exact"
+        },
+        {
+          "id": "173756",
+          "match": "SFT/3150",
+          "kind": "normalized_exact"
+        },
+        {
+          "id": "123653",
+          "match": "SFT/3625",
+          "kind": "number_masked_word_trigram_jaccard",
+          "similarity": 0.6521739130434783
+        },
+        {
+          "id": "8766",
+          "match": "SFT/1349",
+          "kind": "number_masked_word_trigram_jaccard",
+          "similarity": 0.7551020408163265
+        },
+        {
+          "id": "128884",
+          "match": "SFT/3767",
+          "kind": "normalized_exact"
+        },
+        {
+          "id": "48855",
+          "match": "SFT/626",
+          "kind": "normalized_exact"
+        }
+      ],
+      "max_prompt_tokens": 429
+    },
+    "bigmath_cn_k12": {
+      "selected": 256,
+      "rejected": [
+        {
+          "id": "143009",
+          "match": "MATH/algebra/train/297",
+          "kind": "number_masked_word_trigram_jaccard",
+          "similarity": 0.6666666666666666
+        },
+        {
+          "id": "77090",
+          "match": "MATH/counting_and_probability/train/189",
+          "kind": "number_masked_word_trigram_jaccard",
+          "similarity": 0.75
+        },
+        {
+          "id": "128094",
+          "match": "MATH/counting_and_probability/train/189",
+          "kind": "number_masked_word_trigram_jaccard",
+          "similarity": 0.6666666666666666
+        }
+      ],
+      "max_prompt_tokens": 398
+    }
+  },
+  "blocked": {},
+  "publication": "open-r1/Big-Math-RL-Verified-Processed@c79efbb6d3b75e3a2bcc27a5c569119918132345",
+  "publication_filters": "Removes missing llama8b solve rates and references unparseable by Math-Verify; sample uniformly within each source, without solve-rate filtering.",
+  "download_sha256": "db6d8ea52ec4b9bd0bdfc1a2ce38874a95a193cd467e6858c4fecea3db08cbb0",
+  "bigmath_orca": {
+    "rows": 256,
+    "source_rows": 79556,
+    "quality_exclusions": {
+      "figure_or_proof": 124
+    },
+    "sha256": "7df39f2e84380b25b9541a3bf1ccbe8f00c1c6f414976479bca8034be9d4521f"
+  },
+  "bigmath_cn_k12": {
+    "rows": 256,
+    "source_rows": 48974,
+    "quality_exclusions": {
+      "figure_or_proof": 149
+    },
+    "sha256": "2882edfb2ca9b9d117c563561aad4e2ccd0787b21fa69f330df4018d48910655"
+  }
+}

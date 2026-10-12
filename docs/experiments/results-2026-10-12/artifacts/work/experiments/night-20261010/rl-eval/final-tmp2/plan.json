@@ -1,0 +1,27 @@
+{
+  "run": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-split40",
+  "export": [
+    "${PROJECT_ROOT}/work/experiments/night-20261010/cloud/tmp2/runtime/bin/python",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/export.py",
+    "--run",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-split40",
+    "--output",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/final-tmp2"
+  ],
+  "evaluations": [
+    [
+      "${PROJECT_ROOT}/work/experiments/night-20261010/cloud/tmp2/runtime/bin/python",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/final-tmp2",
+      "--name",
+      "final-tmp2-math500",
+      "--suite",
+      "math500",
+      "--mode",
+      "structured"
+    ]
+  ],
+  "deadline": "2026-10-10T09:00:00Z",
+  "note": "Requires runner stopped/GPU free. Export chooses highest committed checkpoint with matching actual optimizer metrics; can recover smoke if production absent, clearly labeled."
+}

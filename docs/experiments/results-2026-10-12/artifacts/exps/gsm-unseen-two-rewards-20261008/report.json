@@ -1,0 +1,54 @@
+{
+  "s2": {
+    "complete": true,
+    "steps": 800,
+    "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-two-rewards-20261008/s2/results/checkpoints/global_step_800/actor/huggingface",
+    "full_state": true,
+    "finite_weights": true,
+    "finite_forward": true,
+    "validation": {
+      "APO_MATH300": {
+        "acc": 0.3924050632911392,
+        "critical_depth": 621.9367088607595,
+        "parallel": 0.8037974683544303,
+        "forks": 0.8037974683544303,
+        "format_ok": 0.9841772151898734,
+        "answers": 316
+      },
+      "gsm_infinite_heldout": {
+        "acc": 0.91796875,
+        "critical_depth": 376.3125,
+        "parallel": 0.953125,
+        "forks": 0.953125,
+        "format_ok": 1.0,
+        "answers": 256
+      }
+    }
+  },
+  "depth": {
+    "complete": true,
+    "steps": 800,
+    "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-two-rewards-20261008/depth/results/checkpoints/global_step_800/actor/huggingface",
+    "full_state": true,
+    "finite_weights": true,
+    "finite_forward": true,
+    "validation": {
+      "APO_MATH300": {
+        "acc": 0.10443037974683544,
+        "critical_depth": 5.512658227848101,
+        "parallel": 0.0,
+        "forks": 0.0,
+        "format_ok": 1.0,
+        "answers": 316
+      },
+      "gsm_infinite_heldout": {
+        "acc": 0.83984375,
+        "critical_depth": 5.0625,
+        "parallel": 0.0,
+        "forks": 0.0,
+        "format_ok": 1.0,
+        "answers": 256
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "method": "night_accuracy",
+  "model": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/model",
+  "train": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+  "val": "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet",
+  "gpu_ids": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+  "expected_gpus": 8,
+  "deadline": "2026-10-10T09:00:00Z",
+  "started_at": "2026-10-09T22:19:06.625564+00:00",
+  "status": "prepared",
+  "smoke_argv": [
+    "bash",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/run_rl.sh",
+    "night_accuracy",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/model",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/review-dryrun/smoke",
+    "trainer.total_training_steps=2",
+    "algorithm.night_structure_bonus=0.0",
+    "algorithm.night_structure_until_step=0"
+  ],
+  "production_argv_template": [
+    "bash",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/run_rl.sh",
+    "night_accuracy",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/model",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/review-dryrun/production",
+    "trainer.total_training_steps=40",
+    "algorithm.night_structure_bonus=0.0",
+    "algorithm.night_structure_until_step=0",
+    "trainer.resume_mode=resume_path",
+    "trainer.resume_from_path=${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/review-dryrun/smoke/checkpoints/global_step_2"
+  ]
+}

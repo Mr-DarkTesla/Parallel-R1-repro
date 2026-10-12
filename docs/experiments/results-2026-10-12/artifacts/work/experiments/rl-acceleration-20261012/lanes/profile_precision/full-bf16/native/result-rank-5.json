@@ -1,0 +1,294 @@
+{
+  "rank": 5,
+  "precision": "bf16_full_autocast",
+  "master_dtype": "float32",
+  "lm_head_dtype": "bfloat16",
+  "dtype_receipt": {
+    "generation:q_proj:(1, 383, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:sdpa:(383, 383)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "generation:lm_head:(1, 1, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:q_proj:(1, 1, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:sdpa:(1, 384)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "generation:lm_head:(7, 1, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:q_proj:(1, 568, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:sdpa:(568, 568)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "teacher:lm_head:(1, 186, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:q_proj:(1, 570, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:sdpa:(570, 570)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "teacher:lm_head:(1, 2, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    }
+  },
+  "ratio_min": 0.8339327573776245,
+  "ratio_max": 1.1346558332443237,
+  "ratio_outside_clip_fraction": 0.0,
+  "ratio_abs_mean": 0.011045076884329319,
+  "logits_normalizer_dtype": "float32",
+  "autocast_weight_cache": true,
+  "attention_forced_fp32": false,
+  "cases": [
+    {
+      "index": 5,
+      "id": "bigmath/cn_k12/165159",
+      "correct": true,
+      "reference_correct": true,
+      "format_valid": true,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 917,
+      "reference_F": 540,
+      "generation_seconds": 37.9710245821625,
+      "T": 1196,
+      "native_replay_max": 0.18160247802734375,
+      "native_replay_mean": 0.011160360649228096,
+      "native_replay_p95": 0.06916618347167969,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 186,
+          "max": 0.09195709228515625,
+          "mean": 0.007660373579710722,
+          "p95": 0.06060171127319336
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 0.0001373291015625,
+          "mean": 6.866455078125e-05,
+          "p95": 0.00013046264939475805
+        },
+        {
+          "phase": "path",
+          "n": 53,
+          "max": 0.06143760681152344,
+          "mean": 0.008835810236632824,
+          "p95": 0.05262717232108116
+        },
+        {
+          "phase": "path",
+          "n": 84,
+          "max": 0.1263294219970703,
+          "mean": 0.014840307645499706,
+          "p95": 0.08400991559028625
+        },
+        {
+          "phase": "path",
+          "n": 56,
+          "max": 0.11875724792480469,
+          "mean": 0.012208836153149605,
+          "p95": 0.06038188934326172
+        },
+        {
+          "phase": "path",
+          "n": 33,
+          "max": 0.05291748046875,
+          "mean": 0.0052623748779296875,
+          "p95": 0.031981270760297775
+        },
+        {
+          "phase": "path",
+          "n": 49,
+          "max": 0.11156272888183594,
+          "mean": 0.00838707946240902,
+          "p95": 0.06376379728317261
+        },
+        {
+          "phase": "path",
+          "n": 56,
+          "max": 0.18160247802734375,
+          "mean": 0.014403547160327435,
+          "p95": 0.0731353759765625
+        },
+        {
+          "phase": "path",
+          "n": 32,
+          "max": 0.11988639831542969,
+          "mean": 0.01327669620513916,
+          "p95": 0.061181217432022095
+        },
+        {
+          "phase": "summary",
+          "n": 524,
+          "max": 0.12364387512207031,
+          "mean": 0.012523028999567032,
+          "p95": 0.07157555222511292
+        },
+        {
+          "phase": "main",
+          "n": 2,
+          "max": 8.7738037109375e-05,
+          "mean": 4.38690185546875e-05,
+          "p95": 8.335113670909777e-05
+        },
+        {
+          "phase": "main",
+          "n": 119,
+          "max": 0.12277984619140625,
+          "mean": 0.009630363434553146,
+          "p95": 0.08619613200426102
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "id": "bigmath/cn_k12/155313",
+      "correct": true,
+      "reference_correct": true,
+      "format_valid": true,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 448,
+      "reference_F": 921,
+      "generation_seconds": 17.739986462984234,
+      "T": 558,
+      "native_replay_max": 0.12000846862792969,
+      "native_replay_mean": 0.010707725770771503,
+      "native_replay_p95": 0.07222211360931396,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 219,
+          "max": 0.11519050598144531,
+          "mean": 0.009599127806723118,
+          "p95": 0.06171083077788353
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 0.0002613067626953125,
+          "mean": 0.00013065338134765625,
+          "p95": 0.0002482414129190147
+        },
+        {
+          "phase": "path",
+          "n": 71,
+          "max": 0.11787223815917969,
+          "mean": 0.015771087259054184,
+          "p95": 0.08876419067382812
+        },
+        {
+          "phase": "path",
+          "n": 103,
+          "max": 0.11020851135253906,
+          "mean": 0.00907240528613329,
+          "p95": 0.064436174929142
+        },
+        {
+          "phase": "path",
+          "n": 39,
+          "max": 0.03758049011230469,
+          "mean": 0.005220315419137478,
+          "p95": 0.033132363110780716
+        },
+        {
+          "phase": "summary",
+          "n": 50,
+          "max": 0.12000846862792969,
+          "mean": 0.018596230074763298,
+          "p95": 0.09017818421125412
+        },
+        {
+          "phase": "main",
+          "n": 2,
+          "max": 7.62939453125e-06,
+          "mean": 3.814697265625e-06,
+          "p95": 7.24792471373803e-06
+        },
+        {
+          "phase": "main",
+          "n": 72,
+          "max": 0.10479736328125,
+          "mean": 0.009511444717645645,
+          "p95": 0.06432272493839264
+        }
+      ]
+    }
+  ],
+  "actions": 1754,
+  "native_replay_max": 0.18160247802734375,
+  "native_replay_mean": 0.011016364209353924,
+  "native_replay_p95": 0.07097320258617401,
+  "unchanged_thresholds": {
+    "max": 0.01,
+    "mean": 0.002,
+    "p95": 0.005
+  },
+  "native_guard_passed": false,
+  "correct": 2,
+  "reference_correct": 2,
+  "quality_not_benchmark": true,
+  "optimizer_updates": 0,
+  "peak_gpu_bytes": 25707317760,
+  "actual_backend_flags": {
+    "cuda_tf32": false,
+    "float32_precision": "highest"
+  },
+  "generation_is_cached": true,
+  "teacher_is_full_prefix": true
+}

@@ -1,0 +1,92 @@
+# Каталог всех найденных каталогов экспериментов
+
+Снимки конфигураций, метрик, числовой телеметрии и графиков. Каталог включает диагностику, подготовку данных и неуспешные попытки. Наличие каталога или конфигурации не означает завершённое обучение.
+
+[Обзор кампаний и протоколов](README.md) · [Конфигурации](TRAINING_CONFIGURATIONS.md) · [Графики](FIGURES.md)
+
+| Каталог | Конфигурации | Метрики / отчёты | Графики | Карточка |
+|---|---:|---:|---:|---|
+| `exps/ablation-queue-20261005` | 8 | 15 | 0 | [Открыть](runs/exps--ablation-queue-20261005.md) |
+| `exps/branch-diversity-20261006` | 1 | 3 | 0 | [Открыть](runs/exps--branch-diversity-20261006.md) |
+| `exps/branch-review-20261007` | 0 | 4 | 4 | [Открыть](runs/exps--branch-review-20261007.md) |
+| `exps/checkpoint-cleanup-20261007` | 0 | 0 | 0 | [Открыть](runs/exps--checkpoint-cleanup-20261007.md) |
+| `exps/cloud-handoff-20261006` | 0 | 0 | 0 | [Открыть](runs/exps--cloud-handoff-20261006.md) |
+| `exps/deepseek-gsm-only-20261009` | 8 | 4 | 2 | [Открыть](runs/exps--deepseek-gsm-only-20261009.md) |
+| `exps/deepseek-gsm-wide-20261009` | 4 | 0 | 0 | [Открыть](runs/exps--deepseek-gsm-wide-20261009.md) |
+| `exps/deepseek-gsm-wide3000-20261009` | 4 | 2 | 0 | [Открыть](runs/exps--deepseek-gsm-wide3000-20261009.md) |
+| `exps/deepseek-gsm-wide3000-v2-20261009` | 10 | 11 | 0 | [Открыть](runs/exps--deepseek-gsm-wide3000-v2-20261009.md) |
+| `exps/deepseek-sft-counted-20261009` | 11 | 7 | 0 | [Открыть](runs/exps--deepseek-sft-counted-20261009.md) |
+| `exps/downloaded-sft-audit-20261008` | 3 | 7 | 0 | [Открыть](runs/exps--downloaded-sft-audit-20261008.md) |
+| `exps/epoch5-format-audit-20261005` | 0 | 2 | 0 | [Открыть](runs/exps--epoch5-format-audit-20261005.md) |
+| `exps/eval-sanity-20261005` | 0 | 0 | 0 | [Открыть](runs/exps--eval-sanity-20261005.md) |
+| `exps/eval-speed-20261005` | 1 | 6 | 0 | [Открыть](runs/exps--eval-speed-20261005.md) |
+| `exps/experiment-history-20261008` | 0 | 1 | 8 | [Открыть](runs/exps--experiment-history-20261008.md) |
+| `exps/final-audit-20261006` | 0 | 0 | 0 | [Открыть](runs/exps--final-audit-20261006.md) |
+| `exps/fixes-20261005` | 8 | 15 | 0 | [Открыть](runs/exps--fixes-20261005.md) |
+| `exps/gsm-unseen-efficiency-pilot-20261008` | 3 | 2 | 0 | [Открыть](runs/exps--gsm-unseen-efficiency-pilot-20261008.md) |
+| `exps/gsm-unseen-split-rewards-400-20261008` | 18 | 21 | 10 | [Открыть](runs/exps--gsm-unseen-split-rewards-400-20261008.md) |
+| `exps/gsm-unseen-two-rewards-20261008` | 15 | 17 | 4 | [Открыть](runs/exps--gsm-unseen-two-rewards-20261008.md) |
+| `exps/hf-upload-20261006` | 0 | 0 | 0 | [Открыть](runs/exps--hf-upload-20261006.md) |
+| `exps/interface-review-20261006` | 0 | 0 | 0 | [Открыть](runs/exps--interface-review-20261006.md) |
+| `exps/math-mean16-20261006` | 0 | 10 | 0 | [Открыть](runs/exps--math-mean16-20261006.md) |
+| `exps/math-only-20261006` | 0 | 2 | 0 | [Открыть](runs/exps--math-only-20261006.md) |
+| `exps/math500-new-sft-20261008` | 13 | 14 | 8 | [Открыть](runs/exps--math500-new-sft-20261008.md) |
+| `exps/merge-review-20261006` | 0 | 0 | 0 | [Открыть](runs/exps--merge-review-20261006.md) |
+| `exps/monitoring` | 0 | 0 | 0 | [Открыть](runs/exps--monitoring.md) |
+| `exps/padding-trim-20261005` | 0 | 0 | 0 | [Открыть](runs/exps--padding-trim-20261005.md) |
+| `exps/path-audit-20261006` | 0 | 2 | 0 | [Открыть](runs/exps--path-audit-20261006.md) |
+| `exps/qwen3-06b-32k-single-20261006` | 1 | 2 | 0 | [Открыть](runs/exps--qwen3-06b-32k-single-20261006.md) |
+| `exps/qwen3-06b-32k-suite-20261006` | 1 | 2 | 0 | [Открыть](runs/exps--qwen3-06b-32k-suite-20261006.md) |
+| `exps/qwen3-06b-instruct-20261005` | 5 | 2 | 0 | [Открыть](runs/exps--qwen3-06b-instruct-20261005.md) |
+| `exps/qwen3-06b-instruct-instant-20261005` | 1 | 2 | 0 | [Открыть](runs/exps--qwen3-06b-instruct-instant-20261005.md) |
+| `exps/qwen3-06b-math500-author-32k-20261007` | 2 | 14 | 4 | [Открыть](runs/exps--qwen3-06b-math500-author-32k-20261007.md) |
+| `exps/qwen3-06b-plain-20261006` | 1 | 5 | 0 | [Открыть](runs/exps--qwen3-06b-plain-20261006.md) |
+| `exps/qwen3-06b-reasoning-16k-20261006` | 2 | 3 | 0 | [Открыть](runs/exps--qwen3-06b-reasoning-16k-20261006.md) |
+| `exps/qwen3-06b-reasoning-32k-20261006` | 1 | 1 | 0 | [Открыть](runs/exps--qwen3-06b-reasoning-32k-20261006.md) |
+| `exps/qwen3-06b-unseen-20261005` | 0 | 1 | 0 | [Открыть](runs/exps--qwen3-06b-unseen-20261005.md) |
+| `exps/qwen3-4b-base-20261005` | 5 | 3 | 0 | [Открыть](runs/exps--qwen3-4b-base-20261005.md) |
+| `exps/qwen3-4b-public-20261005` | 2 | 3 | 0 | [Открыть](runs/exps--qwen3-4b-public-20261005.md) |
+| `exps/rl-alignment-20261006` | 6 | 3 | 0 | [Открыть](runs/exps--rl-alignment-20261006.md) |
+| `exps/rl-dataset-screen-20261007` | 6 | 12 | 0 | [Открыть](runs/exps--rl-dataset-screen-20261007.md) |
+| `exps/rl-s1-seen-20261006-1112` | 40 | 21 | 0 | [Открыть](runs/exps--rl-s1-seen-20261006-1112.md) |
+| `exps/rl-semantics-audit-20261008` | 0 | 0 | 0 | [Открыть](runs/exps--rl-semantics-audit-20261008.md) |
+| `exps/rl-unseen-s1-20261006` | 10 | 4 | 0 | [Открыть](runs/exps--rl-unseen-s1-20261006.md) |
+| `exps/rl-unseen-s1-20261007-seq128` | 5 | 7 | 4 | [Открыть](runs/exps--rl-unseen-s1-20261007-seq128.md) |
+| `exps/rl-unseen-s1-bs32-20261007` | 7 | 8 | 6 | [Открыть](runs/exps--rl-unseen-s1-bs32-20261007.md) |
+| `exps/rl-unseen-s2-20261007` | 13 | 7 | 0 | [Открыть](runs/exps--rl-unseen-s2-20261007.md) |
+| `exps/rl-unseen-s2-bs32-20261007` | 5 | 5 | 0 | [Открыть](runs/exps--rl-unseen-s2-bs32-20261007.md) |
+| `exps/rl-unseen-s2-bs32-500-20261007` | 5 | 5 | 0 | [Открыть](runs/exps--rl-unseen-s2-bs32-500-20261007.md) |
+| `exps/s2-audit-20261007` | 0 | 0 | 0 | [Открыть](runs/exps--s2-audit-20261007.md) |
+| `exps/sft-fix-20261005` | 1 | 0 | 0 | [Открыть](runs/exps--sft-fix-20261005.md) |
+| `exps/sft-fixed-20261005` | 2 | 0 | 0 | [Открыть](runs/exps--sft-fixed-20261005.md) |
+| `exps/sft-padding-fast-20261005` | 2 | 1 | 0 | [Открыть](runs/exps--sft-padding-fast-20261005.md) |
+| `exps/sft-prompt-fixed-20261005` | 2 | 0 | 0 | [Открыть](runs/exps--sft-prompt-fixed-20261005.md) |
+| `exps/sft-prompt-pilot-20261008` | 5 | 0 | 0 | [Открыть](runs/exps--sft-prompt-pilot-20261008.md) |
+| `exps/sft-repro-fast-20261005` | 2 | 0 | 0 | [Открыть](runs/exps--sft-repro-fast-20261005.md) |
+| `exps/sft-unseen-three-datasets-20261008` | 13 | 2 | 0 | [Открыть](runs/exps--sft-unseen-three-datasets-20261008.md) |
+| `exps/tag-loss-x4-20261005` | 3 | 7 | 0 | [Открыть](runs/exps--tag-loss-x4-20261005.md) |
+| `exps/train-eval-audit-20261005` | 0 | 1 | 0 | [Открыть](runs/exps--train-eval-audit-20261005.md) |
+| `work/experiments/base-format-20261010` | 9 | 11 | 6 | [Открыть](runs/work--experiments--base-format-20261010.md) |
+| `work/experiments/checkpoint-retention-20261011` | 1 | 0 | 0 | [Открыть](runs/work--experiments--checkpoint-retention-20261011.md) |
+| `work/experiments/deep-sft-20261010` | 6 | 9 | 0 | [Открыть](runs/work--experiments--deep-sft-20261010.md) |
+| `work/experiments/deep-sft-20261011-instruct` | 5 | 10 | 0 | [Открыть](runs/work--experiments--deep-sft-20261011-instruct.md) |
+| `work/experiments/format-diagnosis-20261010` | 3 | 4 | 0 | [Открыть](runs/work--experiments--format-diagnosis-20261010.md) |
+| `work/experiments/format-loss-20261010` | 3 | 17 | 0 | [Открыть](runs/work--experiments--format-loss-20261010.md) |
+| `work/experiments/hf-instruct-sft-20261012` | 2 | 2 | 0 | [Открыть](runs/work--experiments--hf-instruct-sft-20261012.md) |
+| `work/experiments/instruct-deep-full-20261011` | 12 | 5 | 0 | [Открыть](runs/work--experiments--instruct-deep-full-20261011.md) |
+| `work/experiments/instruct-full-20261011` | 15 | 17 | 6 | [Открыть](runs/work--experiments--instruct-full-20261011.md) |
+| `work/experiments/instruct-token-warmup-20261010` | 17 | 56 | 0 | [Открыть](runs/work--experiments--instruct-token-warmup-20261010.md) |
+| `work/experiments/night-20261010` | 198 | 270 | 0 | [Открыть](runs/work--experiments--night-20261010.md) |
+| `work/experiments/paperbench-32k-20261012` | 5 | 10 | 0 | [Открыть](runs/work--experiments--paperbench-32k-20261012.md) |
+| `work/experiments/paperbench-rl50-20261012` | 7 | 5 | 0 | [Открыть](runs/work--experiments--paperbench-rl50-20261012.md) |
+| `work/experiments/rl-acceleration-20261012` | 79 | 232 | 0 | [Открыть](runs/work--experiments--rl-acceleration-20261012.md) |
+| `work/experiments/rl-campaign-20261010` | 1 | 0 | 0 | [Открыть](runs/work--experiments--rl-campaign-20261010.md) |
+| `work/experiments/rl-data-research-20261011` | 0 | 0 | 0 | [Открыть](runs/work--experiments--rl-data-research-20261011.md) |
+| `work/experiments/rl-instruct-20261011` | 26 | 70 | 0 | [Открыть](runs/work--experiments--rl-instruct-20261011.md) |
+| `work/experiments/rl-r2-24gpu-20261012` | 13 | 20 | 0 | [Открыть](runs/work--experiments--rl-r2-24gpu-20261012.md) |
+| `work/experiments/rl-r2-32gpu-batch32-20261012` | 2 | 7 | 0 | [Открыть](runs/work--experiments--rl-r2-32gpu-batch32-20261012.md) |
+| `work/experiments/rl-readiness-20261010` | 1 | 1 | 0 | [Открыть](runs/work--experiments--rl-readiness-20261010.md) |
+| `work/experiments/rl-vllm-32gpu-20261012` | 2 | 6 | 0 | [Открыть](runs/work--experiments--rl-vllm-32gpu-20261012.md) |
+| `work/experiments/rl-vllm-32gpu-batch64-20261012` | 2 | 5 | 0 | [Открыть](runs/work--experiments--rl-vllm-32gpu-batch64-20261012.md) |
+| `work/experiments/source-push-20261012` | 0 | 0 | 0 | [Открыть](runs/work--experiments--source-push-20261012.md) |
+| `work/experiments/unseen-wide5145-20261009` | 28 | 33 | 0 | [Открыть](runs/work--experiments--unseen-wide5145-20261009.md) |

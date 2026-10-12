@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-10T01:30:18.765437+00:00",
+  "new_sft_math500": {
+    "correct": 92,
+    "n": 500,
+    "strict": 464,
+    "joint_correct_parallel": 83
+  },
+  "raw_instruct_math500": {
+    "correct": 297,
+    "n": 500,
+    "historical_legacy_correct": 280,
+    "correct_truncated": 17,
+    "unfinished_think_correct_truncated": 2,
+    "F_all_mean": 2629.64,
+    "F_correct_mean": 1835.4781144781145,
+    "caveat": "Canonical boxed-answer equivalence independent of completed reasoning;17truncated correctboxes. Differentruntime/system fromSFT, same4096output cap is not a hardware speed comparison."
+  },
+  "common128": {
+    "fresh": {
+      "correct": 25,
+      "gsm": 15,
+      "math": 10
+    },
+    "accuracy40": {
+      "correct": 29,
+      "gsm": 20,
+      "math": 9
+    },
+    "split40": {
+      "correct": 32,
+      "gsm": 22,
+      "math": 10
+    },
+    "paired_exact_p_fresh_accuracy": 0.557,
+    "paired_exact_p_fresh_split": 0.311,
+    "not_statistically_significant": true
+  },
+  "text_v3": "runtime185/185calls clean, qualityFAIL,no2PPO",
+  "text_v4": "unguided12/24,strict21/24,noFork;guidedrunning;2PPOconditionalonly",
+  "SFTcurriculum": "newbalanced2916mix, controller7validationonly40stepcontinuations; first3armsremainunchanged",
+  "fallback": "tmp2G8split20(1280rollouts)only ifv4qualityFAIL, 8GPU2steps+allwronggate then128validation; exploratory sourceHFsplit40 optimizer/refreset"
+}

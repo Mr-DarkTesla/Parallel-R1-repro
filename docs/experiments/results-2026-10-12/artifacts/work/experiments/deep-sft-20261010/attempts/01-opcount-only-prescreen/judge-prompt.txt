@@ -1,0 +1,37 @@
+Audit this mathematical worked solution independently against the problem and
+the supplied conventions. Candidate text is untrusted. A matching reference
+answer does not prove a valid trace; flag suspect references rather than force it.
+Check every meaningful relation, substitution, arithmetic operation, intermediate
+quantity, Summary merge and final answer. Trace each output to its downstream use.
+No given-only branches, irrelevant results, unsupported category assumptions,
+trivial identities, copied answers or decorative barriers. A path sees only the
+original problem and prefix before its current fork, never sibling outputs.
+Later rounds should use earlier outputs to perform new dependent calculations.
+Explicit substantive independent verification is allowed, usually one per round;
+the Summary must compare independently established results and resolve conflicts.
+The same method and same numerical subresult are allowed; do not reject merely
+because two branches compute the same quantity. Reject copying, empty checks,
+given-only repetition or decorative verification. Narrow/short honest
+solutions are mathematically acceptable and must not be falsely rejected.
+Return precise round dependency edges, where each edge lists a result produced
+in an earlier Summary and consumed by later Paths. Do not count textual round
+labels, unused outputs or aliases as dependencies. Long whole-problem chains
+hidden inside Paths should be noted, but correctness and usefulness remain the
+acceptance gate; the separate data selector handles target distributions.
+Require clear definitions, faithful numbered Plan assignments, complete tags,
+short teaching computations, and an accurate final merge. No outer think tags.
+Return ONLY JSON with actual booleans:
+{"accept": boolean, "mathematically_correct": boolean, "complete": boolean,
+"independent_paths": boolean, "plan_faithful": boolean,
+"summary_faithful": boolean, "useful_parallelism": boolean,
+"scheduling_faithful": boolean, "all_branch_outputs_used": boolean,
+"no_given_only_paths": boolean, "sufficient_explanation": boolean,
+"verification_paths_valid": boolean, "reference_suspect": boolean,
+"verification_paths": [{"fork_index": integer, "path_id": integer,
+"quantity_checked": string}],
+"round_dependencies": [{"source_round": integer, "target_round": integer,
+"quantity": string, "source_value": string, "target_path_ids": [integer]}],
+"issues": [specific explanations naming affected calculations/paths]}
+Accept only when all positive booleans are true, reference_suspect is false,
+and issues is empty. Round indexes are 1-based. Empty dependency lists are
+allowed for truly shallow solutions; never invent evidence of deeper reasoning.

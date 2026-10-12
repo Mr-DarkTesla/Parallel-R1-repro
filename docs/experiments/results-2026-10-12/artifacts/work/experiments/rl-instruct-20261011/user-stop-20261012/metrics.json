@@ -1,0 +1,227 @@
+{
+  "full": {
+    "R1": {
+      "passed": true,
+      "checkpoint": 64,
+      "arm": "R1",
+      "coverage": 500,
+      "technical_unknown": 0,
+      "protocol": {
+        "suite": "standard MATH500 full500",
+        "native_prefix": "exact fullSFT native template thinkingTrue opener inprompt",
+        "precision": "FP32",
+        "backend": "FP32 HF FULLWIDTH8 single subgroup",
+        "temperature": 1,
+        "top_p": 1,
+        "top_k": null,
+        "response_budget": 4096,
+        "path_budget": 768,
+        "max_context": 16384,
+        "seed": "42161011+question_index*1000",
+        "samples_per_question": 1,
+        "scorer": "frozen referenceblind MathVerify",
+        "actual_forward_calls": "instrumented model.forward plus exact runtimeledger parity",
+        "selection_allowed": false,
+        "train_reward_leakage": false,
+        "max_batched_paths": 8,
+        "scorer_view": "native visible <think> opener plus response; formatflags rawresponse"
+      },
+      "baseline": {
+        "correct": 251,
+        "accuracy": 0.502,
+        "format_valid": 457,
+        "parallel_valid": 449,
+        "correct_parallel": 231,
+        "fork_samples": 486,
+        "rounds": 509,
+        "width_histogram": {
+          "3": 198,
+          "4": 125,
+          "5": 15,
+          "2": 163,
+          "6": 8
+        },
+        "mean_width": 3.031434184675835,
+        "actual_F": 373370,
+        "mean_actual_F": 746.74,
+        "sampled_T": 488274,
+        "forced_T": 6160,
+        "question_wall_seconds": 15061.193541049957
+      },
+      "candidate": {
+        "correct": 353,
+        "accuracy": 0.706,
+        "format_valid": 277,
+        "parallel_valid": 267,
+        "correct_parallel": 217,
+        "fork_samples": 485,
+        "rounds": 488,
+        "width_histogram": {
+          "2": 426,
+          "4": 10,
+          "3": 48,
+          "5": 2,
+          "6": 2
+        },
+        "mean_width": 2.168032786885246,
+        "actual_F": 449593,
+        "mean_actual_F": 899.186,
+        "sampled_T": 545768,
+        "forced_T": 4696,
+        "question_wall_seconds": 17451.924646377563
+      },
+      "paired": {
+        "improved": 133,
+        "regressed": 31,
+        "same": 336,
+        "accuracy_difference": 0.204,
+        "bootstrap_95_percentile": [
+          0.158,
+          0.25
+        ],
+        "bootstrap_replicates": 20000,
+        "seed": 42161011
+      },
+      "selection_allowed": false,
+      "created": 1791752916.1284313
+    },
+    "R2": {
+      "passed": true,
+      "checkpoint": 64,
+      "arm": "R2",
+      "coverage": 500,
+      "technical_unknown": 0,
+      "protocol": {
+        "suite": "standard MATH500 full500",
+        "native_prefix": "exact fullSFT native template thinkingTrue opener inprompt",
+        "precision": "FP32",
+        "backend": "FP32 HF FULLWIDTH8 single subgroup",
+        "temperature": 1,
+        "top_p": 1,
+        "top_k": null,
+        "response_budget": 4096,
+        "path_budget": 768,
+        "max_context": 16384,
+        "seed": "42161011+question_index*1000",
+        "samples_per_question": 1,
+        "scorer": "frozen referenceblind MathVerify",
+        "actual_forward_calls": "instrumented model.forward plus exact runtimeledger parity",
+        "selection_allowed": false,
+        "train_reward_leakage": false,
+        "max_batched_paths": 8,
+        "scorer_view": "native visible <think> opener plus response; formatflags rawresponse"
+      },
+      "baseline": {
+        "correct": 251,
+        "accuracy": 0.502,
+        "format_valid": 457,
+        "parallel_valid": 449,
+        "correct_parallel": 231,
+        "fork_samples": 486,
+        "rounds": 509,
+        "width_histogram": {
+          "3": 198,
+          "4": 125,
+          "5": 15,
+          "2": 163,
+          "6": 8
+        },
+        "mean_width": 3.031434184675835,
+        "actual_F": 373370,
+        "mean_actual_F": 746.74,
+        "sampled_T": 488274,
+        "forced_T": 6160,
+        "question_wall_seconds": 15061.193541049957
+      },
+      "candidate": {
+        "correct": 280,
+        "accuracy": 0.56,
+        "format_valid": 456,
+        "parallel_valid": 452,
+        "correct_parallel": 262,
+        "fork_samples": 494,
+        "rounds": 507,
+        "width_histogram": {
+          "4": 391,
+          "5": 24,
+          "6": 80,
+          "8": 6,
+          "3": 4,
+          "7": 1,
+          "2": 1
+        },
+        "mean_width": 4.404339250493097,
+        "actual_F": 341496,
+        "mean_actual_F": 682.992,
+        "sampled_T": 519265,
+        "forced_T": 8229,
+        "question_wall_seconds": 14593.95595574379
+      },
+      "paired": {
+        "improved": 82,
+        "regressed": 53,
+        "same": 365,
+        "accuracy_difference": 0.058,
+        "bootstrap_95_percentile": [
+          0.012,
+          0.102
+        ],
+        "bootstrap_replicates": 20000,
+        "seed": 42161011
+      },
+      "selection_allowed": false,
+      "created": 1791752917.8209512
+    }
+  },
+  "partial": {
+    "newdeepSFT-main-duplicate": {
+      "completed": 277,
+      "unscored": 223,
+      "incomplete_line": 0,
+      "correct": 132,
+      "accuracy": 0.47653429602888087,
+      "matched_subset_baseline_correct": 141,
+      "matched_subset_baseline_accuracy": 0.5090252707581228,
+      "mean_F": 438.057761732852,
+      "format_valid": 0.5595667870036101,
+      "parallel_valid": 0.49097472924187724,
+      "correct_parallel": 0.30324909747292417,
+      "mean_width": 2.6950549450549453,
+      "rounds_per_task": 1.3140794223826715,
+      "mean_sampled_T": 533.7725631768953
+    },
+    "newdeepSFT": {
+      "completed": 473,
+      "unscored": 27,
+      "incomplete_line": 0,
+      "correct": 221,
+      "accuracy": 0.46723044397463004,
+      "matched_subset_baseline_correct": 240,
+      "matched_subset_baseline_accuracy": 0.507399577167019,
+      "mean_F": 465.9873150105708,
+      "format_valid": 0.5581395348837209,
+      "parallel_valid": 0.49682875264270615,
+      "correct_parallel": 0.30021141649048627,
+      "mean_width": 2.6978653530377668,
+      "rounds_per_task": 1.2875264270613107,
+      "mean_sampled_T": 567.7019027484143
+    },
+    "R1-checkpoint32": {
+      "completed": 305,
+      "unscored": 195,
+      "incomplete_line": 0,
+      "correct": 212,
+      "accuracy": 0.6950819672131148,
+      "matched_subset_baseline_correct": 161,
+      "matched_subset_baseline_accuracy": 0.5278688524590164,
+      "mean_F": 802.6655737704918,
+      "format_valid": 0.8557377049180328,
+      "parallel_valid": 0.8459016393442623,
+      "correct_parallel": 0.6295081967213115,
+      "mean_width": 2.340764331210191,
+      "rounds_per_task": 1.0295081967213116,
+      "mean_sampled_T": 1011.4196721311475
+    }
+  },
+  "at": 1791753750.2309206
+}

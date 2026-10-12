@@ -1,0 +1,266 @@
+{
+  "rank": 3,
+  "precision": "bf16_full_autocast",
+  "master_dtype": "float32",
+  "lm_head_dtype": "bfloat16",
+  "dtype_receipt": {
+    "generation:q_proj:(1, 387, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:sdpa:(387, 387)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "generation:lm_head:(1, 1, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:q_proj:(1, 1, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:sdpa:(1, 388)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "generation:lm_head:(2, 1, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:q_proj:(1, 549, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:sdpa:(549, 549)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "teacher:lm_head:(1, 163, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:q_proj:(1, 551, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:sdpa:(551, 551)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "teacher:lm_head:(1, 2, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    }
+  },
+  "ratio_min": 0.8171778321266174,
+  "ratio_max": 1.1826649904251099,
+  "ratio_outside_clip_fraction": 0.0,
+  "ratio_abs_mean": 0.00923959817737341,
+  "logits_normalizer_dtype": "float32",
+  "autocast_weight_cache": true,
+  "attention_forced_fp32": false,
+  "cases": [
+    {
+      "index": 3,
+      "id": "bigmath/cn_k12/210293",
+      "correct": false,
+      "reference_correct": false,
+      "format_valid": true,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 410,
+      "reference_F": 710,
+      "generation_seconds": 18.06925299623981,
+      "T": 477,
+      "native_replay_max": 0.12591171264648438,
+      "native_replay_mean": 0.008714688010513783,
+      "native_replay_p95": 0.06690478324890137,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 163,
+          "max": 0.12591171264648438,
+          "mean": 0.012582112103700638,
+          "p95": 0.09263511747121811
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 0.0,
+          "mean": 0.0,
+          "p95": 0.0
+        },
+        {
+          "phase": "path",
+          "n": 83,
+          "max": 0.07512474060058594,
+          "mean": 0.004697639029473066,
+          "p95": 0.03436071053147316
+        },
+        {
+          "phase": "path",
+          "n": 67,
+          "max": 0.09834861755371094,
+          "mean": 0.004133594688028097,
+          "p95": 0.019539646804332733
+        },
+        {
+          "phase": "summary",
+          "n": 88,
+          "max": 0.12257003784179688,
+          "mean": 0.01219580415636301,
+          "p95": 0.08273811638355255
+        },
+        {
+          "phase": "main",
+          "n": 2,
+          "max": 2.47955322265625e-05,
+          "mean": 1.239776611328125e-05,
+          "p95": 2.3555754523840733e-05
+        },
+        {
+          "phase": "main",
+          "n": 72,
+          "max": 0.07387542724609375,
+          "mean": 0.00508210388943553,
+          "p95": 0.030751880258321762
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "id": "bigmath/cn_k12/147481",
+      "correct": true,
+      "reference_correct": true,
+      "format_valid": false,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 890,
+      "reference_F": 1086,
+      "generation_seconds": 37.96232661418617,
+      "T": 1379,
+      "native_replay_max": 0.20189857482910156,
+      "native_replay_mean": 0.009368445724248886,
+      "native_replay_p95": 0.06808065623044968,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 348,
+          "max": 0.12311744689941406,
+          "mean": 0.012601874768733978,
+          "p95": 0.07454288005828857
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 3.814697265625e-06,
+          "mean": 1.9073486328125e-06,
+          "p95": 3.623962356869015e-06
+        },
+        {
+          "phase": "path",
+          "n": 183,
+          "max": 0.12430572509765625,
+          "mean": 0.004136247094720602,
+          "p95": 0.03809183090925217
+        },
+        {
+          "phase": "path",
+          "n": 110,
+          "max": 0.20189857482910156,
+          "mean": 0.011704531498253345,
+          "p95": 0.07131105661392212
+        },
+        {
+          "phase": "path",
+          "n": 196,
+          "max": 0.10903549194335938,
+          "mean": 0.00714215449988842,
+          "p95": 0.058293819427490234
+        },
+        {
+          "phase": "path",
+          "n": 278,
+          "max": 0.1677703857421875,
+          "mean": 0.01101626269519329,
+          "p95": 0.07938049733638763
+        },
+        {
+          "phase": "summary",
+          "n": 194,
+          "max": 0.1481342315673828,
+          "mean": 0.009747485630214214,
+          "p95": 0.07056168466806412
+        },
+        {
+          "phase": "main",
+          "n": 2,
+          "max": 0.0,
+          "mean": 0.0,
+          "p95": 0.0
+        },
+        {
+          "phase": "main",
+          "n": 66,
+          "max": 0.07594108581542969,
+          "mean": 0.002057624515146017,
+          "p95": 0.008872032165527344
+        }
+      ]
+    }
+  ],
+  "actions": 1856,
+  "native_replay_max": 0.20189857482910156,
+  "native_replay_mean": 0.009200426749885082,
+  "native_replay_p95": 0.06811714172363281,
+  "unchanged_thresholds": {
+    "max": 0.01,
+    "mean": 0.002,
+    "p95": 0.005
+  },
+  "native_guard_passed": false,
+  "correct": 1,
+  "reference_correct": 1,
+  "quality_not_benchmark": true,
+  "optimizer_updates": 0,
+  "peak_gpu_bytes": 25404784640,
+  "actual_backend_flags": {
+    "cuda_tf32": false,
+    "float32_precision": "highest"
+  },
+  "generation_is_cached": true,
+  "teacher_is_full_prefix": true
+}

@@ -1,0 +1,24 @@
+{
+  "prepared_at": "2026-10-10T07:23:53.820476+00:00",
+  "not_executed": true,
+  "deadline_utc": null,
+  "only_host": "a100_jupyter",
+  "same_session_mandatory_activation": "source ${ENV_ACTIVATE} training-data",
+  "SDK_method": "platform_client.Job.kill(SimpleNamespace(job_name=EXACT_JOB_ID, region=\"CLUSTER\"))",
+  "jobs": {
+    "tmp2": "RUN_061f39a04b",
+    "tmp3": "RUN_7d061208cd"
+  },
+  "region": "CLUSTER",
+  "guards": [
+    "Save final report before Cloud cleanup.",
+    "Check required env names nonempty without printing; platform_client shared platform_client.",
+    "Verify exact two own IDs against ledger/status; no other jobs.",
+    "Never instantiate or submit new Job; kill uses only job_name/region.",
+    "Record response/status after; do not blindly retry uncertain deletion.",
+    "Never stop original Sirius host or foreign processes."
+  ],
+  "cancelled_by_user_at": "2026-10-10T08:26:55.746022+00:00",
+  "automatic_cleanup_authorized": false,
+  "reason": "User extended indefinitely; do not execute old09cleanup"
+}

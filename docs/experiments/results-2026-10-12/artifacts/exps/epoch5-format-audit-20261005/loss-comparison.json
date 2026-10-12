@@ -1,0 +1,21 @@
+{
+  "samples": 16,
+  "note": "Teacher forcing on first 16 training samples, not generation or benchmark scores",
+  "modes": {
+    "sft": {
+      "answer_loss": 0.5323888080184087,
+      "tag_loss": 2.003948315350032,
+      "tag_top1_correct": 0.4559386973180077
+    },
+    "prompt_positions_normal": {
+      "answer_loss": 0.5554887385539556,
+      "tag_loss": 2.5058534031170083,
+      "tag_top1_correct": 0.32567049808429116
+    },
+    "ordinary_causal": {
+      "answer_loss": 0.589777548056566,
+      "tag_loss": 2.65817570412296,
+      "tag_top1_correct": 0.32950191570881227
+    }
+  }
+}

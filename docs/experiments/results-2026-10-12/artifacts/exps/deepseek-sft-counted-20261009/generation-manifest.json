@@ -1,0 +1,36 @@
+{
+  "created_at": 1791533967.5084424,
+  "model": "deepseek-v4.1-flash",
+  "serving_release": "1f8f58d9ed69ad45",
+  "endpoint": "http://127.0.0.1:8005/v1",
+  "gpus": 8,
+  "reasoning_effort": 50,
+  "concurrency": 64,
+  "targets": {
+    "MATH_train": 3500,
+    "BigMath": 1000,
+    "GSM_Infinite": 500
+  },
+  "train": 4500,
+  "val": 500,
+  "teacher": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "max_tokens": 32768
+  },
+  "judge": {
+    "temperature": 0,
+    "max_tokens": 16384
+  },
+  "student_context_limit": 16384,
+  "files_sha256": {
+    "produce.py": "cfc09c6d618745b9570386117507cadf55d3bb0d3fdc22b039554809bd5aa0c4",
+    "validate.py": "68d24ca4a3b51f78ba6883f18d7a0603cfdfe1b7371d66fef8e960bf4676d35e",
+    "teacher-prompt-v5.txt": "2c1393ca44d63efc3d23ac9d9465a4dc3d4530b66cebf3f438b3c43afb6f3bec",
+    "student-system.txt": "ff9db43554f7b0ea0167443ab971f5b5702eebd336892c9d56ae7c564b72df08",
+    "judge-prompt.txt": "2a8d9f8069ff308e089f021cb13db8fe78cc7091d4ba509e2dbb9cd3de301d45",
+    "pilot-review.json": "47719f92c8c17d8d18b0d2ff4390672d6554f323fab273f80fc031bb5497d6da",
+    "candidate-pool.jsonl": "b433f8662ca2ac1345f3e059320f330e1d35e110e15e494e561004cf0a8c387b",
+    "pool-manifest.json": "6f2aec3ce769a88652e6db026653d6f164f0550f328153520c25b6ae025afa3c"
+  }
+}

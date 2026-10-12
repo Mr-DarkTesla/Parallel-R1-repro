@@ -1,0 +1,8 @@
+- trainer.n_gpus_per_node=8
+- ray_init.num_cpus=32
+- +ray_init.temp_dir=${PROJECT_ROOT}
+- +ray_init.plasma_directory=${PROJECT_ROOT}/plasma
+- +ray_init.object_store_memory=8589934592
+- actor_rollout_ref.rollout.agent.num_workers=8
+- trainer.resume_mode=disable
+- trainer.val_before_train=true

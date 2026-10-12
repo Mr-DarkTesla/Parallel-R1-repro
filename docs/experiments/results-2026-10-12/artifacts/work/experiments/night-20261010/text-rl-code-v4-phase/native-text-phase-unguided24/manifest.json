@@ -1,0 +1,32 @@
+{
+  "model": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/raw",
+  "mode": "structured",
+  "guided_first_width": 0,
+  "sampling": {
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "top_k": -1
+  },
+  "system_file": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/protocol-text-v4prompt-system.txt",
+  "pilot_code": "${PROJECT_ROOT}/work/experiments/night-20261010/text-rl-code-v4-phase/verl",
+  "fixed_questions": "${PROJECT_ROOT}/work/experiments/night-20261010/pilots/fixed24-questions.jsonl",
+  "response_cap": 4096,
+  "path_cap": 256,
+  "merge_reserve": 512,
+  "text_protocol": true,
+  "backend": "text_native_hf_serial_phase_context_v1",
+  "phase_context_intervention": true,
+  "phase_context_profile": {
+    "version": "native_phase_context_v1",
+    "instructions": {
+      "path": "\nWorksheet instruction: Continue ONLY the numbered assignment below. Show its local calculation, then Local result and the closing Path tag. No new plan, fork, think, final-answer heading or boxed answer.\n",
+      "summary": "\nMerge instruction: Combine the actual local results above and resolve disagreements. Show decisive arithmetic, then close this Summary only. No final-answer heading or think tags.\n",
+      "main_after_summary": "\nContinuation instruction: The Summary is already closed. If the requested result is established, close the current think block now and give one Final Answer line outside it; then stop. Do not repeat a Summary closing tag.\n"
+    },
+    "final_reserve_tokens": 256,
+    "max_context_window": 16384,
+    "representation": "RPC-only native prompt context; zero policy loss, no assembled response slots; charged against rollout response budget"
+  },
+  "phase_context_profile_sha256": "b9f7241b42eb144aaa9f581924a1cb4aabf66b0333ee83e0f691d118d383b8ae",
+  "planned": 24
+}

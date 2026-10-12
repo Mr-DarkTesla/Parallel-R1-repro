@@ -1,0 +1,127 @@
+{
+  "complete": true,
+  "finished_moscow": "2026-10-09T21:12:27.745747+03:00",
+  "new_examples": 3000,
+  "old_examples_preserved": 2145,
+  "combined_if_used": 5145,
+  "train": 2700,
+  "val": 300,
+  "decisions": 3551,
+  "acceptance_percent": 84.48324415657561,
+  "sources": {
+    "GSM_Infinite": 3000
+  },
+  "source_datasets": {
+    "InfiniAILab/gsm_infinite_medium_0": 375,
+    "InfiniAILab/gsm_infinite_hard_0": 2449,
+    "InfiniAILab/gsm_infinite_hard_8k": 104,
+    "InfiniAILab/gsm_infinite_medium_8k": 72
+  },
+  "op_histogram": {
+    "26": 125,
+    "23": 375,
+    "21": 463,
+    "19": 50,
+    "24": 219,
+    "28": 240,
+    "22": 393,
+    "20": 46,
+    "27": 340,
+    "25": 161,
+    "29": 196,
+    "30": 125,
+    "8": 11,
+    "16": 32,
+    "12": 16,
+    "11": 22,
+    "18": 42,
+    "14": 28,
+    "17": 35,
+    "13": 13,
+    "10": 11,
+    "15": 27,
+    "6": 7,
+    "9": 10,
+    "7": 9,
+    "5": 4
+  },
+  "forks": 3486,
+  "mean_width_per_fork": 3.291738382099828,
+  "width_histogram": {
+    "4": 1493,
+    "3": 943,
+    "2": 865,
+    "5": 166,
+    "6": 19
+  },
+  "round_histogram": {
+    "1": 2510,
+    "2": 473,
+    "3": 10,
+    "0": 7
+  },
+  "mean_rounds": 1.162,
+  "width_above_two_percent": 75.18646012621916,
+  "verification_rows": 784,
+  "verification_rows_percent": 26.133333333333333,
+  "verification_paths": 830,
+  "all_accepted_reference_match": true,
+  "pipeline_final_answer_checks": {
+    "checked": 3303,
+    "correct": 3285,
+    "note": "Conditional on pipeline reaching the answer-check stage; not all teacher responses."
+  },
+  "output_tokens": {
+    "mean": 815.636,
+    "p50": 786.0,
+    "p90": 1082.2999999999997,
+    "p95": 1194.0499999999997,
+    "p99": 1412.039999999999,
+    "max": 2073.0
+  },
+  "student_sequence_tokens": {
+    "mean": 2277.854,
+    "p50": 2278.0,
+    "p90": 2839.2,
+    "p95": 3096.0499999999997,
+    "p99": 3610.159999999996,
+    "max": 4214.0
+  },
+  "critical_path_tokens_proxy": {
+    "mean": 586.6103333333333,
+    "p50": 566.0,
+    "p90": 772.0,
+    "p95": 855.0499999999997,
+    "p99": 1010.0,
+    "max": 1368.0
+  },
+  "sequential_output_tokens": {
+    "mean": 435.46133333333336,
+    "p50": 420.0,
+    "p90": 589.0999999999999,
+    "p95": 649.0499999999997,
+    "p99": 797.0099999999998,
+    "max": 1077.0
+  },
+  "path_tokens": {
+    "mean": 98.3920697167756,
+    "p50": 86.0,
+    "p90": 159.0,
+    "p95": 194.0,
+    "p99": 293.0,
+    "max": 807.0
+  },
+  "validation": {
+    "unique_ids": true,
+    "train_val_group_disjoint": true,
+    "hashes_match": true,
+    "single_think": true,
+    "all_parallel_blocks_inside_think": true,
+    "final_solution_outside_think": true
+  },
+  "limitations": [
+    "Semantic critic is the teacher model; final-answer matching is not a proof of every reasoning step.",
+    "Critical-path token count is a proxy, not measured forwards or student accuracy."
+  ],
+  "all_accepted_journal_grades_checked": 3000
+}

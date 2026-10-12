@@ -1,0 +1,30 @@
+{
+  "created_at": 1791536160.9024532,
+  "source_scope": "GSM_Infinite ONLY",
+  "model": "deepseek-v4.1-flash",
+  "serving_release": "1f8f58d9ed69ad45",
+  "endpoint": "http://127.0.0.1:8005/v1",
+  "reasoning_effort": 50,
+  "concurrency": 128,
+  "target": 5000,
+  "train": 4500,
+  "val": 500,
+  "reused_gsm": 26,
+  "pool_summary": {
+    "original_eligible": 4660,
+    "reserve": 3840,
+    "candidates": 8500
+  },
+  "files_sha256": {
+    "produce.py": "b48e3891bf0ed135b68cfb1b5c873670e0515bd99c60ef0fac26f52bc928c907",
+    "prepare_pool.py": "2c86237a20dddb81c34d4589f557c4dab10132a1d43e42cda049e48cb2e1363b",
+    "validate.py": "68d24ca4a3b51f78ba6883f18d7a0603cfdfe1b7371d66fef8e960bf4676d35e",
+    "teacher-prompt-v5.txt": "2c1393ca44d63efc3d23ac9d9465a4dc3d4530b66cebf3f438b3c43afb6f3bec",
+    "student-system.txt": "ff9db43554f7b0ea0167443ab971f5b5702eebd336892c9d56ae7c564b72df08",
+    "judge-prompt.txt": "2a8d9f8069ff308e089f021cb13db8fe78cc7091d4ba509e2dbb9cd3de301d45",
+    "pilot-review.json": "0d713a69cd85a418ba160d8bef4b63222b12737fd4c7cf81be3b70b99c98ca9a",
+    "candidate-pool.jsonl": "35a0a345e8e94d66a953d2ee9cdc43eee2b00c6421a472037ea720a152ca07d3",
+    "pool-manifest.json": "d8375a657691d0780c4f4289da968f0c08cd867581f2df6e32ed6ffe51c3da31",
+    "reused-gsm.json": "b14fbb590928c2334a3b24957001a01de9555b03ae1e7aaf48a90974fcb14fb3"
+  }
+}

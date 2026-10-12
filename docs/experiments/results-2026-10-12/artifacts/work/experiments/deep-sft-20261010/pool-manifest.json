@@ -1,0 +1,43 @@
+{
+  "candidates": 7500,
+  "pilot": 50,
+  "source": "NEW independently generated GSM-style layered arithmetic, not GSM-Infinite or MATH-derived",
+  "oracle": "Exact integer Python evaluation of every node and final weighted sum",
+  "width_histogram": {
+    "4": 3727,
+    "3": 1886,
+    "5": 1887
+  },
+  "stages_histogram": {
+    "4": 4496,
+    "3": 1498,
+    "5": 1506
+  },
+  "pilot_width_histogram": {
+    "5": 10,
+    "4": 30,
+    "3": 10
+  },
+  "pilot_stages_histogram": {
+    "4": 30,
+    "3": 10,
+    "5": 10
+  },
+  "pilot_true_width_mean": 4.0,
+  "pilot_true_stages_mean": 4.0,
+  "all_nodes_reachable": true,
+  "all_stage_amounts_updated_simultaneously": true,
+  "all_nodes_computational": true,
+  "known_eval_or_old_train_normalized_questions": 5273,
+  "exact_normalized_question_overlap": 0,
+  "generator_sha256": "070cd3a19fa762b870d631c28f2a4600631c6cf2402d7a80af287b36c541431f",
+  "seed": 2026101001,
+  "pool_sha256": "77ec35ae191165e6d1686a9ba956726e614faf82a6326ee033584ee078ae4945",
+  "pilot_sha256": "afddde5d864f47a07afe75b1c924b37c02dfb32913d4de2aad19db2a288bdefd",
+  "oracle_sha256": "be5ec8514b49994786077b32af913bdf6fa59418c0c7ed9b8f9bdf007093c7d7",
+  "limitations": [
+    "New synthetic distribution; it is not evidence of broader mathematical generalization.",
+    "Exact normalized contamination screening does not prove absence of semantic resemblance.",
+    "Teacher may choose fewer/more rounds; measure actual traces, do not substitute oracle stages for executed trace rounds."
+  ]
+}

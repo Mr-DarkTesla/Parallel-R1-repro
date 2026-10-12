@@ -1,0 +1,313 @@
+{
+  "at": 1791553415.3304732,
+  "pilot_state": {
+    "state": "complete",
+    "started_at": 1791549779.0861397,
+    "total": 60,
+    "completed": 60,
+    "errors": 4,
+    "finished_at": 1791550506.9898608
+  },
+  "completed": 60,
+  "target": 60,
+  "final_correct": 59,
+  "final_checked": 60,
+  "structure_valid": 46,
+  "accepted": 40,
+  "errors": {
+    "AssertionError('structural_or_answer_check')": 3,
+    "deterministic_path_audit/path_without_explicit_computation": 10,
+    "semantic_judge_reject": 6,
+    "AssertionError('judge_not_finished')": 1
+  },
+  "judge_issues": [
+    {
+      "id": "gsm_infinite_hard_0/ops_30-00000-of-00001/471",
+      "issues": [
+        "In the second fork, Path 2 mislabels the Oldhevan sports-academy average as a_RO: it says a_RO = 4 + a_CW = 68, but the problem gives a_AO = 4 + a_CW, while a_RO is the requested final quantity and equals 514. This creates a contradiction a_RO = 68 versus the final a_RO = 514, even though the subsequent a_CH = 64 and final answer 514 are numerically correct."
+      ]
+    },
+    {
+      "id": "gsm_infinite/2195",
+      "issues": [
+        "Path 3 recomputes M_E=4 exactly as Path 1 does; it is not a valid verification because the summary never compares the two M_E outputs, so it is redundant and not a distinct useful contribution."
+      ]
+    },
+    {
+      "id": "gsm_infinite/3867",
+      "issues": [
+        "Second fork Path 1 computes p_SZ=6, but Path 2 recomputes p_SZ and uses it to compute c_HF; p_SZ is not used in the final answer, and the summary's check is not an independent verification, so this branch output is redundant/unused."
+      ]
+    },
+    {
+      "id": "gsm_infinite_hard_0/ops_27-00000-of-00001/764",
+      "issues": [
+        "Path 2 computes adult crow in South Zoo = 12, but this main output is not used in the final calculation; Path 3 recomputes it, and the summary does not use Path 2's result. This violates the requirement that every branch output be used.",
+        "The summary's comparison of the Edison Park owl value from Path 1 with Paths 2 and 4 is an unplanned verification; the plan did not identify a verification branch or state what it verifies, so verification_paths_valid is false.",
+        "Path 1's output is only used in that unplanned verification, not in the final calculation."
+      ]
+    },
+    {
+      "id": "gsm_infinite_hard_0/ops_23-00000-of-00001/1057",
+      "issues": [
+        "Second fork Path 4 uses D_S=22 without recomputing D_S=T_C+D_C=20+2, so it imports sibling Path 1's result; this breaks path independence and makes the T_S verification non-independent."
+      ]
+    },
+    {
+      "id": "gsm_infinite/649",
+      "issues": [
+        "First fork Path 2 recomputes FKAC_S already computed in Path 1 and Path 3; it is not planned as a verification branch, so its output is redundant/unused except an unplanned comparison.",
+        "Abbreviations FSM_B, CRM_B, IDT_M, RBMM_M, FKAC_P, SPD_P, IDT_S, RBMM_V are used without defining their meanings, reducing teachability.",
+        "Summary says FKAC_S values are used next, but FKAC_S is not used in later calculations."
+      ]
+    }
+  ],
+  "all": {
+    "rows": 60,
+    "forks": 74,
+    "mean_width_per_fork": 3.2567567567567566,
+    "width_histogram": {
+      "4": 34,
+      "3": 22,
+      "2": 17,
+      "5": 1
+    },
+    "round_histogram": {
+      "0": 2,
+      "1": 43,
+      "2": 14,
+      "3": 1
+    },
+    "op_histogram": {
+      "25": 4,
+      "26": 3,
+      "22": 9,
+      "23": 7,
+      "21": 10,
+      "19": 1,
+      "24": 5,
+      "28": 5,
+      "20": 1,
+      "27": 7,
+      "29": 4,
+      "30": 3,
+      "18": 1
+    },
+    "total_tokens": {
+      "mean": 854.7833333333333,
+      "p50": 835.5,
+      "p90": 1071.2,
+      "p95": 1201.3999999999999,
+      "max": 1411.0
+    },
+    "sequential_tokens": {
+      "mean": 457.73333333333335,
+      "p50": 450.5,
+      "p90": 600.3,
+      "p95": 610.5,
+      "max": 732.0
+    },
+    "critical_path_tokens_proxy": {
+      "mean": 615.4,
+      "p50": 622.0,
+      "p90": 767.0,
+      "p95": 801.8,
+      "max": 900.0
+    },
+    "parallel_path_tokens": {
+      "mean": 393.03333333333336,
+      "p50": 398.5,
+      "p90": 576.9,
+      "p95": 598.9999999999998,
+      "max": 836.0
+    },
+    "student_tokens": {
+      "mean": 2274.5789473684213,
+      "p50": 2363.0,
+      "p90": 2766.2,
+      "p95": 2946.399999999999,
+      "max": 3221.0
+    },
+    "verification_paths": 11,
+    "rows_with_verification": 11,
+    "mean_distinct_work_width_proxy_judged": 3.0833333333333335,
+    "mean_critical_to_total_ratio": 0.7267297280028236,
+    "width_by_op": {
+      "25": {
+        "forks": 4,
+        "mean_width": 3.0
+      },
+      "26": {
+        "forks": 4,
+        "mean_width": 3.5
+      },
+      "22": {
+        "forks": 8,
+        "mean_width": 3.125
+      },
+      "23": {
+        "forks": 9,
+        "mean_width": 3.111111111111111
+      },
+      "21": {
+        "forks": 14,
+        "mean_width": 3.142857142857143
+      },
+      "19": {
+        "forks": 1,
+        "mean_width": 4.0
+      },
+      "24": {
+        "forks": 6,
+        "mean_width": 3.0
+      },
+      "28": {
+        "forks": 7,
+        "mean_width": 3.142857142857143
+      },
+      "20": {
+        "forks": 1,
+        "mean_width": 4.0
+      },
+      "27": {
+        "forks": 9,
+        "mean_width": 3.5555555555555554
+      },
+      "29": {
+        "forks": 4,
+        "mean_width": 4.0
+      },
+      "30": {
+        "forks": 5,
+        "mean_width": 3.4
+      },
+      "18": {
+        "forks": 2,
+        "mean_width": 2.5
+      }
+    }
+  },
+  "accepted_subset": {
+    "rows": 40,
+    "forks": 48,
+    "mean_width_per_fork": 3.1875,
+    "width_histogram": {
+      "4": 23,
+      "3": 11,
+      "2": 14
+    },
+    "round_histogram": {
+      "1": 33,
+      "2": 6,
+      "3": 1
+    },
+    "op_histogram": {
+      "26": 3,
+      "23": 6,
+      "21": 8,
+      "19": 1,
+      "24": 4,
+      "28": 3,
+      "22": 5,
+      "20": 1,
+      "27": 4,
+      "25": 2,
+      "29": 2,
+      "30": 1
+    },
+    "total_tokens": {
+      "mean": 844.425,
+      "p50": 808.0,
+      "p90": 1083.9,
+      "p95": 1231.6499999999999,
+      "max": 1411.0
+    },
+    "sequential_tokens": {
+      "mean": 439.1,
+      "p50": 437.5,
+      "p90": 592.8,
+      "p95": 603.3,
+      "max": 610.0
+    },
+    "critical_path_tokens_proxy": {
+      "mean": 599.1,
+      "p50": 573.5,
+      "p90": 788.4,
+      "p95": 819.7499999999999,
+      "max": 900.0
+    },
+    "parallel_path_tokens": {
+      "mean": 401.5,
+      "p50": 398.5,
+      "p90": 594.2,
+      "p95": 658.4499999999998,
+      "max": 836.0
+    },
+    "student_tokens": {
+      "mean": 2212.9,
+      "p50": 2275.0,
+      "p90": 2574.9000000000005,
+      "p95": 2919.0999999999995,
+      "max": 3127.0
+    },
+    "verification_paths": 7,
+    "rows_with_verification": 7,
+    "mean_distinct_work_width_proxy_judged": 3.0416666666666665,
+    "mean_critical_to_total_ratio": 0.7159822150049717,
+    "width_by_op": {
+      "26": {
+        "forks": 4,
+        "mean_width": 3.5
+      },
+      "23": {
+        "forks": 7,
+        "mean_width": 2.857142857142857
+      },
+      "21": {
+        "forks": 12,
+        "mean_width": 3.0
+      },
+      "19": {
+        "forks": 1,
+        "mean_width": 4.0
+      },
+      "24": {
+        "forks": 5,
+        "mean_width": 3.0
+      },
+      "28": {
+        "forks": 3,
+        "mean_width": 4.0
+      },
+      "22": {
+        "forks": 5,
+        "mean_width": 2.8
+      },
+      "20": {
+        "forks": 1,
+        "mean_width": 4.0
+      },
+      "27": {
+        "forks": 4,
+        "mean_width": 3.75
+      },
+      "25": {
+        "forks": 3,
+        "mean_width": 2.6666666666666665
+      },
+      "29": {
+        "forks": 2,
+        "mean_width": 3.5
+      },
+      "30": {
+        "forks": 1,
+        "mean_width": 4.0
+      }
+    }
+  },
+  "limitations": [
+    "Teacher answer correctness is measured against source references; acceptance also uses the same model as semantic critic.",
+    "Critical-path tokens are a tokenizer-based proxy, not measured runtime forwards or small-student accuracy.",
+    "Mean width is weighted per fork; examples with no forks do not enter this mean."
+  ]
+}

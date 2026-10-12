@@ -1,0 +1,11 @@
+{
+  "state": "not_launched",
+  "gpu_jobs_started": 0,
+  "preflight": "failed synthetic malformed-format assertion; legacy format checker accepts missing Summary closure",
+  "decision": "User is reviewing reward plots and proposes correctness-only penalty or lower lambda. Defer relative-efficiency pilot; analyze normalization before selecting next run. Original two 800-step runs complete.",
+  "proposed_ablations": [
+    "correctness-gated depth penalty, unchanged GRPO normalization",
+    "correctness-gated depth penalty with separately scaled depth advantage"
+  ],
+  "original_analysis": "../gsm-unseen-two-rewards-20261008/reward-analysis.json"
+}

@@ -1,0 +1,78 @@
+{
+  "hostname": "RUN_9c5b5b8949-mpimaster-0",
+  "sft_status": "${PROJECT_ROOT}/work/experiments/instruct-deep-full-20261011/controller-status.json",
+  "baseline": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/epoch1/final",
+  "questions": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/evaluations/questions-500.jsonl",
+  "system": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/system.txt",
+  "scorer": "${PROJECT_ROOT}/work/experiments/unseen-wide5145-20261009/eval-math500-forced-think-20261009/score.py",
+  "protocol": {
+    "suite": "standard MATH500 full500",
+    "native_prefix": "exact fullSFT native template thinkingTrue opener inprompt",
+    "precision": "FP32",
+    "backend": "actual verified HF microbatch paths2",
+    "temperature": 1,
+    "top_p": 1,
+    "top_k": null,
+    "response_budget": 4096,
+    "path_budget": 768,
+    "max_context": 16384,
+    "seed": "42161011+question_index*1000",
+    "samples_per_question": 1,
+    "scorer": "frozen referenceblind MathVerify",
+    "actual_forward_calls": "instrumented model.forward plus exact runtimeledger parity",
+    "selection_allowed": false,
+    "train_reward_leakage": false
+  },
+  "jobs": [
+    {
+      "id": "001-fullSFT-baseline",
+      "model": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/epoch1/final"
+    },
+    {
+      "id": "R1-checkpoint-0032",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0032/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0032/complete.json"
+    },
+    {
+      "id": "R2-checkpoint-0032",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0032/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0032/complete.json"
+    },
+    {
+      "id": "newdeep-fullSFT-0126",
+      "model": "${PROJECT_ROOT}/work/experiments/instruct-deep-full-20261011/runs/production/final",
+      "audit": "${PROJECT_ROOT}/work/experiments/instruct-deep-full-20261011/production-export-proof.json",
+      "audit_sha256": "777afd5a123fb97e52870145e65e626e612cf791821e14f5abccde2cdad54832"
+    },
+    {
+      "id": "R1-checkpoint-0128",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0128/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0128/complete.json"
+    },
+    {
+      "id": "R2-checkpoint-0128",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0128/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0128/complete.json"
+    },
+    {
+      "id": "R1-checkpoint-0256",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0256/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0256/complete.json"
+    },
+    {
+      "id": "R2-checkpoint-0256",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0256/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0256/complete.json"
+    },
+    {
+      "id": "R1-checkpoint-0500",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0500/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0500/complete.json"
+    },
+    {
+      "id": "R2-checkpoint-0500",
+      "model": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0500/hf",
+      "complete": "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0500/complete.json"
+    }
+  ]
+}

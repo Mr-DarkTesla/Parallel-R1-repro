@@ -1,0 +1,93 @@
+{
+  "phase": "pilot",
+  "accepted": 43,
+  "width": {
+    "count": 183,
+    "mean": 4.043715846994536,
+    "median": 4.0,
+    "p5": 3.0,
+    "p95": 5.0,
+    "minimum": 2,
+    "maximum": 5
+  },
+  "rounds": {
+    "count": 43,
+    "mean": 4.255813953488372,
+    "median": 4.0,
+    "p5": 4.0,
+    "p95": 5.0,
+    "minimum": 4,
+    "maximum": 5
+  },
+  "path_body_tokens": {
+    "count": 740,
+    "mean": 32.6554054054054,
+    "median": 35.0,
+    "p5": 20.0,
+    "p95": 41.0,
+    "minimum": 18,
+    "maximum": 43
+  },
+  "whole_path_tokens": {
+    "count": 740,
+    "mean": 36.6554054054054,
+    "median": 39.0,
+    "p5": 24.0,
+    "p95": 45.0,
+    "minimum": 22,
+    "maximum": 47
+  },
+  "response_tokens": {
+    "count": 43,
+    "mean": 1292.0697674418604,
+    "median": 1250.0,
+    "p5": 915.4,
+    "p95": 1739.8,
+    "minimum": 865,
+    "maximum": 1966
+  },
+  "student_context_tokens": {
+    "count": 43,
+    "mean": 2074.3953488372094,
+    "median": 1982.0,
+    "p5": 1551.8,
+    "p95": 2728.0,
+    "minimum": 1378,
+    "maximum": 3031
+  },
+  "critical_path_tokens_split_proxy": {
+    "count": 43,
+    "mean": 824.3720930232558,
+    "median": 780.0,
+    "p5": 644.0,
+    "p95": 1093.5,
+    "minimum": 609,
+    "maximum": 1193
+  },
+  "serial_tokens_split_proxy": {
+    "count": 43,
+    "mean": 661.2558139534884,
+    "median": 638.0,
+    "p5": 477.0,
+    "p95": 901.3,
+    "minimum": 456,
+    "maximum": 1053
+  },
+  "width_histogram": {
+    "3": 25,
+    "4": 113,
+    "5": 41,
+    "2": 4
+  },
+  "round_histogram": {
+    "4": 32,
+    "5": 11
+  },
+  "accepted_sha256": "55745652ce53b9223baea62f60757e4d61642e996931b57fb1983a22ef05012f",
+  "limitations": [
+    "Student tokenizer and compacted training response; teacher hidden reasoning excluded.",
+    "Critical path includes entire Path opener/body/closer and all serial text.",
+    "Independent segment tokenization can differ at boundaries; split proxy is not runtime forwards or latency.",
+    "Prompt/context tokens count once; prompt is excluded from response critical path."
+  ]
+}

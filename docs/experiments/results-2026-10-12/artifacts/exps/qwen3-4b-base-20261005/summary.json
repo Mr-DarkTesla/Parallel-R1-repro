@@ -1,0 +1,60 @@
+{
+  "complete": true,
+  "model": {
+    "model": "Parallel-R1/Qwen3-4B-Base-add-special-token",
+    "revision": "9732f1f4f58d9fe411d44c5545b5d4b87f1fe284",
+    "path": "${MODEL_ROOT}/huggingface/hub/models--Parallel-R1--Qwen3-4B-Base-add-special-token/snapshots/9732f1f4f58d9fe411d44c5545b5d4b87f1fe284"
+  },
+  "answers": 1916,
+  "benchmarks": {
+    "APO_AIME24": {
+      "answers": 480,
+      "questions": 30,
+      "n": 16,
+      "accuracy": 0.004166666666666667,
+      "observed_pass_at_n": 0.03333333333333333,
+      "bootstrap_best_at_n": 0.029500000000000002,
+      "parallel": 0.16458333333333333,
+      "invalid_answer": 0.65,
+      "paper_accuracy": 0.028999999999999998,
+      "paper_pass_at_n": 0.165
+    },
+    "APO_AIME25": {
+      "answers": 480,
+      "questions": 30,
+      "n": 16,
+      "accuracy": 0.004166666666666667,
+      "observed_pass_at_n": 0.06666666666666667,
+      "bootstrap_best_at_n": 0.043100000000000006,
+      "parallel": 0.1625,
+      "invalid_answer": 0.6395833333333333,
+      "paper_accuracy": 0.013000000000000001,
+      "paper_pass_at_n": 0.102
+    },
+    "APO_AMC23": {
+      "answers": 640,
+      "questions": 40,
+      "n": 16,
+      "accuracy": 0.034375,
+      "observed_pass_at_n": 0.45,
+      "bootstrap_best_at_n": 0.311975,
+      "parallel": 0.146875,
+      "invalid_answer": 0.590625,
+      "paper_accuracy": 0.081,
+      "paper_pass_at_n": 0.512
+    },
+    "APO_MATH300": {
+      "answers": 316,
+      "questions": 316,
+      "n": 1,
+      "accuracy": 0.06329113924050633,
+      "observed_pass_at_n": 0.06329113924050633,
+      "bootstrap_best_at_n": null,
+      "parallel": 0.16139240506329114,
+      "invalid_answer": 0.560126582278481,
+      "paper_accuracy": 0.139,
+      "paper_pass_at_n": null
+    }
+  },
+  "macro_accuracy": 0.026499868143459917
+}

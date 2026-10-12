@@ -1,0 +1,1013 @@
+{
+  "total_rows": 5000,
+  "procedural_question_checks": 4500,
+  "procedural_answers_correct": 4500,
+  "reference_rows_not_independently_solved": 500,
+  "numeric_equalities": 14749,
+  "numeric_equality_rows": 4568,
+  "numeric_equality_mismatches": 0,
+  "case_candidate_grid_checks": 972,
+  "case_candidate_grid_rows": 658,
+  "case_candidate_grid_mismatches": 0,
+  "parallel_rounds": {
+    "1": 4700,
+    "0": 300
+  },
+  "verify_rows": 1195,
+  "verify_wrong_claims": 343,
+  "verify_correct_claims": 852,
+  "correct_answer_in_assistant_before_plan": 764,
+  "new_method_verify_wrong_claims": 130,
+  "new_method_verify_wrong_claim_delta_counts": {
+    "1": 130
+  },
+  "families": [
+    {
+      "family": "absolute_value_cases",
+      "rows": 60,
+      "train": 48,
+      "val": 12,
+      "difficulty": {
+        "medium": 28,
+        "hard": 32
+      },
+      "fork_type": {
+        "cases": 60
+      },
+      "question_checks": {
+        "checked": 60
+      },
+      "question_matches": 60,
+      "numeric_equality_rows": 60
+    },
+    {
+      "family": "affine_absolute_value_cases",
+      "rows": 60,
+      "train": 60,
+      "val": 0,
+      "difficulty": {
+        "medium": 28,
+        "hard": 32
+      },
+      "fork_type": {
+        "cases": 60
+      },
+      "question_checks": {
+        "checked": 60
+      },
+      "question_matches": 60,
+      "numeric_equality_rows": 0
+    },
+    {
+      "family": "arithmetic_checks",
+      "rows": 175,
+      "train": 164,
+      "val": 11,
+      "difficulty": {
+        "medium": 175
+      },
+      "fork_type": {
+        "verify": 175
+      },
+      "question_checks": {
+        "checked": 175
+      },
+      "question_matches": 175,
+      "numeric_equality_rows": 175
+    },
+    {
+      "family": "consecutive_labels_methods",
+      "rows": 71,
+      "train": 62,
+      "val": 9,
+      "difficulty": {
+        "hard": 20,
+        "medium": 37,
+        "easy": 14
+      },
+      "fork_type": {
+        "methods": 71
+      },
+      "question_checks": {
+        "checked": 71
+      },
+      "question_matches": 71,
+      "numeric_equality_rows": 71
+    },
+    {
+      "family": "consecutive_product_mod4",
+      "rows": 60,
+      "train": 55,
+      "val": 5,
+      "difficulty": {
+        "medium": 28,
+        "hard": 32
+      },
+      "fork_type": {
+        "cases": 60
+      },
+      "question_checks": {
+        "checked": 60
+      },
+      "question_matches": 60,
+      "numeric_equality_rows": 60
+    },
+    {
+      "family": "constrained_pairs_cases",
+      "rows": 79,
+      "train": 74,
+      "val": 5,
+      "difficulty": {
+        "medium": 79
+      },
+      "fork_type": {
+        "cases": 79
+      },
+      "question_checks": {
+        "checked": 79
+      },
+      "question_matches": 79,
+      "numeric_equality_rows": 0
+    },
+    {
+      "family": "courier_cost_verify",
+      "rows": 83,
+      "train": 70,
+      "val": 13,
+      "difficulty": {
+        "medium": 35,
+        "hard": 32,
+        "easy": 16
+      },
+      "fork_type": {
+        "verify": 83
+      },
+      "question_checks": {
+        "checked": 83
+      },
+      "question_matches": 83,
+      "numeric_equality_rows": 83
+    },
+    {
+      "family": "discount_fee_verify",
+      "rows": 84,
+      "train": 75,
+      "val": 9,
+      "difficulty": {
+        "easy": 17,
+        "hard": 32,
+        "medium": 35
+      },
+      "fork_type": {
+        "verify": 84
+      },
+      "question_checks": {
+        "checked": 84
+      },
+      "question_matches": 84,
+      "numeric_equality_rows": 84
+    },
+    {
+      "family": "discount_then_change",
+      "rows": 7,
+      "train": 6,
+      "val": 1,
+      "difficulty": {
+        "easy": 7
+      },
+      "fork_type": {
+        "sequential": 7
+      },
+      "question_checks": {
+        "checked": 7
+      },
+      "question_matches": 7,
+      "numeric_equality_rows": 7
+    },
+    {
+      "family": "divisibility_count_methods",
+      "rows": 276,
+      "train": 259,
+      "val": 17,
+      "difficulty": {
+        "medium": 276
+      },
+      "fork_type": {
+        "methods": 172,
+        "verify": 104
+      },
+      "question_checks": {
+        "checked": 276
+      },
+      "question_matches": 276,
+      "numeric_equality_rows": 276
+    },
+    {
+      "family": "even_interval_verify",
+      "rows": 83,
+      "train": 76,
+      "val": 7,
+      "difficulty": {
+        "easy": 16,
+        "medium": 35,
+        "hard": 32
+      },
+      "fork_type": {
+        "verify": 83
+      },
+      "question_checks": {
+        "checked": 83
+      },
+      "question_matches": 83,
+      "numeric_equality_rows": 83
+    },
+    {
+      "family": "fair_revenue_cost",
+      "rows": 67,
+      "train": 60,
+      "val": 7,
+      "difficulty": {
+        "medium": 36,
+        "easy": 17,
+        "hard": 14
+      },
+      "fork_type": {
+        "subtask": 67
+      },
+      "question_checks": {
+        "checked": 67
+      },
+      "question_matches": 67,
+      "numeric_equality_rows": 67
+    },
+    {
+      "family": "garden_width_candidates",
+      "rows": 75,
+      "train": 67,
+      "val": 8,
+      "difficulty": {
+        "hard": 32,
+        "medium": 43
+      },
+      "fork_type": {
+        "candidates": 75
+      },
+      "question_checks": {
+        "checked": 75
+      },
+      "question_matches": 75,
+      "numeric_equality_rows": 75
+    },
+    {
+      "family": "geometric_ratio_candidates",
+      "rows": 75,
+      "train": 68,
+      "val": 7,
+      "difficulty": {
+        "hard": 33,
+        "medium": 42
+      },
+      "fork_type": {
+        "candidates": 75
+      },
+      "question_checks": {
+        "checked": 75
+      },
+      "question_matches": 75,
+      "numeric_equality_rows": 75
+    },
+    {
+      "family": "grid_route_count",
+      "rows": 25,
+      "train": 0,
+      "val": 25,
+      "difficulty": {
+        "medium": 25
+      },
+      "fork_type": {
+        "methods": 25
+      },
+      "question_checks": {
+        "checked": 25
+      },
+      "question_matches": 25,
+      "numeric_equality_rows": 0
+    },
+    {
+      "family": "group_purchase_subtasks",
+      "rows": 78,
+      "train": 73,
+      "val": 5,
+      "difficulty": {
+        "medium": 78
+      },
+      "fork_type": {
+        "subtask": 78
+      },
+      "question_checks": {
+        "checked": 78
+      },
+      "question_matches": 78,
+      "numeric_equality_rows": 78
+    },
+    {
+      "family": "gsm8k_reference_components",
+      "rows": 240,
+      "train": 216,
+      "val": 24,
+      "difficulty": {
+        "unrated": 240
+      },
+      "fork_type": {
+        "subtask": 240
+      },
+      "question_checks": {
+        "reference_requires_semantic_review": 240
+      },
+      "question_matches": 0,
+      "numeric_equality_rows": 165
+    },
+    {
+      "family": "gsm8k_reference_sequential",
+      "rows": 260,
+      "train": 234,
+      "val": 26,
+      "difficulty": {
+        "unrated": 260
+      },
+      "fork_type": {
+        "sequential": 260
+      },
+      "question_checks": {
+        "reference_requires_semantic_review": 260
+      },
+      "question_matches": 0,
+      "numeric_equality_rows": 160
+    },
+    {
+      "family": "interval_intersection",
+      "rows": 25,
+      "train": 0,
+      "val": 25,
+      "difficulty": {
+        "medium": 25
+      },
+      "fork_type": {
+        "subtask": 25
+      },
+      "question_checks": {
+        "checked": 25
+      },
+      "question_matches": 25,
+      "numeric_equality_rows": 11
+    },
+    {
+      "family": "inventory_verify",
+      "rows": 84,
+      "train": 77,
+      "val": 7,
+      "difficulty": {
+        "easy": 17,
+        "hard": 32,
+        "medium": 35
+      },
+      "fork_type": {
+        "verify": 84
+      },
+      "question_checks": {
+        "checked": 84
+      },
+      "question_matches": 84,
+      "numeric_equality_rows": 84
+    },
+    {
+      "family": "machine_input_candidates",
+      "rows": 75,
+      "train": 64,
+      "val": 11,
+      "difficulty": {
+        "hard": 32,
+        "medium": 43
+      },
+      "fork_type": {
+        "candidates": 75
+      },
+      "question_checks": {
+        "checked": 75
+      },
+      "question_matches": 75,
+      "numeric_equality_rows": 75
+    },
+    {
+      "family": "modular_union_cases",
+      "rows": 79,
+      "train": 74,
+      "val": 5,
+      "difficulty": {
+        "medium": 79
+      },
+      "fork_type": {
+        "cases": 79
+      },
+      "question_checks": {
+        "checked": 79
+      },
+      "question_matches": 79,
+      "numeric_equality_rows": 0
+    },
+    {
+      "family": "multi_route_distance",
+      "rows": 67,
+      "train": 61,
+      "val": 6,
+      "difficulty": {
+        "medium": 37,
+        "easy": 17,
+        "hard": 13
+      },
+      "fork_type": {
+        "subtask": 67
+      },
+      "question_checks": {
+        "checked": 67
+      },
+      "question_matches": 67,
+      "numeric_equality_rows": 67
+    },
+    {
+      "family": "multiple_shipments",
+      "rows": 66,
+      "train": 59,
+      "val": 7,
+      "difficulty": {
+        "hard": 13,
+        "medium": 37,
+        "easy": 16
+      },
+      "fork_type": {
+        "subtask": 66
+      },
+      "question_checks": {
+        "checked": 66
+      },
+      "question_matches": 66,
+      "numeric_equality_rows": 66
+    },
+    {
+      "family": "net_flow_subtasks",
+      "rows": 78,
+      "train": 73,
+      "val": 5,
+      "difficulty": {
+        "medium": 78
+      },
+      "fork_type": {
+        "subtask": 78
+      },
+      "question_checks": {
+        "checked": 78
+      },
+      "question_matches": 78,
+      "numeric_equality_rows": 78
+    },
+    {
+      "family": "pair_count_methods",
+      "rows": 71,
+      "train": 65,
+      "val": 6,
+      "difficulty": {
+        "hard": 20,
+        "easy": 14,
+        "medium": 37
+      },
+      "fork_type": {
+        "methods": 71
+      },
+      "question_checks": {
+        "checked": 71
+      },
+      "question_matches": 71,
+      "numeric_equality_rows": 71
+    },
+    {
+      "family": "parcel_fee_subtasks",
+      "rows": 79,
+      "train": 74,
+      "val": 5,
+      "difficulty": {
+        "medium": 79
+      },
+      "fork_type": {
+        "subtask": 79
+      },
+      "question_checks": {
+        "checked": 79
+      },
+      "question_matches": 79,
+      "numeric_equality_rows": 79
+    },
+    {
+      "family": "percentage_recovery_methods",
+      "rows": 276,
+      "train": 259,
+      "val": 17,
+      "difficulty": {
+        "medium": 276
+      },
+      "fork_type": {
+        "verify": 104,
+        "methods": 172
+      },
+      "question_checks": {
+        "checked": 276
+      },
+      "question_matches": 276,
+      "numeric_equality_rows": 276
+    },
+    {
+      "family": "polynomial_candidates",
+      "rows": 175,
+      "train": 165,
+      "val": 10,
+      "difficulty": {
+        "medium": 175
+      },
+      "fork_type": {
+        "candidates": 175
+      },
+      "question_checks": {
+        "checked": 175
+      },
+      "question_matches": 175,
+      "numeric_equality_rows": 175
+    },
+    {
+      "family": "probability_bag_draw",
+      "rows": 25,
+      "train": 0,
+      "val": 25,
+      "difficulty": {
+        "medium": 25
+      },
+      "fork_type": {
+        "subtask": 25
+      },
+      "question_checks": {
+        "checked": 25
+      },
+      "question_matches": 25,
+      "numeric_equality_rows": 25
+    },
+    {
+      "family": "production_dependency_chains",
+      "rows": 67,
+      "train": 61,
+      "val": 6,
+      "difficulty": {
+        "medium": 36,
+        "easy": 17,
+        "hard": 14
+      },
+      "fork_type": {
+        "subtask": 67
+      },
+      "question_checks": {
+        "checked": 67
+      },
+      "question_matches": 67,
+      "numeric_equality_rows": 67
+    },
+    {
+      "family": "profit_markup_methods",
+      "rows": 276,
+      "train": 259,
+      "val": 17,
+      "difficulty": {
+        "medium": 276
+      },
+      "fork_type": {
+        "verify": 104,
+        "methods": 172
+      },
+      "question_checks": {
+        "checked": 276
+      },
+      "question_matches": 276,
+      "numeric_equality_rows": 276
+    },
+    {
+      "family": "quadratic_factor_cases",
+      "rows": 60,
+      "train": 55,
+      "val": 5,
+      "difficulty": {
+        "medium": 28,
+        "hard": 32
+      },
+      "fork_type": {
+        "cases": 60
+      },
+      "question_checks": {
+        "checked": 60
+      },
+      "question_matches": 60,
+      "numeric_equality_rows": 60
+    },
+    {
+      "family": "ratio_allocation",
+      "rows": 79,
+      "train": 74,
+      "val": 5,
+      "difficulty": {
+        "medium": 79
+      },
+      "fork_type": {
+        "subtask": 79
+      },
+      "question_checks": {
+        "checked": 79
+      },
+      "question_matches": 79,
+      "numeric_equality_rows": 79
+    },
+    {
+      "family": "rectangle_algebra_methods",
+      "rows": 71,
+      "train": 63,
+      "val": 8,
+      "difficulty": {
+        "easy": 14,
+        "medium": 37,
+        "hard": 20
+      },
+      "fork_type": {
+        "methods": 71
+      },
+      "question_checks": {
+        "checked": 71
+      },
+      "question_matches": 71,
+      "numeric_equality_rows": 71
+    },
+    {
+      "family": "rectangular_frame_methods",
+      "rows": 276,
+      "train": 259,
+      "val": 17,
+      "difficulty": {
+        "medium": 276
+      },
+      "fork_type": {
+        "methods": 172,
+        "verify": 104
+      },
+      "question_checks": {
+        "checked": 276
+      },
+      "question_matches": 276,
+      "numeric_equality_rows": 276
+    },
+    {
+      "family": "residue_class_cases",
+      "rows": 60,
+      "train": 52,
+      "val": 8,
+      "difficulty": {
+        "hard": 32,
+        "medium": 28
+      },
+      "fork_type": {
+        "cases": 60
+      },
+      "question_checks": {
+        "checked": 60
+      },
+      "question_matches": 60,
+      "numeric_equality_rows": 60
+    },
+    {
+      "family": "sequential_fraction_remainder",
+      "rows": 6,
+      "train": 6,
+      "val": 0,
+      "difficulty": {
+        "medium": 6
+      },
+      "fork_type": {
+        "sequential": 6
+      },
+      "question_checks": {
+        "checked": 6
+      },
+      "question_matches": 6,
+      "numeric_equality_rows": 6
+    },
+    {
+      "family": "sequential_growth",
+      "rows": 7,
+      "train": 6,
+      "val": 1,
+      "difficulty": {
+        "medium": 7
+      },
+      "fork_type": {
+        "sequential": 7
+      },
+      "question_checks": {
+        "checked": 7
+      },
+      "question_matches": 7,
+      "numeric_equality_rows": 7
+    },
+    {
+      "family": "sequential_linear_equation",
+      "rows": 6,
+      "train": 6,
+      "val": 0,
+      "difficulty": {
+        "easy": 6
+      },
+      "fork_type": {
+        "sequential": 6
+      },
+      "question_checks": {
+        "checked": 6
+      },
+      "question_matches": 6,
+      "numeric_equality_rows": 6
+    },
+    {
+      "family": "shop_two_products",
+      "rows": 67,
+      "train": 61,
+      "val": 6,
+      "difficulty": {
+        "medium": 37,
+        "easy": 17,
+        "hard": 13
+      },
+      "fork_type": {
+        "subtask": 67
+      },
+      "question_checks": {
+        "checked": 67
+      },
+      "question_matches": 67,
+      "numeric_equality_rows": 67
+    },
+    {
+      "family": "single_integer_operation",
+      "rows": 7,
+      "train": 6,
+      "val": 1,
+      "difficulty": {
+        "easy": 7
+      },
+      "fork_type": {
+        "sequential": 7
+      },
+      "question_checks": {
+        "checked": 7
+      },
+      "question_matches": 7,
+      "numeric_equality_rows": 7
+    },
+    {
+      "family": "solution_mixture_methods",
+      "rows": 72,
+      "train": 66,
+      "val": 6,
+      "difficulty": {
+        "easy": 14,
+        "hard": 20,
+        "medium": 38
+      },
+      "fork_type": {
+        "methods": 72
+      },
+      "question_checks": {
+        "checked": 72
+      },
+      "question_matches": 72,
+      "numeric_equality_rows": 72
+    },
+    {
+      "family": "stock_sequence",
+      "rows": 7,
+      "train": 6,
+      "val": 1,
+      "difficulty": {
+        "easy": 7
+      },
+      "fork_type": {
+        "sequential": 7
+      },
+      "question_checks": {
+        "checked": 7
+      },
+      "question_matches": 7,
+      "numeric_equality_rows": 7
+    },
+    {
+      "family": "tariff_comparison",
+      "rows": 79,
+      "train": 74,
+      "val": 5,
+      "difficulty": {
+        "medium": 79
+      },
+      "fork_type": {
+        "subtask": 79
+      },
+      "question_checks": {
+        "checked": 79
+      },
+      "question_matches": 79,
+      "numeric_equality_rows": 79
+    },
+    {
+      "family": "ticket_system_methods",
+      "rows": 72,
+      "train": 65,
+      "val": 7,
+      "difficulty": {
+        "medium": 37,
+        "hard": 20,
+        "easy": 15
+      },
+      "fork_type": {
+        "methods": 72
+      },
+      "question_checks": {
+        "checked": 72
+      },
+      "question_matches": 72,
+      "numeric_equality_rows": 72
+    },
+    {
+      "family": "triangular_number_methods",
+      "rows": 72,
+      "train": 62,
+      "val": 10,
+      "difficulty": {
+        "medium": 37,
+        "hard": 20,
+        "easy": 15
+      },
+      "fork_type": {
+        "methods": 72
+      },
+      "question_checks": {
+        "checked": 72
+      },
+      "question_matches": 72,
+      "numeric_equality_rows": 72
+    },
+    {
+      "family": "two_garden_areas",
+      "rows": 66,
+      "train": 58,
+      "val": 8,
+      "difficulty": {
+        "hard": 13,
+        "easy": 16,
+        "medium": 37
+      },
+      "fork_type": {
+        "subtask": 66
+      },
+      "question_checks": {
+        "checked": 66
+      },
+      "question_matches": 66,
+      "numeric_equality_rows": 66
+    },
+    {
+      "family": "two_rates_verify",
+      "rows": 83,
+      "train": 76,
+      "val": 7,
+      "difficulty": {
+        "easy": 17,
+        "hard": 31,
+        "medium": 35
+      },
+      "fork_type": {
+        "verify": 83
+      },
+      "question_checks": {
+        "checked": 83
+      },
+      "question_matches": 83,
+      "numeric_equality_rows": 83
+    },
+    {
+      "family": "two_remainders_candidates",
+      "rows": 75,
+      "train": 71,
+      "val": 4,
+      "difficulty": {
+        "medium": 42,
+        "hard": 33
+      },
+      "fork_type": {
+        "candidates": 75
+      },
+      "question_checks": {
+        "checked": 75
+      },
+      "question_matches": 75,
+      "numeric_equality_rows": 75
+    },
+    {
+      "family": "unit_conversion_sum",
+      "rows": 79,
+      "train": 74,
+      "val": 5,
+      "difficulty": {
+        "medium": 79
+      },
+      "fork_type": {
+        "subtask": 79
+      },
+      "question_checks": {
+        "checked": 79
+      },
+      "question_matches": 79,
+      "numeric_equality_rows": 79
+    },
+    {
+      "family": "usable_chalk_verify",
+      "rows": 83,
+      "train": 76,
+      "val": 7,
+      "difficulty": {
+        "hard": 31,
+        "medium": 35,
+        "easy": 17
+      },
+      "fork_type": {
+        "verify": 83
+      },
+      "question_checks": {
+        "checked": 83
+      },
+      "question_matches": 83,
+      "numeric_equality_rows": 83
+    },
+    {
+      "family": "wage_baseline_methods",
+      "rows": 71,
+      "train": 67,
+      "val": 4,
+      "difficulty": {
+        "medium": 37,
+        "hard": 20,
+        "easy": 14
+      },
+      "fork_type": {
+        "methods": 71
+      },
+      "question_checks": {
+        "checked": 71
+      },
+      "question_matches": 71,
+      "numeric_equality_rows": 71
+    },
+    {
+      "family": "weighted_average_groups",
+      "rows": 25,
+      "train": 0,
+      "val": 25,
+      "difficulty": {
+        "medium": 25
+      },
+      "fork_type": {
+        "subtask": 25
+      },
+      "question_checks": {
+        "checked": 25
+      },
+      "question_matches": 25,
+      "numeric_equality_rows": 25
+    },
+    {
+      "family": "work_completion_methods",
+      "rows": 276,
+      "train": 259,
+      "val": 17,
+      "difficulty": {
+        "medium": 276
+      },
+      "fork_type": {
+        "methods": 172,
+        "verify": 104
+      },
+      "question_checks": {
+        "checked": 276
+      },
+      "question_matches": 276,
+      "numeric_equality_rows": 276
+    }
+  ]
+}

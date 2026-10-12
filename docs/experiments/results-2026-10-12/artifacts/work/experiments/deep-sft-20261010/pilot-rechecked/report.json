@@ -1,0 +1,54 @@
+{
+  "planned": 50,
+  "completed": 50,
+  "first_attempt_only": true,
+  "first_math_correct": 50,
+  "canonical": 49,
+  "accepted_math_canonical": 49,
+  "rejected": [
+    "synthetic-layered-dag-v1/2026101022"
+  ],
+  "semantic_judge_missing": [
+    "synthetic-layered-dag-v1/2026101003",
+    "synthetic-layered-dag-v1/2026101009",
+    "synthetic-layered-dag-v1/2026101017",
+    "synthetic-layered-dag-v1/2026101022",
+    "synthetic-layered-dag-v1/2026101023",
+    "synthetic-layered-dag-v1/2026101029",
+    "synthetic-layered-dag-v1/2026101036",
+    "synthetic-layered-dag-v1/2026101039",
+    "synthetic-layered-dag-v1/2026101040",
+    "synthetic-layered-dag-v1/2026101051",
+    "synthetic-layered-dag-v1/2026101059",
+    "synthetic-layered-dag-v1/2026101061"
+  ],
+  "original_outcomes_preserved": true,
+  "new_teacher_calls": 0,
+  "production_released": false,
+  "status": "HOLD: math/canonical snapshot complete; semantic review and Instruct template pending",
+  "independent_report_sha256": "13c9b7ee36dd57441755ab24a77e72170b66c385d9c294ca2ae98f5ae0255279",
+  "checker_sha256": {
+    "arithmetic_check.py": "059680f92066905230a03666089f6e096aa1a33b9fd96e3d7ed6e999b0acdf61",
+    "oracle_check.py": "4d67be269f5764b1ba2171ab78aff0b99e168f3d2632f42c6d23905d6887c111",
+    "arithmetic_check_v2.py": "5476def2ad35d15e9840da6c6d9f791ee333efa01962f91caf5803abce46854e",
+    "oracle_check_v2.py": "c0b4ae8a43cfc977206b8bc04a51b0bcb001ea8f8db54f14bb46a156dbb017f6",
+    "test_checker_repair.py": "fb7b7ccca1a98a716a0296f2b320e17140f0df2db248f1812fde58a29f2c21c6"
+  },
+  "artifact_sha256": {
+    "journal.jsonl": "345fc0228046b8e888016a20b06bd3ef81833164b7e069eeb744b7967f05eb23",
+    "accepted.jsonl": "7aaaea92f4f5cca6829077e016ea6404b7e4a685689fc6e602f352aa409af265",
+    "first-attempt-raw-responses.jsonl": "473269e163740e13debc1d8621b8549c18e05971adcc6e7ae5f8df187e12a36d"
+  },
+  "provenance_sha256": {
+    "teacher-prompt.txt": "c8963dea43780c26bac19c6a0e7db32bdaaa3e0626747096903e4287e2c36827",
+    "judge-prompt.txt": "602c5e12e4fd6b24c005ee9ea18389b87c83556d3406437c515734768587682a",
+    "pilot-tasks.jsonl": "afddde5d864f47a07afe75b1c924b37c02dfb32913d4de2aad19db2a288bdefd",
+    "oracle-source.jsonl": "be5ec8514b49994786077b32af913bdf6fa59418c0c7ed9b8f9bdf007093c7d7",
+    "candidate-pool.jsonl": "77ec35ae191165e6d1686a9ba956726e614faf82a6326ee033584ee078ae4945"
+  },
+  "limitations": [
+    "Failed internal HTTP transport retries were not individually journaled by original generation.",
+    "Independent reviewer proves source relations; numeric checker does not prove prose meanings.",
+    "Raw 1022 drafting preamble is rejected, not sanitized or replaced with a retry."
+  ]
+}

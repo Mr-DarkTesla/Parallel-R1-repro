@@ -1,0 +1,424 @@
+{
+  "deadline_utc": null,
+  "max_gpus": 24,
+  "new_cloud_jobs": 2,
+  "priority": "medium",
+  "sft": "ONLY new3000,2700train300val,freshBase0.6B,5epochs",
+  "lanes": {
+    "sirius": "090 frozen corrected75 final500 ->092 oldmixed matched500",
+    "tmp2": "090 frozen MATHsplit40 final500 ->093 predeclared MATHaccuracy40 secondary500",
+    "tmp3": "090 frozen MATHaccuracy80 final500"
+  },
+  "rl_initial": {
+    "group_size": 4,
+    "prompt_batch": 8,
+    "response_cap": 2048,
+    "path_cap": 1024,
+    "smoke_steps": 2,
+    "pilot_steps": 40,
+    "eta": 0.05,
+    "B0": 256,
+    "Fscale": 1024,
+    "deadline_utc": "2026-10-10T07:30:00+00:00",
+    "normalization_source": "Frozen newSFT diagnostic GSM validation successful traces; identical across three matched SFT arms"
+  },
+  "quality_gates": [
+    "no heldout contamination",
+    "8GPUfinitePPOsmoke",
+    "SFTformatandMathpass1comparison",
+    "instructneedsnonzerojointcorrectandvalid",
+    "allwronggroups=>curriculumorbudgetadjustment"
+  ],
+  "curriculum": [
+    "easyGSMops2/3",
+    "later balancedmix_easy_math if128validation GSM>=.3,MATH>=.125,strict>=.8,joint>=.15; resetoptim/ref;40steps",
+    "hardGSM andhardMathonlyafterstrongvalidation"
+  ],
+  "report_metrics": [
+    "pass@1",
+    "correctANDvalid",
+    "criticalFmean/p95all+correct",
+    "sampledT",
+    "assembledT",
+    "actualgenerationcalls",
+    "wallseconds",
+    "width",
+    "forks",
+    "rounds",
+    "truncated",
+    "advantages",
+    "KL"
+  ],
+  "caveat": "ForksserialperGPU;criticalFistheoreticaldepth,notactualwalltimespeedup",
+  "automation": "VPSmemorytimerusesCodexqueue;sourceandlogsinr1;45minuntildeadline",
+  "cloud_job_policy": "Two additional active 8A100 lanes maximum; own failed launch replacements permitted after prior instances deleted; preserve all submission ledgers",
+  "final_evaluation": {
+    "frozen_at": "2026-10-10T06:43:13.305429+00:00",
+    "dispatch_at": "2026-10-10T06:43:18.376174+00:00",
+    "proof": "orchestration/root0633-early-dispatch.json",
+    "freeze": "orchestration/final-freeze.json",
+    "selection": "ORIGINAL common128seed42 MATH64→GSM64→lowercorrectF ONLY; never MATH500/diagnostics",
+    "choices": {
+      "sirius": "rl-sft-sirius-continuation4-refcorrected",
+      "tmp2": "rl-sft-math-split40",
+      "tmp3": "rl-sft-math-accuracy80"
+    },
+    "secondary": "Fixed predeclared mathaccuracy40 aftertmp2primary, no re-selection",
+    "source_unchanged": true,
+    "no_new_training": true,
+    "actual_dispatch_independent_proof": "text-review/root0633-final-dispatch-independent.json",
+    "actual_partial_root_proof": "text-review/root0633-final-monitor.json",
+    "actual_alias_weight_tokenizer_identity": "PASS75/40/80",
+    "provisional_primary_ETA_utc": "07:10 incl grading/stragglers; variablehardness",
+    "provisional_all_ETA_utc": "07:40 inclsecondary/oldmixed; variablehardness",
+    "state": "all_five_predeclared_final500_complete_and_independently_audited",
+    "primary_results": {
+      "corrected75": {
+        "correct": 115,
+        "joint": 108
+      },
+      "MATHsplit40": {
+        "correct": 102,
+        "joint": 102
+      },
+      "MATHaccuracy80": {
+        "correct": 130,
+        "joint": 71,
+        "correct_nofork": 55,
+        "correct_forked_invalid": 4
+      }
+    },
+    "proofs": [
+      "text-review/root0718-final-metrics-independent.json",
+      "text-review/root0718-final-runtime-independent.json",
+      "text-review/root0718-secondary-metrics-independent.json",
+      "text-review/root0718-secondary-runtime-independent.json"
+    ],
+    "snapshot": "reports/final-math500-comparison.json",
+    "selection_unchanged_after_test": true,
+    "completed_at": "2026-10-10T07:32:41.162648+00:00",
+    "secondary_results": {
+      "MATHaccuracy40": {
+        "correct": 102,
+        "strict": 488,
+        "joint": 89
+      },
+      "OLDmixedSFT": {
+        "correct": 101,
+        "strict": 223,
+        "joint": 28,
+        "unfinished_thinking": 265,
+        "correct_unfinished_thinking": 47
+      }
+    }
+  },
+  "updated_at": "2026-10-10T07:32:41.162648+00:00",
+  "sft_status": "COMPLETE: freshBase0.6B onlynew3000(2700/300),105steps,5epochs; finalSHA294c0c9677d8388c50b723651dfe61e94e3f13c3897ad1e1408ec081c38260c4",
+  "instruct_protocol_warning": "Random added control-token rows have near-zero probability in native instruct; guided first block does not teach sampled opener(mask0). Do not claim voluntary forks from guided width4. Semantic initialization is separate untrained changed-rows experiment; native multi-token text prototype needs independent tests and GPU smoke.",
+  "runtime_warnings": [
+    "F is logical sampled critical depth; branches execute serially within GPU; no measured speedup claim",
+    "CPU replay and actual PPO passed, direct postoptimizer rollout-versus-actor GPU logits not yet measured",
+    "Legacy compiler normalizes nonEOS wrong Path/Summary control stop into closing tag; RAWtarget preserved but compiledstrict can hide raw compliance. Newsmoke1/64each, onecorrect positivelyrewarded; audit separately."
+  ],
+  "additional_comparison": "After finalSirius RL500, score frozen OLDmixedSFT at identical4096/2048 budget; historical OLD30720/8192 score cannot isolate effect of data.",
+  "continuations": "After initial matched formula and curriculum pilots, SFT lanes may each run two additional validation-gated80-step continuations; stop launching05:30UTC, hardRLdeadline07:30UTC; regression>2/64MATH or5ppGSM holds lane for review. Instruct continuation requires manual protocol review.",
+  "instruct_next": "OldspecialtagV2 intentionallystoppedafterautoforks0at11/12, checkpoint10preserved; doNOTresurrect. Evaluatev2nativeTEXT before furtherRL.",
+  "text_protocol": "NativeTEXT/phase FINALQUALITYFAIL frozen; noPPO/long/search. Standard counters are RPCcalls, not explicit measured per-model-forward telemetry.",
+  "native_text_operational": "PhaseFINALFAIL noPPO,no moreprompt/phase search. FrozenANTLRsummarycollisionCPUrecoveredexistingtraces,no sourceedits.",
+  "native_baseline": "Originalraw instruct fullMATH5004096 queuedearly on tmp2 SAME091key, avoids idle and duplicatefinal.",
+  "text_postrun": "For phase --runtime-dir text-rl-code-v4-phase AND --system-file instruct/protocol-text-v4prompt-system.txt MANDATORY; export --text-protocol and dedicatedrun_text_eval.sh; genericpostrun invalid forTEXT.",
+  "local_budget_audit": "rl-eval/budget_audit.py CPU sidecar, runeachwake; localcallcapreached distinctglobaltruncation.",
+  "common_validation_baseline": "tmp2/012new-sft-validation128 queuedafteroriginalraw500; do not compare different24/128/500populations.",
+  "curriculum_review": "Afterinitialmatched3arms, considerMATHlevel1/2 ifvalidationMathnonzero/GSM>=.3. InitialGSM.8thresholdmaystallMathcurriculum; reviewnextwake.",
+  "common128": "fresh25, accuracy29, scalar26, split4032, split8036(24GSM/12MATH), G8mix2036(28/8), tmp3mix4033(24/9), Siriusmix4039(29/10); singletrainingseed/adaptive comparisons no robustsignificanceclaim; math-firstanchor split80.",
+  "tmp2_fallback": "G8split20newmix fromvalidatedsplit40HFexport ONLYifv4pilotqualityFAIL; CPUconfig+independentauditPASS, actual2GPUsteps+allwronggate mandatory; exploratory,128validation thenregistercandidate",
+  "controller": {
+    "version": 9,
+    "pid": 1238649,
+    "source_sha256": "3dd9f40e98ab255bb6b617f4b1b19358c9aa3117b085923df0e48e5dbfb2a13a",
+    "helper_sha256": "002f48552aeb3fb14ee8ace1d5af56682f0c39df2cc40e142f6ae9abab7fc277",
+    "proof": "orchestration/root0633-early-dispatch.json",
+    "admission": "completeproduction128/protocolgate/nonzerojoint/actualfixedseed42identity/proofcheckpoints; no diagnostics/stoppedruns",
+    "ranking": "MATH64,GSM64,lowercorrectF",
+    "GPU_lanes_untouched": true
+  },
+  "tmp2_now": "Alltraining/evaluations COMPLETE; laneidle; Cloudcleanup09UTC only",
+  "latest_validation": "Combinedbest48mathaccuracy40(30/18),joint46; mathfirst19MATH selectsaccuracy80overall45/joint33; split4040(24/16),joint40; fixedvalidation-onlycriteria unchanged.",
+  "phase_common128_baseline": "CPUrecoveredCOMPLETE58/128=27GSM/31MATH,strict82,joint0/forks0,134callsmeasured;sampling/pathconfigconfounds vsSFT.",
+  "tmp3_now": "Alltraining/evaluations including explicit4B COMPLETE; laneidle; Cloudcleanup09UTC only",
+  "root0333_experiments": {
+    "anchor": "validated sft-split-stage2HFexport(MATH12/64)",
+    "tmp2": "mix_accuracy changesONLYreward vscompletedmixsplit",
+    "tmp3": "MATH-only accuracy changesreward+data exploratory",
+    "total_steps": 40,
+    "mandatory_smoke_steps": 2,
+    "optimizer_reference_reset": true,
+    "candidates_registered": true,
+    "eligible": "complete128+exportproof",
+    "actual_8GPU2smoke": "BOTH PASS, nonzerojointcorrect+finitegrad/KL and8model/8optim each; production40 running"
+  },
+  "sirius_now": "Alltraining/evaluations COMPLETE; laneidle; preserveoriginalhost",
+  "reference_identity_fix": {
+    "reason": "Same-data planner incorrectly initialized freshSFT ref instead of prior runner.model; actor/optimizer were preserved",
+    "fixed": true,
+    "corrected_run": "rl-sft-sirius-continuation4-refcorrected",
+    "restart_checkpoint": "rl-sft-sirius-continuation3/production/checkpoints/global_step_40",
+    "old_run_intentionally_stopped": true,
+    "faulty_updates_retained": false,
+    "proofs": "orchestration/ref-recovery/* + text-review/refcorrected-independent.json",
+    "actual_new_smoke": "PASSactual8GPU41/42,64traces421RAWcalls162paths;finitegrad/KL/joint;checkpoint42 8+8nonempty;independentpositions/pathmasks/all421UnseenmetadataPASS",
+    "independent_other_resume_scan": "reference-drift-scan.json:3explicitcross-runresumes,onlyknownfaultySirius4drift; splitstage2+correctedrunpreservemodel."
+  },
+  "raw_control_sidecar": "CPUonlyrl-eval/raw_control_audit.py ROOTverifiedfreeze+11testsPASS; manualaccountingapproved; separatewrongterminalcontrol/EOS/compiledstrict/rewardjoins/unknowns; no runtimehooks orchanges. Prooftext-review/root-raw-control-code-review.json.",
+  "root0503_experiments": {
+    "at": "2026-10-10T05:05:41.403119+00:00",
+    "tasks": [
+      {
+        "lane": "tmp2",
+        "run": "rl-sft-math-split40",
+        "label": "sft-math-split40",
+        "task": "020-sft-math-split40",
+        "eval_task": "021-sft-math-split40-eval",
+        "runner_args": [
+          "--method",
+          "night_split_success",
+          "--model",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+          "--train",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/data/math_easy/train.parquet",
+          "--val",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet",
+          "--output",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-split40",
+          "--deadline",
+          "2026-10-10T07:30:00Z",
+          "--min-steps",
+          "8",
+          "--max-steps",
+          "40",
+          "algorithm.night_budget=256",
+          "algorithm.night_scale=1024",
+          "data.max_response_length=4096",
+          "actor_rollout_ref.rollout.agent.max_path_response_length=1024"
+        ],
+        "mandatory_actual_smoke": 2,
+        "model_reference": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+        "resume_checkpoint": null,
+        "additional_steps": 40,
+        "review_capture": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0503-review/tmp2-captured.json"
+      },
+      {
+        "lane": "tmp3",
+        "run": "rl-sft-math-accuracy80",
+        "label": "sft-math-accuracy80",
+        "task": "032-sft-math-accuracy80",
+        "eval_task": "033-sft-math-accuracy80-eval",
+        "runner_args": [
+          "--method",
+          "night_accuracy",
+          "--model",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+          "--train",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/data/math_easy/train.parquet",
+          "--val",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet",
+          "--output",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy80",
+          "--deadline",
+          "2026-10-10T07:30:00Z",
+          "--min-steps",
+          "8",
+          "--max-steps",
+          "40",
+          "--resume-checkpoint",
+          "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy40/production/checkpoints/global_step_40",
+          "algorithm.night_budget=256",
+          "algorithm.night_scale=1024",
+          "data.max_response_length=4096",
+          "actor_rollout_ref.rollout.agent.max_path_response_length=1024"
+        ],
+        "mandatory_actual_smoke": 2,
+        "model_reference": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-split-stage2",
+        "resume_checkpoint": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-math-accuracy40/production/checkpoints/global_step_40",
+        "additional_steps": 40,
+        "review_capture": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-launch/root0503-review/tmp3-captured.json"
+      }
+    ],
+    "not_queued": false,
+    "anchor_validation": "48/128,30GSM18MATH; source split80HF",
+    "preserve_first3_reward_arms": true,
+    "hardstop": "07:30UTC",
+    "newstart_cutoff": "05:30UTC",
+    "queued_at": "2026-10-10T05:07:23.517091+00:00",
+    "actual_8GPU2smoke": "BOTH PASS,128traces729RAWcalls256paths,positions/masks/counters0errors;8+8shardseach;actualprodreferencepreserved;targets40/80",
+    "actual_smokes": "ROOT +two independent full8GPU2PPOPASS; finite production throughsteps8/49; actual8model8optim each, frozenreferences preserved; see root0503-final-monitor.json"
+  },
+  "inference_replicas": {
+    "state": "complete",
+    "task": "034-inference-seed-replicas",
+    "source_sha256": "15300497c909d47af14548f2d137d57470447fd88e0e92f6ab55fade9816dc06",
+    "pipeline_sha256": "51d41633b7e3ef03b91b99ad4e4c5e9edb3b14b69f8d19281eadc4882684e3b8",
+    "proof": "text-review/root0633-runtime-independent.json",
+    "matrix": "24math40pilot ->fresh+math40 each128 seeds10042/20042",
+    "actual_gpu_pilot_pending": false,
+    "conditional_gate": "Only if actual24 exactseeds/RAW/masks/positions/isolation and strict+parallel>=.8/nonzero correctness PASS",
+    "deadline_utc": "2026-10-10T07:20:00Z",
+    "inference_sampling_only": true,
+    "training_seed_replicated": false,
+    "checkpoint_selection_allowed": false,
+    "curriculum_selection_allowed": false,
+    "original_seed42_validation_only_for_selection": true,
+    "actual_pilot": {
+      "correct": 6,
+      "strict": 24,
+      "joint": 6,
+      "RAW_calls": 157,
+      "errors": 0
+    },
+    "first128": {
+      "model": "freshSFT",
+      "seed_base": 10042,
+      "correct": 36,
+      "GSM": 21,
+      "MATH": 15,
+      "joint": 33,
+      "independent_RAW_layout_errors": 0
+    },
+    "completed_pairs": [
+      {
+        "seed_base": 42,
+        "fresh": 25,
+        "math40": 48,
+        "by_dataset": {
+          "gsm": {
+            "fresh": 15,
+            "math40": 30
+          },
+          "math": {
+            "fresh": 10,
+            "math40": 18
+          }
+        },
+        "losses": 7,
+        "gains": 30,
+        "all_question_F_delta": -75.7890625,
+        "both_correct_n": 18,
+        "both_correct_F_delta": -88,
+        "fresh_wall_seconds_sum": 2346.2482681274414,
+        "math40_wall_seconds_sum": 2051.7518980503082
+      },
+      {
+        "seed_base": 10042,
+        "fresh": 36,
+        "math40": 42,
+        "by_dataset": {
+          "gsm": {
+            "fresh": 21,
+            "math40": 30
+          },
+          "math": {
+            "fresh": 15,
+            "math40": 12
+          }
+        },
+        "losses": 17,
+        "gains": 23,
+        "all_question_F_delta": -107.96875,
+        "both_correct_n": 19,
+        "both_correct_F_delta": -43,
+        "fresh_wall_seconds_sum": 2525.9493794441223,
+        "math40_wall_seconds_sum": 2147.5735602378845
+      },
+      {
+        "seed_base": 20042,
+        "fresh": 37,
+        "math40": 40,
+        "by_dataset": {
+          "gsm": {
+            "fresh": 24,
+            "math40": 26
+          },
+          "math": {
+            "fresh": 13,
+            "math40": 14
+          }
+        },
+        "losses": 20,
+        "gains": 23,
+        "all_question_F_delta": -118.984375,
+        "both_correct_n": 17,
+        "both_correct_F_delta": -57.64705882352941
+      }
+    ],
+    "mean_overall": {
+      "fresh": 32.666666666666664,
+      "math40": 43.333333333333336
+    },
+    "mean_MATH": {
+      "fresh": 12.666666666666666,
+      "math40": 14.666666666666666
+    },
+    "caveat": "Inference variation on SAME128questions/sameSINGLEtrainingseed only; no stableMATHgain/no selection."
+  },
+  "root0548_corrected_validation": {
+    "correct": 39,
+    "GSM": 24,
+    "MATH": 15,
+    "strict": 126,
+    "joint": 39,
+    "independent_full_RAW_errors": 0,
+    "proof": "text-review/root0548-sirius-independent.json"
+  },
+  "final_evaluation_early_option": "Only after ALL plannedtrainings+prospective128/exportproofs ready, reviewed identicaladmission/math-firstselection andsafeownedcontrollerupdate, may advance final500 before07:30 toavoididle GPUs; noMATH500selection/no newRL",
+  "qwen3_4b_native_tag_probe": {
+    "at": "2026-10-10T07:05:58.982272+00:00",
+    "user_requested": "Qwen3-4B instruct thinking nativeXMLtagpromptprobe",
+    "lane": "tmp3",
+    "task": "094-qwen3-4b-native-tags48",
+    "evaluate_sha256": "4347254de80d4fcb2711d2415cb9e34d2d73e9c7ad5c56ae6305a2a2b1e755c9",
+    "independent_CPU_review": "PASS_revised_source_CPU_ready_for_root_owned_runtime_smoke",
+    "only_after_successful090_final": true,
+    "model": "Qwen/Qwen3-4B",
+    "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "no_training_no_added_GPU_no_model_tokenizer_edits": true,
+    "nativeauthoredXML_not_Unseen_or_executedforks": true,
+    "runtime_smoke_samples": 2,
+    "main_samples": 48,
+    "prompt_arms": [
+      "optional",
+      "requested"
+    ],
+    "conditioning": "ONLY one initial native think opener; noXMLcontrols forced",
+    "state": "complete",
+    "finished_at": "2026-10-10T07:11:54.033263+00:00",
+    "result": {
+      "optional_correct": 21,
+      "requested_correct": 23,
+      "samples_per_arm": 24,
+      "parallel_tag_samples_per_arm": 18,
+      "inside_think_fork_samples": 0,
+      "native_text_only_no_actual_execution": true
+    },
+    "summary": "qwen3-4b-tag-probe-20261010/summary.json",
+    "full_response_accounting": "qwen3-4b-tag-probe-20261010/root-full-response-accounting.json"
+  },
+  "original_night_deadline_utc": "2026-10-10T09:00:00+00:00",
+  "automatic_cloud_cleanup_cancelled": true,
+  "experiment_extension": {
+    "at": "2026-10-10T08:26:55.746022+00:00",
+    "authorization": "User explicitly cancels12MSK cleanup and extends experiments indefinitely",
+    "duration": "indefinite",
+    "resource_limit_GPUs": 24,
+    "additional_cloud_jobs_allowed": false,
+    "monitor_interval_minutes": 45,
+    "current_priority": "Three fixed Qwen3-4B only-six-token-row warmup LR arms and matched MATH/pass1/protocol evaluations"
+  },
+  "parallel_sft_variants": {
+    "lr-1e-3": "tmp2",
+    "lr-2e-4": "tmp3",
+    "baseline": "lr-5e-4 Sirius",
+    "epochs": 3,
+    "trainable_rows": 6,
+    "actual_training_gate": "8GPU2steps then root+independent"
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "observed_utc": "2026-10-08T07:08:39.790776+00:00",
+  "status": {
+    "state": "running",
+    "observed_utc": "2026-10-08T07:08:38.603359+00:00",
+    "controller_pid": 900429,
+    "stage": "gated_depth",
+    "attempt": 1,
+    "pid": 900616,
+    "step": 122,
+    "target_steps": 400,
+    "initialized_from": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005/final",
+    "resumed_from": null,
+    "gpus": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "queued": [
+      "parallel_gain"
+    ]
+  },
+  "bootstrap-status": {
+    "state": "production",
+    "pid": 863678,
+    "observed_utc": "2026-10-08T06:13:01.076900+00:00"
+  },
+  "stages": {
+    "gated_depth": {
+      "attempt_logs": [
+        "driver-attempt-1.log"
+      ],
+      "metric_steps": 122,
+      "first50": {
+        "actor/entropy": 0.9283148646354675,
+        "actor/grad_norm": 1.0409876096248627,
+        "actor/ppo_kl_active_microbatches": 8.875315967654847e-05,
+        "grpo/informative_prompts": 25.24,
+        "response_length/mean": 620.998515625,
+        "parallel/critical_depth_mean": 533.419453125,
+        "parallel/forks_mean": 1.96390625,
+        "parallel/ratio": 0.945390625,
+        "reward/accuracy_mean": 0.266015625,
+        "reward/aux_mean": -0.012573179639875889,
+        "advantage/accuracy_abs_mean": 0.6196119058132171,
+        "advantage/aux_abs_mean": 0.01422415640205145,
+        "response_length/clip_ratio": 0.00625,
+        "timing_s/step": 30.431596245057882
+      },
+      "last50": {
+        "actor/entropy": 0.7031633150577545,
+        "actor/grad_norm": 1.0858524233102798,
+        "actor/ppo_kl_active_microbatches": 1.0671092107659636e-05,
+        "grpo/informative_prompts": 27.82,
+        "response_length/mean": 526.168359375,
+        "parallel/critical_depth_mean": 446.58421875,
+        "parallel/forks_mean": 1.85265625,
+        "parallel/ratio": 0.957421875,
+        "reward/accuracy_mean": 0.4353125,
+        "reward/aux_mean": -0.018066452983766794,
+        "advantage/accuracy_abs_mean": 0.658414409160614,
+        "advantage/aux_abs_mean": 0.014350367225706578,
+        "response_length/clip_ratio": 0.0021875,
+        "timing_s/step": 21.171668419856577
+      },
+      "last100": {
+        "actor/entropy": 0.7736296784877777,
+        "actor/grad_norm": 1.0797825542092323,
+        "actor/ppo_kl_active_microbatches": 5.3491995290385346e-05,
+        "grpo/informative_prompts": 27.2,
+        "response_length/mean": 551.287890625,
+        "parallel/critical_depth_mean": 470.3672265625,
+        "parallel/forks_mean": 1.866796875,
+        "parallel/ratio": 0.9492578125,
+        "reward/accuracy_mean": 0.3803125,
+        "reward/aux_mean": -0.01626486317254603,
+        "advantage/accuracy_abs_mean": 0.6551885533332825,
+        "advantage/aux_abs_mean": 0.014435755899176,
+        "response_length/clip_ratio": 0.0033984375,
+        "timing_s/step": 23.249106349535285
+      },
+      "nonfinite": [],
+      "error_counts": {
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b039dacce00000c98'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f89648037ec1d400000c99'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e02193f1100000c9b'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e02193f0f00000c9a'": 1
+      },
+      "validation": [
+        {
+          "step": 50,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.28164556962025317,
+              "critical_depth": 601.8322784810126,
+              "parallel": 0.9683544303797469,
+              "forks": 1.8006329113924051,
+              "format_ok": 0.9683544303797469,
+              "n": 316,
+              "correct": 89,
+              "top_predictions": [
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "2",
+                  20
+                ],
+                [
+                  "4",
+                  17
+                ],
+                [
+                  "5",
+                  14
+                ],
+                [
+                  "3",
+                  14
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.35546875,
+              "critical_depth": 521.296875,
+              "parallel": 0.953125,
+              "forks": 1.9375,
+              "format_ok": 0.95703125,
+              "n": 256,
+              "correct": 91,
+              "top_predictions": [
+                [
+                  "2",
+                  50
+                ],
+                [
+                  "4",
+                  41
+                ],
+                [
+                  "3",
+                  31
+                ],
+                [
+                  "1",
+                  29
+                ],
+                [
+                  "5",
+                  17
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 100,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3037974683544304,
+              "critical_depth": 595.8449367088608,
+              "parallel": 0.9873417721518988,
+              "forks": 1.8417721518987342,
+              "format_ok": 0.9778481012658228,
+              "n": 316,
+              "correct": 96,
+              "top_predictions": [
+                [
+                  "1",
+                  29
+                ],
+                [
+                  "4",
+                  26
+                ],
+                [
+                  "2",
+                  23
+                ],
+                [
+                  "0",
+                  18
+                ],
+                [
+                  "3",
+                  16
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.4140625,
+              "critical_depth": 436.03515625,
+              "parallel": 0.97265625,
+              "forks": 1.93359375,
+              "format_ok": 0.984375,
+              "n": 256,
+              "correct": 106,
+              "top_predictions": [
+                [
+                  "4",
+                  67
+                ],
+                [
+                  "2",
+                  51
+                ],
+                [
+                  "1",
+                  34
+                ],
+                [
+                  "3",
+                  29
+                ],
+                [
+                  "6",
+                  19
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "last_rollout": 122,
+      "recent20": {
+        "rows": 5120,
+        "groups": 640,
+        "mixed_accuracy_fraction": 0.8015625,
+        "acc": 0.465625,
+        "format_ok": 0.95546875,
+        "top_predictions": [
+          [
+            "4",
+            1007
+          ],
+          [
+            "3",
+            911
+          ],
+          [
+            "2",
+            858
+          ],
+          [
+            "1",
+            464
+          ],
+          [
+            "6",
+            415
+          ]
+        ]
+      },
+      "checkpoints": {
+        "global_step_100": true
+      },
+      "final_verification": null
+    },
+    "parallel_gain": {
+      "attempt_logs": [],
+      "metric_steps": 0,
+      "first50": {},
+      "last50": {},
+      "last100": {},
+      "nonfinite": [],
+      "error_counts": {},
+      "validation": [],
+      "last_rollout": null,
+      "checkpoints": {},
+      "final_verification": null
+    }
+  },
+  "pids": {
+    "900616": "alive",
+    "900429": "alive",
+    "863678": "alive"
+  }
+}

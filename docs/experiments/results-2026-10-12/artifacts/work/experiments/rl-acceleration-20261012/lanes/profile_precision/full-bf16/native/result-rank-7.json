@@ -1,0 +1,301 @@
+{
+  "rank": 7,
+  "precision": "bf16_full_autocast",
+  "master_dtype": "float32",
+  "lm_head_dtype": "bfloat16",
+  "dtype_receipt": {
+    "generation:q_proj:(1, 475, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:sdpa:(475, 475)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "generation:lm_head:(1, 1, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:q_proj:(1, 1, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "generation:sdpa:(1, 476)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "generation:lm_head:(2, 1, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:q_proj:(1, 569, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:sdpa:(569, 569)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "teacher:lm_head:(1, 95, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:q_proj:(1, 571, 4096)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    },
+    "teacher:sdpa:(571, 571)": {
+      "query": "torch.float32",
+      "key": "torch.float32",
+      "value": "torch.bfloat16",
+      "output": "torch.bfloat16"
+    },
+    "teacher:lm_head:(1, 2, 151936)": {
+      "input": "torch.float32",
+      "output": "torch.bfloat16",
+      "weight": "torch.float32",
+      "autocast_enabled": true,
+      "cache_enabled": true
+    }
+  },
+  "ratio_min": 0.8772323727607727,
+  "ratio_max": 1.1563488245010376,
+  "ratio_outside_clip_fraction": 0.0,
+  "ratio_abs_mean": 0.008202098309993744,
+  "logits_normalizer_dtype": "float32",
+  "autocast_weight_cache": true,
+  "attention_forced_fp32": false,
+  "cases": [
+    {
+      "index": 7,
+      "id": "bigmath/cn_k12/60327",
+      "correct": false,
+      "reference_correct": true,
+      "format_valid": true,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 1073,
+      "reference_F": 1069,
+      "generation_seconds": 44.37101138290018,
+      "T": 1255,
+      "native_replay_max": 0.14526748657226562,
+      "native_replay_mean": 0.010067070834338665,
+      "native_replay_p95": 0.07700307667255402,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 95,
+          "max": 0.11728096008300781,
+          "mean": 0.01030255388468504,
+          "p95": 0.08367723971605301
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 0.0003070831298828125,
+          "mean": 0.00015354156494140625,
+          "p95": 0.0002917289675679058
+        },
+        {
+          "phase": "path",
+          "n": 73,
+          "max": 0.114227294921875,
+          "mean": 0.0060265944339334965,
+          "p95": 0.0513351671397686
+        },
+        {
+          "phase": "path",
+          "n": 116,
+          "max": 0.12716102600097656,
+          "mean": 0.010206896811723709,
+          "p95": 0.07855415344238281
+        },
+        {
+          "phase": "summary",
+          "n": 76,
+          "max": 0.11425399780273438,
+          "mean": 0.009150530211627483,
+          "p95": 0.06961393356323242
+        },
+        {
+          "phase": "main",
+          "n": 118,
+          "max": 0.13414955139160156,
+          "mean": 0.018584800884127617,
+          "p95": 0.11352138966321945
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 0.0,
+          "mean": 0.0,
+          "p95": 0.0
+        },
+        {
+          "phase": "path",
+          "n": 109,
+          "max": 0.08681106567382812,
+          "mean": 0.004853484686464071,
+          "p95": 0.025842271745204926
+        },
+        {
+          "phase": "path",
+          "n": 220,
+          "max": 0.11709785461425781,
+          "mean": 0.010086900554597378,
+          "p95": 0.0717146024107933
+        },
+        {
+          "phase": "summary",
+          "n": 257,
+          "max": 0.14526748657226562,
+          "mean": 0.010488362051546574,
+          "p95": 0.06978756934404373
+        },
+        {
+          "phase": "main",
+          "n": 97,
+          "max": 0.12493896484375,
+          "mean": 0.012474197894334793,
+          "p95": 0.0787532776594162
+        },
+        {
+          "phase": "main",
+          "n": 90,
+          "max": 0.10518646240234375,
+          "mean": 0.0054342481307685375,
+          "p95": 0.033407095819711685
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "id": "bigmath/cn_k12/3177",
+      "correct": false,
+      "reference_correct": false,
+      "format_valid": true,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 614,
+      "reference_F": 724,
+      "generation_seconds": 24.61308516608551,
+      "T": 963,
+      "native_replay_max": 0.12459373474121094,
+      "native_replay_mean": 0.005775426048785448,
+      "native_replay_p95": 0.039630115032196045,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 160,
+          "max": 0.11716079711914062,
+          "mean": 0.005128311924636364,
+          "p95": 0.03417092561721802
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 1.9073486328125e-06,
+          "mean": 9.5367431640625e-07,
+          "p95": 1.8119811784345075e-06
+        },
+        {
+          "phase": "path",
+          "n": 108,
+          "max": 0.09683990478515625,
+          "mean": 0.006510999519377947,
+          "p95": 0.04982509836554527
+        },
+        {
+          "phase": "path",
+          "n": 91,
+          "max": 0.12459373474121094,
+          "mean": 0.007541803177446127,
+          "p95": 0.04903411865234375
+        },
+        {
+          "phase": "path",
+          "n": 233,
+          "max": 0.1077423095703125,
+          "mean": 0.0038457715418189764,
+          "p95": 0.024288136512041092
+        },
+        {
+          "phase": "path",
+          "n": 150,
+          "max": 0.12293624877929688,
+          "mean": 0.0058410135097801685,
+          "p95": 0.039527323096990585
+        },
+        {
+          "phase": "summary",
+          "n": 160,
+          "max": 0.12194633483886719,
+          "mean": 0.005733168218284845,
+          "p95": 0.030421266332268715
+        },
+        {
+          "phase": "main",
+          "n": 2,
+          "max": 5.7220458984375e-06,
+          "mean": 2.86102294921875e-06,
+          "p95": 5.435943421616685e-06
+        },
+        {
+          "phase": "main",
+          "n": 57,
+          "max": 0.11877059936523438,
+          "mean": 0.011617225594818592,
+          "p95": 0.07873192429542542
+        }
+      ]
+    }
+  ],
+  "actions": 2218,
+  "native_replay_max": 0.14526748657226562,
+  "native_replay_mean": 0.008203746750950813,
+  "native_replay_p95": 0.06560343503952026,
+  "unchanged_thresholds": {
+    "max": 0.01,
+    "mean": 0.002,
+    "p95": 0.005
+  },
+  "native_guard_passed": false,
+  "correct": 0,
+  "reference_correct": 1,
+  "quality_not_benchmark": true,
+  "optimizer_updates": 0,
+  "peak_gpu_bytes": 25130601984,
+  "actual_backend_flags": {
+    "cuda_tf32": false,
+    "float32_precision": "highest"
+  },
+  "generation_is_cached": true,
+  "teacher_is_full_prefix": true
+}

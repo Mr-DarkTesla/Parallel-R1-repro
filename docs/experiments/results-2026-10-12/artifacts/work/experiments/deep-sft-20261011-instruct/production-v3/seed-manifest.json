@@ -1,0 +1,179 @@
+{
+  "original_tasks": 571,
+  "seed_accepted": 554,
+  "seed_rejected": 17,
+  "new_teacher_calls": 0,
+  "style_exclusions": [
+    {
+      "id": "synthetic-layered-dag-v1/2026107816",
+      "raw_response_sha256": "778f9603591b620ca996facf55a2b0d81a13287fb09a02316e4415827d9a7cdf",
+      "findings": [
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "Return only"
+        },
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "[Ll]et.s final"
+        },
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "[Ww]e won.t"
+        },
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "[Nn]eed [\"\u201c]"
+        },
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "^\\s*\\.\\s*[\"\u201d]"
+        }
+      ]
+    },
+    {
+      "id": "synthetic-layered-dag-v1/2026101151",
+      "raw_response_sha256": "d00bfa6dc40097f8ff535583ba24f4f2c511b776629ef6866129f307f72f9825",
+      "findings": [
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "[Ll]et.s final"
+        },
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "[Ww]e.(?:ll| will) output only"
+        },
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "^\\s*\\.\\s*[\"\u201d]"
+        }
+      ]
+    },
+    {
+      "id": "synthetic-layered-dag-v1/2026105154",
+      "raw_response_sha256": "819b647c4b565a9c5ca1259a93dd262f6a38d1a85a7fafabbac3ac4f78d961cb",
+      "findings": [
+        {
+          "type": "drafting_or_parser_leak",
+          "round": 1,
+          "pattern": "^\\s*\\.\\s*[\"\u201d]"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": " 2*10+14-2=32"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "2*14+4-1=31"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "3*4+10-4=18"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "3*10+10-2=38"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "3*38+31-3=114"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "31-3=142"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "3*31+18-1=93"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "18-1=110"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "3*18+32+2=54"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "32+2=88"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "2*32+38-3=64"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "38-3=99"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "1*88+99-3=184"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "2*99+110+3=198"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "110+3=311"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "2*110+142-1=220"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "142-1=361"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "2*142+88+2=284"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": "88+2=374"
+        },
+        {
+          "type": "serial_prefork_arithmetic",
+          "round": 1,
+          "expression": " 184+622+722+374=1902"
+        }
+      ]
+    }
+  ],
+  "hashes": {
+    "work/experiments/deep-sft-20261011-instruct/production-v2/journal.jsonl": "814346b7a35fd593e2cfca33c14cac83ba7384220b296bb066f30847d5e99a4a",
+    "work/experiments/deep-sft-20261011-instruct/production-v2/teacher-responses.jsonl": "f2b4ecce325eb1f3ddc65b0ff6ddee2b1344979a69ef8ab78442cfd9e40e325c",
+    "work/experiments/deep-sft-20261011-instruct/production-v3/journal.jsonl": "f66b3f5b7d65edb7d891f2c65ddda05efc821c2ed308a8d101fe358af2b1564e",
+    "work/experiments/deep-sft-20261011-instruct/production-v3/seed-accepted.jsonl": "a4016e0707d0b733761c64072c11f6d3a343396d55ac36099bdf42a5af6c6aa8",
+    "work/experiments/deep-sft-20261011-instruct/production-v3/seed-style-exclusions.json": "7e3c7121d79853f5108ee3ce572f7c12f49b2dd04da81cac4e015a1f52ef167f"
+  },
+  "status": "staged root release pending; original immutable"
+}

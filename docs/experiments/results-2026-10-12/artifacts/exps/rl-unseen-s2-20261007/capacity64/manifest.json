@@ -1,0 +1,81 @@
+{
+  "run": "rl-unseen-s2-20261007",
+  "commit": "b656ead",
+  "base_commit": "ea3b07d74851739f2c8c41a88948ca8976b6b165",
+  "stage": "s2",
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "steps": 300,
+  "checkpoint": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005/final",
+  "data_sha256": {
+    "verl/data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet": "cee9b99e0645501b0dac3d885e66eae8d36e107c28a2f914864a68021aafc21e",
+    "verl/data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/train.parquet": "8fd253319384ede4e436d24a4f2884a632e8b1e71e1ee4bc1951ecb68007cec1",
+    "verl/data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_parallel_interv_reward/train.parquet": "cf0e4bdd76e1bf41b1d7a7930e151cbc3345c3f598a9aea491b79dd8db1e8089"
+  },
+  "changed_file_sha256": {
+    "verl/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "7590954080dcbb612665944c109a7c50aa7cabfdbb2674cf82371bd3fd9b7920",
+    "verl/verl/trainer/main_ppo.py": "b05f8f3bbb213175d14aa30b07152be7c02f8be556511e50e10d8a8cdf610819",
+    "verl/verl/trainer/ppo/ray_trainer.py": "673713d29740bdce8ca0b1f075d9f92467a924847d496648bfaa3cc35514b46b",
+    "verl/verl/workers/reward_manager/naive.py": "770bc0c5c981b847a6302244ec5d9a263bc4742b9e4419fae07c80f74e981592",
+    "verl/verl/workers/rollout/vllm_rollout/vllm_rollout_spmd.py": "fd0183ba0dea054a4b7247a7b3c61ebd04cfe32225c6f1fd0bc3c64fc866e218",
+    "verl/verl/workers/actor/dp_actor.py": "6815e394a2bef748f89b4e85a79d06f7335086b4fca636efac7ab7495e6275d1",
+    "verl/verl/workers/fsdp_workers.py": "dfb72b3ef72f01c8628c0968cefd9b7649e6c409f26e710b70357729dddc017b",
+    "verl/verl/workers/rollout/vllm_rollout/decode_graph.py": "1f554ea104620d293b56deb8c244d3cbe8a69a53e234ae0fc3f6819f1988140b",
+    "verl/verl/trainer/config/rl_qwen3_06b.yaml": "5f61c9098f2a305f2b4e43e684a7877dbca7c7ea6d830c8a90a1743744cb92d5"
+  },
+  "overrides": [
+    "ray_init.num_cpus=64",
+    "+ray_init.temp_dir=${PROJECT_ROOT}",
+    "+ray_init.plasma_directory=${PROJECT_ROOT}/plasma",
+    "+ray_init.object_store_memory=8589934592",
+    "data.train_batch_size=256",
+    "actor_rollout_ref.actor.ppo_mini_batch_size=128",
+    "actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=2",
+    "actor_rollout_ref.actor.loss_agg_mode=token-mean",
+    "actor_rollout_ref.actor.sort_microbatches_by_length=false",
+    "actor_rollout_ref.rollout.log_prob_micro_batch_size_per_gpu=4",
+    "actor_rollout_ref.rollout.agent.num_workers=32",
+    "trainer.val_before_train=false",
+    "actor_rollout_ref.model.use_fused_kernels=true",
+    "actor_rollout_ref.model.fused_kernel_options.impl_backend=triton",
+    "++actor_rollout_ref.actor.sort_logprob_rows_by_length=true",
+    "++actor_rollout_ref.actor.sort_microbatch_groups_by_length=true",
+    "++actor_rollout_ref.actor.defer_gradient_sync=true",
+    "trainer.resume_mode=disable",
+    "actor_rollout_ref.actor.clip_ratio_high=0.28",
+    "actor_rollout_ref.rollout.max_num_seqs=64",
+    "++actor_rollout_ref.actor.fsdp_config.sharding_strategy=NO_SHARD",
+    "++actor_rollout_ref.actor.skip_zero_advantage_microbatches=true"
+  ],
+  "extra_env": {
+    "PARALLEL_R1_FULL_DECODE_GRAPH": "1",
+    "VLLM_ATTENTION_BACKEND": "FLASH_ATTN",
+    "CUDA_HOME": "${CUDA_HOME}",
+    "PYTHONPATH": "${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/flashinfer-deps",
+    "PARALLEL_R1_GRAPH_CAPTURE_MIN_USES": "4"
+  },
+  "hypothesis": "Author Unseen-S2 starts independently from the verified Unseen-SFT, accuracy/parallel reward cycle 8:2. Replicated FSDP and zero-advantage skip retain original micro2 groups and optimizer updates.",
+  "implementation_changes": [
+    "Author S2 reward function unchanged; correct parallel valid answer +1.2 on steps9/10 of each cycle; otherwise accuracy +1/-1.",
+    "Fresh Unseen-SFT initialization, no S1 weights or optimizer. batch256, n8, mini128, micro2, token-mean, LR1e-6, author S2 clip high0.28.",
+    "Reuse validated fused Triton, original-pair sorting, deferred sync and exact decode graphs, admission capacity64, capture minuses4.",
+    "NO_SHARD replication and zero-advantage microbatch skip; final microbatch always runs; unchanged original normalization and every optimizer update.",
+    "Validation remains accuracy-only, every10, same1916 rows; save every10 retain3.",
+    "Pre-launch no-update GPU probe on real late-S1 rows: 8ranks, relative gradient L2 1.224%, update subset 5.367s to1.630s. This is not full-step or S2 throughput.",
+    "Guard forced FSDP reshard cleanup for NO_SHARD. Initial attempt failed before any optimizer update; all original logs retained in failed-attempt1."
+  ],
+  "validation": [
+    "CPU S2 reward schedule 120 cases passed",
+    "CPU original-group gradient and Adam two-update equivalence passed incl fully-zero second minibatch",
+    "8 GPU no-update matched-data probes; see zero-probe-rank-*.json",
+    "Need full live S2 steps, checkpoint and export verification; no x5 claim"
+  ]
+}
