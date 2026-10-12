@@ -6,9 +6,11 @@ root=${EXP21_FULL_ROOT:?}
 code=${EXP21_FULL_CODE:?}
 runner="$code/exp21/run_full_parallel_pair_pod.sh"
 dev_pid=$(cat "$root/dev-runner.pid")
+dev_failures=$(grep -c 'FAILED dev' "$root/progress.log" || true)
+frozen_failures=$(grep -c 'FAILED frozen' "$root/progress.log" || true)
 
 while ! test -s "$root/DEV_DONE"; do
-    if grep -q 'FAILED dev' "$root/progress.log"; then
+    if test "$(grep -c 'FAILED dev' "$root/progress.log" || true)" -gt "$dev_failures"; then
         echo 'dev failed; frozen continuation stopped' >&2
         exit 1
     fi
@@ -25,7 +27,7 @@ arc_pid=$!
 
 (
     while ! test -s "$root/output/frozen/parallel/apo/DONE"; do
-        if grep -q 'FAILED frozen' "$root/progress.log"; then
+        if test "$(grep -c 'FAILED frozen' "$root/progress.log" || true)" -gt "$frozen_failures"; then
             echo 'APO failed; IFEval not started' >&2
             exit 1
         fi
@@ -41,7 +43,7 @@ wait "$ifeval_pid"
 
 for bench in apo arc mmlu_pro limo ifeval; do
     while ! test -s "$root/output/frozen/parallel/$bench/DONE"; do
-        if grep -q 'FAILED frozen' "$root/progress.log"; then
+        if test "$(grep -c 'FAILED frozen' "$root/progress.log" || true)" -gt "$frozen_failures"; then
             echo "frozen failed before $bench completed" >&2
             exit 1
         fi

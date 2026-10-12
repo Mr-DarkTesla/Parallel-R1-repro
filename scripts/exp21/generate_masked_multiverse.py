@@ -15,6 +15,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from masked_decode_state import MaskedDecodeState, path_count
+from repetition_guard import repeated_suffix_period
 
 
 def generate(model, tok, prompt, max_tokens, seed, path_open, path_close, policy="sample"):
@@ -24,6 +25,7 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close, policy
     generator = torch.Generator(device="cuda").manual_seed(seed)
     response = []
     ended_with_eos = False
+    stop_reason = "max_tokens"
     with torch.inference_mode():
         out = model(input_ids=ids, use_cache=True)
         past, logits = out.past_key_values, out.logits[0, -1].float()
@@ -32,6 +34,7 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close, policy
                      torch.multinomial(torch.softmax(logits, -1), 1, generator=generator).item())
             if token == tok.eos_token_id:
                 ended_with_eos = True
+                stop_reason = "eos"
                 break
             if token == path_open and state.phase == "plain":
                 state.expected_paths = path_count(tok.decode(response, skip_special_tokens=False)) or 1
@@ -49,10 +52,13 @@ def generate(model, tok, prompt, max_tokens, seed, path_open, path_close, policy
                         cache_position=torch.tensor([len(prompt_ids) + step], device="cuda"),
                         use_cache=True)
             past, logits = out.past_key_values, out.logits[0, -1].float()
+            if len(response) >= 256 and repeated_suffix_period(response) is not None:
+                stop_reason = "repetition"
+                break
     # Token decisions include EOS; physical calls also include prompt prefill and
     # execute every path serially. Scoring separately reports ideal parallel depth.
     return (tok.decode(response, skip_special_tokens=False), len(response) + int(ended_with_eos),
-            not ended_with_eos, 1 + len(response))
+            not ended_with_eos, 1 + len(response), stop_reason)
 
 
 def main():
@@ -95,10 +101,11 @@ def main():
             if len(seen) <= len(previous):
                 assert previous[len(seen) - 1]["input"] == prompt, "resume order or prompt changed"
                 continue
-            answer, length, truncated, model_calls = generate(model, tok, prompt, budget, 0,
-                                                              path_open, path_close, policy)
+            answer, length, truncated, model_calls, stop_reason = generate(
+                model, tok, prompt, budget, 0, path_open, path_close, policy)
             file.write(json.dumps({"input": prompt, "output": answer, "tokens": length,
                                    "truncated": truncated, "seed": 0,
+                                   "stop_reason": stop_reason,
                                    "model_forward_calls": model_calls,
                                    "rollout": {"decoder": "masked-autonomous-v2", "mode": mode,
                                                "policy": policy}}, ensure_ascii=False) + "\n")
