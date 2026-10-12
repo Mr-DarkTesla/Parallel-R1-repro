@@ -1,13 +1,14 @@
 # Очередь опытов, 11 октября 2026
 
-## Frozen только для выбранной clean46, APO готов 04:30 МСК 12 октября
+## Frozen только для выбранной clean46, три набора готовы 04:34 МСК 12 октября
 
 После фиксации выбора clean46 и проверки пустой GPU запущен один
 [frozen-runner](QWEN4B_CLEAN46_FROZEN_RUN.md), PID 143079, на личной
 H100. Последовательно идут APO, ARC, MMLU-Pro, LIMO в no-thinking,
 затем те же наборы в thinking; IFEval уже завершён ранее. Первый
-генератор APO no-thinking PID 143141 завершён; сейчас ARC no-thinking.
-1916 ответов APO архивированы и проверены, [таблица](QWEN4B_CLEAN46_FROZEN_RUN.md#apo-no-thinking-0430-мск).
+генератор APO no-thinking PID 143141 завершён; также завершены ARC и
+MMLU-Pro no-thinking. Сейчас LIMO no-thinking. Сырые ответы трёх
+наборов архивированы и проверены, [таблицы](QWEN4B_CLEAN46_FROZEN_RUN.md#apo-no-thinking-0430-мск).
 Код оценщика `14880be`,
 свободно 6,1 GiB на личном PVC, OOM не вырос. Не создавать другую
 GPU-работу до `EVAL_DONE` и `ATTEMPT_DONE status=0`. По мере окончания
