@@ -19,13 +19,18 @@ def worker(rank,world,init,output):
         gathered=[None]*world;dist.all_gather_object(gathered,local)
         advantages=prompt_advantages(gathered,prompts,group)
         torch.manual_seed(3)
-        model=DDP(torch.nn.Linear(2,1,bias=False).double())
-        initial=model.module.weight.detach().clone()
-        optimizer=torch.optim.AdamW(model.parameters(),lr=1e-3,weight_decay=0.)
+        core=torch.nn.Linear(2,1,bias=False).double()
+        model=DDP(core) if world>1 else core
+        initial=core.weight.detach().clone()
+        if world>1:
+            from torch.distributed.optim import ZeroRedundancyOptimizer
+            optimizer=ZeroRedundancyOptimizer(model.parameters(),optimizer_class=torch.optim.AdamW,lr=1e-3,weight_decay=0.,foreach=False)
+        else:
+            optimizer=torch.optim.AdamW(model.parameters(),lr=1e-3,weight_decay=0.,foreach=False)
         vectors=torch.tensor([[p*group+s+1.,((p*group+s)%3)-1.] for p,s in owned],dtype=torch.float64)
         adv=torch.tensor([advantages[p,s] for p,s in owned],dtype=torch.float64)
         (model(vectors).reshape(-1)*adv*ddp_loss_scale(world,prompts,group)/4096).sum().backward()
-        observed=model.module.weight.grad.clone()
+        observed=core.weight.grad.clone()
         reference=torch.nn.Linear(2,1,bias=False).double();reference.weight.data.copy_(initial)
         reference_optimizer=torch.optim.AdamW(reference.parameters(),lr=1e-3,weight_decay=0.)
         # Independent legacy layout: one actor/prompt, four local responses;
@@ -39,10 +44,10 @@ def worker(rank,world,init,output):
         loss.backward()
         assert torch.allclose(observed,reference.weight.grad,atol=1e-15,rtol=1e-12)
         optimizer.step();reference_optimizer.step()
-        assert torch.allclose(model.module.weight,reference.weight,atol=1e-15,rtol=1e-12)
-        reports.append(dict(prompts=prompts,group=group,local_responses=len(owned),gradient_error=float((observed-reference.weight.grad).abs().max()),adam_error=float((model.module.weight-reference.weight).abs().max())))
+        assert torch.allclose(core.weight,reference.weight,atol=1e-15,rtol=1e-12)
+        reports.append(dict(prompts=prompts,group=group,local_responses=len(owned),gradient_error=float((observed-reference.weight.grad).abs().max()),adam_error=float((core.weight-reference.weight).abs().max())))
         del model,optimizer,reference,reference_optimizer
-    Path(output,f'rank-{rank}.json').write_text(json.dumps(dict(rank=rank,passed=True,cases=reports)))
+    Path(output,f'rank-{rank}.json').write_text(json.dumps(dict(rank=rank,passed=True,optimizer="Zero1AdamW" if world>1 else "AdamW",cases=reports)))
     dist.destroy_process_group()
 
 if __name__=='__main__':

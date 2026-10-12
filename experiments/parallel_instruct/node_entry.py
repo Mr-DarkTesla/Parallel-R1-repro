@@ -68,9 +68,12 @@ try:
         if code:raise RuntimeError(stage+' trainer returned '+str(code))
         if stage=='smoke':
             for r in range(world):assert wait(C/f'smoke-exit-rank-{r}.json')['returncode']==0
-            gpu=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader'],text=True)
-            assert not gpu.strip(),gpu
-            save(C/f'smoke-empty-rank-{rank}.json',dict(passed=True,rank=rank,hostname=socket.gethostname(),empty_gpu=True))
+            from gpu_ownership import assigned_uuids, owned_processes
+            devices=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid','--format=csv,noheader'],text=True)
+            assigned=assigned_uuids(devices,os.environ.get('CUDA_VISIBLE_DEVICES'),processes_per_node)
+            gpu=subprocess.check_output(['nvidia-smi','--query-compute-apps=gpu_uuid,pid','--format=csv,noheader'],text=True)
+            assert not owned_processes(gpu,assigned), 'Assigned GPU still has a live worker'
+            save(C/f'smoke-empty-rank-{rank}.json',dict(passed=True,rank=rank,hostname=socket.gethostname(),empty_gpu=True,assigned_gpu_uuids=sorted(assigned)))
             if rank==0:
                 for r in range(world):assert wait(C/f'smoke-empty-rank-{r}.json')['passed']
                 metrics=[];fixtures=[]
@@ -83,7 +86,7 @@ try:
                     assert proof['passed'] and len(proof['cases'])==20
                     assert all(x['optimizer_resident'] and x['subgroups']==1 for x in proof['cases'])
                     metrics.extend(rows);fixtures.append(proof)
-                proof=dict(passed=True,world_size=world,nodes=expected_nodes,actual_optimizer_updates=2,all_ranks_positive=True,all_workers_exit0=True,all_gpu_empty=True,
+                proof=dict(passed=True,world_size=world,nodes=expected_nodes,actual_optimizer_updates=2,all_ranks_positive=True,all_workers_exit0=True,all_gpu_empty=True,all_assigned_gpu_empty=True,gpu_scope="configured local visible devices",
                            max_replay_drift=max(x['max_replay_logp_drift'] for x in metrics),max_peak_bytes=max(x['peak_gpu_bytes'] for x in metrics),
                            resident_widths=[2,3,4,6,8],resident_rounds_per_width=4,fixtures=fixtures,
                            smoke_config_sha256=sha(B/'smoke-config-v2.json'),source_manifest_sha256=sha(B/'runtime-build-v2.json'))

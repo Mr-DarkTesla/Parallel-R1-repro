@@ -54,6 +54,33 @@ class BatchTests(unittest.TestCase):
         for args in [(0,0,8,4),(0,33,8,4),(-1,8,8,4),(0,8,8,1)]:
             with self.assertRaises(ValueError):m.assignments(*args)
 
+    def test_all_gpu_presets_keep_batch32_and_fit_one_or_more_nodes(self):
+        import json
+        root=Path(__file__).parents[1]/'experiments/parallel_instruct/configs'
+        for world in [1,2,4,8,16,24,32]:
+            cfg=json.loads((root/f'r2-{world}gpu.json').read_text())
+            self.assertEqual(cfg['expected_world_size'],world)
+            self.assertEqual(cfg['processes_per_node'],min(world,8))
+            self.assertEqual(world%cfg['processes_per_node'],0)
+            self.assertEqual(cfg['global_batch'],dict(prompts_per_step=8,rollouts_per_prompt=4,responses_per_step=32))
+
+    def test_prepare_run_supports_every_preset(self):
+        import json,subprocess,sys,tempfile
+        root=Path(__file__).parents[1]
+        with tempfile.TemporaryDirectory(dir=root/'work') as directory:
+            d=Path(directory);model=d/'model';model.mkdir()
+            for name in ['train','val','scorer','system']:(d/name).write_text('fixture')
+            for world in [1,2,4,8,16,24,32]:
+                cfg=json.loads((root/f'experiments/parallel_instruct/configs/r2-{world}gpu.json').read_text())
+                cfg.update(model=str(model),**{name:str(d/name) for name in ['train','val','scorer','system']})
+                source=d/f'config-{world}.json';source.write_text(json.dumps(cfg))
+                output=d/f'run-{world}'
+                subprocess.run([sys.executable,str(root/'experiments/parallel_instruct/prepare_run.py'),'--config',str(source),'--run-root',str(output)],check=True,capture_output=True)
+                generated=json.loads((output/'production-config-v2.json').read_text())
+                self.assertEqual(generated['expected_world_size'],world)
+                self.assertEqual(generated['global_batch']['responses_per_step'],32)
+                self.assertFalse((output/'control/production-approved.json').exists())
+
     def test_batch_changes_are_explicit(self):
         for prompts,group,world in [(16,4,8),(32,8,64),(3,4,10)]:
             pairs=[pair for r in range(world) for pair in m.assignments(r,world,prompts,group)]
