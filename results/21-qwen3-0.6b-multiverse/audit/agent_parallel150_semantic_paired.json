@@ -1,0 +1,70 @@
+{
+  "criterion": "independent distinct necessary intermediate facts and conclusion combining them; correct final",
+  "review": "two readers each reviewed 20 disjoint rows blind to gold/scorer; same rubric for all four variants",
+  "fixed40": 40,
+  "variants": {
+    "clean46_parent_step32": {
+      "useful": 13,
+      "correct_final_manual": 30,
+      "full_block_inside_think_manual": 39,
+      "gsm8k_useful": 8,
+      "math_useful": 5
+    },
+    "agent_parallel150_tagged_step8": {
+      "useful": 10,
+      "correct_final_manual": 30,
+      "full_block_inside_think_manual": 39,
+      "gsm8k_useful": 7,
+      "math_useful": 3
+    },
+    "agent_parallel150_tagged_step16": {
+      "useful": 10,
+      "correct_final_manual": 32,
+      "full_block_inside_think_manual": 35,
+      "gsm8k_useful": 7,
+      "math_useful": 3
+    },
+    "agent_parallel150_tagged_step32": {
+      "useful": 11,
+      "correct_final_manual": 35,
+      "full_block_inside_think_manual": 34,
+      "gsm8k_useful": 9,
+      "math_useful": 2
+    }
+  },
+  "paired_vs_parent": {
+    "agent_parallel150_tagged_step8": {
+      "reference": 32.5,
+      "candidate": 25.0,
+      "delta": -7.5,
+      "ci95": [
+        -17.5,
+        2.5
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    },
+    "agent_parallel150_tagged_step16": {
+      "reference": 32.5,
+      "candidate": 25.0,
+      "delta": -7.5,
+      "ci95": [
+        -20.0,
+        2.5
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    },
+    "agent_parallel150_tagged_step32": {
+      "reference": 32.5,
+      "candidate": 27.5,
+      "delta": -5.0,
+      "ci95": [
+        -15.0,
+        5.0
+      ],
+      "unit": "percentage_points",
+      "n": 40
+    }
+  }
+}
