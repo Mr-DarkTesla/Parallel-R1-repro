@@ -41,7 +41,10 @@ def archived(model, stage, bench):
 
 
 def key(row):
-    return row["source"], row["problem_id"]
+    problem_id = row["problem_id"]
+    number = problem_id.rsplit("/", 1)[-1]
+    # Frozen inputs use "frozen/<bench>/<n>"; archived rows use "<source>/<n>".
+    return row["source"], int(number) if number.isdigit() else problem_id
 
 
 def grouped_reference(reference):
