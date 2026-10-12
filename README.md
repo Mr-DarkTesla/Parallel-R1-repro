@@ -1,7 +1,8 @@
 
 # **Parallel-R1**
 This fork adapts the code for "**Parallel-R1: Towards Parallel Thinking via Reinforcement Learning**"
-to Qwen3-0.6B. The upstream project description and published results follow below.
+with the earlier Qwen3-0.6B adaptation and a Qwen3-4B Instruct SFT/RL runtime.
+The upstream project description and published results follow below.
 
 ## What this branch adds
 
@@ -10,6 +11,12 @@ relative to upstream `main` (`f1c6389`). Its main entry point is
 [`scripts/qwen3.sh`](scripts/qwen3.sh); stage settings live in
 [`verl/verl/trainer/config`](verl/verl/trainer/config).
 
+- **Qwen3-4B Instruct RL:** a [shared runtime](experiments/parallel_instruct/README.md)
+  for 8/16/24/32 GPUs with an explicit, unchanged response batch, fullwidth8
+  decoding, exact structured replay, collective parity rejection, and weights-only
+  checkpoint exports. Dated SFT/RL source snapshots are preserved under
+  [`work/experiments`](work/README.md). Each new run requires its actual distributed
+  GPU smoke; CPU tests do not establish GPU throughput or model quality.
 - **Qwen3-0.6B SFT:** preparation and explicit initialization of six control
   tokens, Seen/Unseen profiles, response-only structured masks and positions,
   corrected gradient accumulation, equal response weighting, complete validation
@@ -34,10 +41,12 @@ relative to upstream `main` (`f1c6389`). Its main entry point is
   and decode graphs.
 
 The published 4B results below are upstream results, not measurements of this
-0.6B adaptation. Unseen generation still differs from training in its attention
-mask/positions, and RL still includes runtime-inserted tags in its loss. The
-bounded response budget also changes the original rollout protocol. This branch
-does not establish paper-level reproduction or a quality improvement.
+fork. In the legacy 0.6B pipeline, Unseen generation differs from training in its
+attention mask/positions, and RL includes runtime-inserted tags in its loss. The
+shared Instruct runtime instead records exact per-call contexts and excludes
+injected headers/bridges from policy loss. Bounded response budgets also change
+the original rollout protocol. Neither source changes nor CPU parity establish
+paper-level reproduction or a quality improvement.
 
 ### Checking the branch
 
