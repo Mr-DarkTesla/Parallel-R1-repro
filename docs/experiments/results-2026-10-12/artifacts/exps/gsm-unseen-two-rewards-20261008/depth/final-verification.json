@@ -1,0 +1,26 @@
+{
+  "complete": true,
+  "steps": 800,
+  "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-two-rewards-20261008/depth/results/checkpoints/global_step_800/actor/huggingface",
+  "full_state": true,
+  "finite_weights": true,
+  "finite_forward": true,
+  "validation": {
+    "APO_MATH300": {
+      "acc": 0.10443037974683544,
+      "critical_depth": 5.512658227848101,
+      "parallel": 0.0,
+      "forks": 0.0,
+      "format_ok": 1.0,
+      "answers": 316
+    },
+    "gsm_infinite_heldout": {
+      "acc": 0.83984375,
+      "critical_depth": 5.0625,
+      "parallel": 0.0,
+      "forks": 0.0,
+      "format_ok": 1.0,
+      "answers": 256
+    }
+  }
+}

@@ -1,0 +1,142 @@
+{
+  "complete": true,
+  "finished": "2026-10-05T21:46:24.131228+00:00",
+  "evaluations": [
+    {
+      "complete": true,
+      "job": {
+        "id": "tag-x4-sync",
+        "model": "seen-tag-x4",
+        "epoch": 5,
+        "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-tag-loss-x4-20261005/global_step_230",
+        "overrides": [
+          "actor_rollout_ref.rollout.mode=sync"
+        ]
+      },
+      "answers": 1916,
+      "benchmarks": {
+        "APO_AIME24": {
+          "answers": 480,
+          "questions": 30,
+          "n": 16,
+          "mean": 0.00625,
+          "observed_pass": 0.1,
+          "bootstrap_best": 0.0646,
+          "parallel": 0.9770833333333333,
+          "format": 0.9479166666666666,
+          "parallel_format": 0.9104166666666667,
+          "format_error": 0.06666666666666667,
+          "no_tags": 0.022916666666666665
+        },
+        "APO_AIME25": {
+          "answers": 480,
+          "questions": 30,
+          "n": 16,
+          "mean": 0.0020833333333333333,
+          "observed_pass": 0.03333333333333333,
+          "bootstrap_best": 0.021166666666666667,
+          "parallel": 0.9854166666666667,
+          "format": 0.9291666666666667,
+          "parallel_format": 0.8979166666666667,
+          "format_error": 0.0875,
+          "no_tags": 0.014583333333333334
+        },
+        "APO_AMC23": {
+          "answers": 640,
+          "questions": 40,
+          "n": 16,
+          "mean": 0.0875,
+          "observed_pass": 0.475,
+          "bootstrap_best": 0.3955,
+          "parallel": 0.9890625,
+          "format": 0.9546875,
+          "parallel_format": 0.9296875,
+          "format_error": 0.059375,
+          "no_tags": 0.0109375
+        },
+        "APO_MATH300": {
+          "answers": 316,
+          "questions": 316,
+          "n": 1,
+          "mean": 0.30063291139240506,
+          "observed_pass": 0.30063291139240506,
+          "bootstrap_best": null,
+          "parallel": 1.0,
+          "format": 0.9651898734177216,
+          "parallel_format": 0.9556962025316456,
+          "format_error": 0.04430379746835443,
+          "no_tags": 0.0
+        }
+      }
+    },
+    {
+      "complete": true,
+      "job": {
+        "id": "tag-x4-async",
+        "model": "seen-tag-x4",
+        "epoch": 5,
+        "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-tag-loss-x4-20261005/global_step_230",
+        "overrides": [
+          "actor_rollout_ref.rollout.mode=async"
+        ]
+      },
+      "answers": 1916,
+      "benchmarks": {
+        "APO_AIME24": {
+          "answers": 480,
+          "questions": 30,
+          "n": 16,
+          "mean": 0.00625,
+          "observed_pass": 0.06666666666666667,
+          "bootstrap_best": 0.051866666666666665,
+          "parallel": 0.99375,
+          "format": 0.9458333333333333,
+          "parallel_format": 0.9333333333333333,
+          "format_error": 0.06041666666666667,
+          "no_tags": 0.00625
+        },
+        "APO_AIME25": {
+          "answers": 480,
+          "questions": 30,
+          "n": 16,
+          "mean": 0.008333333333333333,
+          "observed_pass": 0.13333333333333333,
+          "bootstrap_best": 0.08813333333333334,
+          "parallel": 0.9895833333333334,
+          "format": 0.95625,
+          "parallel_format": 0.9375,
+          "format_error": 0.052083333333333336,
+          "no_tags": 0.010416666666666666
+        },
+        "APO_AMC23": {
+          "answers": 640,
+          "questions": 40,
+          "n": 16,
+          "mean": 0.103125,
+          "observed_pass": 0.475,
+          "bootstrap_best": 0.39645,
+          "parallel": 0.99375,
+          "format": 0.9640625,
+          "parallel_format": 0.9546875,
+          "format_error": 0.0390625,
+          "no_tags": 0.00625
+        },
+        "APO_MATH300": {
+          "answers": 316,
+          "questions": 316,
+          "n": 1,
+          "mean": 0.23417721518987342,
+          "observed_pass": 0.23417721518987342,
+          "bootstrap_best": null,
+          "parallel": 1.0,
+          "format": 0.9873417721518988,
+          "parallel_format": 0.9873417721518988,
+          "format_error": 0.012658227848101266,
+          "no_tags": 0.0
+        }
+      }
+    }
+  ],
+  "failed_or_skipped": [],
+  "protocol": "Isolated Seen ablation versus fixes-20261005 Seen control, same seed1/base/data/LR1e-5/global128/micro4/230steps. Six control-token target CE weights4, remaining1, original token count denominator. Prompt/padding masked. Validation unweighted. Both sync and async final eval1916, original batch256/eager settings for direct comparison. Wait until previous training/evaluation and speed benchmark release GPUs."
+}

@@ -1,0 +1,40 @@
+{
+  "state": "running",
+  "stage": "production",
+  "controller_pid": 1249140,
+  "started_at": "2026-10-10T08:05:34.599574+00:00",
+  "command": [
+    "${PROJECT_ROOT}/.venv/bin/python",
+    "-m",
+    "torch.distributed.run",
+    "--standalone",
+    "--nnodes=1",
+    "--nproc_per_node=8",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/train.py",
+    "--stage",
+    "production"
+  ],
+  "log": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/production.log",
+  "pid": 1249143,
+  "owned_process_group": 1249143,
+  "heartbeat_at": "2026-10-10T08:19:15.062587+00:00",
+  "training_progress": {
+    "state": "running",
+    "at": "2026-10-10T08:18:54.336074+00:00",
+    "step": 129,
+    "target_steps": 129,
+    "epoch": 3,
+    "loss": 0.8920596912503242,
+    "row_grad_norm": 2.0427489280700684,
+    "lr": 5e-05,
+    "mean_input_tokens": 4104.5,
+    "mean_supervised_tokens": 1430.5,
+    "row_update_l2": 1.223875880241394,
+    "elapsed_seconds": 779.9456103732809,
+    "estimated_remaining_seconds": 0.0,
+    "trainable_parameters": 15360,
+    "frozen_parameter_versions_unchanged": true
+  },
+  "returncode": 0,
+  "finished_at": "2026-10-10T08:19:25.067600+00:00"
+}

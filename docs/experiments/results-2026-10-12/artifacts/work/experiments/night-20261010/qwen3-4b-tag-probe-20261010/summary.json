@@ -1,0 +1,74 @@
+{
+  "started_at": "2026-10-10T07:06:10.227229+00:00",
+  "finished_at": "2026-10-10T07:11:54.033263+00:00",
+  "model": "Qwen/Qwen3-4B",
+  "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "enable_thinking": true,
+  "force_initial_native_think_prefix": true,
+  "ordinary_BPE_tags_no_model_tokenizer_edits": true,
+  "native_text_only_no_executed_forks_no_Unseen": true,
+  "max_new_tokens": 8192,
+  "temperature": 0.6,
+  "top_p": 0.95,
+  "top_k": 20,
+  "questions_sha256": "0d925cc42ba83f2063c4691036cd2d88bca431882d92440bf4a1d43ffee9b35e",
+  "scorer_sha256": "3aa6d7bea31716a17a9de12c8ca63fe36e3e0eabe41474f414ce21d29bd08119",
+  "arms": {
+    "optional": {
+      "samples": 24,
+      "correct": 21,
+      "by_dataset": {
+        "gsm": {
+          "samples": 12,
+          "correct": 10
+        },
+        "math": {
+          "samples": 12,
+          "correct": 11
+        }
+      },
+      "mentions_parallel_samples": 18,
+      "authored_fork_samples": 0,
+      "strict_samples": 3,
+      "strict_with_fork_samples": 0,
+      "requested_width3_compliance_samples": 0,
+      "correct_and_strict_with_fork": 0,
+      "widths": [],
+      "FinalAnswer_inside_Path": 0,
+      "FinalAnswer_inside_Summary": 0,
+      "unfinished_thinking": 1,
+      "placeholder_copy": 0,
+      "length_truncated": 1,
+      "mean_generated_tokens": 1870.4583333333333,
+      "prompt_sha256": "0e0f137efa01ae26afa27f34012f8345a241c361e68a1a1b756f7482d5f9745e"
+    },
+    "requested": {
+      "samples": 24,
+      "correct": 23,
+      "by_dataset": {
+        "gsm": {
+          "samples": 12,
+          "correct": 12
+        },
+        "math": {
+          "samples": 12,
+          "correct": 11
+        }
+      },
+      "mentions_parallel_samples": 18,
+      "authored_fork_samples": 0,
+      "strict_samples": 4,
+      "strict_with_fork_samples": 0,
+      "requested_width3_compliance_samples": 0,
+      "correct_and_strict_with_fork": 0,
+      "widths": [],
+      "FinalAnswer_inside_Path": 0,
+      "FinalAnswer_inside_Summary": 0,
+      "unfinished_thinking": 0,
+      "placeholder_copy": 0,
+      "length_truncated": 0,
+      "mean_generated_tokens": 1927.5416666666667,
+      "prompt_sha256": "34bc122d2f8eb5cc5fab2cdb715366eec411e5d33af42ddfd9257a6c68eb229d"
+    }
+  }
+}

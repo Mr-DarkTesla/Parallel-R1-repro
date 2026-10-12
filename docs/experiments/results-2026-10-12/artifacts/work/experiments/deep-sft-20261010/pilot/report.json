@@ -1,0 +1,69 @@
+{
+  "phase": "pilot",
+  "completed": 50,
+  "accepted": 43,
+  "rejected": 7,
+  "errors": {
+    "explicit_arithmetic_mismatch": 6,
+    "independent_oracle_replay": 1
+  },
+  "selected_deep": 41,
+  "width": {
+    "mean": 4.043715846994536,
+    "median": 4.0,
+    "p95": 5.0,
+    "max": 5
+  },
+  "rounds": {
+    "mean": 4.255813953488372,
+    "median": 4.0,
+    "p95": 5.0,
+    "max": 5
+  },
+  "width_histogram": {
+    "3": 25,
+    "4": 113,
+    "5": 41,
+    "2": 4
+  },
+  "round_histogram": {
+    "4": 32,
+    "5": 11
+  },
+  "path_tokens": {
+    "mean": 32.6554054054054,
+    "median": 35.0,
+    "p95": 41.0,
+    "max": 43
+  },
+  "output_tokens": {
+    "mean": 1292.1860465116279,
+    "median": 1250.0,
+    "p95": 1739.8,
+    "max": 1966
+  },
+  "critical_path_tokens_proxy": {
+    "mean": 807.3488372093024,
+    "median": 764.0,
+    "p95": 1073.5,
+    "max": 1173
+  },
+  "explicit_scalar_equalities_checked": 98,
+  "mathematically_reference_verified": 43,
+  "no_think": true,
+  "all_sibling_ids_structurally_consistent": true,
+  "hashes": {
+    "teacher-prompt.txt": "c8963dea43780c26bac19c6a0e7db32bdaaa3e0626747096903e4287e2c36827",
+    "judge-prompt.txt": "602c5e12e4fd6b24c005ee9ea18389b87c83556d3406437c515734768587682a",
+    "pool-manifest.json": "482b5f172f52a6c4ee74b871e941cd8e449a52ad2212b64fbbbedebdb3c7d7bd",
+    "pilot-tasks.jsonl": "afddde5d864f47a07afe75b1c924b37c02dfb32913d4de2aad19db2a288bdefd",
+    "journal.jsonl": "563da649c17e01bc5a48fba71938599e2d6bf661121caba8ebf2468d47c3ded9",
+    "accepted.jsonl": "55745652ce53b9223baea62f60757e4d61642e996931b57fb1983a22ef05012f"
+  },
+  "limitations": [
+    "The teacher also acts as semantic judge; not independent proof of every governing relation.",
+    "Explicit arithmetic checker covers flat scalar equalities only.",
+    "Manual actual-trace review is mandatory before releasing production generation.",
+    "F is token critical-path proxy, not measured GPU latency."
+  ]
+}

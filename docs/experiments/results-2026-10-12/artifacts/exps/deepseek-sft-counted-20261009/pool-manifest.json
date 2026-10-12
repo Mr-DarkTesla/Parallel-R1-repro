@@ -1,0 +1,47 @@
+{
+  "seed": 20261009,
+  "counts": {
+    "MATH_train": 5945,
+    "BigMath": 3000,
+    "GSM_Infinite": 1500
+  },
+  "exclusions": {
+    "diagram_or_url": 711,
+    "eval_overlap/number_masked_trigram_jaccard>=0.65": 697,
+    "eval_overlap/normalized_exact": 36,
+    "missing_reference": 4,
+    "question_length": 266,
+    "duplicate": 6
+  },
+  "evaluation_exclusion_questions": 6552,
+  "sources_sha256": {
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/algebra/test-00000-of-00001.parquet": "0e04a850dac9cfc758eac0c80afd2d0cc65e29ea72f916c8ac1045b12af937f5",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/counting_and_probability/test-00000-of-00001.parquet": "c324818949c75a6227c0328a8499d58023cbbf6757cfc1736f5ab24cc8d87966",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/geometry/test-00000-of-00001.parquet": "98720f3a8134ad9784fd8951195245264495df03ffc5c9485a9a54ff5ae2431a",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/intermediate_algebra/test-00000-of-00001.parquet": "e859f72486c951c2017da880541ca729940eaa986b0364eb23e238983df9bfeb",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/number_theory/test-00000-of-00001.parquet": "ba156c9c9fa2040836ba12135fd964e6e67d6bccd8c469ec4a3ad941f8f6fbe9",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/prealgebra/test-00000-of-00001.parquet": "301e5d8ade5c7b5038032532e498bdc9dca799e7f1061a63f2e7d980803240cc",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/precalculus/test-00000-of-00001.parquet": "da37474ba3761ae5727af3844a7ba963a735bd6a14c65e6137593669a4fe3b9c",
+    "${PROJECT_ROOT}/exps/math500-new-sft-20261008/questions.jsonl": "a2645512280d4499c35e9c781f35e04c643b30ebc20b13d118878e4f2f9b3486",
+    "${PROJECT_ROOT}/exps/rl-dataset-screen-20261007/gsm_infinite.parquet": "ae164a57106664a8cb314d60225e5005aa9d9929a103a7b200392dcc0a7afbd6",
+    "${PROJECT_ROOT}/exps/rl-dataset-screen-20261007/dapo.parquet": "35f2733a92fd8a77cdf5c3408c21795343425c797e0279de7386da618d027b68",
+    "${PROJECT_ROOT}/exps/rl-dataset-screen-20261007/bigmath_orca.parquet": "7df39f2e84380b25b9541a3bf1ccbe8f00c1c6f414976479bca8034be9d4521f",
+    "${PROJECT_ROOT}/exps/rl-dataset-screen-20261007/bigmath_cn_k12.parquet": "2882edfb2ca9b9d117c563561aad4e2ccd0787b21fa69f330df4018d48910655",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/algebra/train-00000-of-00001.parquet": "73347f5b55869f21ff094361025dbd12d291e971aa4d72142eacee10438e449f",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/counting_and_probability/train-00000-of-00001.parquet": "d37ae017930df41678edee50dcde18c17fb06afaff9eb505c1b95f1002bfcb31",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/geometry/train-00000-of-00001.parquet": "9dbf5e5b55499e696e0ba72da9d85d4f0be3acbf7eaa6cb014b0fc78bb63784f",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/intermediate_algebra/train-00000-of-00001.parquet": "0c87f3798ebdfb915b1f9b6fc13c1a8d064c3cb91631ccbe85b83ed5d71150f6",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/number_theory/train-00000-of-00001.parquet": "81c08649149b39811f2d1d7ddf5dfccf6c4c8044a2e169cfb24db09160c941f4",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/prealgebra/train-00000-of-00001.parquet": "765b526fb5c0b8385cb7be2c16bf4f6f28cf71f2bc15c826abfbb5fa7f8616cc",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--EleutherAI--hendrycks_math/snapshots/21a5633873b6a120296cce3e2df9d5550074f4a3/precalculus/train-00000-of-00001.parquet": "28bb1ff95525c8d32521509bef91de76339659f5467a381e6e8deea204538f0e",
+    "${PROJECT_ROOT}/cache/screen-hf/datasets--open-r1--Big-Math-RL-Verified-Processed/snapshots/c79efbb6d3b75e3a2bcc27a5c569119918132345/all/train-00000-of-00001.parquet": "db6d8ea52ec4b9bd0bdfc1a2ce38874a95a193cd467e6858c4fecea3db08cbb0",
+    "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/input/gsm_infinite_adaptive_parallel_5k.jsonl": "a63c0613526338246460b50824dc29f19aa6defcbbc66b73dc8f9a152df72799"
+  },
+  "decontamination": "All 5000 MATH test questions + pilot + previous RL screen. Normalized exact and number-masked word-trigram Jaccard >=0.65, top10 candidates. Does not guarantee removal of semantic paraphrases.",
+  "targets": {
+    "MATH_train": 3500,
+    "BigMath": 1000,
+    "GSM_Infinite": 500
+  },
+  "pilot_excluded": true
+}

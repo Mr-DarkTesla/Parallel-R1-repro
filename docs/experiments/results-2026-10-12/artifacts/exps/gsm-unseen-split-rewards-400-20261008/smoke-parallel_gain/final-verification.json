@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "steps": 2,
+  "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-split-rewards-400-20261008/smoke-parallel_gain/results/checkpoints/global_step_2/actor/huggingface",
+  "full_state": true,
+  "finite_weights": true,
+  "finite_forward": true,
+  "validation": {
+    "gsm_infinite_heldout": {
+      "acc": 0.125,
+      "critical_depth": 769.25,
+      "parallel": 0.875,
+      "forks": 1.375,
+      "format_ok": 1.0,
+      "answers": 8
+    }
+  }
+}

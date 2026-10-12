@@ -1,0 +1,1036 @@
+{
+  "planned": 24,
+  "completed": 24,
+  "missing": 0,
+  "correct": 3,
+  "pass_at_1_completed_only": 0.125,
+  "format_valid": 7,
+  "format_fraction_completed_only": 0.2916666666666667,
+  "executed_fork_samples": 24,
+  "unfinished_thinking": 0,
+  "gate_format_threshold": 0.8,
+  "parallel_protocol_valid": 7,
+  "parallel_protocol_fraction_completed_only": 0.2916666666666667,
+  "gate_passed": false,
+  "response_cap": 4096,
+  "path_cap": 256,
+  "accuracy_gate": "at least one correct; no stronger accuracy threshold",
+  "model": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/raw",
+  "parallel_syntax_valid": 24,
+  "parallel_execution_mismatch_samples": 0,
+  "parallel_valid_definition": "Canonical strict format AND syntax AND actual executed forks>0 AND parsed/textual rounds equal executed forks AND no invalid runtime control",
+  "format_schema_version": 2,
+  "accuracy_schema_version": 2,
+  "legacy_format_valid": 19,
+  "legacy_format_fraction_completed_only": 0.7916666666666666,
+  "legacy_parallel_protocol_valid": 19,
+  "primary_extraction_changed_samples": 0,
+  "gate_criteria": {
+    "all_planned_completed": true,
+    "basic_strict_format_at_least_0_8": false,
+    "fork_coverage_at_least_0_2": true,
+    "valid_parallel_among_executed_fork_samples_at_least_0_9": false,
+    "invalid_width_fraction_at_most_0_05": true,
+    "at_least_one_correct": true
+  },
+  "gate_thresholds": {
+    "basic_strict_format": 0.8,
+    "fork_coverage": 0.2,
+    "valid_parallel_among_executed_forks": 0.9,
+    "max_invalid_width": 0.05,
+    "min_correct": 1
+  },
+  "gate_raw_counts": {
+    "completed": 24,
+    "basic_valid": 7,
+    "executed_fork_samples": 24,
+    "valid_parallel_among_fork_samples": 7,
+    "invalid_width_samples": 0,
+    "correct": 3
+  },
+  "fork_coverage": 1.0,
+  "valid_parallel_among_executed_forks": 0.2916666666666667,
+  "invalid_width_fraction": 0.0,
+  "correct_and_basic_valid": 1,
+  "correct_and_parallel_valid": 1,
+  "metrics_all": {
+    "F": {
+      "n": 24,
+      "sum": 1759.0,
+      "mean": 73.29166666666667,
+      "median": 66.0,
+      "p95": 101.55,
+      "min": 32.0,
+      "max": 315.0
+    },
+    "T_sampled": {
+      "n": 24,
+      "sum": 3695.0,
+      "mean": 153.95833333333334,
+      "median": 156.5,
+      "p95": 207.0,
+      "min": 86.0,
+      "max": 423.0
+    },
+    "T_forced": {
+      "n": 24,
+      "sum": 1805.0,
+      "mean": 75.20833333333333,
+      "median": 74.5,
+      "p95": 90.0,
+      "min": 61.0,
+      "max": 91.0
+    },
+    "T_assembled": {
+      "n": 24,
+      "sum": 5500.0,
+      "mean": 229.16666666666666,
+      "median": 231.0,
+      "p95": 297.0,
+      "min": 147.0,
+      "max": 514.0
+    },
+    "actual_generated_tokens": {
+      "n": 24,
+      "sum": 3695.0,
+      "mean": 153.95833333333334,
+      "median": 156.5,
+      "p95": 207.0,
+      "min": 86.0,
+      "max": 423.0
+    },
+    "generation_calls": {
+      "n": 24,
+      "sum": 228.0,
+      "mean": 9.5,
+      "median": 9.5,
+      "p95": 13.0,
+      "min": 6.0,
+      "max": 13.0
+    },
+    "wall_seconds": {
+      "n": 24,
+      "sum": 119.35614442825317,
+      "mean": 4.973172684510549,
+      "median": 4.632388234138489,
+      "p95": 7.534843003749847,
+      "min": 2.581664562225342,
+      "max": 11.570189237594604
+    },
+    "forks": {
+      "n": 24,
+      "sum": 36.0,
+      "mean": 1.5,
+      "median": 1.5,
+      "p95": 2.0,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "rounds": {
+      "n": 24,
+      "sum": 36.0,
+      "mean": 1.5,
+      "median": 1.5,
+      "p95": 2.0,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "generation_turns": {
+      "n": 24,
+      "sum": 60.0,
+      "mean": 2.5,
+      "median": 2.5,
+      "p95": 3.0,
+      "min": 2.0,
+      "max": 3.0
+    },
+    "model_forward_calls_inferred": {
+      "n": 24,
+      "sum": 3695.0,
+      "mean": 153.95833333333334,
+      "median": 156.5,
+      "p95": 207.0,
+      "min": 86.0,
+      "max": 423.0
+    },
+    "prefill_calls_inferred": {
+      "n": 24,
+      "sum": 228.0,
+      "mean": 9.5,
+      "median": 9.5,
+      "p95": 13.0,
+      "min": 6.0,
+      "max": 13.0
+    },
+    "decode_calls_inferred": {
+      "n": 24,
+      "sum": 3467.0,
+      "mean": 144.45833333333334,
+      "median": 147.0,
+      "p95": 194.0,
+      "min": 80.0,
+      "max": 410.0
+    },
+    "widths": {
+      "n": 36,
+      "sum": 144.0,
+      "mean": 4.0,
+      "median": 4.0,
+      "p95": 4.0,
+      "min": 4.0,
+      "max": 4.0
+    },
+    "width_histogram": {
+      "4": 36
+    },
+    "truncated_samples": 0,
+    "truncated_fraction": 0.0,
+    "invalid_width_samples": 0,
+    "forked_samples": 24
+  },
+  "metrics_correct": {
+    "F": {
+      "n": 3,
+      "sum": 101.0,
+      "mean": 33.666666666666664,
+      "median": 32.0,
+      "p95": 36.5,
+      "min": 32.0,
+      "max": 37.0
+    },
+    "T_sampled": {
+      "n": 3,
+      "sum": 260.0,
+      "mean": 86.66666666666667,
+      "median": 86.0,
+      "p95": 87.8,
+      "min": 86.0,
+      "max": 88.0
+    },
+    "T_forced": {
+      "n": 3,
+      "sum": 183.0,
+      "mean": 61.0,
+      "median": 61.0,
+      "p95": 61.0,
+      "min": 61.0,
+      "max": 61.0
+    },
+    "T_assembled": {
+      "n": 3,
+      "sum": 443.0,
+      "mean": 147.66666666666666,
+      "median": 147.0,
+      "p95": 148.8,
+      "min": 147.0,
+      "max": 149.0
+    },
+    "actual_generated_tokens": {
+      "n": 3,
+      "sum": 260.0,
+      "mean": 86.66666666666667,
+      "median": 86.0,
+      "p95": 87.8,
+      "min": 86.0,
+      "max": 88.0
+    },
+    "generation_calls": {
+      "n": 3,
+      "sum": 18.0,
+      "mean": 6.0,
+      "median": 6.0,
+      "p95": 6.0,
+      "min": 6.0,
+      "max": 6.0
+    },
+    "wall_seconds": {
+      "n": 3,
+      "sum": 9.258951425552368,
+      "mean": 3.0863171418507895,
+      "median": 2.6934187412261963,
+      "p95": 3.8195667266845703,
+      "min": 2.6208384037017822,
+      "max": 3.9446942806243896
+    },
+    "forks": {
+      "n": 3,
+      "sum": 3.0,
+      "mean": 1.0,
+      "median": 1.0,
+      "p95": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "rounds": {
+      "n": 3,
+      "sum": 3.0,
+      "mean": 1.0,
+      "median": 1.0,
+      "p95": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "generation_turns": {
+      "n": 3,
+      "sum": 6.0,
+      "mean": 2.0,
+      "median": 2.0,
+      "p95": 2.0,
+      "min": 2.0,
+      "max": 2.0
+    },
+    "model_forward_calls_inferred": {
+      "n": 3,
+      "sum": 260.0,
+      "mean": 86.66666666666667,
+      "median": 86.0,
+      "p95": 87.8,
+      "min": 86.0,
+      "max": 88.0
+    },
+    "prefill_calls_inferred": {
+      "n": 3,
+      "sum": 18.0,
+      "mean": 6.0,
+      "median": 6.0,
+      "p95": 6.0,
+      "min": 6.0,
+      "max": 6.0
+    },
+    "decode_calls_inferred": {
+      "n": 3,
+      "sum": 242.0,
+      "mean": 80.66666666666667,
+      "median": 80.0,
+      "p95": 81.8,
+      "min": 80.0,
+      "max": 82.0
+    },
+    "widths": {
+      "n": 3,
+      "sum": 12.0,
+      "mean": 4.0,
+      "median": 4.0,
+      "p95": 4.0,
+      "min": 4.0,
+      "max": 4.0
+    },
+    "width_histogram": {
+      "4": 3
+    },
+    "truncated_samples": 0,
+    "truncated_fraction": 0.0,
+    "invalid_width_samples": 0,
+    "forked_samples": 3
+  },
+  "historical_correct": 1,
+  "historical_pass_at_1_completed_only": 0.041666666666666664,
+  "primary_metric": "Math-Verify final answer equivalence after removing only think markup; independent of think-format validity",
+  "work_inference": {
+    "measurement_status": "INFERRED from structured serial HF source; not measured GPU telemetry",
+    "structured_trace_verified_samples": 24,
+    "structured_trace_stat_mismatch_samples": 0,
+    "native_forward_counts_available": false,
+    "text_backend_measured_forward_counts_available": true
+  },
+  "by_dataset": {
+    "gsm": {
+      "planned": 12,
+      "completed": 12,
+      "correct": 2,
+      "pass_at_1": 0.16666666666666666,
+      "basic_valid": 4,
+      "basic_valid_fraction": 0.3333333333333333,
+      "parallel_valid": 4,
+      "parallel_syntax_valid": 12,
+      "parallel_execution_mismatch_samples": 0,
+      "correct_and_basic_valid": 1,
+      "correct_and_parallel_valid": 1,
+      "metrics_all": {
+        "F": {
+          "n": 12,
+          "sum": 1084.0,
+          "mean": 90.33333333333333,
+          "median": 89.5,
+          "p95": 197.84999999999985,
+          "min": 32.0,
+          "max": 315.0
+        },
+        "T_sampled": {
+          "n": 12,
+          "sum": 2100.0,
+          "mean": 175.0,
+          "median": 200.0,
+          "p95": 304.1999999999998,
+          "min": 86.0,
+          "max": 423.0
+        },
+        "T_forced": {
+          "n": 12,
+          "sum": 936.0,
+          "mean": 78.0,
+          "median": 90.0,
+          "p95": 90.45,
+          "min": 61.0,
+          "max": 91.0
+        },
+        "T_assembled": {
+          "n": 12,
+          "sum": 3036.0,
+          "mean": 253.0,
+          "median": 290.0,
+          "p95": 394.64999999999986,
+          "min": 147.0,
+          "max": 514.0
+        },
+        "actual_generated_tokens": {
+          "n": 12,
+          "sum": 2100.0,
+          "mean": 175.0,
+          "median": 200.0,
+          "p95": 304.1999999999998,
+          "min": 86.0,
+          "max": 423.0
+        },
+        "generation_calls": {
+          "n": 12,
+          "sum": 121.0,
+          "mean": 10.083333333333334,
+          "median": 13.0,
+          "p95": 13.0,
+          "min": 6.0,
+          "max": 13.0
+        },
+        "wall_seconds": {
+          "n": 12,
+          "sum": 72.07717657089233,
+          "mean": 6.006431380907695,
+          "median": 6.106168985366821,
+          "p95": 9.3679777264595,
+          "min": 2.6934187412261963,
+          "max": 11.570189237594604
+        },
+        "forks": {
+          "n": 12,
+          "sum": 19.0,
+          "mean": 1.5833333333333333,
+          "median": 2.0,
+          "p95": 2.0,
+          "min": 1.0,
+          "max": 2.0
+        },
+        "rounds": {
+          "n": 12,
+          "sum": 19.0,
+          "mean": 1.5833333333333333,
+          "median": 2.0,
+          "p95": 2.0,
+          "min": 1.0,
+          "max": 2.0
+        },
+        "generation_turns": {
+          "n": 12,
+          "sum": 31.0,
+          "mean": 2.5833333333333335,
+          "median": 3.0,
+          "p95": 3.0,
+          "min": 2.0,
+          "max": 3.0
+        },
+        "model_forward_calls_inferred": {
+          "n": 12,
+          "sum": 2100.0,
+          "mean": 175.0,
+          "median": 200.0,
+          "p95": 304.1999999999998,
+          "min": 86.0,
+          "max": 423.0
+        },
+        "prefill_calls_inferred": {
+          "n": 12,
+          "sum": 121.0,
+          "mean": 10.083333333333334,
+          "median": 13.0,
+          "p95": 13.0,
+          "min": 6.0,
+          "max": 13.0
+        },
+        "decode_calls_inferred": {
+          "n": 12,
+          "sum": 1979.0,
+          "mean": 164.91666666666666,
+          "median": 187.0,
+          "p95": 291.1999999999998,
+          "min": 80.0,
+          "max": 410.0
+        },
+        "widths": {
+          "n": 19,
+          "sum": 76.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "p95": 4.0,
+          "min": 4.0,
+          "max": 4.0
+        },
+        "width_histogram": {
+          "4": 19
+        },
+        "truncated_samples": 0,
+        "truncated_fraction": 0.0,
+        "invalid_width_samples": 0,
+        "forked_samples": 12
+      },
+      "metrics_correct": {
+        "F": {
+          "n": 2,
+          "sum": 69.0,
+          "mean": 34.5,
+          "median": 34.5,
+          "p95": 36.75,
+          "min": 32.0,
+          "max": 37.0
+        },
+        "T_sampled": {
+          "n": 2,
+          "sum": 174.0,
+          "mean": 87.0,
+          "median": 87.0,
+          "p95": 87.9,
+          "min": 86.0,
+          "max": 88.0
+        },
+        "T_forced": {
+          "n": 2,
+          "sum": 122.0,
+          "mean": 61.0,
+          "median": 61.0,
+          "p95": 61.0,
+          "min": 61.0,
+          "max": 61.0
+        },
+        "T_assembled": {
+          "n": 2,
+          "sum": 296.0,
+          "mean": 148.0,
+          "median": 148.0,
+          "p95": 148.9,
+          "min": 147.0,
+          "max": 149.0
+        },
+        "actual_generated_tokens": {
+          "n": 2,
+          "sum": 174.0,
+          "mean": 87.0,
+          "median": 87.0,
+          "p95": 87.9,
+          "min": 86.0,
+          "max": 88.0
+        },
+        "generation_calls": {
+          "n": 2,
+          "sum": 12.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "min": 6.0,
+          "max": 6.0
+        },
+        "wall_seconds": {
+          "n": 2,
+          "sum": 6.638113021850586,
+          "mean": 3.319056510925293,
+          "median": 3.319056510925293,
+          "p95": 3.88213050365448,
+          "min": 2.6934187412261963,
+          "max": 3.9446942806243896
+        },
+        "forks": {
+          "n": 2,
+          "sum": 2.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "rounds": {
+          "n": 2,
+          "sum": 2.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "generation_turns": {
+          "n": 2,
+          "sum": 4.0,
+          "mean": 2.0,
+          "median": 2.0,
+          "p95": 2.0,
+          "min": 2.0,
+          "max": 2.0
+        },
+        "model_forward_calls_inferred": {
+          "n": 2,
+          "sum": 174.0,
+          "mean": 87.0,
+          "median": 87.0,
+          "p95": 87.9,
+          "min": 86.0,
+          "max": 88.0
+        },
+        "prefill_calls_inferred": {
+          "n": 2,
+          "sum": 12.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "min": 6.0,
+          "max": 6.0
+        },
+        "decode_calls_inferred": {
+          "n": 2,
+          "sum": 162.0,
+          "mean": 81.0,
+          "median": 81.0,
+          "p95": 81.9,
+          "min": 80.0,
+          "max": 82.0
+        },
+        "widths": {
+          "n": 2,
+          "sum": 8.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "p95": 4.0,
+          "min": 4.0,
+          "max": 4.0
+        },
+        "width_histogram": {
+          "4": 2
+        },
+        "truncated_samples": 0,
+        "truncated_fraction": 0.0,
+        "invalid_width_samples": 0,
+        "forked_samples": 2
+      },
+      "historical_correct": 1,
+      "historical_pass_at_1": 0.08333333333333333
+    },
+    "math": {
+      "planned": 12,
+      "completed": 12,
+      "correct": 1,
+      "pass_at_1": 0.08333333333333333,
+      "basic_valid": 3,
+      "basic_valid_fraction": 0.25,
+      "parallel_valid": 3,
+      "parallel_syntax_valid": 12,
+      "parallel_execution_mismatch_samples": 0,
+      "correct_and_basic_valid": 0,
+      "correct_and_parallel_valid": 0,
+      "metrics_all": {
+        "F": {
+          "n": 12,
+          "sum": 675.0,
+          "mean": 56.25,
+          "median": 55.0,
+          "p95": 81.14999999999999,
+          "min": 32.0,
+          "max": 85.0
+        },
+        "T_sampled": {
+          "n": 12,
+          "sum": 1595.0,
+          "mean": 132.91666666666666,
+          "median": 121.0,
+          "p95": 183.8,
+          "min": 86.0,
+          "max": 186.0
+        },
+        "T_forced": {
+          "n": 12,
+          "sum": 869.0,
+          "mean": 72.41666666666667,
+          "median": 61.0,
+          "p95": 88.9,
+          "min": 61.0,
+          "max": 90.0
+        },
+        "T_assembled": {
+          "n": 12,
+          "sum": 2464.0,
+          "mean": 205.33333333333334,
+          "median": 182.0,
+          "p95": 272.9,
+          "min": 147.0,
+          "max": 274.0
+        },
+        "actual_generated_tokens": {
+          "n": 12,
+          "sum": 1595.0,
+          "mean": 132.91666666666666,
+          "median": 121.0,
+          "p95": 183.8,
+          "min": 86.0,
+          "max": 186.0
+        },
+        "generation_calls": {
+          "n": 12,
+          "sum": 107.0,
+          "mean": 8.916666666666666,
+          "median": 6.0,
+          "p95": 13.0,
+          "min": 6.0,
+          "max": 13.0
+        },
+        "wall_seconds": {
+          "n": 12,
+          "sum": 47.27896785736084,
+          "mean": 3.9399139881134033,
+          "median": 3.5313923358917236,
+          "p95": 5.426244938373566,
+          "min": 2.581664562225342,
+          "max": 5.485766649246216
+        },
+        "forks": {
+          "n": 12,
+          "sum": 17.0,
+          "mean": 1.4166666666666667,
+          "median": 1.0,
+          "p95": 2.0,
+          "min": 1.0,
+          "max": 2.0
+        },
+        "rounds": {
+          "n": 12,
+          "sum": 17.0,
+          "mean": 1.4166666666666667,
+          "median": 1.0,
+          "p95": 2.0,
+          "min": 1.0,
+          "max": 2.0
+        },
+        "generation_turns": {
+          "n": 12,
+          "sum": 29.0,
+          "mean": 2.4166666666666665,
+          "median": 2.0,
+          "p95": 3.0,
+          "min": 2.0,
+          "max": 3.0
+        },
+        "model_forward_calls_inferred": {
+          "n": 12,
+          "sum": 1595.0,
+          "mean": 132.91666666666666,
+          "median": 121.0,
+          "p95": 183.8,
+          "min": 86.0,
+          "max": 186.0
+        },
+        "prefill_calls_inferred": {
+          "n": 12,
+          "sum": 107.0,
+          "mean": 8.916666666666666,
+          "median": 6.0,
+          "p95": 13.0,
+          "min": 6.0,
+          "max": 13.0
+        },
+        "decode_calls_inferred": {
+          "n": 12,
+          "sum": 1488.0,
+          "mean": 124.0,
+          "median": 115.0,
+          "p95": 170.8,
+          "min": 80.0,
+          "max": 173.0
+        },
+        "widths": {
+          "n": 17,
+          "sum": 68.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "p95": 4.0,
+          "min": 4.0,
+          "max": 4.0
+        },
+        "width_histogram": {
+          "4": 17
+        },
+        "truncated_samples": 0,
+        "truncated_fraction": 0.0,
+        "invalid_width_samples": 0,
+        "forked_samples": 12
+      },
+      "metrics_correct": {
+        "F": {
+          "n": 1,
+          "sum": 32.0,
+          "mean": 32.0,
+          "median": 32.0,
+          "p95": 32.0,
+          "min": 32.0,
+          "max": 32.0
+        },
+        "T_sampled": {
+          "n": 1,
+          "sum": 86.0,
+          "mean": 86.0,
+          "median": 86.0,
+          "p95": 86.0,
+          "min": 86.0,
+          "max": 86.0
+        },
+        "T_forced": {
+          "n": 1,
+          "sum": 61.0,
+          "mean": 61.0,
+          "median": 61.0,
+          "p95": 61.0,
+          "min": 61.0,
+          "max": 61.0
+        },
+        "T_assembled": {
+          "n": 1,
+          "sum": 147.0,
+          "mean": 147.0,
+          "median": 147.0,
+          "p95": 147.0,
+          "min": 147.0,
+          "max": 147.0
+        },
+        "actual_generated_tokens": {
+          "n": 1,
+          "sum": 86.0,
+          "mean": 86.0,
+          "median": 86.0,
+          "p95": 86.0,
+          "min": 86.0,
+          "max": 86.0
+        },
+        "generation_calls": {
+          "n": 1,
+          "sum": 6.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "min": 6.0,
+          "max": 6.0
+        },
+        "wall_seconds": {
+          "n": 1,
+          "sum": 2.6208384037017822,
+          "mean": 2.6208384037017822,
+          "median": 2.6208384037017822,
+          "p95": 2.6208384037017822,
+          "min": 2.6208384037017822,
+          "max": 2.6208384037017822
+        },
+        "forks": {
+          "n": 1,
+          "sum": 1.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "rounds": {
+          "n": 1,
+          "sum": 1.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "p95": 1.0,
+          "min": 1.0,
+          "max": 1.0
+        },
+        "generation_turns": {
+          "n": 1,
+          "sum": 2.0,
+          "mean": 2.0,
+          "median": 2.0,
+          "p95": 2.0,
+          "min": 2.0,
+          "max": 2.0
+        },
+        "model_forward_calls_inferred": {
+          "n": 1,
+          "sum": 86.0,
+          "mean": 86.0,
+          "median": 86.0,
+          "p95": 86.0,
+          "min": 86.0,
+          "max": 86.0
+        },
+        "prefill_calls_inferred": {
+          "n": 1,
+          "sum": 6.0,
+          "mean": 6.0,
+          "median": 6.0,
+          "p95": 6.0,
+          "min": 6.0,
+          "max": 6.0
+        },
+        "decode_calls_inferred": {
+          "n": 1,
+          "sum": 80.0,
+          "mean": 80.0,
+          "median": 80.0,
+          "p95": 80.0,
+          "min": 80.0,
+          "max": 80.0
+        },
+        "widths": {
+          "n": 1,
+          "sum": 4.0,
+          "mean": 4.0,
+          "median": 4.0,
+          "p95": 4.0,
+          "min": 4.0,
+          "max": 4.0
+        },
+        "width_histogram": {
+          "4": 1
+        },
+        "truncated_samples": 0,
+        "truncated_fraction": 0.0,
+        "invalid_width_samples": 0,
+        "forked_samples": 1
+      },
+      "historical_correct": 0,
+      "historical_pass_at_1": 0.0
+    }
+  },
+  "cost_definitions": {
+    "model_forward_calls_inferred": "INFERRED, not measured: serial HF structured_generate runs one initial model forward and one for each additional sampled output, hence sum raw generated_ids lengths across ALL calls. Native unavailable.",
+    "prefill_calls_inferred": "INFERRED, not measured: one initial HF prefill per positive-output generation call. Native unavailable.",
+    "decode_calls_inferred": "INFERRED, not measured: all raw generated tokens minus positive-output generation calls; no speculation in this backend. Native unavailable.",
+    "rounds": "Executed parallel fork rounds; native=0",
+    "generation_turns": "Parallel rounds+1; native=1",
+    "F": "Logical critical sequential sampled-token depth; native F=sampled length. Not measured GPU model-forward invocations.",
+    "T_sampled": "Retained sampled response tokens",
+    "T_forced": "Forced response tokens including think prefix/protocol bridges",
+    "T_assembled": "Total assembled response tokens",
+    "actual_generated_tokens": "All generated token outputs across actual generation calls, including discarded outputs if any",
+    "wall_seconds": "Per-question generation elapsed, excludes engine startup; backend confounded",
+    "backend_confound": "Structured uses HF structured serial backend through vLLM worker RPC; native uses fast vLLM generation. Wall comparisons are descriptive and cannot establish parallel execution speedup.",
+    "model_forward_calls_measured": "Counted at actual HF model invocation sites, including prefill. Request-ID joined worker telemetry, never inferred from F/output length; partial/missing coverage is explicit."
+  },
+  "backend_labels": [
+    "text_native_hf_serial_phase_context_v1"
+  ],
+  "matching_protocol": {
+    "prompt_policy": "Custom system-file supplied verbatim before native chat-template rendering; see system_file and hash",
+    "question_seed": "42+sample_index",
+    "response_budget": 4096,
+    "path_budget": 256,
+    "merge_reserve_tokens": 512,
+    "text_protocol": true,
+    "guided_first_width": 4,
+    "phase_context_intervention": true,
+    "phase_profile_sha256": "b9f7241b42eb144aaa9f581924a1cb4aabf66b0333ee83e0f691d118d383b8ae",
+    "backend": "text_native_hf_serial_phase_context_v1",
+    "temperature": 0.6,
+    "top_p": 1.0,
+    "top_k": -1
+  },
+  "text_protocol": true,
+  "guidance": {
+    "first_width": 4,
+    "intervention": true,
+    "phase_context_intervention": true,
+    "phase_profile": {
+      "version": "native_phase_context_v1",
+      "instructions": {
+        "path": "\nWorksheet instruction: Continue ONLY the numbered assignment below. Show its local calculation, then Local result and the closing Path tag. No new plan, fork, think, final-answer heading or boxed answer.\n",
+        "summary": "\nMerge instruction: Combine the actual local results above and resolve disagreements. Show decisive arithmetic, then close this Summary only. No final-answer heading or think tags.\n",
+        "main_after_summary": "\nContinuation instruction: The Summary is already closed. If the requested result is established, close the current think block now and give one Final Answer line outside it; then stop. Do not repeat a Summary closing tag.\n"
+      },
+      "final_reserve_tokens": 256,
+      "max_context_window": 16384,
+      "representation": "RPC-only native prompt context; zero policy loss, no assembled response slots; charged against rollout response budget"
+    },
+    "phase_profile_sha256": "b9f7241b42eb144aaa9f581924a1cb4aabf66b0333ee83e0f691d118d383b8ae",
+    "forced_action_mask": 0
+  },
+  "phase_context_tokens_by_phase": {
+    "path": 5760,
+    "summary": 1152,
+    "main_after_summary": 1584
+  },
+  "phase_context_tokens_total": 8496,
+  "measured_work": {
+    "status": "measured_actual_HF_model_invocations_separate_from_F_and_inferred_counts",
+    "records": 228,
+    "matched_unique_requests": 228,
+    "duplicate_request_ids": 0,
+    "unmatched_records": 0,
+    "fully_measured_samples": 24,
+    "all_samples_fully_measured": true,
+    "all": {
+      "model_forward_calls": {
+        "n": 24,
+        "sum": 3695.0,
+        "mean": 153.95833333333334,
+        "median": 156.5,
+        "p95": 207.0,
+        "min": 86.0,
+        "max": 423.0
+      },
+      "prefill_forward_calls": {
+        "n": 24,
+        "sum": 228.0,
+        "mean": 9.5,
+        "median": 9.5,
+        "p95": 13.0,
+        "min": 6.0,
+        "max": 13.0
+      },
+      "decode_forward_calls": {
+        "n": 24,
+        "sum": 3467.0,
+        "mean": 144.45833333333334,
+        "median": 147.0,
+        "p95": 194.0,
+        "min": 80.0,
+        "max": 410.0
+      }
+    },
+    "correct": {
+      "model_forward_calls": {
+        "n": 3,
+        "sum": 260.0,
+        "mean": 86.66666666666667,
+        "median": 86.0,
+        "p95": 87.8,
+        "min": 86.0,
+        "max": 88.0
+      },
+      "prefill_forward_calls": {
+        "n": 3,
+        "sum": 18.0,
+        "mean": 6.0,
+        "median": 6.0,
+        "p95": 6.0,
+        "min": 6.0,
+        "max": 6.0
+      },
+      "decode_forward_calls": {
+        "n": 3,
+        "sum": 242.0,
+        "mean": 80.66666666666667,
+        "median": 80.0,
+        "p95": 81.8,
+        "min": 80.0,
+        "max": 82.0
+      }
+    }
+  },
+  "system_file": "${PROJECT_ROOT}/work/experiments/night-20261010/instruct/protocol-text-v4prompt-system.txt",
+  "pilot_code": "${PROJECT_ROOT}/work/experiments/night-20261010/text-rl-code-v4-phase/verl",
+  "system_sha256": "e1019d02e5eb0d30572be33d9cb4168e9daf3bd7dd21a1cc471d827aa28f9aac"
+}

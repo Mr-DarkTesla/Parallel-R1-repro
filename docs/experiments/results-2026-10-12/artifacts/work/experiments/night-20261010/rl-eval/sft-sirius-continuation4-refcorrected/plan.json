@@ -1,0 +1,27 @@
+{
+  "run": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected",
+  "export": [
+    "${PROJECT_ROOT}/.venv/bin/python",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/export.py",
+    "--run",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected",
+    "--output",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-sirius-continuation4-refcorrected"
+  ],
+  "evaluations": [
+    [
+      "${PROJECT_ROOT}/.venv/bin/python",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-sirius-continuation4-refcorrected",
+      "--name",
+      "sft-sirius-continuation4-refcorrected-128",
+      "--suite",
+      "128",
+      "--mode",
+      "structured"
+    ]
+  ],
+  "deadline": "2026-10-10T09:00:00Z",
+  "note": "Requires runner stopped/GPU free. Export chooses highest committed checkpoint with matching actual optimizer metrics; can recover smoke if production absent, clearly labeled."
+}

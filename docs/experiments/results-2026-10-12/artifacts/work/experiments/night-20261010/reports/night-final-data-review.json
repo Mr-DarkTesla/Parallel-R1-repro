@@ -1,0 +1,543 @@
+{
+  "at": "2026-10-10T08:14:18.048141+00:00",
+  "state": "completed_factual_review",
+  "scope": "Read-only synthesis of completed independent proofs and current plan; only these two report files written. No runtime/data/controller/model/process/GPU/API actions.",
+  "source_pins": {
+    "${PROJECT_ROOT}/work/experiments/night-20261010/plan.json": "c516b6d827e7fadaea86f90dbf6e10b2f7c298342fb0ccd5cf0600f44d97f42b",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/sft/initialization-proof.json": "f35dab7f69e25c3cc74eed48fb6598e232b5d03869426e45ef1bd6c4d072b715",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/sft/data-report.json": "f0806a0a5c66202045573837af9444511027e94528852eb65d7572f99c1f28a7",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/sft/final-proof.json": "ef3ba81bddeaaa2eb5ff5b60e7a3511906596dc333560825d9e731aaf7710177",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/data/source-disjoint-proof.json": "ccbb99c200bb342c9b3c913baba8b39413a8abfa2bd46f75b4c36f1bcb6333f6",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/data/context-overlap-proof.json": "23b52c14c2b19daa518297150c94c330a57d539be9f8f68ea0ebe705ef26efc0",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/manifest.json": "7fa12ea14b98dea00a96412992030122f43e52a31d4da1ef86ac2a58ad8e4eee",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/reports/final-math500-comparison.json": "4e172fed6f761b465888c56257cc7a0b66de4089416c0bb370613c9fc678038d",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/root0633-runtime-independent.json": "0acef36bbfbc98785dd9dce80594e02ec1aa54336d5728f4024f86b0a09881c0",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/root0718-final-runtime-independent.json": "da1b96cd905b4d651b9534dc01bd5d89ba55a076872a99cfc5f54dd875a4aa7f",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/root0718-secondary-runtime-independent.json": "5e518090f5dfd2faf8b932d8354f05e06df32ab4151cfc019d82cfc43d885cb6",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/root0503-semantic-diagnostic.json": "a4be549b3f722c9992c036080515b327a2f23757ffbb024741734e4ad07021e2",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/reference-drift-scan.json": "c99c75192196d1d8015dea82865d85664e57eb9f2443d37eb204490c796522de",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/orchestration/ref-recovery/decision.json": "163a57c511e0efe0a322b5bdff2d1ab0b02e408d05e244c278458d016cbc6407",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/smoke-gate-v3prompt.json": "ca2d07e01a4fbdecef34e79a057a5fb03a9f8827f6e59f8873561809c6e75d8c",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/smoke-gate-v4prompt.json": "a4ee93b90bd3b841efca95144cd85722ec53f058beb289e4ebf86844471cf552",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-review/smoke-gate-phase.json": "ca85ba6f37c3f46b02e2cc0b3c22e4be226b1697813f7c03645ad3b07279f4fd",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/pilots/instruct-semantic-fewshot4096/summary.json": "4963ce3907c4dd00e7dbf0910ecc18ac7a6417659e7d8d26d8f8c3c037cfe8f9",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/summary.json": "aba975425a139268c76db9892755253f3c4e4941b0ee328978fb4d8fa25a8e6e",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/root-full-response-accounting.json": "80139a14a41a6ef194208d12b5d334577cb63384d57a66921871605e8b156ad3",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-rl-code-v4-phase/native-text-phase-unguided24/summary.json": "acc776cbf418f4dd8369f89dd0c231c3e38b1883181f1214794ff82de3219210",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-rl-code-v4-phase/native-text-phase-guided4-24/summary.json": "ad43e764d4e92a74848bf9666cea4d561f8eaeae2516a4720ab069803a28d2f6",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/text-rl-code-v4-phase/native-text-phase-base-128/summary.json": "01566762c8bb1b0bdfb53989006ea0bf894b9bfb82874b9006de77426357dd3c"
+  },
+  "sft": {
+    "source": "NEW GSM-Infinite3000 only; original2700train/300val; excludesold2145",
+    "base": {
+      "model": "Qwen/Qwen3-0.6B-Base",
+      "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+      "seed": 1,
+      "token_initialization": "normal",
+      "tokens": {
+        "<Path>": 151669,
+        "</Path>": 151670,
+        "<Parallel>": 151671,
+        "</Parallel>": 151672,
+        "<Summary>": 151673,
+        "</Summary>": 151674
+      }
+    },
+    "initialization": "Four used existing ChatML/think rows initialized independently normal std0.02 seed1; all other rows includingEOS151643 exact preserved; six added XML rows normal initialized. Old base/checkpoints untouched.",
+    "training": "5epochs105steps batch128 LR1e-5 Unseen max16384 no truncation",
+    "length_audit": {
+      "rows": 3000,
+      "train": 2700,
+      "val": 300,
+      "widths": {
+        "4": 1493,
+        "3": 943,
+        "2": 865,
+        "5": 166,
+        "6": 19
+      },
+      "max_tokens": 4210,
+      "quantiles": {
+        "0.5": 2274.0,
+        "0.9": 2828.0,
+        "0.99": 3624.0099999999998
+      },
+      "base": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/base",
+      "base_source": {
+        "model": "Qwen/Qwen3-0.6B-Base",
+        "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+        "seed": 1,
+        "token_initialization": "normal",
+        "tokens": {
+          "<Path>": 151669,
+          "</Path>": 151670,
+          "<Parallel>": 151671,
+          "</Parallel>": 151672,
+          "<Summary>": 151673,
+          "</Summary>": 151674
+        }
+      },
+      "source_sha256": {
+        "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/train.jsonl": "7379ecfc7053771313df1bc63c6324a3f3f8ee72bdfc818015bdc35ae600b24a",
+        "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/val.jsonl": "d5a868ef8fc42a50f21a7e9cb657da1a894b882ddeabb256b6f1eeb6112a23c5"
+      },
+      "split_policy": "NEW only: original 2700/300 split; no overlap",
+      "transformations": "Common counted-fork system prompt; remove external sibling whitespace only"
+    },
+    "final_weights_sha256": "294c0c9677d8388c50b723651dfe61e94e3f13c3897ad1e1408ec081c38260c4",
+    "confounds_old5145": "OLDmixed5145 includesold2145+NEW3000; more training steps(180vs105), changed train/val composition, control-row initialization and formatting. Matched4096/2048 inference does not isolate a pure data or initialization effect."
+  },
+  "data_integrity": {
+    "source_disjoint": {
+      "rl_gsm_source": "InfiniAILab/gsm_infinite_medium_0",
+      "revision": "c6c5ab433565ddfe3e38e22be165b5c40e6bd576",
+      "rl_ops": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "sft_validation_same_dataset_ops_min": 8,
+      "source_dataset_or_op_disjoint": true,
+      "explicit_gsm_only_validation": 256,
+      "excluded_all_MATHtest5000_from_training": true
+    },
+    "context_overlap": {
+      "passed": true,
+      "sft_validation_contexts": 300,
+      "rl_train_rows": 4547,
+      "rl_val_rows": 256,
+      "method": "normalize case/punctuation/whitespace; check every full SFTval <context> story as substring in full RL user prompt, ignoring differing conventions/question wrappers",
+      "overlap": []
+    },
+    "mix": "2916 unchanged source rows=1458GSMeasy+1458MATHlevel1/2; deterministic20261010; sourcehash and heldout_exact_overlap in pinned manifest. MATH-only1675 originalTRAIN examples.",
+    "verdict": "No test-set RL evidence in audited source identities/manifests/normalized exact and GSM-context checks. FinalMATH500 not training, curriculum or checkpoint selection. Common128 is disjoint validation adaptively reused for curriculum/selection; not untouched final test. Exact/context checks do not prove absence of all semantic near-duplicates.",
+    "selection": "ORIGINAL common128seed42 MATH64→GSM64→lowercorrectF ONLY; never MATH500/diagnostics",
+    "frozen_at": "2026-10-10T06:43:13.305429+00:00",
+    "selection_changed_after_test": false
+  },
+  "final500": {
+    "new-sft-math500": {
+      "completed": 500,
+      "correct": 92,
+      "format_valid": 464,
+      "correct_and_parallel_valid": 83,
+      "executed_fork_samples": 461,
+      "unfinished_thinking": 6
+    },
+    "old-mixed-sft-commonbudget-math500": {
+      "completed": 500,
+      "correct": 101,
+      "format_valid": 223,
+      "correct_and_parallel_valid": 28,
+      "executed_fork_samples": 359,
+      "unfinished_thinking": 265
+    },
+    "final-sirius-math500": {
+      "completed": 500,
+      "correct": 115,
+      "format_valid": 477,
+      "correct_and_parallel_valid": 108,
+      "executed_fork_samples": 483,
+      "unfinished_thinking": 1
+    },
+    "final-tmp2-math500": {
+      "completed": 500,
+      "correct": 102,
+      "format_valid": 487,
+      "correct_and_parallel_valid": 102,
+      "executed_fork_samples": 498,
+      "unfinished_thinking": 4
+    },
+    "final-tmp3-math500": {
+      "completed": 500,
+      "correct": 130,
+      "format_valid": 483,
+      "correct_and_parallel_valid": 71,
+      "executed_fork_samples": 351,
+      "unfinished_thinking": 2
+    },
+    "secondary-mathaccuracy40-math500": {
+      "completed": 500,
+      "correct": 102,
+      "format_valid": 488,
+      "correct_and_parallel_valid": 89,
+      "executed_fork_samples": 461,
+      "unfinished_thinking": 2
+    }
+  },
+  "runtime_audit": {
+    "primary": {
+      "passed": true,
+      "samples": 1500,
+      "RAW_calls": 8733,
+      "isolated_paths": 3171,
+      "source_model_hashes_stable": true
+    },
+    "secondary": {
+      "state": "complete_pass",
+      "samples": 1000,
+      "RAW_calls": 5709,
+      "isolated_paths": 2076,
+      "source_model_hashes_stable": true
+    },
+    "combined": "2500samples14442RAWcalls5247paths; no recorded RAW/actionmask/derivedpositions/pathmask/Unseen/sibling/F-T bookkeeping errors. Event joins use request identity and phase+RAWtargets multisets, not async completion order.",
+    "limitations": "Persisted CPU metadata verification does not measure live per-model logprob equivalence or forward speed. Compiler wrong-terminal normalization remains separately logged; compiled strictness can conceal a RAW wrong stop. Local path-budget reached is distinct from global truncation.",
+    "math80_correct_no_fork": 55,
+    "math80_correct_forked_nonjoint": 4,
+    "OLDmixed_unfinished": 265,
+    "OLDmixed_correct_unfinished": 47
+  },
+  "inference_replicas": {
+    "rows": [
+      {
+        "seed_base": 42,
+        "fresh_correct": 25,
+        "math40_correct": 48,
+        "fresh_GSM_MATH": [
+          15,
+          10
+        ],
+        "math40_GSM_MATH": [
+          30,
+          18
+        ],
+        "losses": 7,
+        "gains": 30,
+        "unadjusted_exact_McNemar_p": 0.00019107642583549023,
+        "fixed_all_F_mean_delta": -75.7890625,
+        "both_correct_F_mean_delta": -88
+      },
+      {
+        "seed_base": 10042,
+        "fresh_correct": 36,
+        "math40_correct": 42,
+        "fresh_GSM_MATH": [
+          21,
+          15
+        ],
+        "math40_GSM_MATH": [
+          30,
+          12
+        ],
+        "losses": 17,
+        "gains": 23,
+        "unadjusted_exact_McNemar_p": 0.42959050784338615,
+        "fixed_all_F_mean_delta": -107.96875,
+        "both_correct_F_mean_delta": -43
+      },
+      {
+        "seed_base": 20042,
+        "fresh_correct": 37,
+        "math40_correct": 40,
+        "fresh_GSM_MATH": [
+          24,
+          13
+        ],
+        "math40_GSM_MATH": [
+          26,
+          14
+        ],
+        "losses": 20,
+        "gains": 23,
+        "unadjusted_exact_McNemar_p": 0.7607916425613439,
+        "fixed_all_F_mean_delta": -118.984375,
+        "both_correct_F_mean_delta": -57.64705882352941
+      }
+    ],
+    "descriptive_means": {
+      "fresh": {
+        "correct_count_mean": 32.666666666666664,
+        "gsm_count_mean": 20,
+        "math_count_mean": 12.666666666666666,
+        "F_all_mean": 551.2708333333334
+      },
+      "math40": {
+        "correct_count_mean": 43.333333333333336,
+        "gsm_count_mean": 28.666666666666668,
+        "math_count_mean": 14.666666666666666,
+        "F_all_mean": 450.3567708333333
+      }
+    },
+    "interpretation": "Same128questions/fixedcheckpoints,3inference seeds,one training seed; MATH delta+8,-3,+1 flips direction. No384independent questions, no training-seed replication, no pooled independent CI, no robust statistical/causal gain claim. Multiple adaptively explored candidates; unadjusted paired p values diagnostic only. Replicas excluded from selection/curriculum."
+  },
+  "failures": {
+    "semantic_six_row_initialization": {
+      "completed": 24,
+      "correct": 5,
+      "format_valid": 5,
+      "executed_fork_samples": 0,
+      "correct_and_parallel_valid": 0,
+      "gate_passed": false
+    },
+    "v3prompt": {
+      "state": "blocked_pilot_quality_thresholds",
+      "long_training_started": false,
+      "unguided": {
+        "completed": 24,
+        "correct": 5,
+        "format_valid": 10,
+        "executed_fork_samples": 2,
+        "correct_and_parallel_valid": 0,
+        "gate_passed": false
+      },
+      "guided": {
+        "completed": 24,
+        "correct": 6,
+        "format_valid": 5,
+        "executed_fork_samples": 24,
+        "correct_and_parallel_valid": 1,
+        "gate_passed": false
+      }
+    },
+    "v4prompt": {
+      "state": "blocked_pilot_quality_thresholds",
+      "long_training_started": false,
+      "unguided": {
+        "completed": 24,
+        "correct": 12,
+        "format_valid": 21,
+        "executed_fork_samples": 0,
+        "correct_and_parallel_valid": 0,
+        "gate_passed": false
+      },
+      "guided": {
+        "completed": 24,
+        "correct": 5,
+        "format_valid": 0,
+        "executed_fork_samples": 24,
+        "correct_and_parallel_valid": 0,
+        "gate_passed": false
+      }
+    },
+    "phase": {
+      "unguided": {
+        "completed": 24,
+        "correct": 12,
+        "format_valid": 21,
+        "executed_fork_samples": 0,
+        "correct_and_parallel_valid": 0,
+        "gate_passed": false
+      },
+      "guided": {
+        "completed": 24,
+        "correct": 3,
+        "format_valid": 7,
+        "executed_fork_samples": 24,
+        "correct_and_parallel_valid": 1,
+        "gate_passed": false
+      },
+      "baseline128": {
+        "completed": 128,
+        "correct": 58,
+        "format_valid": 82,
+        "executed_fork_samples": 0,
+        "correct_and_parallel_valid": 0,
+        "gate_passed": false
+      },
+      "summary_recovery": "Frozen helper import triggered ANTLR conflict during original summary; external CPU recovery on unchanged traces. Original missing_summary gate remains preserved. Recovered quality still FAIL; no PPO/long phase run."
+    },
+    "instruct_special_v2": "Guided RL stopped after actual post-guided steps11/12 had zero autonomous forks; checkpoint10 preserved. Validation62/128 with zero joint/forks was excluded, not admitted as successful protocol RL.",
+    "runtime_fixes": "Isolated native TEXT versions addressed BPE closing-token partial suffix boundaries and dual-native-EOS stopping; raw sampled targets retained. Frozen older variants were not silently changed. Quality failures cannot all be attributed to prompts.",
+    "reference_bug": {
+      "at": "2026-10-10T04:22:40.353960+00:00",
+      "reason": "Same-data continuation incorrectly changed KL reference because planner used original SFT model instead of prior runner.model; actor+optimizer restored but ref is never checkpoint restored",
+      "wrong_run": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation4",
+      "wrong_reference": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/runs/01_sft/final",
+      "correct_reference": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-accuracy-stage1",
+      "restart_checkpoint": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation3/production/checkpoints/global_step_40",
+      "restart_from_pre_error_checkpoint": true,
+      "corrected_run": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected",
+      "label": "sft-sirius-continuation4-refcorrected",
+      "runner_args": [
+        "--method",
+        "night_split_success",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/sft-accuracy-stage1",
+        "--train",
+        "${PROJECT_ROOT}/work/experiments/night-20261010/data/mix_easy_math/train.parquet",
+        "--val",
+        "${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet",
+        "--output",
+        "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected",
+        "--resume-checkpoint",
+        "${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-sirius-continuation3/production/checkpoints/global_step_40",
+        "--deadline",
+        "2026-10-10T07:30:00Z",
+        "--min-steps",
+        "8",
+        "--max-steps",
+        "40",
+        "algorithm.night_budget=256",
+        "algorithm.night_scale=1024",
+        "data.max_response_length=4096",
+        "actor_rollout_ref.rollout.agent.max_path_response_length=1024"
+      ],
+      "old_eval_skipped_with_original_queue_preserved": true,
+      "source_or_dataset_changes": false,
+      "intentional_stop_not_failure_retry": true
+    }
+  },
+  "semantic_and_cost_limits": {
+    "joint": "Final-answer equivalence AND canonical strict compiled format AND genuine executed valid fork. Does not certify independent useful work, mathematical validity of every Path, or faithful Summary.",
+    "diagnostic_cases": {
+      "math_train/algebra/216": "Path1+3 versus Path2-3; Summary falsely says both-3; finalgold-3 correct.",
+      "math_train/algebra/392": "Path1domaininside(-1,4),Path2outside; Summary falsely claims agreement/outside; correct final.",
+      "math_train/prealgebra/609": "Paths restate84/144; simplification occurs afterthink."
+    },
+    "sampling": "Purposively selected diagnostic cases, not prevalence estimates.",
+    "F": "Logical critical sampled depth with max sibling contribution, not total token work or GPU speedup. Structured branches serial perGPU. Report T_sampled/T_forced/T_assembled/actualcalls separately. Structured model-forward/prefill/decode counts are explicitly source-INFERRED unless measured; native-vLLM and serial-HF wall times confounded.",
+    "scoring": "Canonical primary strips ALL literal think tags before unchanged blind final-answer extraction/MathVerify; historical think-gated score separate; strict raw/compiled format independent. Correct final can coexist with unfinished/truncated or contradictory reasoning."
+  },
+  "qwen4b_native_diagnostic": {
+    "summary": {
+      "started_at": "2026-10-10T07:06:10.227229+00:00",
+      "finished_at": "2026-10-10T07:11:54.033263+00:00",
+      "model": "Qwen/Qwen3-4B",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+      "enable_thinking": true,
+      "force_initial_native_think_prefix": true,
+      "ordinary_BPE_tags_no_model_tokenizer_edits": true,
+      "native_text_only_no_executed_forks_no_Unseen": true,
+      "max_new_tokens": 8192,
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "top_k": 20,
+      "questions_sha256": "0d925cc42ba83f2063c4691036cd2d88bca431882d92440bf4a1d43ffee9b35e",
+      "scorer_sha256": "3aa6d7bea31716a17a9de12c8ca63fe36e3e0eabe41474f414ce21d29bd08119",
+      "arms": {
+        "optional": {
+          "samples": 24,
+          "correct": 21,
+          "by_dataset": {
+            "gsm": {
+              "samples": 12,
+              "correct": 10
+            },
+            "math": {
+              "samples": 12,
+              "correct": 11
+            }
+          },
+          "mentions_parallel_samples": 18,
+          "authored_fork_samples": 0,
+          "strict_samples": 3,
+          "strict_with_fork_samples": 0,
+          "requested_width3_compliance_samples": 0,
+          "correct_and_strict_with_fork": 0,
+          "widths": [],
+          "FinalAnswer_inside_Path": 0,
+          "FinalAnswer_inside_Summary": 0,
+          "unfinished_thinking": 1,
+          "placeholder_copy": 0,
+          "length_truncated": 1,
+          "mean_generated_tokens": 1870.4583333333333,
+          "prompt_sha256": "0e0f137efa01ae26afa27f34012f8345a241c361e68a1a1b756f7482d5f9745e"
+        },
+        "requested": {
+          "samples": 24,
+          "correct": 23,
+          "by_dataset": {
+            "gsm": {
+              "samples": 12,
+              "correct": 12
+            },
+            "math": {
+              "samples": 12,
+              "correct": 11
+            }
+          },
+          "mentions_parallel_samples": 18,
+          "authored_fork_samples": 0,
+          "strict_samples": 4,
+          "strict_with_fork_samples": 0,
+          "requested_width3_compliance_samples": 0,
+          "correct_and_strict_with_fork": 0,
+          "widths": [],
+          "FinalAnswer_inside_Path": 0,
+          "FinalAnswer_inside_Summary": 0,
+          "unfinished_thinking": 0,
+          "placeholder_copy": 0,
+          "length_truncated": 0,
+          "mean_generated_tokens": 1927.5416666666667,
+          "prompt_sha256": "34bc122d2f8eb5cc5fab2cdb715366eec411e5d33af42ddfd9257a6c68eb229d"
+        }
+      }
+    },
+    "full_response_accounting": {
+      "at": "2026-10-10T07:12:45.238331+00:00",
+      "passed": true,
+      "errors": [],
+      "raw_inputs_outputs_actual48_checked": true,
+      "evaluate_source_sha256": "4347254de80d4fcb2711d2415cb9e34d2d73e9c7ad5c56ae6305a2a2b1e755c9",
+      "arms": {
+        "optional": {
+          "samples": 24,
+          "any_parallel_tag_full_response": 18,
+          "parallel_after_think": 18,
+          "parallel_inside_think": 0,
+          "strict_with_fork_inside_think": 0,
+          "full_response_literal_placeholder_samples": 2,
+          "full_response_widths": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "full_response_FinalAnswer_inside_Path": 1,
+          "full_response_FinalAnswer_inside_Summary": 3,
+          "finish_length": 1
+        },
+        "requested": {
+          "samples": 24,
+          "any_parallel_tag_full_response": 18,
+          "parallel_after_think": 18,
+          "parallel_inside_think": 0,
+          "strict_with_fork_inside_think": 0,
+          "full_response_literal_placeholder_samples": 4,
+          "full_response_widths": [
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3,
+            3
+          ],
+          "full_response_FinalAnswer_inside_Path": 1,
+          "full_response_FinalAnswer_inside_Summary": 2,
+          "finish_length": 0
+        }
+      },
+      "limitations": [
+        "Existing summary.placeholder_copy/FinalAnswer_inside_Path/Summary scan THINK only; full-response counts explicitly separate here.",
+        "Native authored XML is causal text, not executed forks or Unseen masks.",
+        "Full-response placeholder detector matches known skeleton phrases; not exhaustive.",
+        "No claims of training or prompt search optimality."
+      ]
+    },
+    "interpretation": "Original official4Binstruct ordinaryBPE XML, no newtokens/embedding/SFT/RL; 24samequestions×2prompts8192cap. Both arms18/24authorXML onlyAFTERthink; inside-thinkvalidfork0/48. Requested width3 outside-think17vsoptional9; authored causal text is not actual parallel/Unseen execution. Small diagnostic not selection or general impossibility proof."
+  },
+  "separate_current_experiment": {
+    "path": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010",
+    "status": "New explicitly authorized4B six-special-row-only warmup active per OPERATIONS08:07; separate from NIGHT; no results claimed here.",
+    "boundary": "Never stop this new original-Sirius experiment under09UTC NIGHT cleanup. Root owns cleanup only of the two old cloud lanes; no cleanup action taken by this audit."
+  },
+  "reviewed_source_hashes_unchanged_during_synthesis": true
+}

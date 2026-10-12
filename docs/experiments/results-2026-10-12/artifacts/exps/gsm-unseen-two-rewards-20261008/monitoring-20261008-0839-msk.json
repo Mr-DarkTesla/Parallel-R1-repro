@@ -1,0 +1,2513 @@
+{
+  "observed_utc": "2026-10-08T05:39:03.273183+00:00",
+  "status": {
+    "state": "complete",
+    "observed_utc": "2026-10-08T04:07:12.190610+00:00",
+    "controller_pid": 818071,
+    "completed": [
+      "s2",
+      "depth"
+    ]
+  },
+  "bootstrap-status": {
+    "state": "complete",
+    "pid": 799496,
+    "observed_utc": "2026-10-08T04:07:12.205837+00:00"
+  },
+  "stages": {
+    "s2": {
+      "attempt_logs": [
+        "driver-attempt-1.log"
+      ],
+      "metric_steps": 800,
+      "first50": {
+        "actor/entropy": 0.982608562707901,
+        "actor/grad_norm": 1.0451766777038574,
+        "actor/ppo_kl_active_microbatches": 5.417474560817441e-05,
+        "grpo/informative_prompts": 24.46,
+        "response_length/mean": 672.4884375,
+        "parallel/critical_depth_mean": 581.1609375,
+        "parallel/forks_mean": 1.8828125,
+        "parallel/ratio": 0.9296875,
+        "response_length/clip_ratio": 0.0128125,
+        "timing_s/step": 32.860953415911645
+      },
+      "last50": {
+        "actor/entropy": 0.08705959782004356,
+        "actor/grad_norm": 1.0947934748232364,
+        "actor/ppo_kl_active_microbatches": 0.0004527450478757644,
+        "grpo/informative_prompts": 9.96,
+        "response_length/mean": 400.849453125,
+        "parallel/critical_depth_mean": 359.15796875,
+        "parallel/forks_mean": 0.977890625,
+        "parallel/ratio": 0.977890625,
+        "response_length/clip_ratio": 0.001640625,
+        "timing_s/step": 15.94945274842903
+      },
+      "last100": {
+        "actor/entropy": 0.0934354168921709,
+        "actor/grad_norm": 1.1404533052444459,
+        "actor/ppo_kl_active_microbatches": 0.0003964080351106712,
+        "grpo/informative_prompts": 10.66,
+        "response_length/mean": 427.7025,
+        "parallel/critical_depth_mean": 383.3225,
+        "parallel/forks_mean": 0.9749609375,
+        "parallel/ratio": 0.9749609375,
+        "response_length/clip_ratio": 0.0021484375,
+        "timing_s/step": 16.881983692040667
+      },
+      "nonfinite": [],
+      "error_counts": {
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964703e7f0b500000c27'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b03e4953700000c28'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e03bf00af00000c29'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964703ed047e00000c2a'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480306950700000c2b'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480306950900000c2c'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964d03fc613c00000c2d'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e03af367400000c2e'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e03af3d8d00000c30'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c01a28dbd00000c2f'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a041cfabd00000c31'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e03b3aafa00000c32'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c01a3200d00000c34'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480306950900000c33'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964903b60abf00000c35'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0461cb7000000c36'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480306c1af00000c38'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a041c73bb00000c37'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a041c80c600000c39'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b039da2a200000c3a'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e03ce5d0f00000c3c'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e03ce5d0d00000c3b'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480306c88b00000c3d'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f89647042ef82b00000c3e'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a04807eac00000c3f'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0326442600000c40'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a041f64b500000c42'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e02190a1e00000c41'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0461f9a500000c43'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a041fad8600000c44'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b03e9101000000c45'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896470419156a00000c46'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964803070a0100000c47'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c04123e6500000c48'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218e2f500000c4a'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218e2f600000c49'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e021898e600000c4c'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a0480217d00000c4b'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0413514600000c4d'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964803073d9400000c4e'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f89647039f3a2900000c50'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f89647039f3a2c00000c4f'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218a6a800000c51'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a042c2b7300000c52'": 1
+      },
+      "validation": [
+        {
+          "step": 50,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3037974683544304,
+              "critical_depth": 646.9335443037975,
+              "parallel": 0.930379746835443,
+              "forks": 1.6329113924050633,
+              "format_ok": 0.9588607594936709,
+              "n": 316,
+              "correct": 96,
+              "top_predictions": [
+                [
+                  "2",
+                  30
+                ],
+                [
+                  "3",
+                  21
+                ],
+                [
+                  "4",
+                  17
+                ],
+                [
+                  "0",
+                  16
+                ],
+                [
+                  "6",
+                  16
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.2734375,
+              "critical_depth": 539.3203125,
+              "parallel": 0.91796875,
+              "forks": 1.62890625,
+              "format_ok": 0.94140625,
+              "n": 256,
+              "correct": 70,
+              "top_predictions": [
+                [
+                  "4",
+                  44
+                ],
+                [
+                  "1",
+                  36
+                ],
+                [
+                  "3",
+                  35
+                ],
+                [
+                  "2",
+                  33
+                ],
+                [
+                  "6",
+                  18
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 100,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.29430379746835444,
+              "critical_depth": 804.4588607594936,
+              "parallel": 0.7468354430379747,
+              "forks": 1.1329113924050633,
+              "format_ok": 0.9746835443037974,
+              "n": 316,
+              "correct": 93,
+              "top_predictions": [
+                [
+                  "2",
+                  25
+                ],
+                [
+                  "1",
+                  23
+                ],
+                [
+                  "4",
+                  19
+                ],
+                [
+                  "3",
+                  17
+                ],
+                [
+                  "0",
+                  17
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.4453125,
+              "critical_depth": 513.91015625,
+              "parallel": 0.671875,
+              "forks": 0.9921875,
+              "format_ok": 0.98828125,
+              "n": 256,
+              "correct": 114,
+              "top_predictions": [
+                [
+                  "4",
+                  59
+                ],
+                [
+                  "2",
+                  52
+                ],
+                [
+                  "3",
+                  40
+                ],
+                [
+                  "1",
+                  21
+                ],
+                [
+                  "8",
+                  19
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 150,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.31962025316455694,
+              "critical_depth": 673.6455696202531,
+              "parallel": 0.9082278481012658,
+              "forks": 1.4145569620253164,
+              "format_ok": 0.9588607594936709,
+              "n": 316,
+              "correct": 101,
+              "top_predictions": [
+                [
+                  "2",
+                  27
+                ],
+                [
+                  "4",
+                  21
+                ],
+                [
+                  "1",
+                  19
+                ],
+                [
+                  "3",
+                  19
+                ],
+                [
+                  "0",
+                  18
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.5234375,
+              "critical_depth": 422.21875,
+              "parallel": 0.94921875,
+              "forks": 1.41796875,
+              "format_ok": 0.9765625,
+              "n": 256,
+              "correct": 134,
+              "top_predictions": [
+                [
+                  "4",
+                  62
+                ],
+                [
+                  "2",
+                  47
+                ],
+                [
+                  "3",
+                  34
+                ],
+                [
+                  "1",
+                  21
+                ],
+                [
+                  "6",
+                  20
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 200,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3069620253164557,
+              "critical_depth": 627.5379746835443,
+              "parallel": 0.9715189873417721,
+              "forks": 1.490506329113924,
+              "format_ok": 0.9841772151898734,
+              "n": 316,
+              "correct": 97,
+              "top_predictions": [
+                [
+                  "2",
+                  26
+                ],
+                [
+                  "4",
+                  25
+                ],
+                [
+                  "1",
+                  19
+                ],
+                [
+                  "3",
+                  16
+                ],
+                [
+                  "5",
+                  15
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.6015625,
+              "critical_depth": 417.86328125,
+              "parallel": 0.97265625,
+              "forks": 1.375,
+              "format_ok": 0.98828125,
+              "n": 256,
+              "correct": 154,
+              "top_predictions": [
+                [
+                  "2",
+                  54
+                ],
+                [
+                  "4",
+                  53
+                ],
+                [
+                  "3",
+                  41
+                ],
+                [
+                  "1",
+                  19
+                ],
+                [
+                  "8",
+                  16
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 250,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3575949367088608,
+              "critical_depth": 703.243670886076,
+              "parallel": 0.8607594936708861,
+              "forks": 0.9493670886075949,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 113,
+              "top_predictions": [
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "4",
+                  20
+                ],
+                [
+                  "2",
+                  20
+                ],
+                [
+                  "3",
+                  19
+                ],
+                [
+                  "[INVALID]",
+                  16
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.7109375,
+              "critical_depth": 315.2109375,
+              "parallel": 0.96875,
+              "forks": 0.9765625,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 182,
+              "top_predictions": [
+                [
+                  "4",
+                  54
+                ],
+                [
+                  "2",
+                  47
+                ],
+                [
+                  "3",
+                  36
+                ],
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "6",
+                  22
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 300,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.37658227848101267,
+              "critical_depth": 756.873417721519,
+              "parallel": 0.759493670886076,
+              "forks": 0.759493670886076,
+              "format_ok": 0.9746835443037974,
+              "n": 316,
+              "correct": 119,
+              "top_predictions": [
+                [
+                  "2",
+                  27
+                ],
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "4",
+                  22
+                ],
+                [
+                  "3",
+                  17
+                ],
+                [
+                  "[INVALID]",
+                  14
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.80078125,
+              "critical_depth": 437.96875,
+              "parallel": 0.91015625,
+              "forks": 0.91015625,
+              "format_ok": 0.99609375,
+              "n": 256,
+              "correct": 205,
+              "top_predictions": [
+                [
+                  "2",
+                  61
+                ],
+                [
+                  "4",
+                  49
+                ],
+                [
+                  "3",
+                  37
+                ],
+                [
+                  "6",
+                  21
+                ],
+                [
+                  "1",
+                  21
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 350,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.36075949367088606,
+              "critical_depth": 930.9145569620254,
+              "parallel": 0.9050632911392406,
+              "forks": 0.9050632911392406,
+              "format_ok": 0.9746835443037974,
+              "n": 316,
+              "correct": 114,
+              "top_predictions": [
+                [
+                  "[INVALID]",
+                  29
+                ],
+                [
+                  "2",
+                  28
+                ],
+                [
+                  "1",
+                  22
+                ],
+                [
+                  "4",
+                  20
+                ],
+                [
+                  "6",
+                  11
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.8203125,
+              "critical_depth": 560.3984375,
+              "parallel": 0.96484375,
+              "forks": 0.96484375,
+              "format_ok": 0.98828125,
+              "n": 256,
+              "correct": 210,
+              "top_predictions": [
+                [
+                  "4",
+                  54
+                ],
+                [
+                  "2",
+                  52
+                ],
+                [
+                  "3",
+                  40
+                ],
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "6",
+                  23
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 400,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3829113924050633,
+              "critical_depth": 893.8069620253165,
+              "parallel": 0.8734177215189873,
+              "forks": 0.8734177215189873,
+              "format_ok": 0.9873417721518988,
+              "n": 316,
+              "correct": 121,
+              "top_predictions": [
+                [
+                  "1",
+                  27
+                ],
+                [
+                  "2",
+                  25
+                ],
+                [
+                  "[INVALID]",
+                  23
+                ],
+                [
+                  "4",
+                  19
+                ],
+                [
+                  "0",
+                  17
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.84765625,
+              "critical_depth": 648.12109375,
+              "parallel": 0.9375,
+              "forks": 0.9375,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 217,
+              "top_predictions": [
+                [
+                  "4",
+                  56
+                ],
+                [
+                  "2",
+                  51
+                ],
+                [
+                  "3",
+                  37
+                ],
+                [
+                  "1",
+                  26
+                ],
+                [
+                  "6",
+                  19
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 450,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.370253164556962,
+              "critical_depth": 835.2879746835443,
+              "parallel": 0.7848101265822784,
+              "forks": 0.7848101265822784,
+              "format_ok": 0.9936708860759493,
+              "n": 316,
+              "correct": 117,
+              "top_predictions": [
+                [
+                  "2",
+                  25
+                ],
+                [
+                  "1",
+                  23
+                ],
+                [
+                  "3",
+                  20
+                ],
+                [
+                  "[INVALID]",
+                  20
+                ],
+                [
+                  "4",
+                  18
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.87109375,
+              "critical_depth": 605.6328125,
+              "parallel": 0.9140625,
+              "forks": 0.9140625,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 223,
+              "top_predictions": [
+                [
+                  "4",
+                  57
+                ],
+                [
+                  "2",
+                  51
+                ],
+                [
+                  "3",
+                  42
+                ],
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "6",
+                  18
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 500,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.35443037974683544,
+              "critical_depth": 720.0696202531645,
+              "parallel": 0.9367088607594937,
+              "forks": 0.9367088607594937,
+              "format_ok": 0.9936708860759493,
+              "n": 316,
+              "correct": 112,
+              "top_predictions": [
+                [
+                  "1",
+                  32
+                ],
+                [
+                  "2",
+                  30
+                ],
+                [
+                  "4",
+                  19
+                ],
+                [
+                  "3",
+                  16
+                ],
+                [
+                  "6",
+                  15
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.87890625,
+              "critical_depth": 442.5859375,
+              "parallel": 0.97265625,
+              "forks": 0.97265625,
+              "format_ok": 0.9921875,
+              "n": 256,
+              "correct": 225,
+              "top_predictions": [
+                [
+                  "4",
+                  57
+                ],
+                [
+                  "2",
+                  54
+                ],
+                [
+                  "3",
+                  36
+                ],
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "6",
+                  19
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 550,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3924050632911392,
+              "critical_depth": 703.7689873417721,
+              "parallel": 0.9335443037974683,
+              "forks": 0.9335443037974683,
+              "format_ok": 0.9936708860759493,
+              "n": 316,
+              "correct": 124,
+              "top_predictions": [
+                [
+                  "2",
+                  32
+                ],
+                [
+                  "3",
+                  20
+                ],
+                [
+                  "1",
+                  20
+                ],
+                [
+                  "4",
+                  19
+                ],
+                [
+                  "6",
+                  12
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.86328125,
+              "critical_depth": 458.26171875,
+              "parallel": 0.97265625,
+              "forks": 0.97265625,
+              "format_ok": 0.9921875,
+              "n": 256,
+              "correct": 221,
+              "top_predictions": [
+                [
+                  "4",
+                  58
+                ],
+                [
+                  "2",
+                  52
+                ],
+                [
+                  "3",
+                  40
+                ],
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "6",
+                  22
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 600,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.33544303797468356,
+              "critical_depth": 647.6677215189874,
+              "parallel": 0.939873417721519,
+              "forks": 0.939873417721519,
+              "format_ok": 0.9936708860759493,
+              "n": 316,
+              "correct": 106,
+              "top_predictions": [
+                [
+                  "2",
+                  36
+                ],
+                [
+                  "4",
+                  22
+                ],
+                [
+                  "1",
+                  18
+                ],
+                [
+                  "3",
+                  12
+                ],
+                [
+                  "0",
+                  11
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.8671875,
+              "critical_depth": 504.0078125,
+              "parallel": 0.95703125,
+              "forks": 0.95703125,
+              "format_ok": 0.99609375,
+              "n": 256,
+              "correct": 222,
+              "top_predictions": [
+                [
+                  "4",
+                  55
+                ],
+                [
+                  "2",
+                  52
+                ],
+                [
+                  "3",
+                  39
+                ],
+                [
+                  "1",
+                  27
+                ],
+                [
+                  "6",
+                  18
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 650,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3860759493670886,
+              "critical_depth": 618.6487341772151,
+              "parallel": 0.8291139240506329,
+              "forks": 0.8291139240506329,
+              "format_ok": 0.9936708860759493,
+              "n": 316,
+              "correct": 122,
+              "top_predictions": [
+                [
+                  "2",
+                  25
+                ],
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "3",
+                  22
+                ],
+                [
+                  "4",
+                  18
+                ],
+                [
+                  "6",
+                  15
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.88671875,
+              "critical_depth": 578.37890625,
+              "parallel": 0.9453125,
+              "forks": 0.9453125,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 227,
+              "top_predictions": [
+                [
+                  "4",
+                  60
+                ],
+                [
+                  "2",
+                  60
+                ],
+                [
+                  "3",
+                  34
+                ],
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "6",
+                  20
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 700,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.36075949367088606,
+              "critical_depth": 701.6898734177215,
+              "parallel": 0.8512658227848101,
+              "forks": 0.8512658227848101,
+              "format_ok": 0.9746835443037974,
+              "n": 316,
+              "correct": 114,
+              "top_predictions": [
+                [
+                  "2",
+                  29
+                ],
+                [
+                  "3",
+                  25
+                ],
+                [
+                  "4",
+                  24
+                ],
+                [
+                  "1",
+                  22
+                ],
+                [
+                  "5",
+                  13
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.890625,
+              "critical_depth": 545.421875,
+              "parallel": 0.9375,
+              "forks": 0.9375,
+              "format_ok": 0.98828125,
+              "n": 256,
+              "correct": 228,
+              "top_predictions": [
+                [
+                  "4",
+                  57
+                ],
+                [
+                  "2",
+                  55
+                ],
+                [
+                  "3",
+                  39
+                ],
+                [
+                  "1",
+                  27
+                ],
+                [
+                  "6",
+                  17
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 750,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.370253164556962,
+              "critical_depth": 601.5791139240506,
+              "parallel": 0.9493670886075949,
+              "forks": 0.9493670886075949,
+              "format_ok": 0.9936708860759493,
+              "n": 316,
+              "correct": 117,
+              "top_predictions": [
+                [
+                  "2",
+                  31
+                ],
+                [
+                  "3",
+                  26
+                ],
+                [
+                  "1",
+                  20
+                ],
+                [
+                  "12",
+                  14
+                ],
+                [
+                  "4",
+                  12
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.90625,
+              "critical_depth": 392.8671875,
+              "parallel": 0.9765625,
+              "forks": 0.9765625,
+              "format_ok": 0.98828125,
+              "n": 256,
+              "correct": 232,
+              "top_predictions": [
+                [
+                  "2",
+                  64
+                ],
+                [
+                  "4",
+                  58
+                ],
+                [
+                  "3",
+                  38
+                ],
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "6",
+                  17
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 800,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.3924050632911392,
+              "critical_depth": 621.9367088607595,
+              "parallel": 0.8037974683544303,
+              "forks": 0.8037974683544303,
+              "format_ok": 0.9841772151898734,
+              "n": 316,
+              "correct": 124,
+              "top_predictions": [
+                [
+                  "2",
+                  31
+                ],
+                [
+                  "4",
+                  25
+                ],
+                [
+                  "1",
+                  22
+                ],
+                [
+                  "6",
+                  16
+                ],
+                [
+                  "[INVALID]",
+                  13
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.91796875,
+              "critical_depth": 376.3125,
+              "parallel": 0.953125,
+              "forks": 0.953125,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 235,
+              "top_predictions": [
+                [
+                  "4",
+                  59
+                ],
+                [
+                  "2",
+                  55
+                ],
+                [
+                  "3",
+                  39
+                ],
+                [
+                  "1",
+                  27
+                ],
+                [
+                  "6",
+                  19
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "last_rollout": 800,
+      "recent20": {
+        "rows": 5120,
+        "groups": 640,
+        "mixed_accuracy_fraction": 0.1359375,
+        "acc": 0.941015625,
+        "format_ok": 0.996484375,
+        "top_predictions": [
+          [
+            "4",
+            1135
+          ],
+          [
+            "3",
+            1011
+          ],
+          [
+            "2",
+            900
+          ],
+          [
+            "1",
+            352
+          ],
+          [
+            "6",
+            325
+          ]
+        ]
+      },
+      "checkpoints": {
+        "global_step_100": false,
+        "global_step_200": false,
+        "global_step_300": false,
+        "global_step_400": false,
+        "global_step_500": false,
+        "global_step_600": false,
+        "global_step_700": true,
+        "global_step_800": true
+      },
+      "final_verification": {
+        "complete": true,
+        "steps": 800,
+        "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-two-rewards-20261008/s2/results/checkpoints/global_step_800/actor/huggingface",
+        "full_state": true,
+        "finite_weights": true,
+        "finite_forward": true,
+        "validation": {
+          "APO_MATH300": {
+            "acc": 0.3924050632911392,
+            "critical_depth": 621.9367088607595,
+            "parallel": 0.8037974683544303,
+            "forks": 0.8037974683544303,
+            "format_ok": 0.9841772151898734,
+            "answers": 316
+          },
+          "gsm_infinite_heldout": {
+            "acc": 0.91796875,
+            "critical_depth": 376.3125,
+            "parallel": 0.953125,
+            "forks": 0.953125,
+            "format_ok": 1.0,
+            "answers": 256
+          }
+        }
+      }
+    },
+    "depth": {
+      "attempt_logs": [
+        "driver-attempt-1.log"
+      ],
+      "metric_steps": 800,
+      "first50": {
+        "actor/entropy": 0.9293896937370301,
+        "actor/grad_norm": 1.5911155092716216,
+        "actor/ppo_kl_active_microbatches": 0.00010354709788348515,
+        "grpo/informative_prompts": 32.0,
+        "response_length/mean": 417.368125,
+        "parallel/critical_depth_mean": 348.48359375,
+        "parallel/forks_mean": 1.6259375,
+        "parallel/ratio": 0.883046875,
+        "response_length/clip_ratio": 0.002265625,
+        "timing_s/step": 20.043823027778416
+      },
+      "last50": {
+        "actor/entropy": 0.007816521290515084,
+        "actor/grad_norm": 14.816121528102867,
+        "actor/ppo_kl_active_microbatches": 0.001077360178697988,
+        "grpo/informative_prompts": 26.78,
+        "response_length/mean": 5.0790625,
+        "parallel/critical_depth_mean": 5.0790625,
+        "parallel/forks_mean": 0.0,
+        "parallel/ratio": 0.0,
+        "response_length/clip_ratio": 0.0,
+        "timing_s/step": 7.088443725258112
+      },
+      "last100": {
+        "actor/entropy": 0.007629409962828504,
+        "actor/grad_norm": 15.29233980112339,
+        "actor/ppo_kl_active_microbatches": 0.0006116451540193757,
+        "grpo/informative_prompts": 26.56,
+        "response_length/mean": 5.076328125,
+        "parallel/critical_depth_mean": 5.076328125,
+        "parallel/forks_mean": 0.0,
+        "parallel/ratio": 0.0,
+        "response_length/clip_ratio": 0.0,
+        "timing_s/step": 6.602756203459576
+      },
+      "nonfinite": [],
+      "error_counts": {
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b039dd8a400000c56'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964803073f0800000c55'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964d03b2a4eb00000c57'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964803073f0400000c58'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218ec6400000c59'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964803073e7700000c5a'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964903a7937a00000c5c'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a0476f17500000c5b'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964903a7a35500000c5e'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a0476f41100000c5d'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964903a7a51e00000c60'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218edc100000c5f'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964903a7935200000c62'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b039dda9100000c61'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b039dddf500000c63'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0413592300000c64'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964903a7aa5900000c66'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0412607100000c65'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218ef5c00000c68'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0413596b00000c67'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a0477015100000c69'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a0477016100000c6a'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218ef8100000c6c'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964d03b2a70900000c6b'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a047686d900000c6e'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0413678c00000c6d'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964d03b2adce00000c70'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218f07e00000c6f'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218ede800000c71'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218ef7400000c72'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218f12800000c73'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c04136f5d00000c74'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964b039de64c00000c76'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218f18400000c75'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0218f1d200000c78'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480307408200000c77'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480306cca000000c7a'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f89647039f56e600000c79'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e0219121e00000c7b'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f896480307434300000c7c'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964e021912bb00000c7e'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964a04805d3f00000c7d'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f89647039f5eb500000c80'": 1,
+        "OSError: [Errno 16] Device or resource busy: '.nfs80f8964c0425927800000c7f'": 1
+      },
+      "validation": [
+        {
+          "step": 50,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.27848101265822783,
+              "critical_depth": 312.70569620253167,
+              "parallel": 0.740506329113924,
+              "forks": 0.9113924050632911,
+              "format_ok": 0.9841772151898734,
+              "n": 316,
+              "correct": 88,
+              "top_predictions": [
+                [
+                  "2",
+                  29
+                ],
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "0",
+                  21
+                ],
+                [
+                  "4",
+                  18
+                ],
+                [
+                  "3",
+                  11
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.3203125,
+              "critical_depth": 83.046875,
+              "parallel": 0.203125,
+              "forks": 0.203125,
+              "format_ok": 0.98828125,
+              "n": 256,
+              "correct": 82,
+              "top_predictions": [
+                [
+                  "4",
+                  45
+                ],
+                [
+                  "3",
+                  44
+                ],
+                [
+                  "1",
+                  44
+                ],
+                [
+                  "2",
+                  44
+                ],
+                [
+                  "6",
+                  19
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 100,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.11075949367088607,
+              "critical_depth": 7.753164556962025,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 35,
+              "top_predictions": [
+                [
+                  "2",
+                  42
+                ],
+                [
+                  "1",
+                  29
+                ],
+                [
+                  "3",
+                  24
+                ],
+                [
+                  "4",
+                  18
+                ],
+                [
+                  "0",
+                  14
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.44921875,
+              "critical_depth": 6.00390625,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 115,
+              "top_predictions": [
+                [
+                  "2",
+                  78
+                ],
+                [
+                  "4",
+                  67
+                ],
+                [
+                  "3",
+                  66
+                ],
+                [
+                  "1",
+                  29
+                ],
+                [
+                  "5",
+                  5
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 150,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.11392405063291139,
+              "critical_depth": 6.8164556962025316,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 36,
+              "top_predictions": [
+                [
+                  "2",
+                  51
+                ],
+                [
+                  "3",
+                  35
+                ],
+                [
+                  "1",
+                  22
+                ],
+                [
+                  "4",
+                  15
+                ],
+                [
+                  "6",
+                  13
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.5078125,
+              "critical_depth": 6.01171875,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 130,
+              "top_predictions": [
+                [
+                  "2",
+                  72
+                ],
+                [
+                  "3",
+                  68
+                ],
+                [
+                  "4",
+                  54
+                ],
+                [
+                  "1",
+                  33
+                ],
+                [
+                  "6",
+                  9
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 200,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.12025316455696203,
+              "critical_depth": 7.319620253164557,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 38,
+              "top_predictions": [
+                [
+                  "2",
+                  42
+                ],
+                [
+                  "4",
+                  34
+                ],
+                [
+                  "3",
+                  24
+                ],
+                [
+                  "1",
+                  19
+                ],
+                [
+                  "6",
+                  18
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.5234375,
+              "critical_depth": 6.0234375,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 134,
+              "top_predictions": [
+                [
+                  "4",
+                  86
+                ],
+                [
+                  "3",
+                  53
+                ],
+                [
+                  "2",
+                  45
+                ],
+                [
+                  "6",
+                  17
+                ],
+                [
+                  "1",
+                  16
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 250,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.12341772151898735,
+              "critical_depth": 7.243670886075949,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 39,
+              "top_predictions": [
+                [
+                  "2",
+                  40
+                ],
+                [
+                  "4",
+                  31
+                ],
+                [
+                  "3",
+                  27
+                ],
+                [
+                  "1",
+                  24
+                ],
+                [
+                  "6",
+                  21
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.59765625,
+              "critical_depth": 6.01953125,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 153,
+              "top_predictions": [
+                [
+                  "4",
+                  74
+                ],
+                [
+                  "2",
+                  59
+                ],
+                [
+                  "3",
+                  46
+                ],
+                [
+                  "6",
+                  23
+                ],
+                [
+                  "1",
+                  20
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 300,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.10759493670886076,
+              "critical_depth": 6.784810126582278,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 34,
+              "top_predictions": [
+                [
+                  "2",
+                  42
+                ],
+                [
+                  "4",
+                  38
+                ],
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "8",
+                  22
+                ],
+                [
+                  "3",
+                  21
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.56640625,
+              "critical_depth": 6.0078125,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 145,
+              "top_predictions": [
+                [
+                  "4",
+                  95
+                ],
+                [
+                  "2",
+                  53
+                ],
+                [
+                  "3",
+                  35
+                ],
+                [
+                  "6",
+                  22
+                ],
+                [
+                  "8",
+                  19
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 350,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.0981012658227848,
+              "critical_depth": 7.477848101265823,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 31,
+              "top_predictions": [
+                [
+                  "2",
+                  44
+                ],
+                [
+                  "4",
+                  31
+                ],
+                [
+                  "3",
+                  29
+                ],
+                [
+                  "1",
+                  23
+                ],
+                [
+                  "6",
+                  17
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.6171875,
+              "critical_depth": 6.015625,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 158,
+              "top_predictions": [
+                [
+                  "4",
+                  71
+                ],
+                [
+                  "2",
+                  61
+                ],
+                [
+                  "3",
+                  42
+                ],
+                [
+                  "6",
+                  21
+                ],
+                [
+                  "1",
+                  20
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 400,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.0949367088607595,
+              "critical_depth": 7.155063291139241,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 30,
+              "top_predictions": [
+                [
+                  "2",
+                  35
+                ],
+                [
+                  "1",
+                  34
+                ],
+                [
+                  "3",
+                  33
+                ],
+                [
+                  "4",
+                  28
+                ],
+                [
+                  "6",
+                  14
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.6796875,
+              "critical_depth": 6.015625,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 174,
+              "top_predictions": [
+                [
+                  "4",
+                  76
+                ],
+                [
+                  "2",
+                  61
+                ],
+                [
+                  "3",
+                  48
+                ],
+                [
+                  "1",
+                  20
+                ],
+                [
+                  "6",
+                  17
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 450,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.12974683544303797,
+              "critical_depth": 7.658227848101266,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 41,
+              "top_predictions": [
+                [
+                  "4",
+                  37
+                ],
+                [
+                  "2",
+                  34
+                ],
+                [
+                  "3",
+                  31
+                ],
+                [
+                  "1",
+                  23
+                ],
+                [
+                  "6",
+                  21
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.74609375,
+              "critical_depth": 6.0390625,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 191,
+              "top_predictions": [
+                [
+                  "4",
+                  68
+                ],
+                [
+                  "2",
+                  62
+                ],
+                [
+                  "3",
+                  45
+                ],
+                [
+                  "6",
+                  20
+                ],
+                [
+                  "1",
+                  16
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 500,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.11075949367088607,
+              "critical_depth": 6.962025316455696,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 35,
+              "top_predictions": [
+                [
+                  "2",
+                  43
+                ],
+                [
+                  "4",
+                  31
+                ],
+                [
+                  "3",
+                  21
+                ],
+                [
+                  "6",
+                  21
+                ],
+                [
+                  "8",
+                  18
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.74609375,
+              "critical_depth": 6.05078125,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 191,
+              "top_predictions": [
+                [
+                  "4",
+                  64
+                ],
+                [
+                  "2",
+                  60
+                ],
+                [
+                  "3",
+                  39
+                ],
+                [
+                  "1",
+                  26
+                ],
+                [
+                  "8",
+                  18
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 550,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.12025316455696203,
+              "critical_depth": 7.493670886075949,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 38,
+              "top_predictions": [
+                [
+                  "2",
+                  48
+                ],
+                [
+                  "4",
+                  38
+                ],
+                [
+                  "3",
+                  23
+                ],
+                [
+                  "6",
+                  22
+                ],
+                [
+                  "1",
+                  15
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.75,
+              "critical_depth": 6.05859375,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 192,
+              "top_predictions": [
+                [
+                  "2",
+                  72
+                ],
+                [
+                  "4",
+                  54
+                ],
+                [
+                  "3",
+                  43
+                ],
+                [
+                  "1",
+                  21
+                ],
+                [
+                  "6",
+                  15
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 600,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.13924050632911392,
+              "critical_depth": 7.9145569620253164,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 44,
+              "top_predictions": [
+                [
+                  "2",
+                  42
+                ],
+                [
+                  "4",
+                  40
+                ],
+                [
+                  "1",
+                  27
+                ],
+                [
+                  "3",
+                  26
+                ],
+                [
+                  "6",
+                  19
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.8125,
+              "critical_depth": 6.04296875,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 208,
+              "top_predictions": [
+                [
+                  "4",
+                  72
+                ],
+                [
+                  "2",
+                  58
+                ],
+                [
+                  "3",
+                  43
+                ],
+                [
+                  "1",
+                  22
+                ],
+                [
+                  "6",
+                  18
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 650,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.12341772151898735,
+              "critical_depth": 8.215189873417721,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 39,
+              "top_predictions": [
+                [
+                  "2",
+                  47
+                ],
+                [
+                  "4",
+                  34
+                ],
+                [
+                  "3",
+                  25
+                ],
+                [
+                  "1",
+                  21
+                ],
+                [
+                  "16",
+                  13
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.8359375,
+              "critical_depth": 6.05078125,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 214,
+              "top_predictions": [
+                [
+                  "4",
+                  66
+                ],
+                [
+                  "2",
+                  59
+                ],
+                [
+                  "3",
+                  39
+                ],
+                [
+                  "1",
+                  22
+                ],
+                [
+                  "6",
+                  22
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 700,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.10443037974683544,
+              "critical_depth": 5.781645569620253,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 33,
+              "top_predictions": [
+                [
+                  "3",
+                  45
+                ],
+                [
+                  "2",
+                  41
+                ],
+                [
+                  "1",
+                  40
+                ],
+                [
+                  "4",
+                  27
+                ],
+                [
+                  "6",
+                  15
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.7890625,
+              "critical_depth": 5.04296875,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 202,
+              "top_predictions": [
+                [
+                  "2",
+                  57
+                ],
+                [
+                  "4",
+                  50
+                ],
+                [
+                  "3",
+                  46
+                ],
+                [
+                  "1",
+                  32
+                ],
+                [
+                  "8",
+                  19
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 750,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.11075949367088607,
+              "critical_depth": 5.560126582278481,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 35,
+              "top_predictions": [
+                [
+                  "2",
+                  42
+                ],
+                [
+                  "4",
+                  34
+                ],
+                [
+                  "1",
+                  33
+                ],
+                [
+                  "3",
+                  32
+                ],
+                [
+                  "6",
+                  22
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.8359375,
+              "critical_depth": 5.0390625,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 214,
+              "top_predictions": [
+                [
+                  "4",
+                  61
+                ],
+                [
+                  "2",
+                  58
+                ],
+                [
+                  "3",
+                  43
+                ],
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "6",
+                  20
+                ]
+              ]
+            }
+          }
+        },
+        {
+          "step": 800,
+          "rows": 572,
+          "sources": {
+            "APO_MATH300": {
+              "acc": 0.10443037974683544,
+              "critical_depth": 5.512658227848101,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 316,
+              "correct": 33,
+              "top_predictions": [
+                [
+                  "2",
+                  41
+                ],
+                [
+                  "4",
+                  39
+                ],
+                [
+                  "1",
+                  36
+                ],
+                [
+                  "3",
+                  32
+                ],
+                [
+                  "8",
+                  19
+                ]
+              ]
+            },
+            "gsm_infinite_heldout": {
+              "acc": 0.83984375,
+              "critical_depth": 5.0625,
+              "parallel": 0.0,
+              "forks": 0.0,
+              "format_ok": 1.0,
+              "n": 256,
+              "correct": 215,
+              "top_predictions": [
+                [
+                  "2",
+                  64
+                ],
+                [
+                  "4",
+                  55
+                ],
+                [
+                  "3",
+                  38
+                ],
+                [
+                  "1",
+                  25
+                ],
+                [
+                  "6",
+                  20
+                ]
+              ]
+            }
+          }
+        }
+      ],
+      "last_rollout": 800,
+      "recent20": {
+        "rows": 5120,
+        "groups": 640,
+        "mixed_accuracy_fraction": 0.0453125,
+        "acc": 0.80625,
+        "format_ok": 1.0,
+        "top_predictions": [
+          [
+            "4",
+            1183
+          ],
+          [
+            "3",
+            1078
+          ],
+          [
+            "2",
+            992
+          ],
+          [
+            "6",
+            357
+          ],
+          [
+            "8",
+            313
+          ]
+        ]
+      },
+      "checkpoints": {
+        "global_step_100": false,
+        "global_step_200": false,
+        "global_step_300": false,
+        "global_step_400": false,
+        "global_step_500": false,
+        "global_step_600": false,
+        "global_step_700": true,
+        "global_step_800": true
+      },
+      "final_verification": {
+        "complete": true,
+        "steps": 800,
+        "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-two-rewards-20261008/depth/results/checkpoints/global_step_800/actor/huggingface",
+        "full_state": true,
+        "finite_weights": true,
+        "finite_forward": true,
+        "validation": {
+          "APO_MATH300": {
+            "acc": 0.10443037974683544,
+            "critical_depth": 5.512658227848101,
+            "parallel": 0.0,
+            "forks": 0.0,
+            "format_ok": 1.0,
+            "answers": 316
+          },
+          "gsm_infinite_heldout": {
+            "acc": 0.83984375,
+            "critical_depth": 5.0625,
+            "parallel": 0.0,
+            "forks": 0.0,
+            "format_ok": 1.0,
+            "answers": 256
+          }
+        }
+      }
+    }
+  },
+  "pids": {
+    "799496": "absent",
+    "818071": "absent"
+  }
+}

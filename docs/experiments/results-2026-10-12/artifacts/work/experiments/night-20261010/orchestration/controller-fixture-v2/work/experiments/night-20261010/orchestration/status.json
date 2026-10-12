@@ -1,0 +1,84 @@
+{
+  "state": "watching",
+  "actions": [
+    "Matched SFTaccuracy/split40stepfirststage and committed-checkpoint evaluation queued"
+  ],
+  "pid": 1086909,
+  "started": 1791617460.0,
+  "sft_decision": {
+    "gate_passed": true,
+    "correct": 10
+  },
+  "cost_normalization": {
+    "B0": 256,
+    "Fscale": 1024,
+    "source": "Frozen newSFT diagnostic GSM validation successful traces,p25deadzone/p90scale; heldfixedacrossmatchedlanes"
+  },
+  "stage2_tmp2": {
+    "state": "queued",
+    "dataset": "gsm_hard",
+    "method": "night_split_success",
+    "validation_gsm": 0.7,
+    "validation_math": 0.4,
+    "format": 0.9,
+    "autonomous_fork_rate": 0.390625,
+    "guided_first_fork": false,
+    "optimizer_resume": false,
+    "optimizer_and_reference_reset": true,
+    "reason": "Validation-only curriculum; MATH500 results are not used"
+  },
+  "stage2_sirius": {
+    "state": "queued",
+    "dataset": "gsm_easy",
+    "method": "night_scalar_success",
+    "validation_gsm": 0.7,
+    "validation_math": 0.4,
+    "format": 0.9,
+    "autonomous_fork_rate": 0.390625,
+    "guided_first_fork": false,
+    "optimizer_resume": false,
+    "optimizer_and_reference_reset": true,
+    "reason": "Matched third reward arm from initial SFT/easydata; optimizer reset"
+  },
+  "stage2_tmp3": {
+    "state": "queued",
+    "dataset": "gsm_hard",
+    "method": "night_split_success",
+    "validation_gsm": 0.7,
+    "validation_math": 0.4,
+    "format": 0.9,
+    "autonomous_fork_rate": 0.390625,
+    "guided_first_fork": false,
+    "optimizer_resume": false,
+    "optimizer_and_reference_reset": true,
+    "reason": "Validation-only curriculum; MATH500 results are not used"
+  },
+  "heartbeat": "2026-10-09T22:53:18.471850+00:00",
+  "final_tmp2": {
+    "state": "queued",
+    "chosen_run": "rl-instruct-accuracy-v2",
+    "chosen_validation_label": "instruct-stage1-v2",
+    "math_validation_pass1": 0.4,
+    "gsm_validation_pass1": 0.7,
+    "correct_F_mean": 300.0,
+    "selection": "highest64MATHvalidationaccuracy;GSMthenlowerFtie-break;MATH500unused"
+  },
+  "final_sirius": {
+    "state": "queued",
+    "chosen_run": "rl-sft-accuracy",
+    "chosen_validation_label": "sft-accuracy-stage1",
+    "math_validation_pass1": 0.4,
+    "gsm_validation_pass1": 0.7,
+    "correct_F_mean": 300.0,
+    "selection": "highest64MATHvalidationaccuracy;GSMthenlowerFtie-break;MATH500unused"
+  },
+  "final_tmp3": {
+    "state": "queued",
+    "chosen_run": "rl-sft-split",
+    "chosen_validation_label": "sft-split-stage1",
+    "math_validation_pass1": 0.4,
+    "gsm_validation_pass1": 0.7,
+    "correct_F_mean": 300.0,
+    "selection": "highest64MATHvalidationaccuracy;GSMthenlowerFtie-break;MATH500unused"
+  }
+}

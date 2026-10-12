@@ -1,0 +1,34 @@
+{
+  "review": "Single Codex manual reviewer. Fixed seed20261006 uniform block sample; each async20 of structurally valid two-path blocks. Block frequency, conditional on parseable structure, not question/response frequency. Both_sound means local path reasoning; not full solution. Invalid incomplete inputs separated; tiny sample does not establish seen/unseen semantic difference.",
+  "runs": {
+    "seen-async": {
+      "sample_blocks": 20,
+      "sample_unique_questions": 20,
+      "input_incomplete": 2,
+      "eligible_semantic_blocks": 18,
+      "categories": {
+        "same_method": 8,
+        "degenerate_or_unclear": 9,
+        "distinct": 1
+      },
+      "both_sound": 6,
+      "answer_in_prefix": 6,
+      "saved_correct": 4,
+      "saved_correct_with_both_sound": 1
+    },
+    "unseen-async": {
+      "sample_blocks": 20,
+      "sample_unique_questions": 19,
+      "input_incomplete": 2,
+      "eligible_semantic_blocks": 18,
+      "categories": {
+        "same_method": 6,
+        "degenerate_or_unclear": 12
+      },
+      "both_sound": 3,
+      "answer_in_prefix": 3,
+      "saved_correct": 3,
+      "saved_correct_with_both_sound": 1
+    }
+  }
+}

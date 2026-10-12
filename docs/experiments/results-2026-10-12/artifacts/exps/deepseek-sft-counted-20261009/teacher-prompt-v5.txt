@@ -1,0 +1,92 @@
+Write a correct, self-contained mathematical worked solution to the problem below.
+The solution will teach a coordinator to schedule independent computations.
+Return only the worked solution, with the exact execution format below.
+
+SCHEDULING POLICY — APPLY THROUGHOUT THE SOLUTION
+
+1. Start from the facts given in the problem. Explain the current objective in
+   free-form prose and equations; introduce shared definitions as needed.
+2. Identify the NEXT useful local results whose inputs are already available.
+   A local result can be a short calculation, one case, a lemma, a bound, or
+   a genuinely different method when an independent check is useful.
+3. If at least two local results are ready, DO NOT compute them sequentially
+   in the introductory prose. Write a plan and fork them NOW. Use 2 to 8
+   paths, normally one ready local result or case per path. If more than
+   eight are ready, group related work or schedule it later.
+4. Each path completes its assigned local result and stops. Do not pack
+   several independently computable quantities into the same path. A short
+   necessary chain leading to one local result is fine. If a path exposes a
+   new set of independent tasks, return its prerequisite result so the
+   coordinator can schedule those tasks after synchronization.
+5. Synchronize: collect and check the results. Update the shared facts.
+   The summary may combine results, but MUST NOT execute a newly available
+   set of independent tasks. Return to step 2 instead.
+6. If only one useful task is ready, do it sequentially and reassess. Stop
+   immediately once the requested result is justified. Do not predetermine
+   the number of rounds. Zero, one, or many rounds are allowed.
+
+In particular, do not compute all intermediate values in ordinary prose and
+then add one decorative fork for the final products. If a=3*4, b=20-5 and
+c=18/3 are needed, those are THREE ready tasks, not sequential shared setup.
+If their results enable u=ab+c and v=(a+b)c, those are TWO new ready tasks:
+first fork a,b,c; merge; then fork u,v; merge. The two rounds arise from
+these dependencies, not from a fixed round quota. Apply the actual dependency
+structure of the problem below, not these illustrative numbers.
+
+FORMAT
+
+Before each fork, write a brief free-form explanation of the current step,
+then exactly one assignment line for each path:
+Plan:
+1: concrete assignment and what must be established
+2: concrete assignment and what must be established
+... continue through the chosen N ...
+
+Do not include answers to the assignments in the plan. All numeric bounds,
+candidates and case restrictions used to assign work must come from the
+problem or a derivation already shown. Never use hindsight about a sibling's
+future result to choose the assignment or a helper table.
+
+Write <Parallel>N on its own line, replacing N with ONE digit from 2 to 8.
+Then write exactly N sibling paths in integer ID order:
+<Path>1
+Mathematical work for assignment 1, ending with a clear local conclusion.
+</Path>
+... the remaining paths ...
+</Parallel>
+<Summary>
+Check and combine the actual path results; state the established facts.
+</Summary>
+
+Each path starts with <Path>I followed by a newline, where I is its assigned
+integer ID. Restart IDs at 1 in each new fork. Do not use round IDs, letter
+prefixes, tag attributes, nested forks, or a mandatory Result: field.
+Use exactly <Parallel>, </Parallel>, <Path>, </Path>, <Summary>, </Summary>
+as structural tags. Close every tag. Do not copy the format placeholders.
+After a summary, continue in free form and follow the scheduling policy again.
+
+INDEPENDENCE AND CORRECTNESS
+
+Each path has access only to the original problem, the shared prefix BEFORE
+its fork, and its own assignment. Sibling results in the same round are NOT
+available, even though the paths are serialized in the output. Do not quote,
+anticipate, or assume them. Use a symbolic parameter only for a genuinely
+useful general derivation, not to hide a dependency and avoid synchronization.
+
+Show checkable calculations and arguments. Preserve assumptions and domains.
+Justify enumeration completeness, case coverage, admissible roots, and
+optimality when needed. Do not invent tool execution, false intermediate
+claims, duplicate work, fake disagreements, or pointless extra branches.
+A correct final answer does not excuse a false intermediate calculation.
+The summary must faithfully use what the paths actually established.
+If an essential gap remains, acknowledge it rather than fabricate a proof.
+
+End the complete solution with exactly one standalone line:
+Final Answer: \boxed{the requested mathematical answer}
+Put only the requested value, expression, set, or tuple inside the box; explain
+units and context in the body. Paths do not write Final Answer:. If an essential
+gap remains, end with Final Answer: unresolved instead.
+
+PROBLEM
+
+{{INSERT_PROBLEM_HERE}}

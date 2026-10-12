@@ -1,0 +1,126 @@
+{
+  "verdict": "No blocking implementation defect found in completed frozen SFT; counted Unseen sibling isolation, positions and shifted labels are correct for widths 2..8. Quality on MATH-500 is a separate question.",
+  "checks": [
+    "audit-sft-check.json",
+    "audit-sft-provenance.json"
+  ],
+  "findings": [
+    {
+      "severity": "coverage limitation",
+      "finding": "Width 8 has 15 train forks and 0 validation forks; widths 7/6 have 23/68 train and 2/5 validation forks. Overall validation loss cannot establish widest-width format reliability.",
+      "evidence": "audit-sft-check.json corpus.widths_by_split",
+      "recommendation": "Report width-specific format/answer metrics in evaluations; for future SFT consider deliberate width-stratified held-out coverage before changing train data."
+    },
+    {
+      "severity": "format inconsistency",
+      "finding": "All 2145 old responses close think then immediately provide Final Answer, while the common new system also asks for a short concluding solution with decisive arithmetic and units.",
+      "files": [
+        {
+          "path": "work/experiments/unseen-wide5145-20261009/prepare.py",
+          "line": 22
+        },
+        {
+          "path": "exps/deepseek-gsm-wide3000-v2-20261009/student-system.txt",
+          "line": 33
+        }
+      ],
+      "evidence": "audit-sft-provenance.json response_after_think_old.true=2145",
+      "recommendation": "Document the mixed target style; standardize a future dataset only if concluding-solution format matters."
+    },
+    {
+      "severity": "objective observation",
+      "finding": "SFT applies loss to all response tokens, including forced runtime <Path>I headers and merge tags. The <Path> marker for sibling k>1 is a next-token target at prior sibling closing token. This affects metadata-only losses and does not leak prior sibling content into the hidden states used to predict branch content.",
+      "files": [
+        {
+          "path": "work/experiments/unseen-wide5145-20261009/sft-code/verl/utils/dataset/parallel_thinking_sft_dataset.py",
+          "line": 327
+        },
+        {
+          "path": "work/experiments/unseen-wide5145-20261009/sft-code/verl/trainer/fsdp_parallel_sft_trainer.py",
+          "line": 346
+        }
+      ],
+      "recommendation": "Keep protocol metadata distinct from branch-content diagnostics; forced-token masking can be an explicit future objective choice rather than a repair to the completed SFT."
+    }
+  ],
+  "verified": [
+    {
+      "item": "Count header and branch positions",
+      "file": "work/experiments/unseen-wide5145-20261009/sft-code/verl/utils/parallel_structure.py",
+      "lines": [
+        33,
+        40,
+        42
+      ],
+      "evidence": "all 5145 tokenized records; counts 2..8; IDs 1..N; counts/ID newlines preserved; merge begins after longest branch"
+    },
+    {
+      "item": "Sibling and indirect whitespace isolation",
+      "file": "work/experiments/unseen-wide5145-20261009/sft-code/verl/utils/parallel_structure.py",
+      "lines": [
+        38,
+        54
+      ],
+      "evidence": "four-layer Qwen CPU content perturbation, widths 2..8, three repeated forks, gaps on/off; sibling hidden difference zero and merged suffix changes"
+    },
+    {
+      "item": "Causal shift, EOS, trimming and collation",
+      "file": "work/experiments/unseen-wide5145-20261009/sft-code/verl/utils/dataset/parallel_thinking_sft_dataset.py",
+      "lines": [
+        283,
+        329,
+        330
+      ],
+      "evidence": "first response label trained at last prompt query, EOS target trained at final content query; trimmed length retains EOS; production deferred dataset/default collation exercised"
+    },
+    {
+      "item": "Think template agreement",
+      "file": "work/experiments/unseen-wide5145-20261009/prepare.py",
+      "lines": [
+        38,
+        39
+      ],
+      "evidence": "all 5145 responses start <think>; default SFT/eval generation prefix has no <think>; eval system exactly equals SFT system"
+    },
+    {
+      "item": "Token init and checkpoint provenance",
+      "file": "exps/sft-unseen-three-datasets-20261008/code/training_scripts/prepare_qwen3_parallel.py",
+      "lines": [
+        23,
+        28
+      ],
+      "evidence": "six actual embedding rows finite, std 0.0191..0.0209, changed during SFT; final SHA256 matches step180 and final-audit; frozen 585 Python hashes and three source hashes unchanged; source-to-final data reconstruction exact 5145"
+    },
+    {
+      "item": "Completed training",
+      "file": "work/experiments/unseen-wide5145-20261009/runs/01_sft/sft.log",
+      "evidence": "exit 0, 180 finite logged steps, no nonfinite-grad skipped updates, epoch validation losses 0.500874/0.400999/0.374001/0.364715/0.363822; no optimizer/scheduler state saved"
+    }
+  ],
+  "additional_first_token_diagnostic": {
+    "files": [
+      "audit-sft-first-token.py",
+      "audit-sft-first-token.json",
+      "audit-sft-first-token.log",
+      "audit-sft-first-token-think-embeddings.json"
+    ],
+    "method": "24 HF BF16 SDPA next-token forwards, 8 evenly spaced train/val/MATH-500 examples, exact system/template, temperature-1 raw softmax, no generation or sampling",
+    "conclusion": "Weak opening-vs-closing think discrimination exists on in-domain train and validation prefixes; MATH shows an additional domain effect. Base original special tokens including think and ChatML have identical embeddings; final think pair remains nearly parallel. This is a model initialization/training-quality limitation, not an Unseen mask or template mismatch.",
+    "evidence": {
+      "base_151644_to_151668_exact_equal": true,
+      "final_think_close_cosine": 0.9993906617164612,
+      "train_p_think_mean": 0.05562243750318885,
+      "train_p_close_mean": 0.04400807060301304,
+      "val_p_think_mean": 0.05708217108622193,
+      "val_p_close_mean": 0.045139548368752,
+      "math_p_think_mean": 0.03268137068311294,
+      "math_p_close_mean": 0.025545957482412174,
+      "argmax_think_counts": {
+        "train": 8,
+        "val": 8,
+        "math": 5
+      }
+    },
+    "recommendation": "For a future explicitly authorized training experiment, test distinct initialization of unused Base thinking special tokens and/or explicit weighting of format-critical targets; preserve this completed checkpoint as the audited baseline. The small 8-example groups are diagnostic, not an accuracy estimate."
+  }
+}

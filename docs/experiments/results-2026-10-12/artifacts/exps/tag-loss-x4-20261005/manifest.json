@@ -1,0 +1,45 @@
+{
+  "root": "${PROJECT_ROOT}",
+  "queue": "${PROJECT_ROOT}/exps/tag-loss-x4-20261005",
+  "code": "${PROJECT_ROOT}/exps/fixes-20261005/code/verl",
+  "venv": "${PROJECT_ROOT}/.venv",
+  "base": "${MODEL_ROOT}/Qwen3-0.6B-Base-special-v2",
+  "gpu_budget": 8,
+  "models": [
+    {
+      "id": "seen-tag-x4",
+      "name": "Parallel-SFT-Seen-Qwen3-0.6B-tag-loss-x4-20261005",
+      "variant": "seen",
+      "existing": false,
+      "overrides": [
+        "model.enable_gradient_checkpointing=false",
+        "data.max_length=3072",
+        "data.parse_prompt_tags=false",
+        "data.micro_batch_size_per_gpu=4"
+      ],
+      "results": "${PROJECT_ROOT}/exps/tag-loss-x4-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-tag-loss-x4-20261005",
+      "checkpoint_root": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-tag-loss-x4-20261005"
+    }
+  ],
+  "evals": [
+    {
+      "id": "tag-x4-sync",
+      "model": "seen-tag-x4",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-tag-loss-x4-20261005/global_step_230",
+      "overrides": [
+        "actor_rollout_ref.rollout.mode=sync"
+      ]
+    },
+    {
+      "id": "tag-x4-async",
+      "model": "seen-tag-x4",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-tag-loss-x4-20261005/global_step_230",
+      "overrides": [
+        "actor_rollout_ref.rollout.mode=async"
+      ]
+    }
+  ],
+  "protocol": "Isolated Seen ablation versus fixes-20261005 Seen control, same seed1/base/data/LR1e-5/global128/micro4/230steps. Six control-token target CE weights4, remaining1, original token count denominator. Prompt/padding masked. Validation unweighted. Both sync and async final eval1916, original batch256/eager settings for direct comparison. Wait until previous training/evaluation and speed benchmark release GPUs."
+}

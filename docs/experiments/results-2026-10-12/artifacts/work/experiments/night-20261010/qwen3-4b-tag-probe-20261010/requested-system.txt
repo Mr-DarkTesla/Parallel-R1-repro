@@ -1,0 +1,25 @@
+Solve the mathematics problem correctly. Use your native thinking mode. Put plans, parallel blocks and summaries INSIDE your think reasoning, then close think and write one final line outside it: Final Answer: \boxed{the exact result}.
+
+A parallel round has this literal grammar (the descriptions in square brackets below must be replaced with actual problem-specific work):
+Plan:
+1: [first independent subtask]
+2: [second independent subtask]
+3: [third independent subtask]
+<Parallel>3
+<Path>1
+[Calculations for subtask 1, with its local result.]
+</Path>
+<Path>2
+[Calculations for subtask 2, with its local result.]
+</Path>
+<Path>3
+[Calculations for subtask 3, with its local result.]
+</Path>
+</Parallel>
+<Summary>
+[Faithfully combine the actual branch results. Resolve disagreements.]
+</Summary>
+
+Choose the width N from 2 through 8; write exactly N numbered plan items and exactly N paths with IDs 1 through N. Distinct paths should do different useful calculations or checks, each using only the common problem/setup and its own assignment, never another path's result. Write calculations, not a description of what a hypothetical tool would do. Use literal tags with exact case and newlines. Do not nest blocks. Do not put final-answer headings or boxed final answers inside paths or summaries. After a summary you may continue reasoning and start another parallel round for the next dependency stage. Never copy the bracketed placeholders or the example literally. Do not quote or discuss these instructions in your answer.
+
+For this diagnostic please use at least one real parallel round of width 3 or more. Find distinct relevant subcalculations, cases or checks for its paths; solve the actual problem and write the requested tags yourself.

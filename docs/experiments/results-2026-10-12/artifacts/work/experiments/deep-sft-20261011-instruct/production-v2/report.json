@@ -1,0 +1,73 @@
+{
+  "phase": "production",
+  "completed": 571,
+  "accepted": 557,
+  "rejected": 14,
+  "errors": {
+    "independent_substantive_quarantine": 1,
+    "repaired_checks_no_valid_attempt": 3,
+    "source_relation_unproven": 8,
+    "independent_oracle_replay": 1,
+    "structure/missing_plan,missing_prefork_explanation,path_without_explicit_computation,plan_ids_or_count,unexpected_tags_between_blocks": 1
+  },
+  "selected_deep": 557,
+  "width": {
+    "mean": 4.001339285714286,
+    "median": 4.0,
+    "p95": 5.0,
+    "max": 5
+  },
+  "rounds": {
+    "mean": 4.021543985637343,
+    "median": 4.0,
+    "p95": 5.0,
+    "max": 5
+  },
+  "width_histogram": {
+    "3": 547,
+    "4": 1143,
+    "5": 550
+  },
+  "round_histogram": {
+    "3": 106,
+    "4": 333,
+    "5": 118
+  },
+  "path_tokens": {
+    "mean": 37.86812451188218,
+    "median": 38.0,
+    "p95": 42.0,
+    "max": 48
+  },
+  "output_tokens": {
+    "mean": 1314.9012567324955,
+    "median": 1302.0,
+    "p95": 1771.3999999999987,
+    "max": 2146
+  },
+  "critical_path_tokens_proxy": {
+    "mean": 797.439856373429,
+    "median": 798.0,
+    "p95": 1057.1999999999998,
+    "max": 1258
+  },
+  "explicit_scalar_equalities_checked": 9634,
+  "mathematically_reference_verified": 557,
+  "no_think": false,
+  "instruct_think": true,
+  "all_sibling_ids_structurally_consistent": true,
+  "hashes": {
+    "teacher-prompt.txt": "5a3a8888c401b7df223e2b431e5c9dc1edc724fd9ce6db33a0242557e2e91cd8",
+    "production-v2-protocol.json": "25683834fdd3b653b8b9f5c102815379142ebaec664a4df19dc24bf96af0dee2",
+    "pool-manifest.json": "482b5f172f52a6c4ee74b871e941cd8e449a52ad2212b64fbbbedebdb3c7d7bd",
+    "pilot-tasks.jsonl": "afddde5d864f47a07afe75b1c924b37c02dfb32913d4de2aad19db2a288bdefd",
+    "journal.jsonl": "814346b7a35fd593e2cfca33c14cac83ba7384220b296bb066f30847d5e99a4a",
+    "accepted.jsonl": "0f0e8e40a247e3d319457c984d2a6bcc043be303442c5700edb22c45555371fb"
+  },
+  "limitations": [
+    "No same-teacher semantic judge; independent stratified substantive review required for final release.",
+    "Explicit arithmetic checker covers flat scalar equalities only.",
+    "Manual actual-trace review is mandatory before releasing production generation.",
+    "F is token critical-path proxy, not measured GPU latency."
+  ]
+}

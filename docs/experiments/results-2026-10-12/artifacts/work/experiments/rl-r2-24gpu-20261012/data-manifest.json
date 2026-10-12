@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "train": 1024,
+  "val": 32,
+  "pilot": 16,
+  "sources": {
+    "cn_k12": 512,
+    "orca_math": 512
+  },
+  "previous128_preserved": true,
+  "group_disjoint": true,
+  "benchmark_selection": false,
+  "preparation_sha256": "39613274300ef17d95512edd853ac083d060f115486f4157a5d4a7a892887466",
+  "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+  "val_sha256": "cb02ef017baff97bed5568e60a53f9673c04f657f59d81349f1a6484e3f30a6a",
+  "teacher_verdicts_sha256": "3211744626808641f6ffe07b2d27a80ed2870c5727baff0949e1671ec3d63d5b",
+  "new_gold_blind_teacher_corroborated": 720,
+  "prior_reviewed": 304,
+  "rejected_or_unknown": 245,
+  "limitations": [
+    "Teacher agreement corroborates references; it is not an exact oracle or proof that every semantic paraphrase of benchmarks is absent.",
+    "Published original per-item source URLs unavailable; only pinned CNK12/Orca whitelisted."
+  ],
+  "verifier_sha256": "c28e5f363b9eed004b86091c0a3699cc8d755b2ef93e4e14fc73365d159e0922",
+  "scorer_sha256": "3aa6d7bea31716a17a9de12c8ca63fe36e3e0eabe41474f414ce21d29bd08119"
+}

@@ -1,0 +1,35 @@
+{
+  "base_sft_training_attention": "structured 4D additive mask with isolated same-round siblings, shared count header, merged suffix",
+  "base_sft_positions": "repeated per sibling, continuation at longest sibling end+1",
+  "prompt_template": "Instruction/Problem/Solution, no think",
+  "response_mask_policy": "Sampled raw actions1; forcedheaders,synchronizationbridges,padding0; prompt excluded by response scope",
+  "checkpoint": "${PROJECT_ROOT}/work/experiments/base-format-20261010/runs/production/final",
+  "hashes": {
+    "work/experiments/base-format-20261010/code/verl/trainer/fsdp_parallel_sft_trainer.py": "4ae8a56333a41d0bb9fd5f8b9f08b611abe48489390ecbb2b94140eb435bd4e2",
+    "work/experiments/base-format-20261010/code/verl/utils/dataset/parallel_thinking_sft_dataset.py": "862ce8ba02023eca6eb69cd9726f4dc18b65a24f66cea5935de463bee5800d35",
+    "work/experiments/base-format-20261010/code/verl/utils/parallel_structure.py": "f183fe9189592c99862bfbb6260737fe86fd1907c0cb80b7eb03dc416af0dedf",
+    "work/experiments/base-format-20261010/runs/production/final/config.json": "8b21d7e0d9e60e6ffa78001206a049ebc665c49fa6d4a158b91d176b834263f3",
+    "work/experiments/base-format-20261010/runs/production/final/chat_template.jinja": "5104cde78ab23e430f35fc626ae3e547504644a371dfa9ef6b8ce7bb40e7d30a",
+    "verl/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "2e63fe62b7ff6c5f1e16424fc6d4987727fed98cb57899bacbdf9370812e4ca9",
+    "verl/verl/workers/actor/dp_actor.py": "3ae20e77fe5395e11229962ffdbeab7a544fd089f2427289b295211db05900b4"
+  },
+  "legacy_blockers": [
+    "Runtime injectedtags response_mask1",
+    "Fixedwidth+chat template incompatible adaptiveBase",
+    "Causal rollout vs structured actor probabilities",
+    "Recomputed old_logprobs cannot prove decoder parity"
+  ],
+  "selected_fix": "Standalone HF structured rollout and exact per-call replay, no legacy trainer dependencies",
+  "cpu_pass": true,
+  "loop_pass": true,
+  "bf16_gpu_pass": false,
+  "fp32_gpu_pending": false,
+  "launch_readiness": false,
+  "fp32_gpu_pass": true,
+  "fp32_precision": "highest,TF32disabled,FULLFP32 decoder andactor",
+  "gpu_max_abs_logp_delta": 0.00011444091796875,
+  "gpu_mean_abs_logp_delta": 5.646211775456322e-06,
+  "gpu_p95_abs_logp_delta": 3.0517578125e-05,
+  "gpu_call_pairs": 105,
+  "remaining": "Actual8GPUdistributedoptimizer/actor-sampling smoke and proof; no automaticproductionrelease"
+}

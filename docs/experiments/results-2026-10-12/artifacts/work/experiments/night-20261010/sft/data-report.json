@@ -1,0 +1,39 @@
+{
+  "rows": 3000,
+  "train": 2700,
+  "val": 300,
+  "widths": {
+    "4": 1493,
+    "3": 943,
+    "2": 865,
+    "5": 166,
+    "6": 19
+  },
+  "max_tokens": 4210,
+  "quantiles": {
+    "0.5": 2274.0,
+    "0.9": 2828.0,
+    "0.99": 3624.0099999999998
+  },
+  "base": "${PROJECT_ROOT}/work/experiments/night-20261010/sft/base",
+  "base_source": {
+    "model": "Qwen/Qwen3-0.6B-Base",
+    "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+    "seed": 1,
+    "token_initialization": "normal",
+    "tokens": {
+      "<Path>": 151669,
+      "</Path>": 151670,
+      "<Parallel>": 151671,
+      "</Parallel>": 151672,
+      "<Summary>": 151673,
+      "</Summary>": 151674
+    }
+  },
+  "source_sha256": {
+    "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/train.jsonl": "7379ecfc7053771313df1bc63c6324a3f3f8ee72bdfc818015bdc35ae600b24a",
+    "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/val.jsonl": "d5a868ef8fc42a50f21a7e9cb657da1a894b882ddeabb256b6f1eeb6112a23c5"
+  },
+  "split_policy": "NEW only: original 2700/300 split; no overlap",
+  "transformations": "Common counted-fork system prompt; remove external sibling whitespace only"
+}

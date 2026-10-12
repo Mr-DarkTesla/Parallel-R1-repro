@@ -1,0 +1,121 @@
+{
+  "stage": "independent_format_loss_diagnosis",
+  "at": "2026-10-10T09:25:47.522053+00:00",
+  "read_only_audit_no_GPU_or_approvals": true,
+  "source_sha256": {
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/data.py": "7a9415bc70d8c237452a47dadb0c1b8ca5e9bbd8f4d877f3c1c599cc47315919",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/train.py": "bdeabce08d10423708fb0b21a2319b755616df34e5c8070145815b9d6ba0b28d",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/evaluate.py": "ce546b0bc74945b17f99cbd93fb3be1d3d54b4ed737445e15ac80157d8a9d6e8",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/runtime/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "e2d36f53ddd2157d1cc22beb167bad82f337f2d4ff560cda066712bb0fd0d14e",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/runtime/verl/workers/rollout/vllm_rollout/structured_worker.py": "18a98bf021b8907167d3188c84274e71e18d7699d76693bb21e6ad2bcf763e21",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/structured-runtime-smoke24/scores.jsonl": "9a266e35d08ed2358d2f1e1ee5bafce8cec9a872ee511a456945f28c3f3f2d77",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/structured-runtime-smoke24/manifest.json": "a84b19555e07245d38f59440b80910d1a4cea6b919ee6f1a51b3b8c39c3bca09",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/native-runtime-smoke24/scores.jsonl": "0d58f09bb4500a85fef022451a8ee5d714091e05e1044834a29ff6c7c3fc4bee"
+  },
+  "actual24": {
+    "model": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/runs/production/final",
+    "correct": 12,
+    "format_valid_current_scorer": 11,
+    "parallel_protocol_valid": 0,
+    "executed_forks_samples": 3,
+    "invalid_width_samples": [
+      0,
+      8,
+      4,
+      12,
+      1,
+      2,
+      10,
+      18,
+      15,
+      23
+    ],
+    "parallel_after_think_close_samples": [
+      0,
+      8,
+      16,
+      4,
+      12,
+      1,
+      17,
+      2,
+      10,
+      18,
+      15,
+      23
+    ],
+    "fork_samples_after_think_close": [
+      16,
+      17
+    ],
+    "raw_vs_assembled_terminal_mismatches": [
+      {
+        "sample_index": 16,
+        "phase": "summary",
+        "raw_terminal_id": 151645,
+        "assembled_terminal_id": 151674
+      },
+      {
+        "sample_index": 21,
+        "phase": "path",
+        "raw_terminal_id": 151671,
+        "assembled_terminal_id": 151670
+      },
+      {
+        "sample_index": 21,
+        "phase": "summary",
+        "raw_terminal_id": 151671,
+        "assembled_terminal_id": 151674
+      },
+      {
+        "sample_index": 21,
+        "phase": "summary",
+        "raw_terminal_id": 151645,
+        "assembled_terminal_id": 151674
+      },
+      {
+        "sample_index": 17,
+        "phase": "summary",
+        "raw_terminal_id": 151645,
+        "assembled_terminal_id": 151674
+      }
+    ]
+  },
+  "diagnosis": [
+    "Actual24 forced think opener is present once and promptthink false: no observed duplicated/missing opener explains failures.",
+    "Model samples native reasoning then think-close, then protocol in answer phase. Runtime main does not track think state and accepts any Parallel opener even after think-close. This is permissive protocol enforcement, not runtime movement of sampled think-close.",
+    "Width decoder requires exact digit2..8+newline within4 tokens. Leading spaces/newlines terminate or exhaust header: observed10 failures.",
+    "strict_format checks balanced counts and final-after-think but fails to require all XML controls inside think or Plan-ID/width consistency; use stronger diagnostic validator without changing historical metrics.",
+    "Path/summary stop normalization substitutes wrong sampled controls/EOS to expected closing tags while marking them sampled. Actual24 contains5 mismatching terminal tokens; forced-tag zero mask policy must not count normalization as observed correct policy prediction."
+  ],
+  "structural_target_policy": {
+    "predicted_parallel_open": "include single token Parallel opener",
+    "predicted_width": "include entire exact [2-8]+newline after Parallel, all BPE slots by offsets",
+    "plan": "include Plan: syntax, linebreaks, numbered ID+colon prefixes; specify separately whether assignment prose is included",
+    "predicted_path_close": "include Path-close token when teacher target, despite runtime fallback injection",
+    "predicted_summary_close": "include Summary-close token when teacher target, despite runtime fallback injection",
+    "native_think_close": "include native think-close; train correct placement after final Summary and before Final Answer",
+    "final_boundary": "optionally explicit Final Answer prefix plus native im_end as separate class; otherwise onlyparallel cannot teach final layout",
+    "always_zero": "prompt/forced think opener, Path+ID+newline headers, Parallel-close+newline+Summary-open compiler bridge, masked forced whitespace spills; final weight must be target_mask multiplied by structural-or-semantic factor",
+    "shift": "weights index TARGET slots and shift exactly once weights[1:] alongside logits[:-1] and ids[1:]"
+  },
+  "weighted_loss_pitfalls": [
+    "Onlyparallel needs precise public definition: XML-token-only loses width, Plan and think-close supervision; broad structural schema is a different objective and must be named.",
+    "Fivefold structural weights with sum(weight) denominator changes every semantic gradient scale relative to baseline; define whether weighted mean normalization or baseline token denominator is intended and record both normalized objectives.",
+    "Per-example weighted mean then batch mean differs from global weighted token mean; retain existing sample averaging unless change intentional.",
+    "Forced boundary BPE whitespace spill must remain0 even if newline is structural.",
+    "Keep loss finite and positive denominator; report count/mass by target class, structuralCE and semanticCE independently.",
+    "Plan/think-close/native digits remain frozen output rows under six-row training. Trainable new-tag embeddings in system and prior protocol context can steer hidden states, and new-tag logits compete in softmax, but six rows do not provide full model capacity; format-only convergence cannot be promised.",
+    "Six-row tied model applies gradients through forced tag input embeddings despite forced TARGET loss0; this is expected and needed.",
+    "Do not silently fix runtime normalization or constrain decode while comparing loss ablations; treat runtime enforcement change as separate arm/protocol."
+  ],
+  "recommended_cpu_tests": [
+    "forced slots always0 under all modes, weights exactly1 baseline and5 structural for weighted mode",
+    "target shift proof on known token/offset boundaries and whitespace spill",
+    "Plan-width IDs and all controls inside think in strict diagnostic parser",
+    "all targets finite and no semantic tokens accidentally weighted via BPE boundary",
+    "sequential samples without parallel have explicit nonempty structural fallback or consciously rejected zero-denominator",
+    "source-reversal and frozen-pins unaffected by isolated research code"
+  ]
+}

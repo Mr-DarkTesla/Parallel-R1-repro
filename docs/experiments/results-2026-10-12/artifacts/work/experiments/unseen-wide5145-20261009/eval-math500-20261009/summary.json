@@ -1,0 +1,434 @@
+{
+  "state": "partial",
+  "updated_at": "2026-10-09T21:10:00.453016+00:00",
+  "questions": 343,
+  "total_questions": 500,
+  "samples_per_question": 1,
+  "correct": 40,
+  "pass_at_1": 0.11661807580174927,
+  "ci95": [
+    0.08681994674120178,
+    0.1549085337748413
+  ],
+  "invalid_answers": 127,
+  "extraction": {
+    "boxed": 216,
+    "missing_final_answer": 5,
+    "unfinished_thinking": 122
+  },
+  "scorer_errors": [],
+  "final_answer_only_diagnostic": {
+    "correct": 64,
+    "pass_at_1": 0.18658892128279883,
+    "ci95": [
+      0.14891375134876486,
+      0.23120648937727797
+    ],
+    "invalid_answers": 9,
+    "description": "Remove think tags before reference-blind extraction. Diagnostic, not primary previous-comparison metric."
+  },
+  "by_subject": {
+    "Algebra": {
+      "n": 80,
+      "correct": 21,
+      "pass_at_1": 0.2625,
+      "ci95": [
+        0.1785740148850936,
+        0.36818959664428175
+      ],
+      "final_answer_only_correct": 31,
+      "final_answer_only_pass_at_1": 0.3875
+    },
+    "Counting & Probability": {
+      "n": 25,
+      "correct": 3,
+      "pass_at_1": 0.12,
+      "ci95": [
+        0.04166817150440358,
+        0.2995579392092732
+      ],
+      "final_answer_only_correct": 3,
+      "final_answer_only_pass_at_1": 0.12
+    },
+    "Geometry": {
+      "n": 32,
+      "correct": 3,
+      "pass_at_1": 0.09375,
+      "ci95": [
+        0.032401551298366194,
+        0.24218154728387864
+      ],
+      "final_answer_only_correct": 5,
+      "final_answer_only_pass_at_1": 0.15625
+    },
+    "Intermediate Algebra": {
+      "n": 71,
+      "correct": 3,
+      "pass_at_1": 0.04225352112676056,
+      "ci95": [
+        0.014473260620475319,
+        0.11702416040484681
+      ],
+      "final_answer_only_correct": 3,
+      "final_answer_only_pass_at_1": 0.04225352112676056
+    },
+    "Number Theory": {
+      "n": 39,
+      "correct": 2,
+      "pass_at_1": 0.05128205128205128,
+      "ci95": [
+        0.014177955415274113,
+        0.16885640047613612
+      ],
+      "final_answer_only_correct": 4,
+      "final_answer_only_pass_at_1": 0.10256410256410256
+    },
+    "Prealgebra": {
+      "n": 52,
+      "correct": 5,
+      "pass_at_1": 0.09615384615384616,
+      "ci95": [
+        0.04177435105257249,
+        0.20609630120131633
+      ],
+      "final_answer_only_correct": 12,
+      "final_answer_only_pass_at_1": 0.23076923076923078
+    },
+    "Precalculus": {
+      "n": 44,
+      "correct": 3,
+      "pass_at_1": 0.06818181818181818,
+      "ci95": [
+        0.023459395907381622,
+        0.18225044370221527
+      ],
+      "final_answer_only_correct": 6,
+      "final_answer_only_pass_at_1": 0.13636363636363635
+    }
+  },
+  "by_level": {
+    "1": {
+      "n": 30,
+      "correct": 8,
+      "pass_at_1": 0.26666666666666666,
+      "ci95": [
+        0.14182663319596317,
+        0.4444796169518888
+      ],
+      "final_answer_only_correct": 14,
+      "final_answer_only_pass_at_1": 0.4666666666666667
+    },
+    "2": {
+      "n": 61,
+      "correct": 14,
+      "pass_at_1": 0.22950819672131148,
+      "ci95": [
+        0.1419323035287129,
+        0.34913405123584
+      ],
+      "final_answer_only_correct": 15,
+      "final_answer_only_pass_at_1": 0.2459016393442623
+    },
+    "3": {
+      "n": 76,
+      "correct": 10,
+      "pass_at_1": 0.13157894736842105,
+      "ci95": [
+        0.07306881567918964,
+        0.22554119436880626
+      ],
+      "final_answer_only_correct": 19,
+      "final_answer_only_pass_at_1": 0.25
+    },
+    "4": {
+      "n": 86,
+      "correct": 6,
+      "pass_at_1": 0.06976744186046512,
+      "ci95": [
+        0.032365414509921336,
+        0.14396140641036848
+      ],
+      "final_answer_only_correct": 8,
+      "final_answer_only_pass_at_1": 0.09302325581395349
+    },
+    "5": {
+      "n": 90,
+      "correct": 2,
+      "pass_at_1": 0.022222222222222223,
+      "ci95": [
+        0.006115441986325208,
+        0.07744526688625372
+      ],
+      "final_answer_only_correct": 8,
+      "final_answer_only_pass_at_1": 0.08888888888888889
+    }
+  },
+  "by_parallel": {
+    "False": {
+      "n": 92,
+      "correct": 14,
+      "pass_at_1": 0.15217391304347827,
+      "ci95": [
+        0.09286540270143614,
+        0.23936512897551807
+      ],
+      "final_answer_only_correct": 22,
+      "final_answer_only_pass_at_1": 0.2391304347826087
+    },
+    "True": {
+      "n": 251,
+      "correct": 26,
+      "pass_at_1": 0.10358565737051793,
+      "ci95": [
+        0.07167442985961422,
+        0.147447918125311
+      ],
+      "final_answer_only_correct": 42,
+      "final_answer_only_pass_at_1": 0.16733067729083664
+    }
+  },
+  "forks": {
+    "0": 92,
+    "1": 234,
+    "2": 13,
+    "23": 1,
+    "3": 1,
+    "4": 1,
+    "59": 1
+  },
+  "widths": {
+    "2": 264,
+    "3": 34,
+    "4": 42,
+    "5": 7,
+    "6": 2
+  },
+  "parallel_questions": 251,
+  "multi_round_questions": 17,
+  "format_invalid_questions": 11,
+  "invalid_width_questions": 5,
+  "budget_exhausted_questions": 1,
+  "response_tokens": {
+    "n": 343,
+    "sum": 336597,
+    "mean": 981.332361516035,
+    "median": 519,
+    "p90": 1044.0,
+    "p95": 1365.4999999999995,
+    "max": 30720,
+    "min": 83
+  },
+  "sampled_tokens": {
+    "n": 343,
+    "sum": 333013,
+    "mean": 970.8833819241983,
+    "median": 510,
+    "p90": 1034.4,
+    "p95": 1353.7999999999997,
+    "max": 30711,
+    "min": 83
+  },
+  "forced_tokens": {
+    "n": 343,
+    "sum": 3584,
+    "mean": 10.448979591836734,
+    "median": 9,
+    "p90": 15.0,
+    "p95": 18.0,
+    "max": 531,
+    "min": 0
+  },
+  "phase_tokens": {
+    "main": {
+      "n": 692,
+      "sum": 180998,
+      "mean": 261.5578034682081,
+      "median": 129.0,
+      "p90": 302.0,
+      "p95": 424.749999999999,
+      "max": 30277,
+      "min": 12
+    },
+    "width": {
+      "n": 354,
+      "sum": 708,
+      "mean": 2,
+      "median": 2.0,
+      "p90": 2.0,
+      "p95": 2.0,
+      "max": 2,
+      "min": 2
+    },
+    "path": {
+      "n": 845,
+      "sum": 95666,
+      "mean": 113.21420118343195,
+      "median": 70,
+      "p90": 171.0,
+      "p95": 233.79999999999995,
+      "max": 8192,
+      "min": 9
+    },
+    "summary": {
+      "n": 349,
+      "sum": 55641,
+      "mean": 159.4297994269341,
+      "median": 68,
+      "p90": 181.39999999999998,
+      "p95": 251.79999999999956,
+      "max": 20333,
+      "min": 18
+    }
+  },
+  "critical_depth": {
+    "n": 343,
+    "sum": 294319,
+    "mean": 858.072886297376,
+    "median": 431,
+    "p90": 895.4000000000001,
+    "p95": 1148.8999999999996,
+    "max": 30645,
+    "min": 83
+  },
+  "sampled_work_over_critical_depth": {
+    "n": 343,
+    "sum": 390.1484170006507,
+    "mean": 1.137458941692859,
+    "median": 1.116991643454039,
+    "p90": 1.316964533555399,
+    "p95": 1.4033547459252156,
+    "max": 1.6241258741258742,
+    "min": 1.0
+  },
+  "elapsed_seconds_per_question": {
+    "n": 343,
+    "sum": 12071.67303442955,
+    "mean": 35.19438202457595,
+    "median": 15.032788753509521,
+    "p90": 30.690776109695438,
+    "p95": 40.904174327850335,
+    "max": 1566.0891604423523,
+    "min": 2.4431560039520264
+  },
+  "generation_calls": {
+    "n": 343,
+    "sum": 2240,
+    "mean": 6.530612244897959,
+    "median": 6,
+    "p90": 8.0,
+    "p95": 9.899999999999977,
+    "max": 296,
+    "min": 1
+  },
+  "call_budget_reached": {
+    "path": 2,
+    "main": 1
+  },
+  "sampled_eos_by_phase": {
+    "main_sampled_eos": 337,
+    "summary_sampled_eos": 3
+  },
+  "runtime_closure_label_replacements": 6,
+  "exact_duplicate_paths_within_trace": 166,
+  "path_repeated_5gram_fraction": {
+    "n": 845,
+    "sum": 46.01443160467347,
+    "mean": 0.05445494864458399,
+    "median": 0.0,
+    "p90": 0.16000000000000003,
+    "p95": 0.4444444444444444,
+    "max": 0.9727917981072555,
+    "min": 0.0
+  },
+  "paths_with_repeated_5gram_fraction_over_half": 3,
+  "think_markup": {
+    "open=0,close=0": 12,
+    "open=0,close=1": 78,
+    "open=0,close=2": 32,
+    "open=1,close=0": 69,
+    "open=1,close=1": 98,
+    "open=2,close=0": 53,
+    "open=2,close=1": 1
+  },
+  "think_structure": {
+    "exactly_one_balanced_think": 63,
+    "all_forks_inside_think": 62,
+    "final_after_think": 63,
+    "fully_valid": 62
+  },
+  "by_max_width": {
+    "0": {
+      "n": 92,
+      "correct": 14,
+      "pass_at_1": 0.15217391304347827,
+      "ci95": [
+        0.09286540270143614,
+        0.23936512897551807
+      ],
+      "final_answer_only_correct": 22,
+      "final_answer_only_pass_at_1": 0.2391304347826087
+    },
+    "2": {
+      "n": 190,
+      "correct": 19,
+      "pass_at_1": 0.1,
+      "ci95": [
+        0.06495707849098338,
+        0.1508969450767923
+      ],
+      "final_answer_only_correct": 35,
+      "final_answer_only_pass_at_1": 0.18421052631578946
+    },
+    "3": {
+      "n": 31,
+      "correct": 6,
+      "pass_at_1": 0.1935483870967742,
+      "ci95": [
+        0.09187008361586096,
+        0.36280257811795463
+      ],
+      "final_answer_only_correct": 6,
+      "final_answer_only_pass_at_1": 0.1935483870967742
+    },
+    "4": {
+      "n": 21,
+      "correct": 0,
+      "pass_at_1": 0.0,
+      "ci95": [
+        0,
+        0.154639018924847
+      ],
+      "final_answer_only_correct": 0,
+      "final_answer_only_pass_at_1": 0.0
+    },
+    "5": {
+      "n": 7,
+      "correct": 1,
+      "pass_at_1": 0.14285714285714285,
+      "ci95": [
+        0.02567962434474355,
+        0.5131278292743189
+      ],
+      "final_answer_only_correct": 1,
+      "final_answer_only_pass_at_1": 0.14285714285714285
+    },
+    "6": {
+      "n": 2,
+      "correct": 0,
+      "pass_at_1": 0.0,
+      "ci95": [
+        0,
+        0.6576197724933469
+      ],
+      "final_answer_only_correct": 0,
+      "final_answer_only_pass_at_1": 0.0
+    }
+  },
+  "context_audit": {
+    "forks_checked": 349,
+    "sibling_prefix_mismatches": 0,
+    "policy_label_or_mask_errors": []
+  },
+  "theoretical_ratio_note": "Sampled work / serial critical token depth. Branches execute sequentially per GPU in this evaluator; this ratio is not measured speedup.",
+  "extraction_tests": 13
+}

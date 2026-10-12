@@ -1,0 +1,5135 @@
+{
+  "checkpoint_proof": {
+    "passed": true,
+    "step": 50,
+    "checkpoint": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/checkpoint-0050",
+    "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+    "tensors": 399,
+    "parameters": 4022468096,
+    "serialized_parameters": 4411424256,
+    "tied_alias_parameters": 388956160,
+    "finite": true,
+    "unsharded": true,
+    "optimizer_reset": true,
+    "exact_optimizer_resume": false,
+    "source_validation_summary": {
+      "step": 50,
+      "completed": 32,
+      "correct": 28,
+      "format_valid": 30,
+      "parallel_valid": 30,
+      "fork_tasks": 32,
+      "widths": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "actual_rounds": 32,
+      "logical_depth": [
+        752,
+        654,
+        1344,
+        483,
+        463,
+        575,
+        710,
+        580,
+        2255,
+        636,
+        540,
+        364,
+        710,
+        817,
+        1069,
+        766,
+        521,
+        2172,
+        764,
+        1086,
+        952,
+        921,
+        1763,
+        724,
+        609,
+        875,
+        690,
+        1883,
+        559,
+        697,
+        803,
+        399
+      ],
+      "sampled_tokens": [
+        1126,
+        890,
+        1658,
+        718,
+        669,
+        1009,
+        1139,
+        802,
+        2860,
+        1190,
+        816,
+        581,
+        1136,
+        1153,
+        1392,
+        1477,
+        798,
+        3135,
+        1208,
+        1578,
+        1746,
+        1314,
+        2507,
+        1019,
+        831,
+        1214,
+        972,
+        2497,
+        812,
+        1039,
+        1320,
+        639
+      ],
+      "actual_forward_calls": [
+        752,
+        654,
+        1344,
+        483,
+        463,
+        575,
+        710,
+        580,
+        2255,
+        636,
+        540,
+        364,
+        710,
+        817,
+        1069,
+        766,
+        521,
+        2172,
+        764,
+        1086,
+        952,
+        921,
+        1763,
+        724,
+        609,
+        875,
+        690,
+        1883,
+        559,
+        697,
+        803,
+        399
+      ],
+      "sampler": "Exact FP32 HF fullwidth8, temperature1 top_p1 nofilter; fixed clean validation seed",
+      "selection_allowed": true,
+      "benchmark": false
+    },
+    "time": 1791798541.5375202
+  },
+  "source_latest_metrics": {
+    "step": 52,
+    "ranks": [
+      {
+        "step": 52,
+        "rank": 0,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.00019165019875799771,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 470,
+            "generated_tokens": 771,
+            "critical_depth": 470,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.33,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.32999999999999996,
+            "forward_penalty": 0.02,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 359,
+            "generated_tokens": 549,
+            "critical_depth": 359,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 495,
+            "generated_tokens": 774,
+            "critical_depth": 495,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 424,
+            "generated_tokens": 730,
+            "critical_depth": 424,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.004999999999999893,
+          0.015000000000000124,
+          -0.004999999999999893,
+          -0.004999999999999893
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          470,
+          359,
+          495,
+          424
+        ],
+        "sampled_tokens": [
+          771,
+          549,
+          774,
+          730
+        ],
+        "actual_forward_calls": [
+          470,
+          359,
+          495,
+          424
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.7738037109375e-05,
+        "mean_replay_logp_drift": 4.133489255764289e-06,
+        "p95_replay_logp_drift": 2.260180190205574e-05,
+        "seconds": 570.9439611434937,
+        "peak_gpu_bytes": 40197596160,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 35529325568,
+            "reserved": 36163289088,
+            "free": 47957475328,
+            "total": 85094825984,
+            "peak_allocated": 35529325568
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 35529325568,
+            "reserved": 37297848320,
+            "free": 46822916096,
+            "total": 85094825984,
+            "peak_allocated": 36581758976
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 35529329664,
+            "reserved": 42066771968,
+            "free": 42053992448,
+            "total": 85094825984,
+            "peak_allocated": 40197596160
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 35529330688,
+            "reserved": 42066771968,
+            "free": 42053992448,
+            "total": 85094825984,
+            "peak_allocated": 40197596160
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 35529325568,
+            "reserved": 36163289088,
+            "free": 47957475328,
+            "total": 85094825984,
+            "peak_allocated": 40197596160
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 1,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": -0.002893559169024229,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 3,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 624,
+            "generated_tokens": 1048,
+            "critical_depth": 624,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 657,
+            "generated_tokens": 994,
+            "critical_depth": 657,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 666,
+            "generated_tokens": 952,
+            "critical_depth": 666,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 688,
+            "generated_tokens": 961,
+            "critical_depth": 688,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.3225,
+          0.3225,
+          -0.9675,
+          0.3225
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          624,
+          657,
+          666,
+          688
+        ],
+        "sampled_tokens": [
+          1048,
+          994,
+          952,
+          961
+        ],
+        "actual_forward_calls": [
+          624,
+          657,
+          666,
+          688
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.0108642578125e-05,
+        "mean_replay_logp_drift": 4.5026449697616044e-06,
+        "p95_replay_logp_drift": 2.47955322265625e-05,
+        "seconds": 570.9595563411713,
+        "peak_gpu_bytes": 38365733888,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33697463296,
+            "reserved": 34091302912,
+            "free": 50029461504,
+            "total": 85094825984,
+            "peak_allocated": 33697463296
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33697463296,
+            "reserved": 35859202048,
+            "free": 48261562368,
+            "total": 85094825984,
+            "peak_allocated": 34931756032
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33697467392,
+            "reserved": 41072721920,
+            "free": 43048042496,
+            "total": 85094825984,
+            "peak_allocated": 38365733888
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33697468416,
+            "reserved": 41072721920,
+            "free": 43048042496,
+            "total": 85094825984,
+            "peak_allocated": 38365733888
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33697463296,
+            "reserved": 34091302912,
+            "free": 50029461504,
+            "total": 85094825984,
+            "peak_allocated": 38365733888
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 2,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.0,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1162,
+            "generated_tokens": 2005,
+            "critical_depth": 1162,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1164,
+            "generated_tokens": 1771,
+            "critical_depth": 1164,
+            "actual_rounds": 1,
+            "widths": [
+              6
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1012,
+            "generated_tokens": 1688,
+            "critical_depth": 1012,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1117,
+            "generated_tokens": 1860,
+            "critical_depth": 1117,
+            "actual_rounds": 1,
+            "widths": [
+              6
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": true,
+        "actual_widths": [
+          4,
+          6,
+          4,
+          6
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          1162,
+          1164,
+          1012,
+          1117
+        ],
+        "sampled_tokens": [
+          2005,
+          1771,
+          1688,
+          1860
+        ],
+        "actual_forward_calls": [
+          1162,
+          1164,
+          1012,
+          1117
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.20159912109375e-05,
+        "mean_replay_logp_drift": 4.413022452354198e-06,
+        "p95_replay_logp_drift": 2.47955322265625e-05,
+        "seconds": 570.9595890045166,
+        "peak_gpu_bytes": 38363654656,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33695376384,
+            "reserved": 34074525696,
+            "free": 50046238720,
+            "total": 85094825984,
+            "peak_allocated": 33695376384
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33695376384,
+            "reserved": 37107007488,
+            "free": 47013756928,
+            "total": 85094825984,
+            "peak_allocated": 35961076224
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33695380480,
+            "reserved": 41911582720,
+            "free": 42209181696,
+            "total": 85094825984,
+            "peak_allocated": 38363654656
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33695381504,
+            "reserved": 41911582720,
+            "free": 42209181696,
+            "total": 85094825984,
+            "peak_allocated": 38363654656
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33695376384,
+            "reserved": 34074525696,
+            "free": 50046238720,
+            "total": 85094825984,
+            "peak_allocated": 38363654656
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 3,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.00010284476411470678,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 594,
+            "generated_tokens": 964,
+            "critical_depth": 594,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 649,
+            "generated_tokens": 959,
+            "critical_depth": 649,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 643,
+            "generated_tokens": 1254,
+            "critical_depth": 643,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 711,
+            "generated_tokens": 1016,
+            "critical_depth": 711,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.015000000000000124,
+          -0.004999999999999893,
+          -0.004999999999999893,
+          -0.004999999999999893
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          594,
+          649,
+          643,
+          711
+        ],
+        "sampled_tokens": [
+          964,
+          959,
+          1254,
+          1016
+        ],
+        "actual_forward_calls": [
+          594,
+          649,
+          643,
+          711
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 9.72747802734375e-05,
+        "mean_replay_logp_drift": 3.5151529118593317e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9594676494598,
+        "peak_gpu_bytes": 38360514048,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33692240896,
+            "reserved": 34250686464,
+            "free": 49870077952,
+            "total": 85094825984,
+            "peak_allocated": 33692240896
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33692240896,
+            "reserved": 35915825152,
+            "free": 48204939264,
+            "total": 85094825984,
+            "peak_allocated": 34970764800
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33692244992,
+            "reserved": 40584085504,
+            "free": 43536678912,
+            "total": 85094825984,
+            "peak_allocated": 38360514048
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33692246016,
+            "reserved": 40584085504,
+            "free": 43536678912,
+            "total": 85094825984,
+            "peak_allocated": 38360514048
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33692240896,
+            "reserved": 34250686464,
+            "free": 49870077952,
+            "total": 85094825984,
+            "peak_allocated": 38360514048
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 4,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.0006182857905514538,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 857,
+            "generated_tokens": 1647,
+            "critical_depth": 857,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 769,
+            "generated_tokens": 1100,
+            "critical_depth": 769,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 973,
+            "generated_tokens": 1489,
+            "critical_depth": 973,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 692,
+            "generated_tokens": 1023,
+            "critical_depth": 692,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.010000000000000009,
+          0.010000000000000009,
+          -0.010000000000000009,
+          0.010000000000000009
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          857,
+          769,
+          973,
+          692
+        ],
+        "sampled_tokens": [
+          1647,
+          1100,
+          1489,
+          1023
+        ],
+        "actual_forward_calls": [
+          857,
+          769,
+          973,
+          692
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.96453857421875e-05,
+        "mean_replay_logp_drift": 3.726746626853128e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9594023227692,
+        "peak_gpu_bytes": 38368871936,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33700598784,
+            "reserved": 34078720000,
+            "free": 50042044416,
+            "total": 85094825984,
+            "peak_allocated": 33700598784
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33700598784,
+            "reserved": 36263952384,
+            "free": 47856812032,
+            "total": 85094825984,
+            "peak_allocated": 35109125632
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33700602880,
+            "reserved": 41171288064,
+            "free": 42949476352,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33700603904,
+            "reserved": 41171288064,
+            "free": 42949476352,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33700598784,
+            "reserved": 34078720000,
+            "free": 50042044416,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 5,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.0020516987992778013,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 679,
+            "generated_tokens": 993,
+            "critical_depth": 679,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1095,
+            "generated_tokens": 1416,
+            "critical_depth": 1095,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 816,
+            "generated_tokens": 1110,
+            "critical_depth": 816,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.21,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.20999999999999996,
+            "forward_penalty": 0.14,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1481,
+            "generated_tokens": 1732,
+            "critical_depth": 1481,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.03500000000000014,
+          -0.004999999999999893,
+          0.015000000000000124,
+          -0.04499999999999993
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          679,
+          1095,
+          816,
+          1481
+        ],
+        "sampled_tokens": [
+          993,
+          1416,
+          1110,
+          1732
+        ],
+        "actual_forward_calls": [
+          679,
+          1095,
+          816,
+          1481
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.20159912109375e-05,
+        "mean_replay_logp_drift": 3.1837575988902245e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9595377445221,
+        "peak_gpu_bytes": 38360521728,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33692240896,
+            "reserved": 34089205760,
+            "free": 50031558656,
+            "total": 85094825984,
+            "peak_allocated": 33692240896
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33692240896,
+            "reserved": 36035362816,
+            "free": 48085401600,
+            "total": 85094825984,
+            "peak_allocated": 35306007040
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33692244992,
+            "reserved": 40703623168,
+            "free": 43417141248,
+            "total": 85094825984,
+            "peak_allocated": 38360521728
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33692246016,
+            "reserved": 40703623168,
+            "free": 43417141248,
+            "total": 85094825984,
+            "peak_allocated": 38360521728
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33692240896,
+            "reserved": 34089205760,
+            "free": 50031558656,
+            "total": 85094825984,
+            "peak_allocated": 38360521728
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 6,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.07657733326777816,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 3,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 916,
+            "generated_tokens": 1614,
+            "critical_depth": 916,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.23,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.22999999999999998,
+            "forward_penalty": 0.12,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1236,
+            "generated_tokens": 1679,
+            "critical_depth": 1236,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2188,
+            "generated_tokens": 3100,
+            "critical_depth": 2188,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.21,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.20999999999999996,
+            "forward_penalty": 0.14,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1483,
+            "generated_tokens": 1982,
+            "critical_depth": 1483,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.3425,
+          0.3025,
+          -0.9275,
+          0.2825
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          916,
+          1236,
+          2188,
+          1483
+        ],
+        "sampled_tokens": [
+          1614,
+          1679,
+          3100,
+          1982
+        ],
+        "actual_forward_calls": [
+          916,
+          1236,
+          2188,
+          1483
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.58306884765625e-05,
+        "mean_replay_logp_drift": 2.732575921982061e-06,
+        "p95_replay_logp_drift": 1.71661376953125e-05,
+        "seconds": 570.9593617916107,
+        "peak_gpu_bytes": 39571753984,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33699550208,
+            "reserved": 34024194048,
+            "free": 50096570368,
+            "total": 85094825984,
+            "peak_allocated": 33699550208
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33699550208,
+            "reserved": 36865835008,
+            "free": 47254929408,
+            "total": 85094825984,
+            "peak_allocated": 35761402368
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33699554304,
+            "reserved": 43312480256,
+            "free": 40808284160,
+            "total": 85094825984,
+            "peak_allocated": 39571753984
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33699555328,
+            "reserved": 43312480256,
+            "free": 40808284160,
+            "total": 85094825984,
+            "peak_allocated": 39571753984
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33699550208,
+            "reserved": 34024194048,
+            "free": 50096570368,
+            "total": 85094825984,
+            "peak_allocated": 39571753984
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 7,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.046465498347970424,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 2,
+        "format_valid": 1,
+        "parallel_valid": 1,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": -0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 0.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2357,
+            "generated_tokens": 4079,
+            "critical_depth": 2357,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": false,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": -0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 0.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2634,
+            "generated_tokens": 4080,
+            "critical_depth": 2634,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": false,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.8699999999999999,
+            "accuracy_reward": 1.0,
+            "aux_reward": -0.13000000000000006,
+            "forward_penalty": 0.28,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.09999999999999999,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.15,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 0.3333333333333333,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2894,
+            "generated_tokens": 3164,
+            "critical_depth": 2894,
+            "actual_rounds": 1,
+            "widths": [
+              2
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.76,
+            "accuracy_reward": 1.0,
+            "aux_reward": -0.24,
+            "forward_penalty": 0.24,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 0.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2470,
+            "generated_tokens": 3121,
+            "critical_depth": 2470,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": false,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.4075,
+          -0.4075,
+          0.4624999999999999,
+          0.35250000000000004
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          2,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          2357,
+          2634,
+          2894,
+          2470
+        ],
+        "sampled_tokens": [
+          4079,
+          4080,
+          3164,
+          3121
+        ],
+        "actual_forward_calls": [
+          2357,
+          2634,
+          2894,
+          2470
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 9.72747802734375e-05,
+        "mean_replay_logp_drift": 4.382385668577626e-06,
+        "p95_replay_logp_drift": 2.47955322265625e-05,
+        "seconds": 570.9593458175659,
+        "peak_gpu_bytes": 40715906560,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33700598784,
+            "reserved": 34221326336,
+            "free": 49899438080,
+            "total": 85094825984,
+            "peak_allocated": 33700598784
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33700598784,
+            "reserved": 37243322368,
+            "free": 46877442048,
+            "total": 85094825984,
+            "peak_allocated": 35860502528
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33700602880,
+            "reserved": 47108325376,
+            "free": 37012439040,
+            "total": 85094825984,
+            "peak_allocated": 40715906560
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33700603904,
+            "reserved": 47108325376,
+            "free": 37012439040,
+            "total": 85094825984,
+            "peak_allocated": 40715906560
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33700598784,
+            "reserved": 34221326336,
+            "free": 49899438080,
+            "total": 85094825984,
+            "peak_allocated": 40715906560
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 8,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.0008938594985465897,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 536,
+            "generated_tokens": 811,
+            "critical_depth": 536,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 594,
+            "generated_tokens": 887,
+            "critical_depth": 594,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 945,
+            "generated_tokens": 1380,
+            "critical_depth": 945,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 664,
+            "generated_tokens": 1123,
+            "critical_depth": 664,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.015000000000000124,
+          0.015000000000000124,
+          -0.02499999999999991,
+          -0.004999999999999893
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          536,
+          594,
+          945,
+          664
+        ],
+        "sampled_tokens": [
+          811,
+          887,
+          1380,
+          1123
+        ],
+        "actual_forward_calls": [
+          536,
+          594,
+          945,
+          664
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 0.0001125335693359375,
+        "mean_replay_logp_drift": 3.5481859868014e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9593665599823,
+        "peak_gpu_bytes": 38359468032,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33691192320,
+            "reserved": 34301018112,
+            "free": 49819746304,
+            "total": 85094825984,
+            "peak_allocated": 33691192320
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33691192320,
+            "reserved": 35735470080,
+            "free": 48385294336,
+            "total": 85094825984,
+            "peak_allocated": 34800642560
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33691196416,
+            "reserved": 40693137408,
+            "free": 43427627008,
+            "total": 85094825984,
+            "peak_allocated": 38359468032
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33691197440,
+            "reserved": 40693137408,
+            "free": 43427627008,
+            "total": 85094825984,
+            "peak_allocated": 38359468032
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33691192320,
+            "reserved": 34301018112,
+            "free": 49819746304,
+            "total": 85094825984,
+            "peak_allocated": 38359468032
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 9,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.00014526394716085633,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 544,
+            "generated_tokens": 847,
+            "critical_depth": 544,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 522,
+            "generated_tokens": 700,
+            "critical_depth": 522,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 621,
+            "generated_tokens": 793,
+            "critical_depth": 621,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 688,
+            "generated_tokens": 992,
+            "critical_depth": 688,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.010000000000000009,
+          0.010000000000000009,
+          -0.010000000000000009,
+          -0.010000000000000009
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          544,
+          522,
+          621,
+          688
+        ],
+        "sampled_tokens": [
+          847,
+          700,
+          793,
+          992
+        ],
+        "actual_forward_calls": [
+          544,
+          522,
+          621,
+          688
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 7.2479248046875e-05,
+        "mean_replay_logp_drift": 3.9832789298088755e-06,
+        "p95_replay_logp_drift": 2.288818359375e-05,
+        "seconds": 570.9595949649811,
+        "peak_gpu_bytes": 38358414336,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33690143744,
+            "reserved": 34175188992,
+            "free": 49945575424,
+            "total": 85094825984,
+            "peak_allocated": 33690143744
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33690143744,
+            "reserved": 35704012800,
+            "free": 48416751616,
+            "total": 85094825984,
+            "peak_allocated": 34883126272
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33690147840,
+            "reserved": 40372273152,
+            "free": 43748491264,
+            "total": 85094825984,
+            "peak_allocated": 38358414336
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33690148864,
+            "reserved": 40372273152,
+            "free": 43748491264,
+            "total": 85094825984,
+            "peak_allocated": 38358414336
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33690143744,
+            "reserved": 34175188992,
+            "free": 49945575424,
+            "total": 85094825984,
+            "peak_allocated": 38358414336
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 10,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": -0.05312803219567286,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 3,
+        "format_valid": 3,
+        "parallel_valid": 3,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.07,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.06999999999999997,
+            "forward_penalty": 0.28,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2899,
+            "generated_tokens": 3518,
+            "critical_depth": 2899,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1173,
+            "generated_tokens": 1578,
+            "critical_depth": 1173,
+            "actual_rounds": 1,
+            "widths": [
+              6
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.86,
+            "accuracy_reward": 1.0,
+            "aux_reward": -0.14,
+            "forward_penalty": 0.14,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 0.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1498,
+            "generated_tokens": 1735,
+            "critical_depth": 1498,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": false,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 962,
+            "generated_tokens": 1167,
+            "critical_depth": 962,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.275,
+          0.45499999999999996,
+          0.06499999999999995,
+          -0.795
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          6,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          2899,
+          1173,
+          1498,
+          962
+        ],
+        "sampled_tokens": [
+          3518,
+          1578,
+          1735,
+          1167
+        ],
+        "actual_forward_calls": [
+          2899,
+          1173,
+          1498,
+          962
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.58306884765625e-05,
+        "mean_replay_logp_drift": 5.254628831607988e-06,
+        "p95_replay_logp_drift": 2.6702880859375e-05,
+        "seconds": 570.9593391418457,
+        "peak_gpu_bytes": 40939988480,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33697463296,
+            "reserved": 34173091840,
+            "free": 49947672576,
+            "total": 85094825984,
+            "peak_allocated": 33697463296
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33697463296,
+            "reserved": 38107348992,
+            "free": 46013415424,
+            "total": 85094825984,
+            "peak_allocated": 36467375616
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33697467392,
+            "reserved": 46166704128,
+            "free": 37954060288,
+            "total": 85094825984,
+            "peak_allocated": 40939988480
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33697468416,
+            "reserved": 46166704128,
+            "free": 37954060288,
+            "total": 85094825984,
+            "peak_allocated": 40939988480
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33697463296,
+            "reserved": 34173091840,
+            "free": 49947672576,
+            "total": 85094825984,
+            "peak_allocated": 40939988480
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 11,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.0,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 873,
+            "generated_tokens": 1516,
+            "critical_depth": 873,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 871,
+            "generated_tokens": 1612,
+            "critical_depth": 871,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 932,
+            "generated_tokens": 1761,
+            "critical_depth": 932,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 844,
+            "generated_tokens": 1729,
+            "critical_depth": 844,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": true,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          873,
+          871,
+          932,
+          844
+        ],
+        "sampled_tokens": [
+          1516,
+          1612,
+          1761,
+          1729
+        ],
+        "actual_forward_calls": [
+          873,
+          871,
+          932,
+          844
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.20159912109375e-05,
+        "mean_replay_logp_drift": 2.98639270113199e-06,
+        "p95_replay_logp_drift": 1.9073486328125e-05,
+        "seconds": 570.959543466568,
+        "peak_gpu_bytes": 38366787584,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33698511872,
+            "reserved": 34061942784,
+            "free": 50058821632,
+            "total": 85094825984,
+            "peak_allocated": 33698511872
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33698511872,
+            "reserved": 35662069760,
+            "free": 48458694656,
+            "total": 85094825984,
+            "peak_allocated": 35029425152
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33698515968,
+            "reserved": 41001418752,
+            "free": 43119345664,
+            "total": 85094825984,
+            "peak_allocated": 38366787584
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33698516992,
+            "reserved": 41001418752,
+            "free": 43119345664,
+            "total": 85094825984,
+            "peak_allocated": 38366787584
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33698511872,
+            "reserved": 34061942784,
+            "free": 50058821632,
+            "total": 85094825984,
+            "peak_allocated": 38366787584
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 12,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.0003057861777051585,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 453,
+            "generated_tokens": 760,
+            "critical_depth": 453,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 640,
+            "generated_tokens": 800,
+            "critical_depth": 640,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 705,
+            "generated_tokens": 1107,
+            "critical_depth": 705,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 403,
+            "generated_tokens": 646,
+            "critical_depth": 403,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.010000000000000009,
+          -0.010000000000000009,
+          -0.010000000000000009,
+          0.010000000000000009
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          453,
+          640,
+          705,
+          403
+        ],
+        "sampled_tokens": [
+          760,
+          800,
+          1107,
+          646
+        ],
+        "actual_forward_calls": [
+          453,
+          640,
+          705,
+          403
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.20159912109375e-05,
+        "mean_replay_logp_drift": 3.376289214429562e-06,
+        "p95_replay_logp_drift": 1.9073486328125e-05,
+        "seconds": 570.959635257721,
+        "peak_gpu_bytes": 38368871936,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33700598784,
+            "reserved": 34225520640,
+            "free": 49895243776,
+            "total": 85094825984,
+            "peak_allocated": 33700598784
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33700598784,
+            "reserved": 35517366272,
+            "free": 48603398144,
+            "total": 85094825984,
+            "peak_allocated": 34844588544
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33700602880,
+            "reserved": 40286289920,
+            "free": 43834474496,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33700603904,
+            "reserved": 40286289920,
+            "free": 43834474496,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33700598784,
+            "reserved": 34225520640,
+            "free": 49895243776,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 13,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": -0.004170072483248077,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 3,
+        "parallel_valid": 3,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 813,
+            "generated_tokens": 1349,
+            "critical_depth": 813,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 837,
+            "generated_tokens": 1177,
+            "critical_depth": 837,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.94,
+            "accuracy_reward": 1.0,
+            "aux_reward": -0.06,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 0.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 620,
+            "generated_tokens": 887,
+            "critical_depth": 620,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": false,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 750,
+            "generated_tokens": 990,
+            "critical_depth": 750,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.07750000000000012,
+          0.07750000000000012,
+          -0.25249999999999995,
+          0.09750000000000014
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          813,
+          837,
+          620,
+          750
+        ],
+        "sampled_tokens": [
+          1349,
+          1177,
+          887,
+          990
+        ],
+        "actual_forward_calls": [
+          813,
+          837,
+          620,
+          750
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 9.1552734375e-05,
+        "mean_replay_logp_drift": 3.733257017302094e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9593222141266,
+        "peak_gpu_bytes": 38365736448,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33697463296,
+            "reserved": 34057748480,
+            "free": 50063015936,
+            "total": 85094825984,
+            "peak_allocated": 33697463296
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33697463296,
+            "reserved": 35699818496,
+            "free": 48420945920,
+            "total": 85094825984,
+            "peak_allocated": 34989698560
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33697467392,
+            "reserved": 40368078848,
+            "free": 43752685568,
+            "total": 85094825984,
+            "peak_allocated": 38365736448
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33697468416,
+            "reserved": 40368078848,
+            "free": 43752685568,
+            "total": 85094825984,
+            "peak_allocated": 38365736448
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33697463296,
+            "reserved": 34057748480,
+            "free": 50063015936,
+            "total": 85094825984,
+            "peak_allocated": 38365736448
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 14,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.00039550699875690043,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 768,
+            "generated_tokens": 1526,
+            "critical_depth": 768,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 815,
+            "generated_tokens": 1601,
+            "critical_depth": 815,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.27,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.26999999999999996,
+            "forward_penalty": 0.08,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 933,
+            "generated_tokens": 1593,
+            "critical_depth": 933,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1024,
+            "generated_tokens": 1850,
+            "critical_depth": 1024,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.020000000000000018,
+          0.0,
+          0.0,
+          -0.020000000000000018
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          768,
+          815,
+          933,
+          1024
+        ],
+        "sampled_tokens": [
+          1526,
+          1601,
+          1593,
+          1850
+        ],
+        "actual_forward_calls": [
+          768,
+          815,
+          933,
+          1024
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 7.2479248046875e-05,
+        "mean_replay_logp_drift": 2.6496759346628096e-06,
+        "p95_replay_logp_drift": 1.71661376953125e-05,
+        "seconds": 570.9596283435822,
+        "peak_gpu_bytes": 38368871936,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33700598784,
+            "reserved": 34181480448,
+            "free": 49939283968,
+            "total": 85094825984,
+            "peak_allocated": 33700598784
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33700598784,
+            "reserved": 36115054592,
+            "free": 48005709824,
+            "total": 85094825984,
+            "peak_allocated": 35108296704
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33700602880,
+            "reserved": 40783314944,
+            "free": 43337449472,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33700603904,
+            "reserved": 40783314944,
+            "free": 43337449472,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33700598784,
+            "reserved": 34181480448,
+            "free": 49939283968,
+            "total": 85094825984,
+            "peak_allocated": 38368871936
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 15,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.00010528575694479514,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 523,
+            "generated_tokens": 765,
+            "critical_depth": 523,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 466,
+            "generated_tokens": 666,
+            "critical_depth": 466,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 484,
+            "generated_tokens": 690,
+            "critical_depth": 484,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.33,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.32999999999999996,
+            "forward_penalty": 0.02,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 354,
+            "generated_tokens": 592,
+            "critical_depth": 354,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.004999999999999893,
+          -0.004999999999999893,
+          -0.004999999999999893,
+          0.015000000000000124
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          523,
+          466,
+          484,
+          354
+        ],
+        "sampled_tokens": [
+          765,
+          666,
+          690,
+          592
+        ],
+        "actual_forward_calls": [
+          523,
+          466,
+          484,
+          354
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 7.2479248046875e-05,
+        "mean_replay_logp_drift": 3.3900607832038077e-06,
+        "p95_replay_logp_drift": 1.9073486328125e-05,
+        "seconds": 570.9594080448151,
+        "peak_gpu_bytes": 38348176384,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33679905792,
+            "reserved": 34005319680,
+            "free": 50115444736,
+            "total": 85094825984,
+            "peak_allocated": 33679905792
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33679905792,
+            "reserved": 35483811840,
+            "free": 48636952576,
+            "total": 85094825984,
+            "peak_allocated": 34801150464
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33679909888,
+            "reserved": 40676360192,
+            "free": 43444404224,
+            "total": 85094825984,
+            "peak_allocated": 38348176384
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33679910912,
+            "reserved": 40676360192,
+            "free": 43444404224,
+            "total": 85094825984,
+            "peak_allocated": 38348176384
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33679905792,
+            "reserved": 34005319680,
+            "free": 50115444736,
+            "total": 85094825984,
+            "peak_allocated": 38348176384
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 16,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.015343064893386327,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 2,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 805,
+            "generated_tokens": 1204,
+            "critical_depth": 805,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 579,
+            "generated_tokens": 868,
+            "critical_depth": 579,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 451,
+            "generated_tokens": 755,
+            "critical_depth": 451,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 656,
+            "generated_tokens": 933,
+            "critical_depth": 656,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.65,
+          -0.65,
+          0.66,
+          0.64
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          805,
+          579,
+          451,
+          656
+        ],
+        "sampled_tokens": [
+          1204,
+          868,
+          755,
+          933
+        ],
+        "actual_forward_calls": [
+          805,
+          579,
+          451,
+          656
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 9.34600830078125e-05,
+        "mean_replay_logp_drift": 4.7610160436306614e-06,
+        "p95_replay_logp_drift": 2.47955322265625e-05,
+        "seconds": 570.9591670036316,
+        "peak_gpu_bytes": 38348684800,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33680411648,
+            "reserved": 34076622848,
+            "free": 50044141568,
+            "total": 85094825984,
+            "peak_allocated": 33680411648
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33680411648,
+            "reserved": 35601252352,
+            "free": 48519512064,
+            "total": 85094825984,
+            "peak_allocated": 34915008000
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33680415744,
+            "reserved": 40466644992,
+            "free": 43654119424,
+            "total": 85094825984,
+            "peak_allocated": 38348684800
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33680416768,
+            "reserved": 40466644992,
+            "free": 43654119424,
+            "total": 85094825984,
+            "peak_allocated": 38348684800
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33680411648,
+            "reserved": 34076622848,
+            "free": 50044141568,
+            "total": 85094825984,
+            "peak_allocated": 38348684800
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 17,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": -0.03439822874497622,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 2,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 513,
+            "generated_tokens": 957,
+            "critical_depth": 513,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 533,
+            "generated_tokens": 1032,
+            "critical_depth": 533,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.21,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.20999999999999996,
+            "forward_penalty": 0.14,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1532,
+            "generated_tokens": 2058,
+            "critical_depth": 1532,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 715,
+            "generated_tokens": 1157,
+            "critical_depth": 715,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.63,
+          0.68,
+          0.58,
+          -0.63
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          513,
+          533,
+          1532,
+          715
+        ],
+        "sampled_tokens": [
+          957,
+          1032,
+          2058,
+          1157
+        ],
+        "actual_forward_calls": [
+          513,
+          533,
+          1532,
+          715
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.58306884765625e-05,
+        "mean_replay_logp_drift": 2.7519845389178954e-06,
+        "p95_replay_logp_drift": 1.9073486328125e-05,
+        "seconds": 570.9593594074249,
+        "peak_gpu_bytes": 38336442880,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33668154368,
+            "reserved": 34087108608,
+            "free": 50033655808,
+            "total": 85094825984,
+            "peak_allocated": 33668154368
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33668154368,
+            "reserved": 35613835264,
+            "free": 48506929152,
+            "total": 85094825984,
+            "peak_allocated": 35080793088
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33668158464,
+            "reserved": 40282095616,
+            "free": 43838668800,
+            "total": 85094825984,
+            "peak_allocated": 38336442880
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33668159488,
+            "reserved": 40282095616,
+            "free": 43838668800,
+            "total": 85094825984,
+            "peak_allocated": 38336442880
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33668154368,
+            "reserved": 34087108608,
+            "free": 50033655808,
+            "total": 85094825984,
+            "peak_allocated": 38336442880
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 18,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.000529784712853143,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 763,
+            "generated_tokens": 1217,
+            "critical_depth": 763,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 776,
+            "generated_tokens": 1198,
+            "critical_depth": 776,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 676,
+            "generated_tokens": 1142,
+            "critical_depth": 676,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1084,
+            "generated_tokens": 1475,
+            "critical_depth": 1084,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.010000000000000009,
+          0.010000000000000009,
+          0.010000000000000009,
+          -0.030000000000000027
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          763,
+          776,
+          676,
+          1084
+        ],
+        "sampled_tokens": [
+          1217,
+          1198,
+          1142,
+          1475
+        ],
+        "actual_forward_calls": [
+          763,
+          776,
+          676,
+          1084
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 8.7738037109375e-05,
+        "mean_replay_logp_drift": 3.821899099420989e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9593677520752,
+        "peak_gpu_bytes": 38345203712,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33676925440,
+            "reserved": 34097594368,
+            "free": 50023170048,
+            "total": 85094825984,
+            "peak_allocated": 33676925440
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33676925440,
+            "reserved": 35414605824,
+            "free": 48706158592,
+            "total": 85094825984,
+            "peak_allocated": 34841882624
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33676929536,
+            "reserved": 40774926336,
+            "free": 43345838080,
+            "total": 85094825984,
+            "peak_allocated": 38345203712
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33676930560,
+            "reserved": 40774926336,
+            "free": 43345838080,
+            "total": 85094825984,
+            "peak_allocated": 38345203712
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33676925440,
+            "reserved": 34097594368,
+            "free": 50023170048,
+            "total": 85094825984,
+            "peak_allocated": 38345203712
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 19,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": -0.08986313477362273,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 1,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1178,
+            "generated_tokens": 1655,
+            "critical_depth": 1178,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1382,
+            "generated_tokens": 1886,
+            "critical_depth": 1382,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.09,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.08999999999999998,
+            "forward_penalty": 0.26,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2660,
+            "generated_tokens": 3712,
+            "critical_depth": 2660,
+            "actual_rounds": 1,
+            "widths": [
+              6
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1775,
+            "generated_tokens": 2192,
+            "critical_depth": 1775,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.2725,
+          -0.2725,
+          0.8175000000000001,
+          -0.2725
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          6,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          1178,
+          1382,
+          2660,
+          1775
+        ],
+        "sampled_tokens": [
+          1655,
+          1886,
+          3712,
+          2192
+        ],
+        "actual_forward_calls": [
+          1178,
+          1382,
+          2660,
+          1775
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 0.0001201629638671875,
+        "mean_replay_logp_drift": 3.5581290376285324e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9593431949615,
+        "peak_gpu_bytes": 40352173056,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33688015872,
+            "reserved": 34103885824,
+            "free": 50016878592,
+            "total": 85094825984,
+            "peak_allocated": 33688015872
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33688015872,
+            "reserved": 37195087872,
+            "free": 46925676544,
+            "total": 85094825984,
+            "peak_allocated": 35866631168
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33688019968,
+            "reserved": 44931481600,
+            "free": 39189282816,
+            "total": 85094825984,
+            "peak_allocated": 40352173056
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33688020992,
+            "reserved": 44931481600,
+            "free": 39189282816,
+            "total": 85094825984,
+            "peak_allocated": 40352173056
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33688015872,
+            "reserved": 34103885824,
+            "free": 50016878592,
+            "total": 85094825984,
+            "peak_allocated": 40352173056
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 20,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": -0.026627770741470158,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 3,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 535,
+            "generated_tokens": 801,
+            "critical_depth": 535,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.19,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.19,
+            "forward_penalty": 0.16,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1633,
+            "generated_tokens": 2179,
+            "critical_depth": 1633,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 642,
+            "generated_tokens": 837,
+            "critical_depth": 642,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 749,
+            "generated_tokens": 1039,
+            "critical_depth": 749,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          -0.9425,
+          0.24749999999999994,
+          0.34750000000000003,
+          0.34750000000000003
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          535,
+          1633,
+          642,
+          749
+        ],
+        "sampled_tokens": [
+          801,
+          2179,
+          837,
+          1039
+        ],
+        "actual_forward_calls": [
+          535,
+          1633,
+          642,
+          749
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 0.0002231597900390625,
+        "mean_replay_logp_drift": 4.154650014243089e-06,
+        "p95_replay_logp_drift": 2.288818359375e-05,
+        "seconds": 570.9594173431396,
+        "peak_gpu_bytes": 38353168896,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33684880384,
+            "reserved": 34286338048,
+            "free": 49834426368,
+            "total": 85094825984,
+            "peak_allocated": 33684880384
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33684880384,
+            "reserved": 36219912192,
+            "free": 47900852224,
+            "total": 85094825984,
+            "peak_allocated": 35271479296
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33684884480,
+            "reserved": 40888172544,
+            "free": 43232591872,
+            "total": 85094825984,
+            "peak_allocated": 38353168896
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33684885504,
+            "reserved": 40888172544,
+            "free": 43232591872,
+            "total": 85094825984,
+            "peak_allocated": 38353168896
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33684880384,
+            "reserved": 34286338048,
+            "free": 49834426368,
+            "total": 85094825984,
+            "peak_allocated": 38353168896
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 21,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.005167233815882355,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 4,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.31,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.31,
+            "forward_penalty": 0.04,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 574,
+            "generated_tokens": 930,
+            "critical_depth": 574,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 795,
+            "generated_tokens": 1085,
+            "critical_depth": 795,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.19,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.19,
+            "forward_penalty": 0.16,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1731,
+            "generated_tokens": 2028,
+            "critical_depth": 1731,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 667,
+            "generated_tokens": 934,
+            "critical_depth": 667,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.040000000000000036,
+          0.020000000000000018,
+          -0.08000000000000007,
+          0.020000000000000018
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          4,
+          4,
+          4,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          574,
+          795,
+          1731,
+          667
+        ],
+        "sampled_tokens": [
+          930,
+          1085,
+          2028,
+          934
+        ],
+        "actual_forward_calls": [
+          574,
+          795,
+          1731,
+          667
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 0.000102996826171875,
+        "mean_replay_logp_drift": 5.5534237617393956e-06,
+        "p95_replay_logp_drift": 2.6702880859375e-05,
+        "seconds": 570.9590818881989,
+        "peak_gpu_bytes": 38354214912,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33685928960,
+            "reserved": 34131148800,
+            "free": 49989615616,
+            "total": 85094825984,
+            "peak_allocated": 33685928960
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33685928960,
+            "reserved": 36356227072,
+            "free": 47764537344,
+            "total": 85094825984,
+            "peak_allocated": 35425411584
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33685933056,
+            "reserved": 41024487424,
+            "free": 43096276992,
+            "total": 85094825984,
+            "peak_allocated": 38354214912
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33685934080,
+            "reserved": 41024487424,
+            "free": 43096276992,
+            "total": 85094825984,
+            "peak_allocated": 38354214912
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33685928960,
+            "reserved": 34131148800,
+            "free": 49989615616,
+            "total": 85094825984,
+            "peak_allocated": 38354214912
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 22,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": 0.0,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 0,
+        "format_valid": 2,
+        "parallel_valid": 2,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": -0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 0.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1330,
+            "generated_tokens": 1589,
+            "critical_depth": 1330,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": false,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": -0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 0.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1552,
+            "generated_tokens": 1791,
+            "critical_depth": 1552,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": false,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1286,
+            "generated_tokens": 1598,
+            "critical_depth": 1286,
+            "actual_rounds": 1,
+            "widths": [
+              6
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 2015,
+            "generated_tokens": 2200,
+            "critical_depth": 2015,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": true,
+        "actual_widths": [
+          4,
+          4,
+          6,
+          4
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          1330,
+          1552,
+          1286,
+          2015
+        ],
+        "sampled_tokens": [
+          1589,
+          1791,
+          1598,
+          2200
+        ],
+        "actual_forward_calls": [
+          1330,
+          1552,
+          1286,
+          2015
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 9.34600830078125e-05,
+        "mean_replay_logp_drift": 4.8750589485280216e-06,
+        "p95_replay_logp_drift": 2.47955322265625e-05,
+        "seconds": 570.9593534469604,
+        "peak_gpu_bytes": 39136234496,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33679657984,
+            "reserved": 34032582656,
+            "free": 50088181760,
+            "total": 85094825984,
+            "peak_allocated": 33679657984
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33679657984,
+            "reserved": 36440113152,
+            "free": 47680651264,
+            "total": 85094825984,
+            "peak_allocated": 35515762176
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33679662080,
+            "reserved": 43035656192,
+            "free": 41085108224,
+            "total": 85094825984,
+            "peak_allocated": 39136234496
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33679663104,
+            "reserved": 43035656192,
+            "free": 41085108224,
+            "total": 85094825984,
+            "peak_allocated": 39136234496
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33679657984,
+            "reserved": 34032582656,
+            "free": 50088181760,
+            "total": 85094825984,
+            "peak_allocated": 39136234496
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      },
+      {
+        "step": 52,
+        "rank": 23,
+        "trainable": 4022468096,
+        "optimizer_step": true,
+        "loss": -0.033106246148236096,
+        "grad_norm": 0.0469762347638607,
+        "backbone_update_l2": 6.66450261169625e-06,
+        "correct": 3,
+        "format_valid": 4,
+        "parallel_valid": 4,
+        "group": 4,
+        "rewards": [
+          {
+            "score": 1.29,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.29,
+            "forward_penalty": 0.06,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 785,
+            "generated_tokens": 1416,
+            "critical_depth": 785,
+            "actual_rounds": 1,
+            "widths": [
+              6
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.25,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.25,
+            "forward_penalty": 0.1,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1099,
+            "generated_tokens": 1765,
+            "critical_depth": 1099,
+            "actual_rounds": 1,
+            "widths": [
+              4
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 1.17,
+            "accuracy_reward": 1.0,
+            "aux_reward": 0.16999999999999998,
+            "forward_penalty": 0.18,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.3,
+            "round_bonus": 0.05,
+            "fork_bonus": 0.35,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 1856,
+            "generated_tokens": 3093,
+            "critical_depth": 1856,
+            "actual_rounds": 1,
+            "widths": [
+              5
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          },
+          {
+            "score": 0.0,
+            "accuracy_reward": 0.0,
+            "aux_reward": 0.0,
+            "forward_penalty": 0.0,
+            "token_penalty": 0.0,
+            "depth_penalty": 0.0,
+            "width_bonus": 0.0,
+            "round_bonus": 0.0,
+            "fork_bonus": 0.0,
+            "bonus_scale": 1.0,
+            "bonus_schedule": "constant_no_annealing",
+            "width_bonus_units": 1.0,
+            "round_bonus_units": 1,
+            "actual_generation_forward_calls": 834,
+            "generated_tokens": 1391,
+            "critical_depth": 834,
+            "actual_rounds": 1,
+            "widths": [
+              6
+            ],
+            "format_valid": true,
+            "mode": "strong_width",
+            "step": 51
+          }
+        ],
+        "advantages": [
+          0.36250000000000004,
+          0.3225,
+          0.24249999999999994,
+          -0.9275
+        ],
+        "replay_guard_passed": true,
+        "local_replay_guard_bad": false,
+        "technical_skip_reason": null,
+        "cumulative_replay_parity_skips": 0,
+        "zero_advantage_group": false,
+        "actual_widths": [
+          6,
+          4,
+          5,
+          6
+        ],
+        "rounds": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "logical_depth": [
+          785,
+          1099,
+          1856,
+          834
+        ],
+        "sampled_tokens": [
+          1416,
+          1765,
+          3093,
+          1391
+        ],
+        "actual_forward_calls": [
+          785,
+          1099,
+          1856,
+          834
+        ],
+        "ratio_clipped_fraction": 0.0,
+        "max_replay_logp_drift": 0.000102996826171875,
+        "mean_replay_logp_drift": 3.6097785596211907e-06,
+        "p95_replay_logp_drift": 2.09808349609375e-05,
+        "seconds": 570.9586660861969,
+        "peak_gpu_bytes": 38354214912,
+        "memory_stages": [
+          {
+            "stage": "before_rollout",
+            "allocated": 33685928960,
+            "reserved": 34080817152,
+            "free": 50039947264,
+            "total": 85094825984,
+            "peak_allocated": 33685928960
+          },
+          {
+            "stage": "after_rollout",
+            "allocated": 33685928960,
+            "reserved": 37408997376,
+            "free": 46711767040,
+            "total": 85094825984,
+            "peak_allocated": 36004575232
+          },
+          {
+            "stage": "after_backward",
+            "allocated": 33685933056,
+            "reserved": 42077257728,
+            "free": 42043506688,
+            "total": 85094825984,
+            "peak_allocated": 38354214912
+          },
+          {
+            "stage": "after_optimizer",
+            "allocated": 33685934080,
+            "reserved": 42077257728,
+            "free": 42043506688,
+            "total": 85094825984,
+            "peak_allocated": 38354214912
+          },
+          {
+            "stage": "after_cleanup",
+            "allocated": 33685928960,
+            "reserved": 34080817152,
+            "free": 50039947264,
+            "total": 85094825984,
+            "peak_allocated": 38354214912
+          }
+        ],
+        "optimizer_state_sharded": true,
+        "resume_proof": null
+      }
+    ]
+  },
+  "old_submission": {
+    "state": "submitted",
+    "job_desc": "larin | tmp",
+    "gpus": 24,
+    "nodes": 3,
+    "processes_per_node": 8,
+    "type": "pytorch2",
+    "pytorch_use_env": true,
+    "script": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/node_entry.py",
+    "current_run_root": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity",
+    "script_sha256": "796ff3b7cf9714c2d9166875515b207fb913057a5834559da574511029c3e7fd",
+    "config_sha256": "6b251f108746991900ff70ca040ea73a4068c9a076215bc04cae9476c4ffcff1",
+    "runtime_manifest_sha256": "af526d48e5559dfd9bf685ad08651dd2715d0ea4e1cf3dabc76324d777fee578",
+    "data_manifest_sha256": "0b5901efcca2b743961d7e0ff680ff74ac4fca1888155b709700d7b777da0f30",
+    "supersedes_failed": "RUN_bb32c0eace",
+    "lost_unexported_prior_updates": 36,
+    "fresh500": true,
+    "time": 1791775209.9508462,
+    "reply": "Job \"RUN_4b43efec89\" created.",
+    "job_id": "RUN_4b43efec89"
+  }
+}

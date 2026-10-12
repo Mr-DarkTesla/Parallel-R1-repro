@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "coverage": 500,
+  "unique_question_ids": 500,
+  "missing": 0,
+  "technical_unknown_outcomes": 0,
+  "correct": 312,
+  "format_valid": 281,
+  "original_worker_exits_preserved": true,
+  "original_task231_returncode": 1,
+  "original_failure": "CPU resummarizer missing Path import after successful evaluator",
+  "repaired_evaluator_returncode": 0,
+  "evaluator_exit_evidence": "set-e wrapper proceeded from evaluator to CPU resummarizer; historical all-GPU-empty R1 launch gate subsequently passed",
+  "current_gpu_empty_claim": false,
+  "diagnostic_only": true,
+  "selection_allowed": false,
+  "at": "2026-10-11T13:37:36.513710+00:00",
+  "summary_sha256": "9f606516e19693fe1591e40ead90f16e401422aaf56b7edc95f1731509c1ac3e",
+  "trace_sha256": {
+    "traces-2.jsonl": "e31ca4cabb6fe3f67c936a2fb11505cf367de99d9425d03141c028c307a5ce6b",
+    "traces-5.jsonl": "a1d1138bdbfaa1538e10f2f9a4dce21d9a8c0ea5d07a11d259bd48c5a45776e6",
+    "traces-6.jsonl": "4ebd2fc057da935d612023d5077052e45690e6c56e1388a0aad1bc29a3dec779",
+    "traces-3.jsonl": "a8a7c1f69ff56550e8dffa3545ea8d3f0a1a64d2acf13e06c4474e8027d7980b",
+    "traces-7.jsonl": "61c6a9c47297b0bfd7f8672d9b0c5f548310289abde9bd9d0e6655d225c1c130",
+    "traces-4.jsonl": "f4595d819384b05d2d1c2b8e97416838706b134fe0995a160ee408395e913c9f",
+    "traces-0.jsonl": "6a2ba42edf7617978c6aaa08c60352f6f7b0a415e3a1b71e70d8b0c374427ad8",
+    "traces-1.jsonl": "898e17425c7bc60b501030b0a3f2c5979a1161cac0838f8f7519012bda7169cf"
+  },
+  "evidence_sha256": {
+    "${PROJECT_ROOT}/work/experiments/night-20261010/cloud-continued/tmp3/results/231-instruct-math500-worker1-repair.json": "c3d85501d7cf06a02a045ef99715bba4ee777a28e3339caabc48da59eda3b83c",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/cloud-continued/tmp3/231-instruct-math500-worker1-repair.log": "cdf5c208fe20463288235ae04915d8c33359e2b8319fdb63cf2e10cc9be0e82c",
+    "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/repair_worker1.sh": "26be12a4e8b90d55a82a5956555f4ff65b01aa0ac59797fca608a05dbf9e4be4",
+    "${PROJECT_ROOT}/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run-root-gate.json": "8da69e5eb51bd0713645155f7e1e5a005f50bd38e5d0ea608e0c551793dd3d0e"
+  }
+}

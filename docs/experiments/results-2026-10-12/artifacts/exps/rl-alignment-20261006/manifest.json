@@ -1,0 +1,62 @@
+{
+  "run": "rl-s1-seen-aligned-20261006",
+  "commit": "2ae4b8b66e734b3f7b0e069607ee90857114f1c5",
+  "base_commit": "ea3b07d74851739f2c8c41a88948ca8976b6b165",
+  "stage": "s1",
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "steps": 300,
+  "checkpoint": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/final",
+  "data_sha256": {
+    "verl/data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet": "cee9b99e0645501b0dac3d885e66eae8d36e107c28a2f914864a68021aafc21e",
+    "verl/data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/train.parquet": "8fd253319384ede4e436d24a4f2884a632e8b1e71e1ee4bc1951ecb68007cec1"
+  },
+  "changed_file_sha256": {
+    "README.md": "c161eee56cf8d8f26022ff9e2b4bd5fea9025fe4585493faf1c5d043c6c8730b",
+    "tests/test_parallel_loop.py": "2e10c2df1198eeeff41db19731c670dffbaf4f222a81e1a1ead1eb9882556a98",
+    "tests/test_rollout_context.py": "c9979788141fd33181a4137b0de5597f06fc4a3136a293c01cb7b54596d75680",
+    "verl/verl/parallel_thinking_generation_v3/agent_loop.py": "7d16e912fe4a2fe62a4b7a44d7432131f377920465d4b3fd3d3e735265f6d0d9",
+    "verl/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "7044356646487ee1b408564a4243b837a1ea4f96e6329e4d4848a741181c54f4",
+    "verl/verl/trainer/config/rl_qwen3_06b.yaml": "1b55e902ecd1207774049ef1d2e6d6610b3342cb8f6e9448b36d4ded7f1cb229",
+    "verl/verl/trainer/main_ppo.py": "b05f8f3bbb213175d14aa30b07152be7c02f8be556511e50e10d8a8cdf610819",
+    "verl/verl/trainer/ppo/ray_trainer.py": "9d5caf8618415ffa1c9b605d8b3a0acd39bd45950a454946a9e8fa04a03e2bec",
+    "verl/verl/workers/actor/dp_actor.py": "626c79afd237a9e8b1ed049da65950b370d7c5b4e4a63d9dff18b70b8a0fb6f7",
+    "verl/verl/workers/actor/rollout_context.py": "6c24a9190907418fbc4a084ccb200512cb3ab2e6e43e3ae131badb63268cf960",
+    "verl/verl/workers/reward_manager/naive.py": "770bc0c5c981b847a6302244ec5d9a263bc4742b9e4419fae07c80f74e981592"
+  },
+  "overrides": [
+    "ray_init.num_cpus=32",
+    "+ray_init.temp_dir=${PROJECT_ROOT}",
+    "+ray_init.plasma_directory=${PROJECT_ROOT}/plasma",
+    "+ray_init.object_store_memory=8589934592",
+    "actor_rollout_ref.rollout.agent.num_workers=8",
+    "trainer.resume_mode=disable",
+    "trainer.val_before_train=true"
+  ],
+  "extra_env": {
+    "PARALLEL_R1_FULL_DECODE_GRAPH": "1",
+    "VLLM_ATTENTION_BACKEND": "FLASH_ATTN",
+    "CUDA_HOME": "${CUDA_HOME}",
+    "PYTHONPATH": "${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/flashinfer-deps"
+  },
+  "hypothesis": "Exact per-call causal likelihoods and sampled-action labels improve learning over legacy mismatched mask/positions. Same SFT, dataset, batch32, n8, LR1e-6, 300 steps.",
+  "implementation_changes": [
+    "Per-call causal contexts, original sampled EOS labels, forced tokens excluded",
+    "Microbatch1 and gradient checkpointing for extra call-context memory; same per-response loss weighting"
+  ],
+  "validation": [
+    "CPU independent causal replay values and gradients; empty and mixed batches",
+    "Loop coverage includes inserted tags and replaced sampled EOS",
+    "GPU real SFT replay FP32 max absolute logp error <0.00005; BF16 batch-shape drift measured",
+    "Actor padding and microbatch loss regression tests",
+    "Ray temp/plasma startup and shutdown inside ROOT"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "complete": true,
+  "job": {
+    "id": "unseen-async",
+    "model": "unseen",
+    "epoch": 5,
+    "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005/global_step_230",
+    "overrides": [
+      "actor_rollout_ref.rollout.mode=async"
+    ]
+  },
+  "answers": 1916,
+  "benchmarks": {
+    "APO_AIME24": {
+      "answers": 480,
+      "questions": 30,
+      "n": 16,
+      "mean": 0.0020833333333333333,
+      "observed_pass": 0.03333333333333333,
+      "bootstrap_best": 0.02146666666666667,
+      "parallel": 0.9145833333333333,
+      "format": 0.93125,
+      "parallel_format": 0.8458333333333333,
+      "format_error": 0.07291666666666667,
+      "no_tags": 0.08125
+    },
+    "APO_AIME25": {
+      "answers": 480,
+      "questions": 30,
+      "n": 16,
+      "mean": 0.004166666666666667,
+      "observed_pass": 0.06666666666666667,
+      "bootstrap_best": 0.0436,
+      "parallel": 0.8979166666666667,
+      "format": 0.9375,
+      "parallel_format": 0.83125,
+      "format_error": 0.06875,
+      "no_tags": 0.1
+    },
+    "APO_AMC23": {
+      "answers": 640,
+      "questions": 40,
+      "n": 16,
+      "mean": 0.0953125,
+      "observed_pass": 0.6,
+      "bootstrap_best": 0.47275,
+      "parallel": 0.9453125,
+      "format": 0.934375,
+      "parallel_format": 0.878125,
+      "format_error": 0.071875,
+      "no_tags": 0.05
+    },
+    "APO_MATH300": {
+      "answers": 316,
+      "questions": 316,
+      "n": 1,
+      "mean": 0.27848101265822783,
+      "observed_pass": 0.27848101265822783,
+      "bootstrap_best": null,
+      "parallel": 0.9778481012658228,
+      "format": 0.9588607594936709,
+      "parallel_format": 0.9335443037974683,
+      "format_error": 0.04430379746835443,
+      "no_tags": 0.022151898734177215
+    }
+  }
+}

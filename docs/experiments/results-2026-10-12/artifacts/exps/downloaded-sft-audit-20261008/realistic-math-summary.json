@@ -1,0 +1,57 @@
+{
+  "source": "${DATA_SOURCE_ROOT}/sft_messages_5000.jsonl",
+  "source_sha256": "ce0bc7febe267be6761d6689e52f5b57bcaaba6ebdb5a9ed7813ffea35a05dda",
+  "counts": {
+    "rows": 5000,
+    "context_supported": 5000,
+    "equations": 115139,
+    "graph_solved": 5000,
+    "independent_answer_match": 5000,
+    "trace_steps": 115139,
+    "parallel_blocks": 8250,
+    "paths": 29444,
+    "summary_entries": 29444,
+    "fully_passed": 5000
+  },
+  "error_counts": {},
+  "templates": {
+    "movie_festival_awards": {
+      "rows": 1234,
+      "context_supported": 1234,
+      "independent_answer_match": 1234,
+      "fully_passed": 1234
+    },
+    "crazy_zootopia": {
+      "rows": 1231,
+      "context_supported": 1231,
+      "independent_answer_match": 1231,
+      "fully_passed": 1231
+    },
+    "library_collections": {
+      "rows": 1302,
+      "context_supported": 1302,
+      "independent_answer_match": 1302,
+      "fully_passed": 1302
+    },
+    "teachers_in_school": {
+      "rows": 1233,
+      "context_supported": 1233,
+      "independent_answer_match": 1233,
+      "fully_passed": 1233
+    }
+  },
+  "equation_kinds": {
+    "sum": 21194,
+    "mul": 29743,
+    "const": 5000,
+    "offset": 59202
+  },
+  "min_value": 1,
+  "max_value": 58936,
+  "limitations": [
+    "Restricted grammar solver covers only the observed constant, sum, twice, integer multiplier, more/fewer relations.",
+    "Entity parsing is textual normalization of known template prefixes; no independent review of natural-language realism, ontological consistency or data contamination.",
+    "Dependency visibility check models sibling isolation and post-block access to Summary exports; it does not inspect actual training attention masks or inference runtime.",
+    "Trace expression checks require exact operator and ordered concrete operands from independent context solution; same-valued distinct dependencies are distinguished via entity graph but numeric expressions alone cannot prove semantic intent."
+  ]
+}

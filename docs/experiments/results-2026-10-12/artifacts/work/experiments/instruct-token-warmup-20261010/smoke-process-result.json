@@ -1,0 +1,23 @@
+{
+  "state": "running",
+  "stage": "smoke",
+  "controller_pid": 1248043,
+  "started_at": "2026-10-10T07:58:04.797610+00:00",
+  "command": [
+    "${PROJECT_ROOT}/.venv/bin/python",
+    "-m",
+    "torch.distributed.run",
+    "--standalone",
+    "--nnodes=1",
+    "--nproc_per_node=8",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/train.py",
+    "--stage",
+    "smoke"
+  ],
+  "log": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/smoke.log",
+  "pid": 1248046,
+  "owned_process_group": 1248046,
+  "heartbeat_at": "2026-10-10T07:59:04.821632+00:00",
+  "returncode": 0,
+  "finished_at": "2026-10-10T07:59:14.825628+00:00"
+}

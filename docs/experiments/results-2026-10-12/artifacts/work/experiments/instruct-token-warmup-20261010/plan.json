@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-10-10T07:46:48.912719+00:00",
+  "authorization": "User explicitly requests Qwen3-4B instruct six-tag mean-subpiece ONLY-token warmup on newfiltered3000 with Unseen; supersedes oldno-newtraining ONLYthisSirius experiment.",
+  "model": "work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/model",
+  "data": "exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think",
+  "split": {
+    "train": 2700,
+    "val": 300
+  },
+  "trainable": "only6tiedembeddingrows;15360parameters;alloldrowsandtransformerfrozen",
+  "init": "mean_original_tokenizer_tag_subpiece_embeddings_FP32",
+  "epochs": 3,
+  "global_batch": 64,
+  "micro_batch_per_gpu": 1,
+  "learning_rate": 0.0005,
+  "weight_decay": 0,
+  "warmup_steps": 5,
+  "seed": 20261010,
+  "max_length": 8192,
+  "gpus": "Sirius0..7 only; existingnightCloudcleanup09UTC unchanged",
+  "safety": [
+    "CPUdata and independentcodeaudit beforeactual8GPU2stepsmoke",
+    "finite2steps/updateonly6rows/UnseenCPU+GPUisolation gate beforeproduction",
+    "originalmodel/tokenizer/data frozen;allwritesnewfolder",
+    "noMATH500selection;validationgenerationbeforeafter",
+    "NO LoRA/fullweight/RL updates"
+  ],
+  "status": "production_running_actual_steps_verified",
+  "production_controller_pid": 1249140,
+  "actual_smoke_passed": true,
+  "smoke_weights_reused": false,
+  "root_launch_proof": "root-production-launch-proof.json",
+  "approx_training_eta_UTC": "08:22\u201308:27",
+  "full_evaluation_follows_training": true
+}

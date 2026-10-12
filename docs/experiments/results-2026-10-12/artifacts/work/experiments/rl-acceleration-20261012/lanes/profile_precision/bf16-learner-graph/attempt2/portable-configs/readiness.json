@@ -1,0 +1,133 @@
+{
+  "passed": true,
+  "fixed_batch": "8prompts\u00d74=32responses",
+  "denominator": 4096,
+  "worlds": [
+    {
+      "world": 1,
+      "local_responses": [
+        32
+      ],
+      "ddp_scale": 0.03125,
+      "cpu_math_pass": true,
+      "gpu_qualified": false,
+      "multinode_required": false
+    },
+    {
+      "world": 2,
+      "local_responses": [
+        16,
+        16
+      ],
+      "ddp_scale": 0.0625,
+      "cpu_math_pass": true,
+      "gpu_qualified": false,
+      "multinode_required": false
+    },
+    {
+      "world": 4,
+      "local_responses": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "ddp_scale": 0.125,
+      "cpu_math_pass": true,
+      "gpu_qualified": false,
+      "multinode_required": false
+    },
+    {
+      "world": 8,
+      "local_responses": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "ddp_scale": 0.25,
+      "cpu_math_pass": true,
+      "gpu_qualified": true,
+      "multinode_required": false
+    },
+    {
+      "world": 24,
+      "local_responses": [
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "ddp_scale": 0.75,
+      "cpu_math_pass": true,
+      "gpu_qualified": false,
+      "multinode_required": true
+    },
+    {
+      "world": 32,
+      "local_responses": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "ddp_scale": 1.0,
+      "cpu_math_pass": true,
+      "gpu_qualified": false,
+      "multinode_required": true
+    }
+  ],
+  "warning": "Only8GPU actual memory/Adam/throughput validated.1/2/4/24/32 templates are CPU math readiness only;1GPU FP32Adam plus shadows/KV may exceed80GB. Existing launcher is node-local8 only. Root must provide explicit distributed launch for24/32; no launch is performed."
+}

@@ -1,0 +1,43 @@
+{
+  "passed": true,
+  "checkpoint": 50,
+  "completed": 30,
+  "missing": 0,
+  "technical_unknowns": 0,
+  "samples_per_question": 1,
+  "by_dataset": {
+    "AIME2026": {
+      "completed": 30,
+      "correct": 4,
+      "accuracy": 0.13333333333333333,
+      "format_valid": 14,
+      "format_and_fork_count_all": 14,
+      "correct_and_parallel": 4,
+      "mean_actual_forwards_all": 2216.4333333333334,
+      "mean_sampled_tokens_all": 3491.266666666667,
+      "format_conditioned": {
+        "n": 14,
+        "mean_actual_forwards": 1850.2142857142858,
+        "mean_width": 4.357142857142857,
+        "mean_depth": 1
+      },
+      "truncated": 16
+    }
+  },
+  "all8_exit0": true,
+  "traces": {
+    "rank-0.jsonl": "fd9c72c968c4c72256ac947545c679646156a9c6a57de73ce339deb3cdb52b5e",
+    "rank-5.jsonl": "b1dd2fd0b7e4a68f87b16c3ce82e9222c9a3d595051cf5742b9cfc844c217569",
+    "rank-4.jsonl": "e6d3d3714edbe290d43cea96635d4bc538e2f85f9e10b39e0b7fcd68cf8fbb9a",
+    "rank-7.jsonl": "cbc48e1ce45a9bdc2cec830025b05fcaefa72b392794adc07509a2678ae83687",
+    "rank-1.jsonl": "e19db6303144dbab1d81b093bb0b0fbb7a35ceec5d11efed10f62fe822e64c10",
+    "rank-6.jsonl": "eceebf2a43d2d728c22adf95483938f643d663fd93d660c7e446d61c6dbda483",
+    "rank-2.jsonl": "9f63cd1846d2222b9b7c950dfc9ec2ca3edb287dc53e9ca49da83885c8c4b614",
+    "rank-3.jsonl": "bfd6ce4835ccdb75859cb5648c057806a8d7e08504257f9a21c8adde04be8aec"
+  },
+  "selection_allowed": false,
+  "benchmark": true,
+  "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+  "protocol": "FP32 HF fullwidth8, temperature1,4096response/768path/16384context, native think prefix, corrected scorer, instrumentedF",
+  "time": 1791806479.437409
+}

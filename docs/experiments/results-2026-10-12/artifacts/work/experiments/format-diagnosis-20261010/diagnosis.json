@@ -1,0 +1,2251 @@
+{
+  "at": "2026-10-10T10:26:14.708340+00:00",
+  "runs": {
+    "structured-runtime-smoke24": {
+      "counts": {
+        "tasks": 24,
+        "executed_rounds": 4,
+        "forked_tasks": 3,
+        "invalid_width": 10,
+        "truncated": 0,
+        "tasks_with_text_parallel": 13,
+        "text_parallel_openings": 14,
+        "parallel_after_think_tasks": 12,
+        "no_parallel_before_think_close": 23,
+        "correct": 12,
+        "basic_valid": 11,
+        "parallel_valid": 0
+      },
+      "executed_widths": [
+        3,
+        2,
+        2,
+        3
+      ],
+      "mean_executed_width": 2.5,
+      "executed_width_histogram": {
+        "3": 2,
+        "2": 2
+      },
+      "common_headers": [
+        [
+          "  \n2  \n1",
+          2
+        ],
+        [
+          "3\n",
+          2
+        ],
+        [
+          "2\n",
+          2
+        ],
+        [
+          "3  \n1:",
+          2
+        ],
+        [
+          "  \n4  \n",
+          1
+        ],
+        [
+          "  \n3  \n1",
+          1
+        ],
+        [
+          "  \n4  \n1",
+          1
+        ],
+        [
+          "**\n3: Compute",
+          1
+        ]
+      ],
+      "format_errors": {},
+      "samples": [
+        {
+          "id": "gsm_infinite_ops2/ops2/349",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "and intense detective thriller (6).  \n2: Use T to compute Golden Banana's solemn period drama (S) as V + T + 4 + 6.  \n3: Recognize that Verdi's total movies (V) is the sum of all types mentioned (only calm road = 4).  \n\n<Parallel>  \n2  \n1",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                16
+              ],
+              "phase": "width",
+              "response_start": 2055
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/365",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "y summing all types of movies mentioned for that festival.  \n2: Use the given relationship that the number of solemn period dramas in Festival de Saint-Rivage equals the total number of movies in Cinéma de Montreval.  \n\n<Parallel>  \n4  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                19,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 1485
+            }
+          ]
+        },
+        {
+          "id": "math_train/prealgebra/724",
+          "forks": 1,
+          "actual_widths": [
+            3
+          ],
+          "invalid_width": false,
+          "snippet": "0) = 7 - 3.50 = 3.50. So yes, the final price is $3.50. That seems right. I think that's the answer.\n</think>\n\nPlan: 1: Compute first discount, 2: Compute second discount, 3: Subtract second discount from first result.\n\n<Parallel>3\n<Path>1\nThe first discount is 30% of \\$10. The first discount is 10 * 0.30 = 3. The first reduced price is 10 - 3 = 7.\n</Path><Path>2\n1: 10 * 0.30 = 3.00\n2: 10 - 3.00 = 7.00\n3: 7.00 * 0.50 = 3.50\n4: 7.00 - 3.50 = 3.50\n</Path><Path>3\n1: 10 * 0.30 = 3\n2: 10 - 3 = 7\n3: 7 * 0.50 = 3.50\n4: 7 - 3.50 = 3.50\n</Path></Parallel>\n<Summary> \nThe final price is \\$3.50.  \nFinal Answer: \\boxed{3.50}</Summary><|im_end|>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width",
+            "path",
+            "path",
+            "path",
+            "summary",
+            "main"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                18,
+                198
+              ],
+              "phase": "width",
+              "response_start": 544
+            }
+          ]
+        },
+        {
+          "id": "math_train/precalculus/374",
+          "forks": 2,
+          "actual_widths": [
+            2,
+            2
+          ],
+          "invalid_width": false,
+          "snippet": "<think>\nI need to simplify \\tan \\frac{\\pi}{24} + \\tan \\frac{7 \\pi}{24}. Let me compute \\tan \\frac{\\pi}{24} and \\tan \\frac{7 \\pi}{24} separately.\nPlan: 1: Compute \\tan \\frac{\\pi}{24} and 2: Compute \\tan \\frac{7 \\pi}{24}.\n<Parallel>2\n<Path>1\n\\frac{\\pi}{24} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\pi}{12} \\cdot \\frac{1}{2} = \\frac{\\p",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width",
+            "path",
+            "path",
+            "summary",
+            "main",
+            "width",
+            "path",
+            "path",
+            "summary",
+            "main"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                17,
+                198
+              ],
+              "phase": "width",
+              "response_start": 91
+            },
+            {
+              "generated_ids": [
+                17,
+                198
+              ],
+              "phase": "width",
+              "response_start": 2299
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/339",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": " Saint-Rivage = 12.  \n5: Use the equation for intense detective thriller in Rêves de Belleville = S + C + 6.  \n6: Use the equation for upbeat metropolis comedy in Rêves de Belleville = 15 + C.  \n7: Solve for S and C.  \n\n<Parallel>  \n3  \n1",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                18,
+                2303,
+                16
+              ],
+              "phase": "width",
+              "response_start": 3126
+            }
+          ]
+        },
+        {
+          "id": "math_train/precalculus/644",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "\n</think>\n\nPlan: Use the distributive property of matrix multiplication over vector addition. Compute M(v + 3w) = Mv + 3Mw. Substitute the given values for Mv and Mw. Perform scalar multiplication and vector addition.  \n<Parallel>3  \n1:",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                18,
+                2303,
+                16,
+                25
+              ],
+              "phase": "width",
+              "response_start": 445
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/346",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "late total movies in West Sahara (T_W) using calm road and intense detective thriller counts.  \n2: Use T_W to find upbeat metropolis comedy in Northwood (U_N).  \n3: Determine total movies in Northwood (T_N) from U_N.  \n\n<Parallel>  \n4  \n1",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                19,
+                2303,
+                16
+              ],
+              "phase": "width",
+              "response_start": 1520
+            }
+          ]
+        },
+        {
+          "id": "math_train/algebra/216",
+          "forks": 1,
+          "actual_widths": [
+            3
+          ],
+          "invalid_width": false,
+          "snippet": " vertex represents the maximum point. The x-coordinate of the vertex is given by $ x = -\\frac{b}{2a} $.\n\n**Plan:**\n1. Compute $ x = -\\frac{b}{2a} $.\n2. Verify by evaluating the function at $ x = -3 $ and nearby points.\n\n<Parallel>3\n<Path>1\nThe x-coordinate of the vertex is $ x = -\\frac{b}{2a} = -\\frac{-6}{2(-1)} = \\frac{6}{-2} = -3 $.\n</Path><Path>2\nThe x-coordinate of the vertex is $ x = -\\frac{-6}{2 \\cdot (-1)} = \\frac{6}{-2} = -3 $. This is the value of $ x $ that maximizes the function.\n</Path><Path>3\nThe vertex formula yields $ x = -\\frac{-6}{2 \\cdot (-1)} = \\frac{6}{-2} = -3 $. Thus, the maximum occurs at $ x = -3 $.\n\n</Path></Parallel>\n<Summary>  \nThe maximum value is confirmed by evaluating $ f(-3) = -(",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width",
+            "path",
+            "path",
+            "path",
+            "summary",
+            "main"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                18,
+                198
+              ],
+              "phase": "width",
+              "response_start": 759
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/360",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "ad movies in West Sahara (C_WS) = N + I_T + T, where I_T = 3 and T is unknown.  \n3: Solve for T using C_WS = 5 + T.  \n4: Since C_WS is the total movies in West Sahara, and no other info is given, assume C_WS = 5 + T.  \n\n<Parallel>  \n2  \n1",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                16
+              ],
+              "phase": "width",
+              "response_start": 2157
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/476",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": " let me check again to be sure.\n</think>\n\nPlan:  \n1: Calculate Bundle Ranch's adult parrots using total animals.  \n2: Verify consistency with South Zoo's parrot count.  \n3: Ensure all given constraints are satisfied.  \n\n<Parallel>3  \n1:",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                18,
+                2303,
+                16,
+                25
+              ],
+              "phase": "width",
+              "response_start": 1023
+            }
+          ]
+        }
+      ],
+      "complete": true
+    },
+    "lr-1e-3-trained-structured-24": {
+      "counts": {
+        "tasks": 24,
+        "executed_rounds": 1,
+        "forked_tasks": 1,
+        "invalid_width": 7,
+        "truncated": 0,
+        "tasks_with_text_parallel": 8,
+        "text_parallel_openings": 8,
+        "parallel_after_think_tasks": 6,
+        "no_parallel_before_think_close": 22,
+        "correct": 15,
+        "basic_valid": 16,
+        "parallel_valid": 0
+      },
+      "executed_widths": [
+        4
+      ],
+      "mean_executed_width": 4,
+      "executed_width_histogram": {
+        "4": 1
+      },
+      "common_headers": [
+        [
+          "  \n3  \n",
+          3
+        ],
+        [
+          "3  \n",
+          1
+        ],
+        [
+          "4\n",
+          1
+        ],
+        [
+          "8  \n1:",
+          1
+        ],
+        [
+          "3  \n>1",
+          1
+        ],
+        [
+          " 3\n",
+          1
+        ]
+      ],
+      "format_errors": {},
+      "samples": [
+        {
+          "id": "gsm_infinite_ops3/ops3/695",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "ma)  \nN = G - T (Northwood calm road = Golden Banana intense detective thriller - Taylor solemn period drama)  \n\nPlan:\n1: Use G = 4 and T = 3 to compute G - T  \n2: Compute N = G - T from 1  \n3: Compute N from 1 and 2  \n\n<Parallel>3  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                18,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 164
+            }
+          ]
+        },
+        {
+          "id": "math_train/prealgebra/8",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "s correct. Adding them gives 5/9. All steps seem right. I think that's the correct answer.\n</think>\n\nPlan:  \n1: Convert 0.\\overline{3} to fraction.  \n2: Convert 0.\\overline{2} to fraction.  \n3: Add the two fractions.  \n\n<Parallel>  \n3  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                18,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 466
+            }
+          ]
+        },
+        {
+          "id": "math_train/precalculus/374",
+          "forks": 1,
+          "actual_widths": [
+            4
+          ],
+          "invalid_width": false,
+          "snippet": "ine results using the identity tan(A) + tan(B) = sin(A + B)/(cos(A)cos(B)). 4: Compute tan(π/24) + tan(7π/24) = [sin(π/24 + 7π/24)]/[cos(π/24)cos(7π/24)] = sin(π/3)/[cos(π/24)cos(7π/24)] = (√3/2)/[cos(π/24)cos(7π/24)].\n\n<Parallel>4\n<Path>1\ntan(π/24) = tan(7.5°) = tan(π/24) = tan(π/12/2) = tan(π/24) = tan(π/24).\ntan(7π/24) = tan(52.5°) = tan(π/2 + π/24) = tan(π/2 + π/24) = tan(π/2 + π/24) = tan(π/2 + π/24).\nUsing tan(A) + tan(B) = sin(A + B)/(cos(A)cos(B)) with A = π/24, B = 7π/24:\ntan(π/24) + tan(7π/24) = sin(π/24 + 7π/24)/(cos(π/24)cos(7π/24)) = sin(π/3)/[cos(π/24)cos(7π/24)].\n</Path><Path>2\nUse tan(52.5°) = tan(45° + 7.5°) = [1 + tan(7.5°)]/[1 - tan(7.5°)] = [1 + t]/[1 - t] where t = tan(7.5°). Then tan(π/24)",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width",
+            "path",
+            "path",
+            "path",
+            "path",
+            "summary",
+            "main"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                19,
+                198
+              ],
+              "phase": "width",
+              "response_start": 466
+            }
+          ]
+        },
+        {
+          "id": "math_train/prealgebra/724",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "hat's correct. So the current price is $3.50.\n</think>\n\nPlan:  \n1: Compute first reduction (30% of \\$10).  \n2: Compute second reduction (50% of reduced price).  \n3: Subtract second reduction from first reduced price.  \n\n<Parallel>  \n3  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                18,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 592
+            }
+          ]
+        },
+        {
+          "id": "math_train/prealgebra/1153",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": ", which is over 150, so no. And 4² is 16, which is below 20, so not included. So yes, 8 numbers.\n</think>\n\nPlan: 1: Find the smallest square >20, 2: Find largest square ≤150, 3: Count consecutive squares between them.  \n<Parallel>8  \n1:",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                23,
+                2303,
+                16,
+                25
+              ],
+              "phase": "width",
+              "response_start": 543
+            }
+          ]
+        },
+        {
+          "id": "math_train/precalculus/644",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": " for each component seem right. 2 + (-6) is indeed -4, and 3 + (-15) is -12. So the final answer should be the vector [-4, -12].\n</think>\n\nPlan: 1: Compute Mv + 3Mw using given values. 2: Add components of Mv and 3Mw.  \n<Parallel>3  \n>1",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                18,
+                2303,
+                29,
+                16
+              ],
+              "phase": "width",
+              "response_start": 276
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/476",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": ", B = 2.\n2. Use 2 to find A = 4B = 8.\n3. Use 1 to find A = B + C = 2 + 3 = 5.\n4. Use 7 to find E = C = 3.\n5. Use 6 to find C + E + D = 8 → 3 + 3 + D = 8 → D = 2.\n6. Use 5 to find F = B + C + E + D = 2 + 3 + 3 + 2 = 10.\n\n<Parallel> 3\n",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                220,
+                18,
+                198
+              ],
+              "phase": "width",
+              "response_start": 370
+            }
+          ]
+        },
+        {
+          "id": "math_train/algebra/1558",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": ". So the same result. So I think that's correct. Therefore, the answer is 112,875.\n</think>\n\nPlan:  \n1: Compute slope between 1960 and 1996.  \n2: Use slope to find 1987 value.  \n3: Validate with direct interpolation.  \n\n<Parallel>  \n3  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                18,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 2433
+            }
+          ]
+        }
+      ],
+      "complete": true
+    },
+    "lr-1e-3-trained-structured-128": {
+      "counts": {
+        "tasks": 128,
+        "executed_rounds": 5,
+        "forked_tasks": 5,
+        "invalid_width": 23,
+        "truncated": 12,
+        "tasks_with_text_parallel": 28,
+        "text_parallel_openings": 28,
+        "parallel_after_think_tasks": 19,
+        "no_parallel_before_think_close": 119,
+        "correct": 90,
+        "basic_valid": 90,
+        "parallel_valid": 0
+      },
+      "executed_widths": [
+        4,
+        7,
+        2,
+        4,
+        3
+      ],
+      "mean_executed_width": 4,
+      "executed_width_histogram": {
+        "4": 2,
+        "7": 1,
+        "2": 1,
+        "3": 1
+      },
+      "common_headers": [
+        [
+          " 3\n",
+          3
+        ],
+        [
+          "  \n3  \n",
+          3
+        ],
+        [
+          "4\n",
+          2
+        ],
+        [
+          "  \n3  \n1",
+          2
+        ],
+        [
+          "  \n6  \n",
+          2
+        ],
+        [
+          "  \n4  \n",
+          2
+        ],
+        [
+          "  \n2  \n1",
+          2
+        ],
+        [
+          " 5\n",
+          1
+        ]
+      ],
+      "format_errors": {},
+      "samples": [
+        {
+          "id": "gsm_infinite_ops3/ops3/396",
+          "forks": 1,
+          "actual_widths": [
+            4
+          ],
+          "invalid_width": false,
+          "snippet": "oons. 4: Use the wolf count as Beverly Forest’s wolves. 5: Use the wolf count to find Maple Creek’s foxes. 6: Use the fox count in Beverly Forest as the difference between Pine Ridge’s foxes and Maple Creek’s raccoons.\n\n<Parallel>4\n<Path>1\nLet A be Pine Ridge’s adult fox count, B be Maple Creek’s raccoons, C be Beverly Forest’s wolves, D be Maple Creek’s foxes, and E be Beverly Forest’s foxes.\n\nKnown: B = A + E, C = 3, D = 3C = 9, E = A - B.\n\nFrom B = A + E, C = 3, D = 9, and E = A - B, we derive: A = D + B - E = 9 + B - (A - B) = 9 + 2B - A.\nSolving: 2A = 9 + 2B → A = (9 + 2B)/2.\nSince A must be an integer, 9 + 2B must be even, so B must be odd.\nSince B = A + E, and A = (9 + 2B)/2, B = (9 + 2B)/2 + E → 2B = 9 ",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width",
+            "path",
+            "path",
+            "path",
+            "path",
+            "summary",
+            "main"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                19,
+                198
+              ],
+              "phase": "width",
+              "response_start": 166
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/367",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": " 3: Compute the number of calm road movie in Taylor Movie Festival. 4: Compute the number of upbeat metropolis comedy in Taylor Movie Festival. 5: Compute the number of upbeat metropolis comedy in Verdi Movie Festival.\n\n<Parallel> 5\n",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                220,
+                20,
+                198
+              ],
+              "phase": "width",
+              "response_start": 102
+            }
+          ]
+        },
+        {
+          "id": "math_train/geometry/455",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "/think>\n\nPlan:  \n1. Use the ellipse equation to find coordinates of vertices.  \n2. Apply symmetry and equilateral triangle properties.  \n3. Solve for coordinates of other vertices.  \n4. Calculate side length squared.  \n\n<Parallel>  \n3  \n1",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                18,
+                2303,
+                16
+              ],
+              "phase": "width",
+              "response_start": 2525
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/476",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": ", B = 2.\n2. Use 2 to find A = 4B = 8.\n3. Use 1 to find A = B + C = 2 + 3 = 5.\n4. Use 7 to find E = C = 3.\n5. Use 6 to find C + E + D = 8 → 3 + 3 + D = 8 → D = 2.\n6. Use 5 to find F = B + C + E + D = 2 + 3 + 3 + 2 = 10.\n\n<Parallel> 3\n",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                220,
+                18,
+                198
+              ],
+              "phase": "width",
+              "response_start": 370
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/434",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "ue jays in Jefferson Circus equals E.  \n3: Mayer Aquarium has E adult eagles (equal to Jefferson Circus).  \n4: Mayer Aquarium's total adult animals = 4.  \n5: Mayer Aquarium has only eagles (no other types mentioned).  \n\n<Parallel>4  \n1:",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                19,
+                2303,
+                16,
+                25
+              ],
+              "phase": "width",
+              "response_start": 1722
+            }
+          ]
+        },
+        {
+          "id": "math_train/prealgebra/8",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "th methods give the same result. Therefore, the answer is 5/9.\n</think>\n\nPlan:  \n1: Convert 0.\\overline{3} to a fraction.  \n2: Convert 0.\\overline{2} to a fraction.  \n3: Add the two fractions.  \n4: Verify the result.  \n\n<Parallel>  \n3  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                18,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 542
+            }
+          ]
+        },
+        {
+          "id": "math_train/intermediate_algebra/435",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "hat's the answer.\n\nTherefore, the final answer is 986.\n</think>\n\nPlan:  \n1: Compute the sequence's periodicity.  \n2: Use given sums to find initial terms.  \n3: Compute the sum of the first 2001 terms via periodicity.  \n\n<Parallel>  \n6  \n1",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                21,
+                2303,
+                16
+              ],
+              "phase": "width",
+              "response_start": 2900
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/497",
+          "forks": 1,
+          "actual_widths": [
+            7
+          ],
+          "invalid_width": false,
+          "snippet": "4: Compute the number of adult crow in Beverly Forest.\n5: Compute the number of adult eagle in Maple Creek.\n6: Compute the number of adult blue jay in Pine Ridge.\n7: Compute the number of adult blue jay in Maple Creek.\n\n<Parallel>7\n<Path>1\nThe number of adult blue jay in Beverly Forest is given as 3.\nThe number of adult blue jay in Beverly Forest is 3.\n</Path><Path>2\nThe number of adult crow in Pine Ridge equals the number of adult blue jay in Beverly Forest. The number of adult blue jay in Beverly Forest is given as 3, so the number of adult crow in Pine Ridge is 3.\n</Path><Path>3\nThe number of adult eagle in Pine Ridge equals the number of adult blue jay in Beverly Forest. The number of adult blue jay in Beve",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width",
+            "path",
+            "path",
+            "path",
+            "path",
+            "path",
+            "path",
+            "path",
+            "summary",
+            "main"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                22,
+                198
+              ],
+              "phase": "width",
+              "response_start": 103
+            }
+          ]
+        },
+        {
+          "id": "math_train/intermediate_algebra/625",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "n -a = 6, so a = -6. Yep, that's correct. I think that's the right answer.\n</think>\n\nPlan:  \n1: Compute g(a) = 4 - a.  \n2: Substitute g(a) into f(x) to get f(g(a)) = (4 - a)/5 + 3.  \n3: Solve (4 - a)/5 + 3 = 5 for a.  \n\n<Parallel>  \n6  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                21,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 544
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/24",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "answer is indeed 8.\n</think>\n\nPlan:  \n1. Identify known values for each location and animal type.  \n2. Compute Hamilton Farm's adult deer and bear counts.  \n3. Use the Mayer Aquarium bear equation to validate totals.  \n\n<Parallel>  \n4  \n</Path>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                19,
+                2303,
+                151670
+              ],
+              "phase": "width",
+              "response_start": 2187
+            }
+          ]
+        }
+      ],
+      "complete": true
+    },
+    "lr-2e-4-trained-structured-128": {
+      "counts": {
+        "tasks": 128,
+        "executed_rounds": 0,
+        "forked_tasks": 0,
+        "invalid_width": 27,
+        "truncated": 22,
+        "tasks_with_text_parallel": 27,
+        "text_parallel_openings": 27,
+        "parallel_after_think_tasks": 27,
+        "no_parallel_before_think_close": 128,
+        "correct": 81,
+        "basic_valid": 73,
+        "parallel_valid": 0
+      },
+      "executed_widths": [],
+      "mean_executed_width": null,
+      "executed_width_histogram": {},
+      "common_headers": [
+        [
+          "  \n2  \n>",
+          16
+        ],
+        [
+          "  \n2  \n",
+          2
+        ],
+        [
+          "  \n3  \n",
+          2
+        ],
+        [
+          "  \n1  \n2",
+          2
+        ],
+        [
+          "  \n1: Calculate",
+          1
+        ],
+        [
+          "  \n6  \n",
+          1
+        ],
+        [
+          "  \n3  \n>",
+          1
+        ],
+        [
+          "  \n5  \n",
+          1
+        ]
+      ],
+      "format_errors": {},
+      "samples": [
+        {
+          "id": "gsm_infinite_ops2/ops2/349",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "e given relationship between Taylor's intense detective thriller and calm road movies to find T_IDT.  \n3: Determine the total number of movies in Verdi Movie Festival (V) using the information about calm road movies.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 2619
+            }
+          ]
+        },
+        {
+          "id": "math_train/precalculus/644",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "ere. The key was using the linearity property of matrices. So the answer should be the vector with components -4 and -12.\n</think>\n\nPlan:  \n1: Compute 3 times the vector Mw.  \n2: Add the result of 1 to the vector Mv.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 471
+            }
+          ]
+        },
+        {
+          "id": "math_train/number_theory/278",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": " y=4 works.\n\nSo the answer is 4 rows.\n</think>\n\nPlan:  \n1: Solve the equation 7x + 8y = 46 for non-negative integers x and y.  \n2: Find all possible values of y such that (46 - 8y) is divisible by 7 and non-negative.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 1356
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/508",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "an:  \n1: Determine the number of adult crows in Jefferson Circus.  \n2: Since the number of adult crows in Jefferson Circus equals the number in Hamilton Farm, the answer is the same as the number in Jefferson Circus.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 2918
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/619",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": " schools in Oakbridge City (T).  \n2: Use the relationship between Clearwater Bay's total schools and Oakbridge's total schools to find T.  \n3: Calculate the number of elementary schools in Oakbridge City (E) using T.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 2075
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/187",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "the given culinarian school count.  \n2: Use the relationship between Riverton's public high schools and Oakbridge's total schools to find Riverton's public high schools.  \n3: Verify consistency with Shoreline's data.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 2373
+            }
+          ]
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/255",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "2: Calculate the total number of schools in Westhaven City by summing regional medical schools, public high schools, and elementary schools.  \n3: Verify the consistency of the sum for Brightford's elementary schools.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 2289
+            }
+          ]
+        },
+        {
+          "id": "math_train/algebra/1558",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "e result. So, that seems correct.\n\nTherefore, the answer is 112,875.\n</think>\n\nPlan:  \n1: Calculate the slope of the linear decrease between 1960 and 1996.  \n2: Use the slope to determine the number of cases in 1987.  \n\n<Parallel>  \n1: Calculate",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                16,
+                25,
+                20517
+              ],
+              "phase": "width",
+              "response_start": 2098
+            }
+          ]
+        },
+        {
+          "id": "math_train/number_theory/226",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "e, the 43rd digit after the decimal in 1/13 is 0.\n</think>\n\nPlan:  \n1: Compute the decimal expansion of 1/13 and identify the repeating cycle.  \n2: Determine the position of the 43rd digit within the repeating cycle.  \n\n<Parallel>  \n6  \n<",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                21,
+                2303,
+                27
+              ],
+              "phase": "width",
+              "response_start": 2227
+            }
+          ]
+        },
+        {
+          "id": "math_train/algebra/1118",
+          "forks": 0,
+          "actual_widths": [],
+          "invalid_width": true,
+          "snippet": "0. All the given conditions are satisfied. Yep, that's right.\n</think>\n\nPlan:  \n1: Solve the system of equations derived from Juan's and Maria's mistakes.  \n2: Find the sum of the two numbers using the solved values.  \n\n<Parallel>  \n2  \n>",
+          "trace_keys": [
+            "schema_version",
+            "trajectory",
+            "prompt_tokens",
+            "calls",
+            "forks",
+            "started_at",
+            "messages",
+            "prompt_ids",
+            "forced_think_prefix_tokens",
+            "think_prefix_already_in_prompt",
+            "policy_calls",
+            "critical_depth",
+            "invalid_width",
+            "response_tokens",
+            "untruncated_response_tokens",
+            "truncated",
+            "response_ids",
+            "response_mask",
+            "position_ids",
+            "path_masks",
+            "text",
+            "finished_at",
+            "parallel_relative_positions",
+            "executed_fork_count",
+            "generation_calls",
+            "generated_tokens_total"
+          ],
+          "call_phases": [
+            "main",
+            "width"
+          ],
+          "width_calls": [
+            {
+              "generated_ids": [
+                2303,
+                17,
+                2303,
+                29
+              ],
+              "phase": "width",
+              "response_start": 826
+            }
+          ]
+        }
+      ],
+      "complete": true
+    },
+    "weighted-format-constrained-128": {
+      "counts": {
+        "tasks": 62,
+        "executed_rounds": 0,
+        "forked_tasks": 0,
+        "invalid_width": 0,
+        "truncated": 15,
+        "tasks_with_text_parallel": 0,
+        "text_parallel_openings": 0,
+        "parallel_after_think_tasks": 0,
+        "no_parallel_before_think_close": 62
+      },
+      "executed_widths": [],
+      "mean_executed_width": null,
+      "executed_width_histogram": {},
+      "common_headers": [],
+      "format_errors": {},
+      "samples": [],
+      "complete": false
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "run": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-instruct-accuracy-v2",
+  "export": [
+    "${PROJECT_ROOT}/work/experiments/night-20261010/cloud/tmp2/runtime/bin/python",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/export.py",
+    "--run",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-instruct-accuracy-v2",
+    "--output",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/instruct-stage1-v2"
+  ],
+  "evaluations": [
+    [
+      "${PROJECT_ROOT}/work/experiments/night-20261010/cloud/tmp2/runtime/bin/python",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/instruct-stage1-v2",
+      "--name",
+      "instruct-stage1-v2-24",
+      "--suite",
+      "24",
+      "--mode",
+      "structured"
+    ],
+    [
+      "${PROJECT_ROOT}/work/experiments/night-20261010/cloud/tmp2/runtime/bin/python",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/evaluate.py",
+      "--model",
+      "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/exports/instruct-stage1-v2",
+      "--name",
+      "instruct-stage1-v2-128",
+      "--suite",
+      "128",
+      "--mode",
+      "structured"
+    ]
+  ],
+  "deadline": "2026-10-10T09:00:00Z",
+  "note": "Requires runner stopped/GPU free. Export chooses highest committed checkpoint with matching actual optimizer metrics; can recover smoke if production absent, clearly labeled."
+}

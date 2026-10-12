@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "model": "${PROJECT_ROOT}/work/experiments/base-format-20261010/runs/production/final",
+  "created_at": "2026-10-11T00:10:36.174961+00:00",
+  "actual_weight_shards": [
+    "model-00001-of-00002.safetensors",
+    "model-00002-of-00002.safetensors"
+  ],
+  "tensor_keys": 398,
+  "total_weight_file_bytes": 8044981992,
+  "files": {
+    "added_tokens.json": {
+      "sha256": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+      "bytes": 844
+    },
+    "chat_template.jinja": {
+      "sha256": "5104cde78ab23e430f35fc626ae3e547504644a371dfa9ef6b8ce7bb40e7d30a",
+      "bytes": 249
+    },
+    "config.json": {
+      "sha256": "8b21d7e0d9e60e6ffa78001206a049ebc665c49fa6d4a158b91d176b834263f3",
+      "bytes": 1542
+    },
+    "generation_config.json": {
+      "sha256": "8a47fb71ce00121a7bb199fd65ec641b15518d902d8a868f693ae86f0aa81984",
+      "bytes": 117
+    },
+    "model-00001-of-00002.safetensors": {
+      "sha256": "7f6c3614e019aad7b7d55dcdc81ff89b80be637191930423c8e24ed02d8e779a",
+      "bytes": 4967215360
+    },
+    "model-00002-of-00002.safetensors": {
+      "sha256": "a4c4921e71a1bdcd220e424758383435848eb88d715e5e279b0db00f27dfaffd",
+      "bytes": 3077766632
+    },
+    "model.safetensors.index.json": {
+      "sha256": "a4552ba4015e525d61298de02b8b586eaab32ff08b6eac266303c9306edf5392",
+      "bytes": 32854
+    },
+    "special_tokens_map.json": {
+      "sha256": "94c1690bfeeb9d6c26e2fda1fb655a843dbc2f0fca442f8154413138292502e1",
+      "bytes": 433
+    },
+    "tokenizer.json": {
+      "sha256": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7",
+      "bytes": 11423769
+    },
+    "tokenizer_config.json": {
+      "sha256": "f34e5f6291309b8a663fb4a7cf48a8f748766fa5e3aeeaf8efeded3f56e17b1e",
+      "bytes": 6279
+    },
+    "vocab.json": {
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+      "bytes": 2776833
+    }
+  },
+  "manifest_scope": "Exact original fullBasefinal weights/config/tokenizer/template; verifybeforeeachproductionlaunch"
+}

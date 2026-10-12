@@ -1,0 +1,838 @@
+[
+  {
+    "outputs": [
+      "figures/qwen06b-legacy-rl.png",
+      "figures/qwen06b-legacy-rl.svg"
+    ],
+    "description": "Final MATH316 validation; legacy runtime, unequal budgets. Full GSM curves remain in the archived figures.",
+    "sources": [
+      {
+        "path": "artifacts/exps/branch-review-20261007/summary.json",
+        "sha256": "70c3ea2462af22bc7ca3bf3679109fe6c8dbb7c00fb40341d5419032a9807187"
+      },
+      {
+        "path": "artifacts/exps/gsm-unseen-two-rewards-20261008/report.json",
+        "sha256": "9791445e4b74b5c5f58483a4de2252c5e623b74930125f94dcccbb2a29ef4f5e"
+      },
+      {
+        "path": "artifacts/exps/gsm-unseen-split-rewards-400-20261008/completed-snapshot-20261008.json",
+        "sha256": "8c0941914bcd59fbc7cfaab5a74821ce435357362eb778cc9a7cbd0f2d220cb6"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/qwen06b-night-math500.png",
+      "figures/qwen06b-night-math500.svg"
+    ],
+    "description": "Same saved evaluation budget; selected RL checkpoints and unequal training histories. Critical depth is not physical parallel speedup.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/reports/final-math500-comparison.json",
+        "sha256": "28a020af5ee8c560e5f5567572b547cef9b188cd6a4c036ef95b706f54e6bae7"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/qwen4b-math500.png",
+      "figures/qwen4b-math500.svg"
+    ],
+    "description": "All500 denominator. The step50 point is a different training campaign and is not a paired training ablation.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-instruct-20261011/math500-paired-audit/R1-checkpoint-0064.json",
+        "sha256": "84d92fe89005e276e20a742206181b9cb29b82f58117651235802b50ae09b7b5"
+      },
+      {
+        "path": "artifacts/work/experiments/rl-instruct-20261011/math500-paired-audit/R2-checkpoint-0064.json",
+        "sha256": "307ea99152035416c05d7fd2c14d70554009ded5d92749fe524a97da6fb49c0e"
+      },
+      {
+        "path": "artifacts/work/experiments/rl-r2-32gpu-batch32-20261012/evaluation-math500/summary.json",
+        "sha256": "1158dc57ece2655be5c501de58bbe1f7d6681ea89707b5767939baf17f88bb56"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/qwen4b-paperbench32k.png",
+      "figures/qwen4b-paperbench32k.svg"
+    ],
+    "description": "RL hybrid protocol: 77 completed4k traces plus rerun53 at32k; native130 fresh BF16 vLLM. No exact-compute comparison.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/paperbench-32k-20261012/attempt2-main-thread/result.json",
+        "sha256": "b33025e04deae14ed0a97c3b676dbeb2284d8bc335f15b16e79917112cf4c50a"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/base-format-20261010--8b813f097a.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/base-format-20261010/runs/production/metrics.jsonl",
+        "sha256": "d4961671d975c73c4a491a0f1e7434bfb69366e5a94dfce2976dd5731136c9ef"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/base-format-20261010--149136f069.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/base-format-20261010/runs/smoke/metrics.jsonl",
+        "sha256": "bc3cafb3a969bcddcde042d7d71f2bb8961f68a5691cf0c0b52c38fd9fa13345"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/format-loss-20261010--34134e8c39.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/format-loss-20261010/runs/production/metrics.jsonl",
+        "sha256": "26a363cb853fd4da8631f48ca11c540d114ac75f25da58a43b9a7f12b9f326a4"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/format-loss-20261010--4850cbc87f.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/format-loss-20261010/runs/smoke/metrics.jsonl",
+        "sha256": "99dca7d6fa57e99b7a0a299b5745688c9215de3b711db66c23e1137b5129245c"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-deep-full-20261011--52836c4372.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-deep-full-20261011/runs/production/metrics.jsonl",
+        "sha256": "a10e12df2f97c960e9ee24299cf8c6b79cd018e5f177f5244ee4a7308c1cef2a"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-deep-full-20261011--64328fd7ad.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-deep-full-20261011/runs/smoke/metrics.jsonl",
+        "sha256": "cff290933c442a70916b6d6ca50cc9fc1ffb2f87a8b504be60bf1d4df4262eb2"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-full-20261011--0b5c749724.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-full-20261011/runs/epoch1/metrics.jsonl",
+        "sha256": "da8afca1e82eb3fbdeebffa7a14485d1b5fd03bfc7b6117a81377e05fbfdd10e"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-full-20261011--4dc33374d7.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-full-20261011/runs/smoke/metrics.jsonl",
+        "sha256": "a2c4464400e1b8b9daaea0606c75b1193af755a37848a5a6c929348d655778e8"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-token-warmup-20261010--55a8b1261c.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-token-warmup-20261010/runs/production/metrics.jsonl",
+        "sha256": "d66fe405b3d780dcba7d2b768477a509f28925938c07400b52f97a6f91b83027"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-token-warmup-20261010--904a6f6fa8.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-token-warmup-20261010/runs/smoke/metrics.jsonl",
+        "sha256": "87d9fa9effe948f19bb894a2efa1ffed85247c3bcb964f4c170f6cc80dc2a47b"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-token-warmup-20261010--7c4088430a.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/production/metrics.jsonl",
+        "sha256": "faf6429309501565d6e42d290d0471f487a5677f8fbfd4af65cddafeab69a6cb"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-token-warmup-20261010--8b17125c55.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/smoke/metrics.jsonl",
+        "sha256": "2fb33ed90f0964e6a29eb236fa1ec169baa778cb5b4f445b7cc03f2593f1f3f4"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-token-warmup-20261010--b98ad705a3.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/metrics.jsonl",
+        "sha256": "35929dd6d5d80f38d9861f8374b31c2f936c21b0c60dac812a51b7aedbcb4ac7"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/instruct-token-warmup-20261010--05b0cc8638.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/smoke/metrics.jsonl",
+        "sha256": "7d38804001b39810931a8b34129a700e42ce10a65da9f00a3b52b5ef02e6bd7c"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--5f334cae3d.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-instruct-accuracy-v2/production/training-metrics.jsonl",
+        "sha256": "2fc67b6eed069760bbe596e8430ddbb777ecf7338de49ae06f55a1a14769dc4b"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--b9a3f10f4b.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-instruct-accuracy-v2/smoke/training-metrics.jsonl",
+        "sha256": "651f425e8ef72f7305ed1d5868b0eaf69b1583bd343f5adf3670cf74ed7d0758"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--9e120ba535.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-accuracy/production/training-metrics.jsonl",
+        "sha256": "7c00e374efa82e1433480d579f0582de435b3c4ac487781b352daad81304ac33"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--45642dbf82.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-accuracy/smoke/training-metrics.jsonl",
+        "sha256": "fad112c10f9ec57bfa4e22873d2677df29b43cb35052263e5ee939446fb7fb66"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--2675d71ada.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-math-accuracy40/production/training-metrics.jsonl",
+        "sha256": "950180da0c33338b386900f805ddf8a3317a7ece0594d3e0e88fb994df1480be"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--95481d9102.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-math-accuracy40/smoke/training-metrics.jsonl",
+        "sha256": "cdf6329014a9565139a43319d2109a8e662b1e3d5afb55f03ce4fe2199699164"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--bf7937c734.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-math-accuracy80/production/training-metrics.jsonl",
+        "sha256": "123494ac0206859121788998240e6121b99adb37b5660a3772ed3dd89ea971dd"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--f7f2b1c5dd.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-math-accuracy80/smoke/training-metrics.jsonl",
+        "sha256": "618871def9496f2aaf69c790f511924dd9378925fe3ca015773f353a0205b37f"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--cccb1927f0.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-math-split40/production/training-metrics.jsonl",
+        "sha256": "de94b83d4b4e5a47f4845e12b9bd178e1c5a43f38965f0d0b4f4d795e8dcaa24"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--ebba9352e2.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-math-split40/smoke/training-metrics.jsonl",
+        "sha256": "a67b9a5a0c06a19add18f073d6993717888f615d5f91cab7cfabe8241019dda2"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--e4e66ddf57.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-mix-accuracy40/production/training-metrics.jsonl",
+        "sha256": "d9c66702ae21d7b6c314a4d15b02226e3156ea0345eb0167e5abf1f36522c7b4"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--7d76819217.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-mix-accuracy40/smoke/training-metrics.jsonl",
+        "sha256": "94f05e27ee9ac56653b4ee74d4f06398b71af836b26dc94cd720638268aee6d5"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--2b7efcf397.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-mix-g8-pilot/production/training-metrics.jsonl",
+        "sha256": "7d7bc7de1c5bb3ed54e9e67be4de84e0dd3251f9f081a32fb9f035365da67f63"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--2b467d8d01.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-mix-g8-pilot/smoke/training-metrics.jsonl",
+        "sha256": "7822fdde5b5981ebc3f72afd07be11b71e2753b7cd29fa0bd7747ed745cbed04"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--0298bef1c9.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-scalar/production/training-metrics.jsonl",
+        "sha256": "dba5577d43c4f183d5e21f693d1b22f019cd1dac90227c8d9505321b71df8b06"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--f73205ce58.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-scalar/smoke/training-metrics.jsonl",
+        "sha256": "633ef6098c45925680d1a3b7d3abb113e056af7c045d639381a2ae63def9ee45"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--85209541e0.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-sirius-continuation3/production/training-metrics.jsonl",
+        "sha256": "5147a485d935d8eb2265bb84b2b4c0cebf9c8cd7ff89e6fff28301270e643871"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--9a2c3c4889.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-sirius-continuation3/smoke/training-metrics.jsonl",
+        "sha256": "c8e711baaee267292ae23d94bfc112de3c86be1d789e6465f6effe0f751bcef9"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--9d3a182b00.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-sirius-continuation4/production/training-metrics.jsonl",
+        "sha256": "ff188d209609d49b1af98acf00fe5835b2427bbb6bc52beebb6e79bdfe5f8259"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--d1cdbc1b64.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-sirius-continuation4/smoke/training-metrics.jsonl",
+        "sha256": "16df96cdb70f7dbe061615cacf0ec5a8c0a3e5f5e8aee2a17068617cc1411daa"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--deebdd7a7c.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected/production/training-metrics.jsonl",
+        "sha256": "d34397312484ea047c57b4aef5bf4ef9bccadbc20a7c983852423a3c308ed5c5"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--eeb7ef3e8f.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-sirius-continuation4-refcorrected/smoke/training-metrics.jsonl",
+        "sha256": "df33c58ea8a2f8a8367bf34e15a884cae80a5ab8521a704e0566bc21080ea01a"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--8289dd6126.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-split/production/training-metrics.jsonl",
+        "sha256": "646155a38a8bc31f942531d64edb0dc4abad43567c746cb96fa10890f2601623"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--0297f1722e.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-split/smoke/training-metrics.jsonl",
+        "sha256": "03162b087f9bf12b8e60c684793c7327093130f5234adfdb70ee1336dfa01905"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--95641b518c.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-split-stage2/production/training-metrics.jsonl",
+        "sha256": "740de2218f938e64b4e4e570712515db0748fe330bde9a2194c157e4c4ad0036"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--79f5a876bb.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-split-stage2/smoke/training-metrics.jsonl",
+        "sha256": "084a8c528ea4a0e51f94fbf1afddf69ec88750ab412ed51151e9465689e961aa"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--8156d8ca1e.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-tmp3-continuation3/production/training-metrics.jsonl",
+        "sha256": "c8af754f5cdc6b585d204f1504b46a7c3ea10f2c6e26ac34edffec0b28e5268d"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/night-20261010--3ef9e999bd.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/night-20261010/rl-sft-tmp3-continuation3/smoke/training-metrics.jsonl",
+        "sha256": "6398b375a4247fbeb9541f55ae7550a3b4fd58fbd7512aa28a8e6f2cb863edfd"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--7d6c07625d.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/cohort_batching/baseline32/metrics.jsonl",
+        "sha256": "55bac5a1c528f9c0a3f14d8751413494d4ac6cd2600d59e32dc10e66dbfa93d1"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--ee5e18b390.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/cohort_batching/batched-replay/training/metrics.jsonl",
+        "sha256": "036fb7bbd5033686cb627db9ee65a664e70e485c3cd1a6f465c523a634d53a6f"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--1fd1175a3d.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/cohort_batching/cohort32/metrics.jsonl",
+        "sha256": "b28440bdae9c897fc9b6f813320855b4cbd3e0338b11ee32bcb38238d4d9f41b"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--33f558c1c4.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/cohort_batching/unified-bf16-tis/training/metrics.jsonl",
+        "sha256": "6c777533b45fcce744849f8d6a060d271db6bc5d2a7f3126cd6ec36f64a19f7d"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--883af7e412.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/compact_decode/smoke/metrics.jsonl",
+        "sha256": "8a84cec717ed2e7c722a7dddd03fc8bbee0c7dbe03921381faf00f5a68bf11e2"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--c89d3d4cd0.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/kv_replay/attempt2/smoke/metrics.jsonl",
+        "sha256": "95fd46e8caa590d1628ed5c1110232766803fb397793b156030166fd50ab2261"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--e4da5a42cb.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/kv_replay/attempt3/smoke/metrics.jsonl",
+        "sha256": "27dc382e4246cbd4018b18475c4d84d18067c9756270e015920794f1487c285a"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--f49a855848.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/kv_replay/attempt4/smoke/metrics.jsonl",
+        "sha256": "5e30100294c93e49bb0af650a166b6f43463fd5aa9172ec7d5ea5245c71c843f"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--cf58ce1353.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/kv_replay/attempt6/smoke/metrics.jsonl",
+        "sha256": "8fcf237c3068903491179b20debae365c3e2378ce6039f3ebf2b795e9f10177f"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--f995350776.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/kv_replay/full-mixed-combined-v2/smoke/metrics.jsonl",
+        "sha256": "2ec739403ecf2b1f5a8cfe707e79b4c455028face8de1b5a82ff95849382beea"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--c3a5e4e858.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/profile_precision/baseline/metrics.jsonl",
+        "sha256": "d824ecc3b38e104405d59bd0d3afa5eb9d01f0d468d763b51a1aa210be80faa5"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--909cc43f9b.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/profile_precision/bf16-learner-graph/attempt2/training/metrics.jsonl",
+        "sha256": "ebe2c32a3f29f81ba7a63c094b0b529f0adc0d2c2f5a8023598a8e3ee8f91f74"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--3c2a4c7a9a.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/lanes/profile_precision/bf16-rollout-tis/training/metrics.jsonl",
+        "sha256": "0887d5dc393c930c86be45d1c0bfe983bc1e9778aa56ff5bcee05ed7755b1e9f"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-acceleration-20261012--b9a12c6e47.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-acceleration-20261012/research/vllm-structured-prototype/learner-attempt1/training/metrics.jsonl",
+        "sha256": "055916b73999c9bf89af211c569f13e2e9877b80d33a3aa3aa3a557ef789bf17"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-instruct-20261011--e9cad6e1dd.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/metrics.jsonl",
+        "sha256": "767b5f177f4b6f8496fec3ad073ea906f7c0c88b9136ff78a1e51b5d5ccaefa1"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-instruct-20261011--0d5ffb58d9.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/metrics.jsonl",
+        "sha256": "420678885d9d59c82528e661d4ce99d3daf641bd971364048d179c5a716604c5"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-instruct-20261011--930298caa1.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-instruct-20261011/production-runs/strong_width-stage16/metrics.jsonl",
+        "sha256": "6d462b321f52fc4a4bb76f22d8b8c1f52231f2a9651feeeb34d3ff5c010095a5"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-r2-24gpu-20261012--7ea301fcfa.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-r2-24gpu-20261012/production/metrics.jsonl",
+        "sha256": "8bb57390d3e87d84b9df6e44e10c5969a7225c5e05505921e8898ef51723c779"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-r2-24gpu-20261012--cbe9488c50.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/metrics.jsonl",
+        "sha256": "87d0bea4f6c9843652bffc3245f53a2ab3d6cb9dcf5aca433946d7d73e3214ba"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-r2-24gpu-20261012--018812b1a5.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/smoke/metrics.jsonl",
+        "sha256": "5ec29945bd22f1f471f64b8eebd93787c7a4310851851550c8ae6502f1d444b6"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-r2-24gpu-20261012--063de9d88f.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-r2-24gpu-20261012/smoke/metrics.jsonl",
+        "sha256": "8b039b5a1cbf622c559ee94a21f3af0ad2ad1a87ab456f00d155754aa852311d"
+      }
+    ]
+  },
+  {
+    "outputs": [
+      "figures/training/rl-vllm-32gpu-20261012--46b30e458a.png"
+    ],
+    "description": "Raw saved telemetry. Repeated steps use last saved row. Rank loss is an arithmetic rank mean; local seconds is max rank duration, not instrumented global step time.",
+    "sources": [
+      {
+        "path": "artifacts/work/experiments/rl-vllm-32gpu-20261012/production/metrics.jsonl",
+        "sha256": "85796fc88cb2c6b732f92a0cf4c14b37c8bf7efab06d9287c37f005364b47424"
+      }
+    ]
+  }
+]

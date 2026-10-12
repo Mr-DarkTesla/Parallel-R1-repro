@@ -1,0 +1,124 @@
+{
+  "selection": {
+    "selection": "random.Random(seed).sample(sorted(rows,key=id),15) for old then new; interleave old/new in draw order; sampling without replacement, independent of heuristic flags",
+    "seed": 20261009,
+    "n": 30,
+    "counts": {
+      "old": 15,
+      "new": 15
+    },
+    "blind_to_existing_heuristic_flags": true,
+    "scope": [
+      "Read full problem and solution for every selected row",
+      "Judge useful substantive computed contributions and whether each is consumed later",
+      "Separate given/alias-only paths from substantive derivations",
+      "Flag artificial plus-zero or equivalent padding",
+      "Check plan ownership, summary numerical fidelity and final arithmetic in shown target chain"
+    ],
+    "non_goals": [
+      "No guarantee of full global-context consistency",
+      "No proof of causal contribution to MATH-500 score"
+    ],
+    "definitions": {
+      "given_or_alias_only": "A standalone path only copies a given/shared value or propagates equalities; no substantive calculation beyond that alias",
+      "unused_output": "A returned output is not consumed by later target calculations or an explicitly planned verification comparison; partner recomputation does not itself consume it",
+      "padding_operation": "Artificial neutral arithmetic, e.g. a stated given rewritten as x+0, used to present alias/given work as computation",
+      "useful_verification": "Explicitly assigned independent calculation of a meaningful quantity, compared in summary",
+      "clear_scheduling_issue": "At least one confirmed given/alias-only path, unused/irrelevant output, artificial neutral-operation padding, or materially unfaithful summary"
+    },
+    "input_sha256": {
+      "${PROJECT_ROOT}/work/experiments/unseen-wide5145-20261009/data/train.jsonl": "0821bfb7d2ea468594f51e88e95c29441f050137f116fb5ffa5a09f2e9628aad",
+      "${PROJECT_ROOT}/work/experiments/unseen-wide5145-20261009/data/val.jsonl": "994599658e42beda549725cfbdadce8f0ec1becf0fff55796fc7b8521c3103ad"
+    },
+    "ids": [
+      "old:gsm_infinite/2686",
+      "new:gsm_infinite_hard_0/ops_22-00000-of-00001/1990",
+      "old:gsm_infinite/4978",
+      "new:gsm_infinite_hard_0/ops_23-00000-of-00001/1991",
+      "old:gsm_infinite/2148",
+      "new:gsm_infinite_hard_0/ops_27-00000-of-00001/446",
+      "old:gsm_infinite/3838",
+      "new:gsm_infinite/1512",
+      "old:gsm_infinite/1684",
+      "new:gsm_infinite_hard_0/ops_24-00000-of-00001/1401",
+      "old:gsm_infinite/2615",
+      "new:gsm_infinite_hard_0/ops_23-00000-of-00001/18",
+      "old:gsm_infinite/4976",
+      "new:gsm_infinite_hard_0/ops_22-00000-of-00001/3019",
+      "old:gsm_infinite/2959",
+      "new:gsm_infinite/4367",
+      "old:gsm_infinite/1775",
+      "new:gsm_infinite_hard_0/ops_23-00000-of-00001/1040",
+      "old:gsm_infinite/4984",
+      "new:gsm_infinite_hard_0/ops_22-00000-of-00001/4450",
+      "old:gsm_infinite/3235",
+      "new:gsm_infinite/4193",
+      "old:gsm_infinite/3255",
+      "new:gsm_infinite_hard_0/ops_25-00000-of-00001/689",
+      "old:gsm_infinite/3906",
+      "new:gsm_infinite_hard_0/ops_24-00000-of-00001/1328",
+      "old:gsm_infinite/3578",
+      "new:gsm_infinite_hard_0/ops_21-00000-of-00001/1003",
+      "old:gsm_infinite/4334",
+      "new:gsm_infinite_hard_0/ops_27-00000-of-00001/910"
+    ]
+  },
+  "summary": {
+    "old": {
+      "reviewed_rows": 15,
+      "forks": 32,
+      "paths": 89,
+      "clear_scheduling_issue_rows": 14,
+      "given_alias_rows": 14,
+      "given_alias_paths": 34,
+      "unused_output_rows": 0,
+      "padding_rows": 0,
+      "unfaithful_summary_rows": 0,
+      "same_chain_verification_low_value_rows": 0,
+      "nested_prefix_overlap_rows": 0,
+      "incidental_negative_witness_rows": 1,
+      "widths": [
+        2,
+        3,
+        4,
+        5
+      ]
+    },
+    "new": {
+      "reviewed_rows": 15,
+      "forks": 17,
+      "paths": 58,
+      "clear_scheduling_issue_rows": 0,
+      "given_alias_rows": 0,
+      "given_alias_paths": 0,
+      "unused_output_rows": 0,
+      "padding_rows": 0,
+      "unfaithful_summary_rows": 0,
+      "same_chain_verification_low_value_rows": 3,
+      "nested_prefix_overlap_rows": 1,
+      "incidental_negative_witness_rows": 4,
+      "widths": [
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  "witness_ids": [
+    "new:gsm_infinite/4367",
+    "new:gsm_infinite/4193",
+    "new:gsm_infinite_hard_0/ops_25-00000-of-00001/689",
+    "new:gsm_infinite_hard_0/ops_27-00000-of-00001/910"
+  ],
+  "all_selected_source_rows_match_inputs": true,
+  "input_hashes_unchanged": true,
+  "sampling_reproduction_verified": true,
+  "limitations": [
+    "15 per stratum is small; these are sample counts, not exact dataset rates.",
+    "Blind means no existing heuristic flags were consulted during selection/manual judgment; source origin and full responses were visible.",
+    "Same reviewer, separate re-reading of source arithmetic; no claim of second human reviewer.",
+    "No exhaustive global consistency validator was run; incidental negative counts are separately reported, absence of a witness proves nothing.",
+    "No inference about causal effect on completed SFT/eval.",
+    "Planned independent verification counts as consumption when explicitly compared; identical computation can still have low extra value."
+  ]
+}

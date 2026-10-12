@@ -1,0 +1,39 @@
+{
+  "run": "rl-s1-seen-20261006-1112-flashinfer8gpu",
+  "commit": "e6850e0b589fe9805ac07bd02bf438dcd155dc1b",
+  "stage": "s1",
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "steps": 300,
+  "checkpoint": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/final",
+  "archive_sha256": "a77fa61860d10fdecb19c588a3814934fe1b323a77c001e619ad8f41b3545a18",
+  "data_sha256": {
+    "verl/data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet": "cee9b99e0645501b0dac3d885e66eae8d36e107c28a2f914864a68021aafc21e",
+    "verl/data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/train.parquet": "8fd253319384ede4e436d24a4f2884a632e8b1e71e1ee4bc1951ecb68007cec1"
+  },
+  "overrides": [
+    "ray_init.num_cpus=32",
+    "actor_rollout_ref.rollout.agent.num_workers=8",
+    "actor_rollout_ref.rollout.enforce_eager=false",
+    "actor_rollout_ref.model.enable_gradient_checkpointing=false",
+    "trainer.resume_mode=resume_path",
+    "trainer.resume_from_path=${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/tokenonly8gpu/results/checkpoints/global_step_70",
+    "trainer.val_before_train=true",
+    "actor_rollout_ref.model.use_fused_kernels=true",
+    "actor_rollout_ref.model.fused_kernel_options.impl_backend=triton"
+  ],
+  "supersedes": "Resume tokenonly8gpu checkpoint 70; sorted microbatch 4, numerically checked fused PPO and FlashInfer BF16",
+  "extra_env": {
+    "VLLM_ATTENTION_BACKEND": "FLASHINFER",
+    "CUDA_HOME": "${CUDA_HOME}",
+    "PYTHONPATH": "${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/flashinfer-deps"
+  }
+}

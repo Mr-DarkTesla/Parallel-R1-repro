@@ -1,0 +1,8 @@
+- trainer.n_gpus_per_node=8
+- ray_init.num_cpus=32
+- actor_rollout_ref.rollout.agent.num_workers=8
+- actor_rollout_ref.rollout.enforce_eager=false
+- actor_rollout_ref.model.enable_gradient_checkpointing=false
+- trainer.resume_mode=resume_path
+- trainer.resume_from_path=${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/flashinfer8gpu/results/checkpoints/global_step_120
+- trainer.val_before_train=true

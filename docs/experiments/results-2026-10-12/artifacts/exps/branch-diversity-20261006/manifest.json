@@ -1,0 +1,23 @@
+{
+  "dataset": "HuggingFaceH4/MATH-500",
+  "revision": "6e4ed1a2a79af7d8630a6b768ec859cb5af4d3be",
+  "rows": 500,
+  "unique_questions": 500,
+  "dataset_sha256": "32317851fa9be3c3d949c4709c18ec3b40c0efbe79b5bdef72a0addad1446658",
+  "checkpoint": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/final",
+  "mode": "async",
+  "temperature": 1.0,
+  "gpus": [
+    0,
+    1
+  ],
+  "command": [
+    "bash",
+    "training_scripts/eval_qwen3_06b.sh",
+    "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/final",
+    "data.val_batch_size=1024",
+    "data.val_files=${PROJECT_ROOT}/exps/branch-diversity-20261006/math500.parquet",
+    "ray_init.num_cpus=16"
+  ],
+  "started": "2026-10-06T07:18:49.641818+00:00"
+}

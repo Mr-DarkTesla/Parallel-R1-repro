@@ -1,0 +1,26 @@
+{
+  "state": "running",
+  "stage": "structured-runtime-smoke24",
+  "controller_pid": 1250941,
+  "started_at": "2026-10-10T08:30:43.757656+00:00",
+  "command": [
+    "bash",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh",
+    "--model",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/runs/production/final",
+    "--name",
+    "structured-runtime-smoke24",
+    "--suite",
+    "24",
+    "--mode",
+    "structured",
+    "--system-file",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt"
+  ],
+  "log": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/structured-runtime-smoke24.log",
+  "pid": 1251888,
+  "owned_process_group": 1251888,
+  "heartbeat_at": "2026-10-10T08:35:03.883090+00:00",
+  "returncode": 0,
+  "finished_at": "2026-10-10T08:35:13.886675+00:00"
+}

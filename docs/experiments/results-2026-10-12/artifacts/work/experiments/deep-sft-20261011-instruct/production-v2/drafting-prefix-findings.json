@@ -1,0 +1,37 @@
+{
+  "scanned_accepted": 352,
+  "findings": [
+    {
+      "id": "synthetic-layered-dag-v1/2026107816",
+      "raw_response_sha256": "778f9603591b620ca996facf55a2b0d81a13287fb09a02316e4415827d9a7cdf",
+      "patterns": [
+        "Return only",
+        "[Ll]et.s final",
+        "[Ww]e won.t",
+        "[Nn]eed [\"\u201c]",
+        "^\\s*\\.\\s*[\"\u201d]"
+      ],
+      "prefix": ".\" We won't.\n\nNeed \"Return only worked solution.\" Yes.\n\nLet's final.Initial amounts: Alpha_0 = 12, Gamma_0 = 15, Delta_0 = 7.\n\nStage 1 updates all three stations simultaneously from the initial amounts.\n"
+    },
+    {
+      "id": "synthetic-layered-dag-v1/2026101151",
+      "raw_response_sha256": "d00bfa6dc40097f8ff535583ba24f4f2c511b776629ef6866129f307f72f9825",
+      "patterns": [
+        "[Ll]et.s final",
+        "[Ww]e.ll output only",
+        "^\\s*\\.\\s*[\"\u201d]"
+      ],
+      "prefix": ".\" We'll output only.\n\nNeed maybe avoid \"I update\" first person? Fine.\n\nLet's final. \nI update Cedar, Aster, and Elm simultaneously for four stages, then combine the final amounts as 2*Cedar_4 + Aster_4 + 2*Elm_4.\n\nStage 1 establishes the three post-stage-1 amounts from the initial values.\n"
+    },
+    {
+      "id": "synthetic-layered-dag-v1/2026105154",
+      "raw_response_sha256": "819b647c4b565a9c5ca1259a93dd262f6a38d1a85a7fafabbac3ac4f78d961cb",
+      "patterns": [
+        "^\\s*\\.\\s*[\"\u201d]"
+      ],
+      "prefix": ".\" We will output only.\n\nNeed final answer exactly last line. The final solution heading and sentence before final line. Last line \"Final Answer: \\boxed{1902}\". Good.\n\nShould we include units? Problem amounts no units. No units in box. Good.\n\nLet's ensure arithmetic:\nStage1 N1: 2*10+14-2=32. E1:2*14+4-1=31. W1:3*4+10-4=18. S1:3*10+10-2=38.\nStage2 N2:3*38+31-3=114+31-3=142. E2:3*31+18-1=93+18-1=110. W2:3*18+32+2=54+32+2=88. S2:2*32+38-3=64+38-3=99.\nStage3 N3:1*88+99-3=184. E3:2*99+110+3=198+110+3=311. W3:2*110+142-1=220+142-1=361. S3:2*142+88+2=284+88+2=374.\nFinal: 184+622+722+374=1902. Yes.\n\nNeed maybe mention \"North + 2 times East + 2 times West + South\" corresponds to N3 + 2E3 + 2W3 + S3. Good.\n\nNow final.Initial amounts are North_0 = 4, East_0 = 10, West_0 = 10, South_0 = 14; all Stage 1 updates use only these initial amounts.\nStage 1 establishes the four warehouse amounts after the first simultaneous update.\n"
+    }
+  ],
+  "automatic_admission": false,
+  "limitations": "Known drafting markers only; no proof of all unflagged prose semantics."
+}

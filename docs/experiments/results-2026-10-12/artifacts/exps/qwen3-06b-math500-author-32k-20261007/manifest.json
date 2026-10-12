@@ -1,0 +1,66 @@
+{
+  "created": "2026-10-07T11:37:19.776796+00:00",
+  "model": "Qwen/Qwen3-0.6B",
+  "revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+  "weights_sha256": "f47f71177f32bcd101b7573ec9171e6a57f4f4d31148d38e382306f42996874b",
+  "source_dataset": "HuggingFaceH4/MATH-500",
+  "questions": 500,
+  "profiles": {
+    "instant": {
+      "temperature": 0.7,
+      "top_p": 0.8,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 1.5
+    },
+    "reasoning": {
+      "temperature": 0.6,
+      "top_p": 0.95,
+      "top_k": 20,
+      "min_p": 0.0,
+      "presence_penalty": 0.0
+    }
+  },
+  "samples_per_question": 1,
+  "max_output_tokens": 32768,
+  "max_model_len": 40960,
+  "prompt_instruction": "Please reason step by step, and put your final answer within \\boxed{}.",
+  "native_chat_template": true,
+  "parallel_r1": false,
+  "seed": 42,
+  "dtype": "bfloat16",
+  "tensor_parallel_size": 1,
+  "gpus_per_run": 1,
+  "sequential_modes": true,
+  "engine": {
+    "max_num_seqs": 32,
+    "max_num_batched_tokens": 8192,
+    "enable_chunked_prefill": true,
+    "gpu_memory_utilization": 0.85
+  },
+  "scoring": "Math-Verify 0.8.0 symbolic equivalence, reference-blind final answer extraction",
+  "source_sha256": "32317851fa9be3c3d949c4709c18ec3b40c0efbe79b5bdef72a0addad1446658",
+  "dataset_sha256": "fbb1fc6a839247042311f7695a40dc963631ba01885a665f3725b2f6acbe2b96",
+  "code_sha256": {
+    "run.py": "904b137e94bb8c0863a42563c9bd04f1588b77869bffdf12155ad20358912a55",
+    "score.py": "c596ffeafea68eb3e39b47bc08d452237ee66ecdb27e068e2724446030402dd0",
+    "run8.py": "217bbcef5f62ceb16be59cecc6230310f20e634cda8df9bc4b9635c46b566b49"
+  },
+  "versions": {
+    "vllm": "0.8.5.post1",
+    "transformers": "4.53.2"
+  },
+  "references": [
+    "https://arxiv.org/html/2505.09388v1#S4.SS4",
+    "https://huggingface.co/Qwen/Qwen3-0.6B#best-practices"
+  ],
+  "note": "Reproduces published decoding settings and recommended prompt. The technical report does not specify its complete MATH-500 grading implementation; Math-Verify is explicitly identified here.",
+  "execution_revision": "2026-10-07T11:57:22.981111+00:00",
+  "total_gpus": 8,
+  "worker_gpus": 1,
+  "replicas_per_unfinished_mode": 8,
+  "preserve_completed_modes": true,
+  "scheduler": "Eight disjoint task shards, ordinary inference",
+  "max_num_seqs_per_replica": 16,
+  "streaming_completed_answers": true
+}

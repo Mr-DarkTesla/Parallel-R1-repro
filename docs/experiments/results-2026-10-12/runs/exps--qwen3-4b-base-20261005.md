@@ -1,0 +1,531 @@
+# exps/qwen3-4b-base-20261005
+
+Ниже — сохранённые наблюдения и настройки конкретного каталога. Значения в plan/manifest могут быть плановыми; исполнение подтверждают метрики, число завершённых задач и terminal status соответствующей попытки. Неподтверждённые параметры нельзя переносить из соседнего запуска.
+
+## Полная конфигурация и данные
+
+- [exps/qwen3-4b-base-20261005/code-commits.txt](../artifacts/exps/qwen3-4b-base-20261005/code-commits.txt) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+- [exps/qwen3-4b-base-20261005/model-data-sha256.txt](../artifacts/exps/qwen3-4b-base-20261005/model-data-sha256.txt) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+- [exps/qwen3-4b-base-20261005/model-source.json](../artifacts/exps/qwen3-4b-base-20261005/model-source.json) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+<details>
+
+<summary>Числа и параметры</summary>
+
+```json
+{
+  "model": "Parallel-R1/Qwen3-4B-Base-add-special-token",
+  "revision": "9732f1f4f58d9fe411d44c5545b5d4b87f1fe284",
+  "path": "${MODEL_ROOT}/huggingface/hub/models--Parallel-R1--Qwen3-4B-Base-add-special-token/snapshots/9732f1f4f58d9fe411d44c5545b5d4b87f1fe284"
+}
+```
+
+</details>
+
+- [exps/qwen3-4b-base-20261005/packages.txt](../artifacts/exps/qwen3-4b-base-20261005/packages.txt) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+- [exps/qwen3-4b-base-20261005/resolved-config.yaml](../artifacts/exps/qwen3-4b-base-20261005/resolved-config.yaml) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+<details>
+
+<summary>Числа и параметры</summary>
+
+```yaml
+actor_rollout_ref:
+  actor:
+    strategy: fsdp
+    ppo_mini_batch_size: 8
+    ppo_micro_batch_size: null
+    ppo_micro_batch_size_per_gpu: 1
+    use_dynamic_bsz: false
+    ppo_max_token_len_per_gpu: 16384
+    clip_ratio: 0.2
+    clip_ratio_low: 0.2
+    clip_ratio_high: 0.2
+    policy_loss:
+      loss_mode: vanilla
+      clip_cov_ratio: 0.0002
+      clip_cov_lb: 1.0
+      clip_cov_ub: 5.0
+      kl_cov_ratio: 0.0002
+      ppo_kl_coef: 0.1
+    clip_ratio_c: 3.0
+    loss_agg_mode: token-mean
+    entropy_coeff: 0
+    use_kl_loss: false
+    use_torch_compile: false
+    kl_loss_coef: 0.001
+    kl_loss_type: low_var_kl
+    ppo_epochs: 1
+    shuffle: false
+    checkpoint:
+      save_contents:
+      - model
+      - optimizer
+      - extra
+      load_contents:
+      - model
+      - optimizer
+      - extra
+    optim:
+      lr: 1.0e-06
+      lr_warmup_steps_ratio: 0.0
+      total_training_steps: -1
+      weight_decay: 0.01
+      lr_warmup_steps: -1
+      min_lr_ratio: 0.0
+      num_cycles: 0.5
+      warmup_style: constant
+    grad_clip: 1.0
+    ulysses_sequence_parallel_size: 1
+    entropy_from_logits_with_chunking: false
+    entropy_checkpointing: false
+    fsdp_config:
+      wrap_policy:
+        min_num_params: 0
+      param_offload: false
+      optimizer_offload: false
+      offload_policy: false
+      reshard_after_forward: true
+      fsdp_size: -1
+      forward_prefetch: false
+  ref:
+    strategy: fsdp
+    use_torch_compile: false
+    log_prob_micro_batch_size: null
+    log_prob_micro_batch_size_per_gpu: null
+    log_prob_use_dynamic_bsz: false
+    log_prob_max_token_len_per_gpu: 16384
+    fsdp_config:
+      param_offload: false
+      reshard_after_forward: true
+      forward_prefetch: false
+      wrap_policy:
+        min_num_params: 0
+    ulysses_sequence_parallel_size: 1
+    entropy_from_logits_with_chunking: false
+    entropy_checkpointing: false
+  rollout:
+    name: vllm
+    mode: async
+    temperature: 1.0
+    top_k: -1
+    top_p: 1
+    prompt_length: 2000
+    response_length: 3000
+    dtype: bfloat16
+    gpu_memory_utilization: 0.7
+    ignore_eos: false
+    enforce_eager: true
+    free_cache_engine: true
+    tensor_model_parallel_size: 1
+    max_num_batched_tokens: 8192
+    max_model_len: null
+    max_num_seqs: 1024
+    log_prob_micro_batch_size: null
+    log_prob_micro_batch_size_per_gpu: 1
+    log_prob_use_dynamic_bsz: false
+    log_prob_max_token_len_per_gpu: 16384
+    disable_log_stats: true
+    do_sample: true
+    'n': 1
+    multi_stage_wake_up: false
+    engine_kwargs:
+      vllm:
+        swap_space: null
+        disable_mm_preprocessor_cache: false
+      sglang:
+        attention_backend: null
+    val_kwargs:
+      top_k: -1
+      top_p: 1.0
+      temperature: 1.0
+      'n': 1
+      do_sample: true
+    multi_turn:
+      enable: false
+      max_assistant_turns: null
+      tool_config_path: null
+      max_user_turns: null
+      max_parallel_calls: 1
+      max_tool_response_length: 256
+      tool_response_truncate_side: middle
+      interaction_config_path: null
+      completion_callback: null
+      use_inference_chat_template: false
+      tokenization_sanity_check_mode: strict
+      format: hermes
+    calculate_log_probs: false
+    parallel: false
+    agent:
+      num_workers: 8
+      agent_loop_config_path: null
+      max_iterations_for_parallel_thinking: 4
+      num_paths: 2
+      max_path_response_length: 4096
+      add_diverse_prefix: false
+      custom_async_server:
+        path: null
+        name: null
+    update_weights_bucket_megabytes: 512
+    trace:
+      backend: null
+      token2text: false
+    enable_chunked_prefill: true
+    load_format: dummy_dtensor
+    layered_summon: false
+  hybrid_engine: true
+  model:
+    path: ${MODEL_ROOT}/huggingface/hub/models--Parallel-R1--Qwen3-4B-Base-add-special-token/snapshots/9732f1f4f58d9fe411d44c5545b5d4b87f1fe284
+    custom_chat_template: null
+    use_shm: false
+    external_lib: null
+    override_config: {}
+    enable_gradient_checkpointing: false
+    enable_activation_offload: false
+    use_remove_padding: false
+    lora_rank: 0
+    lora_alpha: 16
+    target_modules: all-linear
+    exclude_modules: null
+    use_liger: false
+    use_fused_kernels: false
+    fused_kernel_options:
+      impl_backend: torch
+    trust_remote_code: false
+  profiler:
+    _target_: verl.utils.profiler.ProfilerConfig
+    discrete: false
+    all_ranks: false
+    ranks: []
+trainer:
+  npu_profile:
+    options:
+      save_path: ./profiler_data
+      level: level1
+      with_memory: false
+      record_shapes: false
+      with_npu: true
+      with_cpu: true
+      with_module: false
+      with_stack: false
+      analysis: true
+  balance_batch: true
+  total_epochs: 1
+  total_training_steps: null
+  profile_steps: null
+  controller_nsight_options:
+    trace: cuda,nvtx,cublas,ucx
+    cuda-memory-usage: 'true'
+    cuda-graph-trace: graph
+  worker_nsight_options:
+    trace: cuda,nvtx,cublas,ucx
+    cuda-memory-usage: 'true'
+    cuda-graph-trace: graph
+    capture-range: cudaProfilerApi
+    capture-range-end: null
+    kill: none
+  project_name: Parallel-R1
+  experiment_name: base
+  logger:
+  - console
+  log_val_generations: 0
+  rollout_data_dir: null
+  validation_data_dir: ${PROJECT_ROOT}/verl/checkpoints/eval/qwen3-4b-base-20261005/eval/base
+  nnodes: 1
+  n_gpus_per_node: 8
+  save_freq: -1
+  esi_redundant_time: 0
+  resume_mode: disable
+  resume_from_path: null
+  val_before_train: true
+  val_only: true
+  test_freq: -1
+  critic_warmup: 0
+  default_hdfs_dir: null
+  del_local_ckpt_after_load: false
+  default_local_dir: ${PROJECT_ROOT}/verl/checkpoints/eval/qwen3-4b-base-20261005/eval/base
+  max_actor_ckpt_to_keep: null
+  max_critic_ckpt_to_keep: null
+  ray_wait_register_center_timeout: 300
+  device: cuda
+  use_legacy_worker_impl: auto
+data:
+  tokenizer: null
+  use_shm: false
+  train_files: data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet
+  val_files: data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet
+  prompt_key: prompt
+  reward_fn_key: data_source
+  max_prompt_length: 2000
+  max_response_length: 3000
+  train_batch_size: 8
+  val_batch_size: 256
+  return_raw_input_ids: false
+  return_raw_chat: true
+  return_full_prompt: false
+  shuffle: true
+  dataloader_num_workers: 8
+  validation_shuffle: false
+  filter_overlong_prompts: false
+  filter_overlong_prompts_workers: 1
+  truncation: error
+  image_key: images
+  video_key: videos
+  trust_remote_code: false
+  custom_cls:
+    path: null
+    name: null
+  return_multi_modal_inputs: true
+  sampler:
+    class_path: null
+    class_name: null
+  datagen:
+    path: null
+    name: null
+critic:
+  rollout_n: 1
+  strategy: fsdp
+  optim:
+    lr_warmup_steps_ratio: 0.0
+    total_training_steps: -1
+    weight_decay: 0.01
+    lr: 1.0e-05
+    min_lr_ratio: null
+    warmup_style: constant
+  model:
+    path: ~/models/deepseek-llm-7b-chat
+    tokenizer_path: ${MODEL_ROOT}/huggingface/hub/models--Parallel-R1--Qwen3-4B-Base-add-special-token/snapshots/9732f1f4f58d9fe411d44c5545b5d4b87f1fe284
+    override_config: {}
+    external_lib: null
+    enable_gradient_checkpointing: true
+    trust_remote_code: false
+    use_shm: false
+    enable_activation_offload: false
+    use_remove_padding: false
+    fsdp_config:
+      param_offload: false
+      optimizer_offload: false
+      offload_policy: false
+      reshard_after_forward: true
+      wrap_policy:
+        min_num_params: 0
+      fsdp_size: -1
+      forward_prefetch: false
+    lora_rank: 0
+    lora_alpha: 16
+    target_modules: all-linear
+  ppo_mini_batch_size: 8
+  ppo_micro_batch_size: null
+  ppo_micro_batch_size_per_gpu: null
+  use_dynamic_bsz: false
+  ppo_max_token_len_per_gpu: 32768
+  forward_max_token_len_per_gpu: 32768
+  ppo_epochs: 1
+  shuffle: false
+  cliprange_value: 0.5
+  loss_agg_mode: token-mean
+  checkpoint:
+    save_contents:
+    - model
+    - optimizer
+    - extra
+    load_contents:
+    - model
+    - optimizer
+    - extra
+  profiler:
+    _target_: verl.utils.profiler.ProfilerConfig
+    discrete: false
+    all_ranks: false
+    ranks: []
+  _target_: verl.trainer.config.FSDPCriticConfig
+  forward_micro_batch_size: null
+  forward_micro_batch_size_per_gpu: null
+  ulysses_sequence_parallel_size: 1
+  grad_clip: 1.0
+reward_model:
+  enable: false
+  strategy: fsdp
+  model:
+    input_tokenizer: ${MODEL_ROOT}/huggingface/hub/models--Parallel-R1--Qwen3-4B-Base-add-special-token/snapshots/9732f1f4f58d9fe411d44c5545b5d4b87f1fe284
+    path: ~/models/FsfairX-LLaMA3-RM-v0.1
+    external_lib: null
+    trust_remote_code: false
+    use_shm: false
+    use_remove_padding: false
+    use_fused_kernels: false
+    fsdp_config:
+      wrap_policy:
+        min_num_params: 0
+      param_offload: false
+      reshard_after_forward: true
+      fsdp_size: -1
+      forward_prefetch: false
+  micro_batch_size: null
+  micro_batch_size_per_gpu: null
+  max_length: null
+  use_dynamic_bsz: false
+  forward_max_token_len_per_gpu: 32768
+  reward_manager: naive
+  launch_reward_fn_async: false
+  sandbox_fusion:
+    url: null
+    max_concurrent: 64
+    memory_limit_mb: 1024
+  profiler:
+    _target_: verl.utils.profiler.ProfilerConfig
+    discrete: false
+    all_ranks: false
+    ranks: []
+  ulysses_sequence_parallel_size: 1
+custom_reward_function:
+  path: training_scripts/eval_score.py
+  name: compute_score
+algorithm:
+  _target_: verl.trainer.config.AlgoConfig
+  gamma: 1.0
+  lam: 1.0
+  adv_estimator: grpo
+  norm_adv_by_std_in_grpo: true
+  use_kl_in_reward: false
+  kl_penalty: kl
+  kl_ctrl:
+    _target_: verl.trainer.config.KLControlConfig
+    type: fixed
+    kl_coef: 0.001
+    horizon: 10000
+    target_kl: 0.1
+  use_pf_ppo: false
+  pf_ppo:
+    _target_: verl.trainer.config.PFPPOConfig
+    reweight_method: pow
+    weight_pow: 2.0
+ray_init:
+  num_cpus: 32
+  timeline_json_file: null
+
+```
+
+</details>
+
+## Метрики и полнота результатов
+
+- [exps/qwen3-4b-base-20261005/public-weights-comparison.json](../artifacts/exps/qwen3-4b-base-20261005/public-weights-comparison.json) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+<details>
+
+<summary>Числа и параметры</summary>
+
+```json
+{
+  "public_model": "Qwen/Qwen3-4B-Base",
+  "public_revision": "906bfd4b4dc7f14ee4320094d8b41684abff8539",
+  "author_revision": "9732f1f4f58d9fe411d44c5545b5d4b87f1fe284",
+  "checked_tensors": 398,
+  "checked_elements": 4021784576,
+  "added_rows": {
+    "model.embed_tokens.weight": {
+      "author_rows": 151675,
+      "public_rows": 151936,
+      "compared_rows": 151669,
+      "public_tokenizer_rows": 151669,
+      "new_token_elements_different_from_public_padding": 15356
+    }
+  },
+  "differences": {},
+  "original_token_ids_equal": true,
+  "added_tokens": {
+    "<Parallel>": 151671,
+    "</Parallel>": 151672,
+    "</Summary>": 151674,
+    "<Path>": 151669,
+    "<Summary>": 151673,
+    "</Path>": 151670
+  },
+  "missing_keys": [],
+  "extra_keys": [],
+  "exact_original_weights": true
+}
+```
+
+</details>
+
+- [exps/qwen3-4b-base-20261005/summary.csv](../artifacts/exps/qwen3-4b-base-20261005/summary.csv) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+- [exps/qwen3-4b-base-20261005/summary.json](../artifacts/exps/qwen3-4b-base-20261005/summary.json) — local_saved, снимок 2026-10-12T17:38:52.274040+00:00.
+
+<details>
+
+<summary>Числа и параметры</summary>
+
+```json
+{
+  "complete": true,
+  "model": {
+    "model": "Parallel-R1/Qwen3-4B-Base-add-special-token",
+    "revision": "9732f1f4f58d9fe411d44c5545b5d4b87f1fe284",
+    "path": "${MODEL_ROOT}/huggingface/hub/models--Parallel-R1--Qwen3-4B-Base-add-special-token/snapshots/9732f1f4f58d9fe411d44c5545b5d4b87f1fe284"
+  },
+  "answers": 1916,
+  "benchmarks": {
+    "APO_AIME24": {
+      "answers": 480,
+      "questions": 30,
+      "n": 16,
+      "accuracy": 0.004166666666666667,
+      "observed_pass_at_n": 0.03333333333333333,
+      "bootstrap_best_at_n": 0.029500000000000002,
+      "parallel": 0.16458333333333333,
+      "invalid_answer": 0.65,
+      "paper_accuracy": 0.028999999999999998,
+      "paper_pass_at_n": 0.165
+    },
+    "APO_AIME25": {
+      "answers": 480,
+      "questions": 30,
+      "n": 16,
+      "accuracy": 0.004166666666666667,
+      "observed_pass_at_n": 0.06666666666666667,
+      "bootstrap_best_at_n": 0.043100000000000006,
+      "parallel": 0.1625,
+      "invalid_answer": 0.6395833333333333,
+      "paper_accuracy": 0.013000000000000001,
+      "paper_pass_at_n": 0.102
+    },
+    "APO_AMC23": {
+      "answers": 640,
+      "questions": 40,
+      "n": 16,
+      "accuracy": 0.034375,
+      "observed_pass_at_n": 0.45,
+      "bootstrap_best_at_n": 0.311975,
+      "parallel": 0.146875,
+      "invalid_answer": 0.590625,
+      "paper_accuracy": 0.081,
+      "paper_pass_at_n": 0.512
+    },
+    "APO_MATH300": {
+      "answers": 316,
+      "questions": 316,
+      "n": 1,
+      "accuracy": 0.06329113924050633,
+      "observed_pass_at_n": 0.06329113924050633,
+      "bootstrap_best_at_n": null,
+      "parallel": 0.16139240506329114,
+      "invalid_answer": 0.560126582278481,
+      "paper_accuracy": 0.139,
+      "paper_pass_at_n": null
+    }
+  },
+  "macro_accuracy": 0.026499868143459917
+}
+```
+
+</details>
+
+## Исходники рецепта и награды
+
+- [exps/qwen3-4b-base-20261005/launch.sh](../artifacts/exps/qwen3-4b-base-20261005/launch.sh) — remote_nfs, снимок 2026-10-12T17:43:08.720015+00:00.

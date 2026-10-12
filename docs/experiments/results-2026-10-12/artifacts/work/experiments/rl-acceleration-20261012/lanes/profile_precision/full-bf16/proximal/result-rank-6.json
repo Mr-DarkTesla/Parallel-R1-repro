@@ -1,0 +1,38 @@
+{
+  "rank": 6,
+  "n": 2165,
+  "source": "${PROJECT_ROOT}/work/experiments/rl-acceleration-20261012/lanes/profile_precision/full-bf16/native",
+  "q": "immutable full-BF16 cached native sampler",
+  "p0": "FP32 fullteacher at unchanged checkpoint50",
+  "optimizer_updates": 0,
+  "no_q_refresh": true,
+  "seconds": 9.193004061933607,
+  "max_abs_logratio": 5.85472297668457,
+  "mean_abs_logratio": 0.10455366224050522,
+  "p95_abs_logratio": 0.5816909670829773,
+  "signed_mean": -0.03767668455839157,
+  "ratio_min": 0.002866329625248909,
+  "ratio_max": 6.891115665435791,
+  "ratio_mean": 1.0005359649658203,
+  "ratio_std": 0.2898317575454712,
+  "ratio_quantiles": {
+    "0.001": 0.05469074100255966,
+    "0.01": 0.25855547189712524,
+    "0.05": 0.6535226702690125,
+    "0.5": 1.0000076293945312,
+    "0.95": 1.2345187664031982,
+    "0.99": 1.8837485313415527,
+    "0.999": 3.949395179748535
+  },
+  "ppo_clip_fraction": 0.13856813311576843,
+  "cap_fraction": {
+    "1.2": 0.05542725324630737,
+    "1.5": 0.021709006279706955,
+    "2.0": 0.00923787523061037,
+    "3.0": 0.003233256284147501,
+    "5.0": 0.0009237875347025692,
+    "10.0": 0.0
+  },
+  "ESS_fraction": 0.9226167798042297,
+  "peak_gpu_bytes": 17353126400
+}

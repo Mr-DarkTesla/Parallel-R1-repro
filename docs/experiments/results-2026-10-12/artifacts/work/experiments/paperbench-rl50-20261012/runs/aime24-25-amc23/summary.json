@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "checkpoint": 50,
+  "completed": 100,
+  "missing": 0,
+  "technical_unknowns": 0,
+  "samples_per_question": 1,
+  "by_dataset": {
+    "AIME2024": {
+      "completed": 30,
+      "correct": 8,
+      "accuracy": 0.26666666666666666,
+      "format_valid": 15,
+      "format_and_fork_count_all": 15,
+      "correct_and_parallel": 8,
+      "mean_actual_forwards_all": 2279.4333333333334,
+      "mean_sampled_tokens_all": 3283.5333333333333,
+      "format_conditioned": {
+        "n": 15,
+        "mean_actual_forwards": 1798.6666666666667,
+        "mean_width": 3.9375,
+        "mean_depth": 1.0666666666666667
+      },
+      "truncated": 15
+    },
+    "AIME2025": {
+      "completed": 30,
+      "correct": 3,
+      "accuracy": 0.1,
+      "format_valid": 14,
+      "format_and_fork_count_all": 14,
+      "correct_and_parallel": 3,
+      "mean_actual_forwards_all": 2362.0333333333333,
+      "mean_sampled_tokens_all": 3500.266666666667,
+      "format_conditioned": {
+        "n": 14,
+        "mean_actual_forwards": 1998.142857142857,
+        "mean_width": 4,
+        "mean_depth": 1
+      },
+      "truncated": 16
+    },
+    "AMC2023": {
+      "completed": 40,
+      "correct": 24,
+      "accuracy": 0.6,
+      "format_valid": 33,
+      "format_and_fork_count_all": 33,
+      "correct_and_parallel": 23,
+      "mean_actual_forwards_all": 1725.6,
+      "mean_sampled_tokens_all": 2521.925,
+      "format_conditioned": {
+        "n": 33,
+        "mean_actual_forwards": 1529.7272727272727,
+        "mean_width": 4.212121212121212,
+        "mean_depth": 1
+      },
+      "truncated": 6
+    }
+  },
+  "all8_exit0": true,
+  "traces": {
+    "rank-2.jsonl": "469aecad3c68c7adf93b72cf5bebcc37d25268e1e85edd8ee0bd132a80d885bc",
+    "rank-5.jsonl": "0999f917ccad199f987ca8edd143b4a5f233df77ebe5842c3cf151c8034bc3e1",
+    "rank-7.jsonl": "b6ae6ae6f0907231bff31104632a008e74743cd25035b5332e269ba09b2f9aa1",
+    "rank-0.jsonl": "2b161206207f3ce080fce9985cddb4eff91b29f0471dca89624b3b6674603adf",
+    "rank-3.jsonl": "1447fe6caf805140bbbb6196db575b4c08bdebfa97f41806ba20e61e73b81963",
+    "rank-6.jsonl": "34c514a326a85f0563a71d340160f76e47703b6bfc2b1d6ce5c185b2aab12e33",
+    "rank-1.jsonl": "561bc1ab788875513903b09e50f4ff8aae044f7a3d04a2bc189f16fb427e352d",
+    "rank-4.jsonl": "4875824359ddfa5453a0336bc95abe494a7476c47c96cbd0ed2f0cf56306b98a"
+  },
+  "selection_allowed": false,
+  "benchmark": true,
+  "model_sha256": "727550dbcb49937625a451e02c8c0c700d80c95685b63d0fcff983e09c00f42c",
+  "protocol": "FP32 HF fullwidth8, temperature1,4096response/768path/16384context, native think prefix, corrected scorer, instrumentedF",
+  "time": 1791806003.7237706
+}

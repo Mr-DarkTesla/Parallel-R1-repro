@@ -1,0 +1,205 @@
+Write a rigorous, self-contained reference solution to the mathematical
+problem below, represented as an adaptive parallel reasoning trace.
+
+The trace should demonstrate how to solve the problem through a useful
+combination of sequential reasoning, parallel work, synchronization,
+and further reasoning.
+
+Prioritize mathematical correctness, completeness, and meaningful progress.
+
+EXECUTION MODEL
+
+The trace represents one coordinator and multiple parallel branches.
+
+The coordinator may:
+- reason sequentially;
+- launch 2–8 independent branches;
+- synchronize their results;
+- continue reasoning and launch another round;
+- finish when the solution is complete.
+
+Choose the number of branches separately for each round.
+Eight is the maximum, not a target.
+
+For a difficult problem, use multiple rounds when earlier results enable
+new useful parallel work. Do not force a fixed number of rounds.
+Use sequential reasoning when parallelization would merely duplicate work.
+
+Do not choose the total number of rounds in advance.
+After each synchronization, decide what work is still necessary.
+Continue sequentially or launch another parallel round as appropriate.
+Stop when the solution is complete; never add rounds merely to increase depth.
+The limit of 8 applies only to simultaneous branches within one round.
+
+PLANNING BEFORE EACH FORK
+
+Before every <Parallel> block, write a short plan containing:
+- the round ID: r1, r2, ...;
+- the current objective;
+- the number of branches;
+- a unique ID for every branch: r1.p1, r1.p2, ...;
+- each branch's concrete assignment and expected output;
+- how the outputs will be combined or evaluated.
+
+The plan must reflect information available before that round.
+Do not put the answers to the assigned subproblems into the plan.
+Shared definitions and useful common preprocessing are allowed.
+
+Assignments must be specific. Avoid vague instructions such as
+“try another approach” without identifying the approach or question.
+
+USEFUL BRANCH ASSIGNMENTS
+
+A branch may:
+- solve an independent subproblem needed by the final solution;
+- analyze a specified case or region of the domain;
+- derive a lemma, bound, invariant, or necessary condition;
+- investigate a substantively different promising method;
+- test a conjecture or construct a counterexample;
+- verify a candidate or claim established before the current round.
+
+Different cases may use the same method.
+Rewording the same calculation, changing variable names, or changing
+arithmetic order does not constitute useful additional work.
+
+Exploit symmetry and common structure when they eliminate redundant work.
+
+INFORMATION BOUNDARIES
+
+Each branch may use only:
+- the original problem;
+- the shared context established before the current fork;
+- its own assignment and calculations.
+
+Branches in the same round must not use, quote, anticipate, or claim
+agreement with one another's results.
+
+If a task requires another branch's result, perform it after synchronization
+or assign it in a later round.
+
+This is a serialized representation of parallel execution:
+although branch texts appear consecutively, later-listed branches must
+remain independent of earlier-listed branches in the same round.
+
+BRANCH CONTENT
+
+Start each branch with its assigned ID.
+
+Provide concise, explicit mathematical work sufficient to verify its result.
+Preserve relevant assumptions, units, domain restrictions, and case boundaries.
+
+Complete the assigned task rather than merely describing how it could be done.
+Return the requested local result; a branch need not solve the whole problem.
+
+A justified empty case, counterexample, or unsuccessful approach can be useful.
+Explain precisely what was established and what remains unresolved.
+Do not invent mistakes, dead ends, or disagreements to make the trace longer.
+
+An unproved conjecture must remain labelled as a conjecture.
+Do not present numerical evidence as a general proof.
+Do not claim to have run tools or computations that were not actually run.
+
+Branches cannot launch nested parallel blocks.
+
+SYNCHRONIZATION
+
+After every </Parallel>, write a <Summary> block.
+
+Synchronization must advance the solution:
+- assess branch results and their assumptions;
+- refer to contributions using branch IDs;
+- combine complementary results;
+- check coverage and overlaps when merging cases;
+- address contradictions through explicit mathematical reasoning;
+- distinguish established facts, hypotheses, and unresolved obligations;
+- identify the next useful step.
+
+Do not claim that all branches agree if they produced different kinds of results.
+Agreement or majority vote alone is not proof.
+Do not attribute a derivation or check to a branch that did not perform it.
+
+Perform any additional connecting calculations explicitly.
+
+A later round should address work made possible or necessary by the evolving
+solution: a remaining case, a new subproblem, a surviving conjecture,
+a candidate requiring verification, or a gap in the proof.
+
+Do not repeat completed work merely to create another round.
+
+COMPLETION AND QUALITY
+
+Produce a complete solution whenever you can justify one.
+Do not fabricate a conclusion if an essential gap remains.
+
+For equations, check admissibility and extraneous solutions.
+For exhaustive searches or classifications, justify completeness.
+For counting, prevent omissions and double counting.
+For optimization, justify optimality rather than only giving a candidate.
+For proofs, discharge the necessary assumptions and intermediate claims.
+
+Keep the trace focused:
+- no theatrical internal monologue;
+- no generic filler about exploring different perspectives;
+- no artificial proliferation of branches;
+- no retrospective rewriting of earlier plans;
+- no unsupported leaps concealed by a correct final answer.
+
+COORDINATOR DECISIONS AND PROGRESS
+
+At the start and after each synchronization, inspect the current unresolved
+work. If two or more substantial tasks are independently executable now,
+assign those tasks before carrying out their results in the coordinator.
+If only one useful task is ready, perform it sequentially and reassess when
+its result exposes new work. Do not finish all remaining substantial work
+sequentially merely because one parallel block has already been used.
+
+Choose branch width from the actual available tasks. Group tiny calculations
+and symmetric cases; do not create branches just to copy a value or perform
+one trivial arithmetic operation. There is no preferred width or round count.
+
+Prefer complementary contributions when they naturally exist. Two full
+solutions are appropriate only when they supply a meaningful independent
+check or explore materially different uncertain approaches.
+
+Every branch assignment must be executable as written. If a branch needs an
+unknown result, either derive that result independently within the branch,
+work explicitly with a symbolic parameter, or defer the task to a later round.
+Do not silently import a candidate or bound from a sibling.
+
+After a synchronization, make the next objective follow from the established
+results or unresolved issues. State that connection briefly in the next plan.
+Finish immediately once the proof is complete. Never add a verification round
+that only repeats checks already completed.
+
+OUTPUT FORMAT
+
+Return only the mathematical solution trace, using ordinary prose and LaTeX.
+Do not wrap the trace in a code fence or literal square brackets.
+
+Before each fork write:
+Plan:
+round=rN; paths=K
+Objective: a concrete objective based on the current state
+rN.p1: assignment and expected output
+... one assignment line for every actual branch ...
+Merge: how to use the results and check completeness
+
+Then serialize that round using these exact structural tokens:
+<Parallel> followed by K sibling <Path>...</Path> blocks, then </Parallel>,
+then one <Summary>...</Summary> block.
+Each <Path> starts with id=rN.pK on its own line and ends with Result: ... .
+Keep IDs as ordinary text, not attributes on the tags.
+No nested forks. The path IDs and count must match the preceding plan.
+
+Write any useful sequential reasoning between complete rounds.
+Generate another plan only when another fork is useful.
+Sequential solutions with no structural tags are allowed.
+Do not reproduce placeholders or invent extra structural tags.
+
+End with exactly one standalone line:
+Final Answer: <the requested result>
+If an essential gap remains, explicitly state unresolved on that line.
+
+PROBLEM
+
+{{INSERT_PROBLEM_HERE}}

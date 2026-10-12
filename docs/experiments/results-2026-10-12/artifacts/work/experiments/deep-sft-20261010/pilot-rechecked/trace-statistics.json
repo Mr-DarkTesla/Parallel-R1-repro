@@ -1,0 +1,93 @@
+{
+  "phase": "pilot-rechecked",
+  "accepted": 49,
+  "width": {
+    "count": 207,
+    "mean": 3.975845410628019,
+    "median": 4.0,
+    "p5": 3.0,
+    "p95": 5.0,
+    "minimum": 2,
+    "maximum": 5
+  },
+  "rounds": {
+    "count": 49,
+    "mean": 4.224489795918367,
+    "median": 4.0,
+    "p5": 4.0,
+    "p95": 5.0,
+    "minimum": 4,
+    "maximum": 5
+  },
+  "path_body_tokens": {
+    "count": 823,
+    "mean": 33.650060753341435,
+    "median": 36.0,
+    "p5": 20.0,
+    "p95": 41.89999999999998,
+    "minimum": 18,
+    "maximum": 55
+  },
+  "whole_path_tokens": {
+    "count": 823,
+    "mean": 37.650060753341435,
+    "median": 40.0,
+    "p5": 24.0,
+    "p95": 45.89999999999998,
+    "minimum": 22,
+    "maximum": 59
+  },
+  "response_tokens": {
+    "count": 49,
+    "mean": 1281.0816326530612,
+    "median": 1244.0,
+    "p5": 883.4,
+    "p95": 1730.1999999999998,
+    "minimum": 835,
+    "maximum": 1966
+  },
+  "student_context_tokens": {
+    "count": 49,
+    "mean": 2040.8367346938776,
+    "median": 1979.0,
+    "p5": 1413.0,
+    "p95": 2709.9999999999995,
+    "minimum": 1369,
+    "maximum": 3031
+  },
+  "critical_path_tokens_split_proxy": {
+    "count": 49,
+    "mean": 816.2244897959183,
+    "median": 776.0,
+    "p5": 647.4,
+    "p95": 1082.9999999999998,
+    "minimum": 623,
+    "maximum": 1193
+  },
+  "serial_tokens_split_proxy": {
+    "count": 49,
+    "mean": 648.7142857142857,
+    "median": 628.0,
+    "p5": 481.6,
+    "p95": 887.3999999999999,
+    "minimum": 468,
+    "maximum": 1053
+  },
+  "width_histogram": {
+    "4": 120,
+    "5": 45,
+    "3": 34,
+    "2": 8
+  },
+  "round_histogram": {
+    "4": 38,
+    "5": 11
+  },
+  "accepted_sha256": "7aaaea92f4f5cca6829077e016ea6404b7e4a685689fc6e602f352aa409af265",
+  "limitations": [
+    "Student tokenizer and compacted training response; teacher hidden reasoning excluded.",
+    "Critical path includes entire Path opener/body/closer and all serial text.",
+    "Independent segment tokenization can differ at boundaries; split proxy is not runtime forwards or latency.",
+    "Prompt/context tokens count once; prompt is excluded from response critical path."
+  ]
+}

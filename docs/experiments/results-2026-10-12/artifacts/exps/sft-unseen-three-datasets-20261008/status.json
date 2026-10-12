@@ -1,0 +1,69 @@
+{
+  "state": "complete",
+  "controller_pid": 946333,
+  "started_at": "2026-10-08T13:37:38.671111+00:00",
+  "policy": "Independent fresh starts from pinned base; serial execution; stop on failure; no restart/resume.",
+  "jobs": [
+    {
+      "name": "00_longest_canary",
+      "dataset": "gsm_infinite",
+      "canary": true,
+      "state": "complete",
+      "started_at": "2026-10-08T13:37:38.680909+00:00",
+      "log": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/00_longest_canary/sft.log",
+      "pid": 946336,
+      "finished_at": "2026-10-08T13:38:57.356332+00:00",
+      "exit_code": 0,
+      "optimizer_steps": 1,
+      "expected_steps": 1,
+      "final": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/00_longest_canary/final",
+      "final_sha256": "b52880ca1dc50b36ce3aad1b922a1eadf3a592eb1df2c59272850a2a1ea68979"
+    },
+    {
+      "name": "01_gsm_infinite",
+      "dataset": "gsm_infinite",
+      "canary": false,
+      "state": "complete",
+      "started_at": "2026-10-08T13:38:58.917857+00:00",
+      "log": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/01_gsm_infinite/sft.log",
+      "pid": 948008,
+      "finished_at": "2026-10-08T15:17:02.183836+00:00",
+      "exit_code": 0,
+      "optimizer_steps": 175,
+      "expected_steps": 175,
+      "final": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/01_gsm_infinite/final",
+      "final_sha256": "101d49a2e82b3c3433ae9101a39a92e3c819e547b96f5dc7e0df5cd27d739756"
+    },
+    {
+      "name": "02_sft_messages",
+      "dataset": "sft_messages",
+      "canary": false,
+      "state": "complete",
+      "started_at": "2026-10-08T15:17:03.854362+00:00",
+      "log": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/02_sft_messages/sft.log",
+      "pid": 950668,
+      "finished_at": "2026-10-08T15:39:46.221316+00:00",
+      "exit_code": 0,
+      "optimizer_steps": 175,
+      "expected_steps": 175,
+      "final": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/02_sft_messages/final",
+      "final_sha256": "0b45d350fb935dfe04c8f3a57c9fdb4f450df9ac562eee47f5891736f9a36ee1"
+    },
+    {
+      "name": "03_mixed",
+      "dataset": "mixed",
+      "canary": false,
+      "state": "complete",
+      "started_at": "2026-10-08T15:39:47.880762+00:00",
+      "log": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/03_mixed/sft.log",
+      "pid": 953177,
+      "finished_at": "2026-10-08T15:56:16.236567+00:00",
+      "exit_code": 0,
+      "optimizer_steps": 175,
+      "expected_steps": 175,
+      "final": "${PROJECT_ROOT}/exps/sft-unseen-three-datasets-20261008/runs/03_mixed/final",
+      "final_sha256": "843925d22fdb7f2bec81600f0b6f2114367bb20a35ca0b332bdc403e72b239af"
+    }
+  ],
+  "finished_at": "2026-10-08T15:56:17.800103+00:00"
+}

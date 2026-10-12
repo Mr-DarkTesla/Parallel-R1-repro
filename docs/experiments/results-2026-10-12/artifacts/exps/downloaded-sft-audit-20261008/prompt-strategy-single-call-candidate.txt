@@ -1,0 +1,121 @@
+STATUS: Proposed candidate derived from pilot v2 and the 2026-10-08 dataset audit; not experimentally validated on DeepSeek or Luna.
+Remove these first two lines when constructing the actual teacher request.
+
+Write a correct, complete mathematical reference solution to PROBLEM as
+an adaptive parallel trace. Return only the trace, in ordinary prose and LaTeX.
+
+First identify the requested result and the quantities or proof obligations
+that are actually needed for it. Ignore irrelevant context. Establish shared
+definitions and any useful common preprocessing sequentially. Preserve units,
+domains, hypotheses and case boundaries. For dependency-heavy word problems,
+name quantities clearly and use equations to expose their dependencies.
+
+Before scheduling work, apply straightforward identities, alias substitutions,
+cancellations, symmetry, known zero factors and common-expression reuse.
+A simplification requiring substantial proof may itself be assigned as a task.
+Do not compute a large dependency
+chain whose value cannot affect the requested result. Share genuinely common
+work before a fork; do not create extra paths by repeating it. This preliminary
+work should expose useful tasks, not silently solve every substantial task.
+Respect the stated meaning of totals and units. Do not invent missing premises
+such as an exhaustive list of categories. If the problem is underdetermined,
+state the missing premise or give a conditional result instead of silently
+repairing the problem. Do not invent physical plausibility for inconsistent data.
+
+One coordinator can perform sequential work, launch a round of 2–8 independent
+branches, synchronize, and continue. Choose width separately at each fork.
+Eight is a maximum, not a target. Do not choose the number of rounds in advance.
+Sequential solutions with no fork are valid.
+
+Before and after each round, reassess the unresolved work. If two or more
+substantial required tasks are independently executable now, assign them.
+If only one is ready, perform it sequentially until its result exposes new work.
+Stop immediately once the requested solution is complete. Do not do all
+remaining substantial independent work in the coordinator merely because
+one fork has already occurred.
+
+A branch can solve a necessary subproblem, investigate a specified case,
+derive a useful lemma or bound, pursue a materially different uncertain method,
+or check an established candidate when the check is needed. Prefer complementary
+outputs. Two whole solutions are appropriate only for a meaningful independent
+check or genuinely different promising approaches. Do not branch for paraphrases,
+copies, variable renaming or one trivial arithmetic operation. Group tiny steps
+into useful independent chains. Exploit symmetry and common work.
+
+INFORMATION BOUNDARY
+Each branch may use only PROBLEM, shared facts established before its fork,
+its assignment, and its own derivations. It must not use, quote, anticipate,
+or claim agreement with a sibling's result from that round. A branch that needs
+an unavailable value must derive it independently, explicitly keep it symbolic,
+or wait for a later round. Serialization order does not change this rule.
+Branches cannot create nested forks.
+
+BEFORE EVERY FORK
+Write a plan reflecting only the current pre-fork state. Give the concrete
+objective, count, unique IDs, assignment, available inputs, expected output
+type, and merge rule. Never reveal assigned answers in a plan. Expected output
+means a quantity, lemma, case classification, bound or check, not its answer.
+
+Use exactly this grammar, replacing N and K with actual integers:
+Plan:
+round=rN; paths=K
+Objective: the work now required and why it is ready
+rN.p1: assignment; inputs: available facts; output: requested result type
+... one actual assignment line per branch ...
+Merge: how the outputs advance the solution and how coverage is checked
+
+Then write exactly one <Parallel> block with K sibling <Path> blocks.
+Every branch starts with its literal ID line, for example id=r1.p1.
+Do not reproduce placeholders, add tag attributes, or write “on its own line”.
+
+<Parallel><Path>
+id=r1.p1
+Explicit local mathematics completing the assignment.
+Result: the established local result, with its conditions.
+</Path><Path>
+id=r1.p2
+Explicit local mathematics for the second assignment.
+Result: the established local result, with its conditions.
+</Path></Parallel><Summary>
+Assess and combine the outputs by their exact IDs. State the new established
+facts, remaining obligations and next useful step. Show any connecting
+calculation. Check completeness and overlap for cases. Resolve contradictions
+mathematically; votes and assertions of agreement are not proof.
+</Summary>
+
+The two-path example above only demonstrates grammar. For K greater than two,
+insert the remaining actual sibling Path blocks before </Parallel>. Inside
+<Parallel>, put all whitespace and all prose inside Path blocks: write
+<Parallel><Path>, </Path><Path>, and </Path></Parallel> without intervening
+whitespace. Line breaks inside a Path are allowed.
+Use r1 for the first actual
+fork, r2 for the second, and p1 through pK within each round. Counts and IDs
+must match the preceding plan. Every </Parallel> must immediately be followed
+by a single <Summary> block. Shared conclusions become available to later
+rounds only after this synchronization.
+
+MATHEMATICAL QUALITY
+Do the assigned work, rather than describe a possible method. Justify necessary
+conditions, completeness for classifications, counting without omissions or
+duplication, admissibility for roots and candidates, and optimality for extrema.
+An empty case or unsuccessful approach may be useful if justified. Do not
+invent mistakes, disagreements, dead ends or verification rounds. Keep
+conjectures and evidence distinct from established facts. Do not claim tools
+or computations were executed unless they actually were.
+
+Keep the trace focused and auditable. Local errors remain errors even when
+the final number is correct. Do not hide a gap in Summary, silently repair
+a branch's claim, or attribute work to a branch that did not perform it.
+If a discovered error matters, correct it explicitly and reassess downstream
+claims. A later fork must address work enabled by established results or a
+remaining necessary obligation; never repeat completed work to increase depth.
+
+End with exactly one standalone line:
+Final Answer: the full requested result
+If the given premises provably do not determine a unique answer, state that
+conclusion and the missing premise explicitly. A conditional result must retain
+its exact condition on this line. If instead your attempted solution has an
+essential unproved step, state unresolved and identify that gap on this line.
+
+PROBLEM
+{{INSERT_PROBLEM_HERE}}

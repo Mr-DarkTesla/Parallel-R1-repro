@@ -1,0 +1,26 @@
+{
+  "state": "running",
+  "stage": "native-runtime-smoke24",
+  "controller_pid": 1250941,
+  "started_at": "2026-10-10T08:25:13.382350+00:00",
+  "command": [
+    "bash",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh",
+    "--model",
+    "${PROJECT_ROOT}/work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/model",
+    "--name",
+    "native-runtime-smoke24",
+    "--suite",
+    "24",
+    "--mode",
+    "native",
+    "--system-file",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/math-system.txt"
+  ],
+  "log": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/native-runtime-smoke24.log",
+  "pid": 1250944,
+  "owned_process_group": 1250944,
+  "heartbeat_at": "2026-10-10T08:30:33.531578+00:00",
+  "returncode": 0,
+  "finished_at": "2026-10-10T08:30:43.535688+00:00"
+}

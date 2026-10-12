@@ -1,0 +1,1536 @@
+{
+  "matched_explicit_protocol": true,
+  "generation_config_hashes_differ": true,
+  "explicit_sampling": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "top_k": 20,
+    "repetition_penalty": 1,
+    "seed": "42+sample_index"
+  },
+  "results": {
+    "epoch1-guard-structured-128": {
+      "completed": 128,
+      "correct": 86,
+      "format_valid": 126,
+      "parallel_valid": 124,
+      "unfinished_thinking": 1,
+      "by_dataset": {
+        "gsm": {
+          "correct": 47,
+          "completed": 64
+        },
+        "math": {
+          "correct": 39,
+          "completed": 64
+        }
+      },
+      "actual_policy_width_attempt_groups": {
+        "count": 127,
+        "histogram": {
+          "4": 30,
+          "2": 58,
+          "3": 37,
+          "5": 1,
+          "6": 1
+        },
+        "mean": 2.8188976377952755
+      },
+      "actual_completed_path_summary_groups": {
+        "count": 127,
+        "histogram": {
+          "4": 30,
+          "2": 58,
+          "3": 37,
+          "5": 1,
+          "6": 1
+        },
+        "mean": 2.8188976377952755
+      },
+      "executed_forks_stats_total": 127,
+      "details": [
+        {
+          "id": "gsm_infinite_ops2/ops2/360",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/476",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/1213",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/146",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/514",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/434",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/1406",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/312",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/8",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/566",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/835",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/768",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/435",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/76",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/1599",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/354",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/185",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/1604",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/984",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/689",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/396",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/367",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/649",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/308",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/101",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/801",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/457",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/geometry/455",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/geometry/667",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/419",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/609",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/346",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            },
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 2
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/977",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/327",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/419",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/497",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/198",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/70",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/precalculus/374",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/geometry/563",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/geometry/201",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/855",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/751",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/1249",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/625",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/252",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/34",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/441",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/264",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/905",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/508",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/146",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/312",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/216",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/900",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/1223",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/392",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/counting_and_probability/745",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/1063",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/56",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/precalculus/193",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/34",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/566",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/484",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/441",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/42",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/790",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/588",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/7",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            },
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 2
+        },
+        {
+          "id": "math_train/prealgebra/1153",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/151",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/precalculus/567",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/993",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/464",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/counting_and_probability/434",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/752",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/106",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/695",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/619",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/510",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/747",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/187",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/255",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/7",
+          "groups": [
+            {
+              "path_calls": 5,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/173",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/1558",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/786",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/690",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/226",
+          "groups": [
+            {
+              "path_calls": 6,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/376",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/precalculus/110",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/1118",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/precalculus/590",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/349",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/365",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/203",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/919",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/252",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops5/ops5/175",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/605",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/397",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/precalculus/644",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/1058",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/892",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/278",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/1199",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/geometry/662",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/856",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/934",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/339",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/236",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/176",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/549",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/24",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/466",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops4/ops4/786",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/691",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/724",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/1266",
+          "groups": [
+            {
+              "path_calls": 3,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/910",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/number_theory/830",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/algebra/270",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/precalculus/155",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/intermediate_algebra/100",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "math_train/prealgebra/979",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        }
+      ],
+      "critical_path_proxy_F_mean": 569.0390625,
+      "inferred_sampled_token_work_mean": 722.5234375,
+      "manifest": {
+        "model": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/epoch1/final",
+        "mode": "structured",
+        "system_file": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/system.txt",
+        "fixed_questions": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/evaluations/questions-128.jsonl",
+        "response_cap": 4096,
+        "path_cap": 2048,
+        "planned": 128,
+        "suite": "128",
+        "native_eos_ids": [
+          151643,
+          151645
+        ],
+        "diagnostic_only": true,
+        "checkpoint_selection_allowed": false,
+        "guard_protocol": "native think opener in prompt; sampled close ends thinking; all six XML tags blocked after close; nonmain close blocked; visible cap4096 with response budget4094",
+        "model_precision": "bf16",
+        "scorer_think_tag_fix": true,
+        "evaluator_sha256": "18a0a9f6245eba0b072fcc98be8bf26f0fdea440c443ba43d55ea234ebcabf93",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "questions_sha256": "f40af1afc5073be8e41e691f04f701a57dbd2c07ff5fa9a9256e675220674b5d",
+        "generation_config_sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+        "runtime_sha256": {
+          "native_eos.py": "e8ff0eaa8f50e35e9db75c8f848da538f3615a69adc208a205589f06277d3ae3",
+          "summary_metrics.py": "3eab70d837c464d490886866afc32cb965f4546d8a43a2daf8b1cbcef064f4c7",
+          "runtime/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "59489cc00c70e83ce6f66b199dab342d2a54150c7d88554c48d32b846d5a03ce",
+          "runtime/verl/workers/rollout/vllm_rollout/structured_worker.py": "0aa0a6233ac96e3d32ac00a51ddc71f3c394d6c7b2d8ff02e97f92d504206cb5",
+          "runtime/verl/utils/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "generation_config": {
+        "bos_token_id": 151643,
+        "do_sample": true,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "temperature": 0.6,
+        "top_k": 20,
+        "top_p": 0.95,
+        "transformers_version": "4.53.2"
+      }
+    },
+    "warmup-lr1e3-guard-structured-128": {
+      "completed": 128,
+      "correct": 103,
+      "format_valid": 107,
+      "parallel_valid": 1,
+      "unfinished_thinking": 17,
+      "by_dataset": {
+        "gsm": {
+          "correct": 52,
+          "completed": 64
+        },
+        "math": {
+          "correct": 51,
+          "completed": 64
+        }
+      },
+      "actual_policy_width_attempt_groups": {
+        "count": 9,
+        "histogram": {
+          "0": 5,
+          "2": 1,
+          "4": 2,
+          "7": 1
+        },
+        "mean": 1.8888888888888888
+      },
+      "actual_completed_path_summary_groups": {
+        "count": 4,
+        "histogram": {
+          "2": 1,
+          "4": 2,
+          "7": 1
+        },
+        "mean": 4.25
+      },
+      "executed_forks_stats_total": 4,
+      "details": [
+        {
+          "id": "math_train/intermediate_algebra/1266",
+          "groups": [
+            {
+              "path_calls": 0,
+              "summary_call": false
+            }
+          ],
+          "executed_forks_stat": 0
+        },
+        {
+          "id": "gsm_infinite_ops2/ops2/34",
+          "groups": [
+            {
+              "path_calls": 2,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/441",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/396",
+          "groups": [
+            {
+              "path_calls": 4,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/367",
+          "groups": [
+            {
+              "path_calls": 0,
+              "summary_call": false
+            }
+          ],
+          "executed_forks_stat": 0
+        },
+        {
+          "id": "math_train/intermediate_algebra/856",
+          "groups": [
+            {
+              "path_calls": 0,
+              "summary_call": false
+            }
+          ],
+          "executed_forks_stat": 0
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/497",
+          "groups": [
+            {
+              "path_calls": 7,
+              "summary_call": true
+            }
+          ],
+          "executed_forks_stat": 1
+        },
+        {
+          "id": "gsm_infinite_ops6/ops6/476",
+          "groups": [
+            {
+              "path_calls": 0,
+              "summary_call": false
+            }
+          ],
+          "executed_forks_stat": 0
+        },
+        {
+          "id": "gsm_infinite_ops3/ops3/695",
+          "groups": [
+            {
+              "path_calls": 0,
+              "summary_call": false
+            }
+          ],
+          "executed_forks_stat": 0
+        }
+      ],
+      "critical_path_proxy_F_mean": 1455.4609375,
+      "inferred_sampled_token_work_mean": 1471.46875,
+      "manifest": {
+        "model": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/production/final",
+        "mode": "structured",
+        "system_file": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/system.txt",
+        "fixed_questions": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/evaluations/questions-128.jsonl",
+        "response_cap": 4096,
+        "path_cap": 2048,
+        "planned": 128,
+        "suite": "128",
+        "native_eos_ids": [
+          151643,
+          151645
+        ],
+        "diagnostic_only": true,
+        "checkpoint_selection_allowed": false,
+        "guard_protocol": "native think opener in prompt; sampled close ends thinking; all six XML tags blocked after close; nonmain close blocked; visible cap4096 with response budget4094",
+        "model_precision": "bf16",
+        "scorer_think_tag_fix": true,
+        "evaluator_sha256": "18a0a9f6245eba0b072fcc98be8bf26f0fdea440c443ba43d55ea234ebcabf93",
+        "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+        "questions_sha256": "f40af1afc5073be8e41e691f04f701a57dbd2c07ff5fa9a9256e675220674b5d",
+        "generation_config_sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "runtime_sha256": {
+          "native_eos.py": "e8ff0eaa8f50e35e9db75c8f848da538f3615a69adc208a205589f06277d3ae3",
+          "summary_metrics.py": "3eab70d837c464d490886866afc32cb965f4546d8a43a2daf8b1cbcef064f4c7",
+          "runtime/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "59489cc00c70e83ce6f66b199dab342d2a54150c7d88554c48d32b846d5a03ce",
+          "runtime/verl/workers/rollout/vllm_rollout/structured_worker.py": "0aa0a6233ac96e3d32ac00a51ddc71f3c394d6c7b2d8ff02e97f92d504206cb5",
+          "runtime/verl/utils/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f"
+        }
+      },
+      "generation_config": {
+        "bos_token_id": 151643,
+        "do_sample": true,
+        "eos_token_id": [
+          151645,
+          151643
+        ],
+        "pad_token_id": 151643,
+        "temperature": 0.6,
+        "top_k": 20,
+        "top_p": 0.95,
+        "transformers_version": "4.51.0"
+      }
+    }
+  },
+  "accuracy_difference_full_minus_warmup": -17,
+  "accuracy_percentage_points": -13.28125,
+  "width_definition": "Counts actual raw policy phase=path calls grouped after each actual width call; completed means summary call present with >=2 actual paths; width attempts with zero paths preserved separately. No textual headers counted.",
+  "forward_semantics": "F critical sequential sampled-token depth proxy and inferred raw sampled-token work are not physical forward invocation counts."
+}

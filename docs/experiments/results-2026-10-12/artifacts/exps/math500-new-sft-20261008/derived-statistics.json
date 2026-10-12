@@ -1,0 +1,62 @@
+{
+  "paired_accuracy_comparisons": [
+    {
+      "a": "gsm_infinite_ep5",
+      "b": "sft_messages_ep5",
+      "delta_pp": 1.0,
+      "paired_bootstrap_ci95_pp": [
+        -2.6,
+        4.604999999999928
+      ],
+      "a_only_correct": 47,
+      "b_only_correct": 42
+    },
+    {
+      "a": "gsm_infinite_ep5",
+      "b": "mixed_ep1",
+      "delta_pp": 4.6,
+      "paired_bootstrap_ci95_pp": [
+        0.8,
+        8.6
+      ],
+      "a_only_correct": 63,
+      "b_only_correct": 40
+    },
+    {
+      "a": "sft_messages_ep5",
+      "b": "mixed_ep1",
+      "delta_pp": 3.5999999999999996,
+      "paired_bootstrap_ci95_pp": [
+        -0.4,
+        7.3999999999999995
+      ],
+      "a_only_correct": 57,
+      "b_only_correct": 39
+    }
+  ],
+  "seed": 42,
+  "bootstrap_replicates": 10000,
+  "models": {
+    "gsm_infinite_ep5": {
+      "branch_token_share_weighted": 0.00300542574107683,
+      "max_forks": 3,
+      "strict_format_parallel_count": 51,
+      "budget_reached_correct": 0,
+      "total_generated_tokens": 2115840
+    },
+    "sft_messages_ep5": {
+      "branch_token_share_weighted": 0.009810680106638964,
+      "max_forks": 1,
+      "strict_format_parallel_count": 15,
+      "budget_reached_correct": 0,
+      "total_generated_tokens": 1147423
+    },
+    "mixed_ep1": {
+      "branch_token_share_weighted": 0.35778223919573715,
+      "max_forks": 2,
+      "strict_format_parallel_count": 347,
+      "budget_reached_correct": 0,
+      "total_generated_tokens": 264988
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "public_model": "Qwen/Qwen3-4B-Base",
+  "public_revision": "906bfd4b4dc7f14ee4320094d8b41684abff8539",
+  "author_revision": "9732f1f4f58d9fe411d44c5545b5d4b87f1fe284",
+  "checked_tensors": 398,
+  "checked_elements": 4021784576,
+  "added_rows": {
+    "model.embed_tokens.weight": {
+      "author_rows": 151675,
+      "public_rows": 151936,
+      "compared_rows": 151669,
+      "public_tokenizer_rows": 151669,
+      "new_token_elements_different_from_public_padding": 15356
+    }
+  },
+  "differences": {},
+  "original_token_ids_equal": true,
+  "added_tokens": {
+    "<Parallel>": 151671,
+    "</Parallel>": 151672,
+    "</Summary>": 151674,
+    "<Path>": 151669,
+    "<Summary>": 151673,
+    "</Path>": 151670
+  },
+  "missing_keys": [],
+  "extra_keys": [],
+  "exact_original_weights": true
+}

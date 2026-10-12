@@ -1,0 +1,26 @@
+{
+  "complete": true,
+  "steps": 400,
+  "hf_model": "${PROJECT_ROOT}/exps/gsm-unseen-split-rewards-400-20261008/gated_depth/results/checkpoints/global_step_400/actor/huggingface",
+  "full_state": true,
+  "finite_weights": true,
+  "finite_forward": true,
+  "validation": {
+    "APO_MATH300": {
+      "acc": 0.370253164556962,
+      "critical_depth": 651.4841772151899,
+      "parallel": 0.16455696202531644,
+      "forks": 0.1930379746835443,
+      "format_ok": 0.990506329113924,
+      "answers": 316
+    },
+    "gsm_infinite_heldout": {
+      "acc": 0.875,
+      "critical_depth": 347.33203125,
+      "parallel": 0.0078125,
+      "forks": 0.0078125,
+      "format_ok": 0.9921875,
+      "answers": 256
+    }
+  }
+}

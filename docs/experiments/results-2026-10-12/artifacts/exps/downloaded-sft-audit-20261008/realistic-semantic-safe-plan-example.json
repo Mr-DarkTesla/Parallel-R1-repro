@@ -1,0 +1,47 @@
+{
+  "source_row_1based": 3779,
+  "source_id": "realistic_parallel_03778",
+  "quantity_dictionary": {
+    "q01": "number of astronomy books at Stonegate Library",
+    "q02": "number of cookbooks at Lakeside Library",
+    "q03": "number of cookbooks at Stonegate Library",
+    "q04": "number of mystery novels at Oak Lane Library",
+    "q05": "number of engineering manuals at Grandview Library",
+    "q06": "number of art books at Pine Street Library",
+    "q07": "number of music books at Eastbridge Library",
+    "q08": "number of science books at Silverbrook Library",
+    "q09": "number of architecture books at Pine Street Library"
+  },
+  "plan_text": "Plan: compute q02 from the given q01. For block B1, both paths may read q02. Path B1.P1 computes q03 then q04. Path B1.P2 computes q05 then q06 then q07. After joining q04 and q07, compute q08, then the requested q09.",
+  "branch_metadata": [
+    {
+      "block_id": "B1",
+      "shared_inputs": [
+        "q02"
+      ],
+      "paths": [
+        {
+          "path_id": "B1.P1",
+          "ordered_outputs": [
+            "q03",
+            "q04"
+          ],
+          "terminal_result": "q04"
+        },
+        {
+          "path_id": "B1.P2",
+          "ordered_outputs": [
+            "q05",
+            "q06",
+            "q07"
+          ],
+          "terminal_result": "q07"
+        }
+      ],
+      "join_outputs": [
+        "q08"
+      ]
+    }
+  ],
+  "safety_boundary": "Illustrative metadata plus proposed nonnumeric assistant prelude only; source row is unchanged. The plan contains no computed branch answers. Do not introduce Path tag attributes without checking loader/parser support. Keep complete quantity type and referent in dictionary. This fixes missing explicit planning/identity, not story realism or arithmetic diversity."
+}

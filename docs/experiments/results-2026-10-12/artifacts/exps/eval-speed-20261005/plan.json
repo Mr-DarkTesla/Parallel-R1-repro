@@ -1,0 +1,13 @@
+{
+  "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-fixed-mb4-20261005/global_step_230",
+  "mode": "async",
+  "baseline": "${PROJECT_ROOT}/exps/fixes-20261005/results/eval/seen-async",
+  "baseline_seconds": 736.949345,
+  "baseline_batch": 256,
+  "candidates": [
+    "batch1024-eager",
+    "batch1024-graphs"
+  ],
+  "code": "${PROJECT_ROOT}/exps/fixes-20261005/code/verl",
+  "note": "Two GPUs per run; same dataset1916, sampling and token budget. One stochastic pass; accuracy differences are not significance proof."
+}

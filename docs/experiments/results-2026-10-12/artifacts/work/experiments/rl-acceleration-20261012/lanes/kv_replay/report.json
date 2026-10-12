@@ -1,0 +1,32 @@
+{
+  "state": "inference_proof_passed_optimizer_held_for_benchmarks",
+  "production_ready": false,
+  "proof_gpu_model": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/checkpoint-0050/hf",
+  "proof_cases": 87,
+  "widths": [
+    2,
+    3,
+    4,
+    6,
+    8
+  ],
+  "assembled_rounds_per_width": 4,
+  "paired_action_logp_max": 3.528594970703125e-05,
+  "replay_action_logp_max": 5.340576171875e-05,
+  "peak_gpu_bytes": 21545335808,
+  "synthetic_phase_baseline_seconds": 43.51694473903626,
+  "synthetic_phase_candidate_seconds": 36.319375021383166,
+  "synthetic_speedup": 1.1981743825001256,
+  "physical_generation_forward_count_unchanged": true,
+  "verified_decoder_sha256": "0c4ab5ed84b35e84c00023db96aff0f1b40cf50e436539dc5eb4b8f36925a259",
+  "current_decoder_sha256": "e91eeec467ce905255bac71f89438f340409cee3952e59d1354a5f8cc9161d88",
+  "mapping_only_optimization": "Hoist cached-index set construction out of token loop; CPU mapping equality verified for lengths 1, 100, and 16000.",
+  "limits": [
+    "Teacher-forced structured fixtures; actual clean16 sampled quality and mask parity remain pending.",
+    "Full-vocabulary raw logits comparison remains pending; proof compares sampled-action normalized log-probabilities.",
+    "Full 4B / 8 GPU resident Zero1 Adam, two positive updates, finite backbone gradient, step52-55 wall time, and clean GPU exits remain pending; user reassigned resources.",
+    "Prefix KV bank must clear before changed model weights and between independent episodes; canonical execute clears at start and end.",
+    "Persistent bank stores inference-only detached KV and must never be used for autograd replay.",
+    "Index-set hoist preserves every model input, mask, position and cache mapping, but the current source hash still requires another GPU run for exact-source qualification."
+  ]
+}

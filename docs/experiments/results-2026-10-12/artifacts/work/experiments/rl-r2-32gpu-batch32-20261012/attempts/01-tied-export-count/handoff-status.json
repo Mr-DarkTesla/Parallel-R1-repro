@@ -1,0 +1,8 @@
+{
+  "state": "failed",
+  "pid": 3488423,
+  "time": 1791797118.2961102,
+  "old_job": "RUN_4b43efec89",
+  "error": "AssertionError((399, 4411424256))",
+  "traceback": "Traceback (most recent call last):\n  File \"${PROJECT_ROOT}/work/experiments/rl-r2-32gpu-batch32-20261012/handoff.py\", line 165, in <module>\n    main();break\n    ^^^^^^\n  File \"${PROJECT_ROOT}/work/experiments/rl-r2-32gpu-batch32-20261012/handoff.py\", line 109, in main\n    proof=checkpoint_proof(cp)\n          ^^^^^^^^^^^^^^^^^^^^\n  File \"${PROJECT_ROOT}/work/experiments/rl-r2-32gpu-batch32-20261012/handoff.py\", line 49, in checkpoint_proof\n    assert tensor_count==398 and count>=4_000_000_000,(tensor_count,count)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: (399, 4411424256)\n"
+}

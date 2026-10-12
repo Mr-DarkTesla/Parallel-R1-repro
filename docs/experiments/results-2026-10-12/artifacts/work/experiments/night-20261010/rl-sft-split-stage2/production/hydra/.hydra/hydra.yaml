@@ -1,0 +1,196 @@
+hydra:
+  run:
+    dir: ${oc.env:PARALLEL_R1_RL_DIR}/hydra
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.num}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params: null
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: simple
+        filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
+    root:
+      level: INFO
+      handlers:
+      - console
+      - file
+    disable_existing_loggers: false
+  env: {}
+  mode: RUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra:
+    - hydra.mode=RUN
+    task:
+    - data.train_files=${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet
+    - data.val_files=${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet
+    - data.train_batch_size=8
+    - data.max_response_length=2048
+    - data.max_prompt_length=2000
+    - actor_rollout_ref.actor.ppo_mini_batch_size=8
+    - actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=1
+    - actor_rollout_ref.rollout.n=4
+    - actor_rollout_ref.rollout.agent.max_path_response_length=1024
+    - actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu=1
+    - actor_rollout_ref.rollout.agent.num_workers=8
+    - actor_rollout_ref.rollout.tensor_model_parallel_size=1
+    - algorithm.adv_estimator=night_split_success
+    - algorithm.night_eta=0.05
+    - algorithm.night_budget=512
+    - algorithm.night_scale=4096
+    - algorithm.use_kl_in_reward=false
+    - actor_rollout_ref.actor.use_kl_loss=true
+    - actor_rollout_ref.actor.kl_loss_coef=0.001
+    - actor_rollout_ref.actor.kl_loss_type=low_var_kl
+    - actor_rollout_ref.actor.optim.warmup_style=constant
+    - actor_rollout_ref.actor.optim.lr_warmup_steps_ratio=0.0
+    - trainer.n_gpus_per_node=8
+    - trainer.nnodes=1
+    - trainer.logger=[console]
+    - trainer.save_freq=10
+    - trainer.test_freq=-1
+    - trainer.val_before_train=false
+    - trainer.total_training_steps=40
+    - ray_init.num_cpus=32
+    - +ray_init.temp_dir=${PROJECT_ROOT}
+    - +ray_init.plasma_directory=${PROJECT_ROOT}/plasma
+    - +ray_init.object_store_memory=8589934592
+    - trainer.total_training_steps=80
+    - algorithm.night_structure_bonus=0.0
+    - algorithm.night_structure_until_step=0
+    - actor_rollout_ref.rollout.agent.guided_first_width=0
+    - actor_rollout_ref.rollout.agent.guided_first_until_step=10
+    - algorithm.night_budget=256
+    - algorithm.night_scale=1024
+    - trainer.resume_mode=resume_path
+    - trainer.resume_from_path=${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-split-stage2/smoke/checkpoints/global_step_42
+  job:
+    name: main_ppo
+    chdir: null
+    override_dirname: +ray_init.object_store_memory=8589934592,+ray_init.plasma_directory=${PROJECT_ROOT}/plasma,+ray_init.temp_dir=${SHARED_ROOT}/larin${TMPDIR}/r1,actor_rollout_ref.actor.kl_loss_coef=0.001,actor_rollout_ref.actor.kl_loss_type=low_var_kl,actor_rollout_ref.actor.optim.lr_warmup_steps_ratio=0.0,actor_rollout_ref.actor.optim.warmup_style=constant,actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=1,actor_rollout_ref.actor.ppo_mini_batch_size=8,actor_rollout_ref.actor.use_kl_loss=true,actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu=1,actor_rollout_ref.rollout.agent.guided_first_until_step=10,actor_rollout_ref.rollout.agent.guided_first_width=0,actor_rollout_ref.rollout.agent.max_path_response_length=1024,actor_rollout_ref.rollout.agent.num_workers=8,actor_rollout_ref.rollout.n=4,actor_rollout_ref.rollout.tensor_model_parallel_size=1,algorithm.adv_estimator=night_split_success,algorithm.night_budget=256,algorithm.night_budget=512,algorithm.night_eta=0.05,algorithm.night_scale=1024,algorithm.night_scale=4096,algorithm.night_structure_bonus=0.0,algorithm.night_structure_until_step=0,algorithm.use_kl_in_reward=false,data.max_prompt_length=2000,data.max_response_length=2048,data.train_batch_size=8,data.train_files=${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_easy/train.parquet,data.val_files=${PROJECT_ROOT}/work/experiments/night-20261010/data/gsm_val.parquet,ray_init.num_cpus=32,trainer.logger=[console],trainer.n_gpus_per_node=8,trainer.nnodes=1,trainer.resume_from_path=${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-split-stage2/smoke/checkpoints/global_step_42,trainer.resume_mode=resume_path,trainer.save_freq=10,trainer.test_freq=-1,trainer.total_training_steps=40,trainer.total_training_steps=80,trainer.val_before_train=false
+    id: ???
+    num: ???
+    config_name: rl_qwen3_06b_night
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys: []
+  runtime:
+    version: 1.3.2
+    version_base: '1.3'
+    cwd: ${PROJECT_ROOT}/work/experiments/night-20261010/rl-code/verl
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: ${PROJECT_ROOT}/work/experiments/night-20261010/rl-code/verl/verl/trainer/config
+      schema: file
+      provider: main
+    - path: ''
+      schema: structured
+      provider: schema
+    output_dir: ${PROJECT_ROOT}/work/experiments/night-20261010/rl-sft-split-stage2/production/hydra
+    choices:
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: default
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false

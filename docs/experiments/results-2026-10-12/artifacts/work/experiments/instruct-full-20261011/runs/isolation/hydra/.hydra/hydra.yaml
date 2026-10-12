@@ -1,0 +1,181 @@
+hydra:
+  run:
+    dir: ${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/isolation/hydra
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.num}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params: null
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: simple
+        filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
+    root:
+      level: INFO
+      handlers:
+      - console
+      - file
+    disable_existing_loggers: false
+  env: {}
+  mode: RUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra:
+    - hydra.run.dir=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/isolation/hydra
+    - hydra.mode=RUN
+    task:
+    - data.train_files=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/data/smoke-train.parquet
+    - data.val_files=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/data/smoke-val.parquet
+    - data.custom_cls.path=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/dataset.py
+    - data.custom_cls.name=InstructDataset
+    - +data.defer_parallel_mask=true
+    - data.max_length=8192
+    - data.truncation=error
+    - data.trim_padding=true
+    - data.train_batch_size=8
+    - data.micro_batch_size_per_gpu=1
+    - data.num_workers=0
+    - model.partial_pretrain=${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/production/final
+    - model.strategy=fsdp
+    - model.lora_rank=0
+    - model.enable_gradient_checkpointing=true
+    - model.fsdp_config.model_dtype=fp32
+    - optim.lr=1e-5
+    - optim.warmup_steps_ratio=0.0
+    - ulysses_sequence_parallel_size=1
+    - use_remove_padding=false
+    - trainer.total_epochs=1
+    - trainer.total_training_steps=2
+    - trainer.default_local_dir=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/isolation
+    - trainer.final_dir=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/isolation/final
+    - trainer.experiment_name=Instruct-4B-full-isolation
+    - trainer.logger=[console]
+  job:
+    name: fsdp_parallel_sft_trainer
+    chdir: null
+    override_dirname: +data.defer_parallel_mask=true,data.custom_cls.name=InstructDataset,data.custom_cls.path=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/dataset.py,data.max_length=8192,data.micro_batch_size_per_gpu=1,data.num_workers=0,data.train_batch_size=8,data.train_files=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/data/smoke-train.parquet,data.trim_padding=true,data.truncation=error,data.val_files=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/data/smoke-val.parquet,model.enable_gradient_checkpointing=true,model.fsdp_config.model_dtype=fp32,model.lora_rank=0,model.partial_pretrain=${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/production/final,model.strategy=fsdp,optim.lr=1e-5,optim.warmup_steps_ratio=0.0,trainer.default_local_dir=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/isolation,trainer.experiment_name=Instruct-4B-full-isolation,trainer.final_dir=${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/isolation/final,trainer.logger=[console],trainer.total_epochs=1,trainer.total_training_steps=2,ulysses_sequence_parallel_size=1,use_remove_padding=false
+    id: ???
+    num: ???
+    config_name: sft_qwen3_06b
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys: []
+  runtime:
+    version: 1.3.2
+    version_base: '1.3'
+    cwd: ${PROJECT_ROOT}/work/experiments/instruct-full-20261011/code
+    config_sources:
+    - path: hydra.conf
+      schema: pkg
+      provider: hydra
+    - path: verl.trainer.config
+      schema: pkg
+      provider: main
+    - path: ''
+      schema: structured
+      provider: schema
+    output_dir: ${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/isolation/hydra
+    choices:
+      hydra/env: default
+      hydra/callbacks: null
+      hydra/job_logging: default
+      hydra/hydra_logging: default
+      hydra/hydra_help: default
+      hydra/help: default
+      hydra/sweeper: basic
+      hydra/launcher: basic
+      hydra/output: default
+  verbose: false

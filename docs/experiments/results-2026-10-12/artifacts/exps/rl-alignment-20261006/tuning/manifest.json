@@ -1,0 +1,64 @@
+{
+  "run": "rl-unseen-s1-author-20261006",
+  "commit": "86f8d6af05245946ce404879c71f2ef4dee19e5f",
+  "base_commit": "ea3b07d74851739f2c8c41a88948ca8976b6b165",
+  "stage": "s1",
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "steps": 300,
+  "checkpoint": "${PROJECT_ROOT}/exps/fixes-20261005/results/train/Parallel-SFT-Unseen-Qwen3-0.6B-fixed-mb4-20261005/final",
+  "data_sha256": {
+    "verl/data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet": "cee9b99e0645501b0dac3d885e66eae8d36e107c28a2f914864a68021aafc21e",
+    "verl/data_preprocess_scripts/data/dapo/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/train.parquet": "8fd253319384ede4e436d24a4f2884a632e8b1e71e1ee4bc1951ecb68007cec1"
+  },
+  "changed_file_sha256": {
+    "README.md": "a370ad73629b224125b3eed3ce0d76c9884790d18efd5aa6d0d01322b53e4d75",
+    "verl/verl/parallel_thinking_generation_v3/parallel_thinking_loop_v3.py": "7590954080dcbb612665944c109a7c50aa7cabfdbb2674cf82371bd3fd9b7920",
+    "verl/verl/trainer/main_ppo.py": "b05f8f3bbb213175d14aa30b07152be7c02f8be556511e50e10d8a8cdf610819",
+    "verl/verl/trainer/ppo/ray_trainer.py": "673713d29740bdce8ca0b1f075d9f92467a924847d496648bfaa3cc35514b46b",
+    "verl/verl/workers/reward_manager/naive.py": "770bc0c5c981b847a6302244ec5d9a263bc4742b9e4419fae07c80f74e981592"
+  },
+  "overrides": [
+    "ray_init.num_cpus=64",
+    "+ray_init.temp_dir=${PROJECT_ROOT}",
+    "+ray_init.plasma_directory=${PROJECT_ROOT}/plasma",
+    "+ray_init.object_store_memory=8589934592",
+    "data.train_batch_size=256",
+    "actor_rollout_ref.actor.ppo_mini_batch_size=128",
+    "actor_rollout_ref.actor.ppo_micro_batch_size_per_gpu=2",
+    "actor_rollout_ref.actor.loss_agg_mode=token-mean",
+    "actor_rollout_ref.actor.sort_microbatches_by_length=false",
+    "actor_rollout_ref.actor.clip_ratio_high=0.2",
+    "actor_rollout_ref.rollout.log_prob_micro_batch_size_per_gpu=4",
+    "actor_rollout_ref.rollout.agent.num_workers=32",
+    "trainer.resume_mode=disable",
+    "trainer.val_before_train=true"
+  ],
+  "extra_env": {
+    "PARALLEL_R1_FULL_DECODE_GRAPH": "1",
+    "VLLM_ATTENTION_BACKEND": "FLASH_ATTN",
+    "CUDA_HOME": "${CUDA_HOME}",
+    "PYTHONPATH": "${PROJECT_ROOT}/exps/rl-s1-seen-20261006-1112/flashinfer-deps"
+  },
+  "hypothesis": "Reproduce published Unseen-S1 structured actor objective starting from our verified Unseen-SFT 0.6B checkpoint; no per-call causal replay or runtime-tag loss changes.",
+  "implementation_changes": [
+    "Restored structured actor and runtime tag labels/masks from ea3b07d; same upstream objective as f1c6389",
+    "Author batch256, mini128, micro2, rollout n8, clip0.2, token-mean loss, LR1e-6; no microbatch sorting",
+    "Existing runtime adapters: 0.6B/tokenizer paths, SDPA, bounded generation budget, empty-output handling, trimmed padding, exact-checked decode graphs",
+    "A100 memory optimization: gradient checkpointing off; GPU rollout memory .45 rather than .7",
+    "Validation/save every10; 300-step budget; extra initial validation; sampling/datasets unchanged"
+  ],
+  "validation": [
+    "Local loop regression covering 63 cases passed",
+    "Existing actor padding equivalence checks; source restoration verified against ea3b07d",
+    "Unseen tokenizer/model dimensions and checkpoint presence checked by launch controller; inspect real optimizer steps after startup"
+  ]
+}

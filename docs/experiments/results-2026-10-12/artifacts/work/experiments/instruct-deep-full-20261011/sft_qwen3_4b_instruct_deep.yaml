@@ -1,0 +1,22 @@
+defaults:
+  - sft_trainer
+  - _self_
+data:
+  max_length: 8192
+  train_batch_size: 64
+  micro_batch_size_per_gpu: 1
+  num_workers: 0
+  parallel_attention: true
+  trim_padding: true
+model:
+  partial_pretrain: ${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/production/final
+  enable_gradient_checkpointing: true
+  strategy: fsdp
+  lora_rank: 0
+trainer:
+  project_name: Parallel-R1
+  experiment_name: Instruct-4B-deep-full
+  total_epochs: 3
+  logger: [console]
+  default_local_dir: ${PROJECT_ROOT}/work/experiments/instruct-deep-full-20261011/runs/production
+  final_dir: ${PROJECT_ROOT}/work/experiments/instruct-deep-full-20261011/runs/production/final

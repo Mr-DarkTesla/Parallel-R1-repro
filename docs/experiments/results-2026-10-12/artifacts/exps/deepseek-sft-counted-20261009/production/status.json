@@ -1,0 +1,49 @@
+{
+  "state": "stopped_user_scope_correction",
+  "started_at": 1791533976.830515,
+  "pid": 996207,
+  "concurrency": 64,
+  "reasoning_effort": 50,
+  "targets": {
+    "MATH_train": 3500,
+    "BigMath": 1000,
+    "GSM_Infinite": 500
+  },
+  "accepted": {
+    "BigMath": 62,
+    "MATH_train": 204,
+    "GSM_Infinite": 26
+  },
+  "processed": 336,
+  "active_requests": 20,
+  "max_active_requests": 64,
+  "inflight": {
+    "MATH_train": 17,
+    "BigMath": 0,
+    "GSM_Infinite": 3
+  },
+  "errors": {
+    "structure": 26,
+    "answer_verification": 12,
+    "semantic_judge_reject": 4,
+    "judge_not_finished": 2
+  },
+  "accepted_round_histogram": {
+    "0": 13,
+    "1": 213,
+    "2": 53,
+    "3": 8,
+    "4": 5
+  },
+  "accepted_width_histogram": {
+    "2": 269,
+    "3": 61,
+    "4": 21,
+    "5": 7,
+    "7": 1,
+    "6": 4
+  },
+  "updated_at": 1791535463.3919694,
+  "stopped_at": 1791535480.972152,
+  "stop_reason": "Only GSM-Infinite authorized; mixed-source assumption corrected."
+}

@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "source_sha256": {
+    "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/train.jsonl": "7379ecfc7053771313df1bc63c6324a3f3f8ee72bdfc818015bdc35ae600b24a",
+    "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/val.jsonl": "d5a868ef8fc42a50f21a7e9cb657da1a894b882ddeabb256b6f1eeb6112a23c5"
+  },
+  "splits": {
+    "train": {
+      "rows": 2700,
+      "unique_questions": 2700,
+      "min_length": 860,
+      "max_length": 4050,
+      "mean_length": 2112.3403703703702,
+      "p50_length": 2114,
+      "p95_length": 2932,
+      "width_histogram": {
+        "4": 1335,
+        "3": 858,
+        "2": 778,
+        "5": 147,
+        "6": 17
+      },
+      "total_supervised_targets": 2161963,
+      "boundary_telemetry": [],
+      "all_direct_and_indirect_isolation_invariants": true,
+      "no_truncation": true
+    },
+    "val": {
+      "rows": 300,
+      "unique_questions": 300,
+      "min_length": 832,
+      "max_length": 3746,
+      "mean_length": 2127.4766666666665,
+      "p50_length": 2115,
+      "p95_length": 2911,
+      "width_histogram": {
+        "4": 158,
+        "3": 85,
+        "2": 87,
+        "5": 19,
+        "6": 2
+      },
+      "total_supervised_targets": 237062,
+      "boundary_telemetry": [],
+      "all_direct_and_indirect_isolation_invariants": true,
+      "no_truncation": true
+    }
+  },
+  "tokenizer_sha256": {
+    "chat_template.jinja": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "tokenizer_config.json": "26c6acc08d99bb84c75646e977bd35c69a2b4795bbebfe96fcd28b7eefdf21ba",
+    "special_tokens_map.json": "caca9dbcb841cc4bf3e5429fb0022a3056fe1b3dcac75797c067b0e109c2bb8a",
+    "added_tokens.json": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "tokenizer.json": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7"
+  },
+  "data_module_sha256": "7a9415bc70d8c237452a47dadb0c1b8ca5e9bbd8f4d877f3c1c599cc47315919",
+  "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+  "torch_GPU_launches": false,
+  "response_transformations": "Only separate native initialthink into prompt and append native im_end; all source assistant bytes preserved; sibling whitespace retained on preceding path.",
+  "train_val_question_overlap": 0
+}

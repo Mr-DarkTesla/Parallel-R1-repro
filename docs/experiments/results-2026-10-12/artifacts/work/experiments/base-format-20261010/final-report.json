@@ -1,0 +1,287 @@
+{
+  "verified_at": "2026-10-10T19:31:06.212773+00:00",
+  "original_baseline_unchanged": true,
+  "runs": {
+    "original_instruct_native": {
+      "accuracy_count": 98,
+      "accuracy": 0.765625,
+      "basic_valid": 55,
+      "parallel_valid": 0,
+      "correct_and_parallel_valid": 0,
+      "fork_tasks": 0,
+      "fork_task_fraction": 0.0,
+      "actual_rounds": 0,
+      "mean_rounds_per_task": 0.0,
+      "actual_mean_width": null,
+      "actual_width_histogram": {},
+      "by_dataset": {
+        "gsm": {
+          "n": 64,
+          "correct": 53,
+          "parallel_valid": 0
+        },
+        "math": {
+          "n": 64,
+          "correct": 45,
+          "parallel_valid": 0
+        }
+      },
+      "format_schema_version": 2,
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/model",
+      "summary_path": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/original-native-128/summary.json",
+      "delta_vs_fixed_original_baseline_pp": 0.0
+    },
+    "base_full_sft_no_think": {
+      "accuracy_count": 84,
+      "accuracy": 0.65625,
+      "basic_valid": 126,
+      "parallel_valid": 120,
+      "correct_and_parallel_valid": 78,
+      "fork_tasks": 120,
+      "fork_task_fraction": 0.9375,
+      "actual_rounds": 125,
+      "mean_rounds_per_task": 0.9765625,
+      "actual_mean_width": 2.392,
+      "actual_width_histogram": {
+        "2": 88,
+        "3": 29,
+        "4": 5,
+        "5": 2,
+        "6": 1
+      },
+      "by_dataset": {
+        "gsm": {
+          "n": 64,
+          "correct": 46,
+          "parallel_valid": 58
+        },
+        "math": {
+          "n": 64,
+          "correct": 38,
+          "parallel_valid": 62
+        }
+      },
+      "format_schema_version": 3,
+      "model": "${PROJECT_ROOT}/work/experiments/base-format-20261010/runs/production/final",
+      "summary_path": "${PROJECT_ROOT}/work/experiments/base-format-20261010/evaluations/base-no-think-unconstrained-128/summary.json",
+      "delta_vs_fixed_original_baseline_pp": -10.9375
+    },
+    "weighted_instruct_guard": {
+      "accuracy_count": 82,
+      "accuracy": 0.640625,
+      "basic_valid": 85,
+      "parallel_valid": 0,
+      "correct_and_parallel_valid": 0,
+      "fork_tasks": 1,
+      "fork_task_fraction": 0.0078125,
+      "actual_rounds": 1,
+      "mean_rounds_per_task": 0.0078125,
+      "actual_mean_width": 2.0,
+      "actual_width_histogram": {
+        "2": 1
+      },
+      "by_dataset": {
+        "gsm": {
+          "n": 64,
+          "correct": 44,
+          "parallel_valid": 0
+        },
+        "math": {
+          "n": 64,
+          "correct": 38,
+          "parallel_valid": 0
+        }
+      },
+      "format_schema_version": 2,
+      "model": "${PROJECT_ROOT}/work/experiments/format-loss-20261010/runs/production/final",
+      "summary_path": "${PROJECT_ROOT}/work/experiments/format-loss-20261010/evaluations/weighted-format-constrained-128/summary.json",
+      "delta_vs_fixed_original_baseline_pp": -12.5
+    },
+    "weighted_instruct_fewshot_guard": {
+      "accuracy_count": 98,
+      "accuracy": 0.765625,
+      "basic_valid": 102,
+      "parallel_valid": 0,
+      "correct_and_parallel_valid": 0,
+      "fork_tasks": 0,
+      "fork_task_fraction": 0.0,
+      "actual_rounds": 0,
+      "mean_rounds_per_task": 0.0,
+      "actual_mean_width": null,
+      "actual_width_histogram": {},
+      "by_dataset": {
+        "gsm": {
+          "n": 64,
+          "correct": 49,
+          "parallel_valid": 0
+        },
+        "math": {
+          "n": 64,
+          "correct": 49,
+          "parallel_valid": 0
+        }
+      },
+      "format_schema_version": 2,
+      "model": "${PROJECT_ROOT}/work/experiments/format-loss-20261010/runs/production/final",
+      "summary_path": "${PROJECT_ROOT}/work/experiments/format-loss-20261010/evaluations/weighted-format-fewshot-128/summary.json",
+      "delta_vs_fixed_original_baseline_pp": 0.0
+    },
+    "original_instruct_hf_diagnostic": {
+      "accuracy_count": 95,
+      "accuracy": 0.7421875,
+      "basic_valid": 52,
+      "parallel_valid": 0,
+      "correct_and_parallel_valid": 0,
+      "fork_tasks": 0,
+      "fork_task_fraction": 0.0,
+      "actual_rounds": 0,
+      "mean_rounds_per_task": 0.0,
+      "actual_mean_width": null,
+      "actual_width_histogram": {},
+      "by_dataset": {
+        "gsm": {
+          "n": 64,
+          "correct": 50,
+          "parallel_valid": 0
+        },
+        "math": {
+          "n": 64,
+          "correct": 45,
+          "parallel_valid": 0
+        }
+      },
+      "format_schema_version": 2,
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/model",
+      "summary_path": "${PROJECT_ROOT}/work/experiments/format-diagnosis-20261010/evaluations/original-instruct-thinking-hf-128/summary.json",
+      "delta_vs_fixed_original_baseline_pp": -2.34375
+    },
+    "old_sft_instruct_guard": {
+      "accuracy_count": 104,
+      "accuracy": 0.8125,
+      "basic_valid": 103,
+      "parallel_valid": 1,
+      "correct_and_parallel_valid": 1,
+      "fork_tasks": 2,
+      "fork_task_fraction": 0.015625,
+      "actual_rounds": 2,
+      "mean_rounds_per_task": 0.015625,
+      "actual_mean_width": 3.0,
+      "actual_width_histogram": {
+        "2": 1,
+        "4": 1
+      },
+      "by_dataset": {
+        "gsm": {
+          "n": 64,
+          "correct": 53,
+          "parallel_valid": 0
+        },
+        "math": {
+          "n": 64,
+          "correct": 51,
+          "parallel_valid": 1
+        }
+      },
+      "format_schema_version": 2,
+      "model": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/runs/production/final",
+      "summary_path": "${PROJECT_ROOT}/work/experiments/format-loss-20261010/evaluations/baseline-lr-5e-4-constrained-128/summary.json",
+      "delta_vs_fixed_original_baseline_pp": 4.6875
+    }
+  },
+  "source_sha256": {
+    "work/experiments/instruct-token-warmup-20261010/evaluations/original-native-128/summary.json": "bbae2ec1481d306742a1c9a88c9c7583c7662e98c48391d02e76c062aaf550ec",
+    "work/experiments/instruct-token-warmup-20261010/evaluations/original-native-128/scores.jsonl": "935ab03361779768dae09e20db61bc5b6450f37548b25983fa9cf1cefa06c9d0",
+    "work/experiments/instruct-token-warmup-20261010/evaluations/original-native-128/worker-exits.json": "7604640d16826af23c822d02ba16dc713101d1852eb92eead17f07f63c7171b6",
+    "work/experiments/instruct-token-warmup-20261010/evaluations/original-native-128/manifest.json": "d6b0dc2b537d77997a075d3fe04fd9a19819a72150c2c4b61c142dd37592c273",
+    "work/experiments/base-format-20261010/evaluations/base-no-think-unconstrained-128/summary.json": "afab658268e7fb75549b73c3c343f2fc16189d38ca5bd259608d8019c76b41b0",
+    "work/experiments/base-format-20261010/evaluations/base-no-think-unconstrained-128/scores.jsonl": "9d33de966d5909e2ffc8cfe9bb8000be8bd8e529257c616fdb591a39135e53be",
+    "work/experiments/base-format-20261010/evaluations/base-no-think-unconstrained-128/worker-exits.json": "7604640d16826af23c822d02ba16dc713101d1852eb92eead17f07f63c7171b6",
+    "work/experiments/base-format-20261010/evaluations/base-no-think-unconstrained-128/manifest.json": "c644bd6df9db8b02e452f46fadbb92a046437de5932f87b597cec37bfaf891a4",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-constrained-128/summary.json": "0355cb42065c43c6a379ec415048da9342f6c58538f0e5469ac65d7505bee5f5",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-constrained-128/scores.jsonl": "53c356e7cceb2a8785d34f0cbef93286a55ca1794e262370233ab720afdbe3bd",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-constrained-128/worker-exits.json": "7604640d16826af23c822d02ba16dc713101d1852eb92eead17f07f63c7171b6",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-constrained-128/manifest.json": "098550256a16bce54227bb3e7ee69dd874dcc87946990cb04349bfc41a4936b2",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-fewshot-128/summary.json": "092be5405978d3c5487b0db4ad52c49590af69c852bc29f032b231e7dfe98232",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-fewshot-128/scores.jsonl": "6a18c5e242cbc63d1907ef9668a6968e4e9c9b84406227f46b6279bf94e1260f",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-fewshot-128/worker-exits.json": "7604640d16826af23c822d02ba16dc713101d1852eb92eead17f07f63c7171b6",
+    "work/experiments/format-loss-20261010/evaluations/weighted-format-fewshot-128/manifest.json": "37084f159cfbf361b84e3f93589cb34cf86aab64e0a4ca503b138cdcfb0effaa",
+    "work/experiments/format-diagnosis-20261010/evaluations/original-instruct-thinking-hf-128/summary.json": "553a1306ce6fa95cccb1305335fd8ca252ab9a98c1b70d6bade7f2e47ebe2075",
+    "work/experiments/format-diagnosis-20261010/evaluations/original-instruct-thinking-hf-128/scores.jsonl": "601e4a2eca5fc4bb151c854d24637293417aafb8d71470f29fb4a9ca62f6fd5a",
+    "work/experiments/format-diagnosis-20261010/evaluations/original-instruct-thinking-hf-128/worker-exits.json": "7604640d16826af23c822d02ba16dc713101d1852eb92eead17f07f63c7171b6",
+    "work/experiments/format-diagnosis-20261010/evaluations/original-instruct-thinking-hf-128/manifest.json": "15633f57a768462b5ad0d8f164636725ecb0f97e41d02091a9be9e9c2f88de12",
+    "work/experiments/format-loss-20261010/evaluations/baseline-lr-5e-4-constrained-128/summary.json": "011af451839f8effacd75c752d6b93125b5f0f8e86f6af5c62450332203fb5a6",
+    "work/experiments/format-loss-20261010/evaluations/baseline-lr-5e-4-constrained-128/scores.jsonl": "bff2d5b01f9dbf899335a7dddcfaacb41cbf5221330ee7919894a3fa009597fa",
+    "work/experiments/format-loss-20261010/evaluations/baseline-lr-5e-4-constrained-128/worker-exits.json": "7604640d16826af23c822d02ba16dc713101d1852eb92eead17f07f63c7171b6",
+    "work/experiments/format-loss-20261010/evaluations/baseline-lr-5e-4-constrained-128/manifest.json": "5214b94934ca2d24fe42b19cb685918169acbe644e402d92c758254369958afb"
+  },
+  "comparison_limit": "Same fixed questions/scorer; model family, prompt and runtime differ. Accuracy delta is a target comparison, not a causal estimate of SFT degradation.",
+  "curriculum_selection_allowed": false,
+  "checkpoint_selection_allowed": false,
+  "paired_outcomes": {
+    "baseline_only_correct": 26,
+    "base_only_correct": 12,
+    "both_correct": 72,
+    "both_wrong": 18
+  },
+  "autonomy_proof": {
+    "forced_think_prefix_tokens": 0,
+    "sampled_parallel_openers": 127,
+    "constrained_decoding": false,
+    "runtime_forced": "Path IDs/headers and synchronization bridges; Plan, Parallel opener and width sampled"
+  },
+  "training": {
+    "state": "complete",
+    "steps": 126,
+    "epochs": 3,
+    "val_loss": 0.3373735249042511,
+    "full_model": true,
+    "think_wrapped": false,
+    "finite_optimizer_steps": 126,
+    "sampled_backbone_positive_updates": 125,
+    "initial_zero_update": "First optimizer step has zero LR during warmup",
+    "validation_losses": [
+      0.37333112955093384,
+      0.34007543325424194,
+      0.3373735249042511
+    ]
+  },
+  "trace_observations": [
+    {
+      "id": "math_train/prealgebra/566",
+      "finding": "Both paths compute correct GCD/factorizations; Summary incorrectly evaluates 8*9*37 as 2952 instead of 2664.",
+      "format_valid": true,
+      "parallel_valid": true,
+      "reference_answer": "2664",
+      "extracted_answer": "2952"
+    },
+    {
+      "id": "math_train/algebra/1558",
+      "finding": "Plan asks for endpoint sum rather than decline; 450000+500 replaces required 450000-500.",
+      "format_valid": true,
+      "parallel_valid": true,
+      "reference_answer": "112,\\!875",
+      "extracted_answer": "112125"
+    },
+    {
+      "id": "gsm_infinite_ops4/ops4/510",
+      "finding": "Path correctly computes 5-3=2, labels it non-owl; Summary subtracts 3 again and answers -1.",
+      "format_valid": true,
+      "parallel_valid": true,
+      "reference_answer": "2",
+      "extracted_answer": "-1"
+    },
+    {
+      "id": "math_train/algebra/786",
+      "finding": "Plan creates a trivial zero branch; another branch reverses the wrong interval endpoints under negation.",
+      "format_valid": true,
+      "parallel_valid": true,
+      "reference_answer": "(-1,0]",
+      "extracted_answer": "[-1,0)"
+    }
+  ],
+  "objective_assessment": {
+    "autonomous_format_learned": true,
+    "accuracy_retention_met": false,
+    "note": "Base fork coverage 93.75%, but 84/128 vs original Instruct98/128; syntax validity does not prove useful independent computations."
+  }
+}

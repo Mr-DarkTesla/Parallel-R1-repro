@@ -1,0 +1,402 @@
+{
+  "state": "completed",
+  "before": {
+    "work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width": 242637381632,
+    "work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run": 242534236160
+  },
+  "df_before": "Filesystem                                                                         1B-blocks            Used     Available Use% Mounted on\npd22-nfs-002.k3.aicloud.sbercloud.tech:/vol_fg_001/namespace_ai0001071-01058 175921860444160 169387764219904 6534096224256  97% ${SHARED_ROOT}\n",
+  "dependency_audit": "${PROJECT_ROOT}/work/experiments/checkpoint-retention-20261011/reports/audit.json",
+  "scanned_small_text_files": 46125,
+  "preserved": [
+    "both checkpoint32 benchmark anchors",
+    "both checkpoint64 full Adam+RNG resume pins",
+    "future128/256/500 anchors",
+    "all initial/final models",
+    "all legacy technical smoke proofs",
+    "all validation scores/traces/logs"
+  ],
+  "deleted": [
+    {
+      "path": "work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0004",
+      "reason": "obsolete early checkpoint; no configuration/queue/plan/source-seal reference in audit; later32benchmark and64resumable complete; steps4/8/16 metrics+traces retained",
+      "logical_bytes": 48286008383,
+      "exclusively_linked_allocated_bytes": 48476303360,
+      "nlink": 1,
+      "metadata_archive": "work/experiments/checkpoint-retention-20261011/reports/deleted-checkpoint-metadata/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0004",
+      "metadata_files": [
+        {
+          "path": "complete.json",
+          "sha256": "ca431f1d2070d7152baaeb62139d0adde9637a50e7e7111efb3caf1f75373dc6",
+          "bytes": 88
+        },
+        {
+          "path": "hf/config.json",
+          "sha256": "aab1e5eafe978977e5ff8d95f5c3a6fe368099a692804589b914537e20c51097",
+          "bytes": 1541
+        },
+        {
+          "path": "hf/generation_config.json",
+          "sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+          "bytes": 214
+        },
+        {
+          "path": "hf/model.safetensors.index.json",
+          "sha256": "460938bd7bd398df9bb83f58388ad0046b4e611b279cf747a8b40f3671c6374c",
+          "bytes": 32856
+        },
+        {
+          "path": "hf/tokenizer_config.json",
+          "sha256": "26c6acc08d99bb84c75646e977bd35c69a2b4795bbebfe96fcd28b7eefdf21ba",
+          "bytes": 6560
+        },
+        {
+          "path": "hf/special_tokens_map.json",
+          "sha256": "288dab326a769b9ccb4f558eab94e753a6a73424445528364da1953a09e7bc7c",
+          "bytes": 714
+        },
+        {
+          "path": "hf/added_tokens.json",
+          "sha256": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+          "bytes": 844
+        },
+        {
+          "path": "hf/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "bytes": 2776833
+        },
+        {
+          "path": "hf/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "bytes": 1671853
+        },
+        {
+          "path": "hf/tokenizer.json",
+          "sha256": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7",
+          "bytes": 11423769
+        }
+      ],
+      "state": "deleted",
+      "removed_at": 1791743549.282386
+    },
+    {
+      "path": "work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0008",
+      "reason": "obsolete early checkpoint; no configuration/queue/plan/source-seal reference in audit; later32benchmark and64resumable complete; steps4/8/16 metrics+traces retained",
+      "logical_bytes": 48286008383,
+      "exclusively_linked_allocated_bytes": 48476303360,
+      "nlink": 1,
+      "metadata_archive": "work/experiments/checkpoint-retention-20261011/reports/deleted-checkpoint-metadata/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0008",
+      "metadata_files": [
+        {
+          "path": "complete.json",
+          "sha256": "ffcb011ee090808abddb4e841832d5c8c8911b6db960cc0079ceffc02782e72f",
+          "bytes": 88
+        },
+        {
+          "path": "hf/config.json",
+          "sha256": "aab1e5eafe978977e5ff8d95f5c3a6fe368099a692804589b914537e20c51097",
+          "bytes": 1541
+        },
+        {
+          "path": "hf/generation_config.json",
+          "sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+          "bytes": 214
+        },
+        {
+          "path": "hf/model.safetensors.index.json",
+          "sha256": "460938bd7bd398df9bb83f58388ad0046b4e611b279cf747a8b40f3671c6374c",
+          "bytes": 32856
+        },
+        {
+          "path": "hf/tokenizer_config.json",
+          "sha256": "26c6acc08d99bb84c75646e977bd35c69a2b4795bbebfe96fcd28b7eefdf21ba",
+          "bytes": 6560
+        },
+        {
+          "path": "hf/special_tokens_map.json",
+          "sha256": "288dab326a769b9ccb4f558eab94e753a6a73424445528364da1953a09e7bc7c",
+          "bytes": 714
+        },
+        {
+          "path": "hf/added_tokens.json",
+          "sha256": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+          "bytes": 844
+        },
+        {
+          "path": "hf/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "bytes": 2776833
+        },
+        {
+          "path": "hf/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "bytes": 1671853
+        },
+        {
+          "path": "hf/tokenizer.json",
+          "sha256": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7",
+          "bytes": 11423769
+        }
+      ],
+      "state": "deleted",
+      "removed_at": 1791743549.496146
+    },
+    {
+      "path": "work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0016",
+      "reason": "obsolete early checkpoint; no configuration/queue/plan/source-seal reference in audit; later32benchmark and64resumable complete; steps4/8/16 metrics+traces retained",
+      "logical_bytes": 48286008384,
+      "exclusively_linked_allocated_bytes": 48476303360,
+      "nlink": 1,
+      "metadata_archive": "work/experiments/checkpoint-retention-20261011/reports/deleted-checkpoint-metadata/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0016",
+      "metadata_files": [
+        {
+          "path": "complete.json",
+          "sha256": "8d328edbf386040930e7ebdd6f4a0caf891d71ead29dff753118f7b5eef67b3f",
+          "bytes": 89
+        },
+        {
+          "path": "hf/config.json",
+          "sha256": "aab1e5eafe978977e5ff8d95f5c3a6fe368099a692804589b914537e20c51097",
+          "bytes": 1541
+        },
+        {
+          "path": "hf/generation_config.json",
+          "sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+          "bytes": 214
+        },
+        {
+          "path": "hf/model.safetensors.index.json",
+          "sha256": "460938bd7bd398df9bb83f58388ad0046b4e611b279cf747a8b40f3671c6374c",
+          "bytes": 32856
+        },
+        {
+          "path": "hf/tokenizer_config.json",
+          "sha256": "26c6acc08d99bb84c75646e977bd35c69a2b4795bbebfe96fcd28b7eefdf21ba",
+          "bytes": 6560
+        },
+        {
+          "path": "hf/special_tokens_map.json",
+          "sha256": "288dab326a769b9ccb4f558eab94e753a6a73424445528364da1953a09e7bc7c",
+          "bytes": 714
+        },
+        {
+          "path": "hf/added_tokens.json",
+          "sha256": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+          "bytes": 844
+        },
+        {
+          "path": "hf/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "bytes": 2776833
+        },
+        {
+          "path": "hf/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "bytes": 1671853
+        },
+        {
+          "path": "hf/tokenizer.json",
+          "sha256": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7",
+          "bytes": 11423769
+        }
+      ],
+      "state": "deleted",
+      "removed_at": 1791743549.7307193
+    },
+    {
+      "path": "work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0004",
+      "reason": "obsolete early checkpoint; no configuration/queue/plan/source-seal reference in audit; later32benchmark and64resumable complete; steps4/8/16 metrics+traces retained",
+      "logical_bytes": 48286008383,
+      "exclusively_linked_allocated_bytes": 48476303360,
+      "nlink": 1,
+      "metadata_archive": "work/experiments/checkpoint-retention-20261011/reports/deleted-checkpoint-metadata/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0004",
+      "metadata_files": [
+        {
+          "path": "complete.json",
+          "sha256": "ca431f1d2070d7152baaeb62139d0adde9637a50e7e7111efb3caf1f75373dc6",
+          "bytes": 88
+        },
+        {
+          "path": "hf/config.json",
+          "sha256": "aab1e5eafe978977e5ff8d95f5c3a6fe368099a692804589b914537e20c51097",
+          "bytes": 1541
+        },
+        {
+          "path": "hf/generation_config.json",
+          "sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+          "bytes": 214
+        },
+        {
+          "path": "hf/model.safetensors.index.json",
+          "sha256": "460938bd7bd398df9bb83f58388ad0046b4e611b279cf747a8b40f3671c6374c",
+          "bytes": 32856
+        },
+        {
+          "path": "hf/tokenizer_config.json",
+          "sha256": "26c6acc08d99bb84c75646e977bd35c69a2b4795bbebfe96fcd28b7eefdf21ba",
+          "bytes": 6560
+        },
+        {
+          "path": "hf/special_tokens_map.json",
+          "sha256": "288dab326a769b9ccb4f558eab94e753a6a73424445528364da1953a09e7bc7c",
+          "bytes": 714
+        },
+        {
+          "path": "hf/added_tokens.json",
+          "sha256": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+          "bytes": 844
+        },
+        {
+          "path": "hf/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "bytes": 2776833
+        },
+        {
+          "path": "hf/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "bytes": 1671853
+        },
+        {
+          "path": "hf/tokenizer.json",
+          "sha256": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7",
+          "bytes": 11423769
+        }
+      ],
+      "state": "deleted",
+      "removed_at": 1791743549.9912453
+    },
+    {
+      "path": "work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0008",
+      "reason": "obsolete early checkpoint; no configuration/queue/plan/source-seal reference in audit; later32benchmark and64resumable complete; steps4/8/16 metrics+traces retained",
+      "logical_bytes": 48286008383,
+      "exclusively_linked_allocated_bytes": 48476303360,
+      "nlink": 1,
+      "metadata_archive": "work/experiments/checkpoint-retention-20261011/reports/deleted-checkpoint-metadata/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0008",
+      "metadata_files": [
+        {
+          "path": "complete.json",
+          "sha256": "ffcb011ee090808abddb4e841832d5c8c8911b6db960cc0079ceffc02782e72f",
+          "bytes": 88
+        },
+        {
+          "path": "hf/config.json",
+          "sha256": "aab1e5eafe978977e5ff8d95f5c3a6fe368099a692804589b914537e20c51097",
+          "bytes": 1541
+        },
+        {
+          "path": "hf/generation_config.json",
+          "sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+          "bytes": 214
+        },
+        {
+          "path": "hf/model.safetensors.index.json",
+          "sha256": "460938bd7bd398df9bb83f58388ad0046b4e611b279cf747a8b40f3671c6374c",
+          "bytes": 32856
+        },
+        {
+          "path": "hf/tokenizer_config.json",
+          "sha256": "26c6acc08d99bb84c75646e977bd35c69a2b4795bbebfe96fcd28b7eefdf21ba",
+          "bytes": 6560
+        },
+        {
+          "path": "hf/special_tokens_map.json",
+          "sha256": "288dab326a769b9ccb4f558eab94e753a6a73424445528364da1953a09e7bc7c",
+          "bytes": 714
+        },
+        {
+          "path": "hf/added_tokens.json",
+          "sha256": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+          "bytes": 844
+        },
+        {
+          "path": "hf/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "bytes": 2776833
+        },
+        {
+          "path": "hf/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "bytes": 1671853
+        },
+        {
+          "path": "hf/tokenizer.json",
+          "sha256": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7",
+          "bytes": 11423769
+        }
+      ],
+      "state": "deleted",
+      "removed_at": 1791743550.3191707
+    },
+    {
+      "path": "work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0016",
+      "reason": "obsolete early checkpoint; no configuration/queue/plan/source-seal reference in audit; later32benchmark and64resumable complete; steps4/8/16 metrics+traces retained",
+      "logical_bytes": 48286008384,
+      "exclusively_linked_allocated_bytes": 48476303360,
+      "nlink": 1,
+      "metadata_archive": "work/experiments/checkpoint-retention-20261011/reports/deleted-checkpoint-metadata/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0016",
+      "metadata_files": [
+        {
+          "path": "complete.json",
+          "sha256": "8d328edbf386040930e7ebdd6f4a0caf891d71ead29dff753118f7b5eef67b3f",
+          "bytes": 89
+        },
+        {
+          "path": "hf/config.json",
+          "sha256": "aab1e5eafe978977e5ff8d95f5c3a6fe368099a692804589b914537e20c51097",
+          "bytes": 1541
+        },
+        {
+          "path": "hf/generation_config.json",
+          "sha256": "475b038504e6cd813ed0a80c3b01200a5fdbd2e3679c2354c01371e83c50a7cc",
+          "bytes": 214
+        },
+        {
+          "path": "hf/model.safetensors.index.json",
+          "sha256": "460938bd7bd398df9bb83f58388ad0046b4e611b279cf747a8b40f3671c6374c",
+          "bytes": 32856
+        },
+        {
+          "path": "hf/tokenizer_config.json",
+          "sha256": "26c6acc08d99bb84c75646e977bd35c69a2b4795bbebfe96fcd28b7eefdf21ba",
+          "bytes": 6560
+        },
+        {
+          "path": "hf/special_tokens_map.json",
+          "sha256": "288dab326a769b9ccb4f558eab94e753a6a73424445528364da1953a09e7bc7c",
+          "bytes": 714
+        },
+        {
+          "path": "hf/added_tokens.json",
+          "sha256": "7850ed5df9923a253976020596c17700d5dd552db3686ec96cf5621ac05c0569",
+          "bytes": 844
+        },
+        {
+          "path": "hf/vocab.json",
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+          "bytes": 2776833
+        },
+        {
+          "path": "hf/merges.txt",
+          "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+          "bytes": 1671853
+        },
+        {
+          "path": "hf/tokenizer.json",
+          "sha256": "473316a0fd7d9b756447419d97489c5e6ee3fe4ffceb25392011edfe68bca4f7",
+          "bytes": 11423769
+        }
+      ],
+      "state": "deleted",
+      "removed_at": 1791743550.6185207
+    }
+  ],
+  "after": {
+    "work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width": 97208446976,
+    "work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run": 97105301504
+  },
+  "df_after": "Filesystem                                                                         1B-blocks            Used     Available Use% Mounted on\npd22-nfs-002.k3.aicloud.sbercloud.tech:/vol_fg_001/namespace_ai0001071-01058 175921860444160 169387764219904 6534096224256  97% ${SHARED_ROOT}\n",
+  "completed_at": 1791743550.6441836,
+  "gross_exclusively_linked_allocated_bytes": 290857820160,
+  "targeted_run_allocated_bytes_reduction": 290857869312,
+  "retained_archive_allocated_bytes": 96202752,
+  "net_project_allocated_bytes_reduction_estimate": 290761666560
+}

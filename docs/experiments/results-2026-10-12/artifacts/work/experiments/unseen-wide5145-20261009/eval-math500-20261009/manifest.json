@@ -1,0 +1,558 @@
+{
+  "dataset": "HuggingFaceH4/MATH-500",
+  "questions": 500,
+  "samples_per_question": 1,
+  "checkpoint": "${PROJECT_ROOT}/work/experiments/unseen-wide5145-20261009/runs/01_sft/final",
+  "checkpoint_sha256": "fa9e92602b36042e0f4f488b5ccf6a8956826978f9d9d9cbfa9e80792a3be6c6",
+  "questions_sha256": "a2645512280d4499c35e9c781f35e04c643b30ebc20b13d118878e4f2f9b3486",
+  "previous_questions_sha256": "a2645512280d4499c35e9c781f35e04c643b30ebc20b13d118878e4f2f9b3486",
+  "system_prompt": "You solve mathematical problems with clear, accurate worked reasoning.\nPut all your solution work inside one <think>...</think> block. Inside it, use\nordinary prose and equations for setup and necessary sequential work. Define\nquantities and show each governing relation, numeric substitution, arithmetic,\nand meaning of the result. Explain non-obvious dependencies and category totals.\n\nWhen independent useful calculations are available, explain the step, write\nPlan:, and list concrete assignments as 1: ..., 2: ..., through N: .... Choose\nN from 2 through 8 from the available work. Prefer a wider useful cut with 4--6\npaths when available; small dependency graphs can use 2--3 or stay sequential.\nAssignments may return computed counts, rates, subtotals or other useful terms.\nNever precompute unknown assignment results in the plan. Given constants and\nmere aliases do not need their own paths. Do not invent work to increase width.\n\nAfter the plan write exactly <Parallel>N on its own line. Then write N sibling\npaths in order. Each begins with <Path>I and a newline and ends with </Path>.\nIDs are integers 1 through N and restart at 1 in each fork. Each path sees only\nthe problem, the shared prefix before its fork and its own assignment. It can\nfollow dependent calculations locally and recompute a short cheap prerequisite;\nit cannot use a sibling's result from the same fork. No nested forks or round\nlabels. No mandatory Result: field and no Final Answer: inside a path.\n\nClose with </Parallel>, then <Summary>...</Summary>. Combine actual path outputs\nwith explicit calculations and explain their use. An occasional verification\npath may independently recompute the same substantive quantity as another path,\neven by the same method. Mark its purpose in the plan and compare the results\nexplicitly in the summary. Do not copy a sibling's result or use redundant\nbranches merely to increase width. If the results disagree, resolve the issue\nbefore relying on them. Continue with new forks only when useful work remains;\nthere is no fixed number of rounds. Keep shared setup and summaries concise.\n\nAfter the requested result is justified, close </think>. Outside the think\nblock give a short concluding solution with the decisive arithmetic and units,\nthen end on a standalone line: Final Answer: \\boxed{...}. Do not put new forks\nor an extended derivation in the concluding solution. If an essential gap\nremains, explain it honestly and end with Final Answer: unresolved.\n",
+  "max_prompt_tokens": 2048,
+  "max_response_tokens": 30720,
+  "max_model_len": 32768,
+  "max_path_tokens": 8192,
+  "temperature": 0.6,
+  "top_p": 0.95,
+  "top_k": 20,
+  "seed": 42,
+  "min_paths": 2,
+  "max_paths": 8,
+  "max_forks": 0,
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "scorer": "Math-Verify 0.8.0, exact previous reference-blind scorer",
+  "runtime": "Same counted Unseen loop and structured vLLM-weight backend, eight independent TP=1 evaluation workers; no Ray/FSDP/optimizer",
+  "differences_from_previous": [
+    "Current SFT student system prompt",
+    "Model chooses 2..8 branches instead of two forced branches",
+    "Correct Unseen masks and positions instead of causal inference"
+  ],
+  "previous_results": {
+    "gsm_infinite_ep5": {
+      "complete": true,
+      "model": "gsm_infinite_ep5",
+      "questions": 500,
+      "correct": 84,
+      "accuracy": 0.168,
+      "ci95": [
+        0.13778823297684417,
+        0.20327432908962656
+      ],
+      "parallel_ratio": 0.11,
+      "multi_round_ratio": 0.012,
+      "fork_histogram": {
+        "1": 49,
+        "0": 445,
+        "2": 5,
+        "3": 1
+      },
+      "executed_width_histogram": {
+        "2": 62
+      },
+      "rendered_width_histogram": {
+        "2": 62
+      },
+      "first_fork_relative_position": {
+        "mean": 0.23228550308156687,
+        "median": 0.2304147465437788,
+        "p90": 0.4415841584158416,
+        "max": 0.5676392572944297
+      },
+      "path_token_share": {
+        "mean": 0.023287057796204776,
+        "median": 0.0,
+        "p90": 0.0041100582258248655,
+        "max": 0.6139130434782609
+      },
+      "phase_tokens": {
+        "main": 2106573,
+        "path": 6359,
+        "summary": 2908
+      },
+      "response_tokens": {
+        "mean": 4232.3,
+        "median": 256.0,
+        "p90": 30720,
+        "max": 30720
+      },
+      "generated_tokens": {
+        "mean": 4231.68,
+        "median": 254.0,
+        "p90": 30720,
+        "max": 30720
+      },
+      "path_generated_tokens": {
+        "mean": 51.28225806451613,
+        "median": 37.0,
+        "p90": 86,
+        "max": 518
+      },
+      "critical_decode_depth": {
+        "mean": 4226.608,
+        "median": 250.5,
+        "p90": 30720,
+        "max": 30720
+      },
+      "theoretical_decode_work_over_depth": {
+        "mean": 1.0109148865106101,
+        "median": 1.0,
+        "p90": 1.0016423533958072,
+        "max": 1.3110047846889952
+      },
+      "generation_calls": {
+        "mean": 1.496,
+        "median": 1.0,
+        "p90": 5,
+        "max": 13
+      },
+      "unbalanced_tags": 6,
+      "strict_format_among_parallel": 0.9272727272727272,
+      "exact_duplicate_paths": 10,
+      "samples_with_duplicate_paths": 10,
+      "path_calls_without_sampled_close": 1,
+      "summary_calls_without_sampled_close": 0,
+      "path_calls_at_token_cap": 0,
+      "response_budget_exhausted": 60,
+      "truncated": 0,
+      "invalid_final_answers": 64,
+      "scorer_errors": 0,
+      "accuracy_by_parallel": {
+        "False": {
+          "n": 445,
+          "correct": 79,
+          "accuracy": 0.17752808988764046
+        },
+        "True": {
+          "n": 55,
+          "correct": 5,
+          "accuracy": 0.09090909090909091
+        }
+      },
+      "accuracy_by_subject": {
+        "Algebra": {
+          "n": 124,
+          "correct": 28,
+          "accuracy": 0.22580645161290322
+        },
+        "Counting & Probability": {
+          "n": 38,
+          "correct": 9,
+          "accuracy": 0.23684210526315788
+        },
+        "Geometry": {
+          "n": 41,
+          "correct": 6,
+          "accuracy": 0.14634146341463414
+        },
+        "Intermediate Algebra": {
+          "n": 97,
+          "correct": 9,
+          "accuracy": 0.09278350515463918
+        },
+        "Number Theory": {
+          "n": 62,
+          "correct": 8,
+          "accuracy": 0.12903225806451613
+        },
+        "Prealgebra": {
+          "n": 82,
+          "correct": 15,
+          "accuracy": 0.18292682926829268
+        },
+        "Precalculus": {
+          "n": 56,
+          "correct": 9,
+          "accuracy": 0.16071428571428573
+        }
+      },
+      "accuracy_by_level": {
+        "1": {
+          "n": 43,
+          "correct": 18,
+          "accuracy": 0.4186046511627907
+        },
+        "2": {
+          "n": 90,
+          "correct": 27,
+          "accuracy": 0.3
+        },
+        "3": {
+          "n": 105,
+          "correct": 19,
+          "accuracy": 0.18095238095238095
+        },
+        "4": {
+          "n": 128,
+          "correct": 12,
+          "accuracy": 0.09375
+        },
+        "5": {
+          "n": 134,
+          "correct": 8,
+          "accuracy": 0.05970149253731343
+        }
+      },
+      "raw_trace_count": 504,
+      "scored_unique_traces": 500,
+      "limitations": [
+        "Two paths are imposed by runtime.",
+        "Decode work/depth is not measured wall-clock speedup.",
+        "Text equality only detects literal duplicate paths, not semantic duplication or valid reasoning.",
+        "Unseen custom mask/positions are not applied to vLLM continuation."
+      ]
+    },
+    "sft_messages_ep5": {
+      "complete": true,
+      "model": "sft_messages_ep5",
+      "questions": 500,
+      "correct": 79,
+      "accuracy": 0.158,
+      "ci95": [
+        0.1286526978644355,
+        0.19256235101126623
+      ],
+      "parallel_ratio": 0.056,
+      "multi_round_ratio": 0.0,
+      "fork_histogram": {
+        "0": 472,
+        "1": 28
+      },
+      "executed_width_histogram": {
+        "2": 28
+      },
+      "rendered_width_histogram": {
+        "2": 28
+      },
+      "first_fork_relative_position": {
+        "mean": 0.20665706769567338,
+        "median": 0.21563088512241052,
+        "p90": 0.42065491183879095,
+        "max": 0.48788927335640137
+      },
+      "path_token_share": {
+        "mean": 0.012026271198015914,
+        "median": 0.0,
+        "p90": 0.0,
+        "max": 0.673352435530086
+      },
+      "phase_tokens": {
+        "main": 1114872,
+        "path": 11257,
+        "summary": 21294
+      },
+      "response_tokens": {
+        "mean": 2295.128,
+        "median": 135.0,
+        "p90": 1052,
+        "max": 30720
+      },
+      "generated_tokens": {
+        "mean": 2294.846,
+        "median": 135.0,
+        "p90": 1047,
+        "max": 30720
+      },
+      "path_generated_tokens": {
+        "mean": 201.01785714285714,
+        "median": 32.5,
+        "p90": 114,
+        "max": 8192
+      },
+      "critical_decode_depth": {
+        "mean": 2292.896,
+        "median": 135.0,
+        "p90": 1044,
+        "max": 30720
+      },
+      "theoretical_decode_work_over_depth": {
+        "mean": 1.004431249130656,
+        "median": 1.0,
+        "p90": 1.0,
+        "max": 1.2714285714285714
+      },
+      "generation_calls": {
+        "mean": 1.224,
+        "median": 1.0,
+        "p90": 1,
+        "max": 5
+      },
+      "unbalanced_tags": 52,
+      "strict_format_among_parallel": 0.5357142857142857,
+      "exact_duplicate_paths": 5,
+      "samples_with_duplicate_paths": 5,
+      "path_calls_without_sampled_close": 10,
+      "summary_calls_without_sampled_close": 8,
+      "path_calls_at_token_cap": 1,
+      "response_budget_exhausted": 17,
+      "truncated": 0,
+      "invalid_final_answers": 46,
+      "scorer_errors": 0,
+      "accuracy_by_parallel": {
+        "False": {
+          "n": 472,
+          "correct": 78,
+          "accuracy": 0.1652542372881356
+        },
+        "True": {
+          "n": 28,
+          "correct": 1,
+          "accuracy": 0.03571428571428571
+        }
+      },
+      "accuracy_by_subject": {
+        "Algebra": {
+          "n": 124,
+          "correct": 29,
+          "accuracy": 0.23387096774193547
+        },
+        "Counting & Probability": {
+          "n": 38,
+          "correct": 6,
+          "accuracy": 0.15789473684210525
+        },
+        "Geometry": {
+          "n": 41,
+          "correct": 4,
+          "accuracy": 0.0975609756097561
+        },
+        "Intermediate Algebra": {
+          "n": 97,
+          "correct": 12,
+          "accuracy": 0.12371134020618557
+        },
+        "Number Theory": {
+          "n": 62,
+          "correct": 6,
+          "accuracy": 0.0967741935483871
+        },
+        "Prealgebra": {
+          "n": 82,
+          "correct": 17,
+          "accuracy": 0.2073170731707317
+        },
+        "Precalculus": {
+          "n": 56,
+          "correct": 5,
+          "accuracy": 0.08928571428571429
+        }
+      },
+      "accuracy_by_level": {
+        "1": {
+          "n": 43,
+          "correct": 20,
+          "accuracy": 0.46511627906976744
+        },
+        "2": {
+          "n": 90,
+          "correct": 26,
+          "accuracy": 0.28888888888888886
+        },
+        "3": {
+          "n": 105,
+          "correct": 19,
+          "accuracy": 0.18095238095238095
+        },
+        "4": {
+          "n": 128,
+          "correct": 7,
+          "accuracy": 0.0546875
+        },
+        "5": {
+          "n": 134,
+          "correct": 7,
+          "accuracy": 0.05223880597014925
+        }
+      },
+      "raw_trace_count": 504,
+      "scored_unique_traces": 500,
+      "limitations": [
+        "Two paths are imposed by runtime.",
+        "Decode work/depth is not measured wall-clock speedup.",
+        "Text equality only detects literal duplicate paths, not semantic duplication or valid reasoning.",
+        "Unseen custom mask/positions are not applied to vLLM continuation."
+      ]
+    },
+    "mixed_ep1": {
+      "complete": true,
+      "model": "mixed_ep1",
+      "questions": 500,
+      "correct": 61,
+      "accuracy": 0.122,
+      "ci95": [
+        0.0961592783150937,
+        0.15360472307383977
+      ],
+      "parallel_ratio": 0.97,
+      "multi_round_ratio": 0.002,
+      "fork_histogram": {
+        "1": 484,
+        "0": 15,
+        "2": 1
+      },
+      "executed_width_histogram": {
+        "2": 486
+      },
+      "rendered_width_histogram": {
+        "2": 483,
+        "0": 4,
+        "1": 1
+      },
+      "first_fork_relative_position": {
+        "mean": 0.15606282520748724,
+        "median": 0.14754098360655737,
+        "p90": 0.2589928057553957,
+        "max": 0.4444444444444444
+      },
+      "path_token_share": {
+        "mean": 0.5437661236804713,
+        "median": 0.5588416323013479,
+        "p90": 0.7642276422764228,
+        "max": 0.9863523573200993
+      },
+      "phase_tokens": {
+        "main": 85218,
+        "path": 94808,
+        "summary": 84962
+      },
+      "response_tokens": {
+        "mean": 534.838,
+        "median": 223.0,
+        "p90": 509,
+        "max": 30720
+      },
+      "generated_tokens": {
+        "mean": 529.976,
+        "median": 218.0,
+        "p90": 504,
+        "max": 30715
+      },
+      "path_generated_tokens": {
+        "mean": 97.53909465020575,
+        "median": 58.0,
+        "p90": 140,
+        "max": 8192
+      },
+      "critical_decode_depth": {
+        "mean": 474.498,
+        "median": 168.0,
+        "p90": 411,
+        "max": 30701
+      },
+      "theoretical_decode_work_over_depth": {
+        "mean": 1.2780731941340286,
+        "median": 1.2764863268355398,
+        "p90": 1.4574468085106382,
+        "max": 1.7401129943502824
+      },
+      "generation_calls": {
+        "mean": 4.888,
+        "median": 5.0,
+        "p90": 5,
+        "max": 9
+      },
+      "unbalanced_tags": 150,
+      "strict_format_among_parallel": 0.7154639175257732,
+      "exact_duplicate_paths": 8,
+      "samples_with_duplicate_paths": 8,
+      "path_calls_without_sampled_close": 57,
+      "summary_calls_without_sampled_close": 144,
+      "path_calls_at_token_cap": 1,
+      "response_budget_exhausted": 2,
+      "truncated": 0,
+      "invalid_final_answers": 2,
+      "scorer_errors": 0,
+      "accuracy_by_parallel": {
+        "False": {
+          "n": 15,
+          "correct": 3,
+          "accuracy": 0.2
+        },
+        "True": {
+          "n": 485,
+          "correct": 58,
+          "accuracy": 0.11958762886597939
+        }
+      },
+      "accuracy_by_subject": {
+        "Algebra": {
+          "n": 124,
+          "correct": 20,
+          "accuracy": 0.16129032258064516
+        },
+        "Counting & Probability": {
+          "n": 38,
+          "correct": 2,
+          "accuracy": 0.05263157894736842
+        },
+        "Geometry": {
+          "n": 41,
+          "correct": 4,
+          "accuracy": 0.0975609756097561
+        },
+        "Intermediate Algebra": {
+          "n": 97,
+          "correct": 9,
+          "accuracy": 0.09278350515463918
+        },
+        "Number Theory": {
+          "n": 62,
+          "correct": 6,
+          "accuracy": 0.0967741935483871
+        },
+        "Prealgebra": {
+          "n": 82,
+          "correct": 15,
+          "accuracy": 0.18292682926829268
+        },
+        "Precalculus": {
+          "n": 56,
+          "correct": 5,
+          "accuracy": 0.08928571428571429
+        }
+      },
+      "accuracy_by_level": {
+        "1": {
+          "n": 43,
+          "correct": 8,
+          "accuracy": 0.18604651162790697
+        },
+        "2": {
+          "n": 90,
+          "correct": 15,
+          "accuracy": 0.16666666666666666
+        },
+        "3": {
+          "n": 105,
+          "correct": 22,
+          "accuracy": 0.20952380952380953
+        },
+        "4": {
+          "n": 128,
+          "correct": 9,
+          "accuracy": 0.0703125
+        },
+        "5": {
+          "n": 134,
+          "correct": 7,
+          "accuracy": 0.05223880597014925
+        }
+      },
+      "raw_trace_count": 504,
+      "scored_unique_traces": 500,
+      "limitations": [
+        "Two paths are imposed by runtime.",
+        "Decode work/depth is not measured wall-clock speedup.",
+        "Text equality only detects literal duplicate paths, not semantic duplication or valid reasoning.",
+        "Unseen custom mask/positions are not applied to vLLM continuation."
+      ]
+    }
+  }
+}

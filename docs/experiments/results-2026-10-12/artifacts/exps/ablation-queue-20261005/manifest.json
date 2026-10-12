@@ -1,0 +1,91 @@
+{
+  "root": "${PROJECT_ROOT}",
+  "queue": "${PROJECT_ROOT}/exps/ablation-queue-20261005",
+  "code": "${PROJECT_ROOT}/exps/ablation-queue-20261005/code/verl",
+  "venv": "${PROJECT_ROOT}/.venv",
+  "base": "${MODEL_ROOT}/Qwen3-0.6B-Base-special-v2",
+  "gpu_budget": 8,
+  "models": [
+    {
+      "id": "padding-fast",
+      "name": "Parallel-SFT-Unseen-Qwen3-0.6B-padding-fast-20261005",
+      "existing": true,
+      "results": "${PROJECT_ROOT}/verl/checkpoints/Parallel-SFT-Unseen-Qwen3-0.6B-padding-fast-20261005",
+      "checkpoint_root": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-padding-fast-20261005"
+    },
+    {
+      "id": "prompt-fixed",
+      "name": "Parallel-SFT-Unseen-Qwen3-0.6B-prompt-fixed-20261005",
+      "existing": true,
+      "results": "${PROJECT_ROOT}/verl/checkpoints/Parallel-SFT-Unseen-Qwen3-0.6B-prompt-fixed-20261005",
+      "checkpoint_root": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-prompt-fixed-20261005"
+    },
+    {
+      "id": "seen",
+      "name": "Parallel-SFT-Seen-Qwen3-0.6B-queue-20261005",
+      "existing": true,
+      "variant": "seen",
+      "overrides": [
+        "model.enable_gradient_checkpointing=false",
+        "data.max_length=3072",
+        "data.parse_prompt_tags=false"
+      ],
+      "results": "${PROJECT_ROOT}/exps/ablation-queue-20261005/results/train/Parallel-SFT-Seen-Qwen3-0.6B-queue-20261005",
+      "checkpoint_root": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-queue-20261005"
+    },
+    {
+      "id": "prompt-lr3e6",
+      "name": "Parallel-SFT-Unseen-Qwen3-0.6B-prompt-lr3e6-20261005",
+      "existing": true,
+      "variant": "unseen",
+      "overrides": [
+        "model.enable_gradient_checkpointing=false",
+        "data.max_length=3072",
+        "data.parse_prompt_tags=false",
+        "optim.lr=3e-6"
+      ],
+      "results": "${PROJECT_ROOT}/exps/ablation-queue-20261005/results/train/Parallel-SFT-Unseen-Qwen3-0.6B-prompt-lr3e6-20261005",
+      "checkpoint_root": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-prompt-lr3e6-20261005"
+    }
+  ],
+  "evals": [
+    {
+      "id": "base-v2",
+      "model": "base",
+      "epoch": 0,
+      "checkpoint": "${MODEL_ROOT}/Qwen3-0.6B-Base-special-v2"
+    },
+    {
+      "id": "padding-fast-epoch-5",
+      "model": "padding-fast",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-padding-fast-20261005/global_step_230"
+    },
+    {
+      "id": "prompt-fixed-epoch-5",
+      "model": "prompt-fixed",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-prompt-fixed-20261005/global_step_230"
+    },
+    {
+      "id": "seen-epoch-5",
+      "model": "seen",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Seen-Qwen3-0.6B-queue-20261005/global_step_230"
+    },
+    {
+      "id": "prompt-lr3e6-epoch-5",
+      "model": "prompt-lr3e6",
+      "epoch": 5,
+      "checkpoint": "${MODEL_ROOT}/Parallel-SFT-Unseen-Qwen3-0.6B-prompt-lr3e6-20261005/global_step_230"
+    }
+  ],
+  "protocol": "author-async-v3;3000 response;mean@16 competition/mean@1 MATH;sanity format;no grad accumulation fix",
+  "commit": "787575134f097826c956e8b6c950dbc6db68ba2c",
+  "data_sha256": {
+    "verl/data_preprocess_scripts/data/gsm8k/adaptive_parallel_thinking_final_with_prompt_v3/sft_all_accuracy_times_parallel_reward/train.parquet": "48b9c7ec2fb1e070a8912706b49f7d7ce594401f64b1f68247bc83ed2a34d87b",
+    "verl/data_preprocess_scripts/data/gsm8k/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_times_parallel_reward/test.parquet": "fdaa803b505aaccfc1eded139da8d84c73b43e5e0ccba20232e3ff46dcc1f5d2",
+    "verl/data_preprocess_scripts/data/APO_combine/adaptive_parallel_thinking_final_with_prompt_v3/rl_all_accuracy_reward/test.parquet": "cee9b99e0645501b0dac3d885e66eae8d36e107c28a2f914864a68021aafc21e"
+  },
+  "eval_selection": "base and final epoch only; changed by user; trainings unchanged"
+}

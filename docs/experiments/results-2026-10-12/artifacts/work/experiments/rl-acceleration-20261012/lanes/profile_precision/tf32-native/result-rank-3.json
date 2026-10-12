@@ -1,0 +1,191 @@
+{
+  "rank": 3,
+  "precision": "tf32",
+  "master_dtype": "float32",
+  "lm_head_dtype": "float32",
+  "cases": [
+    {
+      "index": 3,
+      "id": "bigmath/cn_k12/210293",
+      "correct": false,
+      "reference_correct": false,
+      "format_valid": true,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 819,
+      "reference_F": 710,
+      "generation_seconds": 29.9422858459875,
+      "T": 1327,
+      "native_replay_max": 0.057170867919921875,
+      "native_replay_mean": 0.0012393705546855927,
+      "native_replay_p95": 0.006729691755026579,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 116,
+          "max": 0.057170867919921875,
+          "mean": 0.003984533715993166,
+          "p95": 0.02294301986694336
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 9.5367431640625e-06,
+          "mean": 4.76837158203125e-06,
+          "p95": 9.059906005859375e-06
+        },
+        {
+          "phase": "path",
+          "n": 156,
+          "max": 0.004497528076171875,
+          "mean": 0.00019637132936622947,
+          "p95": 0.000957489013671875
+        },
+        {
+          "phase": "path",
+          "n": 156,
+          "max": 0.0068187713623046875,
+          "mean": 0.00015767414879519492,
+          "p95": 0.0006680488586425781
+        },
+        {
+          "phase": "path",
+          "n": 196,
+          "max": 0.0052661895751953125,
+          "mean": 0.00020482589025050402,
+          "p95": 0.0010328292846679688
+        },
+        {
+          "phase": "path",
+          "n": 339,
+          "max": 0.005512237548828125,
+          "mean": 0.0001647099561523646,
+          "p95": 0.0009197235340252519
+        },
+        {
+          "phase": "summary",
+          "n": 260,
+          "max": 0.05585670471191406,
+          "mean": 0.0033270029816776514,
+          "p95": 0.017574980854988098
+        },
+        {
+          "phase": "main",
+          "n": 2,
+          "max": 0.0,
+          "mean": 0.0,
+          "p95": 0.0
+        },
+        {
+          "phase": "main",
+          "n": 100,
+          "max": 0.022737503051757812,
+          "mean": 0.0016619492089375854,
+          "p95": 0.01188305951654911
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "id": "bigmath/cn_k12/147481",
+      "correct": true,
+      "reference_correct": true,
+      "format_valid": true,
+      "reference_format_valid": true,
+      "exact_ids": false,
+      "F": 1110,
+      "reference_F": 1086,
+      "generation_seconds": 40.82329851295799,
+      "T": 1801,
+      "native_replay_max": 0.09502220153808594,
+      "native_replay_mean": 0.0019491800339892507,
+      "native_replay_p95": 0.011135101318359375,
+      "phases": [
+        {
+          "phase": "main",
+          "n": 542,
+          "max": 0.09502220153808594,
+          "mean": 0.004055209923535585,
+          "p95": 0.022695835679769516
+        },
+        {
+          "phase": "width",
+          "n": 2,
+          "max": 1.9073486328125e-05,
+          "mean": 9.5367431640625e-06,
+          "p95": 1.811981201171875e-05
+        },
+        {
+          "phase": "path",
+          "n": 205,
+          "max": 0.00298309326171875,
+          "mean": 0.0001334120606770739,
+          "p95": 0.0009178161853924394
+        },
+        {
+          "phase": "path",
+          "n": 253,
+          "max": 0.008516311645507812,
+          "mean": 0.0002605754998512566,
+          "p95": 0.001305770711041987
+        },
+        {
+          "phase": "path",
+          "n": 288,
+          "max": 0.004375457763671875,
+          "mean": 0.000273393263341859,
+          "p95": 0.0016633985796943307
+        },
+        {
+          "phase": "path",
+          "n": 233,
+          "max": 0.003643035888671875,
+          "mean": 0.00018742770771495998,
+          "p95": 0.0012680049985647202
+        },
+        {
+          "phase": "summary",
+          "n": 189,
+          "max": 0.06942367553710938,
+          "mean": 0.004943524487316608,
+          "p95": 0.024516288191080093
+        },
+        {
+          "phase": "main",
+          "n": 2,
+          "max": 0.0,
+          "mean": 0.0,
+          "p95": 0.0
+        },
+        {
+          "phase": "main",
+          "n": 87,
+          "max": 0.03901863098144531,
+          "mean": 0.0018680616049095988,
+          "p95": 0.009404557757079601
+        }
+      ]
+    }
+  ],
+  "actions": 3128,
+  "native_replay_max": 0.09502220153808594,
+  "native_replay_mean": 0.0016480556223541498,
+  "native_replay_p95": 0.009671589359641075,
+  "unchanged_thresholds": {
+    "max": 0.01,
+    "mean": 0.002,
+    "p95": 0.005
+  },
+  "native_guard_passed": false,
+  "correct": 1,
+  "reference_correct": 1,
+  "quality_not_benchmark": true,
+  "optimizer_updates": 0,
+  "peak_gpu_bytes": 18011250176,
+  "actual_backend_flags": {
+    "cuda_tf32": true,
+    "float32_precision": "high"
+  },
+  "generation_is_cached": true,
+  "teacher_is_full_prefix": true
+}

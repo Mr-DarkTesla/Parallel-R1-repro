@@ -1,0 +1,185 @@
+{
+  "base_source": {
+    "model": "Qwen/Qwen3-0.6B-Base",
+    "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+    "seed": 1,
+    "token_initialization": "normal",
+    "tokens": {
+      "<Path>": 151669,
+      "</Path>": 151670,
+      "<Parallel>": 151671,
+      "</Parallel>": 151672,
+      "<Summary>": 151673,
+      "</Summary>": 151674
+    }
+  },
+  "tag_ids": {
+    "<Parallel>": [
+      151671
+    ],
+    "</Parallel>": [
+      151672
+    ],
+    "<Path>": [
+      151669
+    ],
+    "</Path>": [
+      151670
+    ],
+    "<Summary>": [
+      151673
+    ],
+    "</Summary>": [
+      151674
+    ]
+  },
+  "split_policy": "Adaptive corpora: deterministic SHA256(problem, split-seed-1), 4500/500. Mixed: original splits.",
+  "transformation": "Only whitespace outside sibling Path spans is removed; system/user roles preserved.",
+  "datasets": [
+    {
+      "name": "gsm_infinite",
+      "sources": {
+        "gsm_infinite_adaptive_parallel_5k.jsonl": "a63c0613526338246460b50824dc29f19aa6defcbbc66b73dc8f9a152df72799"
+      },
+      "splits": {
+        "train": {
+          "rows": 4500,
+          "sha256": "8bf270da09def7e5a124750920352000107528791d98d409d085301e4ba295bf",
+          "min": 275,
+          "max": 27954,
+          "quantiles": {
+            "0.5": 1425,
+            "0.9": 2812,
+            "0.95": 3777,
+            "0.99": 11137
+          },
+          "over": {
+            "3072": 365,
+            "4096": 191,
+            "8192": 163,
+            "16384": 38,
+            "32768": 0,
+            "40960": 0
+          }
+        },
+        "val": {
+          "rows": 500,
+          "sha256": "fc0c7330a559386d2584e55ef377a51c7d53513dfe40cf49d1cd6f91cae04dc6",
+          "min": 319,
+          "max": 22793,
+          "quantiles": {
+            "0.5": 1344,
+            "0.9": 2707,
+            "0.95": 3413,
+            "0.99": 10029
+          },
+          "over": {
+            "3072": 34,
+            "4096": 20,
+            "8192": 15,
+            "16384": 2,
+            "32768": 0,
+            "40960": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "sft_messages",
+      "sources": {
+        "sft_messages_5000.jsonl": "ce0bc7febe267be6761d6689e52f5b57bcaaba6ebdb5a9ed7813ffea35a05dda"
+      },
+      "splits": {
+        "train": {
+          "rows": 4500,
+          "sha256": "0aa7e66856caaf802fc127089ec2b6fab75d1a5cad7419d36aa73b6ed30feea4",
+          "min": 392,
+          "max": 4147,
+          "quantiles": {
+            "0.5": 1515,
+            "0.9": 2471,
+            "0.95": 2741,
+            "0.99": 3232
+          },
+          "over": {
+            "3072": 79,
+            "4096": 1,
+            "8192": 0,
+            "16384": 0,
+            "32768": 0,
+            "40960": 0
+          }
+        },
+        "val": {
+          "rows": 500,
+          "sha256": "2e29a0ca61985d71d5a17376d1eabeaa67c395c1f6f997b875263cb5f798d055",
+          "min": 397,
+          "max": 3800,
+          "quantiles": {
+            "0.5": 1488,
+            "0.9": 2406,
+            "0.95": 2695,
+            "0.99": 3260
+          },
+          "over": {
+            "3072": 6,
+            "4096": 0,
+            "8192": 0,
+            "16384": 0,
+            "32768": 0,
+            "40960": 0
+          }
+        }
+      }
+    },
+    {
+      "name": "mixed",
+      "sources": {
+        "train.parquet": "b4b62e72075795db1d33f03805e847acbb67ab20562312eeff2e6a832736d4e6",
+        "val.parquet": "765350e7f3c4ec54b77536f541460562e93b9d495c25f0aef811ea594c6db7bd"
+      },
+      "splits": {
+        "train": {
+          "rows": 4500,
+          "sha256": "c8016cc02c00c3330091e63eff6c14e3a23ee520c14b5b1aadea47ffa0a44cc6",
+          "min": 35,
+          "max": 528,
+          "quantiles": {
+            "0.5": 201,
+            "0.9": 272,
+            "0.95": 310,
+            "0.99": 415
+          },
+          "over": {
+            "3072": 0,
+            "4096": 0,
+            "8192": 0,
+            "16384": 0,
+            "32768": 0,
+            "40960": 0
+          }
+        },
+        "val": {
+          "rows": 500,
+          "sha256": "18dea1278874cce43da85de64c35bbc9138eb9c00ddaca1a7e7996ecae7bec6a",
+          "min": 39,
+          "max": 419,
+          "quantiles": {
+            "0.5": 193,
+            "0.9": 257,
+            "0.95": 293,
+            "0.99": 407
+          },
+          "over": {
+            "3072": 0,
+            "4096": 0,
+            "8192": 0,
+            "16384": 0,
+            "32768": 0,
+            "40960": 0
+          }
+        }
+      }
+    }
+  ]
+}

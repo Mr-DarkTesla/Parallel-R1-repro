@@ -1,0 +1,48 @@
+{
+  "self_tests_passed": 9,
+  "by_source": {
+    "new": {
+      "rows": 3000,
+      "rows_with_explicit_total_convention": 3000,
+      "supported_constraints": 54532,
+      "unsupported_constraints": 18995,
+      "rows_with_any_supported_constraint": 2997,
+      "rows_with_unsupported_constraints": 2560,
+      "rows_with_bounded_quantities": 2986,
+      "rows_with_duplicate_definition_skip": 3,
+      "rows_with_negative_witness": 667,
+      "negative_witnesses": 973,
+      "rows_without_detected_witness_unresolved": 2333,
+      "rows_all_candidate_surface_constraints_supported": 440
+    },
+    "old": {
+      "rows": 2145,
+      "rows_with_explicit_total_convention": 0,
+      "supported_constraints": 36204,
+      "unsupported_constraints": 10851,
+      "rows_with_any_supported_constraint": 2139,
+      "rows_with_unsupported_constraints": 1687,
+      "rows_with_bounded_quantities": 2127,
+      "rows_with_duplicate_definition_skip": 5,
+      "rows_with_negative_witness": 332,
+      "negative_witnesses": 510,
+      "rows_without_detected_witness_unresolved": 1813,
+      "rows_all_candidate_surface_constraints_supported": 458
+    }
+  },
+  "input_sha256": {
+    "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/train.jsonl": "7379ecfc7053771313df1bc63c6324a3f3f8ee72bdfc818015bdc35ae600b24a",
+    "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/sft-think/val.jsonl": "d5a868ef8fc42a50f21a7e9cb657da1a894b882ddeabb256b6f1eeb6112a23c5",
+    "${PROJECT_ROOT}/exps/deepseek-gsm-only-20261009/production/accepted-at-user-stop.jsonl": "c13c51a87d7189b659795d21a98ada9db5063c44a2135434aa454b3428b28612"
+  },
+  "limitations": [
+    "Affected-row counts divided by corpus size are lower bounds on the fraction with a proved witness under ordinary ordered arithmetic and nonnegative quantity semantics; they are not the full inconsistency prevalence.",
+    "Unsupported sentences/quantities are unresolved, never classified clean.",
+    "Totals use safe lower bounds from available positive components, never complete-category or zero assumptions.",
+    "Only source problem conditions are read; target answers and teacher solutions are excluded."
+  ],
+  "arithmetic_interpretation": "ordinary ordered arithmetic",
+  "nonnegative_domain_assumed": true,
+  "official_generator_commit": "caa5388043bd5d34aa6f03738c2b9aa3764fa284",
+  "modular_generation_caveat": "Official generator optionally applies modulo after subtraction and its CLI defaults to mod=23. This validator does not assume an unmentioned modulus in the SFT problem text and does not attribute contradictions to teacher arithmetic."
+}

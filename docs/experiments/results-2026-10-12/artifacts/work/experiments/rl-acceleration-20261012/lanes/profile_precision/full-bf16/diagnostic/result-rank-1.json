@@ -1,0 +1,57 @@
+{
+  "rank": 1,
+  "all_master_fp32": true,
+  "native_source": "${PROJECT_ROOT}/work/experiments/rl-acceleration-20261012/lanes/profile_precision/full-bf16/native",
+  "guard_thresholds_unchanged": {
+    "max": 0.01,
+    "mean": 0.002,
+    "p95": 0.005
+  },
+  "same_shape_cached_replay": {
+    "n": 2415,
+    "max": 0.0,
+    "mean": 0.0,
+    "p95": 0.0,
+    "ratio_min": 1.0,
+    "ratio_max": 1.0,
+    "clip_fraction": 0.0,
+    "ratio_abs_mean": 0.0,
+    "seconds": 80.84689754294232
+  },
+  "no_reduced_bf16_accum": {
+    "n": 2415,
+    "max": 0.20808792114257812,
+    "mean": 0.007063607219606638,
+    "p95": 0.048496462404727936,
+    "ratio_min": 0.8291888236999512,
+    "ratio_max": 1.2313214540481567,
+    "clip_fraction": 0.00041407867684029043,
+    "ratio_abs_mean": 0.007056655827909708,
+    "seconds": 1.4045582921244204
+  },
+  "no_reduced_math_sdpa": {
+    "n": 2415,
+    "max": 0.20299530029296875,
+    "mean": 0.006621985230594873,
+    "p95": 0.046650148928165436,
+    "ratio_min": 0.8162820935249329,
+    "ratio_max": 1.1425718069076538,
+    "clip_fraction": 0.0,
+    "ratio_abs_mean": 0.006602610927075148,
+    "seconds": 2.8484451891854405
+  },
+  "matched_likelihood_gradient": {
+    "actions": 131,
+    "phase": "main",
+    "objective": "negative mean raw sampled logprob, unit advantage; no PPO/Adam",
+    "bf16_loss": 0.4674346148967743,
+    "fp32_loss": 0.604005753993988,
+    "cosine": 0.8146994371615348,
+    "relative_l2": 0.594918970670469,
+    "fp32_norm": 17.15843369385793,
+    "bf16_norm": 11.698523639105959,
+    "fp32_master": true
+  },
+  "peak_gpu_bytes": 51694528512,
+  "optimizer_updates": 0
+}

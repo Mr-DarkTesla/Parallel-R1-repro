@@ -1,0 +1,143 @@
+Write a correct, self-contained worked solution to the problem below for a
+supervised training dataset. Represent useful parallel work using the exact
+execution protocol below. Return only the solution, without a code fence.
+
+Prioritize correctness, explicit mathematical justification, and useful progress.
+Write a concise worked solution, not a transcript of private deliberation.
+
+EXECUTION PROTOCOL
+
+There is one coordinator and independent workers. The coordinator can perform
+sequential work, plan a fork, launch 2 to 8 workers, merge their results, and
+continue. Choose the worker count independently at each fork. Eight is a maximum,
+not a target. There is no fixed number of rounds. Fully sequential solutions
+are valid when no useful parallel work is available.
+
+Before every fork, first write a free-form mathematical explanation of the
+current step: relevant established facts, any shared calculations, and what
+needs to be established next. Use ordinary prose and equations without a
+fixed heading. This can be one sentence when the next step is straightforward.
+Do not repeat the preceding summary or solve the assigned tasks in advance.
+
+Then write a short plan using ordinary text:
+
+Plan:
+1: a concrete assignment; the local result or certificate to return
+2: a different concrete assignment; the local result or certificate to return
+
+The preceding explanation should make clear how the assignments contribute
+to the solution. No separate Objective: or Merge: fields are required.
+
+Use exactly the integer IDs 1 through N within each fork, one assignment per
+line, with no missing or duplicate IDs. Restart numbering at 1 for every new
+fork. Do not write round numbers or letter prefixes on IDs. An ID refers to
+the matching assignment and path in the current fork; when using an earlier
+result, identify the mathematical fact rather than an ambiguous old path ID.
+The plan contains N assignment lines. It must not contain the unknown answers
+that the workers are being assigned to find. Shared definitions, established
+facts, and common preprocessing belong before the fork.
+
+Immediately after the plan, write <Parallel>N followed by a newline, where N
+is ONE literal decimal digit from 2 through 8. The count is the launch command.
+For example, a three-worker round starts with the exact line:
+<Parallel>3
+
+Then write exactly N sibling paths, in ID order, using this syntax:
+<Path>1
+Explicit mathematical work for assignment 1.
+Make the local conclusion, its conditions, or any remaining gap clear in
+ordinary prose or equations. No Result: field or concluding template is needed.
+</Path>
+
+The first line of each path is the opening token immediately followed by its
+assigned integer ID. After all paths, write:
+</Parallel>
+<Summary>
+Assess and combine the actual path results, referring to their IDs. State
+what has been established and any obligations still unresolved.
+</Summary>
+
+After synchronization, continue with free-form mathematical explanation.
+If another fork is useful, follow it with a new short plan and fork. Otherwise
+continue sequentially or finish. Do not add an extra explanation just to
+repeat what the summary already established; explain the next step instead.
+
+Use exactly these six structural tokens: <Parallel>, </Parallel>, <Path>,
+</Path>, <Summary>, </Summary>. Counts and IDs are ordinary text, not tag
+attributes. No nested forks. No prose between sibling paths. Every opening
+tag must have its matching closing tag. Do not reproduce placeholder text.
+
+WORKER ISOLATION
+
+At execution time, worker I receives only the original problem, the shared
+prefix ending in <Parallel>N and a newline, and the injected prefix
+<Path>I followed by a newline, where I is its literal integer ID from 1 to N.
+Its assignment is the matching line in the immediately preceding plan.
+Its sibling workers' outputs are not visible to it.
+
+Respect that boundary in the serialized solution: no worker may use, quote,
+anticipate, or claim agreement with a sibling's result from the same round.
+A worker needing such a result must instead work with an explicit symbolic
+parameter, derive it independently when useful, or wait for a later round.
+Workers complete their assigned local tasks; they do not launch forks or
+write coordinator summaries. They do not write Final Answer:; that marker
+belongs only to the coordinator at the end of the complete solution.
+
+CHOOSING USEFUL WORK
+
+At the start and after each merge, consider the remaining mathematical work.
+When two or more useful tasks are independently executable from the
+current shared information, assign them before solving them in the coordinator.
+When only one useful task is ready, perform it sequentially and reassess.
+Prefer a new fork when such work becomes available, even if an earlier fork
+was recent. Short paths are allowed: there is no minimum length or minimum
+number of calculations, and a path need not be a complete solution method.
+Close the path as soon as its local assignment is fulfilled.
+
+Useful assignments include complementary subproblems, specified cases,
+lemmas or bounds, genuinely different promising methods, counterexample
+searches, and verification of a candidate already available before the fork.
+Different cases may use the same method. Short independent calculations may
+be separate paths when their outputs are useful downstream. Exploit symmetry
+and do not create extra work by paraphrasing one calculation or copying known
+values. Each assignment needs a distinct purpose; multiple full solutions
+require a meaningful reason.
+
+Choose N from the actual useful independent work. If more than eight tasks
+are ready, group related tasks or schedule remaining work later. Do not force
+wide forks or multiple rounds on a problem that does not support them.
+
+A later round must address new work enabled by earlier results or a specific
+remaining obligation. Do not preselect the total number of rounds. Do not
+stop using useful parallelism merely because one fork has already occurred.
+Stop once the requested result is fully justified.
+
+MATHEMATICAL QUALITY AND MERGING
+
+Show enough equations and argument to verify every claimed result. Preserve
+domain restrictions, units, assumptions, and case boundaries. For enumeration,
+explain the inclusion rule and completeness; for cases, check coverage and
+overlap; for equations, exclude inadmissible roots; for optimization, justify
+optimality. Numerical agreement alone is not a proof.
+
+The summary must reflect what the paths actually established. Combine
+complementary results explicitly; do not claim that different results agree.
+Resolve contradictions with a justified check or defer an unresolved issue
+to further work. Majority vote is not proof. Do not silently change a path's
+result, invent mistakes or failed approaches, or pretend to have executed tools.
+A failed approach is useful only if it establishes a real limitation or fact.
+
+Check internal consistency, not only the final answer. A correct answer does
+not excuse a false intermediate claim. Avoid repetitive prose, ceremonial
+planning, and unnecessary verification rounds. If an essential gap remains,
+state it honestly instead of fabricating a completed proof.
+
+End the entire solution with exactly one standalone line:
+Final Answer: the requested result
+If an essential gap remains, use Final Answer: unresolved and explain the gap
+before that line. Such an output will be excluded from the completed-solution
+training set.
+
+PROBLEM
+
+{{INSERT_PROBLEM_HERE}}

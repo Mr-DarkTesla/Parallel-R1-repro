@@ -1,0 +1,144 @@
+{
+  "predeclared_at": "2026-10-10T08:44:12.607514+00:00",
+  "CPU_only": true,
+  "GPU_launches": false,
+  "suite": "500",
+  "fixed_questions_sha256": "ddde77ef9dbf78d911a6bc2db2040332bbd33e097ae95a4afb81dd192963d39e",
+  "question_source": "${PROJECT_ROOT}/work/experiments/night-20261010/rl-eval/questions-math500.jsonl",
+  "selection_allowed": false,
+  "checkpoint_selection_allowed": false,
+  "curriculum_selection_allowed": false,
+  "all_learning_rate_arms_reported_no_test_based_winner_selection": true,
+  "original_control_runtime_prompt_differs_from_structured": true,
+  "generation": {
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "top_k": 20,
+    "response_cap": 4096,
+    "path_cap": 2048,
+    "seed_base": 42,
+    "8workers": true
+  },
+  "requires_before_root_launch": [
+    "completed production+CPU398tensor audit for each trained arm",
+    "actual24 runtime audit+ROOTapproval before128/500",
+    "ROOT explicit dispatch only; not integrated into variant training pipeline"
+  ],
+  "models": [
+    {
+      "label": "original-native",
+      "model": "${PROJECT_ROOT}/work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/model",
+      "mode": "native",
+      "system_file": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/math-system.txt",
+      "system_sha256": "eff263864e35545cc737445e2dfd1053104a12689514315f16c1e210b952f802",
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_math500.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/night-20261010/qwen3-4b-tag-probe-20261010/model",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/math-system.txt",
+        "--mode",
+        "native",
+        "--suite",
+        "500",
+        "--name",
+        "math500-original-native"
+      ]
+    },
+    {
+      "label": "meaninit-structured",
+      "model": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/init-model",
+      "mode": "structured",
+      "system_file": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+      "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_math500.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/init-model",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+        "--mode",
+        "structured",
+        "--suite",
+        "500",
+        "--name",
+        "math500-meaninit-structured"
+      ]
+    },
+    {
+      "label": "lr5e-4-structured",
+      "model": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/runs/production/final",
+      "mode": "structured",
+      "system_file": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+      "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_math500.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/runs/production/final",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+        "--mode",
+        "structured",
+        "--suite",
+        "500",
+        "--name",
+        "math500-lr5e-4-structured"
+      ]
+    },
+    {
+      "label": "lr1e-3-structured",
+      "model": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/production/final",
+      "mode": "structured",
+      "system_file": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+      "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_math500.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-1e-3/runs/production/final",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+        "--mode",
+        "structured",
+        "--suite",
+        "500",
+        "--name",
+        "math500-lr1e-3-structured"
+      ]
+    },
+    {
+      "label": "lr2e-4-structured",
+      "model": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/final",
+      "mode": "structured",
+      "system_file": "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+      "system_sha256": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+      "argv": [
+        "bash",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_math500.sh",
+        "--model",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/variants/lr-2e-4/runs/production/final",
+        "--system-file",
+        "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/system.txt",
+        "--mode",
+        "structured",
+        "--suite",
+        "500",
+        "--name",
+        "math500-lr2e-4-structured"
+      ]
+    }
+  ],
+  "sha256": {
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/evaluate.py": "ce546b0bc74945b17f99cbd93fb3be1d3d54b4ed737445e15ac80157d8a9d6e8",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/evaluate_math500.py": "ee768a765cfe13bfb058975b3afa0e83881275cfd07d61e3f6a324f562983e74",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_eval.sh": "c3f9a68bda63f85f0c15206d12141f39f5c6d711e580cb0cb82371b23d7204a0",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/run_math500.sh": "02cef88e28debdd8ed439aec290b99f38db73d5f54ad6dfd8d5aa049de21dec9",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/questions-500.jsonl": "ddde77ef9dbf78d911a6bc2db2040332bbd33e097ae95a4afb81dd192963d39e",
+    "${PROJECT_ROOT}/work/experiments/instruct-token-warmup-20261010/evaluations/ready.json": "a4dd5577a77c9f914770dc9b0cb40beed1dfe0beeef31432b52442741d5824e8"
+  },
+  "exact_AST_reverse_to_baseline": true,
+  "only_evaluator_change": "suite choices add500; fixed questions500 maps existing same questions-{suite} mechanism; no generation/scorer/runtime change"
+}
