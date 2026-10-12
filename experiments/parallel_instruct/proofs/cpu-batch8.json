@@ -7,6 +7,7 @@
     {
       "rank": 0,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -27,6 +28,7 @@
     {
       "rank": 1,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -47,6 +49,7 @@
     {
       "rank": 2,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -67,6 +70,7 @@
     {
       "rank": 3,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -87,6 +91,7 @@
     {
       "rank": 4,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -107,6 +112,7 @@
     {
       "rank": 5,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -127,6 +133,7 @@
     {
       "rank": 6,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -147,6 +154,7 @@
     {
       "rank": 7,
       "passed": true,
+      "optimizer": "Zero1AdamW",
       "cases": [
         {
           "prompts": 2,
@@ -165,9 +173,9 @@
       ]
     }
   ],
-  "scope": "CPU reward grouping, DDP gradient averaging and Adam; not a GPU/mask/memory or quality result",
+  "scope": "CPU reward grouping, gradient averaging and Adam/Zero1; not a GPU/mask/memory or quality result",
   "tested_source_sha256": {
     "experiments/parallel_instruct/batching.py": "01facf67f7448a3813b7d4090ed56e8447dca6469dd0c9f9485773bd3f4bb3da",
-    "experiments/parallel_instruct/proof_distributed_batch.py": "af5d5ad60e1c38f24314f289aaf85e3d2d73d2029a6a0602c40fd38ae370c283"
+    "experiments/parallel_instruct/proof_distributed_batch.py": "6a9e179ff343c7e84cc6a6a1d30529c76fd56abd3a0dad5e90f51eddc84c5fc0"
   }
 }

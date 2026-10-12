@@ -1,12 +1,15 @@
 # Shared Qwen3-4B Instruct RL runtime
 
 GPU count and effective batch are separate configuration fields. All presets
-(`configs/r2-{8,16,24,32}gpu.json`) keep **8 prompts × 4 responses = 32 responses
+(`configs/r2-{1,2,4,8,16,24,32}gpu.json`) keep **8 prompts × 4 responses = 32 responses
 per update**, the same R2 reward, and the same global target of 500 iterations.
 They use the same `train.py`, decoder, replay, reward, and distributed entry.
 
 | GPUs | Ranks per prompt | Responses per rank within a prompt |
 | --- | --- | --- |
+| 1 | One rank owns all 8 prompts | 32 total responses |
+| 2 | One rank owns 4 prompts | 16 total responses |
+| 4 | One rank owns 2 prompts | 8 total responses |
 | 8 | 1 | 4 |
 | 16 | 2 | 2 |
 | 24 | 3 | 2, 1, 1 |
@@ -45,8 +48,12 @@ export PARALLEL_R1_RUN_ROOT="$PWD/work/experiments/my-r2-run"
 torchrun --standalone --nproc_per_node=8 experiments/parallel_instruct/node_entry.py
 ```
 
+For 1/2/4 GPUs, use the corresponding preset and `--nproc_per_node=1/2/4`.
 For multiple nodes, use the platform launcher with `expected_world_size / 8`
 nodes, 8 processes per node, and `PARALLEL_R1_RUN_ROOT` in the job environment.
+GPU count changes response ownership, not optimizer behavior or batch size. On
+a single GPU Adam is ordinary AdamW; on multiple GPUs Zero1 partitions its state.
+Full-model FP32 memory on the selected devices must pass the actual smoke.
 `prepare_run.py` does not allocate GPUs, submit a job, or stop existing workers.
 `node_entry.py` performs two actual full-model smoke updates and resident-Adam
 width 2/3/4/6/8 fixtures on every rank, verifies clean exits, and then releases
@@ -70,4 +77,4 @@ The dated `work/experiments/` sources preserve earlier experiments, including th
 8-GPU controls, the 24-GPU run, and the validated pending 32-GPU handoff. Those
 frozen run inputs are not overwritten by this shared runtime. Every preset above
 must pass its actual distributed GPU smoke before production; this code does not
-claim new 8/16/24/32-GPU production results.
+claim new 1/2/4/8/16/24/32-GPU production results.

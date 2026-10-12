@@ -27,7 +27,7 @@ def grouped_advantages(records, group=4):
     return result
 '''
 (M/'runner/rollout_partition.py').write_text(helper)
-s=(M/'train-source.py').read_text()
+s=(N/'runner/train.py').read_text()
 s=s.replace('Expected exactly 24 distributed training ranks','Expected exactly 32 distributed training ranks').replace("cfg.get('expected_world_size', 24)","cfg.get('expected_world_size', 32)")
 s=s.replace("    group = int(cfg.get('group', 4))", "    group = int(cfg['group'])\n    from rollout_partition import partition, grouped_advantages\n    assert world == 32 and group == 1 and cfg['reward_group'] == 4\n    assert cfg['global_batch'] == dict(prompts_per_step=8, rollouts_per_prompt=4, responses_per_step=32)\n    prompt_index, sample_index = partition(rank, world)")
 a=s.index('    start_step = 0\n'); b=s.index('    def memory_snapshot',a)

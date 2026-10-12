@@ -12,7 +12,7 @@ relative to upstream `main` (`f1c6389`). Its main entry point is
 [`verl/verl/trainer/config`](verl/verl/trainer/config).
 
 - **Qwen3-4B Instruct RL:** a [shared runtime](experiments/parallel_instruct/README.md)
-  for 8/16/24/32 GPUs with an explicit, unchanged response batch, fullwidth8
+  for 1/2/4/8/16/24/32 GPUs with an explicit, unchanged response batch, fullwidth8
   decoding, exact structured replay, collective parity rejection, and weights-only
   checkpoint exports. Dated SFT/RL source snapshots are preserved under
   [`work/experiments`](work/README.md). Each new run requires its actual distributed
