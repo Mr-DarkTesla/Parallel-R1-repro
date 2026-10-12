@@ -100,3 +100,8 @@ meta.json. Строгий финал **3,67%**, верное значение **
 и столько же последовательных форвардов, обрезано **0%**.
 Полных валидных блоков нет. Все четыре no-thinking бенчмарка
 завершены, тот же runner перешёл к APO thinking.
+
+Архив и таблицы no-thinking отправлены в `origin` коммитом
+`fe09e2e` через `ssh.github.com:443`; соединение с GitHub на порту 22
+по-прежнему сбрасывается. Для продолжения push использована команда
+`GIT_SSH_COMMAND='ssh -p 443 -o HostName=ssh.github.com -o ConnectTimeout=10' git push origin exp/21-qwen3-0.6b-multiverse`.
