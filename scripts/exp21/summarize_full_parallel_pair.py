@@ -13,6 +13,9 @@ from pathlib import Path
 
 import numpy as np
 
+from mv_format import parse
+from score_thinking_blocks import thought_span
+
 
 BASE = Path(__file__).resolve().parents[2] / "results/21-qwen3-0.6b-multiverse"
 DEV = ("gsm8k_dev", "math_dev", "arc_dev", "mmlu_pro_dev")
@@ -88,6 +91,26 @@ def summarize(new, reference):
     correct_blocks = sum(bool(row["think_numbered_block"] and row["acc_robust"]) for row in new)
     result["masked"]["numbered_correct_count"] = correct_blocks
     result["masked"]["numbered_correct_percent"] = round(100 * correct_blocks / len(new), 2)
+    masked = result["masked"]
+    masked["model_forward_calls"] = round(sum(row["model_forward_calls"] for row in new) / len(new), 2)
+    masked["started_blocks_per_answer"] = round(sum(row["think_started_blocks"] for row in new) / len(new), 2)
+    masked["serial_blocks_per_answer"] = round(sum(row["serial_blocks"] for row in new) / len(new), 2)
+    masked["serial_block_distribution"] = {
+        "zero": sum(row["serial_blocks"] == 0 for row in new),
+        "one": sum(row["serial_blocks"] == 1 for row in new),
+        "two_or_more": sum(row["serial_blocks"] >= 2 for row in new),
+    }
+    with_blocks = [row for row in new if row["serial_blocks"]]
+    masked["max_width_per_block_answer"] = (
+        round(sum(row["max_width"] for row in with_blocks) / len(with_blocks), 2) if with_blocks else None)
+    masked["paths_per_block"] = (
+        round(sum(row["total_paths"] for row in with_blocks) /
+              sum(row["serial_blocks"] for row in with_blocks), 2) if with_blocks else None)
+    masked["max_width_distribution"] = {
+        "two": sum(row["max_width"] == 2 for row in with_blocks),
+        "three": sum(row["max_width"] == 3 for row in with_blocks),
+        "four_or_more": sum(row["max_width"] >= 4 for row in with_blocks),
+    }
     return result
 
 
@@ -105,10 +128,22 @@ def main():
                 continue
             fresh = rows(folder / "block_rows.jsonl")
             strict = rows(folder / "score_rows.jsonl")
-            assert len(fresh) == len(strict)
-            for block, score in zip(fresh, strict):
+            generated = rows(folder / "raw.jsonl")
+            assert len(fresh) == len(strict) == len(generated)
+            for block, score, raw in zip(fresh, strict, generated):
                 assert key(block) == key(score)
+                assert block["input"] == raw["input"]
+                assert block["tokens"] == score["tokens"] == raw["tokens"]
                 block["acc"] = bool(score["acc"])
+                block["model_forward_calls"] = int(raw["model_forward_calls"])
+                thought, _, wellformed = thought_span(raw["input"], raw["output"])
+                structure = parse(thought)
+                valid = wellformed and structure["valid"] and all(b["numbered"] for b in structure["blocks"])
+                complete = structure["blocks"] if valid else []
+                block["serial_blocks"] = len(complete)
+                block["max_width"] = max((len(b["paths"]) for b in complete), default=0)
+                block["total_paths"] = sum(len(b["paths"]) for b in complete)
+                assert bool(complete) == block["think_numbered_block"]
             report["benchmarks"][f"{stage}/{bench}"] = {}
             sources = sorted({row["source"] for row in fresh})
             for source in sources:

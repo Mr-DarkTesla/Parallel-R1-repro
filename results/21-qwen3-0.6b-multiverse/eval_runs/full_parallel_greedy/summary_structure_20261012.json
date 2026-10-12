@@ -1,0 +1,1050 @@
+{
+  "protocol": "One greedy masked answer versus archived ordinary sampled answer means on identical question IDs; prompts and decoder differ, so deltas are descriptive",
+  "confidence_interval": "10,000 paired bootstrap replicates by question, seed 21",
+  "benchmarks": {
+    "dev/gsm8k_dev": {
+      "GSM8K_DEV": {
+        "selected": {
+          "questions": 296,
+          "archived_responses": 1184,
+          "masked": {
+            "acc": 78.04,
+            "acc_robust": 82.77,
+            "tokens": 229.02,
+            "forward_passes": 188.94,
+            "truncated": 0.0,
+            "think_full_block": 97.64,
+            "think_numbered_block": 95.61,
+            "think_has_parallel": 100.0,
+            "think_wellformed": 97.64,
+            "full_blocks": 289,
+            "numbered_blocks": 283,
+            "numbered_correct_count": 238,
+            "numbered_correct_percent": 80.41,
+            "model_forward_calls": 229.02,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.96,
+            "serial_block_distribution": {
+              "zero": 13,
+              "one": 283,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 283,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 60.22,
+            "acc_robust": 94.09,
+            "tokens": 633.36,
+            "forward_passes": 633.36,
+            "truncated": 0.0
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": 17.82,
+              "ci95": [
+                12.58,
+                22.81
+              ]
+            },
+            "acc_robust": {
+              "estimate": -11.32,
+              "ci95": [
+                -15.63,
+                -7.26
+              ]
+            },
+            "tokens": {
+              "estimate": -404.34,
+              "ci95": [
+                -446.47,
+                -365.11
+              ]
+            },
+            "forward_passes": {
+              "estimate": -444.42,
+              "ci95": [
+                -486.91,
+                -405.15
+              ]
+            },
+            "truncated": {
+              "estimate": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "base": {
+          "questions": 296,
+          "archived_responses": 1184,
+          "masked": {
+            "acc": 78.04,
+            "acc_robust": 82.77,
+            "tokens": 229.02,
+            "forward_passes": 188.94,
+            "truncated": 0.0,
+            "think_full_block": 97.64,
+            "think_numbered_block": 95.61,
+            "think_has_parallel": 100.0,
+            "think_wellformed": 97.64,
+            "full_blocks": 289,
+            "numbered_blocks": 283,
+            "numbered_correct_count": 238,
+            "numbered_correct_percent": 80.41,
+            "model_forward_calls": 229.02,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.96,
+            "serial_block_distribution": {
+              "zero": 13,
+              "one": 283,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 283,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 78.55,
+            "acc_robust": 98.06,
+            "tokens": 1059.66,
+            "forward_passes": 1059.66,
+            "truncated": 0.0
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": -0.51,
+              "ci95": [
+                -5.91,
+                4.73
+              ]
+            },
+            "acc_robust": {
+              "estimate": -15.29,
+              "ci95": [
+                -19.68,
+                -11.06
+              ]
+            },
+            "tokens": {
+              "estimate": -830.64,
+              "ci95": [
+                -936.74,
+                -736.35
+              ]
+            },
+            "forward_passes": {
+              "estimate": -870.72,
+              "ci95": [
+                -977.45,
+                -776.15
+              ]
+            },
+            "truncated": {
+              "estimate": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            }
+          }
+        }
+      }
+    },
+    "dev/math_dev": {
+      "MATH_DEV": {
+        "selected": {
+          "questions": 482,
+          "archived_responses": 964,
+          "masked": {
+            "acc": 51.24,
+            "acc_robust": 53.94,
+            "tokens": 792.78,
+            "forward_passes": 729.19,
+            "truncated": 2.49,
+            "think_full_block": 95.44,
+            "think_numbered_block": 91.29,
+            "think_has_parallel": 100.0,
+            "think_wellformed": 96.47,
+            "full_blocks": 460,
+            "numbered_blocks": 440,
+            "numbered_correct_count": 246,
+            "numbered_correct_percent": 51.04,
+            "model_forward_calls": 792.8,
+            "started_blocks_per_answer": 1.01,
+            "serial_blocks_per_answer": 0.91,
+            "serial_block_distribution": {
+              "zero": 42,
+              "one": 440,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 440,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 30.6,
+            "acc_robust": 84.75,
+            "tokens": 2956.43,
+            "forward_passes": 2956.43,
+            "truncated": 1.97
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": 20.64,
+              "ci95": [
+                15.98,
+                25.31
+              ]
+            },
+            "acc_robust": {
+              "estimate": -30.81,
+              "ci95": [
+                -35.06,
+                -26.56
+              ]
+            },
+            "tokens": {
+              "estimate": -2163.65,
+              "ci95": [
+                -2483.84,
+                -1839.87
+              ]
+            },
+            "forward_passes": {
+              "estimate": -2227.24,
+              "ci95": [
+                -2548.24,
+                -1902.11
+              ]
+            },
+            "truncated": {
+              "estimate": 0.52,
+              "ci95": [
+                -1.14,
+                2.18
+              ]
+            }
+          }
+        },
+        "base": {
+          "questions": 482,
+          "archived_responses": 964,
+          "masked": {
+            "acc": 51.24,
+            "acc_robust": 53.94,
+            "tokens": 792.78,
+            "forward_passes": 729.19,
+            "truncated": 2.49,
+            "think_full_block": 95.44,
+            "think_numbered_block": 91.29,
+            "think_has_parallel": 100.0,
+            "think_wellformed": 96.47,
+            "full_blocks": 460,
+            "numbered_blocks": 440,
+            "numbered_correct_count": 246,
+            "numbered_correct_percent": 51.04,
+            "model_forward_calls": 792.8,
+            "started_blocks_per_answer": 1.01,
+            "serial_blocks_per_answer": 0.91,
+            "serial_block_distribution": {
+              "zero": 42,
+              "one": 440,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 440,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 10.58,
+            "acc_robust": 90.87,
+            "tokens": 4271.05,
+            "forward_passes": 4271.05,
+            "truncated": 3.32
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": 40.66,
+              "ci95": [
+                36.1,
+                45.44
+              ]
+            },
+            "acc_robust": {
+              "estimate": -36.93,
+              "ci95": [
+                -41.39,
+                -32.47
+              ]
+            },
+            "tokens": {
+              "estimate": -3478.27,
+              "ci95": [
+                -3836.89,
+                -3117.84
+              ]
+            },
+            "forward_passes": {
+              "estimate": -3541.86,
+              "ci95": [
+                -3901.81,
+                -3179.78
+              ]
+            },
+            "truncated": {
+              "estimate": -0.83,
+              "ci95": [
+                -2.8,
+                1.04
+              ]
+            }
+          }
+        }
+      }
+    },
+    "dev/arc_dev": {
+      "ARC": {
+        "selected": {
+          "questions": 299,
+          "archived_responses": 1196,
+          "masked": {
+            "acc": 71.91,
+            "acc_robust": 83.28,
+            "tokens": 228.19,
+            "forward_passes": 189.22,
+            "truncated": 0.0,
+            "think_full_block": 79.6,
+            "think_numbered_block": 74.58,
+            "think_has_parallel": 99.67,
+            "think_wellformed": 82.61,
+            "full_blocks": 238,
+            "numbered_blocks": 223,
+            "numbered_correct_count": 187,
+            "numbered_correct_percent": 62.54,
+            "model_forward_calls": 228.19,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.75,
+            "serial_block_distribution": {
+              "zero": 76,
+              "one": 223,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 223,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 85.7,
+            "acc_robust": 85.7,
+            "tokens": 473.66,
+            "forward_passes": 473.66,
+            "truncated": 0.0
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": -13.8,
+              "ci95": [
+                -18.81,
+                -8.78
+              ]
+            },
+            "acc_robust": {
+              "estimate": -2.42,
+              "ci95": [
+                -6.19,
+                1.34
+              ]
+            },
+            "tokens": {
+              "estimate": -245.47,
+              "ci95": [
+                -266.94,
+                -224.31
+              ]
+            },
+            "forward_passes": {
+              "estimate": -284.44,
+              "ci95": [
+                -306.19,
+                -262.91
+              ]
+            },
+            "truncated": {
+              "estimate": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            }
+          }
+        },
+        "base": {
+          "questions": 299,
+          "archived_responses": 1196,
+          "masked": {
+            "acc": 71.91,
+            "acc_robust": 83.28,
+            "tokens": 228.19,
+            "forward_passes": 189.22,
+            "truncated": 0.0,
+            "think_full_block": 79.6,
+            "think_numbered_block": 74.58,
+            "think_has_parallel": 99.67,
+            "think_wellformed": 82.61,
+            "full_blocks": 238,
+            "numbered_blocks": 223,
+            "numbered_correct_count": 187,
+            "numbered_correct_percent": 62.54,
+            "model_forward_calls": 228.19,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.75,
+            "serial_block_distribution": {
+              "zero": 76,
+              "one": 223,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 223,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 91.72,
+            "acc_robust": 91.72,
+            "tokens": 868.7,
+            "forward_passes": 868.7,
+            "truncated": 0.0
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": -19.82,
+              "ci95": [
+                -24.83,
+                -14.97
+              ]
+            },
+            "acc_robust": {
+              "estimate": -8.44,
+              "ci95": [
+                -12.37,
+                -4.77
+              ]
+            },
+            "tokens": {
+              "estimate": -640.51,
+              "ci95": [
+                -719.46,
+                -566.36
+              ]
+            },
+            "forward_passes": {
+              "estimate": -679.48,
+              "ci95": [
+                -758.56,
+                -605.11
+              ]
+            },
+            "truncated": {
+              "estimate": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            }
+          }
+        }
+      }
+    },
+    "dev/mmlu_pro_dev": {
+      "MMLUPRO": {
+        "selected": {
+          "questions": 999,
+          "archived_responses": 999,
+          "masked": {
+            "acc": 43.54,
+            "acc_robust": 49.45,
+            "tokens": 735.59,
+            "forward_passes": 675.95,
+            "truncated": 2.8,
+            "think_full_block": 77.68,
+            "think_numbered_block": 75.28,
+            "think_has_parallel": 99.1,
+            "think_wellformed": 81.08,
+            "full_blocks": 776,
+            "numbered_blocks": 752,
+            "numbered_correct_count": 388,
+            "numbered_correct_percent": 38.84,
+            "model_forward_calls": 735.62,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.75,
+            "serial_block_distribution": {
+              "zero": 247,
+              "one": 752,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 752,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 54.95,
+            "acc_robust": 55.16,
+            "tokens": 1978.86,
+            "forward_passes": 1978.86,
+            "truncated": 0.1
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": -11.41,
+              "ci95": [
+                -14.81,
+                -8.01
+              ]
+            },
+            "acc_robust": {
+              "estimate": -5.71,
+              "ci95": [
+                -9.01,
+                -2.3
+              ]
+            },
+            "tokens": {
+              "estimate": -1243.27,
+              "ci95": [
+                -1446.69,
+                -1037.59
+              ]
+            },
+            "forward_passes": {
+              "estimate": -1302.9,
+              "ci95": [
+                -1506.47,
+                -1096.46
+              ]
+            },
+            "truncated": {
+              "estimate": 2.7,
+              "ci95": [
+                1.7,
+                3.8
+              ]
+            }
+          }
+        },
+        "base": {
+          "questions": 999,
+          "archived_responses": 999,
+          "masked": {
+            "acc": 43.54,
+            "acc_robust": 49.45,
+            "tokens": 735.59,
+            "forward_passes": 675.95,
+            "truncated": 2.8,
+            "think_full_block": 77.68,
+            "think_numbered_block": 75.28,
+            "think_has_parallel": 99.1,
+            "think_wellformed": 81.08,
+            "full_blocks": 776,
+            "numbered_blocks": 752,
+            "numbered_correct_count": 388,
+            "numbered_correct_percent": 38.84,
+            "model_forward_calls": 735.62,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.75,
+            "serial_block_distribution": {
+              "zero": 247,
+              "one": 752,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 752,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 57.46,
+            "acc_robust": 58.06,
+            "tokens": 3651.23,
+            "forward_passes": 3651.23,
+            "truncated": 2.2
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": -13.91,
+              "ci95": [
+                -17.52,
+                -10.31
+              ]
+            },
+            "acc_robust": {
+              "estimate": -8.61,
+              "ci95": [
+                -12.01,
+                -5.21
+              ]
+            },
+            "tokens": {
+              "estimate": -2915.64,
+              "ci95": [
+                -3174.27,
+                -2657.37
+              ]
+            },
+            "forward_passes": {
+              "estimate": -2975.27,
+              "ci95": [
+                -3234.74,
+                -2715.6
+              ]
+            },
+            "truncated": {
+              "estimate": 0.6,
+              "ci95": [
+                -0.7,
+                1.9
+              ]
+            }
+          }
+        }
+      }
+    },
+    "frozen/apo": {
+      "AIME24": {
+        "selected": {
+          "questions": 30,
+          "archived_responses": 480,
+          "masked": {
+            "acc": 0.0,
+            "acc_robust": 0.0,
+            "tokens": 4586.33,
+            "forward_passes": 4483.47,
+            "truncated": 26.67,
+            "think_full_block": 70.0,
+            "think_numbered_block": 66.67,
+            "think_has_parallel": 100.0,
+            "think_wellformed": 70.0,
+            "full_blocks": 21,
+            "numbered_blocks": 20,
+            "numbered_correct_count": 0,
+            "numbered_correct_percent": 0.0,
+            "model_forward_calls": 4586.6,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.67,
+            "serial_block_distribution": {
+              "zero": 10,
+              "one": 20,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 20,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 5.0,
+            "acc_robust": 41.04,
+            "tokens": 10104.97,
+            "forward_passes": 10104.97,
+            "truncated": 25.83
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": -5.0,
+              "ci95": [
+                -10.21,
+                -1.25
+              ]
+            },
+            "acc_robust": {
+              "estimate": -41.04,
+              "ci95": [
+                -54.17,
+                -27.92
+              ]
+            },
+            "tokens": {
+              "estimate": -5518.64,
+              "ci95": [
+                -8029.83,
+                -2964.99
+              ]
+            },
+            "forward_passes": {
+              "estimate": -5621.51,
+              "ci95": [
+                -8141.28,
+                -3068.62
+              ]
+            },
+            "truncated": {
+              "estimate": 0.83,
+              "ci95": [
+                -17.5,
+                19.58
+              ]
+            }
+          }
+        }
+      },
+      "AIME25": {
+        "selected": {
+          "questions": 30,
+          "archived_responses": 480,
+          "masked": {
+            "acc": 6.67,
+            "acc_robust": 6.67,
+            "tokens": 1774.17,
+            "forward_passes": 1674.9,
+            "truncated": 6.67,
+            "think_full_block": 83.33,
+            "think_numbered_block": 73.33,
+            "think_has_parallel": 100.0,
+            "think_wellformed": 90.0,
+            "full_blocks": 25,
+            "numbered_blocks": 22,
+            "numbered_correct_count": 2,
+            "numbered_correct_percent": 6.67,
+            "model_forward_calls": 1774.23,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.73,
+            "serial_block_distribution": {
+              "zero": 8,
+              "one": 22,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 22,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 1.25,
+            "acc_robust": 36.88,
+            "tokens": 9946.19,
+            "forward_passes": 9946.19,
+            "truncated": 27.92
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": 5.42,
+              "ci95": [
+                -1.04,
+                14.79
+              ]
+            },
+            "acc_robust": {
+              "estimate": -30.21,
+              "ci95": [
+                -44.38,
+                -16.88
+              ]
+            },
+            "tokens": {
+              "estimate": -8172.03,
+              "ci95": [
+                -10244.63,
+                -5859.26
+              ]
+            },
+            "forward_passes": {
+              "estimate": -8271.29,
+              "ci95": [
+                -10355.73,
+                -5947.62
+              ]
+            },
+            "truncated": {
+              "estimate": -21.25,
+              "ci95": [
+                -35.83,
+                -6.25
+              ]
+            }
+          }
+        }
+      },
+      "AMC23": {
+        "selected": {
+          "questions": 40,
+          "archived_responses": 640,
+          "masked": {
+            "acc": 30.0,
+            "acc_robust": 30.0,
+            "tokens": 1349.08,
+            "forward_passes": 1256.75,
+            "truncated": 5.0,
+            "think_full_block": 87.5,
+            "think_numbered_block": 87.5,
+            "think_has_parallel": 100.0,
+            "think_wellformed": 95.0,
+            "full_blocks": 35,
+            "numbered_blocks": 35,
+            "numbered_correct_count": 11,
+            "numbered_correct_percent": 27.5,
+            "model_forward_calls": 1349.12,
+            "started_blocks_per_answer": 1.05,
+            "serial_blocks_per_answer": 0.88,
+            "serial_block_distribution": {
+              "zero": 5,
+              "one": 35,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 35,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 13.91,
+            "acc_robust": 77.66,
+            "tokens": 5603.35,
+            "forward_passes": 5603.35,
+            "truncated": 6.25
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": 16.09,
+              "ci95": [
+                3.59,
+                28.91
+              ]
+            },
+            "acc_robust": {
+              "estimate": -47.66,
+              "ci95": [
+                -62.03,
+                -32.66
+              ]
+            },
+            "tokens": {
+              "estimate": -4254.28,
+              "ci95": [
+                -5806.24,
+                -2555.81
+              ]
+            },
+            "forward_passes": {
+              "estimate": -4346.6,
+              "ci95": [
+                -5913.86,
+                -2641.53
+              ]
+            },
+            "truncated": {
+              "estimate": -1.25,
+              "ci95": [
+                -9.38,
+                8.28
+              ]
+            }
+          }
+        }
+      },
+      "MATH300": {
+        "selected": {
+          "questions": 316,
+          "archived_responses": 316,
+          "masked": {
+            "acc": 54.43,
+            "acc_robust": 54.75,
+            "tokens": 642.53,
+            "forward_passes": 582.94,
+            "truncated": 4.75,
+            "think_full_block": 93.04,
+            "think_numbered_block": 88.29,
+            "think_has_parallel": 99.68,
+            "think_wellformed": 94.62,
+            "full_blocks": 294,
+            "numbered_blocks": 279,
+            "numbered_correct_count": 161,
+            "numbered_correct_percent": 50.95,
+            "model_forward_calls": 642.58,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.88,
+            "serial_block_distribution": {
+              "zero": 37,
+              "one": 279,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 279,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 31.96,
+            "acc_robust": 86.71,
+            "tokens": 2469.72,
+            "forward_passes": 2469.72,
+            "truncated": 1.27
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": 22.47,
+              "ci95": [
+                16.45,
+                28.48
+              ]
+            },
+            "acc_robust": {
+              "estimate": -31.96,
+              "ci95": [
+                -37.67,
+                -26.27
+              ]
+            },
+            "tokens": {
+              "estimate": -1827.19,
+              "ci95": [
+                -2187.57,
+                -1470.0
+              ]
+            },
+            "forward_passes": {
+              "estimate": -1886.78,
+              "ci95": [
+                -2246.52,
+                -1528.71
+              ]
+            },
+            "truncated": {
+              "estimate": 3.48,
+              "ci95": [
+                0.95,
+                6.01
+              ]
+            }
+          }
+        }
+      }
+    },
+    "frozen/arc": {
+      "ARC": {
+        "selected": {
+          "questions": 1172,
+          "archived_responses": 1172,
+          "masked": {
+            "acc": 75.34,
+            "acc_robust": 85.15,
+            "tokens": 226.79,
+            "forward_passes": 187.1,
+            "truncated": 0.09,
+            "think_full_block": 81.31,
+            "think_numbered_block": 77.13,
+            "think_has_parallel": 99.83,
+            "think_wellformed": 82.94,
+            "full_blocks": 953,
+            "numbered_blocks": 904,
+            "numbered_correct_count": 778,
+            "numbered_correct_percent": 66.38,
+            "model_forward_calls": 226.79,
+            "started_blocks_per_answer": 1.0,
+            "serial_blocks_per_answer": 0.77,
+            "serial_block_distribution": {
+              "zero": 268,
+              "one": 904,
+              "two_or_more": 0
+            },
+            "max_width_per_block_answer": 2.0,
+            "paths_per_block": 2.0,
+            "max_width_distribution": {
+              "two": 904,
+              "three": 0,
+              "four_or_more": 0
+            }
+          },
+          "ordinary": {
+            "acc": 85.67,
+            "acc_robust": 85.67,
+            "tokens": 523.22,
+            "forward_passes": 523.22,
+            "truncated": 0.0
+          },
+          "paired_delta": {
+            "acc": {
+              "estimate": -10.32,
+              "ci95": [
+                -12.88,
+                -7.76
+              ]
+            },
+            "acc_robust": {
+              "estimate": -0.51,
+              "ci95": [
+                -2.56,
+                1.62
+              ]
+            },
+            "tokens": {
+              "estimate": -296.42,
+              "ci95": [
+                -317.67,
+                -277.27
+              ]
+            },
+            "forward_passes": {
+              "estimate": -336.12,
+              "ci95": [
+                -357.33,
+                -316.77
+              ]
+            },
+            "truncated": {
+              "estimate": 0.09,
+              "ci95": [
+                0.0,
+                0.26
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
