@@ -1,0 +1,26 @@
+{
+  "cutover_time_msk": "2026-10-12 17:42",
+  "original_generator_commit": "d3ec214",
+  "repetition_guard_commit": "48d02c0",
+  "runner_failure_check_commit": "2b262f9",
+  "rule": {
+    "min_generated_tokens": 256,
+    "min_period_tokens": 12,
+    "max_period_tokens": 128,
+    "consecutive_identical_spans": 4,
+    "verdict": "truncated=true, stop_reason=repetition",
+    "tokens_and_model_forward_calls": "actual work before early stop"
+  },
+  "completed_rows_before_guard": {
+    "dev/parallel/mmlu_pro_dev": 810,
+    "frozen/parallel/limo": 233,
+    "frozen/parallel/mmlu_pro": 957,
+    "frozen/parallel/apo": 90
+  },
+  "already_completed_before_guard": [
+    "dev/parallel/gsm8k_dev",
+    "dev/parallel/arc_dev",
+    "dev/parallel/math_dev"
+  ],
+  "interruption_note": "Raw JSONL rows were flushed and copied to the second owned PVC before restart. Three partial frozen benchmarks were incorrectly marked DONE by the previous runner after SIGTERM; false DONE files were quarantined and the runner now requires successful generation and exact row counts before scoring or DONE."
+}
