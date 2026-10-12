@@ -5,6 +5,13 @@ set -euo pipefail
 
 stage=${1:?dev or frozen}
 case "$stage" in dev|frozen) ;; *) exit 2 ;; esac
+only_bench=${EXP21_ONLY_BENCHMARK:-}
+only_gpu=${EXP21_ONLY_GPU:-}
+if test -n "$only_bench"; then
+    test "$stage" = frozen
+    case "$only_bench" in apo|arc|mmlu_pro|limo|ifeval) ;; *) exit 2 ;; esac
+    case "$only_gpu" in 0|1|2|3) ;; *) exit 2 ;; esac
+fi
 : "${EXP21_COMMIT:?record the committed code revision}"
 root=${EXP21_FULL_ROOT:-/work/exp21-full-parallel-pair}
 backup=${EXP21_FULL_BACKUP:-/checkpoints/exp21-full-parallel-pair-backup}
@@ -17,8 +24,8 @@ python_extra=${EXP21_PYTHON_EXTRA:-}
 test -s "$model/config.json"
 test -s "$root/input/manifest.json"
 mkdir -p "$root/output/$stage" "$root/logs" "$backup"
-exec 9>"$root/${stage}.lock"
-flock -n 9 || { echo "another $stage runner holds the lock" >&2; exit 1; }
+exec 9>"$root/${stage}${only_bench:+-$only_bench}.lock"
+flock -n 9 || { echo "another $stage ${only_bench:-stage} runner holds the lock" >&2; exit 1; }
 gpu_count=$(nvidia-smi --list-gpus | wc -l)
 case "$gpu_count" in 1|4) ;; *) echo "expected one or four owned GPUs, got $gpu_count" >&2; exit 1 ;; esac
 if test "$venv" != system; then source "$venv/bin/activate"; fi
@@ -28,7 +35,9 @@ export EXP21_TOKENIZER="$model" SCORE_IFEVAL_SEED=0 EXP21_LIGHT_SCORE=1 NLTK_DAT
 cd "$repo/verl"
 
 run_one() {
-    local bench=$1 input out count raw rows blocks
+    local bench=$1 input out count raw rows blocks lockfd
+    exec {lockfd}>"$root/${stage}-${bench}.run.lock"
+    flock "$lockfd"
     input=$root/input/$stage/parallel/$bench.parquet
     out=$root/output/$stage/parallel/$bench
     test -s "$input"
@@ -94,13 +103,16 @@ worker_all() {
 }
 
 snapshot() {
+    local snapshot_dir=$root/output/$stage
+    if test -n "$only_bench"; then snapshot_dir=$snapshot_dir/parallel/$only_bench; fi
+    mkdir -p "$snapshot_dir"
     while true; do
-        find "$root/output/$stage" -type f -name raw.jsonl -print0 | while IFS= read -r -d '' raw; do
+        find "$snapshot_dir" -type f -name raw.jsonl -print0 | while IFS= read -r -d '' raw; do
             rel=${raw#"$root/output/"}
             target=$backup/snapshots/${rel%/*}
             mkdir -p "$target"
-            cp "$raw" "$target/raw.jsonl.tmp"
-            mv "$target/raw.jsonl.tmp" "$target/raw.jsonl"
+            cp "$raw" "$target/raw.jsonl.tmp.$$"
+            mv "$target/raw.jsonl.tmp.$$" "$target/raw.jsonl"
         done
         echo "$(date -Is) snapshot complete"
         sleep 180
@@ -111,7 +123,9 @@ snapshot >> "$root/logs/${stage}-snapshot.log" 2>&1 &
 snapshot_pid=$!
 trap 'kill "$snapshot_pid" 2>/dev/null || true' EXIT
 status=0
-if test "$gpu_count" -eq 1; then
+if test -n "$only_bench"; then
+    CUDA_VISIBLE_DEVICES=$only_gpu run_one "$only_bench" > "$root/logs/${stage}-${only_bench}-gpu${only_gpu}.log" 2>&1 || status=1
+elif test "$gpu_count" -eq 1; then
     CUDA_VISIBLE_DEVICES=0 worker_all > "$root/logs/${stage}-gpu0.log" 2>&1 || status=1
 else
     CUDA_VISIBLE_DEVICES=0 worker 0 > "$root/logs/${stage}-gpu0.log" 2>&1 & p0=$!
@@ -123,6 +137,10 @@ fi
 if test "$status" -ne 0; then
     echo "$(date -Is) FAILED $stage; inspect worker logs and resume" | tee -a "$root/progress.log"
     exit 1
+fi
+if test -n "$only_bench"; then
+    echo "$(date -Is) BENCH_DONE $stage/$only_bench" | tee -a "$root/progress.log"
+    exit 0
 fi
 printf '%s\n' "$(date -Is) commit=$EXP21_COMMIT" > "$root/${stage^^}_DONE"
 echo "$(date -Is) STAGE_DONE $stage" | tee -a "$root/progress.log"
