@@ -1,0 +1,84 @@
+{
+  "protocol": "Parallel inside thinking, masked greedy pass@1; existing plain results reused",
+  "suites": {
+    "dev": {
+      "gsm8k_dev": {
+        "original_rows": 1184,
+        "unique_questions": 296,
+        "sources": {
+          "APO_GSM8K_DEV": 296
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/dev/parallel/gsm8k_dev.parquet"
+      },
+      "math_dev": {
+        "original_rows": 964,
+        "unique_questions": 482,
+        "sources": {
+          "APO_MATH_DEV": 482
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/dev/parallel/math_dev.parquet"
+      },
+      "arc_dev": {
+        "original_rows": 1196,
+        "unique_questions": 299,
+        "sources": {
+          "APO_ARC": 299
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/dev/parallel/arc_dev.parquet"
+      },
+      "mmlu_pro_dev": {
+        "original_rows": 999,
+        "unique_questions": 999,
+        "sources": {
+          "APO_MMLUPRO": 999
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/dev/parallel/mmlu_pro_dev.parquet"
+      }
+    },
+    "frozen": {
+      "apo": {
+        "original_rows": 1916,
+        "unique_questions": 416,
+        "sources": {
+          "APO_MATH300": 316,
+          "APO_AMC23": 40,
+          "APO_AIME25": 30,
+          "APO_AIME24": 30
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/frozen/parallel/apo.parquet"
+      },
+      "arc": {
+        "original_rows": 1172,
+        "unique_questions": 1172,
+        "sources": {
+          "APO_ARC": 1172
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/frozen/parallel/arc.parquet"
+      },
+      "mmlu_pro": {
+        "original_rows": 2000,
+        "unique_questions": 2000,
+        "sources": {
+          "APO_MMLUPRO": 2000
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/frozen/parallel/mmlu_pro.parquet"
+      },
+      "limo": {
+        "original_rows": 3268,
+        "unique_questions": 817,
+        "sources": {
+          "APO_LIMO": 817
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/frozen/parallel/limo.parquet"
+      },
+      "ifeval": {
+        "original_rows": 541,
+        "unique_questions": 541,
+        "sources": {
+          "APO_IFEVAL": 541
+        },
+        "path": "results/21-qwen3-0.6b-multiverse/eval_runs/full_parallel_greedy/input/frozen/parallel/ifeval.parquet"
+      }
+    }
+  }
+}
