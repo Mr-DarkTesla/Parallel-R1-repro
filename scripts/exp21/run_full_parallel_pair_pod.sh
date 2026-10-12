@@ -40,8 +40,8 @@ run_one() {
     flock "$lockfd"
     input=$root/input/$stage/parallel/$bench.parquet
     out=$root/output/$stage/parallel/$bench
-    test -s "$input"
-    mkdir -p "$out"
+    test -s "$input" || return 1
+    mkdir -p "$out" || return 1
     count=$(python - "$input" <<'PY'
 import pandas as pd, sys
 print(len(pd.read_parquet(sys.argv[1])))
@@ -51,26 +51,27 @@ PY
     rows=$out/score_rows.jsonl
     blocks=$out/block_rows.jsonl
     if test -s "$out/DONE"; then
-        test "$(wc -l < "$raw")" -eq "$count"
-        test "$(wc -l < "$rows")" -eq "$count"
-        test "$(wc -l < "$blocks")" -eq "$count"
+        test "$(wc -l < "$raw")" -eq "$count" || return 1
+        test "$(wc -l < "$rows")" -eq "$count" || return 1
+        test "$(wc -l < "$blocks")" -eq "$count" || return 1
         return
     fi
     echo "$(date -Is) START $stage/parallel/$bench count=$count budget=16384 gpu=$CUDA_VISIBLE_DEVICES" | tee -a "$root/progress.log"
-    python "$code/exp21/generate_masked_multiverse.py" "$model" "$input" "$raw" "$count" 16384 thinking greedy >> "$out/generate.log" 2>&1
-    test "$(wc -l < "$raw")" -eq "$count"
-    python "$code/bench/score.py" "$raw" "$input" "$out/score.json.tmp" "$rows.tmp" >> "$out/score.log" 2>&1
-    mv "$rows.tmp" "$rows"
-    mv "$out/score.json.tmp" "$out/score.json"
-    python "$code/exp21/score_thinking_blocks.py" "$raw" "$rows" "$out/blocks.json.tmp" "$blocks.tmp" masked >> "$out/score.log" 2>&1
-    mv "$blocks.tmp" "$blocks"
-    mv "$out/blocks.json.tmp" "$out/blocks.json"
-    test "$(wc -l < "$rows")" -eq "$count"
-    test "$(wc -l < "$blocks")" -eq "$count"
-    cp "$raw.meta.json" "$out/generation_meta.json"
-    printf '%s\n' "$(date -Is)" > "$out/DONE"
-    mkdir -p "$backup/$stage/parallel/$bench"
-    cp "$raw" "$rows" "$blocks" "$out/score.json" "$out/blocks.json" "$out/generation_meta.json" "$out/DONE" "$backup/$stage/parallel/$bench/"
+    python "$code/exp21/generate_masked_multiverse.py" "$model" "$input" "$raw" "$count" 16384 thinking greedy >> "$out/generate.log" 2>&1 || return 1
+    test "$(wc -l < "$raw")" -eq "$count" || return 1
+    python "$code/bench/score.py" "$raw" "$input" "$out/score.json.tmp" "$rows.tmp" >> "$out/score.log" 2>&1 || return 1
+    mv "$rows.tmp" "$rows" || return 1
+    mv "$out/score.json.tmp" "$out/score.json" || return 1
+    python "$code/exp21/score_thinking_blocks.py" "$raw" "$rows" "$out/blocks.json.tmp" "$blocks.tmp" masked >> "$out/score.log" 2>&1 || return 1
+    mv "$blocks.tmp" "$blocks" || return 1
+    mv "$out/blocks.json.tmp" "$out/blocks.json" || return 1
+    test "$(wc -l < "$rows")" -eq "$count" || return 1
+    test "$(wc -l < "$blocks")" -eq "$count" || return 1
+    cp "$raw.meta.json" "$out/generation_meta.json" || return 1
+    mkdir -p "$backup/$stage/parallel/$bench" || return 1
+    cp "$raw" "$rows" "$blocks" "$out/score.json" "$out/blocks.json" "$out/generation_meta.json" "$backup/$stage/parallel/$bench/" || return 1
+    printf '%s\n' "$(date -Is)" > "$out/DONE" || return 1
+    cp "$out/DONE" "$backup/$stage/parallel/$bench/DONE" || return 1
     echo "$(date -Is) DONE $stage/parallel/$bench" | tee -a "$root/progress.log"
 }
 
@@ -78,27 +79,27 @@ worker() {
     local group=$1
     if test "$stage" = frozen; then
         case "$group" in
-            0) run_one apo ;;
-            1) run_one limo ;;
-            2) run_one arc; run_one ifeval ;;
-            3) run_one mmlu_pro ;;
+            0) run_one apo || return 1 ;;
+            1) run_one limo || return 1 ;;
+            2) run_one arc || return 1; run_one ifeval || return 1 ;;
+            3) run_one mmlu_pro || return 1 ;;
         esac
         return
     fi
     case "$group" in
-        0) run_one gsm8k_dev ;;
-        1) run_one math_dev ;;
-        2) run_one arc_dev ;;
-        3) run_one mmlu_pro_dev ;;
+        0) run_one gsm8k_dev || return 1 ;;
+        1) run_one math_dev || return 1 ;;
+        2) run_one arc_dev || return 1 ;;
+        3) run_one mmlu_pro_dev || return 1 ;;
     esac
 }
 
 worker_all() {
     local bench
     if test "$stage" = dev; then
-        for bench in gsm8k_dev math_dev arc_dev mmlu_pro_dev; do run_one "$bench"; done
+        for bench in gsm8k_dev math_dev arc_dev mmlu_pro_dev; do run_one "$bench" || return 1; done
     else
-        for bench in apo arc mmlu_pro limo ifeval; do run_one "$bench"; done
+        for bench in apo arc mmlu_pro limo ifeval; do run_one "$bench" || return 1; done
     fi
 }
 
