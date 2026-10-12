@@ -1,0 +1,143 @@
+{
+  "verified_at": 1791743609.7484858,
+  "runs": [
+    {
+      "run": "work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width",
+      "status": {
+        "state": "training",
+        "step": 100,
+        "steps": 500,
+        "finite": true,
+        "optimizer_step": true,
+        "backbone_update_l2": 7.583040384654622e-06,
+        "max_replay_logp_drift": 0.0001735687255859375
+      },
+      "remaining_checkpoints": [
+        "checkpoint-0032",
+        "checkpoint-0064"
+      ],
+      "leases": {
+        "leases": {
+          "64": {
+            "corrected-fullwidth8-resume-pending-confirmation": {
+              "state": "active",
+              "created": 1791743569.5442498
+            }
+          },
+          "32": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.5492418
+            }
+          },
+          "128": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.556306
+            }
+          },
+          "256": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.5619812
+            }
+          },
+          "500": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.5668285
+            }
+          }
+        }
+      },
+      "validation_dirs": [
+        "validation-0000",
+        "validation-0004",
+        "validation-0008",
+        "validation-0016",
+        "validation-0032",
+        "validation-0064"
+      ],
+      "metrics_exists": true,
+      "traces": [
+        "traces-rank-1.jsonl",
+        "traces-rank-4.jsonl",
+        "traces-rank-3.jsonl",
+        "traces-rank-0.jsonl",
+        "traces-rank-2.jsonl",
+        "traces-rank-7.jsonl",
+        "traces-rank-5.jsonl",
+        "traces-rank-6.jsonl"
+      ]
+    },
+    {
+      "run": "work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run",
+      "status": {
+        "state": "training",
+        "step": 65,
+        "steps": 500,
+        "finite": true,
+        "optimizer_step": true,
+        "backbone_update_l2": 5.521847944285825e-06,
+        "max_replay_logp_drift": 9.72747802734375e-05
+      },
+      "remaining_checkpoints": [
+        "checkpoint-0032",
+        "checkpoint-0064"
+      ],
+      "leases": {
+        "leases": {
+          "64": {
+            "corrected-fullwidth8-resume-pending-confirmation": {
+              "state": "active",
+              "created": 1791743569.5712879
+            }
+          },
+          "32": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.575086
+            }
+          },
+          "128": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.5789943
+            }
+          },
+          "256": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.5831513
+            }
+          },
+          "500": {
+            "scheduled-MATH500-full500": {
+              "state": "active",
+              "created": 1791743569.5870924
+            }
+          }
+        }
+      },
+      "validation_dirs": [
+        "validation-0000",
+        "validation-0004",
+        "validation-0008",
+        "validation-0016",
+        "validation-0032",
+        "validation-0064"
+      ],
+      "metrics_exists": true,
+      "traces": [
+        "traces-rank-2.jsonl",
+        "traces-rank-0.jsonl",
+        "traces-rank-3.jsonl",
+        "traces-rank-6.jsonl",
+        "traces-rank-4.jsonl",
+        "traces-rank-1.jsonl",
+        "traces-rank-5.jsonl",
+        "traces-rank-7.jsonl"
+      ]
+    }
+  ]
+}

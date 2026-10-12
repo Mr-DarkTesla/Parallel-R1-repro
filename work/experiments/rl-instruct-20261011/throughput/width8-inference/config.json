@@ -1,0 +1,20 @@
+{
+  "models": [
+    {"name": "baseline", "path": "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/instruct-full-20261011/runs/epoch1/final"},
+    {"name": "r1-step32", "path": "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/rl-instruct-20261011/direct-full500/r1-repair/run/checkpoint-0032/hf"},
+    {"name": "r2-step32", "path": "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/rl-instruct-20261011/direct-full500/runs/strong_width/checkpoint-0032/hf"}
+  ],
+  "questions": "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/rl-instruct-20261011/evaluations/questions-500.jsonl",
+  "system": "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/instruct-full-20261011/system.txt",
+  "sample_count": 2,
+  "seed_base": 42161011,
+  "response_budget": 4096,
+  "path_budget": 768,
+  "max_context": 16384,
+  "max_logp_delta": 0.01,
+  "mean_logp_delta": 0.002,
+  "p95_logp_delta": 0.005,
+  "protocol": "separate-width8-inference-FP32",
+  "primary_runtime_unchanged": true,
+  "queue_predecessors": "primary MATH500 baseline/R1/R2step32 and new deep126; owner-controlled retained main8 only"
+}

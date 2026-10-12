@@ -1,0 +1,1881 @@
+{
+  "passed": true,
+  "strict_reference_pass": true,
+  "numerical_acceptance": {
+    "maximum_limit": 0.01,
+    "mean_limit": 0.002,
+    "p95_limit": 0.005,
+    "justification": "Root-approved FP32 numerical gate: maximum1% initial probability-ratio error vs PPO20%clip; mathematical context/mask/action parity independently checked"
+  },
+  "phase_quantiles": {
+    "main": {
+      "tokens": 170,
+      "mean": 6.731818757543806e-06,
+      "p95": 3.0517578125e-05,
+      "maximum": 4.9591064453125e-05
+    },
+    "path": {
+      "tokens": 480,
+      "mean": 6.210803803696763e-06,
+      "p95": 3.4332275390625e-05,
+      "maximum": 0.00011444091796875
+    },
+    "summary": {
+      "tokens": 140,
+      "mean": 3.910064606316155e-06,
+      "p95": 1.9264232832938433e-05,
+      "maximum": 3.62396240234375e-05
+    },
+    "width": {
+      "tokens": 40,
+      "mean": 3.337860050578456e-07,
+      "p95": 3.814697265625e-06,
+      "maximum": 5.7220458984375e-06
+    }
+  },
+  "mean_abs_logp_delta": 5.646211775456322e-06,
+  "p95_abs_logp_delta": 3.0517578125e-05,
+  "ratio_error_over_1percent_count": 0,
+  "model": "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/base-format-20261010/runs/production/final",
+  "dtype": "fp32",
+  "autocast_bf16": false,
+  "device": "cuda",
+  "structural_cases": [
+    {
+      "tokens": 217,
+      "sampled": 166,
+      "forced": 32,
+      "rounds": 4,
+      "width": 2,
+      "F": 138,
+      "T": 166
+    },
+    {
+      "tokens": 257,
+      "sampled": 194,
+      "forced": 44,
+      "rounds": 4,
+      "width": 3,
+      "F": 138,
+      "T": 194
+    },
+    {
+      "tokens": 297,
+      "sampled": 222,
+      "forced": 56,
+      "rounds": 4,
+      "width": 4,
+      "F": 138,
+      "T": 222
+    },
+    {
+      "tokens": 377,
+      "sampled": 278,
+      "forced": 80,
+      "rounds": 4,
+      "width": 6,
+      "F": 138,
+      "T": 278
+    },
+    {
+      "tokens": 457,
+      "sampled": 334,
+      "forced": 104,
+      "rounds": 4,
+      "width": 8,
+      "F": 138,
+      "T": 334
+    }
+  ],
+  "call_parity": [
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.4332275390625e-05,
+        7.62939453125e-06,
+        5.7220458984375e-06,
+        1.9073486328125e-06,
+        9.5367431640625e-06,
+        5.7220458984375e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.9073486328125e-05,
+        2.6702880859375e-05,
+        3.814697265625e-06,
+        3.4332275390625e-05,
+        3.814697265625e-06,
+        1.9073486328125e-05,
+        2.6702880859375e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 0.00011444091796875,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        2.288818359375e-05,
+        3.814697265625e-06,
+        0.00011444091796875,
+        0.0,
+        1.52587890625e-05,
+        7.62939453125e-06,
+        0.0,
+        2.6702880859375e-05,
+        3.4332275390625e-05,
+        1.33514404296875e-05,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        2.6702880859375e-05,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.9073486328125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        7.62939453125e-06,
+        1.71661376953125e-05,
+        0.0,
+        0.0,
+        7.62939453125e-06,
+        1.9073486328125e-05,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.0517578125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.0517578125e-05,
+        1.1444091796875e-05,
+        1.9073486328125e-06,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.9073486328125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 4.1961669921875e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        4.1961669921875e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.1444091796875e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.1444091796875e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 2.288818359375e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        2.288818359375e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.6702880859375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.52587890625e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.6702880859375e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 3.814697265625e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-05
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 2,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 6,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.4332275390625e-05,
+        7.62939453125e-06,
+        5.7220458984375e-06,
+        1.9073486328125e-06,
+        9.5367431640625e-06,
+        5.7220458984375e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 4.9591064453125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        2.288818359375e-05,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        4.9591064453125e-05,
+        1.1444091796875e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 5.7220458984375e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        4.1961669921875e-05,
+        4.9591064453125e-05,
+        0.0,
+        2.6702880859375e-05,
+        1.9073486328125e-05,
+        3.814697265625e-05,
+        3.814697265625e-05,
+        0.0,
+        3.0517578125e-05,
+        4.1961669921875e-05,
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        0.0,
+        5.7220458984375e-05,
+        9.5367431640625e-06,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.62396240234375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.71661376953125e-05,
+        1.71661376953125e-05,
+        3.62396240234375e-05,
+        0.0,
+        7.62939453125e-06,
+        3.4332275390625e-05,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.0517578125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        5.7220458984375e-06,
+        1.9073486328125e-06,
+        3.0517578125e-05,
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        1.1444091796875e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.9073486328125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 2.288818359375e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        1.9073486328125e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.288818359375e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 1.9073486328125e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.1444091796875e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.1444091796875e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 3,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 6,
+      "per_target_abs_logp_deltas": [
+        7.62939453125e-06,
+        7.62939453125e-06,
+        0.0,
+        7.62939453125e-06,
+        3.814697265625e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.4332275390625e-05,
+        7.62939453125e-06,
+        5.7220458984375e-06,
+        1.9073486328125e-06,
+        9.5367431640625e-06,
+        5.7220458984375e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        3.4332275390625e-05,
+        7.62939453125e-06,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 4.9591064453125e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        2.6702880859375e-05,
+        1.52587890625e-05,
+        3.814697265625e-06,
+        2.288818359375e-05,
+        1.1444091796875e-05,
+        2.288818359375e-05,
+        2.6702880859375e-05,
+        3.814697265625e-06,
+        2.288818359375e-05,
+        3.0517578125e-05,
+        2.288818359375e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        4.9591064453125e-05,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.6702880859375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        2.47955322265625e-05,
+        1.9073486328125e-05,
+        3.814697265625e-06,
+        0.0,
+        3.814697265625e-06,
+        2.288818359375e-05,
+        2.6702880859375e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.86102294921875e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.52587890625e-05,
+        2.86102294921875e-05,
+        2.6702880859375e-05,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        2.288818359375e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.6702880859375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        2.6702880859375e-05,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        1.1444091796875e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.4332275390625e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        2.288818359375e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 4.9591064453125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.9073486328125e-05,
+        0.0,
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        0.0,
+        4.9591064453125e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.288818359375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06,
+        3.814697265625e-06,
+        2.288818359375e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.288818359375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.288818359375e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 4,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 6,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.4332275390625e-05,
+        7.62939453125e-06,
+        5.7220458984375e-06,
+        1.9073486328125e-06,
+        9.5367431640625e-06,
+        5.7220458984375e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 5.7220458984375e-06,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        5.7220458984375e-06,
+        0.0
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.0517578125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        1.1444091796875e-05,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        7.62939453125e-06,
+        7.62939453125e-06,
+        3.0517578125e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 4.9591064453125e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        1.9073486328125e-05,
+        3.4332275390625e-05,
+        3.814697265625e-06,
+        4.57763671875e-05,
+        1.9073486328125e-05,
+        2.09808349609375e-05,
+        7.62939453125e-06,
+        0.0,
+        2.6702880859375e-05,
+        1.1444091796875e-05,
+        1.71661376953125e-05,
+        0.0,
+        0.0,
+        0.0,
+        4.9591064453125e-05,
+        7.62939453125e-06,
+        9.5367431640625e-06
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        1.1444091796875e-05,
+        3.814697265625e-06,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 4.1961669921875e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        4.1961669921875e-05,
+        3.0517578125e-05,
+        3.814697265625e-06,
+        1.9073486328125e-05,
+        0.0,
+        3.814697265625e-06,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.52587890625e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06,
+        0.0
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 2.6702880859375e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.6702880859375e-05,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05,
+        1.1444091796875e-05,
+        1.9073486328125e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        7.62939453125e-06
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 4.1961669921875e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        4.1961669921875e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 1.9073486328125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.9073486328125e-05,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 1.52587890625e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 6,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 6,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        7.62939453125e-06,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.4332275390625e-05,
+        7.62939453125e-06,
+        5.7220458984375e-06,
+        1.9073486328125e-06,
+        9.5367431640625e-06,
+        5.7220458984375e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 4.1961669921875e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        7.62939453125e-06,
+        7.62939453125e-06,
+        3.814697265625e-06,
+        3.4332275390625e-05,
+        7.62939453125e-06,
+        4.1961669921875e-05,
+        1.9073486328125e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 8.20159912109375e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        5.53131103515625e-05,
+        1.52587890625e-05,
+        0.0,
+        7.62939453125e-06,
+        1.9073486328125e-05,
+        3.24249267578125e-05,
+        7.62939453125e-06,
+        0.0,
+        3.0517578125e-05,
+        1.52587890625e-05,
+        4.38690185546875e-05,
+        0.0,
+        0.0,
+        0.0,
+        6.866455078125e-05,
+        3.62396240234375e-05,
+        8.20159912109375e-05
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.6702880859375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.52587890625e-05,
+        3.814697265625e-06,
+        1.52587890625e-05,
+        0.0,
+        0.0,
+        2.6702880859375e-05,
+        2.288818359375e-05
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 2.09808349609375e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        2.09808349609375e-05,
+        0.0,
+        5.7220458984375e-06,
+        7.62939453125e-06,
+        0.0,
+        3.814697265625e-06,
+        1.1444091796875e-05
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.4332275390625e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.4332275390625e-05
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 2.288818359375e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        1.52587890625e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0,
+        2.288818359375e-05
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        7.62939453125e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        0.0
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 1.1444091796875e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.1444091796875e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06,
+        7.62939453125e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.0517578125e-05,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        1.1444091796875e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.0517578125e-05
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "width",
+      "target_count": 2,
+      "maximum_abs_logp_delta": 0.0,
+      "decoder_forwards": 2,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 3.814697265625e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.814697265625e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "path",
+      "target_count": 17,
+      "maximum_abs_logp_delta": 3.0517578125e-05,
+      "decoder_forwards": 17,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.0517578125e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.52587890625e-05
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "summary",
+      "target_count": 7,
+      "maximum_abs_logp_delta": 7.62939453125e-06,
+      "decoder_forwards": 7,
+      "per_target_abs_logp_deltas": [
+        3.814697265625e-06,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        7.62939453125e-06
+      ]
+    },
+    {
+      "width": 8,
+      "phase": "main",
+      "target_count": 6,
+      "maximum_abs_logp_delta": 1.9073486328125e-05,
+      "decoder_forwards": 6,
+      "per_target_abs_logp_deltas": [
+        0.0,
+        3.814697265625e-06,
+        3.814697265625e-06,
+        1.9073486328125e-05,
+        3.814697265625e-06,
+        3.814697265625e-06
+      ]
+    }
+  ],
+  "maximum_abs_logp_delta": 0.00011444091796875,
+  "tolerance": 0.0003,
+  "total_calls": 105,
+  "actual_decoder_forward_proof": true,
+  "matmul_precision": "highest",
+  "allow_tf32": false,
+  "maximum_initial_ratio_error": 0.00011444746658041009,
+  "training_launch_ready": false,
+  "remaining": "Distributed actor and weight synchronization smoke still required",
+  "source_sha256": {
+    "structured_replay.py": "f1d731572190d978b980a2e91e4ed9e34f470e30be6c1177a13673ec93536a1e",
+    "source/parallel_structure.py": "f9b26772090c5d8af0bff54f26369da5e26f850e79d9261b6f0da5531000881f",
+    "audit_fp32_full.py": "b253b978d423ca4877d95d82015ae7ea9f458e7c8ce5aa3b40b95eb1908f58a2"
+  }
+}

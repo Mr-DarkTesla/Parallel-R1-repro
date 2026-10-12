@@ -1,0 +1,19 @@
+"""Bind exact stage16→500total continuation; batch32 means32prompts×4rollouts (128 responses; historic32×8 differed)."""
+import argparse,json,hashlib
+from pathlib import Path
+
+def sha(p):
+ h=hashlib.sha256()
+ with Path(p).open('rb') as f:
+  for block in iter(lambda:f.read(8*1024*1024),b''):h.update(block)
+ return h.hexdigest()
+p=argparse.ArgumentParser();p.add_argument('--mode',choices=['strong_width','forward_only'],required=True);p.add_argument('--from-step',type=int,default=16);p.add_argument('--data-manifest',required=True);p.add_argument('--initial-sft-validation',required=True);p.add_argument('--batch-proof',required=True);a=p.parse_args();assert a.from_step==16,'Matched500 continuations begin exact16 checkpoint';here=Path(__file__).resolve().parent;base=here.parent;root=next(x for x in base.parents if (x/'verl').is_dir() and (x/'exps').is_dir());stage_config=base/'production-configs'/(a.mode+'-stage16.json');cfg=json.loads(stage_config.read_text());run=Path(cfg['output']);assert json.loads((run/'result.json').read_text())['completed'];checkpoint=run/'checkpoint-0016';assert json.loads((checkpoint/'complete.json').read_text())['step']==16
+baseline=run/'validation-0000/summary.json';selected=run/'validation-0016/summary.json';assert json.loads(baseline.read_text())['completed']==32 and json.loads(selected.read_text())['completed']==32
+files=[p for p in checkpoint.rglob('*') if p.is_file() and not p.name.startswith('._')];files += [baseline,selected,stage_config,run/'result.json'];manifest=here/(a.mode+'-resume16-manifest.json');assert not manifest.exists();manifest.write_text(json.dumps(dict(checkpoint=str(checkpoint),files={str(p):sha(p) for p in files}),indent=2)+'\n')
+data_manifest=Path(a.data_manifest); data=json.loads(data_manifest.read_text()); assert data['passed']; proof=Path(a.batch_proof); assert json.loads(proof.read_text())['passed'] and json.loads(proof.read_text())['actual_8GPU_memory_pass']; new_baseline=Path(a.initial_sft_validation); assert json.loads(new_baseline.read_text())['completed']==128
+cfg['replay']=str(here/'runner/structured_replay.py');cfg['batch_decoder']=str(here/'runner/microbatch_decoder.py')
+cfg['sealed_inputs'][str(manifest.relative_to(root))]=str(manifest);cfg.update(resume=str(checkpoint),resume_manifest=str(manifest),resume_manifest_sha256=sha(manifest),steps=500,checkpoint_steps=[32,64,128,256,500],output=str(base/'production-runs'/(a.mode+'-continue500')),initial_sft_validation=str(new_baseline),prompts_per_rank=4,train=data['train'],val=data['val'],long_batch_proof=str(proof),long_batch_proof_sha256=sha(proof),total_steps_not_additional=True,global_batch=dict(prompts_per_step=32,rollouts_per_prompt=4,total_rollouts_per_step=128,historical_prompts_per_step=32,historical_rollouts_per_prompt=8,historical_total_rollouts_per_step=256),data_reuse=dict(train_prompts=1024,prompt_exposures_per_step=32,additional_prompt_exposures=484*32,additional_curriculum_passes=484*32/1024),continuation_policy='Continue to500 autonomously while optimizer/replay/memory integrity passes; persist early cleanval checkpoints and overfit alerts; root autonomously reviews material sustained regression and best-checkpoint selection; earlycheckpoints are observations, not target ceilings')
+cfg['sealed_inputs'][str(data_manifest.relative_to(root))]=str(data_manifest)
+cfg['sealed_inputs'][str(new_baseline.relative_to(root))]=str(new_baseline)
+cfg['sealed_inputs'][str(proof.relative_to(root))]=str(proof)
+path=here/(a.mode+'-continue500.json');assert not path.exists();path.write_text(json.dumps(cfg,indent=2)+'\n');print(json.dumps(dict(config=str(path),sha256=sha(path),resume_manifest_sha256=sha(manifest),total_steps=500,additional_steps=484,batch32='32 prompts x4 rollouts =128 responses',additional_curriculum_passes=15.125)))

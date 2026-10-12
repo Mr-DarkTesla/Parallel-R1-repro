@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "model": "tiny-random-Qwen3-CPU-FP32",
+  "forced": {
+    "forced": true,
+    "max_logp_delta": 4.76837158203125e-07,
+    "max_replay_delta": 9.5367431640625e-07,
+    "baseline_episode_calls": [
+      9,
+      9,
+      9,
+      9
+    ],
+    "episode_calls": [
+      9,
+      9,
+      9,
+      9
+    ],
+    "server_calls": 9,
+    "server_rows": [
+      8,
+      8
+    ]
+  },
+  "sampled": {
+    "forced": false,
+    "max_logp_delta": 9.5367431640625e-07,
+    "max_replay_delta": 4.76837158203125e-07,
+    "baseline_episode_calls": [
+      7,
+      9,
+      9,
+      6
+    ],
+    "episode_calls": [
+      7,
+      9,
+      9,
+      6
+    ],
+    "server_calls": 9,
+    "server_rows": [
+      8,
+      8
+    ]
+  },
+  "cross_episode_perturbation_delta": 0.0,
+  "gpu4b_parity_and_memory_not_proven": true,
+  "full_rollout_trace_integration_not_proven": true
+}
