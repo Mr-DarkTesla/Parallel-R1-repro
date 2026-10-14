@@ -46,7 +46,7 @@ def main():
     cfg.setdefault('reward_mode','strong_width')
     cfg.setdefault('lr',1e-6)
     cfg.setdefault('zero1_optimizer',True)
-    cfg.setdefault('checkpoint_steps',[50,100,200,300,400,500])
+    cfg.setdefault('checkpoint_steps',list(range(50,cfg['steps']+1,50)))
     if cfg['reward_mode'] not in ('strong_width','forward_only'):
         raise ValueError('Unknown reward mode')
     if not all(0<s<=cfg['steps'] for s in cfg['checkpoint_steps']):

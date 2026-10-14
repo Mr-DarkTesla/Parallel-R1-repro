@@ -46,8 +46,29 @@ try:
     env['LD_LIBRARY_PATH']=':'.join([str(site/'torch/lib'),*[str(p) for p in (site/'nvidia').glob('*/lib')],'/usr/local/nvidia/lib','/usr/local/nvidia/lib64'])
     for variable,name in [('TMPDIR','tmp'),('HF_HOME','hf'),('CUDA_CACHE_PATH','cuda'),('TRITON_CACHE_DIR','triton'),('TORCHINDUCTOR_CACHE_DIR','inductor'),('TORCH_EXTENSIONS_DIR','extensions')]:
         path=cache/name;path.mkdir(exist_ok=True);env[variable]=str(path)
-    for stage in ['smoke','production']:
+    for stage in ['evaluation','smoke','production']:
         if stage=='production':wait(C/'production-approved.json')
+        if stage=='evaluation':
+            job=B/'evaluation-job.json'
+            evalenv=dict(env,CUDA_VISIBLE_DEVICES=str(local))
+            command=[str(B/'portable-venv/bin/python'),str(B/'eval_worker.py'),'--job',str(job),'--rank',str(rank)]
+            with (B/f'evaluation-rank-{rank}.log').open('ab',buffering=0) as log:
+                child=subprocess.Popen(command,env=evalenv,cwd=R,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT)
+                save(C/f'evaluation-child-rank-{rank}.json',dict(pid=child.pid,rank=rank,command=command,time=time.time()))
+                code=child.wait()
+            save(C/f'evaluation-exit-rank-{rank}.json',dict(rank=rank,returncode=code,time=time.time()))
+            if code:raise RuntimeError('evaluation worker returned '+str(code))
+            for r in range(32):assert wait(C/f'evaluation-exit-rank-{r}.json',86400)['returncode']==0
+            gpu=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid','--format=csv,noheader'],text=True)
+            assert not gpu.strip(),gpu
+            save(C/f'evaluation-empty-rank-{rank}.json',dict(passed=True,rank=rank))
+            if rank==0:
+                for r in range(32):assert wait(C/f'evaluation-empty-rank-{r}.json')['passed']
+                code=subprocess.run([str(B/'portable-venv/bin/python'),str(B/'eval_finalize.py')],env=env,cwd=R).returncode
+                if code:raise RuntimeError('evaluation finalize returned '+str(code))
+                save(C/'evaluation-completed.json',dict(passed=True,checkpoint=50,completed=500,all32_exit0=True,all_gpu_empty=True,summary=str(B/'evaluation-math500/summary.json')))
+            wait(C/'evaluation-completed.json',86400)
+            continue
         cfg=B/(stage+'-config-v2.json')
         command=[str(B/'portable-venv/bin/python'),str(B/'runner/train.py'),'--config',str(cfg)]
         command+=['--smoke'] if stage=='smoke' else ['--receipt',str(C/'production-approved.json')]
@@ -80,7 +101,7 @@ try:
                            smoke_config_sha256=sha(B/'smoke-config-v2.json'),source_manifest_sha256=sha(B/'runtime-build-v2.json'))
                 save(B/'distributed-smoke-proof.json',proof)
                 production=json.loads((B/'production-config-v2.json').read_text())
-                assert production['steps']==500 and production['checkpoint_steps']==[50,100,200,300,400,500]
+                assert production['steps']==500 and production['checkpoint_steps']==list(range(50,501,50))
                 assert production['global_batch']==dict(prompts_per_step=8,rollouts_per_prompt=4,responses_per_step=32)
                 assert production['expected_world_size']==32
                 assert production['reward_mode']=='strong_width' and production['max_batched_paths']==8

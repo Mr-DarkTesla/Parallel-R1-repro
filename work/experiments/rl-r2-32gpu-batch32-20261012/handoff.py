@@ -40,19 +40,34 @@ def checkpoint_proof(cp):
     expected=list((Path(load(N/'production-config-v2.json')['model'])).glob('*token*'))
     assert (hf/'tokenizer_config.json').is_file() and (hf/'tokenizer.json').is_file()
     torch.set_num_threads(2)
-    tensor_count=0;count=0
+    initial=Path(load(N/'production-config-v2.json')['model'])
+    reference=load(initial/'model.safetensors.index.json')['weight_map']
+    tensor_count=0;count=0;alias_parameters=0
     with safe_open(hf/'model.safetensors',framework='pt',device='cpu') as model:
+        keys=set(model.keys());missing=set(reference)-keys;extra=keys-set(reference)
+        assert not missing,missing
+        assert extra in [set(),{'lm_head.weight'}],extra
+        if extra:
+            assert config['tie_word_embeddings'] is True
+            assert torch.equal(model.get_tensor('lm_head.weight'),model.get_tensor('model.embed_tokens.weight'))
+            alias_parameters=model.get_tensor('lm_head.weight').numel()
+        for shard in sorted(set(reference.values())):
+            with safe_open(initial/shard,framework='pt',device='cpu') as src:
+                for name in src.keys():
+                    assert model.get_slice(name).get_shape()==src.get_slice(name).get_shape(),name
         for name in model.keys():
             tensor=model.get_tensor(name)
             assert torch.isfinite(tensor).all().item(),name
             count+=tensor.numel();tensor_count+=1;del tensor
-    assert tensor_count==398 and count>=4_000_000_000,(tensor_count,count)
+    unique_parameters=count-alias_parameters
+    assert len(reference)==398 and len(keys)-len(extra)==398
+    assert unique_parameters==4_022_468_096,unique_parameters
     model_sha=sha(hf/'model.safetensors')
     summary=load(N/'production'/f'validation-{step:04}'/'summary.json');assert summary['step']==step and summary['completed']==32
     latest=load_metrics()
     assert latest['step']>=step and len(latest['ranks'])==24
     proof=dict(passed=True,step=step,checkpoint=str(cp),model_sha256=model_sha,
-               tensors=tensor_count,parameters=count,finite=True,unsharded=True,optimizer_reset=True,
+               tensors=tensor_count,parameters=unique_parameters,serialized_parameters=count,tied_alias_parameters=alias_parameters,finite=True,unsharded=True,optimizer_reset=True,
                exact_optimizer_resume=False,source_validation_summary=summary,time=time.time())
     save(M/f'checkpoint-{step:04}-handoff-proof.json',proof)
     return proof
@@ -65,6 +80,7 @@ def prepare_configs(cp,proof):
     original=load(N/'production-config-v2.json')
     cfg=dict(original)
     cfg.update(model=str(cp/'hf'),initial_checkpoint=str(cp),initial_step=proof['step'],
+               checkpoint_steps=list(range(50,501,50)),
                prompt_exposure_offset=proof['step']*24,group=1,reward_group=4,
                expected_world_size=32,world_size=32,
                global_batch=dict(prompts_per_step=8,rollouts_per_prompt=4,responses_per_step=32),
@@ -78,6 +94,16 @@ def prepare_configs(cp,proof):
     for path in sorted((M/'runner').rglob('*.py')):sealed[str(path.relative_to(R))]=str(path)
     sealed['cpu-reward-group-proof']=str(M/'cpu-reward-group-proof.json')
     sealed['weights-only-handoff-proof']=str(M/f"checkpoint-{proof['step']:04}-handoff-proof.json")
+    evaluation=dict(model=str(cp/'hf'),system=cfg['system'],scorer=cfg['scorer'],
+                    questions=str(M/'eval-questions-500.jsonl'),output=str(M/'evaluation-math500'),
+                    world_size=32,initial_step=proof['step'],selection_allowed=False,
+                    runtime_max_batched_paths=8,temperature=1,response_budget=4096,path_budget=768,max_context=16384,
+                    seed=42161011,model_sha256=proof['model_sha256'])
+    save(M/'evaluation-job.json',evaluation)
+    for path in [M/'eval_worker.py',M/'eval_finalize.py',M/'eval-questions-500.jsonl',M/'evaluation-job.json']:
+        sealed[str(path.relative_to(R))]=str(path)
+    for path in sorted((R/'work/experiments/rl-instruct-20261011/production-runner').rglob('*.py')):
+        sealed['eval-runtime:'+str(path.relative_to(R))]=str(path)
     cfg['sealed_inputs']=sealed
     smoke=dict(cfg,steps=proof['step']+2,output=str(M/'smoke'),skip_validation=True,skip_exports=True,
                resident_fixture_step=proof['step']+2)
@@ -93,25 +119,11 @@ def main():
     assert not (M/'cloud-submission.json').exists(),'Existing or unknown submit: reconcile; never duplicate'
     assert load(B/'cloud-submission.json')['job_id']==OLD
     status('waiting_verified_checkpoint',batch_target='8prompts x4responses =32')
-    while True:
-        assert load(B/'cloud-submission.json')['job_id']==OLD,'Current allocation changed; refuse duplicate'
-        latest=load_metrics();step=latest['step']
-        failures=list((N/'control').glob('failure-rank-*.json'))
-        if failures:raise RuntimeError('Source job failed before handoff: '+str(failures))
-        candidates=[a for a in ANCHORS if a<500 and a>=step and (N/'production'/f'checkpoint-{a:04}'/'complete.json').exists()]
-        if not candidates:
-            if step>=500:status('source_completed_no_migration_needed',step=step);return
-            status('waiting_verified_checkpoint',current_step=step,next_anchor=next(a for a in ANCHORS if a>=step))
-            time.sleep(10);continue
-        anchor=min(candidates);cp=N/'production'/f'checkpoint-{anchor:04}'
-        status('verifying_checkpoint',step=anchor)
-        proof=checkpoint_proof(cp)
-        if load_metrics()['step']>anchor:
-            status('next_anchor_required',checkpoint_step=anchor,current_step=load_metrics()['step'])
-            time.sleep(10);continue
-        verify_source();cfg=prepare_configs(cp,proof)
-        if load_metrics()['step']>anchor:continue
-        break
+    anchor=50;cp=N/'production/checkpoint-0050'
+    assert (cp/'complete.json').exists(),'Requested checkpoint50 must be complete before source stop'
+    status('verifying_checkpoint',step=anchor)
+    proof=checkpoint_proof(cp)
+    verify_source();cfg=prepare_configs(cp,proof)
     # CPU-side Cloud calls only after all immutable source and complete weights passed.
     os.environ['NB_PREFIX']='/notebook/'+os.environ['NAMESPACE']+'/'+os.environ['WORKSPACE_ID']
     import client_lib as cloud
@@ -127,7 +139,7 @@ def main():
                   job_desc='larin | tmp',n_workers=4,processes_per_worker=8,queue_name='edge',
                   priority_class=cloud.PriorityClass.medium,detached=True,max_retry=3,
                   env_variables={'PYTHONDONTWRITEBYTECODE':'1'})
-    if load_metrics()['step']!=anchor:raise SourceAdvanced('Preserve newer updates; wait next exported anchor')
+    assert load_metrics()['step']>=anchor
     save(M/'before-stop.json',dict(checkpoint_proof=proof,source_latest_metrics=load_metrics(),old_submission=load(B/'cloud-submission.json')))
     status('stopping_verified_source',step=anchor)
     reply=old.kill();assert 'deleted' in reply
@@ -140,9 +152,11 @@ def main():
     # Allow platform teardown; absence must remain confirmed before submit.
     time.sleep(20)
     response=query(OLD);assert response.status_code==400 and response.text.strip()=='"No such job"'
-    final=load_metrics();assert final['step']==anchor,'Unexpected completed source step after snapshot; investigate before replacement'
-    save(M/'source-training-preserved.json',dict(passed=True,completed_source_step=anchor,restored_weight_step=anchor,
-                                               all_completed_updates_preserved=True,inflight_batch_discarded=True,
+    final=load_metrics();assert final['step']>=anchor
+    save(M/'source-training-preserved.json',dict(passed=True,completed_source_step=final['step'],restored_weight_step=anchor,
+                                               all_completed_updates_preserved=final['step']==anchor,
+                                               completed_updates_after_checkpoint_not_preserved=final['step']-anchor,
+                                               requested_checkpoint50_preserved=True,inflight_batch_discarded=True,
                                                optimizer_reset=True,source_run=str(N),time=time.time()))
     intent=dict(state='submitting',job_desc='larin | tmp',gpus=32,nodes=4,processes_per_node=8,
                 current_run_root=str(M),supersedes=OLD,initial_step=anchor,steps=500,
@@ -154,7 +168,7 @@ def main():
     save(M/'cloud-submission.json',intent)
     assert job.job_name,'Unknown submission: reconcile, never blindly resubmit'
     save(B/'cloud-submission.json',intent)
-    status('submitted32_waiting_actual_smoke',job_id=job.job_name,initial_step=anchor,optimizer_reset=True)
+    status('submitted32_eval_then_smoke_then_rl',job_id=job.job_name,initial_step=anchor,optimizer_reset=True)
 
 if __name__=='__main__':
     lock=(M/'handoff.lock').open('a');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)

@@ -59,4 +59,5 @@ s=s.replace("assert [x['step'] for x in rows]==[1,2]", "initial=json.loads((B/'p
 s=s.replace("x['max_replay_logp_drift']<=.01 for x in rows", "x['max_replay_logp_drift']<=.01 and x['replay_guard_passed'] and x['group']==1 and x['reward_group']==4 for x in rows")
 s=s.replace("authorization='User requested full500 R2 on24GPU; autonomous actual engineering review'", "authorization='User authorized careful migration32GPU, batch8prompts x4responses, preserve weights and continue global500'")
 s=s.replace("                assert production['reward_mode']", "                assert production['global_batch']==dict(prompts_per_step=8,rollouts_per_prompt=4,responses_per_step=32)\n                assert production['expected_world_size']==32\n                assert production['reward_mode']")
+s=s.replace("production['checkpoint_steps']==[50,100,200,300,400,500]", "production['checkpoint_steps']==list(range(50,501,50))")
 (M/'node_entry.py').write_text(s)
