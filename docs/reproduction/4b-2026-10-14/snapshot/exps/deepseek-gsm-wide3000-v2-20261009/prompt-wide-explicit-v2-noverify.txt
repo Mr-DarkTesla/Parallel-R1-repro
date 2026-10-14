@@ -1,0 +1,146 @@
+Write a correct mathematical worked solution for a GSM-Infinite problem.
+The solution is training data for a small coordinator model. Optimize correct
+reasoning with a short sequential decoding path and useful parallel work.
+Return only the worked solution in the exact execution format below.
+
+SCHEDULING OBJECTIVE
+
+1. Work backward from the requested quantity. Identify only relevant quantities
+   and justify any required total, constraint or coverage argument. Give concise
+   shared definitions. Do not calculate an independent set of numeric results
+   sequentially in shared prose before assigning its work.
+2. Before grouping work, identify every independent chain that establishes a
+   distinct relevant contribution. For totals, comparisons, ratios and
+   differences, consider separate category contributions, location subtotals,
+   numerator/denominator components and constraint terms. Work backward through
+   each chain to its known inputs. A path may establish a coherent partial
+   contribution or subtotal, with its necessary dependent calculations inside
+   that path. Its output must be explicitly consumed after synchronization.
+   Combine chains only when they are very small or splitting them would add
+   synchronization overhead; do not hide several substantial independent
+   contributions inside a single path just to default to width two.
+3. Across this dataset, aim for a mean fork width of approximately FOUR.
+   This is a distribution objective, not a mandatory quota for every problem.
+   Prefer 4--6 paths when that many substantial independent contributions exist;
+   use 2--3 for narrower dependency graphs and 7--8 for wider graphs. Enumerate
+   useful work before grouping it. Never invent contributions to meet the target.
+   When a specific error risk warrants verification, a path may check a named
+   substantive subtotal or constraint using a materially different relation.
+   Show that calculation and explicitly use the check in the summary. Do not
+   routinely duplicate whole solutions or add trivial consistency checks.
+4. A path can use only the original problem, the shared prefix before its fork
+   and its own assignment. Sibling outputs from the same fork are unavailable.
+   Exact symbolic substitution of stated equations is allowed when shown and
+   justified. A path may independently recompute a SHORT cheap prerequisite
+   from known inputs if this avoids another synchronization. It cannot assume
+   a sibling's numeric result or duplicate another path's entire task.
+5. Choose a useful CUT through the relevant dependency graph, not automatically
+   one complete final category contribution per path. Look INSIDE long chains
+   for independently computable counts, rates, subtotals and constraint terms.
+   Prefer a cut with 4--6 distinct useful computed outputs when available, then
+   perform necessary dependent combinations after synchronization. Independently
+   computed count and rate may occupy separate paths and be multiplied in the
+   summary. A location subtotal and a separately needed computed category count
+   may be established independently before their sum is used downstream.
+   Keep the same number of barriers when a wider cut permits it. A short final
+   merge can remain sequential; do not force another two-path fork for it.
+   Every output on this cut must be explicitly consumed after the fork, either
+   by a downstream calculation or an explicit comparison for verification.
+   Do not return an ancestor whose only use has already been recomputed inside
+   another path. Repeating one or two cheap prerequisite operations is allowed;
+   unplanned duplication of an entire sibling subproblem is not. The verification
+   exception below permits one explicitly assigned independent recomputation. Quantities connected only
+   by aliases share ONE computed result. Given values and aliases of given
+   values belong in setup or the merge, NEVER in their own paths. Use narrower
+   forks when the relevant graph has fewer useful independent computations.
+6. Synchronize when essential results must be combined. A summary lists the
+   actual established results, checks their consistency and explains the merge.
+   Continue with another fork when merged information enables useful work.
+   Zero, one or many rounds are allowed. A true single chain can be sequential.
+   Stop when the requested answer is justified.
+
+For latency, the important trace length is shared sequential text plus the
+LONGEST path in each fork, summed over forks. Plans, introductions, summaries
+and repeated explanations count toward this sequential text. Keep them compact.
+More total parallel tokens can be reasonable if the sequential path is shorter.
+Do not sacrifice correctness or essential explanations to reduce this length.
+
+REASONING STYLE
+
+Make the mathematics easy to follow for a 0.6B or 4B student. Define each abbreviation before use. For every derived value, state the governing relation, replace its variables with known numeric operands, show the arithmetic, and state which quantity the result represents. Explain non-obvious coefficients, totals, changes of variables and symbolic eliminations in one clear sentence. Within a path, make intermediate steps explicit; do not jump across several dependent transformations or hide work in phrases such as straightforward calculation. Shared setup and summaries should stay compact: give essential definitions once and summarize outputs rather than repeating derivations. Use simple equations and concrete substitutions, not long motivational prose.
+Explain where EACH governing relation comes from and what EACH intermediate
+result means. For a dependent chain show each arithmetic transformation
+separately with its numeric operands. Introduce every relation with a short
+sentence linking the quantities to the corresponding condition in the problem;
+do not compress several relations into an unexplained expression. Explain why
+a total covers exactly the relevant categories and why a combined coefficient
+is valid. This is a worked teaching example, not a terse calculation log.
+Put this additional detail inside the parallel paths whenever possible. Do not
+add unrelated quantities merely to make the solution longer.
+
+FORMAT
+
+Start the solution with a short standalone explanation BEFORE the first Plan.
+Before EVERY later fork, write a standalone sentence explaining the next
+computation, then provide exactly N assignments. A Plan heading or assignment
+text does not count as the required explanatory sentence:
+Plan:
+1: concrete useful output and what this path must establish
+2: concrete useful output and what this path must establish
+... continue through N ...
+
+Plans identify work without precomputing unknown answers. Numeric restrictions
+used to select work must come from the problem or an earlier shown derivation.
+Then write <Parallel>N on its own line, replacing N with one digit from 2 to 8.
+Write exactly N sibling paths in local ID order:
+<Path>1
+Checkable calculations for the first assignment.
+</Path>
+... the remaining paths ...
+</Parallel>
+<Summary>
+Actual established results and a justified merge.
+</Summary>
+
+Each <Path>I is followed by a newline, where I is its integer ID. IDs restart at
+1 in every fork. No round labels, ID prefixes, attributes or nested forks.
+Use <Parallel>, </Parallel>, <Path>, </Path>, <Summary>, </Summary> exactly.
+Close every tag. No mandatory Result: label. After each summary continue in
+free form. No path writes a global Final Answer line. No code fences.
+
+CORRECTNESS
+
+Preserve variable meanings, units, domains and conditions. Every returned path
+output must contribute to the answer or a specifically justified independent
+verification. Do not count reading a given constant as a computation. Show any
+algebra used to remove dependencies. Account for every relevant category in a
+total; do not silently infer a missing-category convention unless it is supplied
+with the problem. Flag inconsistent conditions or a remaining essential gap.
+Do not invent tool execution, false calculations or agreement between paths.
+
+End with exactly one standalone line:
+Final Answer: \boxed{the requested mathematical answer}
+Put only the value, expression, set or tuple inside the box; discuss units in
+the body. If an essential gap remains, use Final Answer: unresolved.
+Before the final answer, separate the explanation from its concluding solution
+with the exact heading on a standalone line:
+Final solution:
+Then write 1--3 concise sentences giving the requested result with its decisive
+arithmetic or expression and units. Use already established quantities; do not
+add a new fork or restart the derivation. End with the Final Answer line.
+The exporter puts ALL earlier work inside <think>...</think> and places this
+short concluding solution plus the Final Answer AFTER </think>. Do not emit
+outer think tags yourself in the raw response.
+
+FINAL FORMAT CHECK BEFORE RETURNING
+The first line is an explanatory sentence, not Plan. Every parallel block has
+its prefork explanation and numbered Plan. Every Summary is closed with
+</Summary>. After that closing tag and any necessary final derivation, write
+After closing all tags, emit the exact heading Final solution: followed by
+the short concluding solution, then Final Answer: on the LAST line, outside
+every structural tag. Do not put the
+Final Answer inside Summary. Do not omit closing tags.
+
+PROBLEM
+
+{{INSERT_PROBLEM_HERE}}

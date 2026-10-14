@@ -1,5 +1,7 @@
 # Experiment results
 
+- [Reproduce 4B SFT, R2 RL300 and new-reward R4 RL150](../reproduction/4b-2026-10-14/README.md): immutable inputs, exact checkpoint lineage, complete configurations and portable launch commands.
+
 - [Complete Qwen3-0.6B / Qwen3-4B archive, October 12, 2026](results-2026-10-12/README.md):
   campaign descriptions, exact training/evaluation configurations, reward formulas,
   saved metrics, coverage, provenance and reproducible figures.

@@ -1,0 +1,47 @@
+{
+  "complete": true,
+  "accepted": 3000,
+  "sources": {
+    "GSM_Infinite": 3000
+  },
+  "train": 2700,
+  "val": 300,
+  "rounds": {
+    "1": 2510,
+    "2": 473,
+    "3": 10,
+    "0": 7
+  },
+  "widths": {
+    "4": 1493,
+    "3": 943,
+    "2": 865,
+    "5": 166,
+    "6": 19
+  },
+  "total_requests_max_concurrency": 256,
+  "rejections": {
+    "AssertionError('structural_or_answer_check')": 3,
+    "deterministic_path_audit": 10,
+    "semantic_judge_reject": 236,
+    "AssertionError('judge_not_finished')": 1,
+    "structure": 248,
+    "judge_not_finished": 36,
+    "answer_verification": 17
+  },
+  "mean_width_target": null,
+  "mean_width_actual": 3.291738382099828,
+  "valid_narrow_traces_preserved": "${PROJECT_ROOT}/exps/deepseek-gsm-wide3000-v2-20261009/production/valid-narrow-deferred.jsonl",
+  "limitations": [
+    "Semantic judge uses the same teacher model and is not a formal proof checker.",
+    "Decontamination is textual, not a guarantee against semantic paraphrases.",
+    "Serving inference was teacher serialization, not separate isolated worker generation.",
+    "Requires counted-fork-aware SFT loader and rollout runtime."
+  ],
+  "sha256": {
+    "train.jsonl": "7131400db09ef5df846388b5049a08af9f3ad651c2f1a0b028fa2a0f0adc40fb",
+    "val.jsonl": "3f56e6037c65a5cec1e4fb918bc46cb4f75e07401e88933fe04a77f9c3930251",
+    "train.parquet": "6851db93ec911b49ad62cdfa90c401ecd4fa28c5a1f59560a17e492fec185873",
+    "val.parquet": "44bee448e774328f96ff7647bc27a5f7b37e6962cb9abae882120e92df3151d2"
+  }
+}
