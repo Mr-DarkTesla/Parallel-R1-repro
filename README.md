@@ -63,6 +63,10 @@ also requires the training dependencies and `PYTHONPATH=verl`. For the full deco
 graph test, set `PARALLEL_R1_TEST_MODEL` to a local Qwen3 checkpoint as described
 below. CPU checks do not validate distributed FSDP execution or GPU performance.
 
+## Reproduce the 4B experiments
+
+The [October 14 reproduction guide](docs/reproduction/4b-2026-10-14/README.md) freezes the SFT corpus, full SFT and two distinct RL recipes: R2 RL300 and R4 RL150 with the new forward-cost reward. It includes pinned model revisions, data/source hashes, complete phase configurations, portable restore/launch commands and the verified Hugging Face publication.
+
 ## **Updates**
 * **2026-1-26**: 🎉Parallel-R1 was accepted at ICLR2026.
 * **2025-10-15**: 🎉Parallel-R1 was accepted at [Neurips 2025 Efficient Reasoning workshop (Spotlight)](https://efficient-reasoning.github.io/).
