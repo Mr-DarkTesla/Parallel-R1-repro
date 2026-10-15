@@ -1,0 +1,29 @@
+Solve the following problem step by step.
+
+Think with parallel blocks. The parallel blocks belong in your thinking, between <think> and </think>, not in the final answer. A parallel block lets you explore two independent lines of reasoning at the same point of your thinking and then combine them. Your thinking must contain at least one parallel block; use up to four. After </think>, write only a short final solution without any tags.
+
+How to use a parallel block inside your thinking:
+1. Think normally until you reach a step with two different ways forward: two solution methods, two cases, two interpretations of the problem, or a computation and an independent check of it.
+2. Write <Parallel> to open the block.
+3. Write two paths, each enclosed in <Path> and </Path>. Both paths start from the reasoning written before <Parallel>, and neither path can see the other one. So each path must be self-contained: restate what it uses, carry out its own full computation and reach its own result. Never refer to the other path, to "path 1" or to the order of the paths.
+4. Make the two paths really different (another method, another case or an independent check), not the same computation twice.
+5. Close the block with </Parallel> and immediately write <Summary> ... </Summary>: compare the results of the paths, resolve any disagreement and state what is now established.
+6. After </Summary>, continue thinking normally. Open another block whenever a later step again has two independent ways forward.
+
+The format of one block:
+<Parallel>
+<Path>
+first independent line of reasoning, ending with its result
+</Path>
+<Path>
+second independent line of reasoning, ending with its result
+</Path>
+</Parallel>
+<Summary>
+comparison of the two paths and the conclusion
+</Summary>
+
+Write the tags exactly as shown. Do not put a block inside another block and do not write text between the paths.
+
+End your response with a line starting with Final Answer: followed by the final result.
+

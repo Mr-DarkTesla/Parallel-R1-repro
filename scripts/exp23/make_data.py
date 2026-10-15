@@ -2,7 +2,7 @@
 
 Rows, ids, answers and sample order stay as in <eval_data>/dev/parallel, so outcomes pair row by row with earlier dev runs.
 The same prompts go to dev/plain (plain generation, scripts/instruct4b_eval/run_eval.sh no-thinking | thinking) and dev/parallel (rollout).
-Usage: python scripts/exp23/make_data.py <eval_data> <output_dir>   (eval_data: /work/bench_data/instruct4b/eval)
+Usage: python scripts/exp23/make_data.py <eval_data> <output_dir> [header file, default header.txt]   (eval_data: /work/bench_data/instruct4b/eval)
 """
 import os
 import sys
@@ -10,7 +10,7 @@ import sys
 import pandas as pd
 
 source, output = sys.argv[1], sys.argv[2]
-header = open(os.path.join(os.path.dirname(__file__), "header.txt")).read()
+header = open(sys.argv[3] if len(sys.argv) > 3 else os.path.join(os.path.dirname(__file__), "header.txt")).read()
 for bench in ("gsm8k_dev", "math_dev"):
     frame = pd.read_parquet(f"{source}/dev/parallel/{bench}.parquet")
     contents = [p[0]["content"] for p in frame["prompt"]]

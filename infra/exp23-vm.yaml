@@ -1,4 +1,4 @@
-# Exp 23 GPU pod: 4x H100 in the non-guaranteed queue root.shared (vk.team/scheduleShared), preemptible.
+# Exp 23 GPU pod: H100s (4 for the main runs, 2 for the thinking-placement check) in the non-guaranteed queue root.shared (vk.team/scheduleShared), preemptible.
 # PID 1 waits for /work/exp23/start.sh (uploaded after the pod starts), then runs it under term_forward.sh.
 # start.sh resumes: finished benchmarks are skipped, so a restart after preemption only repeats unfinished ones.
 apiVersion: apps/v1
@@ -30,9 +30,9 @@ spec:
         - {name: TRITON_CACHE_DIR, value: /work/cache/triton}
         resources:
           limits:
-            cpu: "64"
-            memory: 320Gi
-            nvidia.com/gpu.h100.pa: "4"
+            cpu: "32"
+            memory: 160Gi
+            nvidia.com/gpu.h100.pa: "2"
         volumeMounts:
         - {name: work, mountPath: /work}
         - {name: dshm, mountPath: /dev/shm}
