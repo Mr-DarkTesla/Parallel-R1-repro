@@ -4,6 +4,7 @@ Math (authors' set, LIMO): the authors' math_dapo check of "Final Answer:". ARC 
 accuracy_robust also accepts other answer layouts: math from the last \\boxed{} or the line after the last "Final Answer:", checked with
 math_verify; options also as "answer is X" / "Correct Answer: X" or as the option number (1 = A).
 IFEval: the official lm-eval checker on the answer with any <think> block removed (prompt- and instruction-level, strict and loose).
+Math with some non-integer reference answers (MATH500): accuracy_robust also on the integer-answer problems only.
 Also: share of answers with <Parallel>, tag validity (scripts/tag_validator.py), answers without "Final Answer", mean length in characters.
 
 Usage (from verl/, PYTHONPATH with the IFEval checker): python ../scripts/bench/score.py <generations.jsonl> <test.parquet> <output.json>
@@ -69,6 +70,7 @@ if (sources == "IFEVAL").all():
 else:
     frame["acc"] = results
     frame["acc_robust"] = [correct_robust(s, a, t) for s, a, t in zip(sources, final, truths)]
+frame["integer_answer"] = [str(t).strip().lstrip("-").isdigit() for t in truths]
 frame["parallel"] = answers.str.contains("<Parallel>")
 frame[["tags", "correct_tags"]] = answers.map(validate).tolist()
 frame["no_final_answer"] = ~final.str.contains(r"(?i)Final Answer\s*:")
@@ -83,6 +85,9 @@ for source, group in frame.groupby("source"):
     summary[source] = {
         "accuracy": round(100 * group["acc"].mean(), 2),
         **({"accuracy_robust": round(100 * group["acc_robust"].mean(), 2)} if "acc_robust" in group else {}),
+        **({"integer_answers": round(100 * group["integer_answer"].mean(), 1),
+            "accuracy_robust_integer_answers": round(100 * group[group["integer_answer"]]["acc_robust"].mean(), 2)}
+           if "acc_robust" in group and not group["integer_answer"].all() else {}),
         f"pass@{per_problem.size().iloc[0]}": round(100 * per_problem.max().mean(), 2),
         **({f"pass_robust@{per_problem.size().iloc[0]}": round(100 * group.groupby("problem")["acc_robust"].max().mean(), 2)} if "acc_robust" in group else {}),
         "problems": int(per_problem.ngroups),
