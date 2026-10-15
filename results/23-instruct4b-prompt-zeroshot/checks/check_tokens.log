@@ -1,0 +1,8 @@
+1. tags are single special ids: {'<Path>': 151669, '</Path>': 151670, '<Parallel>': 151671, '</Parallel>': 151672, '<Summary>': 151673, '</Summary>': 151674}
+2. the same text as ordinary text: {'<Path>': ['<Path', '>'], '</Path>': ['</', 'Path', '>'], '<Parallel>': ['<', 'Parallel', '>'], '</Parallel>': ['</', 'Parallel', '>'], '<Summary>': ['<', 'Summary', '>'], '</Summary>': ['</', 'Summary', '>']}
+3. /work/bench_data/exp23/dev/parallel/gsm8k_dev.parquet: every tag in the rendered prompt is one id (16 tags per prompt)
+3. /work/bench_data/exp23/dev/parallel/math_dev.parquet: every tag in the rendered prompt is one id (16 tags per prompt)
+3. /work/bench_data/exp23/dev/plain/gsm8k_dev.parquet: every tag in the rendered prompt is one id (16 tags per prompt)
+3. /work/bench_data/exp23/dev/plain/math_dev.parquet: every tag in the rendered prompt is one id (16 tags per prompt)
+4. tag rows = mean of their pieces' rows; max cos between tags 0.743
+OK

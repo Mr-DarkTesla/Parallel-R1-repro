@@ -75,4 +75,4 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
   their special token ids by construction; the dump also keeps the generated `token_ids` and `prompt_tag_ids` (tag ids in the prompt
   vLLM received). Same prompts as before: `scripts/exp23/check_tokens.py` asserts that the text and the token-id rendering agree.
   Reason: count tags the model writes as the special token vs as text pieces (`scripts/exp23/tag_stats.py`).
-- `scripts/exp23/`: prompt (`header.txt`), dev parquets (`make_data.py`), pre-run token checks, tag statistics, pod entrypoint (`start.sh`).
+- `scripts/exp23/`: prompt (`header.txt`), dev parquets (`make_data.py`, `make_subset.py`), token checks, tag statistics, teacher-forcing tag logits, the x2 output-row variant (`scale_tag_logits.py`), paired comparison, thinking placement, pod entrypoint (`start.sh`). Results: `results/23-instruct4b-prompt-zeroshot/README.md`.
