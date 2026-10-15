@@ -68,3 +68,11 @@ Verified on the pod CPU by `scripts/instruct4b/test_sft_instruct.py` (tokenizer 
    comparisons; with `SCORE_IFEVAL_SEED=<int>` the IFEval checker's random fallbacks are seeded per prompt key (unset = old behaviour,
    same summary). Used by `scripts/instruct4b_eval/` (run_eval.sh always sets 0); verified by CPU tests in
    `results/13-instruct4b-control/checks/eval-*.log`, details in `results/13-instruct4b-control/evaluation.md`. Training code unchanged.
+
+## exp/23-instruct4b-prompt-zeroshot: zero-shot parallel blocks from a detailed prompt (no training)
+
+- `scripts/instruct4b_eval/generate.py`: the prompt goes to vLLM as the chat template's token ids instead of text, so the tags in it are
+  their special token ids by construction; the dump also keeps the generated `token_ids` and `prompt_tag_ids` (tag ids in the prompt
+  vLLM received). Same prompts as before: `scripts/exp23/check_tokens.py` asserts that the text and the token-id rendering agree.
+  Reason: count tags the model writes as the special token vs as text pieces (`scripts/exp23/tag_stats.py`).
+- `scripts/exp23/`: prompt (`header.txt`), dev parquets (`make_data.py`), pre-run token checks, tag statistics, pod entrypoint (`start.sh`).

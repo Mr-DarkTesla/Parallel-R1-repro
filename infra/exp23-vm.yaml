@@ -1,0 +1,48 @@
+# Exp 23 GPU pod: 4x H100 in the non-guaranteed queue root.shared (vk.team/scheduleShared), preemptible.
+# PID 1 waits for /work/exp23/start.sh (uploaded after the pod starts), then runs it under term_forward.sh.
+# start.sh resumes: finished benchmarks are skipped, so a restart after preemption only repeats unfinished ones.
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vcharkin-exp23
+  namespace: shared-dzen-ml
+spec:
+  replicas: 0
+  serviceName: vcharkin-exp23
+  selector:
+    matchLabels:
+      app: vcharkin-exp23
+  template:
+    metadata:
+      labels:
+        app: vcharkin-exp23
+        repository/git: "true"
+      annotations:
+        vk.team/scheduleShared: "true"
+    spec:
+      terminationGracePeriodSeconds: 120
+      containers:
+      - name: main
+        image: registry-gitlab.corp.mail.ru/platforma-adm/ml/registry/dzen-ml/ml-korshunov-ale-image-zsh-ub22.04-cu121@sha256:57a03ce8b39787dfd9b7ab9e98c03de75b29e076a0573123cefa62e92c50730b
+        command: ["bash", "-c", "until [ -f /work/exp23/start.sh ]; do sleep 20; done; exec bash /work/tools/term_forward.sh bash /work/exp23/start.sh"]
+        env:
+        - {name: VLLM_CACHE_ROOT, value: /work/cache/vllm}
+        - {name: TRITON_CACHE_DIR, value: /work/cache/triton}
+        resources:
+          limits:
+            cpu: "64"
+            memory: 320Gi
+            nvidia.com/gpu.h100.pa: "4"
+        volumeMounts:
+        - {name: work, mountPath: /work}
+        - {name: dshm, mountPath: /dev/shm}
+      securityContext:
+        fsGroup: 100
+      volumes:
+      - name: work
+        persistentVolumeClaim:
+          claimName: vcharkin-parallel-r1-b-pvc
+      - name: dshm
+        emptyDir:
+          medium: Memory
+          sizeLimit: 64Gi
