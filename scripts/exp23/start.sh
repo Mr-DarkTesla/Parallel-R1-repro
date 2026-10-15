@@ -10,6 +10,7 @@ source /work/venv/bin/activate
 repo=/work/exps/23-instruct4b-prompt-zeroshot
 model=/work/assets/models/Qwen3-4B-instruct-add-special-token
 export EVAL_DATA=/work/bench_data/exp23 EVAL_OUT=/work/bench/exp23 RAY_DEDUP_LOGS=0
+export PYTHONDONTWRITEBYTECODE=1  # the repo tracks verl/**/__pycache__; rewritten .pyc would fail run_eval.sh's clean-tree check
 logs=/work/exp23/logs
 mkdir -p "$logs"
 cd "$repo"
@@ -20,13 +21,16 @@ if ! python scripts/exp23/check_tokens.py "$model" "$EVAL_DATA" > "$logs/check_t
 fi
 run() {  # gpu name mode benches
     CUDA_VISIBLE_DEVICES=$1 BENCHES=$4 bash scripts/instruct4b_eval/run_eval.sh "$2" "$model" dev "$3" 16384 >> "$logs/$2-gpu$1.log" 2>&1
-    echo "exit $? $(date)" >> "$logs/$2-gpu$1.log"
+    local code=$?
+    echo "exit $code $(date)" >> "$logs/$2-gpu$1.log"
+    return $code
 }
 run 0 exp23-dev-par parallel gsm8k_dev &
 run 1 exp23-dev-par parallel math_dev &
 run 2 exp23-dev-nothink no-thinking "gsm8k_dev math_dev" &
 run 3 exp23-dev-think thinking "gsm8k_dev math_dev" &
-wait
-echo "done $(date)" >> "$logs/start.log"
-touch /work/exp23/DONE
-exec sleep infinity  # all finished: keep the pod quiet until it is scaled to 0 (a restart would only skip finished work)
+failed=0
+for job in $(jobs -p); do wait "$job" || failed=1; done
+echo "done $(date) failed=$failed" >> "$logs/start.log"
+[ $failed = 0 ] && touch /work/exp23/DONE
+exec sleep infinity  # finished or failed: keep the pod quiet until it is scaled to 0; a restart repeats only unfinished benchmarks
