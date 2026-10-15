@@ -65,6 +65,8 @@ below. CPU checks do not validate distributed FSDP execution or GPU performance.
 
 ## Reproduce the 4B experiments
 
+The [benchmark trajectory figures and calculation guide](docs/reproduction/benchmark-trajectories-2026-10-14/README.md) include both four-panel RL300/RL150 figures, per-answer input snapshots, exact aggregation formulas, numerical tables and standalone plotting code.
+
 The [October 14 reproduction guide](docs/reproduction/4b-2026-10-14/README.md) freezes the SFT corpus, full SFT and two distinct RL recipes: R2 RL300 and R4 RL150 with the new forward-cost reward. It includes pinned model revisions, data/source hashes, complete phase configurations, portable restore/launch commands and the verified Hugging Face publication.
 
 ## **Updates**
