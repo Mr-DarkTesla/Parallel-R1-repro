@@ -1,0 +1,689 @@
+{
+  "source": {
+    "path": "forwards-accuracy-snapshot.json",
+    "sha256": "d1fe4546d57376867d8e3f8cb3fe68174d7cdf0b88e144dea3f8fc9cb023955f",
+    "snapshot_at": 1791889620.1551654
+  },
+  "fork_source": {
+    "path": "fork-snapshot.json",
+    "sha256": "f10d4fc7d2e8d6dc07af47cb63f48362d3e36d30a4d7066592fa01e78f504096",
+    "extracted_at": "2026-10-14T14:07:51.203148+00:00",
+    "all_old_sample_fields_matched": true
+  },
+  "new_reward_source": {
+    "path": "new-reward-snapshot.json",
+    "sha256": "94be98b199f651d7129f0bbc92058ba95bea2e3a47b8c29c928d00574ca73e4c",
+    "extracted_at": "2026-10-14T15:48:14.120616+00:00",
+    "initial_model": "/home/jovyan/shares/SR004.nfs3/larin/tmp/r1/work/experiments/instruct-full-20261011/runs/epoch1/final",
+    "reward": "C*(1-.9*(1-exp(-ln(9)*F/10000)))",
+    "training_root": "work/experiments/rl-r4-dapo2k-sft-16gpu-20261013",
+    "protocols": {
+      "NewRL50": {
+        "response_budget": 32000,
+        "path_budget": 4000,
+        "max_context": 40960,
+        "precision": "BF16",
+        "model_sha256": "2a614d078ca1ab2a13cc84d0823a28a8ce64b1881796e11929045b9273587a7e",
+        "job_sha256": "99c8b563a9ddc73a247d5ed7f817f0310d7879040ecf142971b2a7de9549bbfb",
+        "checkpoint_complete_sha256": "1e72b2a19e9b89c08deacd780ce53c1451c52c35b1202f33c7e4c0ca374d279d"
+      },
+      "NewRL100": {
+        "response_budget": 32000,
+        "path_budget": 4000,
+        "max_context": 40960,
+        "precision": "BF16",
+        "model_sha256": "5c67d78f554b5ad161bb706322102d49fcd04820936b59e84b253afd41b8cef7",
+        "job_sha256": "9393fd9dad1beebcc3d74726cac8367d55600e71ff7b7db249535b54b79d56e0",
+        "checkpoint_complete_sha256": "b5153cc8deaef50b3e5433c1920daf7ea6199739d8a9c6781c1aab412030708f"
+      },
+      "NewRL150": {
+        "response_budget": 32000,
+        "path_budget": 4000,
+        "max_context": 40960,
+        "precision": "BF16",
+        "model_sha256": "a15058092190e857c6f68a337d69e0c149602e1ab50f8384a92d2c04007ef28f",
+        "job_sha256": "55c7d8b2784fd3bb772e9bd56d60eb8cdd6219073595db30ca8d4ea434f3f160",
+        "checkpoint_complete_sha256": "da1a9f5767a5d7ce70ed59646f03cc979fc9e8edd62a6448d0d0d3d072e6490c"
+      }
+    }
+  },
+  "benchmark_weights": {
+    "MATH500": 0.25,
+    "AIME2024": 0.25,
+    "AIME2025": 0.25,
+    "AIME2026": 0.25
+  },
+  "aggregation": "Equal-weight mean of four per-benchmark means, over all answers; not pooled 590-task mean",
+  "coverage": {
+    "MATH500": 500,
+    "AIME2024": 30,
+    "AIME2025": 30,
+    "AIME2026": 30
+  },
+  "steps": [
+    0,
+    50,
+    100,
+    150,
+    200,
+    250,
+    300
+  ],
+  "new_steps": [
+    0,
+    50,
+    100,
+    150
+  ],
+  "models": {
+    "Instruct": {
+      "accuracy": 76.89999999999999,
+      "forwards": 13677.287833333332,
+      "forks": 0.0,
+      "width": null,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 488,
+          "accuracy": 97.6,
+          "forwards": 5179.518,
+          "forks": 0.0,
+          "width": null,
+          "total_executed_forks": 0
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 22,
+          "accuracy": 73.33333333333333,
+          "forwards": 15463.266666666666,
+          "forks": 0.0,
+          "width": null,
+          "total_executed_forks": 0
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 19,
+          "accuracy": 63.33333333333333,
+          "forwards": 18348.1,
+          "forks": 0.0,
+          "width": null,
+          "total_executed_forks": 0
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 22,
+          "accuracy": 73.33333333333333,
+          "forwards": 15718.266666666666,
+          "forks": 0.0,
+          "width": null,
+          "total_executed_forks": 0
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "SFT": {
+      "accuracy": 14.566666666666668,
+      "forwards": 1008.7171666666667,
+      "forks": 1.0318333333333334,
+      "width": 3.069291251541507,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 258,
+          "accuracy": 51.6,
+          "forwards": 718.302,
+          "forks": 0.994,
+          "width": 3.0261569416498992,
+          "total_executed_forks": 497
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 0,
+          "accuracy": 0.0,
+          "forwards": 1015.5666666666667,
+          "forks": 1.0333333333333334,
+          "width": 3.032258064516129,
+          "total_executed_forks": 31
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 1,
+          "accuracy": 3.3333333333333335,
+          "forwards": 1161.9333333333334,
+          "forks": 1.0333333333333334,
+          "width": 3.0,
+          "total_executed_forks": 31
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 1,
+          "accuracy": 3.3333333333333335,
+          "forwards": 1139.0666666666666,
+          "forks": 1.0666666666666667,
+          "width": 3.21875,
+          "total_executed_forks": 32
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "RL50": {
+      "accuracy": 20.25,
+      "forwards": 1398.5846666666666,
+      "forks": 1.0681666666666667,
+      "width": 3.4949338893111914,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 305,
+          "accuracy": 61.0,
+          "forwards": 819.072,
+          "forks": 1.006,
+          "width": 3.389662027833002,
+          "total_executed_forks": 503
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 2,
+          "accuracy": 6.666666666666667,
+          "forwards": 1591.1666666666667,
+          "forks": 1.0666666666666667,
+          "width": 3.5,
+          "total_executed_forks": 32
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 3,
+          "accuracy": 10.0,
+          "forwards": 1432.8666666666666,
+          "forks": 1.1333333333333333,
+          "width": 3.5588235294117645,
+          "total_executed_forks": 34
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 1,
+          "accuracy": 3.3333333333333335,
+          "forwards": 1751.2333333333333,
+          "forks": 1.0666666666666667,
+          "width": 3.53125,
+          "total_executed_forks": 32
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "RL100": {
+      "accuracy": 26.43333333333333,
+      "forwards": 1904.131,
+      "forks": 1.0146666666666666,
+      "width": 4.011036568409343,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 362,
+          "accuracy": 72.39999999999999,
+          "forwards": 953.224,
+          "forks": 0.992,
+          "width": 4.048387096774194,
+          "total_executed_forks": 496
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 4,
+          "accuracy": 13.333333333333334,
+          "forwards": 2363.2,
+          "forks": 1.0666666666666667,
+          "width": 4.0625,
+          "total_executed_forks": 32
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 3,
+          "accuracy": 10.0,
+          "forwards": 2257.766666666667,
+          "forks": 1.0333333333333334,
+          "width": 3.967741935483871,
+          "total_executed_forks": 31
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 3,
+          "accuracy": 10.0,
+          "forwards": 2042.3333333333333,
+          "forks": 0.9666666666666667,
+          "width": 3.9655172413793105,
+          "total_executed_forks": 29
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "RL150": {
+      "accuracy": 34.599999999999994,
+      "forwards": 3165.5815000000002,
+      "forks": 1.0151666666666668,
+      "width": 4.0780813915752585,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 392,
+          "accuracy": 78.4,
+          "forwards": 1210.726,
+          "forks": 0.994,
+          "width": 4.086519114688128,
+          "total_executed_forks": 497
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 5,
+          "accuracy": 16.666666666666664,
+          "forwards": 3890.133333333333,
+          "forks": 1.0333333333333334,
+          "width": 4.032258064516129,
+          "total_executed_forks": 31
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 7,
+          "accuracy": 23.333333333333332,
+          "forwards": 4203.366666666667,
+          "forks": 1.0,
+          "width": 4.0,
+          "total_executed_forks": 30
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 6,
+          "accuracy": 20.0,
+          "forwards": 3358.1,
+          "forks": 1.0333333333333334,
+          "width": 4.193548387096774,
+          "total_executed_forks": 31
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "RL200": {
+      "accuracy": 37.71666666666667,
+      "forwards": 3844.5738333333334,
+      "forks": 0.998,
+      "width": 4.10151904894327,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 421,
+          "accuracy": 84.2,
+          "forwards": 1423.862,
+          "forks": 0.992,
+          "width": 4.106854838709677,
+          "total_executed_forks": 496
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 10,
+          "accuracy": 33.33333333333333,
+          "forwards": 5330.733333333334,
+          "forks": 1.0,
+          "width": 4.0,
+          "total_executed_forks": 30
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 6,
+          "accuracy": 20.0,
+          "forwards": 4291.8,
+          "forks": 1.0333333333333334,
+          "width": 4.161290322580645,
+          "total_executed_forks": 31
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 4,
+          "accuracy": 13.333333333333334,
+          "forwards": 4331.9,
+          "forks": 0.9666666666666667,
+          "width": 4.137931034482759,
+          "total_executed_forks": 29
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "RL250": {
+      "accuracy": 36.6,
+      "forwards": 4126.406666666667,
+      "forks": 0.9833333333333334,
+      "width": 4.185614942528736,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 432,
+          "accuracy": 86.4,
+          "forwards": 1325.66,
+          "forks": 1.0,
+          "width": 4.162,
+          "total_executed_forks": 500
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 8,
+          "accuracy": 26.666666666666668,
+          "forwards": 5292.233333333334,
+          "forks": 0.9666666666666667,
+          "width": 4.206896551724138,
+          "total_executed_forks": 29
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 7,
+          "accuracy": 23.333333333333332,
+          "forwards": 5319.433333333333,
+          "forks": 0.9666666666666667,
+          "width": 4.206896551724138,
+          "total_executed_forks": 29
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 3,
+          "accuracy": 10.0,
+          "forwards": 4568.3,
+          "forks": 1.0,
+          "width": 4.166666666666667,
+          "total_executed_forks": 30
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "RL300": {
+      "accuracy": 48.416666666666664,
+      "forwards": 3918.9965,
+      "forks": 0.8646666666666667,
+      "width": 4.436713709677419,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 435,
+          "accuracy": 87.0,
+          "forwards": 1318.786,
+          "forks": 0.992,
+          "width": 4.106854838709677,
+          "total_executed_forks": 496
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 13,
+          "accuracy": 43.333333333333336,
+          "forwards": 6658.166666666667,
+          "forks": 0.6333333333333333,
+          "width": 5.0,
+          "total_executed_forks": 19
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 11,
+          "accuracy": 36.666666666666664,
+          "forwards": 4392.066666666667,
+          "forks": 0.8333333333333334,
+          "width": 4.44,
+          "total_executed_forks": 25
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 8,
+          "accuracy": 26.666666666666668,
+          "forwards": 3306.9666666666667,
+          "forks": 1.0,
+          "width": 4.2,
+          "total_executed_forks": 30
+        }
+      ],
+      "precision": {
+        "FP32": 74,
+        "BF16": 516
+      }
+    },
+    "NewRL50": {
+      "accuracy": 16.683333333333334,
+      "forwards": 1137.1435000000001,
+      "width": 2.9213630266447166,
+      "forks": 1.0651666666666668,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 267,
+          "accuracy": 53.400000000000006,
+          "forwards": 735.574,
+          "forks": 0.994,
+          "width": 2.8148893360160967,
+          "total_executed_forks": 497
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 1,
+          "accuracy": 3.3333333333333335,
+          "forwards": 1219.0,
+          "forks": 1.1,
+          "width": 2.8181818181818183,
+          "total_executed_forks": 33
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 2,
+          "accuracy": 6.666666666666667,
+          "forwards": 1251.4666666666667,
+          "forks": 1.1666666666666667,
+          "width": 2.8857142857142857,
+          "total_executed_forks": 35
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 1,
+          "accuracy": 3.3333333333333335,
+          "forwards": 1342.5333333333333,
+          "forks": 1.0,
+          "width": 3.1666666666666665,
+          "total_executed_forks": 30
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "NewRL100": {
+      "accuracy": 21.150000000000002,
+      "forwards": 1664.1800000000003,
+      "width": 3.033846004785495,
+      "forks": 0.9438333333333333,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 323,
+          "accuracy": 64.60000000000001,
+          "forwards": 853.42,
+          "forks": 0.942,
+          "width": 2.8959660297239913,
+          "total_executed_forks": 471
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 2,
+          "accuracy": 6.666666666666667,
+          "forwards": 1961.4333333333334,
+          "forks": 0.9,
+          "width": 3.037037037037037,
+          "total_executed_forks": 27
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 3,
+          "accuracy": 10.0,
+          "forwards": 1779.9,
+          "forks": 1.0,
+          "width": 3.1666666666666665,
+          "total_executed_forks": 30
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 1,
+          "accuracy": 3.3333333333333335,
+          "forwards": 2061.9666666666667,
+          "forks": 0.9333333333333333,
+          "width": 3.0357142857142856,
+          "total_executed_forks": 28
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    },
+    "NewRL150": {
+      "accuracy": 29.61666666666666,
+      "forwards": 2272.5018333333333,
+      "width": 2.84716948723512,
+      "forks": 0.7928333333333333,
+      "benchmarks": [
+        {
+          "dataset": "MATH500",
+          "n": 500,
+          "correct": 359,
+          "accuracy": 71.8,
+          "forwards": 1029.574,
+          "forks": 0.838,
+          "width": 2.6992840095465396,
+          "total_executed_forks": 419
+        },
+        {
+          "dataset": "AIME2024",
+          "n": 30,
+          "correct": 4,
+          "accuracy": 13.333333333333334,
+          "forwards": 2382.5,
+          "forks": 0.8,
+          "width": 2.9583333333333335,
+          "total_executed_forks": 24
+        },
+        {
+          "dataset": "AIME2025",
+          "n": 30,
+          "correct": 5,
+          "accuracy": 16.666666666666664,
+          "forwards": 2939.2,
+          "forks": 0.7333333333333333,
+          "width": 2.772727272727273,
+          "total_executed_forks": 22
+        },
+        {
+          "dataset": "AIME2026",
+          "n": 30,
+          "correct": 5,
+          "accuracy": 16.666666666666664,
+          "forwards": 2738.733333333333,
+          "forks": 0.8,
+          "width": 2.9583333333333335,
+          "total_executed_forks": 24
+        }
+      ],
+      "precision": {
+        "BF16": 590
+      }
+    }
+  },
+  "forward_semantics": "Saved instrumented per-request generation model.forward participation, including prefill; not total generated tokens or global batched engine call count",
+  "protocol": {
+    "response_budget": 32768,
+    "path_budget": 768,
+    "samples_per_question": 1,
+    "temperature": 1.0,
+    "top_p": 1.0
+  },
+  "fork_semantics": "Executed fork count per answer, including all zero-fork and invalid-format answers; stats.forks equals len(widths)",
+  "width_semantics": "For each benchmark, mean width over executed forks across all answers, then equal-weight macro mean across benchmarks; undefined for native Instruct because it executes no forks",
+  "display": {
+    "smoothing": false,
+    "point_markers": true,
+    "point_value_labels": "RL at 150 and 300; new-reward RL at 150; horizontal baselines at right",
+    "labelled_rl_iterations": {
+      "RL": [
+        150,
+        300
+      ],
+      "NewRL": [
+        150
+      ]
+    },
+    "variants": [
+      "comparison (with new reward)",
+      "comparison-original (without new reward)"
+    ],
+    "dashed_lines": [
+      "SFT",
+      "Instruct"
+    ],
+    "confidence_intervals": false,
+    "reference_lines": "Unchanged SFT and Instruct checkpoints shown as horizontal baselines; RL curve begins at SFT on iteration 0"
+  },
+  "caveats": [
+    "RL300 consists of 74 FP32 and 516 BF16 answers; all other displayed models use BF16.",
+    "Instruct uses native thinking; SFT/RL use the structured parallel runtime.",
+    "Inference results are the archived complete evaluation snapshot of 2026-10-13, not a new model run.",
+    "The new-reward run uses DAPO2000 training and BF16 evaluation with response32000/path4000; the old RL uses response32768/path768, so this is not an isolated reward-only comparison.",
+    "The new trajectory reuses the existing SFT benchmark evaluation at iteration 0, representing the same initial weights but the original response32768/path768 protocol."
+  ],
+  "optional_metrics": [
+    "Macro mean executed fork count per answer, including zero-fork answers",
+    "Macro mean branch width conditional on completed forks; width is undefined for Instruct",
+    "Macro percentage of answers with at least one completed fork",
+    "Accuracy vs forwards checkpoint trajectory"
+  ]
+}
