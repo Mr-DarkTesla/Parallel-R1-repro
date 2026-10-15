@@ -10,7 +10,7 @@ source, output, n = sys.argv[1], sys.argv[2], int(sys.argv[3])
 for bench in ("gsm8k_dev", "math_dev"):
     frame = pd.read_parquet(f"{source}/dev/plain/{bench}.parquet")
     ids = frame["extra_info"].map(lambda info: info["id"])
-    first = frame[~ids.duplicated()].iloc[:n]
+    first = frame[~ids.duplicated()].iloc[:n].reset_index(drop=True)  # score.py aligns by position
     os.makedirs(f"{output}/dev/plain", exist_ok=True)
     first.to_parquet(f"{output}/dev/plain/{bench}.parquet")
     print(bench, len(first), "rows")
