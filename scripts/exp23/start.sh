@@ -3,9 +3,10 @@
 # No training, the exp-23 prompt (header.txt), dev math, budget 16384. Models: P = prepared Qwen3-4B with the six tag tokens (c=1);
 # P2 = P with the tags' output rows x2 (scale_tag_logits.py; in P a tag token is unreachable, tag_logits.py). One job per GPU:
 #   GPU0/1  P2 parallel rollout (authors' rollout, non-thinking template), gsm8k_dev / math_dev
-#   GPU2    P plain generation non-thinking (token ids), then P2 plain generation thinking
+#   GPU2    P2 plain generation thinking (token ids)
 #   GPU3    P2 plain generation non-thinking (token ids)
-# P rollout gsm8k_dev (exp23-dev-par) ran in the first launch; P rollout math_dev and P thinking were stopped (tags unreachable).
+# First launch (commit 6f2c608): P rollout gsm8k_dev (exp23-dev-par) and P plain non-thinking (exp23-dev-nothink) finished; P rollout
+# math_dev and P thinking were stopped (tags unreachable). run_eval.sh refuses to reopen a run at another commit, so they are not here.
 # Rerun = resume: run_eval.sh skips finished benchmarks. Logs /work/exp23/logs, results /work/bench/exp23/<run>.
 set -uo pipefail
 source /work/venv/bin/activate
@@ -31,7 +32,7 @@ run() {  # gpu name model mode benches
 }
 run 0 exp23x2-dev-par "$model2" parallel gsm8k_dev &
 run 1 exp23x2-dev-par "$model2" parallel math_dev &
-{ run 2 exp23-dev-nothink "$model" no-thinking "gsm8k_dev math_dev" && run 2 exp23x2-dev-think "$model2" thinking "gsm8k_dev math_dev"; } &
+run 2 exp23x2-dev-think "$model2" thinking "gsm8k_dev math_dev" &
 run 3 exp23x2-dev-nothink "$model2" no-thinking "gsm8k_dev math_dev" &
 failed=0
 for job in $(jobs -p); do wait "$job" || failed=1; done
