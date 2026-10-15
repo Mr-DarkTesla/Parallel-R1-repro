@@ -15,15 +15,16 @@ mkdir -p "$run/results"
 export RAY_TMPDIR=/tmp/ray_$name
 export PYTHONPATH=/work/assets/ifeval/pkg NLTK_DATA=/work/assets/ifeval/nltk_data
 
-for bench in apo arc ifeval mmlu_pro limo; do
+data=${BENCH_DATA:-/work/bench_data}  # BENCH_DATA / BENCHES: another set, e.g. scripts/bench/make_slide_data.py
+for bench in ${BENCHES:-apo arc ifeval mmlu_pro limo}; do
     [ -s "$run/results/$bench.json" ] && continue
     if [ "$mode" = parallel ]; then
-        test=/work/bench_data/parallel/$bench.parquet
+        test=$data/parallel/$bench.parquet
         rm -rf "$run/$bench"
         bash "$repo/scripts/bench/eval_rollout.sh" "$model" "$run/$bench" "$test" "$budget" > "$run/$bench.log" 2>&1
         generations=$run/$bench/generations/0.jsonl
     else
-        test=/work/bench_data/plain/$bench.parquet
+        test=$data/plain/$bench.parquet
         generations=$run/$bench.jsonl
         thinking=$([ "$mode" = plain ] && echo default || echo "$mode")
         (cd "$repo/verl" && python ../scripts/bench/generate_plain.py "$model" "$test" "$generations" "$budget" "$thinking") > "$run/$bench.log" 2>&1

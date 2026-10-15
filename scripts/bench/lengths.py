@@ -4,6 +4,8 @@ length: all answer tokens (both paths of every block included).
 decode steps: tokens the model decodes one after another. Plain generation: equal to the length (exact token counts from vLLM).
 Parallel rollout (paths decoded at the same time): main-chain tokens + per block the longest path + the summary; tokens the rollout
 inserts itself (<Path>, </Parallel>, the newline and <Summary>) are not decoded. The rollout dump keeps text only, so it is re-tokenized.
+Decode steps equal the forward calls on the critical path (a prefill forward yields the next token), the F of the RL-branch slides.
+forks: <Parallel> blocks per answer (each has 2 paths in the authors' rollout).
 
 Usage (from verl/): python ../scripts/bench/lengths.py <generations.jsonl> <tokenizer_dir> <test.parquet> <output.json>
 """
@@ -48,11 +50,13 @@ def rollout_steps(ids):
 
 if "tokens" in generations:  # plain generation
     lengths = steps = generations["tokens"].to_numpy()
+    forks = np.zeros(len(steps))
 else:
     texts = generations["output"].str.replace(tokenizer.eos_token, "", regex=False)
     encoded = [tokenizer.encode(text, add_special_tokens=False) for text in texts]
     lengths = np.array([len(ids) for ids in encoded])
     steps = np.array([rollout_steps(ids) for ids in encoded])
+    forks = np.array([ids.count(tag["<Parallel>"]) for ids in encoded])
 
 
 def stats(values):
@@ -63,6 +67,7 @@ summary = {}
 for source in pd.unique(sources):
     mask = sources == source
     summary[source] = {"answers": int(mask.sum()), "decode_steps_total": int(steps[mask].sum()),
-                       "decode_steps": stats(steps[mask]), "length_tokens": stats(lengths[mask])}
+                       "decode_steps": stats(steps[mask]), "length_tokens": stats(lengths[mask]),
+                       "forks": round(float(forks[mask].mean()), 3)}
 json.dump(summary, open(output_path, "w"), indent=1)
 print(json.dumps(summary))
