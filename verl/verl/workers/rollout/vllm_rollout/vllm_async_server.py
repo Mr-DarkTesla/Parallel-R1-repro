@@ -29,6 +29,7 @@ from vllm.entrypoints.openai.serving_chat import OpenAIServingChat
 from vllm.entrypoints.openai.serving_models import BaseModelPath, OpenAIServingModels
 from vllm.inputs import TokensPrompt
 from vllm.outputs import RequestOutput
+from vllm.sampling_params import RequestOutputKind
 from vllm.v1.engine.async_llm import AsyncLLM
 from vllm.v1.executor.abstract import Executor
 from vllm.worker.worker_base import WorkerWrapperBase
@@ -256,6 +257,7 @@ class AsyncvLLMServer(AsyncServerBase):
             load_format="auto",
             disable_log_stats=config.disable_log_stats,
             max_num_batched_tokens=max_num_batched_tokens,
+            max_num_seqs=config.max_num_seqs,
             enable_chunked_prefill=config.enable_chunked_prefill,
             enable_prefix_caching=True,
             trust_remote_code=trust_remote_code,
@@ -314,7 +316,15 @@ class AsyncvLLMServer(AsyncServerBase):
             return JSONResponse(content=generator.model_dump())
 
     async def generate(self, prompt_ids: list[int], sampling_params: dict[str, Any], request_id: str) -> list[int]:
-        max_tokens = self.max_model_len - len(prompt_ids)
+        sampling_params = dict(sampling_params)
+        context_left = self.max_model_len - len(prompt_ids)
+        max_tokens = min(context_left, sampling_params.pop("max_tokens", context_left))
+        if max_tokens <= 0:
+            return []
+        # This internal API consumes only the final token list, never streaming deltas.
+        sampling_params["output_kind"] = RequestOutputKind.FINAL_ONLY
+        # String stops need the detokenizer; token-ID stops and EOS do not.
+        sampling_params.setdefault("detokenize", bool(sampling_params.get("stop")))
         sampling_params = SamplingParams(max_tokens=max_tokens, **sampling_params)
         prompt = TokensPrompt(prompt_token_ids=prompt_ids)
         generator = self.engine.generate(prompt=prompt, sampling_params=sampling_params, request_id=request_id)

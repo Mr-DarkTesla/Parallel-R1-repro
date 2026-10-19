@@ -1,0 +1,209 @@
+{
+  "source_sha256": "ae6dcf700e54544e37840c4004effc2b7d322b2bbe791b6c9f40e39adb5ce492",
+  "checkpoint_identity": {
+    "checkpoint": 150,
+    "dataset": "MATH500",
+    "reward": "C*(1-.9*(1-exp(-ln(9)*F/10000)))",
+    "initial_model": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/epoch1/final",
+    "training_root": "${PROJECT_ROOT}/work/experiments/rl-r4-dapo2k-sft-16gpu-20261013",
+    "evaluation_root": "${PROJECT_ROOT}/work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150",
+    "model_sha256": "a15058092190e857c6f68a337d69e0c149602e1ab50f8384a92d2c04007ef28f",
+    "summary": {
+      "passed": true,
+      "checkpoint": 150,
+      "dataset": "MATH500",
+      "completed": 500,
+      "technical_unknown": 0,
+      "correct": 359,
+      "format_valid": 455,
+      "correct_and_parallel": 293,
+      "format_and_fork_count_all": 398,
+      "actual_forwards_all": 1029.574,
+      "sampled_tokens_all": 1237.892,
+      "width_valid": 2.7167919799498748,
+      "depth_valid": 0.8769230769230769,
+      "actual_forwards_valid": 957.276923076923,
+      "truncated": 0,
+      "mean_task_seconds": 124.2659029955864,
+      "model_sha256": "a15058092190e857c6f68a337d69e0c149602e1ab50f8384a92d2c04007ef28f",
+      "samples_per_question": 1,
+      "response_budget": 32000,
+      "path_budget": 4000,
+      "max_context": 40960,
+      "prior_4096_results_not_matched": true,
+      "precision": "BF16",
+      "backend": "vLLM structured DAG BF16 rolling4",
+      "precision_counts": {
+        "BF16": 500
+      },
+      "full_traces_retained": true,
+      "selection_allowed": false,
+      "finished_at": 1791972841.6747775,
+      "accuracy": 0.718,
+      "format_and_fork_fraction_all": 0.796
+    },
+    "reward_source_sha256": "b4c37fd4e22ba6edb5d3efd214c6cf07a9f4975acdc41f4afb351658c1e5d4f5",
+    "training_config_sha256": "5cba0cc2f85dc134a8feae33a2a9c186cd4cd6204824063992c3ed91dcce9993",
+    "job_sha256": "55c7d8b2784fd3bb772e9bd56d60eb8cdd6219073595db30ca8d4ea434f3f160",
+    "complete_sha256": "da1a9f5767a5d7ce70ed59646f03cc979fc9e8edd62a6448d0d0d3d072e6490c",
+    "extracted_at": "2026-10-14T14:38:17.692274+00:00",
+    "source_files": [
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-0.jsonl",
+        "sha256": "83239699c568ab1800d485dafbd8a5b5e75b39a7b20f410f3b7ac9f7974ae7f1",
+        "rows": 24
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-1.jsonl",
+        "sha256": "73a07817e04ba9ffe0860d8539f4b6b4b2dafcf8b81439b9187fe7f94032ac36",
+        "rows": 23
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-10.jsonl",
+        "sha256": "819e4ce2ede60eb1560ed65dc562110c1b725ec0b6a1010aaf74449dde62d3e8",
+        "rows": 15
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-11.jsonl",
+        "sha256": "1492228d9229e4c4262ff5d9a5d88b044607f9c0ae0e0afb4384bfd0824a4465",
+        "rows": 29
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-12.jsonl",
+        "sha256": "00a0f3de589ec7d7a27386c411afe044ffdcbef43673f8999cfec0dbf735950a",
+        "rows": 29
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-13.jsonl",
+        "sha256": "9bd010b5deb08326dcd9d87a4c85509e9eeaef62b3f8ddbb2edee4c19eb84f91",
+        "rows": 42
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-14.jsonl",
+        "sha256": "63c69b4dbfb5da18eb408248853b888a11ebc942a15257450889f5f7523757d1",
+        "rows": 43
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-15.jsonl",
+        "sha256": "04f8528752df7ff72c7431aa799ab57405970f914ed2a9b271276fa3052fb779",
+        "rows": 17
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-2.jsonl",
+        "sha256": "661642e96bb855db8b3a1548d9de967fe5c5edeff740a0a28b82e69f2a1c08bf",
+        "rows": 36
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-3.jsonl",
+        "sha256": "b76a66bf12e863559e404fb3a4cf6bc0c00ce1da4437710e68fd5ae2a841525b",
+        "rows": 22
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-4.jsonl",
+        "sha256": "7ef74ce98712f73722255db3a2d8f9eeb3ba8b416007c10d244a43630fd23251",
+        "rows": 43
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-5.jsonl",
+        "sha256": "2bfc57d28f1fb2dfb447f123573bcde4af932c2f7e829c2afe6759cd2c01438f",
+        "rows": 32
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-6.jsonl",
+        "sha256": "60370deb4f3b4da1ac3e19d6f95d0ff62d0c2a002ac585e6266ca4e06426a76e",
+        "rows": 21
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-7.jsonl",
+        "sha256": "2280aa907405eaaa23d1397600ba207d5d0bd50e6894e6ddb31869d110b93d3e",
+        "rows": 36
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-8.jsonl",
+        "sha256": "c1c529e8553d70da5ceece2710abf03c81b0d3d0be8b2b77243a79ac1decb8f1",
+        "rows": 51
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-9.jsonl",
+        "sha256": "ee8c4baa58dad7e2595328e0783e5693741177245439e8cad344237421308119",
+        "rows": 37
+      }
+    ],
+    "protocol": {
+      "precision": "BF16",
+      "response_budget": 32000,
+      "path_budget": 4000,
+      "samples_per_question": 1
+    }
+  },
+  "reference_validation": {
+    "matched_all_500_rows": true,
+    "matched_fields": [
+      "counts",
+      "total",
+      "sampled",
+      "valid",
+      "correct"
+    ],
+    "reference_source_sha256": "9bb63376e5f717ead646291ec44a131b57768417d5219a0ad291b39ef0a4b373"
+  },
+  "dataset": "MATH500",
+  "group": "all",
+  "n": 500,
+  "total_response_tokens": 623598,
+  "counts_including_invalid_format": true,
+  "aggregation": "Pooled share of all response token IDs, including runtime-inserted service tokens; excludes prompt; not unweighted mean per-task percentage",
+  "confidence": "95% percentile task bootstrap, 20000 repetitions, seed20261013",
+  "palette": {
+    "plan": "#D7A522",
+    "branches": "#397CC1",
+    "summary": "#B9674D",
+    "answer": "#6D8884",
+    "other_thought": "#89949D",
+    "service": "#C5C5C5"
+  },
+  "shares": [
+    {
+      "category": "plan",
+      "tokens": 176652,
+      "share_pct": 28.32786506691811,
+      "ci95_low": 24.922584603768936,
+      "ci95_high": 32.11747587055515
+    },
+    {
+      "category": "branches",
+      "tokens": 240132,
+      "share_pct": 38.50750002405396,
+      "ci95_low": 35.05723379875492,
+      "ci95_high": 42.050666093866596
+    },
+    {
+      "category": "summary",
+      "tokens": 117359,
+      "share_pct": 18.81965625290652,
+      "ci95_low": 16.163286235867098,
+      "ci95_high": 21.670448532601405
+    },
+    {
+      "category": "answer",
+      "tokens": 53258,
+      "share_pct": 8.540437910320431,
+      "ci95_low": 7.792437451902108,
+      "ci95_high": 9.37224900399606
+    },
+    {
+      "category": "other_thought",
+      "tokens": 27686,
+      "share_pct": 4.4397191780602245,
+      "ci95_low": 2.662278143491704,
+      "ci95_high": 6.534918695245855
+    },
+    {
+      "category": "service",
+      "tokens": 8511,
+      "share_pct": 1.364821567740756,
+      "ci95_low": 1.2435052851163813,
+      "ci95_high": 1.4996770445979617
+    }
+  ]
+}

@@ -152,6 +152,9 @@ algorithm:
   # Whether to normalize advantages by std (specific to GRPO)
   norm_adv_by_std_in_grpo: True
 
+  # Opt-in: standardize accuracy, center auxiliary rewards without rescaling.
+  split_accuracy_aux: false
+
   # Whether to enable in-reward KL penalty
   use_kl_in_reward: False
 

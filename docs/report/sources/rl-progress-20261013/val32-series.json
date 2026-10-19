@@ -1,0 +1,103 @@
+{
+  "now": 1791870572.4012556,
+  "points": [
+    {
+      "step": 0,
+      "correct": 16,
+      "n": 32,
+      "format_valid": 29,
+      "accuracy": 0.5,
+      "forwards_valid": 525.4827586206897,
+      "width_valid": 2.7,
+      "forwards_all": 541.28125,
+      "width_all": 2.727272727272727,
+      "depth_valid": 1.0344827586206897,
+      "backend": "HF FP32",
+      "source": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/validation-0000/summary.json"
+    },
+    {
+      "step": 50,
+      "correct": 28,
+      "n": 32,
+      "format_valid": 30,
+      "accuracy": 0.875,
+      "forwards_valid": 837.6333333333333,
+      "width_valid": 4,
+      "forwards_all": 879.25,
+      "width_all": 4,
+      "depth_valid": 1,
+      "backend": "HF FP32",
+      "source": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/validation-0050/summary.json"
+    },
+    {
+      "step": 100,
+      "correct": 27,
+      "n": 32,
+      "format_valid": 31,
+      "accuracy": 0.84375,
+      "forwards_valid": 635.6451612903226,
+      "width_valid": 3.966666666666667,
+      "forwards_all": 638.78125,
+      "width_all": 3.967741935483871,
+      "depth_valid": 0.967741935483871,
+      "backend": "vLLM BF16",
+      "source": "${PROJECT_ROOT}/work/experiments/rl-vllm-32gpu-batch64-20261012/repair-01-refresh-memory/production/validation-0100/summary.json"
+    },
+    {
+      "step": 150,
+      "correct": 28,
+      "n": 32,
+      "format_valid": 32,
+      "accuracy": 0.875,
+      "forwards_valid": 736.75,
+      "width_valid": 4.03125,
+      "forwards_all": 736.75,
+      "width_all": 4.03125,
+      "depth_valid": 1,
+      "backend": "vLLM BF16",
+      "source": "${PROJECT_ROOT}/work/experiments/rl-vllm-32gpu-batch64-20261012/repair-01-refresh-memory/production/validation-0150/summary.json"
+    },
+    {
+      "step": 200,
+      "correct": 28,
+      "n": 32,
+      "format_valid": 32,
+      "accuracy": 0.875,
+      "forwards_valid": 780.25,
+      "width_valid": 4,
+      "forwards_all": 780.25,
+      "width_all": 4,
+      "depth_valid": 1.03125,
+      "backend": "vLLM BF16",
+      "source": "${PROJECT_ROOT}/work/experiments/rl-vllm-32gpu-batch64-20261012/repair-01-refresh-memory/production/validation-0200/summary.json"
+    },
+    {
+      "step": 250,
+      "correct": 28,
+      "n": 32,
+      "format_valid": 31,
+      "accuracy": 0.875,
+      "forwards_valid": 742.0967741935484,
+      "width_valid": 4.161290322580645,
+      "forwards_all": 799.59375,
+      "width_all": 4.15625,
+      "depth_valid": 1,
+      "backend": "vLLM BF16",
+      "source": "${PROJECT_ROOT}/work/experiments/rl-vllm-32gpu-batch64-20261012/repair-01-refresh-memory/production/validation-0250/summary.json"
+    },
+    {
+      "step": 300,
+      "correct": 29,
+      "n": 32,
+      "format_valid": 31,
+      "accuracy": 0.90625,
+      "forwards_valid": 722.9032258064516,
+      "width_valid": 4.064516129032258,
+      "forwards_all": 792.3125,
+      "width_all": 4.0625,
+      "depth_valid": 1,
+      "backend": "vLLM BF16",
+      "source": "${PROJECT_ROOT}/work/experiments/rl-vllm-32gpu-batch64-20261012/repair-01-refresh-memory/production/validation-0300/summary.json"
+    }
+  ]
+}

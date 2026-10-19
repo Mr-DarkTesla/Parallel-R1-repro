@@ -25,6 +25,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "true"
 
 import logging
 import re
+import shutil
 from contextlib import nullcontext
 
 import hydra
@@ -38,7 +39,7 @@ from torch.distributed.fsdp import CPUOffload, MixedPrecision, ShardingStrategy
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 from torch.utils.data import DataLoader, Dataset, DistributedSampler
 from tqdm import tqdm
-from transformers import AutoConfig, AutoModelForCausalLM, PreTrainedModel
+from transformers import set_seed, AutoConfig, AutoModelForCausalLM, PreTrainedModel
 
 import verl.utils.hdfs_io as hdfs_io
 from verl.utils.dataset import SFTDataset, ParallelThinkingSFTDataset
@@ -150,19 +151,19 @@ class FSDPParallelThinkingSFTTrainer:
             dataset=self.train_dataset,
             batch_size=config.data.train_batch_size,
             sampler=self.train_sampler,
-            num_workers=8,
+            num_workers=config.data.get("num_workers", 8),
             pin_memory=True,
             drop_last=True,
         )
 
-        self.val_sampler = DistributedSampler(self.val_dataset, shuffle=False, num_replicas=world_size, rank=rank, drop_last=True)
+        self.val_sampler = DistributedSampler(self.val_dataset, shuffle=False, num_replicas=world_size, rank=rank, drop_last=False)
         self.val_dataloader = DataLoader(
             dataset=self.val_dataset,
             batch_size=config.data.micro_batch_size_per_gpu,
             sampler=self.val_sampler,
-            num_workers=8,
+            num_workers=config.data.get("num_workers", 8),
             pin_memory=True,
-            drop_last=True,
+            drop_last=False,
         )
 
     def _build_model_optimizer(self):
@@ -300,9 +301,30 @@ class FSDPParallelThinkingSFTTrainer:
         else:
             raise ValueError(f"Unknown lr scheduler: {self.config.optim.lr_scheduler}")
 
-    def _compute_loss_and_backward(self, batch, do_backward=True):
+    def _compute_loss_and_backward(self, batch, do_backward=True, loss_scale=1.0, return_per_example=False):
         """Compute loss with optional sequence parallelism and remove padding features"""
         use_sp = self.use_remove_padding and self.config.ulysses_sequence_parallel_size > 1
+
+        if self.config.data.get("trim_padding", False) and not use_sp:
+            # Keep the last next-token target; preserve the original positions and mask.
+            length = batch["loss_mask"].nonzero()[:, -1].max().item() + 2
+            for key in ("input_ids", "position_ids", "loss_mask"):
+                batch[key] = batch[key][:, :length]
+            mask = batch["attention_mask"]
+            batch["attention_mask"] = mask[..., :length, :length] if mask.ndim == 4 else mask[:, :length]
+
+        if self.config.data.get("defer_parallel_mask", False):
+            if use_sp or not self.config.data.parallel_attention:
+                raise ValueError("Deferred masks require Unseen attention without remove-padding/SP")
+            # Keep full optimizer batches linear in sequence length. Each mask
+            # uses the same parser as the eager dataset, including prompt scope.
+            masks = []
+            for ids, valid, start in zip(batch["input_ids"], batch["attention_mask"], batch["prompt_length"]):
+                allowed = self.train_dataset.generate_parallel_thinking_reasponse_mask(ids.cpu(), start=int(start))
+                valid = valid.cpu().bool()
+                allowed &= valid[:, None] & valid[None, :]
+                masks.append(torch.zeros(allowed.shape, dtype=torch.float32).masked_fill_(~allowed, -torch.inf))
+            batch["attention_mask"] = torch.stack(masks).unsqueeze(1)
 
         # Move inputs to GPU and prepare loss mask
         input_ids = batch["input_ids"].to(self.device_name)
@@ -379,18 +401,22 @@ class FSDPParallelThinkingSFTTrainer:
                 loss_mask = loss_mask.to(full_loss.device)
                 loss = full_loss * loss_mask
 
-            valid_token_this_rank = torch.sum(loss_mask)
+            token_counts = loss_mask.view(input_ids.size(0), -1).sum(-1)
+            example_losses = loss.view(input_ids.size(0), -1).sum(-1) / token_counts.clamp_min(1)
+            if return_per_example:
+                return example_losses
 
             if self.config.data.balance_dp_token:
+                valid_token_this_rank = torch.sum(loss_mask)
                 torch.distributed.all_reduce(valid_token_this_rank)
                 dp_size = self.ulysses_device_mesh.size("dp") if use_sp else torch.distributed.get_world_size()
+                loss = torch.sum(loss) / (valid_token_this_rank + 1e-8) * dp_size
             else:
-                dp_size = 1
-
-            loss = torch.sum(loss) / (valid_token_this_rank + 1e-8) * dp_size
+                # Keep equal example weights when changing the microbatch size.
+                loss = example_losses.mean()
 
             if do_backward:
-                loss.backward()
+                (loss * loss_scale).backward()
             return loss
 
     def training_step(self, batch: TensorDict):
@@ -406,7 +432,7 @@ class FSDPParallelThinkingSFTTrainer:
         n_micro_batches = len(micro_batches)
         step_loss = 0
         for micro_batch in micro_batches:
-            loss = self._compute_loss_and_backward(batch=micro_batch) / n_micro_batches
+            loss = self._compute_loss_and_backward(batch=micro_batch, loss_scale=1 / n_micro_batches) / n_micro_batches
             step_loss += loss.item()
 
         if self.config.model.strategy == 'fsdp':
@@ -442,18 +468,25 @@ class FSDPParallelThinkingSFTTrainer:
             step_loss /= self.ulysses_device_mesh.size(0)
         return {'train/loss': step_loss.detach().item(), 'train/lr(1e-3)': lr * 1e3}
 
-    def validation_step(self, batch: TensorDict):
+    @torch.no_grad()
+    def validate(self):
         self.fsdp_model.eval()
-        with torch.no_grad():
-            loss = self._compute_loss_and_backward(batch, do_backward=False)
-            if is_cuda_available:
-                torch.distributed.all_reduce(loss, op=torch.distributed.ReduceOp.AVG)
-            elif is_npu_available:
-                torch.distributed.all_reduce(loss)
-                loss /= self.ulysses_device_mesh.size(0)
-        return loss
+        total = torch.zeros((), device=self.device_name)
+        offset = 0
+        for data in self.val_dataloader:
+            data.pop("bool_attention_mask", None)
+            size = data["input_ids"].size(0)
+            batch = TensorDict(data, batch_size=size).to(self.device_name)
+            losses = self._compute_loss_and_backward(batch, do_backward=False, return_per_example=True)
+            # DistributedSampler pads with duplicates; do not count those examples.
+            indices = (offset + torch.arange(size, device=self.device_name)) * self.val_sampler.num_replicas + self.val_sampler.rank
+            total += losses[indices < len(self.val_dataset)].sum()
+            offset += size
+        torch.distributed.all_reduce(total)
+        sp_size = self.config.ulysses_sequence_parallel_size
+        return (total / (len(self.val_dataset) * sp_size)).item()
 
-    def save_checkpoint(self, step):
+    def save_checkpoint(self, step, final=False):
         # save checkpoint
         path = os.path.join(self.config.trainer.default_local_dir, f"global_step_{step}")
 
@@ -466,11 +499,6 @@ class FSDPParallelThinkingSFTTrainer:
             with FSDP.state_dict_type(self.fsdp_model, StateDictType.FULL_STATE_DICT, cfg):
                 state_dict = self.fsdp_model.state_dict()
 
-            # save huggingface model
-            if self.device_mesh.get_rank() == 0:
-                os.makedirs(path, exist_ok=True)
-                self.model.save_pretrained(path, state_dict=state_dict)
-                self.tokenizer.save_pretrained(path)
         elif fsdp_strategy == "fsdp2":
             # FSDP2 checkpoint saving
             from torch.distributed.checkpoint.state_dict import StateDictOptions, get_model_state_dict
@@ -479,14 +507,20 @@ class FSDPParallelThinkingSFTTrainer:
             options = StateDictOptions(full_state_dict=True, cpu_offload=True)
             state_dict = get_model_state_dict(self.fsdp_model, options=options)
 
-            # save huggingface model
-            if self.device_mesh.get_rank() == 0:
-                os.makedirs(path, exist_ok=True)
-                self.model.save_pretrained(path, state_dict=state_dict)
-                self.model_config.save_pretrained(path)
-                self.tokenizer.save_pretrained(path)
         else:
             raise NotImplementedError(f"not implement {fsdp_strategy}")
+
+        if self.device_mesh.get_rank() == 0:
+            os.makedirs(path, exist_ok=True)
+            state_dict = {key: value.bfloat16() if value.is_floating_point() else value for key, value in state_dict.items()}
+            if self.model_config.tie_word_embeddings:
+                state_dict.pop("lm_head.weight", None)
+            self.model.save_pretrained(path, state_dict=state_dict)
+            self.model_config.torch_dtype = torch.bfloat16
+            self.model_config.save_pretrained(path)
+            self.tokenizer.save_pretrained(path)
+            if final and self.config.trainer.get("final_dir"):
+                shutil.copytree(path, self.config.trainer.final_dir, dirs_exist_ok=True)
 
         # Copy to HDFS if configured
         if self.device_mesh.get_rank() == 0 and self.config.trainer.default_hdfs_dir:
@@ -529,6 +563,7 @@ class FSDPParallelThinkingSFTTrainer:
                 disable=rank != 0
             ):
                 global_step += 1
+                data.pop("bool_attention_mask", None)
                 data = TensorDict(data, batch_size=self.config.data.train_batch_size).to(self.device_name)
                 metric = self.training_step(data)
                 if rank == 0:
@@ -536,33 +571,17 @@ class FSDPParallelThinkingSFTTrainer:
 
                 # for early exit validation
                 if global_step >= self.total_training_steps:
-                    # Perform final validation
-                    val_losses = []
-                    for val_data in self.val_dataloader:
-                        val_data = TensorDict(val_data, batch_size=self.config.data.micro_batch_size_per_gpu).to(self.device_name)
-                        val_loss = self.validation_step(val_data)
-                        val_losses.append(val_loss)
+                    val_loss = self.validate()
                     if rank == 0:
-                        avg_val_loss = torch.mean(torch.stack(val_losses))
-                        metric = {"val/loss": avg_val_loss.detach().item()}
-                        tracking.log(data=metric, step=global_step)
-                    torch.distributed.barrier()
+                        tracking.log(data={"val/loss": val_loss}, step=global_step)
 
                     # Save final checkpoint
-                    self.save_checkpoint(step=global_step)
+                    self.save_checkpoint(step=global_step, final=True)
                     return
 
-            # validation
-            val_losses = []
-            for data in self.val_dataloader:
-                data = TensorDict(data, batch_size=self.config.data.micro_batch_size_per_gpu).to(self.device_name)
-                val_loss = self.validation_step(data)
-                val_losses.append(val_loss)
+            val_loss = self.validate()
             if rank == 0:
-                val_loss = torch.mean(torch.stack(val_losses))
-                metric = {"val/loss": val_loss.detach().item()}
-                tracking.log(data=metric, step=global_step)
-            torch.distributed.barrier()
+                tracking.log(data={"val/loss": val_loss}, step=global_step)
 
             # save checkpoint
             self.save_checkpoint(step=global_step)
@@ -570,6 +589,7 @@ class FSDPParallelThinkingSFTTrainer:
 
 @hydra.main(config_path="config", config_name="sft_trainer", version_base=None)
 def main(config):
+    set_seed(config.trainer.seed)
     device_name = get_device_name()
     local_rank, rank, world_size = initialize_global_process_group()
 
@@ -602,7 +622,7 @@ def create_sft_dataset(data_paths, data_config, tokenizer):
         dataset_cls = MultiTurnSFTDataset
     # Default to single-turn dataset
     else:
-        dataset_cls = ParallelThinkingSFTDataset
+        dataset_cls = ParallelThinkingSFTDataset if data_config.get("parallel_attention", True) else SFTDataset
 
     # Create datasets based on the selected class
     dataset = dataset_cls(parquet_files=data_paths, tokenizer=tokenizer, config=data_config)

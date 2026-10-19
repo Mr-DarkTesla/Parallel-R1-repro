@@ -227,10 +227,12 @@ def efficient_entropy_kernel_general_mainloop(
 
         # update global maximum
         _max_old = _max
-        m_pid_n = tl.max(logits, axis=1)
+        # Zero-filled vocabulary padding must not enter the softmax denominator.
+        valid_vocab = offs_bn < min((pid_n + 1) * vocab_per_split, vocab_size)
+        m_pid_n = tl.max(tl.where(valid_vocab[None, :], logits, -float("inf")), axis=1)
         _max = tl.maximum(_max_old, m_pid_n)
 
-        exp_logits = tl.exp(logits - _max[:, None])
+        exp_logits = tl.where(valid_vocab[None, :], tl.exp(logits - _max[:, None]), 0.0)
         coeff = tl.exp(_max_old - _max)
         _accu = coeff * _accu + tl.sum(exp_logits, axis=1)
 

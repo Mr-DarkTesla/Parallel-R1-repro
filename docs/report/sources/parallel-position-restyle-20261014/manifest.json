@@ -1,0 +1,66 @@
+{
+  "style_thread": "thread://01a139af-0656-72c3-9564-ebbc74514b95?hostId=local",
+  "style_source": "${PROJECT_ROOT}/work/experiments/gsm-legacy-comparison-20261014/plot.py",
+  "palette": {
+    "blue": "#397CC1",
+    "background": "#ffffff",
+    "text": "#33332f",
+    "grid": "#e8e6df"
+  },
+  "content": "axes and ticks only; no titles, captions, legend, annotations, markers or dashed lines",
+  "axes": {
+    "x": [
+      0,
+      300
+    ],
+    "y": [
+      0,
+      1
+    ]
+  },
+  "ours": {
+    "source": "${PROJECT_ROOT}/work/experiments/rl300-parallel-position-20261014/data.json",
+    "sha256": "c89a4c5a05e91be2118225a3dcbf7192b920924a5cdf3514d80e0fe8034efb30",
+    "iterations": [
+      1,
+      300
+    ],
+    "metric": "pooled mean of start_token_index / response_ids_length",
+    "smoothing": "trailing 10 completed updates, weighted by number of blocks; shortened prefix window"
+  },
+  "paper": {
+    "url": "https://arxiv.org/pdf/2509.07980",
+    "version": "2509.07980v2",
+    "page": 11,
+    "figure": 3,
+    "source_pdf_sha256": "0f08fb26acc3d887a1784c1f3bfec57ca89f2f2083c96e777961ceaa6992d650",
+    "method": "extract all vertices of red PDF vector path; affine calibration from original grid ticks",
+    "points": 119,
+    "iterations": [
+      2,
+      238
+    ],
+    "calibration": {
+      "x0": 360.71818,
+      "x250": 511.82202,
+      "y04": 328.86364,
+      "y08": 224.13417
+    },
+    "smoothing": "none; preserve published curve vertices; these are graphical values, not raw author logs"
+  },
+  "combined": {
+    "outputs": [
+      "comparison.png",
+      "comparison.svg"
+    ],
+    "displayed_iterations": [
+      0,
+      250
+    ],
+    "legend": {
+      "Статья": "#B9674D",
+      "Наш": "#397CC1"
+    },
+    "content": "two solid curves in shared axes, with legend; no title or prose captions"
+  }
+}

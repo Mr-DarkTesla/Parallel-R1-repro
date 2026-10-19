@@ -1,6 +1,78 @@
 
 # **Parallel-R1**
-The official repository for "**Parallel-R1: Towards Parallel Thinking via Reinforcement Learning**".
+This fork adapts the code for "**Parallel-R1: Towards Parallel Thinking via Reinforcement Learning**"
+with the earlier Qwen3-0.6B adaptation and a Qwen3-4B Instruct SFT/RL runtime.
+The upstream project description and published results follow below.
+
+## Results report
+
+**[Что мы сделали: эксперименты, графики, исправления](docs/report/README.md)** — сводка по Qwen3-0.6B и
+Qwen3-4B (SFT, RL, ошибки авторов) со ссылками на страницы по каждому эксперименту.
+
+## What this branch adds
+
+This branch contains the reusable SFT, evaluation and RL implementation
+relative to upstream `main` (`f1c6389`). Its main entry point is
+[`scripts/qwen3.sh`](scripts/qwen3.sh); stage settings live in
+[`verl/verl/trainer/config`](verl/verl/trainer/config).
+
+- **Qwen3-4B Instruct RL:** a [shared runtime](experiments/parallel_instruct/README.md)
+  for 1/2/4/8/16/24/32 GPUs with an explicit, unchanged response batch, fullwidth8
+  decoding, exact structured replay, collective parity rejection, and weights-only
+  checkpoint exports. Dated SFT/RL source snapshots are preserved in the
+  [4B reproduction bundle](docs/reproduction/4b-2026-10-14/README.md). Each new run requires its actual distributed
+  GPU smoke; CPU tests do not establish GPU throughput or model quality.
+- **Qwen3-0.6B SFT:** preparation and explicit initialization of six control
+  tokens, Seen/Unseen profiles, response-only structured masks and positions,
+  corrected gradient accumulation, equal response weighting, complete validation
+  without counting sampler duplicates, and BF16 HF checkpoint export.
+- **Checkpoint evaluation:** validation-only launcher, a shared total response
+  budget across paths and summary, empty-generation handling, observed `pass@N`,
+  separate tag-format diagnostics, and per-response JSONL output.
+- **S1/S2 RL:** a common launcher, author batch/loss defaults and S2 reward
+  schedule, local rollout/GRPO telemetry, optional forward probes, atomic
+  checkpoint tracking, and checkpoint saving before lengthy validation.
+- **Efficiency RL experiments:** critical decode-depth telemetry, a cost applied
+  only to correct solutions, a parallel-efficiency bonus, and optional split
+  GRPO advantages that preserve the auxiliary coefficient. See the
+  [formulas and launch recipe](docs/efficiency-rl.md) and the
+  [0.6B RL report](docs/report/03-rl-0.6b.md).
+- **Performance controls:** padding and unused prompt-logit trimming, token-only
+  final vLLM outputs, optional microbatch scheduling and deferred gradient sync,
+  configurable FSDP sharding, guarded zero-advantage skipping, and opt-in full
+  decode graphs. The detailed conditions and memory tradeoffs are documented below.
+- **Regression checks:** CPU tests for generation, PPO loss/gradients, ordering,
+  sharding guards, S2 and efficiency rewards, plus optional CUDA checks for fused kernels
+  and decode graphs.
+
+The published 4B results below are upstream results, not measurements of this
+fork. In the legacy 0.6B pipeline, Unseen generation differs from training in its
+attention mask/positions, and RL includes runtime-inserted tags in its loss. The
+shared Instruct runtime instead records exact per-call contexts and excludes
+injected headers/bridges from policy loss. Bounded response budgets also change
+the original rollout protocol. Neither source changes nor CPU parity establish
+paper-level reproduction or a quality improvement.
+
+### Checking the branch
+
+From the repository root, in a Python environment with PyTorch 2.6.0 and
+Transformers 4.53.2:
+
+```bash
+python -m unittest discover -s tests -v
+git diff --check origin/main...HEAD
+```
+
+On CPU, the fused-kernel and decode-graph checks are skipped. The CUDA fused test
+also requires the training dependencies and `PYTHONPATH=verl`. For the full decode
+graph test, set `PARALLEL_R1_TEST_MODEL` to a local Qwen3 checkpoint as described
+below. CPU checks do not validate distributed FSDP execution or GPU performance.
+
+## Reproduce the 4B experiments
+
+The [benchmark trajectory figures and calculation guide](docs/reproduction/benchmark-trajectories-2026-10-14/README.md) include both four-panel RL300/RL150 figures, per-answer input snapshots, exact aggregation formulas, numerical tables and standalone plotting code.
+
+The [October 14 reproduction guide](docs/reproduction/4b-2026-10-14/README.md) freezes the SFT corpus, full SFT and two distinct RL recipes: R2 RL300 and R4 RL150 with the new forward-cost reward. It includes pinned model revisions, data/source hashes, complete phase configurations, portable restore/launch commands and the verified Hugging Face publication.
 
 ## **Updates**
 * **2026-1-26**: 🎉Parallel-R1 was accepted at ICLR2026.
@@ -75,6 +147,164 @@ cd verl
 sh training_scripts/sft_exp.sh
 ```
 
+For Qwen3-0.6B, all stages have one entry point (run from the repository root
+in the active Python environment):
+
+```bash
+NPROC_PER_NODE=8 bash scripts/qwen3.sh sft seen
+NPROC_PER_NODE=2 bash scripts/qwen3.sh eval verl/checkpoints/Parallel-SFT-Seen-Qwen3-0.6B/final
+NPROC_PER_NODE=1 bash scripts/qwen3.sh rl s1 verl/checkpoints/Parallel-SFT-Unseen-Qwen3-0.6B/final
+NPROC_PER_NODE=1 bash scripts/qwen3.sh rl s2 verl/checkpoints/Parallel-SFT-Unseen-Qwen3-0.6B/final
+```
+
+Arguments after the stage/model are ordinary Hydra overrides. All stages use
+`NPROC_PER_NODE`, `PARALLEL_R1_OUTPUT_ROOT` and `PARALLEL_R1_SCRATCH_ROOT`.
+The existing SFT/eval launchers remain available. SFT/eval default to 8 GPUs;
+the RL profile defaults to 1 A100 80 GB. Select the count explicitly when switching stages.
+
+RL uses `rl_qwen3_06b.yaml`: batch 256, PPO minibatch 128, rollout n=8,
+microbatch 2 per GPU, token-mean loss, LR 1e-6,
+300 steps, save/validation every 10 steps, offline W&B and rollout telemetry.
+It uses CUDA graphs and trims padding while retaining the parallel attention mask.
+Length sorting is disabled by default to preserve the original PPO microbatch groups.
+Activation checkpointing is disabled for A100 80 GB. For an 8-GPU run, use
+`NPROC_PER_NODE=8` with overrides `ray_init.num_cpus=32 actor_rollout_ref.rollout.agent.num_workers=8`.
+Per-token forward counting is opt-in: set `PARALLEL_R1_FORWARD_PROBE=1` and
+`actor_rollout_ref.rollout.enforce_eager=true` when profiling.
+On vLLM 0.8.5.post1, Qwen3 and rollout TP=1, full decode graphs can be enabled with
+`PARALLEL_R1_FULL_DECODE_GRAPH=1 VLLM_ATTENTION_BACKEND=FLASH_ATTN`.
+They retain the compiled kernels and exact batch shapes, check each new graph
+against the original forward, and use the existing path for prefill.
+Set `PARALLEL_R1_GRAPH_CAPTURE_MIN_USES=4` to run the first three occurrences of a
+new shape through the original forward before paying the capture cost (default: 1).
+Run `PARALLEL_R1_TEST_MODEL=/path/to/qwen3 python tests/test_vllm_decode_graph.py`
+with `PYTHONPATH=verl` for the GPU check, including variable batches and sleep/wake.
+The published S1/S2 scripts target Unseen-SFT. Use an Unseen checkpoint to reproduce
+that setup; the launcher accepts any checkpoint and does not infer its SFT mode.
+S1 and S2 start independently from the same SFT. Existing repository Parquets
+have identical questions/order (17,917 train, 1,916 validation); only the S2
+train reward differs. Validation always uses accuracy. No dataset copying is needed.
+S2 uses the author's reward: eight accuracy-only steps, followed by two steps
+where a correct, well-formed parallel answer receives +1.2 (plain correct: +1;
+incorrect or malformed parallel: -1). Start S2 from Unseen-SFT with a new run name.
+Results go to `<output>/rl/<PARALLEL_R1_RL_NAME>` (default name `qwen06-s1-seed1`
+or `qwen06-s2-seed1`); set a new name for each independent run. Continue an
+existing run by passing `trainer.resume_mode=auto trainer.val_before_train=true`.
+RL saves optimizer state; SFT does not. The old `experiments/qwen06/run_rl.sh`
+command is a compatibility adapter for the previous environment variables.
+
+For runs using the author's `token-mean` loss, keep
+`actor_rollout_ref.actor.sort_microbatches_by_length=false`. Optional
+`++actor_rollout_ref.actor.sort_microbatch_groups_by_length=true` reorders whole
+original microbatches without changing their loss weights;
+`++actor_rollout_ref.actor.sort_logprob_rows_by_length=true` restores log-prob
+outputs to their original row order. FSDP1 can defer gradient synchronization with
+`++actor_rollout_ref.actor.defer_gradient_sync=true` when parameters stay on GPU;
+this uses more gradient memory and changes BF16 accumulation rounding.
+`actor_rollout_ref.rollout.max_num_seqs` controls inference concurrency separately
+from the training batch. Re-measure full steps after changing it, including
+validation/checkpoint time in the completion estimate.
+For a small actor on a one-dimensional FSDP1 mesh,
+`++actor_rollout_ref.actor.fsdp_config.sharding_strategy=NO_SHARD` keeps model,
+optimizer and gradients replicated on each GPU while retaining gradient all-reduce.
+`SHARD_GRAD_OP` keeps optimizer states sharded and avoids resharding within
+`no_sync`. The default `auto` retains the original full/hybrid sharding.
+These options trade memory for communication; validate gradient equivalence,
+checkpoint/export and full-step time before using them for a run.
+With `NO_SHARD`, `defer_gradient_sync=true`, zero entropy coefficient and no KL loss,
+`++actor_rollout_ref.actor.skip_zero_advantage_microbatches=true` can omit zero-gradient
+microbatches. Original microbatch normalization and every optimizer update remain;
+the final microbatch always runs on all ranks to synchronize gradients. The skipped
+fraction is logged, and PPO KL is named `actor/ppo_kl_active_microbatches` because
+it covers only executed microbatches. Old-log-prob and entropy logging still cover all rows.
+
+The shared dependency file remains `verl/requirements-qwen3.txt`. It uses
+Transformers 4.53.2, Ray 2.48.0 and TensorDict 0.8.3; the earlier RL environment
+used 4.51.3/2.43.0/0.6.2. The integrated interface and generation loop have CPU
+checks, including padding/gradient equivalence, and an 8-GPU training smoke. RL retains the
+upstream structured actor mask/positions and loss on runtime-inserted tags;
+its inference/training mismatch is unchanged. Our bounded total response budget
+also differs from the original RL branch, so old runs are not protocol-identical.
+
+One-off VM provisioning, queues, plots, reports and smoke experiments remain on
+`qwen3-0.6b-rl`; no `exp/*` branch is merged here.
+
+For SFT setup:
+
+```bash
+cd verl  # from the repository root
+uv venv --python 3.12 ../.venv
+source ../.venv/bin/activate
+uv pip install -r requirements-qwen3.txt setuptools ninja
+uv pip install --no-build-isolation flash-attn==2.7.4.post1
+bash training_scripts/sft_qwen3_06b.sh  # Seen is the default
+# Optional Unseen comparison:
+bash training_scripts/sft_qwen3_06b.sh unseen
+```
+
+The same environment runs SFT and evaluation: PyTorch 2.6, vLLM 0.8.5.post1,
+and FlashAttention 2.7.4.post1. The environment lives in the project.
+
+The Qwen3-0.6B profile uses Parallel-GSM8K, global batch 128, microbatch 4,
+length 3072, LR 1e-5, and five epochs. Seen uses ordinary causal attention;
+Unseen isolates response paths. Prompt instructions always retain ordinary
+positions and causal attention. The selected profile was checked on 8 A100 80GB;
+use Hydra overrides for other GPU memory limits.
+
+The launcher prepares six control tokens once, explicitly initializes their
+embeddings, and uses `Qwen3-0.6B-Base-special-v2`. Existing checkpoints from the
+old token initialization need retraining. Right padding is trimmed before forward;
+tokens, positions and the attention mask are preserved. Gradient checkpointing
+is disabled. Microbatch 8 ran out of memory on the longest examples.
+
+Training averages token loss within each response and then across examples,
+with accumulation scaling applied before backward. Validation covers every
+example once, excluding duplicated sampler padding. Weighted token loss is an
+experiment only and is not part of the shared trainer.
+Override `NPROC_PER_NODE` for another GPU count and pass Hydra
+overrides after the variant. By default, the prepared model, HF cache, and all
+five epoch checkpoints are stored under `verl/checkpoints/` in the project.
+The epoch weights use BF16 (about 6 GB per variant) and can be scored separately.
+A final HF checkpoint is also copied to
+`verl/checkpoints/<experiment>/final`. Set `PARALLEL_R1_SCRATCH_ROOT` and
+`PARALLEL_R1_OUTPUT_ROOT` to use different storage locations; absolute paths
+are recommended. Optimizer
+states are not saved. Weight-only checkpoints do not resume optimizer/scheduler
+state. Kaggle-specific changes are deferred.
+
+To evaluate an epoch checkpoint in the same environment:
+
+```bash
+bash training_scripts/eval_qwen3_06b.sh checkpoints/Parallel-SFT-Seen-Qwen3-0.6B/final
+```
+
+The launcher runs validation only through the parallel-generation loop, with
+batch 1024 in eager mode (CUDA Graphs disabled). The response budget includes
+all paths, injected tags and the summary. On two A100s, measured full eval time
+was 6.9 min with this profile versus 12.3 min at batch 256 and 7.8 min with
+batch 1024 and CUDA Graphs. One stochastic pass does not establish a quality
+advantage for either engine configuration; eager is selected for measured speed.
+
+Use `actor_rollout_ref.rollout.mode=sync` for ordinary autoregressive decoding
+and `actor_rollout_ref.rollout.enforce_eager=false` to enable CUDA Graphs.
+The parallel vLLM loop does not apply Unseen's custom summary positions/mask;
+Unseen train/inference alignment remains an open limitation.
+The default benchmark file contains 30 AIME24, 30 AIME25, and 40 AMC23 questions,
+each repeated 16 times, plus 316 MATH questions once. Keep `val_kwargs.n=1` for
+this file. Metrics include accuracy, observed `pass@N`, parallel ratio, and tag
+format validity, using the original answer verifiers. Logs and per-response
+JSONL are saved under `PARALLEL_R1_OUTPUT_ROOT/eval` (default: `verl/checkpoints/eval`).
+The format sanity metrics are `parallel_format` (control tags are balanced and
+properly nested), `format_error` (unmatched or misnested tags), and `no_tags`
+(no control tags); their fractions sum to one. The sanity check imposes no
+minimum number of paths and does not require a summary. The separate `format`
+metric retains the original author checker, which requires at least two paths
+and a summary after each parallel block. They check the assembled response, including tags inserted by the
+parallel agent, and do not change accuracy or reward. Bootstrap best/worst/majority metrics
+are omitted for these auxiliary format flags; accuracy statistics are retained.
+Override `data.val_files` for another Parquet dataset and `NPROC_PER_NODE` for
+another GPU count.
+
 ### **2️⃣ Perform RL**
 To train Parallel-R1-Unseen (S1) from scratch 
 ```bash
@@ -105,4 +335,3 @@ If you think this work is useful, please cite our paper.
   journal={arXiv preprint arXiv:2509.07980},
   year={2025}
 }
-

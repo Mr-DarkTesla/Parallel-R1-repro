@@ -1,0 +1,25 @@
+{
+  "at": 1791553433.5477633,
+  "production_ready": true,
+  "production_prompt": "prompt-wide-explicit.txt",
+  "production_prompt_sha256": "3f1e91b62b5f12e6a37d7a8d14abcda0e24ceb0d3ca7e605ef7c69540670d8d4",
+  "pilot_unique_questions": 60,
+  "pilot_final_correct": 59,
+  "pilot_accepted": 40,
+  "pilot_mean_width": 3.1875,
+  "mean_width_selection_target": null,
+  "verification_examples": 7,
+  "student_layout_validation": {
+    "actual_tokenizer_prompt_opens_think": false,
+    "checked": 40,
+    "actual_loader_concatenation_single_think": true,
+    "whole_chat_single_think": true,
+    "all_work_inside_think": true,
+    "final_solution_outside_think": true,
+    "max_student_tokens": 3127,
+    "student_system_sha256": "49efaf2415b43fc6acc8cc4069858aefccebc5a6011d88eb83291d2796d186ca",
+    "serialization_version": "counted-forks-think-tail-final-v4"
+  },
+  "note": "Pilot quality gate excludes no-computation paths; production additionally balances width. Same-model critic is not a proof checker.",
+  "width_filter_enabled": false
+}

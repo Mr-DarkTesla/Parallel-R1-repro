@@ -1,0 +1,548 @@
+{
+  "root": "${PROJECT_ROOT}/work/experiments/rl-vllm-32gpu-batch64-20261012/repair-01-refresh-memory",
+  "now_msk": "2026-10-13T08:41:37.329728+03:00",
+  "step": 307,
+  "recent": [
+    {
+      "step": 288,
+      "seconds": 159.03209238313138
+    },
+    {
+      "step": 289,
+      "seconds": 108.17194470623508
+    },
+    {
+      "step": 290,
+      "seconds": 139.1295087588951
+    },
+    {
+      "step": 291,
+      "seconds": 206.28284459467977
+    },
+    {
+      "step": 292,
+      "seconds": 105.11936438921839
+    },
+    {
+      "step": 293,
+      "seconds": 191.165937572252
+    },
+    {
+      "step": 294,
+      "seconds": 132.36759678507224
+    },
+    {
+      "step": 295,
+      "seconds": 171.05030435603112
+    },
+    {
+      "step": 296,
+      "seconds": 158.54797132778913
+    },
+    {
+      "step": 297,
+      "seconds": 140.43798331171274
+    },
+    {
+      "step": 298,
+      "seconds": 88.72698388900608
+    },
+    {
+      "step": 299,
+      "seconds": 92.16049422044307
+    },
+    {
+      "step": 300,
+      "seconds": 153.5183364348486
+    },
+    {
+      "step": 301,
+      "seconds": 141.23287525493652
+    },
+    {
+      "step": 302,
+      "seconds": 149.93721392098814
+    },
+    {
+      "step": 303,
+      "seconds": 106.63872083183378
+    },
+    {
+      "step": 304,
+      "seconds": 158.02554135676473
+    },
+    {
+      "step": 305,
+      "seconds": 147.00473263300955
+    },
+    {
+      "step": 306,
+      "seconds": 180.73478410486132
+    },
+    {
+      "step": 307,
+      "seconds": 124.60762810800225
+    }
+  ],
+  "vals": [
+    {
+      "step": 100,
+      "correct": 27,
+      "completed": 32,
+      "technical_unknown": 0,
+      "format_valid": 31,
+      "parallel_valid": 30
+    },
+    {
+      "step": 150,
+      "correct": 28,
+      "completed": 32,
+      "technical_unknown": 0,
+      "format_valid": 32,
+      "parallel_valid": 32
+    },
+    {
+      "step": 200,
+      "correct": 28,
+      "completed": 32,
+      "technical_unknown": 0,
+      "format_valid": 32,
+      "parallel_valid": 32
+    },
+    {
+      "step": 250,
+      "correct": 28,
+      "completed": 32,
+      "technical_unknown": 0,
+      "format_valid": 31,
+      "parallel_valid": 31
+    },
+    {
+      "step": 300,
+      "correct": 29,
+      "completed": 32,
+      "technical_unknown": 0,
+      "format_valid": 31,
+      "parallel_valid": 31
+    }
+  ],
+  "baselines": [
+    {
+      "path": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/production/validation-0000/summary.json",
+      "step": 0,
+      "correct": 16,
+      "completed": 32
+    },
+    {
+      "path": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/validation-0000/summary.json",
+      "step": 0,
+      "correct": 16,
+      "completed": 32
+    },
+    {
+      "path": "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/recovery-20261012-global-parity/production/validation-0050/summary.json",
+      "step": 50,
+      "correct": 28,
+      "completed": 32
+    }
+  ],
+  "data_files": [
+    "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/data/val.jsonl",
+    "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/data/manifest.json"
+  ],
+  "valrows": [
+    {
+      "id": "bigmath/cn_k12/26444",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Calculus -> Differential Calculus -> Applications of Derivatives"
+      ],
+      "split_group": "1cc6d1306591561531d8a4639209924b8e52c9ac8a860c693c8835c8e11c2b06",
+      "source_row_index": 26444,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/cn32-replacements-review.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/88253",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Algebra -> Other"
+      ],
+      "split_group": "5bf8549383d62ad9fcc998bf5f90a8228f51acbbe05151ee4c0f904ca3eb7e02",
+      "source_row_index": 88253,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/163846",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Number Theory -> Other"
+      ],
+      "split_group": "7137488d22ea505df40e45293410b72922f22bd8067174a21b09a0a00f1bba20",
+      "source_row_index": 163846,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/210293",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Algebra -> Equations and Inequalities -> Polynomial Equations"
+      ],
+      "split_group": "3aa18187985a13480009f3fe17bf2616fe374730019746a1862eab42463d018b",
+      "source_row_index": 210293,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/cn32-replacements-review.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/88674",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Statistics -> Mathematical Statistics"
+      ],
+      "split_group": "7fa551c1dc78d71356f76a87cf70218f931010d41284f46310d80f10f60a3680",
+      "source_row_index": 88674,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/165159",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Combinatorics"
+      ],
+      "split_group": "08b32ba3f095e780f0bd5160e5092af295fdf6e0b6741bd75f4311a6c6d18ac3",
+      "source_row_index": 165159,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/176142",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Calculus -> Differential Calculus -> Applications of Derivatives"
+      ],
+      "split_group": "f777babf735d9129951aefc2482a162fe43975d497d149e364b255ab185813b4",
+      "source_row_index": 176142,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/60327",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Calculus -> Differential Calculus -> Applications of Derivatives"
+      ],
+      "split_group": "a8a4be0f7f092462c01892a00d5ec6d663b50d0eb961bfcb0bda2a50369119a1",
+      "source_row_index": 60327,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/23250",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Geometry -> Plane Geometry -> Other"
+      ],
+      "split_group": "781e5f6129841e6b8141105c9adf9adbd9742046074a6c280686d35a633b4a8f",
+      "source_row_index": 23250,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/64731",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Precalculus -> Trigonometric Functions"
+      ],
+      "split_group": "9a26a396e1cbc7fe10230164d391d5d4fa97742c7848996d84c0045f1256d3cd",
+      "source_row_index": 64731,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/204933",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Algebra -> Other"
+      ],
+      "split_group": "ba55e3873017bc9261786cc89fe618d86ace4f9492f750989fcaadd2f96a5dd8",
+      "source_row_index": 204933,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/147481",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Geometry -> Other"
+      ],
+      "split_group": "6e6230d9ff66ec8d39cd404d477fcf93e153e0531a82c9097c25be9f5e8ef65a",
+      "source_row_index": 147481,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/61311",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Algebra -> Other"
+      ],
+      "split_group": "5559ed77d7bd81d828e4491a78f811517979d19536979bf505ef872c927c4e72",
+      "source_row_index": 61311,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/155313",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Algebra -> Equations and Inequalities -> Quadratic Functions"
+      ],
+      "split_group": "77a0374ec9232734b2bfe5fca38b29ba0d66f98098839385648c3755c68d5602",
+      "source_row_index": 155313,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/cn32-replacements-review.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/95257",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Algebra -> Other"
+      ],
+      "split_group": "04744159728265ffd0a7776366291100fe3600b786243ba06d982f706dd3fd1d",
+      "source_row_index": 95257,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/cn32-replacements-review.jsonl"
+    },
+    {
+      "id": "bigmath/cn_k12/3177",
+      "source": "cn_k12",
+      "domain": [
+        "Mathematics -> Geometry -> Plane Geometry -> Circles"
+      ],
+      "split_group": "eb0e55374c25b9ffe3076cf588be10c2fe6a11573bae3fdd815d0bd38eff0ee7",
+      "source_row_index": 3177,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/train0-64-val0-16-pilotcn8.jsonl"
+    },
+    {
+      "id": "bigmath/orca_math/126445",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "c848ae4535054c200eb8aa1529931752bf2e8ddfa1080a7845081507998f6c44",
+      "source_row_index": 126445,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca32-replacements-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/77939",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "0808cf3b2a3b3b84aa788a61922f9cf9c351e90118e8e5113237af079d98f25d",
+      "source_row_index": 77939,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/177237",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "28af3f8f6698e29c29b7a4391bf53135aeda5682760e699f0d0eee788593826a",
+      "source_row_index": 177237,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/37442",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Geometry -> Plane Geometry -> Other"
+      ],
+      "split_group": "d6e90c03104f2f5e4ec3b2efef2bfc900e27c725e3952622482786def472e106",
+      "source_row_index": 37442,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/97620",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Probability -> Counting Methods -> Permutations"
+      ],
+      "split_group": "b7365d1e91072030b1c10a2453727442c9a2d95bc283da11ca4c301698d7d93b",
+      "source_row_index": 97620,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca32-replacements-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/95362",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "8167dcb41d6089ea98852f5a36c1d14ef46a7b4a1b2c1e95312e392efa26d73e",
+      "source_row_index": 95362,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/168550",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "181cf837c0bf52f0ee32158f0d1bfee10aa8b319238b5e84aaa91722c5cd280b",
+      "source_row_index": 168550,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca32-replacements-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/126193",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "72a674b9f64fb1eb9d611b256b49e7f12911fda6b52841b8e82a5e542aeee60b",
+      "source_row_index": 126193,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/212852",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "5c39c56d5b47d685edae6b0454acb5999069c4922bf4616e78a3e874b3efa3d1",
+      "source_row_index": 212852,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca32-replacements-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/51453",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "43da737681e16079523280cc41843406c3cd567b28ef97023941732cef5ef82a",
+      "source_row_index": 51453,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/56121",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "e5843742755961c55add06a57cc2e94e7e3b27f8cfc674f5855ab7d9ad87dc3e",
+      "source_row_index": 56121,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/95224",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "8b743f97af73942e3233d51ce65e785e6ea7e6521a9351e851d932221bf4b458",
+      "source_row_index": 95224,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/43001",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "da802c10115c2e9df0548ef92c5127f1a218ab95d4d086e7d3af0937444d357d",
+      "source_row_index": 43001,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/159296",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "28e216fe980ab1d752ff13c5e6260e2df4ff3ec7f49a892948059b639d892e8c",
+      "source_row_index": 159296,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/201363",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "76643afbfae1182ea075e92b30abcaebb48ec913db42e53a3b18419be2d035af",
+      "source_row_index": 201363,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    },
+    {
+      "id": "bigmath/orca_math/197443",
+      "source": "orca_math",
+      "domain": [
+        "Mathematics -> Applied Mathematics -> Math Word Problems"
+      ],
+      "split_group": "8fc146bc47564388a0b1c275f0b35f8bc71ba81d797be2162e75c412e3819af4",
+      "source_row_index": 197443,
+      "answer_review_receipt": "work/experiments/rl-instruct-20261011/data/independent-review/orca80-source-answer-review.json"
+    }
+  ],
+  "manifests": {
+    "${PROJECT_ROOT}/work/experiments/rl-r2-24gpu-20261012/data/manifest.json": {
+      "passed": true,
+      "train": 1024,
+      "val": 32,
+      "pilot": 16,
+      "sources": {
+        "cn_k12": 512,
+        "orca_math": 512
+      },
+      "previous128_preserved": true,
+      "group_disjoint": true,
+      "benchmark_selection": false,
+      "preparation_sha256": "39613274300ef17d95512edd853ac083d060f115486f4157a5d4a7a892887466",
+      "train_sha256": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+      "val_sha256": "cb02ef017baff97bed5568e60a53f9673c04f657f59d81349f1a6484e3f30a6a",
+      "teacher_verdicts_sha256": "3211744626808641f6ffe07b2d27a80ed2870c5727baff0949e1671ec3d63d5b",
+      "new_gold_blind_teacher_corroborated": 720,
+      "prior_reviewed": 304,
+      "rejected_or_unknown": 245,
+      "limitations": [
+        "Teacher agreement corroborates references; it is not an exact oracle or proof that every semantic paraphrase of benchmarks is absent.",
+        "Published original per-item source URLs unavailable; only pinned CNK12/Orca whitelisted."
+      ],
+      "verifier_sha256": "c28e5f363b9eed004b86091c0a3699cc8d755b2ef93e4e14fc73365d159e0922",
+      "scorer_sha256": "3aa6d7bea31716a17a9de12c8ca63fe36e3e0eabe41474f414ce21d29bd08119"
+    }
+  },
+  "failures": [],
+  "validation_times": [
+    {
+      "step": 100,
+      "mtime": 1791842020.3825552
+    },
+    {
+      "step": 150,
+      "mtime": 1791848535.6328619
+    },
+    {
+      "step": 200,
+      "mtime": 1791855016.6316817
+    },
+    {
+      "step": 250,
+      "mtime": 1791861928.5701807
+    },
+    {
+      "step": 300,
+      "mtime": 1791868981.929653
+    }
+  ],
+  "checkpoint_times": [
+    {
+      "step": 100,
+      "mtime": 1791842116.4914255
+    },
+    {
+      "step": 150,
+      "mtime": 1791848641.8831213
+    },
+    {
+      "step": 200,
+      "mtime": 1791855124.4974592
+    },
+    {
+      "step": 250,
+      "mtime": 1791862034.5542123
+    },
+    {
+      "step": 300,
+      "mtime": 1791869081.7054713
+    }
+  ]
+}

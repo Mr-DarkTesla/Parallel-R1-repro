@@ -58,6 +58,9 @@ def run_ppo(config) -> None:
         ray.init(
             runtime_env=PPO_RAY_RUNTIME_ENV,
             num_cpus=config.ray_init.num_cpus,
+            _temp_dir=config.ray_init.get('temp_dir'),
+            _plasma_directory=config.ray_init.get('plasma_directory'),
+            object_store_memory=config.ray_init.get('object_store_memory'),
         )
 
     # Create a remote instance of the TaskRunner class, and

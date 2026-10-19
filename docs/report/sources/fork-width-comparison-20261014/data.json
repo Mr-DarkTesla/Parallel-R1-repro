@@ -1,0 +1,50 @@
+{
+  "sources": [
+    {
+      "path": "${PROJECT_ROOT}/work/experiments/rl300-fork-width-20261014/data.json",
+      "sha256": "1554103a38822b6643663e38b2acee696ca11776847e1fb07825ae197b12aa9e"
+    },
+    {
+      "path": "${PROJECT_ROOT}/work/experiments/rl150-fork-width-20261014/data.json",
+      "sha256": "2403f73fc54c3330bfc893b92ad4f12d93ffaec6dde7b04eb412acc5a5185a50"
+    }
+  ],
+  "widths": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "groups": [
+    {
+      "checkpoint": 300,
+      "percentages": [
+        0.0,
+        0.0,
+        83.09316638370119,
+        2.438172043010753,
+        7.220960667798529,
+        2.1995260328239956,
+        5.048174872665535
+      ],
+      "mean_width": 4.436713709677419
+    },
+    {
+      "checkpoint": 150,
+      "percentages": [
+        43.05073407102047,
+        35.94122911694511,
+        18.089381282997035,
+        1.5189936356404137,
+        0.17899761336515513,
+        0.0,
+        1.220664280031822
+      ],
+      "mean_width": 2.84716948723512
+    }
+  ],
+  "aggregation": "Equal 25% weight for each benchmark distribution; mean width is macro mean of per-benchmark fork widths"
+}

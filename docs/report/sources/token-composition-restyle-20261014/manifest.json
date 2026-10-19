@@ -1,0 +1,120 @@
+{
+  "source": {
+    "path": "work/experiments/eval-comparison-20261013/token-composition-math500.json",
+    "sha256": "9bb63376e5f717ead646291ec44a131b57768417d5219a0ad291b39ef0a4b373",
+    "snapshot_at": 1791884869.7576177
+  },
+  "checkpoint": 300,
+  "dataset": "MATH500",
+  "categories": [
+    "plan",
+    "branches",
+    "summary",
+    "answer",
+    "other_thought",
+    "service"
+  ],
+  "palette": {
+    "plan": "#D7A522",
+    "branches": "#397CC1",
+    "summary": "#B9674D",
+    "answer": "#6D8884",
+    "other_thought": "#89949D",
+    "service": "#C5C5C5"
+  },
+  "groups": {
+    "all": {
+      "n": 500,
+      "total_tokens": 1000341,
+      "percentages": [
+        13.84577858950098,
+        51.85651692772765,
+        26.79346342897072,
+        5.713451712965878,
+        0.5284198088451838,
+        1.2623695319895916
+      ],
+      "ci95_low": [
+        12.026602192698695,
+        49.17814858045657,
+        23.413545965068693,
+        5.37326601940307,
+        0.10025254186532562,
+        1.168189687263623
+      ],
+      "ci95_high": [
+        15.962040570318957,
+        54.61463376580863,
+        30.208076962529656,
+        6.074785429708625,
+        1.3097120645336728,
+        1.3663015982300704
+      ],
+      "counts": [
+        138505,
+        518742,
+        268026,
+        57154,
+        5286,
+        12628
+      ]
+    },
+    "valid": {
+      "n": 487,
+      "total_tokens": 937319,
+      "percentages": [
+        13.150912336141698,
+        53.247506985348636,
+        26.17881425640577,
+        5.605348872689021,
+        0.49812283758250925,
+        1.3192947118323644
+      ],
+      "ci95_low": [
+        11.618047291843297,
+        50.60219578036366,
+        22.802991271921325,
+        5.282282148763257,
+        0.0656628979291203,
+        1.223129519220358
+      ],
+      "ci95_high": [
+        15.044223351710862,
+        55.91677517953598,
+        29.528365399277984,
+        5.947096086926814,
+        1.3325442096405495,
+        1.4246802989640182
+      ],
+      "counts": [
+        123266,
+        499099,
+        245379,
+        52540,
+        4669,
+        12366
+      ]
+    }
+  },
+  "denominator": "Sum of all response token IDs, including runtime-inserted headers/tags; excludes prompt",
+  "aggregation": "Pooled token proportions, not an unweighted mean of per-task proportions",
+  "confidence": "95% percentile bootstrap over tasks, 20000 draws, seed 20261013",
+  "definitions": {
+    "plan": "main phase text while Think open BEFORE first Parallel: initial planning/introductory reasoning; serial no-fork traces included here",
+    "branches": "path: all sampled sibling contents summed",
+    "summary": "summary phase: text inside Summary",
+    "answer": "main text after Think close",
+    "service": "forced runtime headers/bridges plus sampled width/tags/Think close/EOS",
+    "denominator": "all response_ids incl injected tokens, excludes prompt",
+    "aggregation": "pooled token weighted; mean per-task percentages saved separately",
+    "format_primary": "format_valid=True",
+    "other_thought": "main phase text while Think open AFTER first Parallel, outside Path/Summary blocks"
+  },
+  "valid_format_is_not_correctness": true,
+  "display": {
+    "groups": [
+      "all"
+    ],
+    "panel_titles": false
+  }
+}

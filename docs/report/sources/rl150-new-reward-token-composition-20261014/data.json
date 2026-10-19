@@ -1,0 +1,7798 @@
+{
+  "metadata": {
+    "checkpoint": 150,
+    "dataset": "MATH500",
+    "reward": "C*(1-.9*(1-exp(-ln(9)*F/10000)))",
+    "initial_model": "${PROJECT_ROOT}/work/experiments/instruct-full-20261011/runs/epoch1/final",
+    "training_root": "${PROJECT_ROOT}/work/experiments/rl-r4-dapo2k-sft-16gpu-20261013",
+    "evaluation_root": "${PROJECT_ROOT}/work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150",
+    "model_sha256": "a15058092190e857c6f68a337d69e0c149602e1ab50f8384a92d2c04007ef28f",
+    "summary": {
+      "passed": true,
+      "checkpoint": 150,
+      "dataset": "MATH500",
+      "completed": 500,
+      "technical_unknown": 0,
+      "correct": 359,
+      "format_valid": 455,
+      "correct_and_parallel": 293,
+      "format_and_fork_count_all": 398,
+      "actual_forwards_all": 1029.574,
+      "sampled_tokens_all": 1237.892,
+      "width_valid": 2.7167919799498748,
+      "depth_valid": 0.8769230769230769,
+      "actual_forwards_valid": 957.276923076923,
+      "truncated": 0,
+      "mean_task_seconds": 124.2659029955864,
+      "model_sha256": "a15058092190e857c6f68a337d69e0c149602e1ab50f8384a92d2c04007ef28f",
+      "samples_per_question": 1,
+      "response_budget": 32000,
+      "path_budget": 4000,
+      "max_context": 40960,
+      "prior_4096_results_not_matched": true,
+      "precision": "BF16",
+      "backend": "vLLM structured DAG BF16 rolling4",
+      "precision_counts": {
+        "BF16": 500
+      },
+      "full_traces_retained": true,
+      "selection_allowed": false,
+      "finished_at": 1791972841.6747775,
+      "accuracy": 0.718,
+      "format_and_fork_fraction_all": 0.796
+    },
+    "reward_source_sha256": "b4c37fd4e22ba6edb5d3efd214c6cf07a9f4975acdc41f4afb351658c1e5d4f5",
+    "training_config_sha256": "5cba0cc2f85dc134a8feae33a2a9c186cd4cd6204824063992c3ed91dcce9993",
+    "job_sha256": "55c7d8b2784fd3bb772e9bd56d60eb8cdd6219073595db30ca8d4ea434f3f160",
+    "complete_sha256": "da1a9f5767a5d7ce70ed59646f03cc979fc9e8edd62a6448d0d0d3d072e6490c",
+    "extracted_at": "2026-10-14T14:38:17.692274+00:00",
+    "source_files": [
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-0.jsonl",
+        "sha256": "83239699c568ab1800d485dafbd8a5b5e75b39a7b20f410f3b7ac9f7974ae7f1",
+        "rows": 24
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-1.jsonl",
+        "sha256": "73a07817e04ba9ffe0860d8539f4b6b4b2dafcf8b81439b9187fe7f94032ac36",
+        "rows": 23
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-10.jsonl",
+        "sha256": "819e4ce2ede60eb1560ed65dc562110c1b725ec0b6a1010aaf74449dde62d3e8",
+        "rows": 15
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-11.jsonl",
+        "sha256": "1492228d9229e4c4262ff5d9a5d88b044607f9c0ae0e0afb4384bfd0824a4465",
+        "rows": 29
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-12.jsonl",
+        "sha256": "00a0f3de589ec7d7a27386c411afe044ffdcbef43673f8999cfec0dbf735950a",
+        "rows": 29
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-13.jsonl",
+        "sha256": "9bd010b5deb08326dcd9d87a4c85509e9eeaef62b3f8ddbb2edee4c19eb84f91",
+        "rows": 42
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-14.jsonl",
+        "sha256": "63c69b4dbfb5da18eb408248853b888a11ebc942a15257450889f5f7523757d1",
+        "rows": 43
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-15.jsonl",
+        "sha256": "04f8528752df7ff72c7431aa799ab57405970f914ed2a9b271276fa3052fb779",
+        "rows": 17
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-2.jsonl",
+        "sha256": "661642e96bb855db8b3a1548d9de967fe5c5edeff740a0a28b82e69f2a1c08bf",
+        "rows": 36
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-3.jsonl",
+        "sha256": "b76a66bf12e863559e404fb3a4cf6bc0c00ce1da4437710e68fd5ae2a841525b",
+        "rows": 22
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-4.jsonl",
+        "sha256": "7ef74ce98712f73722255db3a2d8f9eeb3ba8b416007c10d244a43630fd23251",
+        "rows": 43
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-5.jsonl",
+        "sha256": "2bfc57d28f1fb2dfb447f123573bcde4af932c2f7e829c2afe6759cd2c01438f",
+        "rows": 32
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-6.jsonl",
+        "sha256": "60370deb4f3b4da1ac3e19d6f95d0ff62d0c2a002ac585e6266ca4e06426a76e",
+        "rows": 21
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-7.jsonl",
+        "sha256": "2280aa907405eaaa23d1397600ba207d5d0bd50e6894e6ddb31869d110b93d3e",
+        "rows": 36
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-8.jsonl",
+        "sha256": "c1c529e8553d70da5ceece2710abf03c81b0d3d0be8b2b77243a79ac1decb8f1",
+        "rows": 51
+      },
+      {
+        "path": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150/runs/MATH500/rank-9.jsonl",
+        "sha256": "ee8c4baa58dad7e2595328e0783e5693741177245439e8cad344237421308119",
+        "rows": 37
+      }
+    ],
+    "protocol": {
+      "precision": "BF16",
+      "response_budget": 32000,
+      "path_budget": 4000,
+      "samples_per_question": 1
+    }
+  },
+  "records": [
+    {
+      "id": "test/algebra/722.json",
+      "valid": true,
+      "correct": true,
+      "total": 449,
+      "sampled": 440,
+      "counts": {
+        "plan": 109,
+        "branches": 168,
+        "summary": 100,
+        "answer": 54,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1922.json",
+      "valid": true,
+      "correct": true,
+      "total": 355,
+      "sampled": 346,
+      "counts": {
+        "plan": 76,
+        "branches": 163,
+        "summary": 57,
+        "answer": 41,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1255.json",
+      "valid": true,
+      "correct": true,
+      "total": 347,
+      "sampled": 338,
+      "counts": {
+        "plan": 94,
+        "branches": 126,
+        "summary": 56,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1082.json",
+      "valid": true,
+      "correct": true,
+      "total": 2096,
+      "sampled": 2078,
+      "counts": {
+        "plan": 143,
+        "branches": 1658,
+        "summary": 137,
+        "answer": 128,
+        "other_thought": 1,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/algebra/2199.json",
+      "valid": true,
+      "correct": true,
+      "total": 479,
+      "sampled": 470,
+      "counts": {
+        "plan": 124,
+        "branches": 250,
+        "summary": 52,
+        "answer": 35,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1201.json",
+      "valid": true,
+      "correct": true,
+      "total": 509,
+      "sampled": 500,
+      "counts": {
+        "plan": 180,
+        "branches": 173,
+        "summary": 52,
+        "answer": 86,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/263.json",
+      "valid": true,
+      "correct": true,
+      "total": 1224,
+      "sampled": 1212,
+      "counts": {
+        "plan": 397,
+        "branches": 377,
+        "summary": 253,
+        "answer": 175,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1961.json",
+      "valid": true,
+      "correct": true,
+      "total": 885,
+      "sampled": 870,
+      "counts": {
+        "plan": 253,
+        "branches": 329,
+        "summary": 197,
+        "answer": 80,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1354.json",
+      "valid": true,
+      "correct": false,
+      "total": 2522,
+      "sampled": 2510,
+      "counts": {
+        "plan": 215,
+        "branches": 1438,
+        "summary": 489,
+        "answer": 358,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/254.json",
+      "valid": true,
+      "correct": true,
+      "total": 471,
+      "sampled": 462,
+      "counts": {
+        "plan": 191,
+        "branches": 158,
+        "summary": 55,
+        "answer": 49,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1251.json",
+      "valid": true,
+      "correct": true,
+      "total": 1321,
+      "sampled": 1309,
+      "counts": {
+        "plan": 241,
+        "branches": 687,
+        "summary": 108,
+        "answer": 227,
+        "other_thought": 37,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1842.json",
+      "valid": false,
+      "correct": true,
+      "total": 323,
+      "sampled": 323,
+      "counts": {
+        "plan": 236,
+        "branches": 0,
+        "summary": 0,
+        "answer": 84,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/algebra/524.json",
+      "valid": true,
+      "correct": true,
+      "total": 337,
+      "sampled": 328,
+      "counts": {
+        "plan": 85,
+        "branches": 132,
+        "summary": 52,
+        "answer": 50,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/960.json",
+      "valid": false,
+      "correct": false,
+      "total": 2374,
+      "sampled": 2365,
+      "counts": {
+        "plan": 653,
+        "branches": 1560,
+        "summary": 95,
+        "answer": 48,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/203.json",
+      "valid": true,
+      "correct": true,
+      "total": 1024,
+      "sampled": 1015,
+      "counts": {
+        "plan": 245,
+        "branches": 175,
+        "summary": 112,
+        "answer": 74,
+        "other_thought": 401,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/117.json",
+      "valid": true,
+      "correct": false,
+      "total": 2090,
+      "sampled": 2081,
+      "counts": {
+        "plan": 618,
+        "branches": 1140,
+        "summary": 248,
+        "answer": 66,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2176.json",
+      "valid": true,
+      "correct": true,
+      "total": 1114,
+      "sampled": 1099,
+      "counts": {
+        "plan": 231,
+        "branches": 596,
+        "summary": 126,
+        "answer": 135,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/853.json",
+      "valid": true,
+      "correct": true,
+      "total": 961,
+      "sampled": 961,
+      "counts": {
+        "plan": 854,
+        "branches": 0,
+        "summary": 0,
+        "answer": 105,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1572.json",
+      "valid": true,
+      "correct": true,
+      "total": 560,
+      "sampled": 551,
+      "counts": {
+        "plan": 200,
+        "branches": 194,
+        "summary": 46,
+        "answer": 74,
+        "other_thought": 29,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/188.json",
+      "valid": true,
+      "correct": false,
+      "total": 916,
+      "sampled": 907,
+      "counts": {
+        "plan": 539,
+        "branches": 192,
+        "summary": 88,
+        "answer": 79,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/2015.json",
+      "valid": true,
+      "correct": false,
+      "total": 5042,
+      "sampled": 5030,
+      "counts": {
+        "plan": 740,
+        "branches": 4047,
+        "summary": 109,
+        "answer": 124,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/776.json",
+      "valid": true,
+      "correct": true,
+      "total": 1637,
+      "sampled": 1628,
+      "counts": {
+        "plan": 99,
+        "branches": 536,
+        "summary": 762,
+        "answer": 105,
+        "other_thought": 118,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1796.json",
+      "valid": true,
+      "correct": true,
+      "total": 902,
+      "sampled": 893,
+      "counts": {
+        "plan": 133,
+        "branches": 616,
+        "summary": 71,
+        "answer": 64,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1000.json",
+      "valid": false,
+      "correct": true,
+      "total": 2344,
+      "sampled": 2332,
+      "counts": {
+        "plan": 226,
+        "branches": 473,
+        "summary": 423,
+        "answer": 1199,
+        "other_thought": 1,
+        "service": 22
+      }
+    },
+    {
+      "id": "test/prealgebra/930.json",
+      "valid": true,
+      "correct": true,
+      "total": 284,
+      "sampled": 284,
+      "counts": {
+        "plan": 202,
+        "branches": 0,
+        "summary": 0,
+        "answer": 80,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1454.json",
+      "valid": false,
+      "correct": false,
+      "total": 3414,
+      "sampled": 3405,
+      "counts": {
+        "plan": 285,
+        "branches": 782,
+        "summary": 248,
+        "answer": 130,
+        "other_thought": 1951,
+        "service": 18
+      }
+    },
+    {
+      "id": "test/prealgebra/1558.json",
+      "valid": true,
+      "correct": true,
+      "total": 576,
+      "sampled": 567,
+      "counts": {
+        "plan": 258,
+        "branches": 97,
+        "summary": 102,
+        "answer": 101,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/627.json",
+      "valid": true,
+      "correct": false,
+      "total": 670,
+      "sampled": 661,
+      "counts": {
+        "plan": 207,
+        "branches": 344,
+        "summary": 69,
+        "answer": 32,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2214.json",
+      "valid": true,
+      "correct": true,
+      "total": 374,
+      "sampled": 365,
+      "counts": {
+        "plan": 121,
+        "branches": 123,
+        "summary": 58,
+        "answer": 54,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1849.json",
+      "valid": true,
+      "correct": false,
+      "total": 954,
+      "sampled": 954,
+      "counts": {
+        "plan": 776,
+        "branches": 0,
+        "summary": 0,
+        "answer": 176,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/2700.json",
+      "valid": true,
+      "correct": true,
+      "total": 1490,
+      "sampled": 1478,
+      "counts": {
+        "plan": 628,
+        "branches": 219,
+        "summary": 493,
+        "answer": 71,
+        "other_thought": 58,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1035.json",
+      "valid": false,
+      "correct": false,
+      "total": 674,
+      "sampled": 665,
+      "counts": {
+        "plan": 171,
+        "branches": 358,
+        "summary": 89,
+        "answer": 38,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/582.json",
+      "valid": true,
+      "correct": false,
+      "total": 8289,
+      "sampled": 8271,
+      "counts": {
+        "plan": 331,
+        "branches": 3881,
+        "summary": 3892,
+        "answer": 122,
+        "other_thought": 34,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/431.json",
+      "valid": true,
+      "correct": true,
+      "total": 428,
+      "sampled": 416,
+      "counts": {
+        "plan": 94,
+        "branches": 164,
+        "summary": 100,
+        "answer": 48,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2058.json",
+      "valid": true,
+      "correct": true,
+      "total": 1006,
+      "sampled": 997,
+      "counts": {
+        "plan": 135,
+        "branches": 510,
+        "summary": 273,
+        "answer": 70,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/765.json",
+      "valid": true,
+      "correct": false,
+      "total": 3710,
+      "sampled": 3698,
+      "counts": {
+        "plan": 608,
+        "branches": 862,
+        "summary": 2034,
+        "answer": 67,
+        "other_thought": 118,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/920.json",
+      "valid": true,
+      "correct": false,
+      "total": 3744,
+      "sampled": 3732,
+      "counts": {
+        "plan": 696,
+        "branches": 1569,
+        "summary": 400,
+        "answer": 276,
+        "other_thought": 782,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/947.json",
+      "valid": true,
+      "correct": false,
+      "total": 797,
+      "sampled": 797,
+      "counts": {
+        "plan": 644,
+        "branches": 0,
+        "summary": 0,
+        "answer": 151,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/1056.json",
+      "valid": true,
+      "correct": true,
+      "total": 2786,
+      "sampled": 2774,
+      "counts": {
+        "plan": 236,
+        "branches": 2217,
+        "summary": 198,
+        "answer": 113,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/121.json",
+      "valid": true,
+      "correct": false,
+      "total": 1446,
+      "sampled": 1446,
+      "counts": {
+        "plan": 1367,
+        "branches": 0,
+        "summary": 0,
+        "answer": 77,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/1201.json",
+      "valid": true,
+      "correct": false,
+      "total": 7991,
+      "sampled": 7981,
+      "counts": {
+        "plan": 123,
+        "branches": 6887,
+        "summary": 596,
+        "answer": 142,
+        "other_thought": 226,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/1014.json",
+      "valid": true,
+      "correct": true,
+      "total": 451,
+      "sampled": 442,
+      "counts": {
+        "plan": 98,
+        "branches": 129,
+        "summary": 120,
+        "answer": 86,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/529.json",
+      "valid": true,
+      "correct": true,
+      "total": 800,
+      "sampled": 791,
+      "counts": {
+        "plan": 323,
+        "branches": 373,
+        "summary": 50,
+        "answer": 36,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1128.json",
+      "valid": true,
+      "correct": true,
+      "total": 577,
+      "sampled": 568,
+      "counts": {
+        "plan": 220,
+        "branches": 206,
+        "summary": 79,
+        "answer": 54,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1203.json",
+      "valid": true,
+      "correct": true,
+      "total": 501,
+      "sampled": 492,
+      "counts": {
+        "plan": 131,
+        "branches": 191,
+        "summary": 99,
+        "answer": 62,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/561.json",
+      "valid": true,
+      "correct": false,
+      "total": 3744,
+      "sampled": 3729,
+      "counts": {
+        "plan": 219,
+        "branches": 2905,
+        "summary": 483,
+        "answer": 111,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1508.json",
+      "valid": true,
+      "correct": true,
+      "total": 2230,
+      "sampled": 2212,
+      "counts": {
+        "plan": 201,
+        "branches": 1145,
+        "summary": 594,
+        "answer": 163,
+        "other_thought": 98,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/algebra/2036.json",
+      "valid": true,
+      "correct": true,
+      "total": 571,
+      "sampled": 562,
+      "counts": {
+        "plan": 155,
+        "branches": 168,
+        "summary": 159,
+        "answer": 71,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1139.json",
+      "valid": false,
+      "correct": false,
+      "total": 3352,
+      "sampled": 3340,
+      "counts": {
+        "plan": 251,
+        "branches": 1873,
+        "summary": 231,
+        "answer": 109,
+        "other_thought": 867,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/1032.json",
+      "valid": true,
+      "correct": true,
+      "total": 892,
+      "sampled": 880,
+      "counts": {
+        "plan": 367,
+        "branches": 326,
+        "summary": 67,
+        "answer": 49,
+        "other_thought": 62,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1197.json",
+      "valid": true,
+      "correct": false,
+      "total": 2876,
+      "sampled": 2855,
+      "counts": {
+        "plan": 522,
+        "branches": 823,
+        "summary": 1225,
+        "answer": 211,
+        "other_thought": 62,
+        "service": 33
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/662.json",
+      "valid": true,
+      "correct": false,
+      "total": 4705,
+      "sampled": 4693,
+      "counts": {
+        "plan": 295,
+        "branches": 2837,
+        "summary": 1404,
+        "answer": 121,
+        "other_thought": 27,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1924.json",
+      "valid": true,
+      "correct": true,
+      "total": 335,
+      "sampled": 323,
+      "counts": {
+        "plan": 83,
+        "branches": 131,
+        "summary": 50,
+        "answer": 49,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2570.json",
+      "valid": true,
+      "correct": true,
+      "total": 675,
+      "sampled": 663,
+      "counts": {
+        "plan": 105,
+        "branches": 294,
+        "summary": 159,
+        "answer": 95,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/229.json",
+      "valid": false,
+      "correct": false,
+      "total": 9313,
+      "sampled": 9304,
+      "counts": {
+        "plan": 2004,
+        "branches": 470,
+        "summary": 5733,
+        "answer": 888,
+        "other_thought": 201,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2486.json",
+      "valid": true,
+      "correct": true,
+      "total": 476,
+      "sampled": 476,
+      "counts": {
+        "plan": 368,
+        "branches": 0,
+        "summary": 0,
+        "answer": 106,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/number_theory/466.json",
+      "valid": true,
+      "correct": true,
+      "total": 438,
+      "sampled": 429,
+      "counts": {
+        "plan": 99,
+        "branches": 178,
+        "summary": 32,
+        "answer": 65,
+        "other_thought": 47,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1411.json",
+      "valid": true,
+      "correct": false,
+      "total": 2358,
+      "sampled": 2349,
+      "counts": {
+        "plan": 677,
+        "branches": 1370,
+        "summary": 162,
+        "answer": 131,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/13.json",
+      "valid": true,
+      "correct": true,
+      "total": 1048,
+      "sampled": 1039,
+      "counts": {
+        "plan": 134,
+        "branches": 253,
+        "summary": 603,
+        "answer": 40,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2789.json",
+      "valid": true,
+      "correct": true,
+      "total": 455,
+      "sampled": 443,
+      "counts": {
+        "plan": 115,
+        "branches": 137,
+        "summary": 136,
+        "answer": 45,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/752.json",
+      "valid": true,
+      "correct": true,
+      "total": 1108,
+      "sampled": 1096,
+      "counts": {
+        "plan": 188,
+        "branches": 502,
+        "summary": 320,
+        "answer": 76,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1365.json",
+      "valid": true,
+      "correct": true,
+      "total": 1652,
+      "sampled": 1640,
+      "counts": {
+        "plan": 423,
+        "branches": 841,
+        "summary": 266,
+        "answer": 100,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1388.json",
+      "valid": true,
+      "correct": false,
+      "total": 1007,
+      "sampled": 998,
+      "counts": {
+        "plan": 175,
+        "branches": 452,
+        "summary": 285,
+        "answer": 77,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2427.json",
+      "valid": true,
+      "correct": true,
+      "total": 1062,
+      "sampled": 1050,
+      "counts": {
+        "plan": 235,
+        "branches": 362,
+        "summary": 387,
+        "answer": 56,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/counting_and_probability/525.json",
+      "valid": true,
+      "correct": false,
+      "total": 1945,
+      "sampled": 1930,
+      "counts": {
+        "plan": 393,
+        "branches": 1276,
+        "summary": 153,
+        "answer": 97,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/1840.json",
+      "valid": true,
+      "correct": true,
+      "total": 511,
+      "sampled": 496,
+      "counts": {
+        "plan": 90,
+        "branches": 233,
+        "summary": 86,
+        "answer": 76,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1217.json",
+      "valid": true,
+      "correct": true,
+      "total": 652,
+      "sampled": 652,
+      "counts": {
+        "plan": 579,
+        "branches": 0,
+        "summary": 0,
+        "answer": 71,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/892.json",
+      "valid": false,
+      "correct": false,
+      "total": 3656,
+      "sampled": 3656,
+      "counts": {
+        "plan": 3526,
+        "branches": 0,
+        "summary": 0,
+        "answer": 127,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/prealgebra/951.json",
+      "valid": true,
+      "correct": true,
+      "total": 562,
+      "sampled": 553,
+      "counts": {
+        "plan": 155,
+        "branches": 99,
+        "summary": 182,
+        "answer": 108,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/2046.json",
+      "valid": true,
+      "correct": true,
+      "total": 746,
+      "sampled": 734,
+      "counts": {
+        "plan": 146,
+        "branches": 294,
+        "summary": 199,
+        "answer": 85,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/43.json",
+      "valid": true,
+      "correct": true,
+      "total": 385,
+      "sampled": 376,
+      "counts": {
+        "plan": 96,
+        "branches": 147,
+        "summary": 90,
+        "answer": 34,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1519.json",
+      "valid": true,
+      "correct": true,
+      "total": 792,
+      "sampled": 780,
+      "counts": {
+        "plan": 115,
+        "branches": 379,
+        "summary": 186,
+        "answer": 90,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/964.json",
+      "valid": true,
+      "correct": false,
+      "total": 1370,
+      "sampled": 1352,
+      "counts": {
+        "plan": 297,
+        "branches": 541,
+        "summary": 449,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/prealgebra/1113.json",
+      "valid": true,
+      "correct": true,
+      "total": 426,
+      "sampled": 426,
+      "counts": {
+        "plan": 360,
+        "branches": 0,
+        "summary": 0,
+        "answer": 64,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/number_theory/598.json",
+      "valid": true,
+      "correct": true,
+      "total": 2317,
+      "sampled": 2302,
+      "counts": {
+        "plan": 458,
+        "branches": 1319,
+        "summary": 330,
+        "answer": 126,
+        "other_thought": 59,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/697.json",
+      "valid": true,
+      "correct": true,
+      "total": 1286,
+      "sampled": 1274,
+      "counts": {
+        "plan": 478,
+        "branches": 371,
+        "summary": 366,
+        "answer": 49,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/65.json",
+      "valid": true,
+      "correct": false,
+      "total": 4950,
+      "sampled": 4938,
+      "counts": {
+        "plan": 322,
+        "branches": 1579,
+        "summary": 2557,
+        "answer": 123,
+        "other_thought": 348,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/483.json",
+      "valid": true,
+      "correct": true,
+      "total": 407,
+      "sampled": 407,
+      "counts": {
+        "plan": 361,
+        "branches": 0,
+        "summary": 0,
+        "answer": 44,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1422.json",
+      "valid": true,
+      "correct": true,
+      "total": 2100,
+      "sampled": 2085,
+      "counts": {
+        "plan": 690,
+        "branches": 1177,
+        "summary": 140,
+        "answer": 67,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/geometry/826.json",
+      "valid": true,
+      "correct": false,
+      "total": 4066,
+      "sampled": 4051,
+      "counts": {
+        "plan": 757,
+        "branches": 3052,
+        "summary": 128,
+        "answer": 74,
+        "other_thought": 30,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/number_theory/368.json",
+      "valid": true,
+      "correct": true,
+      "total": 397,
+      "sampled": 397,
+      "counts": {
+        "plan": 282,
+        "branches": 0,
+        "summary": 0,
+        "answer": 113,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/695.json",
+      "valid": true,
+      "correct": true,
+      "total": 846,
+      "sampled": 837,
+      "counts": {
+        "plan": 416,
+        "branches": 188,
+        "summary": 140,
+        "answer": 84,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/911.json",
+      "valid": true,
+      "correct": true,
+      "total": 1009,
+      "sampled": 982,
+      "counts": {
+        "plan": 228,
+        "branches": 490,
+        "summary": 215,
+        "answer": 34,
+        "other_thought": 1,
+        "service": 41
+      }
+    },
+    {
+      "id": "test/precalculus/1289.json",
+      "valid": true,
+      "correct": true,
+      "total": 338,
+      "sampled": 326,
+      "counts": {
+        "plan": 64,
+        "branches": 156,
+        "summary": 65,
+        "answer": 31,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/1281.json",
+      "valid": true,
+      "correct": false,
+      "total": 4076,
+      "sampled": 4067,
+      "counts": {
+        "plan": 772,
+        "branches": 264,
+        "summary": 2558,
+        "answer": 139,
+        "other_thought": 326,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/1202.json",
+      "valid": true,
+      "correct": true,
+      "total": 1077,
+      "sampled": 1077,
+      "counts": {
+        "plan": 907,
+        "branches": 0,
+        "summary": 0,
+        "answer": 168,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/geometry/538.json",
+      "valid": true,
+      "correct": true,
+      "total": 925,
+      "sampled": 913,
+      "counts": {
+        "plan": 238,
+        "branches": 401,
+        "summary": 163,
+        "answer": 44,
+        "other_thought": 58,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/914.json",
+      "valid": true,
+      "correct": true,
+      "total": 1554,
+      "sampled": 1545,
+      "counts": {
+        "plan": 147,
+        "branches": 1069,
+        "summary": 249,
+        "answer": 71,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/679.json",
+      "valid": false,
+      "correct": true,
+      "total": 1060,
+      "sampled": 1051,
+      "counts": {
+        "plan": 197,
+        "branches": 216,
+        "summary": 424,
+        "answer": 134,
+        "other_thought": 72,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/323.json",
+      "valid": true,
+      "correct": false,
+      "total": 1923,
+      "sampled": 1914,
+      "counts": {
+        "plan": 279,
+        "branches": 952,
+        "summary": 482,
+        "answer": 142,
+        "other_thought": 51,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/846.json",
+      "valid": true,
+      "correct": true,
+      "total": 421,
+      "sampled": 409,
+      "counts": {
+        "plan": 91,
+        "branches": 119,
+        "summary": 144,
+        "answer": 45,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/1303.json",
+      "valid": true,
+      "correct": false,
+      "total": 721,
+      "sampled": 721,
+      "counts": {
+        "plan": 581,
+        "branches": 0,
+        "summary": 0,
+        "answer": 138,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/geometry/248.json",
+      "valid": true,
+      "correct": true,
+      "total": 476,
+      "sampled": 464,
+      "counts": {
+        "plan": 119,
+        "branches": 172,
+        "summary": 78,
+        "answer": 85,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/737.json",
+      "valid": true,
+      "correct": false,
+      "total": 1505,
+      "sampled": 1496,
+      "counts": {
+        "plan": 215,
+        "branches": 434,
+        "summary": 630,
+        "answer": 49,
+        "other_thought": 160,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/990.json",
+      "valid": true,
+      "correct": false,
+      "total": 1297,
+      "sampled": 1285,
+      "counts": {
+        "plan": 219,
+        "branches": 403,
+        "summary": 576,
+        "answer": 77,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/178.json",
+      "valid": false,
+      "correct": true,
+      "total": 534,
+      "sampled": 534,
+      "counts": {
+        "plan": 234,
+        "branches": 0,
+        "summary": 0,
+        "answer": 298,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/1247.json",
+      "valid": false,
+      "correct": true,
+      "total": 540,
+      "sampled": 540,
+      "counts": {
+        "plan": 368,
+        "branches": 0,
+        "summary": 0,
+        "answer": 170,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/counting_and_probability/119.json",
+      "valid": true,
+      "correct": true,
+      "total": 826,
+      "sampled": 817,
+      "counts": {
+        "plan": 229,
+        "branches": 461,
+        "summary": 44,
+        "answer": 59,
+        "other_thought": 16,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/967.json",
+      "valid": true,
+      "correct": true,
+      "total": 902,
+      "sampled": 893,
+      "counts": {
+        "plan": 514,
+        "branches": 212,
+        "summary": 109,
+        "answer": 49,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/1313.json",
+      "valid": true,
+      "correct": true,
+      "total": 2671,
+      "sampled": 2653,
+      "counts": {
+        "plan": 955,
+        "branches": 981,
+        "summary": 577,
+        "answer": 128,
+        "other_thought": 1,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1247.json",
+      "valid": true,
+      "correct": true,
+      "total": 668,
+      "sampled": 659,
+      "counts": {
+        "plan": 162,
+        "branches": 198,
+        "summary": 248,
+        "answer": 42,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/207.json",
+      "valid": true,
+      "correct": true,
+      "total": 1201,
+      "sampled": 1192,
+      "counts": {
+        "plan": 253,
+        "branches": 710,
+        "summary": 65,
+        "answer": 155,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/893.json",
+      "valid": true,
+      "correct": false,
+      "total": 1384,
+      "sampled": 1375,
+      "counts": {
+        "plan": 757,
+        "branches": 155,
+        "summary": 361,
+        "answer": 93,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1898.json",
+      "valid": true,
+      "correct": true,
+      "total": 639,
+      "sampled": 630,
+      "counts": {
+        "plan": 365,
+        "branches": 196,
+        "summary": 30,
+        "answer": 30,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/283.json",
+      "valid": true,
+      "correct": true,
+      "total": 838,
+      "sampled": 826,
+      "counts": {
+        "plan": 313,
+        "branches": 366,
+        "summary": 79,
+        "answer": 58,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/661.json",
+      "valid": true,
+      "correct": false,
+      "total": 805,
+      "sampled": 793,
+      "counts": {
+        "plan": 198,
+        "branches": 327,
+        "summary": 102,
+        "answer": 65,
+        "other_thought": 92,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/966.json",
+      "valid": true,
+      "correct": false,
+      "total": 4255,
+      "sampled": 4255,
+      "counts": {
+        "plan": 4166,
+        "branches": 0,
+        "summary": 0,
+        "answer": 87,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/number_theory/149.json",
+      "valid": true,
+      "correct": true,
+      "total": 1033,
+      "sampled": 1021,
+      "counts": {
+        "plan": 125,
+        "branches": 733,
+        "summary": 111,
+        "answer": 42,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1907.json",
+      "valid": true,
+      "correct": true,
+      "total": 515,
+      "sampled": 503,
+      "counts": {
+        "plan": 157,
+        "branches": 172,
+        "summary": 118,
+        "answer": 46,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/234.json",
+      "valid": true,
+      "correct": true,
+      "total": 805,
+      "sampled": 793,
+      "counts": {
+        "plan": 138,
+        "branches": 516,
+        "summary": 67,
+        "answer": 62,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/2086.json",
+      "valid": true,
+      "correct": true,
+      "total": 696,
+      "sampled": 684,
+      "counts": {
+        "plan": 145,
+        "branches": 300,
+        "summary": 181,
+        "answer": 48,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2159.json",
+      "valid": false,
+      "correct": true,
+      "total": 245,
+      "sampled": 245,
+      "counts": {
+        "plan": 128,
+        "branches": 0,
+        "summary": 0,
+        "answer": 115,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/989.json",
+      "valid": false,
+      "correct": false,
+      "total": 6776,
+      "sampled": 6776,
+      "counts": {
+        "plan": 6222,
+        "branches": 0,
+        "summary": 0,
+        "answer": 552,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/190.json",
+      "valid": true,
+      "correct": false,
+      "total": 2413,
+      "sampled": 2398,
+      "counts": {
+        "plan": 484,
+        "branches": 404,
+        "summary": 1035,
+        "answer": 88,
+        "other_thought": 377,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/counting_and_probability/71.json",
+      "valid": true,
+      "correct": true,
+      "total": 723,
+      "sampled": 714,
+      "counts": {
+        "plan": 94,
+        "branches": 335,
+        "summary": 195,
+        "answer": 81,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/337.json",
+      "valid": true,
+      "correct": true,
+      "total": 1148,
+      "sampled": 1136,
+      "counts": {
+        "plan": 166,
+        "branches": 784,
+        "summary": 88,
+        "answer": 51,
+        "other_thought": 38,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/902.json",
+      "valid": true,
+      "correct": false,
+      "total": 10854,
+      "sampled": 10838,
+      "counts": {
+        "plan": 706,
+        "branches": 5264,
+        "summary": 2354,
+        "answer": 455,
+        "other_thought": 2050,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/number_theory/427.json",
+      "valid": true,
+      "correct": true,
+      "total": 875,
+      "sampled": 866,
+      "counts": {
+        "plan": 296,
+        "branches": 388,
+        "summary": 78,
+        "answer": 73,
+        "other_thought": 23,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/518.json",
+      "valid": true,
+      "correct": true,
+      "total": 531,
+      "sampled": 522,
+      "counts": {
+        "plan": 197,
+        "branches": 211,
+        "summary": 43,
+        "answer": 62,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2391.json",
+      "valid": true,
+      "correct": true,
+      "total": 1017,
+      "sampled": 1002,
+      "counts": {
+        "plan": 125,
+        "branches": 627,
+        "summary": 176,
+        "answer": 63,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1994.json",
+      "valid": true,
+      "correct": true,
+      "total": 1519,
+      "sampled": 1510,
+      "counts": {
+        "plan": 365,
+        "branches": 919,
+        "summary": 112,
+        "answer": 105,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1349.json",
+      "valid": true,
+      "correct": true,
+      "total": 773,
+      "sampled": 755,
+      "counts": {
+        "plan": 187,
+        "branches": 418,
+        "summary": 97,
+        "answer": 41,
+        "other_thought": 1,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/number_theory/515.json",
+      "valid": false,
+      "correct": true,
+      "total": 628,
+      "sampled": 619,
+      "counts": {
+        "plan": 281,
+        "branches": 213,
+        "summary": 73,
+        "answer": 43,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/927.json",
+      "valid": true,
+      "correct": true,
+      "total": 1423,
+      "sampled": 1411,
+      "counts": {
+        "plan": 436,
+        "branches": 763,
+        "summary": 162,
+        "answer": 40,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/285.json",
+      "valid": true,
+      "correct": true,
+      "total": 537,
+      "sampled": 537,
+      "counts": {
+        "plan": 470,
+        "branches": 0,
+        "summary": 0,
+        "answer": 65,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/1265.json",
+      "valid": true,
+      "correct": true,
+      "total": 423,
+      "sampled": 414,
+      "counts": {
+        "plan": 56,
+        "branches": 190,
+        "summary": 68,
+        "answer": 91,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/45.json",
+      "valid": true,
+      "correct": true,
+      "total": 478,
+      "sampled": 469,
+      "counts": {
+        "plan": 69,
+        "branches": 237,
+        "summary": 83,
+        "answer": 47,
+        "other_thought": 25,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/305.json",
+      "valid": true,
+      "correct": true,
+      "total": 491,
+      "sampled": 479,
+      "counts": {
+        "plan": 143,
+        "branches": 229,
+        "summary": 52,
+        "answer": 45,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1233.json",
+      "valid": true,
+      "correct": true,
+      "total": 336,
+      "sampled": 336,
+      "counts": {
+        "plan": 257,
+        "branches": 0,
+        "summary": 0,
+        "answer": 77,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/769.json",
+      "valid": true,
+      "correct": true,
+      "total": 564,
+      "sampled": 555,
+      "counts": {
+        "plan": 159,
+        "branches": 240,
+        "summary": 54,
+        "answer": 93,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/279.json",
+      "valid": false,
+      "correct": false,
+      "total": 4648,
+      "sampled": 4639,
+      "counts": {
+        "plan": 142,
+        "branches": 3955,
+        "summary": 408,
+        "answer": 125,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1747.json",
+      "valid": true,
+      "correct": true,
+      "total": 615,
+      "sampled": 603,
+      "counts": {
+        "plan": 198,
+        "branches": 242,
+        "summary": 106,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/972.json",
+      "valid": true,
+      "correct": true,
+      "total": 799,
+      "sampled": 787,
+      "counts": {
+        "plan": 157,
+        "branches": 319,
+        "summary": 237,
+        "answer": 64,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/847.json",
+      "valid": true,
+      "correct": true,
+      "total": 872,
+      "sampled": 860,
+      "counts": {
+        "plan": 116,
+        "branches": 561,
+        "summary": 99,
+        "answer": 74,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/612.json",
+      "valid": false,
+      "correct": true,
+      "total": 388,
+      "sampled": 388,
+      "counts": {
+        "plan": 276,
+        "branches": 0,
+        "summary": 0,
+        "answer": 110,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/246.json",
+      "valid": true,
+      "correct": true,
+      "total": 629,
+      "sampled": 620,
+      "counts": {
+        "plan": 199,
+        "branches": 236,
+        "summary": 118,
+        "answer": 58,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/117.json",
+      "valid": true,
+      "correct": true,
+      "total": 3869,
+      "sampled": 3860,
+      "counts": {
+        "plan": 1184,
+        "branches": 2152,
+        "summary": 150,
+        "answer": 320,
+        "other_thought": 46,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/230.json",
+      "valid": true,
+      "correct": true,
+      "total": 804,
+      "sampled": 795,
+      "counts": {
+        "plan": 128,
+        "branches": 488,
+        "summary": 112,
+        "answer": 58,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/478.json",
+      "valid": true,
+      "correct": true,
+      "total": 409,
+      "sampled": 400,
+      "counts": {
+        "plan": 81,
+        "branches": 180,
+        "summary": 75,
+        "answer": 55,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/297.json",
+      "valid": true,
+      "correct": false,
+      "total": 3796,
+      "sampled": 3784,
+      "counts": {
+        "plan": 487,
+        "branches": 2648,
+        "summary": 511,
+        "answer": 128,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/441.json",
+      "valid": true,
+      "correct": true,
+      "total": 562,
+      "sampled": 562,
+      "counts": {
+        "plan": 423,
+        "branches": 0,
+        "summary": 0,
+        "answer": 135,
+        "other_thought": 0,
+        "service": 4
+      }
+    },
+    {
+      "id": "test/prealgebra/153.json",
+      "valid": true,
+      "correct": true,
+      "total": 727,
+      "sampled": 712,
+      "counts": {
+        "plan": 210,
+        "branches": 322,
+        "summary": 100,
+        "answer": 69,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1210.json",
+      "valid": true,
+      "correct": false,
+      "total": 1330,
+      "sampled": 1309,
+      "counts": {
+        "plan": 450,
+        "branches": 299,
+        "summary": 294,
+        "answer": 253,
+        "other_thought": 1,
+        "service": 33
+      }
+    },
+    {
+      "id": "test/geometry/473.json",
+      "valid": true,
+      "correct": true,
+      "total": 574,
+      "sampled": 562,
+      "counts": {
+        "plan": 226,
+        "branches": 212,
+        "summary": 79,
+        "answer": 35,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1834.json",
+      "valid": false,
+      "correct": true,
+      "total": 148,
+      "sampled": 148,
+      "counts": {
+        "plan": 63,
+        "branches": 0,
+        "summary": 0,
+        "answer": 83,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/number_theory/1287.json",
+      "valid": true,
+      "correct": true,
+      "total": 311,
+      "sampled": 311,
+      "counts": {
+        "plan": 228,
+        "branches": 0,
+        "summary": 0,
+        "answer": 81,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/1995.json",
+      "valid": true,
+      "correct": true,
+      "total": 590,
+      "sampled": 581,
+      "counts": {
+        "plan": 97,
+        "branches": 352,
+        "summary": 55,
+        "answer": 68,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/1172.json",
+      "valid": true,
+      "correct": false,
+      "total": 2076,
+      "sampled": 2064,
+      "counts": {
+        "plan": 94,
+        "branches": 1056,
+        "summary": 790,
+        "answer": 60,
+        "other_thought": 55,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1300.json",
+      "valid": true,
+      "correct": true,
+      "total": 934,
+      "sampled": 922,
+      "counts": {
+        "plan": 172,
+        "branches": 551,
+        "summary": 73,
+        "answer": 96,
+        "other_thought": 21,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/631.json",
+      "valid": true,
+      "correct": true,
+      "total": 1472,
+      "sampled": 1463,
+      "counts": {
+        "plan": 491,
+        "branches": 803,
+        "summary": 78,
+        "answer": 82,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/1097.json",
+      "valid": true,
+      "correct": false,
+      "total": 890,
+      "sampled": 875,
+      "counts": {
+        "plan": 295,
+        "branches": 279,
+        "summary": 237,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/776.json",
+      "valid": true,
+      "correct": true,
+      "total": 1949,
+      "sampled": 1940,
+      "counts": {
+        "plan": 716,
+        "branches": 924,
+        "summary": 66,
+        "answer": 182,
+        "other_thought": 44,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/801.json",
+      "valid": true,
+      "correct": false,
+      "total": 3036,
+      "sampled": 3021,
+      "counts": {
+        "plan": 468,
+        "branches": 827,
+        "summary": 1485,
+        "answer": 107,
+        "other_thought": 124,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/1338.json",
+      "valid": true,
+      "correct": true,
+      "total": 1480,
+      "sampled": 1465,
+      "counts": {
+        "plan": 97,
+        "branches": 1010,
+        "summary": 184,
+        "answer": 163,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/number_theory/769.json",
+      "valid": true,
+      "correct": true,
+      "total": 812,
+      "sampled": 803,
+      "counts": {
+        "plan": 143,
+        "branches": 519,
+        "summary": 85,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2264.json",
+      "valid": true,
+      "correct": true,
+      "total": 714,
+      "sampled": 705,
+      "counts": {
+        "plan": 105,
+        "branches": 367,
+        "summary": 120,
+        "answer": 104,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/681.json",
+      "valid": true,
+      "correct": false,
+      "total": 1611,
+      "sampled": 1599,
+      "counts": {
+        "plan": 144,
+        "branches": 975,
+        "summary": 408,
+        "answer": 62,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/499.json",
+      "valid": true,
+      "correct": true,
+      "total": 1081,
+      "sampled": 1069,
+      "counts": {
+        "plan": 380,
+        "branches": 283,
+        "summary": 201,
+        "answer": 195,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2780.json",
+      "valid": true,
+      "correct": true,
+      "total": 740,
+      "sampled": 731,
+      "counts": {
+        "plan": 258,
+        "branches": 245,
+        "summary": 117,
+        "answer": 85,
+        "other_thought": 18,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/224.json",
+      "valid": true,
+      "correct": true,
+      "total": 600,
+      "sampled": 591,
+      "counts": {
+        "plan": 254,
+        "branches": 167,
+        "summary": 87,
+        "answer": 74,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/158.json",
+      "valid": true,
+      "correct": false,
+      "total": 1460,
+      "sampled": 1445,
+      "counts": {
+        "plan": 612,
+        "branches": 162,
+        "summary": 426,
+        "answer": 77,
+        "other_thought": 158,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/number_theory/239.json",
+      "valid": true,
+      "correct": true,
+      "total": 556,
+      "sampled": 547,
+      "counts": {
+        "plan": 102,
+        "branches": 310,
+        "summary": 81,
+        "answer": 45,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/779.json",
+      "valid": true,
+      "correct": true,
+      "total": 416,
+      "sampled": 407,
+      "counts": {
+        "plan": 126,
+        "branches": 175,
+        "summary": 46,
+        "answer": 51,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1302.json",
+      "valid": true,
+      "correct": true,
+      "total": 428,
+      "sampled": 419,
+      "counts": {
+        "plan": 65,
+        "branches": 184,
+        "summary": 74,
+        "answer": 66,
+        "other_thought": 22,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/666.json",
+      "valid": true,
+      "correct": false,
+      "total": 1245,
+      "sampled": 1230,
+      "counts": {
+        "plan": 226,
+        "branches": 397,
+        "summary": 414,
+        "answer": 65,
+        "other_thought": 118,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/number_theory/864.json",
+      "valid": true,
+      "correct": true,
+      "total": 410,
+      "sampled": 401,
+      "counts": {
+        "plan": 112,
+        "branches": 170,
+        "summary": 49,
+        "answer": 61,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/627.json",
+      "valid": true,
+      "correct": true,
+      "total": 436,
+      "sampled": 424,
+      "counts": {
+        "plan": 81,
+        "branches": 172,
+        "summary": 108,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/428.json",
+      "valid": true,
+      "correct": false,
+      "total": 1265,
+      "sampled": 1253,
+      "counts": {
+        "plan": 140,
+        "branches": 332,
+        "summary": 692,
+        "answer": 79,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/572.json",
+      "valid": true,
+      "correct": true,
+      "total": 529,
+      "sampled": 520,
+      "counts": {
+        "plan": 234,
+        "branches": 164,
+        "summary": 78,
+        "answer": 35,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/1105.json",
+      "valid": true,
+      "correct": true,
+      "total": 502,
+      "sampled": 493,
+      "counts": {
+        "plan": 123,
+        "branches": 191,
+        "summary": 92,
+        "answer": 78,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/516.json",
+      "valid": true,
+      "correct": false,
+      "total": 1260,
+      "sampled": 1251,
+      "counts": {
+        "plan": 542,
+        "branches": 450,
+        "summary": 187,
+        "answer": 63,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/46.json",
+      "valid": true,
+      "correct": false,
+      "total": 621,
+      "sampled": 606,
+      "counts": {
+        "plan": 106,
+        "branches": 327,
+        "summary": 103,
+        "answer": 59,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/192.json",
+      "valid": true,
+      "correct": true,
+      "total": 389,
+      "sampled": 380,
+      "counts": {
+        "plan": 84,
+        "branches": 215,
+        "summary": 30,
+        "answer": 42,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/47.json",
+      "valid": true,
+      "correct": true,
+      "total": 1060,
+      "sampled": 1048,
+      "counts": {
+        "plan": 350,
+        "branches": 278,
+        "summary": 116,
+        "answer": 118,
+        "other_thought": 177,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/362.json",
+      "valid": false,
+      "correct": false,
+      "total": 1451,
+      "sampled": 1451,
+      "counts": {
+        "plan": 1352,
+        "branches": 0,
+        "summary": 0,
+        "answer": 96,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/558.json",
+      "valid": false,
+      "correct": false,
+      "total": 4431,
+      "sampled": 4422,
+      "counts": {
+        "plan": 565,
+        "branches": 1003,
+        "summary": 1800,
+        "answer": 333,
+        "other_thought": 713,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1151.json",
+      "valid": true,
+      "correct": true,
+      "total": 2176,
+      "sampled": 2167,
+      "counts": {
+        "plan": 122,
+        "branches": 645,
+        "summary": 1264,
+        "answer": 127,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/430.json",
+      "valid": true,
+      "correct": true,
+      "total": 921,
+      "sampled": 912,
+      "counts": {
+        "plan": 326,
+        "branches": 364,
+        "summary": 100,
+        "answer": 113,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1257.json",
+      "valid": true,
+      "correct": true,
+      "total": 666,
+      "sampled": 657,
+      "counts": {
+        "plan": 144,
+        "branches": 388,
+        "summary": 55,
+        "answer": 61,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/864.json",
+      "valid": true,
+      "correct": true,
+      "total": 472,
+      "sampled": 463,
+      "counts": {
+        "plan": 184,
+        "branches": 116,
+        "summary": 59,
+        "answer": 95,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/417.json",
+      "valid": true,
+      "correct": true,
+      "total": 1233,
+      "sampled": 1221,
+      "counts": {
+        "plan": 193,
+        "branches": 348,
+        "summary": 287,
+        "answer": 150,
+        "other_thought": 234,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/907.json",
+      "valid": true,
+      "correct": true,
+      "total": 647,
+      "sampled": 635,
+      "counts": {
+        "plan": 134,
+        "branches": 335,
+        "summary": 127,
+        "answer": 29,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/183.json",
+      "valid": true,
+      "correct": false,
+      "total": 991,
+      "sampled": 979,
+      "counts": {
+        "plan": 347,
+        "branches": 398,
+        "summary": 128,
+        "answer": 96,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1123.json",
+      "valid": true,
+      "correct": false,
+      "total": 495,
+      "sampled": 486,
+      "counts": {
+        "plan": 206,
+        "branches": 118,
+        "summary": 55,
+        "answer": 98,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1458.json",
+      "valid": true,
+      "correct": true,
+      "total": 347,
+      "sampled": 338,
+      "counts": {
+        "plan": 99,
+        "branches": 110,
+        "summary": 61,
+        "answer": 59,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1065.json",
+      "valid": true,
+      "correct": true,
+      "total": 2302,
+      "sampled": 2290,
+      "counts": {
+        "plan": 214,
+        "branches": 1765,
+        "summary": 178,
+        "answer": 123,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/634.json",
+      "valid": true,
+      "correct": true,
+      "total": 1146,
+      "sampled": 1134,
+      "counts": {
+        "plan": 130,
+        "branches": 726,
+        "summary": 107,
+        "answer": 161,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/226.json",
+      "valid": true,
+      "correct": false,
+      "total": 2404,
+      "sampled": 2389,
+      "counts": {
+        "plan": 544,
+        "branches": 1517,
+        "summary": 269,
+        "answer": 48,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/counting_and_probability/25149.json",
+      "valid": true,
+      "correct": true,
+      "total": 689,
+      "sampled": 677,
+      "counts": {
+        "plan": 173,
+        "branches": 272,
+        "summary": 186,
+        "answer": 36,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1544.json",
+      "valid": true,
+      "correct": false,
+      "total": 3008,
+      "sampled": 2993,
+      "counts": {
+        "plan": 542,
+        "branches": 2022,
+        "summary": 318,
+        "answer": 100,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/1936.json",
+      "valid": true,
+      "correct": true,
+      "total": 463,
+      "sampled": 454,
+      "counts": {
+        "plan": 144,
+        "branches": 164,
+        "summary": 54,
+        "answer": 83,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1566.json",
+      "valid": true,
+      "correct": true,
+      "total": 943,
+      "sampled": 934,
+      "counts": {
+        "plan": 436,
+        "branches": 326,
+        "summary": 108,
+        "answer": 55,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/820.json",
+      "valid": true,
+      "correct": true,
+      "total": 1413,
+      "sampled": 1413,
+      "counts": {
+        "plan": 722,
+        "branches": 0,
+        "summary": 0,
+        "answer": 689,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/geometry/73.json",
+      "valid": true,
+      "correct": true,
+      "total": 642,
+      "sampled": 630,
+      "counts": {
+        "plan": 189,
+        "branches": 286,
+        "summary": 77,
+        "answer": 68,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1031.json",
+      "valid": true,
+      "correct": true,
+      "total": 532,
+      "sampled": 532,
+      "counts": {
+        "plan": 445,
+        "branches": 0,
+        "summary": 0,
+        "answer": 85,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/1291.json",
+      "valid": true,
+      "correct": true,
+      "total": 509,
+      "sampled": 509,
+      "counts": {
+        "plan": 451,
+        "branches": 0,
+        "summary": 0,
+        "answer": 56,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1111.json",
+      "valid": true,
+      "correct": false,
+      "total": 933,
+      "sampled": 924,
+      "counts": {
+        "plan": 416,
+        "branches": 145,
+        "summary": 265,
+        "answer": 89,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1791.json",
+      "valid": true,
+      "correct": false,
+      "total": 2139,
+      "sampled": 2124,
+      "counts": {
+        "plan": 206,
+        "branches": 1631,
+        "summary": 156,
+        "answer": 120,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/996.json",
+      "valid": false,
+      "correct": true,
+      "total": 423,
+      "sampled": 423,
+      "counts": {
+        "plan": 355,
+        "branches": 0,
+        "summary": 0,
+        "answer": 65,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1806.json",
+      "valid": true,
+      "correct": false,
+      "total": 2124,
+      "sampled": 2106,
+      "counts": {
+        "plan": 199,
+        "branches": 1147,
+        "summary": 167,
+        "answer": 45,
+        "other_thought": 534,
+        "service": 32
+      }
+    },
+    {
+      "id": "test/prealgebra/1930.json",
+      "valid": true,
+      "correct": true,
+      "total": 783,
+      "sampled": 771,
+      "counts": {
+        "plan": 297,
+        "branches": 241,
+        "summary": 163,
+        "answer": 60,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/824.json",
+      "valid": true,
+      "correct": true,
+      "total": 784,
+      "sampled": 772,
+      "counts": {
+        "plan": 221,
+        "branches": 385,
+        "summary": 88,
+        "answer": 68,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/805.json",
+      "valid": true,
+      "correct": false,
+      "total": 1668,
+      "sampled": 1656,
+      "counts": {
+        "plan": 131,
+        "branches": 541,
+        "summary": 135,
+        "answer": 143,
+        "other_thought": 697,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1128.json",
+      "valid": true,
+      "correct": false,
+      "total": 878,
+      "sampled": 866,
+      "counts": {
+        "plan": 121,
+        "branches": 316,
+        "summary": 316,
+        "answer": 50,
+        "other_thought": 54,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1350.json",
+      "valid": true,
+      "correct": false,
+      "total": 1654,
+      "sampled": 1645,
+      "counts": {
+        "plan": 486,
+        "branches": 907,
+        "summary": 164,
+        "answer": 79,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/134.json",
+      "valid": true,
+      "correct": false,
+      "total": 443,
+      "sampled": 434,
+      "counts": {
+        "plan": 83,
+        "branches": 223,
+        "summary": 90,
+        "answer": 29,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/1199.json",
+      "valid": true,
+      "correct": false,
+      "total": 1183,
+      "sampled": 1174,
+      "counts": {
+        "plan": 652,
+        "branches": 305,
+        "summary": 126,
+        "answer": 82,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/434.json",
+      "valid": true,
+      "correct": true,
+      "total": 2930,
+      "sampled": 2921,
+      "counts": {
+        "plan": 156,
+        "branches": 2282,
+        "summary": 310,
+        "answer": 164,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1000.json",
+      "valid": true,
+      "correct": true,
+      "total": 2060,
+      "sampled": 2051,
+      "counts": {
+        "plan": 310,
+        "branches": 1452,
+        "summary": 165,
+        "answer": 101,
+        "other_thought": 15,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/90.json",
+      "valid": false,
+      "correct": true,
+      "total": 2039,
+      "sampled": 2039,
+      "counts": {
+        "plan": 1407,
+        "branches": 0,
+        "summary": 0,
+        "answer": 630,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/number_theory/634.json",
+      "valid": true,
+      "correct": true,
+      "total": 1280,
+      "sampled": 1271,
+      "counts": {
+        "plan": 189,
+        "branches": 716,
+        "summary": 47,
+        "answer": 104,
+        "other_thought": 207,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/691.json",
+      "valid": true,
+      "correct": true,
+      "total": 813,
+      "sampled": 786,
+      "counts": {
+        "plan": 187,
+        "branches": 235,
+        "summary": 256,
+        "answer": 93,
+        "other_thought": 1,
+        "service": 41
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1166.json",
+      "valid": true,
+      "correct": true,
+      "total": 3241,
+      "sampled": 3229,
+      "counts": {
+        "plan": 343,
+        "branches": 619,
+        "summary": 504,
+        "answer": 72,
+        "other_thought": 1682,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/109.json",
+      "valid": true,
+      "correct": true,
+      "total": 490,
+      "sampled": 481,
+      "counts": {
+        "plan": 200,
+        "branches": 134,
+        "summary": 69,
+        "answer": 69,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1185.json",
+      "valid": true,
+      "correct": true,
+      "total": 899,
+      "sampled": 887,
+      "counts": {
+        "plan": 461,
+        "branches": 120,
+        "summary": 198,
+        "answer": 98,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2743.json",
+      "valid": true,
+      "correct": true,
+      "total": 644,
+      "sampled": 632,
+      "counts": {
+        "plan": 241,
+        "branches": 227,
+        "summary": 97,
+        "answer": 57,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/counting_and_probability/10.json",
+      "valid": true,
+      "correct": true,
+      "total": 1064,
+      "sampled": 1049,
+      "counts": {
+        "plan": 304,
+        "branches": 579,
+        "summary": 78,
+        "answer": 77,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/2430.json",
+      "valid": true,
+      "correct": true,
+      "total": 851,
+      "sampled": 842,
+      "counts": {
+        "plan": 163,
+        "branches": 497,
+        "summary": 53,
+        "answer": 109,
+        "other_thought": 12,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/22.json",
+      "valid": true,
+      "correct": false,
+      "total": 410,
+      "sampled": 410,
+      "counts": {
+        "plan": 334,
+        "branches": 0,
+        "summary": 0,
+        "answer": 74,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1102.json",
+      "valid": true,
+      "correct": true,
+      "total": 2641,
+      "sampled": 2614,
+      "counts": {
+        "plan": 442,
+        "branches": 1046,
+        "summary": 1050,
+        "answer": 61,
+        "other_thought": 1,
+        "service": 41
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1279.json",
+      "valid": true,
+      "correct": false,
+      "total": 2933,
+      "sampled": 2924,
+      "counts": {
+        "plan": 548,
+        "branches": 2001,
+        "summary": 309,
+        "answer": 57,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/356.json",
+      "valid": true,
+      "correct": true,
+      "total": 864,
+      "sampled": 852,
+      "counts": {
+        "plan": 355,
+        "branches": 292,
+        "summary": 82,
+        "answer": 113,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1004.json",
+      "valid": false,
+      "correct": true,
+      "total": 231,
+      "sampled": 231,
+      "counts": {
+        "plan": 152,
+        "branches": 0,
+        "summary": 0,
+        "answer": 77,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/2046.json",
+      "valid": true,
+      "correct": true,
+      "total": 449,
+      "sampled": 440,
+      "counts": {
+        "plan": 79,
+        "branches": 173,
+        "summary": 148,
+        "answer": 31,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/873.json",
+      "valid": true,
+      "correct": true,
+      "total": 594,
+      "sampled": 582,
+      "counts": {
+        "plan": 175,
+        "branches": 226,
+        "summary": 124,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1646.json",
+      "valid": true,
+      "correct": false,
+      "total": 1155,
+      "sampled": 1146,
+      "counts": {
+        "plan": 428,
+        "branches": 414,
+        "summary": 119,
+        "answer": 176,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/34.json",
+      "valid": true,
+      "correct": true,
+      "total": 922,
+      "sampled": 913,
+      "counts": {
+        "plan": 195,
+        "branches": 138,
+        "summary": 192,
+        "answer": 365,
+        "other_thought": 15,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/128.json",
+      "valid": true,
+      "correct": false,
+      "total": 1018,
+      "sampled": 1003,
+      "counts": {
+        "plan": 191,
+        "branches": 457,
+        "summary": 274,
+        "answer": 70,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/counting_and_probability/23957.json",
+      "valid": true,
+      "correct": true,
+      "total": 412,
+      "sampled": 403,
+      "counts": {
+        "plan": 82,
+        "branches": 168,
+        "summary": 70,
+        "answer": 74,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/505.json",
+      "valid": true,
+      "correct": true,
+      "total": 520,
+      "sampled": 511,
+      "counts": {
+        "plan": 68,
+        "branches": 274,
+        "summary": 41,
+        "answer": 94,
+        "other_thought": 26,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/931.json",
+      "valid": false,
+      "correct": true,
+      "total": 695,
+      "sampled": 695,
+      "counts": {
+        "plan": 582,
+        "branches": 0,
+        "summary": 0,
+        "answer": 97,
+        "other_thought": 0,
+        "service": 16
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1126.json",
+      "valid": true,
+      "correct": true,
+      "total": 1349,
+      "sampled": 1334,
+      "counts": {
+        "plan": 208,
+        "branches": 890,
+        "summary": 166,
+        "answer": 59,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1408.json",
+      "valid": true,
+      "correct": false,
+      "total": 4298,
+      "sampled": 4283,
+      "counts": {
+        "plan": 218,
+        "branches": 1136,
+        "summary": 420,
+        "answer": 205,
+        "other_thought": 2294,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/counting_and_probability/803.json",
+      "valid": true,
+      "correct": true,
+      "total": 861,
+      "sampled": 849,
+      "counts": {
+        "plan": 349,
+        "branches": 338,
+        "summary": 74,
+        "answer": 78,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/counting_and_probability/181.json",
+      "valid": true,
+      "correct": false,
+      "total": 654,
+      "sampled": 645,
+      "counts": {
+        "plan": 194,
+        "branches": 207,
+        "summary": 169,
+        "answer": 66,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1275.json",
+      "valid": true,
+      "correct": true,
+      "total": 1004,
+      "sampled": 992,
+      "counts": {
+        "plan": 101,
+        "branches": 562,
+        "summary": 205,
+        "answer": 114,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/counting_and_probability/282.json",
+      "valid": true,
+      "correct": false,
+      "total": 1409,
+      "sampled": 1400,
+      "counts": {
+        "plan": 385,
+        "branches": 474,
+        "summary": 403,
+        "answer": 129,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1578.json",
+      "valid": true,
+      "correct": true,
+      "total": 988,
+      "sampled": 976,
+      "counts": {
+        "plan": 506,
+        "branches": 280,
+        "summary": 153,
+        "answer": 27,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/347.json",
+      "valid": false,
+      "correct": true,
+      "total": 349,
+      "sampled": 349,
+      "counts": {
+        "plan": 250,
+        "branches": 0,
+        "summary": 0,
+        "answer": 96,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/algebra/1934.json",
+      "valid": true,
+      "correct": true,
+      "total": 500,
+      "sampled": 488,
+      "counts": {
+        "plan": 129,
+        "branches": 246,
+        "summary": 49,
+        "answer": 54,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/694.json",
+      "valid": true,
+      "correct": true,
+      "total": 849,
+      "sampled": 840,
+      "counts": {
+        "plan": 196,
+        "branches": 396,
+        "summary": 183,
+        "answer": 56,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/339.json",
+      "valid": true,
+      "correct": true,
+      "total": 341,
+      "sampled": 341,
+      "counts": {
+        "plan": 270,
+        "branches": 0,
+        "summary": 0,
+        "answer": 69,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/791.json",
+      "valid": true,
+      "correct": true,
+      "total": 736,
+      "sampled": 736,
+      "counts": {
+        "plan": 606,
+        "branches": 0,
+        "summary": 0,
+        "answer": 128,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/1282.json",
+      "valid": true,
+      "correct": true,
+      "total": 1747,
+      "sampled": 1735,
+      "counts": {
+        "plan": 697,
+        "branches": 732,
+        "summary": 155,
+        "answer": 141,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1044.json",
+      "valid": true,
+      "correct": true,
+      "total": 829,
+      "sampled": 814,
+      "counts": {
+        "plan": 354,
+        "branches": 208,
+        "summary": 152,
+        "answer": 89,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/276.json",
+      "valid": true,
+      "correct": true,
+      "total": 671,
+      "sampled": 659,
+      "counts": {
+        "plan": 134,
+        "branches": 230,
+        "summary": 243,
+        "answer": 42,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/858.json",
+      "valid": false,
+      "correct": false,
+      "total": 438,
+      "sampled": 438,
+      "counts": {
+        "plan": 254,
+        "branches": 0,
+        "summary": 0,
+        "answer": 182,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/geometry/465.json",
+      "valid": true,
+      "correct": true,
+      "total": 1065,
+      "sampled": 1050,
+      "counts": {
+        "plan": 217,
+        "branches": 444,
+        "summary": 270,
+        "answer": 108,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/742.json",
+      "valid": true,
+      "correct": false,
+      "total": 1224,
+      "sampled": 1212,
+      "counts": {
+        "plan": 306,
+        "branches": 688,
+        "summary": 113,
+        "answer": 95,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1303.json",
+      "valid": true,
+      "correct": true,
+      "total": 302,
+      "sampled": 293,
+      "counts": {
+        "plan": 73,
+        "branches": 125,
+        "summary": 39,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1199.json",
+      "valid": true,
+      "correct": true,
+      "total": 443,
+      "sampled": 434,
+      "counts": {
+        "plan": 158,
+        "branches": 136,
+        "summary": 64,
+        "answer": 67,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/955.json",
+      "valid": true,
+      "correct": true,
+      "total": 2623,
+      "sampled": 2608,
+      "counts": {
+        "plan": 518,
+        "branches": 424,
+        "summary": 1116,
+        "answer": 92,
+        "other_thought": 448,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1797.json",
+      "valid": true,
+      "correct": true,
+      "total": 850,
+      "sampled": 850,
+      "counts": {
+        "plan": 687,
+        "branches": 0,
+        "summary": 0,
+        "answer": 161,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/849.json",
+      "valid": true,
+      "correct": true,
+      "total": 306,
+      "sampled": 294,
+      "counts": {
+        "plan": 91,
+        "branches": 98,
+        "summary": 53,
+        "answer": 42,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/398.json",
+      "valid": true,
+      "correct": true,
+      "total": 3452,
+      "sampled": 3443,
+      "counts": {
+        "plan": 571,
+        "branches": 2271,
+        "summary": 361,
+        "answer": 231,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/477.json",
+      "valid": true,
+      "correct": false,
+      "total": 508,
+      "sampled": 508,
+      "counts": {
+        "plan": 440,
+        "branches": 0,
+        "summary": 0,
+        "answer": 66,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/668.json",
+      "valid": true,
+      "correct": true,
+      "total": 447,
+      "sampled": 438,
+      "counts": {
+        "plan": 113,
+        "branches": 180,
+        "summary": 62,
+        "answer": 74,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/731.json",
+      "valid": true,
+      "correct": false,
+      "total": 1290,
+      "sampled": 1281,
+      "counts": {
+        "plan": 478,
+        "branches": 406,
+        "summary": 307,
+        "answer": 81,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1388.json",
+      "valid": true,
+      "correct": true,
+      "total": 477,
+      "sampled": 468,
+      "counts": {
+        "plan": 71,
+        "branches": 179,
+        "summary": 158,
+        "answer": 51,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/914.json",
+      "valid": true,
+      "correct": true,
+      "total": 1260,
+      "sampled": 1239,
+      "counts": {
+        "plan": 272,
+        "branches": 619,
+        "summary": 202,
+        "answer": 60,
+        "other_thought": 74,
+        "service": 33
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/894.json",
+      "valid": false,
+      "correct": false,
+      "total": 3863,
+      "sampled": 3854,
+      "counts": {
+        "plan": 362,
+        "branches": 3275,
+        "summary": 132,
+        "answer": 75,
+        "other_thought": 1,
+        "service": 18
+      }
+    },
+    {
+      "id": "test/prealgebra/1807.json",
+      "valid": true,
+      "correct": true,
+      "total": 707,
+      "sampled": 698,
+      "counts": {
+        "plan": 246,
+        "branches": 256,
+        "summary": 87,
+        "answer": 100,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/702.json",
+      "valid": true,
+      "correct": false,
+      "total": 421,
+      "sampled": 421,
+      "counts": {
+        "plan": 347,
+        "branches": 0,
+        "summary": 0,
+        "answer": 72,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/1908.json",
+      "valid": true,
+      "correct": true,
+      "total": 496,
+      "sampled": 487,
+      "counts": {
+        "plan": 124,
+        "branches": 225,
+        "summary": 71,
+        "answer": 58,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/733.json",
+      "valid": true,
+      "correct": false,
+      "total": 7804,
+      "sampled": 7795,
+      "counts": {
+        "plan": 406,
+        "branches": 1532,
+        "summary": 5594,
+        "answer": 175,
+        "other_thought": 80,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/291.json",
+      "valid": true,
+      "correct": true,
+      "total": 1374,
+      "sampled": 1359,
+      "counts": {
+        "plan": 500,
+        "branches": 570,
+        "summary": 211,
+        "answer": 67,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1555.json",
+      "valid": true,
+      "correct": true,
+      "total": 764,
+      "sampled": 749,
+      "counts": {
+        "plan": 198,
+        "branches": 350,
+        "summary": 130,
+        "answer": 60,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/counting_and_probability/216.json",
+      "valid": true,
+      "correct": true,
+      "total": 791,
+      "sampled": 779,
+      "counts": {
+        "plan": 190,
+        "branches": 323,
+        "summary": 113,
+        "answer": 143,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1353.json",
+      "valid": false,
+      "correct": true,
+      "total": 699,
+      "sampled": 699,
+      "counts": {
+        "plan": 630,
+        "branches": 0,
+        "summary": 0,
+        "answer": 56,
+        "other_thought": 0,
+        "service": 13
+      }
+    },
+    {
+      "id": "test/counting_and_probability/116.json",
+      "valid": true,
+      "correct": true,
+      "total": 402,
+      "sampled": 393,
+      "counts": {
+        "plan": 121,
+        "branches": 112,
+        "summary": 87,
+        "answer": 64,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/860.json",
+      "valid": true,
+      "correct": false,
+      "total": 668,
+      "sampled": 659,
+      "counts": {
+        "plan": 76,
+        "branches": 379,
+        "summary": 130,
+        "answer": 65,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1743.json",
+      "valid": true,
+      "correct": true,
+      "total": 1020,
+      "sampled": 1011,
+      "counts": {
+        "plan": 149,
+        "branches": 648,
+        "summary": 166,
+        "answer": 39,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1865.json",
+      "valid": true,
+      "correct": true,
+      "total": 1131,
+      "sampled": 1116,
+      "counts": {
+        "plan": 366,
+        "branches": 385,
+        "summary": 254,
+        "answer": 100,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/2277.json",
+      "valid": true,
+      "correct": true,
+      "total": 929,
+      "sampled": 917,
+      "counts": {
+        "plan": 258,
+        "branches": 339,
+        "summary": 204,
+        "answer": 106,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/1133.json",
+      "valid": false,
+      "correct": false,
+      "total": 2842,
+      "sampled": 2842,
+      "counts": {
+        "plan": 2638,
+        "branches": 0,
+        "summary": 0,
+        "answer": 202,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/1960.json",
+      "valid": true,
+      "correct": true,
+      "total": 625,
+      "sampled": 616,
+      "counts": {
+        "plan": 145,
+        "branches": 293,
+        "summary": 97,
+        "answer": 72,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/843.json",
+      "valid": true,
+      "correct": true,
+      "total": 477,
+      "sampled": 468,
+      "counts": {
+        "plan": 151,
+        "branches": 166,
+        "summary": 47,
+        "answer": 36,
+        "other_thought": 60,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/1082.json",
+      "valid": true,
+      "correct": false,
+      "total": 1446,
+      "sampled": 1431,
+      "counts": {
+        "plan": 213,
+        "branches": 732,
+        "summary": 354,
+        "answer": 121,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/counting_and_probability/199.json",
+      "valid": true,
+      "correct": true,
+      "total": 634,
+      "sampled": 619,
+      "counts": {
+        "plan": 179,
+        "branches": 269,
+        "summary": 105,
+        "answer": 55,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1232.json",
+      "valid": true,
+      "correct": true,
+      "total": 500,
+      "sampled": 491,
+      "counts": {
+        "plan": 196,
+        "branches": 181,
+        "summary": 74,
+        "answer": 31,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/187.json",
+      "valid": true,
+      "correct": true,
+      "total": 401,
+      "sampled": 401,
+      "counts": {
+        "plan": 273,
+        "branches": 0,
+        "summary": 0,
+        "answer": 126,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/counting_and_probability/1114.json",
+      "valid": true,
+      "correct": true,
+      "total": 1010,
+      "sampled": 1010,
+      "counts": {
+        "plan": 897,
+        "branches": 0,
+        "summary": 0,
+        "answer": 111,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/956.json",
+      "valid": true,
+      "correct": false,
+      "total": 2422,
+      "sampled": 2407,
+      "counts": {
+        "plan": 312,
+        "branches": 859,
+        "summary": 948,
+        "answer": 158,
+        "other_thought": 120,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/24313.json",
+      "valid": true,
+      "correct": true,
+      "total": 885,
+      "sampled": 873,
+      "counts": {
+        "plan": 200,
+        "branches": 529,
+        "summary": 68,
+        "answer": 66,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/1300.json",
+      "valid": true,
+      "correct": true,
+      "total": 1230,
+      "sampled": 1221,
+      "counts": {
+        "plan": 578,
+        "branches": 229,
+        "summary": 272,
+        "answer": 133,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/183.json",
+      "valid": true,
+      "correct": false,
+      "total": 4432,
+      "sampled": 4423,
+      "counts": {
+        "plan": 464,
+        "branches": 506,
+        "summary": 1461,
+        "answer": 117,
+        "other_thought": 1867,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1297.json",
+      "valid": true,
+      "correct": true,
+      "total": 861,
+      "sampled": 852,
+      "counts": {
+        "plan": 116,
+        "branches": 581,
+        "summary": 55,
+        "answer": 91,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/109.json",
+      "valid": false,
+      "correct": false,
+      "total": 83,
+      "sampled": 83,
+      "counts": {
+        "plan": 80,
+        "branches": 0,
+        "summary": 0,
+        "answer": 0,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/counting_and_probability/51.json",
+      "valid": true,
+      "correct": true,
+      "total": 764,
+      "sampled": 764,
+      "counts": {
+        "plan": 623,
+        "branches": 0,
+        "summary": 0,
+        "answer": 139,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/541.json",
+      "valid": true,
+      "correct": true,
+      "total": 505,
+      "sampled": 505,
+      "counts": {
+        "plan": 309,
+        "branches": 0,
+        "summary": 0,
+        "answer": 194,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/477.json",
+      "valid": true,
+      "correct": false,
+      "total": 1194,
+      "sampled": 1182,
+      "counts": {
+        "plan": 126,
+        "branches": 842,
+        "summary": 123,
+        "answer": 81,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/547.json",
+      "valid": true,
+      "correct": false,
+      "total": 1060,
+      "sampled": 1060,
+      "counts": {
+        "plan": 973,
+        "branches": 0,
+        "summary": 0,
+        "answer": 85,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/102.json",
+      "valid": true,
+      "correct": false,
+      "total": 2590,
+      "sampled": 2581,
+      "counts": {
+        "plan": 201,
+        "branches": 1969,
+        "summary": 304,
+        "answer": 98,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1143.json",
+      "valid": true,
+      "correct": true,
+      "total": 595,
+      "sampled": 595,
+      "counts": {
+        "plan": 488,
+        "branches": 0,
+        "summary": 0,
+        "answer": 105,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/1555.json",
+      "valid": true,
+      "correct": true,
+      "total": 658,
+      "sampled": 643,
+      "counts": {
+        "plan": 160,
+        "branches": 278,
+        "summary": 115,
+        "answer": 79,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/1787.json",
+      "valid": true,
+      "correct": true,
+      "total": 397,
+      "sampled": 397,
+      "counts": {
+        "plan": 249,
+        "branches": 0,
+        "summary": 0,
+        "answer": 146,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/2551.json",
+      "valid": true,
+      "correct": true,
+      "total": 583,
+      "sampled": 568,
+      "counts": {
+        "plan": 120,
+        "branches": 259,
+        "summary": 132,
+        "answer": 46,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/number_theory/533.json",
+      "valid": true,
+      "correct": true,
+      "total": 931,
+      "sampled": 919,
+      "counts": {
+        "plan": 95,
+        "branches": 353,
+        "summary": 319,
+        "answer": 103,
+        "other_thought": 40,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/346.json",
+      "valid": true,
+      "correct": true,
+      "total": 360,
+      "sampled": 351,
+      "counts": {
+        "plan": 86,
+        "branches": 148,
+        "summary": 58,
+        "answer": 50,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/1108.json",
+      "valid": true,
+      "correct": true,
+      "total": 425,
+      "sampled": 425,
+      "counts": {
+        "plan": 352,
+        "branches": 0,
+        "summary": 0,
+        "answer": 71,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/1423.json",
+      "valid": false,
+      "correct": false,
+      "total": 625,
+      "sampled": 616,
+      "counts": {
+        "plan": 96,
+        "branches": 149,
+        "summary": 260,
+        "answer": 0,
+        "other_thought": 102,
+        "service": 18
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/446.json",
+      "valid": true,
+      "correct": false,
+      "total": 1586,
+      "sampled": 1571,
+      "counts": {
+        "plan": 212,
+        "branches": 1073,
+        "summary": 159,
+        "answer": 116,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1714.json",
+      "valid": true,
+      "correct": true,
+      "total": 420,
+      "sampled": 411,
+      "counts": {
+        "plan": 92,
+        "branches": 128,
+        "summary": 99,
+        "answer": 83,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/954.json",
+      "valid": true,
+      "correct": true,
+      "total": 550,
+      "sampled": 538,
+      "counts": {
+        "plan": 102,
+        "branches": 224,
+        "summary": 118,
+        "answer": 84,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/509.json",
+      "valid": true,
+      "correct": true,
+      "total": 1097,
+      "sampled": 1085,
+      "counts": {
+        "plan": 150,
+        "branches": 333,
+        "summary": 558,
+        "answer": 34,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1973.json",
+      "valid": true,
+      "correct": true,
+      "total": 536,
+      "sampled": 527,
+      "counts": {
+        "plan": 234,
+        "branches": 177,
+        "summary": 74,
+        "answer": 33,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2592.json",
+      "valid": true,
+      "correct": true,
+      "total": 368,
+      "sampled": 359,
+      "counts": {
+        "plan": 88,
+        "branches": 96,
+        "summary": 100,
+        "answer": 66,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1078.json",
+      "valid": true,
+      "correct": true,
+      "total": 795,
+      "sampled": 786,
+      "counts": {
+        "plan": 131,
+        "branches": 411,
+        "summary": 137,
+        "answer": 98,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1992.json",
+      "valid": false,
+      "correct": true,
+      "total": 1656,
+      "sampled": 1656,
+      "counts": {
+        "plan": 1503,
+        "branches": 0,
+        "summary": 0,
+        "answer": 141,
+        "other_thought": 0,
+        "service": 12
+      }
+    },
+    {
+      "id": "test/precalculus/96.json",
+      "valid": true,
+      "correct": true,
+      "total": 594,
+      "sampled": 585,
+      "counts": {
+        "plan": 214,
+        "branches": 181,
+        "summary": 112,
+        "answer": 69,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/690.json",
+      "valid": true,
+      "correct": true,
+      "total": 848,
+      "sampled": 833,
+      "counts": {
+        "plan": 208,
+        "branches": 350,
+        "summary": 162,
+        "answer": 102,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/2680.json",
+      "valid": true,
+      "correct": true,
+      "total": 526,
+      "sampled": 511,
+      "counts": {
+        "plan": 107,
+        "branches": 215,
+        "summary": 127,
+        "answer": 51,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/1227.json",
+      "valid": true,
+      "correct": true,
+      "total": 563,
+      "sampled": 554,
+      "counts": {
+        "plan": 234,
+        "branches": 149,
+        "summary": 102,
+        "answer": 60,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1002.json",
+      "valid": true,
+      "correct": true,
+      "total": 1328,
+      "sampled": 1319,
+      "counts": {
+        "plan": 275,
+        "branches": 705,
+        "summary": 259,
+        "answer": 71,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1339.json",
+      "valid": true,
+      "correct": true,
+      "total": 622,
+      "sampled": 613,
+      "counts": {
+        "plan": 126,
+        "branches": 235,
+        "summary": 61,
+        "answer": 72,
+        "other_thought": 111,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/190.json",
+      "valid": true,
+      "correct": true,
+      "total": 473,
+      "sampled": 464,
+      "counts": {
+        "plan": 70,
+        "branches": 222,
+        "summary": 64,
+        "answer": 99,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/342.json",
+      "valid": true,
+      "correct": true,
+      "total": 317,
+      "sampled": 308,
+      "counts": {
+        "plan": 108,
+        "branches": 89,
+        "summary": 67,
+        "answer": 35,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/834.json",
+      "valid": true,
+      "correct": true,
+      "total": 952,
+      "sampled": 943,
+      "counts": {
+        "plan": 98,
+        "branches": 228,
+        "summary": 510,
+        "answer": 98,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/72.json",
+      "valid": true,
+      "correct": true,
+      "total": 579,
+      "sampled": 570,
+      "counts": {
+        "plan": 288,
+        "branches": 120,
+        "summary": 103,
+        "answer": 50,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1930.json",
+      "valid": true,
+      "correct": true,
+      "total": 5115,
+      "sampled": 5115,
+      "counts": {
+        "plan": 4883,
+        "branches": 0,
+        "summary": 0,
+        "answer": 230,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/101.json",
+      "valid": true,
+      "correct": true,
+      "total": 2627,
+      "sampled": 2615,
+      "counts": {
+        "plan": 310,
+        "branches": 1856,
+        "summary": 298,
+        "answer": 141,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1467.json",
+      "valid": false,
+      "correct": false,
+      "total": 4048,
+      "sampled": 4036,
+      "counts": {
+        "plan": 140,
+        "branches": 2751,
+        "summary": 621,
+        "answer": 452,
+        "other_thought": 63,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2779.json",
+      "valid": true,
+      "correct": false,
+      "total": 4339,
+      "sampled": 4324,
+      "counts": {
+        "plan": 180,
+        "branches": 3820,
+        "summary": 243,
+        "answer": 70,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/1072.json",
+      "valid": true,
+      "correct": true,
+      "total": 1534,
+      "sampled": 1519,
+      "counts": {
+        "plan": 619,
+        "branches": 651,
+        "summary": 181,
+        "answer": 57,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/1146.json",
+      "valid": true,
+      "correct": false,
+      "total": 1369,
+      "sampled": 1354,
+      "counts": {
+        "plan": 170,
+        "branches": 735,
+        "summary": 307,
+        "answer": 131,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/geometry/456.json",
+      "valid": true,
+      "correct": false,
+      "total": 437,
+      "sampled": 428,
+      "counts": {
+        "plan": 150,
+        "branches": 163,
+        "summary": 53,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/623.json",
+      "valid": true,
+      "correct": true,
+      "total": 508,
+      "sampled": 499,
+      "counts": {
+        "plan": 122,
+        "branches": 174,
+        "summary": 148,
+        "answer": 46,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/105.json",
+      "valid": false,
+      "correct": true,
+      "total": 450,
+      "sampled": 450,
+      "counts": {
+        "plan": 292,
+        "branches": 0,
+        "summary": 0,
+        "answer": 156,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/number_theory/357.json",
+      "valid": true,
+      "correct": true,
+      "total": 1098,
+      "sampled": 1089,
+      "counts": {
+        "plan": 133,
+        "branches": 708,
+        "summary": 167,
+        "answer": 72,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1733.json",
+      "valid": true,
+      "correct": false,
+      "total": 1918,
+      "sampled": 1900,
+      "counts": {
+        "plan": 391,
+        "branches": 391,
+        "summary": 951,
+        "answer": 72,
+        "other_thought": 84,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/precalculus/44.json",
+      "valid": true,
+      "correct": false,
+      "total": 2389,
+      "sampled": 2377,
+      "counts": {
+        "plan": 67,
+        "branches": 1409,
+        "summary": 836,
+        "answer": 55,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2232.json",
+      "valid": true,
+      "correct": true,
+      "total": 468,
+      "sampled": 459,
+      "counts": {
+        "plan": 183,
+        "branches": 114,
+        "summary": 103,
+        "answer": 50,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/345.json",
+      "valid": false,
+      "correct": false,
+      "total": 8424,
+      "sampled": 8400,
+      "counts": {
+        "plan": 633,
+        "branches": 1185,
+        "summary": 769,
+        "answer": 998,
+        "other_thought": 4799,
+        "service": 40
+      }
+    },
+    {
+      "id": "test/prealgebra/1272.json",
+      "valid": true,
+      "correct": true,
+      "total": 539,
+      "sampled": 530,
+      "counts": {
+        "plan": 69,
+        "branches": 292,
+        "summary": 57,
+        "answer": 103,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/686.json",
+      "valid": true,
+      "correct": true,
+      "total": 1348,
+      "sampled": 1339,
+      "counts": {
+        "plan": 189,
+        "branches": 332,
+        "summary": 694,
+        "answer": 115,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1214.json",
+      "valid": true,
+      "correct": true,
+      "total": 339,
+      "sampled": 330,
+      "counts": {
+        "plan": 81,
+        "branches": 139,
+        "summary": 74,
+        "answer": 27,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/870.json",
+      "valid": true,
+      "correct": true,
+      "total": 866,
+      "sampled": 866,
+      "counts": {
+        "plan": 798,
+        "branches": 0,
+        "summary": 0,
+        "answer": 66,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/2735.json",
+      "valid": true,
+      "correct": true,
+      "total": 605,
+      "sampled": 593,
+      "counts": {
+        "plan": 166,
+        "branches": 188,
+        "summary": 157,
+        "answer": 72,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/881.json",
+      "valid": true,
+      "correct": false,
+      "total": 1805,
+      "sampled": 1796,
+      "counts": {
+        "plan": 952,
+        "branches": 194,
+        "summary": 218,
+        "answer": 93,
+        "other_thought": 331,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/425.json",
+      "valid": true,
+      "correct": true,
+      "total": 451,
+      "sampled": 442,
+      "counts": {
+        "plan": 87,
+        "branches": 209,
+        "summary": 91,
+        "answer": 46,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1407.json",
+      "valid": false,
+      "correct": true,
+      "total": 1263,
+      "sampled": 1263,
+      "counts": {
+        "plan": 1144,
+        "branches": 0,
+        "summary": 0,
+        "answer": 116,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/algebra/1547.json",
+      "valid": true,
+      "correct": true,
+      "total": 1009,
+      "sampled": 997,
+      "counts": {
+        "plan": 361,
+        "branches": 357,
+        "summary": 209,
+        "answer": 60,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/686.json",
+      "valid": true,
+      "correct": true,
+      "total": 720,
+      "sampled": 705,
+      "counts": {
+        "plan": 213,
+        "branches": 251,
+        "summary": 192,
+        "answer": 38,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/826.json",
+      "valid": true,
+      "correct": false,
+      "total": 2023,
+      "sampled": 2014,
+      "counts": {
+        "plan": 372,
+        "branches": 1101,
+        "summary": 377,
+        "answer": 155,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/631.json",
+      "valid": true,
+      "correct": true,
+      "total": 796,
+      "sampled": 787,
+      "counts": {
+        "plan": 180,
+        "branches": 519,
+        "summary": 23,
+        "answer": 56,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/761.json",
+      "valid": true,
+      "correct": true,
+      "total": 328,
+      "sampled": 319,
+      "counts": {
+        "plan": 114,
+        "branches": 112,
+        "summary": 49,
+        "answer": 35,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1572.json",
+      "valid": true,
+      "correct": true,
+      "total": 509,
+      "sampled": 497,
+      "counts": {
+        "plan": 223,
+        "branches": 96,
+        "summary": 91,
+        "answer": 77,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/132.json",
+      "valid": true,
+      "correct": true,
+      "total": 908,
+      "sampled": 896,
+      "counts": {
+        "plan": 259,
+        "branches": 384,
+        "summary": 201,
+        "answer": 42,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1553.json",
+      "valid": true,
+      "correct": true,
+      "total": 602,
+      "sampled": 602,
+      "counts": {
+        "plan": 513,
+        "branches": 0,
+        "summary": 0,
+        "answer": 87,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1779.json",
+      "valid": true,
+      "correct": true,
+      "total": 2384,
+      "sampled": 2372,
+      "counts": {
+        "plan": 184,
+        "branches": 1898,
+        "summary": 165,
+        "answer": 115,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/255.json",
+      "valid": true,
+      "correct": false,
+      "total": 1862,
+      "sampled": 1853,
+      "counts": {
+        "plan": 258,
+        "branches": 1397,
+        "summary": 137,
+        "answer": 52,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1814.json",
+      "valid": true,
+      "correct": true,
+      "total": 919,
+      "sampled": 907,
+      "counts": {
+        "plan": 182,
+        "branches": 520,
+        "summary": 80,
+        "answer": 115,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2476.json",
+      "valid": true,
+      "correct": true,
+      "total": 923,
+      "sampled": 908,
+      "counts": {
+        "plan": 229,
+        "branches": 324,
+        "summary": 284,
+        "answer": 60,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1981.json",
+      "valid": true,
+      "correct": true,
+      "total": 883,
+      "sampled": 871,
+      "counts": {
+        "plan": 517,
+        "branches": 178,
+        "summary": 81,
+        "answer": 85,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/615.json",
+      "valid": true,
+      "correct": false,
+      "total": 1299,
+      "sampled": 1287,
+      "counts": {
+        "plan": 159,
+        "branches": 464,
+        "summary": 518,
+        "answer": 136,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/1055.json",
+      "valid": true,
+      "correct": true,
+      "total": 1164,
+      "sampled": 1155,
+      "counts": {
+        "plan": 637,
+        "branches": 215,
+        "summary": 180,
+        "answer": 51,
+        "other_thought": 64,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2157.json",
+      "valid": true,
+      "correct": true,
+      "total": 371,
+      "sampled": 371,
+      "counts": {
+        "plan": 250,
+        "branches": 0,
+        "summary": 0,
+        "answer": 119,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/675.json",
+      "valid": true,
+      "correct": false,
+      "total": 1293,
+      "sampled": 1284,
+      "counts": {
+        "plan": 548,
+        "branches": 310,
+        "summary": 304,
+        "answer": 113,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/156.json",
+      "valid": true,
+      "correct": true,
+      "total": 630,
+      "sampled": 630,
+      "counts": {
+        "plan": 360,
+        "branches": 0,
+        "summary": 0,
+        "answer": 268,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/2022.json",
+      "valid": true,
+      "correct": true,
+      "total": 969,
+      "sampled": 969,
+      "counts": {
+        "plan": 718,
+        "branches": 0,
+        "summary": 0,
+        "answer": 249,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/515.json",
+      "valid": true,
+      "correct": true,
+      "total": 412,
+      "sampled": 400,
+      "counts": {
+        "plan": 130,
+        "branches": 115,
+        "summary": 61,
+        "answer": 84,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1686.json",
+      "valid": true,
+      "correct": true,
+      "total": 457,
+      "sampled": 448,
+      "counts": {
+        "plan": 91,
+        "branches": 160,
+        "summary": 125,
+        "answer": 63,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1410.json",
+      "valid": true,
+      "correct": true,
+      "total": 1553,
+      "sampled": 1553,
+      "counts": {
+        "plan": 1230,
+        "branches": 0,
+        "summary": 0,
+        "answer": 321,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/986.json",
+      "valid": true,
+      "correct": true,
+      "total": 1017,
+      "sampled": 1005,
+      "counts": {
+        "plan": 202,
+        "branches": 548,
+        "summary": 178,
+        "answer": 67,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1510.json",
+      "valid": true,
+      "correct": false,
+      "total": 6854,
+      "sampled": 6854,
+      "counts": {
+        "plan": 6042,
+        "branches": 0,
+        "summary": 0,
+        "answer": 810,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/geometry/880.json",
+      "valid": true,
+      "correct": false,
+      "total": 1937,
+      "sampled": 1925,
+      "counts": {
+        "plan": 351,
+        "branches": 922,
+        "summary": 477,
+        "answer": 102,
+        "other_thought": 64,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/183.json",
+      "valid": true,
+      "correct": false,
+      "total": 2360,
+      "sampled": 2345,
+      "counts": {
+        "plan": 387,
+        "branches": 1302,
+        "summary": 471,
+        "answer": 174,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/659.json",
+      "valid": true,
+      "correct": true,
+      "total": 1071,
+      "sampled": 1059,
+      "counts": {
+        "plan": 159,
+        "branches": 389,
+        "summary": 449,
+        "answer": 52,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/483.json",
+      "valid": false,
+      "correct": false,
+      "total": 1220,
+      "sampled": 1211,
+      "counts": {
+        "plan": 113,
+        "branches": 797,
+        "summary": 201,
+        "answer": 91,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/190.json",
+      "valid": true,
+      "correct": false,
+      "total": 3799,
+      "sampled": 3787,
+      "counts": {
+        "plan": 133,
+        "branches": 1885,
+        "summary": 822,
+        "answer": 628,
+        "other_thought": 310,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1238.json",
+      "valid": true,
+      "correct": true,
+      "total": 498,
+      "sampled": 489,
+      "counts": {
+        "plan": 166,
+        "branches": 169,
+        "summary": 90,
+        "answer": 55,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/737.json",
+      "valid": true,
+      "correct": true,
+      "total": 387,
+      "sampled": 378,
+      "counts": {
+        "plan": 82,
+        "branches": 123,
+        "summary": 79,
+        "answer": 85,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/2146.json",
+      "valid": true,
+      "correct": false,
+      "total": 2714,
+      "sampled": 2702,
+      "counts": {
+        "plan": 418,
+        "branches": 1475,
+        "summary": 631,
+        "answer": 168,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/928.json",
+      "valid": false,
+      "correct": true,
+      "total": 1067,
+      "sampled": 1052,
+      "counts": {
+        "plan": 130,
+        "branches": 572,
+        "summary": 163,
+        "answer": 96,
+        "other_thought": 81,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/145.json",
+      "valid": false,
+      "correct": false,
+      "total": 3518,
+      "sampled": 3509,
+      "counts": {
+        "plan": 722,
+        "branches": 736,
+        "summary": 1162,
+        "answer": 807,
+        "other_thought": 74,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/625.json",
+      "valid": true,
+      "correct": true,
+      "total": 1019,
+      "sampled": 1007,
+      "counts": {
+        "plan": 310,
+        "branches": 297,
+        "summary": 249,
+        "answer": 141,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/24.json",
+      "valid": true,
+      "correct": true,
+      "total": 767,
+      "sampled": 755,
+      "counts": {
+        "plan": 248,
+        "branches": 334,
+        "summary": 103,
+        "answer": 60,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2023.json",
+      "valid": true,
+      "correct": true,
+      "total": 410,
+      "sampled": 410,
+      "counts": {
+        "plan": 292,
+        "branches": 0,
+        "summary": 0,
+        "answer": 116,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/1804.json",
+      "valid": true,
+      "correct": true,
+      "total": 388,
+      "sampled": 388,
+      "counts": {
+        "plan": 248,
+        "branches": 0,
+        "summary": 0,
+        "answer": 138,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/counting_and_probability/377.json",
+      "valid": true,
+      "correct": true,
+      "total": 988,
+      "sampled": 973,
+      "counts": {
+        "plan": 253,
+        "branches": 385,
+        "summary": 272,
+        "answer": 52,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/algebra/2253.json",
+      "valid": true,
+      "correct": true,
+      "total": 937,
+      "sampled": 925,
+      "counts": {
+        "plan": 361,
+        "branches": 368,
+        "summary": 71,
+        "answer": 115,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1761.json",
+      "valid": true,
+      "correct": false,
+      "total": 562,
+      "sampled": 553,
+      "counts": {
+        "plan": 192,
+        "branches": 135,
+        "summary": 53,
+        "answer": 97,
+        "other_thought": 68,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1332.json",
+      "valid": true,
+      "correct": true,
+      "total": 456,
+      "sampled": 447,
+      "counts": {
+        "plan": 112,
+        "branches": 199,
+        "summary": 68,
+        "answer": 59,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2593.json",
+      "valid": true,
+      "correct": true,
+      "total": 555,
+      "sampled": 546,
+      "counts": {
+        "plan": 161,
+        "branches": 192,
+        "summary": 78,
+        "answer": 106,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/232.json",
+      "valid": true,
+      "correct": false,
+      "total": 1671,
+      "sampled": 1656,
+      "counts": {
+        "plan": 231,
+        "branches": 872,
+        "summary": 437,
+        "answer": 105,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1063.json",
+      "valid": true,
+      "correct": false,
+      "total": 1766,
+      "sampled": 1754,
+      "counts": {
+        "plan": 196,
+        "branches": 1100,
+        "summary": 375,
+        "answer": 73,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/621.json",
+      "valid": false,
+      "correct": true,
+      "total": 525,
+      "sampled": 525,
+      "counts": {
+        "plan": 451,
+        "branches": 0,
+        "summary": 0,
+        "answer": 67,
+        "other_thought": 0,
+        "service": 7
+      }
+    },
+    {
+      "id": "test/algebra/351.json",
+      "valid": true,
+      "correct": true,
+      "total": 577,
+      "sampled": 577,
+      "counts": {
+        "plan": 332,
+        "branches": 0,
+        "summary": 0,
+        "answer": 243,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/2517.json",
+      "valid": true,
+      "correct": true,
+      "total": 955,
+      "sampled": 943,
+      "counts": {
+        "plan": 114,
+        "branches": 627,
+        "summary": 96,
+        "answer": 69,
+        "other_thought": 28,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/521.json",
+      "valid": true,
+      "correct": true,
+      "total": 699,
+      "sampled": 690,
+      "counts": {
+        "plan": 113,
+        "branches": 312,
+        "summary": 205,
+        "answer": 51,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/991.json",
+      "valid": true,
+      "correct": false,
+      "total": 714,
+      "sampled": 705,
+      "counts": {
+        "plan": 400,
+        "branches": 100,
+        "summary": 87,
+        "answer": 53,
+        "other_thought": 57,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/838.json",
+      "valid": true,
+      "correct": true,
+      "total": 1351,
+      "sampled": 1342,
+      "counts": {
+        "plan": 78,
+        "branches": 621,
+        "summary": 480,
+        "answer": 154,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/221.json",
+      "valid": true,
+      "correct": true,
+      "total": 722,
+      "sampled": 713,
+      "counts": {
+        "plan": 187,
+        "branches": 442,
+        "summary": 52,
+        "answer": 23,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/508.json",
+      "valid": true,
+      "correct": false,
+      "total": 358,
+      "sampled": 349,
+      "counts": {
+        "plan": 110,
+        "branches": 102,
+        "summary": 93,
+        "answer": 35,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2102.json",
+      "valid": true,
+      "correct": true,
+      "total": 746,
+      "sampled": 737,
+      "counts": {
+        "plan": 221,
+        "branches": 394,
+        "summary": 68,
+        "answer": 45,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/2057.json",
+      "valid": true,
+      "correct": true,
+      "total": 553,
+      "sampled": 541,
+      "counts": {
+        "plan": 159,
+        "branches": 175,
+        "summary": 77,
+        "answer": 70,
+        "other_thought": 51,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/986.json",
+      "valid": true,
+      "correct": true,
+      "total": 1426,
+      "sampled": 1417,
+      "counts": {
+        "plan": 667,
+        "branches": 309,
+        "summary": 326,
+        "answer": 106,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/580.json",
+      "valid": true,
+      "correct": true,
+      "total": 506,
+      "sampled": 506,
+      "counts": {
+        "plan": 468,
+        "branches": 0,
+        "summary": 0,
+        "answer": 36,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/975.json",
+      "valid": true,
+      "correct": true,
+      "total": 1789,
+      "sampled": 1774,
+      "counts": {
+        "plan": 266,
+        "branches": 1236,
+        "summary": 112,
+        "answer": 149,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/precalculus/768.json",
+      "valid": true,
+      "correct": false,
+      "total": 782,
+      "sampled": 782,
+      "counts": {
+        "plan": 638,
+        "branches": 0,
+        "summary": 0,
+        "answer": 142,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/260.json",
+      "valid": true,
+      "correct": false,
+      "total": 1074,
+      "sampled": 1065,
+      "counts": {
+        "plan": 167,
+        "branches": 425,
+        "summary": 371,
+        "answer": 93,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1512.json",
+      "valid": true,
+      "correct": false,
+      "total": 603,
+      "sampled": 591,
+      "counts": {
+        "plan": 188,
+        "branches": 186,
+        "summary": 139,
+        "answer": 68,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/965.json",
+      "valid": true,
+      "correct": false,
+      "total": 1873,
+      "sampled": 1861,
+      "counts": {
+        "plan": 763,
+        "branches": 821,
+        "summary": 206,
+        "answer": 61,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/465.json",
+      "valid": true,
+      "correct": false,
+      "total": 3191,
+      "sampled": 3182,
+      "counts": {
+        "plan": 800,
+        "branches": 2101,
+        "summary": 154,
+        "answer": 118,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1187.json",
+      "valid": true,
+      "correct": true,
+      "total": 1450,
+      "sampled": 1435,
+      "counts": {
+        "plan": 303,
+        "branches": 760,
+        "summary": 240,
+        "answer": 121,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/geometry/846.json",
+      "valid": true,
+      "correct": false,
+      "total": 2053,
+      "sampled": 2041,
+      "counts": {
+        "plan": 279,
+        "branches": 842,
+        "summary": 809,
+        "answer": 101,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/101.json",
+      "valid": true,
+      "correct": true,
+      "total": 885,
+      "sampled": 873,
+      "counts": {
+        "plan": 274,
+        "branches": 379,
+        "summary": 152,
+        "answer": 58,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1298.json",
+      "valid": true,
+      "correct": true,
+      "total": 337,
+      "sampled": 328,
+      "counts": {
+        "plan": 70,
+        "branches": 104,
+        "summary": 115,
+        "answer": 30,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1462.json",
+      "valid": true,
+      "correct": false,
+      "total": 3937,
+      "sampled": 3928,
+      "counts": {
+        "plan": 247,
+        "branches": 2435,
+        "summary": 713,
+        "answer": 76,
+        "other_thought": 449,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/2019.json",
+      "valid": true,
+      "correct": true,
+      "total": 396,
+      "sampled": 387,
+      "counts": {
+        "plan": 86,
+        "branches": 100,
+        "summary": 117,
+        "answer": 67,
+        "other_thought": 9,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1640.json",
+      "valid": true,
+      "correct": true,
+      "total": 672,
+      "sampled": 663,
+      "counts": {
+        "plan": 364,
+        "branches": 138,
+        "summary": 100,
+        "answer": 52,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1014.json",
+      "valid": true,
+      "correct": true,
+      "total": 907,
+      "sampled": 898,
+      "counts": {
+        "plan": 152,
+        "branches": 423,
+        "summary": 264,
+        "answer": 50,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/607.json",
+      "valid": true,
+      "correct": false,
+      "total": 3098,
+      "sampled": 3098,
+      "counts": {
+        "plan": 2767,
+        "branches": 0,
+        "summary": 0,
+        "answer": 329,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/2193.json",
+      "valid": true,
+      "correct": true,
+      "total": 492,
+      "sampled": 483,
+      "counts": {
+        "plan": 179,
+        "branches": 202,
+        "summary": 46,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1837.json",
+      "valid": true,
+      "correct": true,
+      "total": 1021,
+      "sampled": 1012,
+      "counts": {
+        "plan": 354,
+        "branches": 373,
+        "summary": 223,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1098.json",
+      "valid": true,
+      "correct": true,
+      "total": 400,
+      "sampled": 388,
+      "counts": {
+        "plan": 108,
+        "branches": 161,
+        "summary": 62,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/307.json",
+      "valid": true,
+      "correct": true,
+      "total": 172,
+      "sampled": 172,
+      "counts": {
+        "plan": 102,
+        "branches": 0,
+        "summary": 0,
+        "answer": 68,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/567.json",
+      "valid": true,
+      "correct": true,
+      "total": 486,
+      "sampled": 477,
+      "counts": {
+        "plan": 94,
+        "branches": 269,
+        "summary": 50,
+        "answer": 55,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/353.json",
+      "valid": true,
+      "correct": true,
+      "total": 547,
+      "sampled": 538,
+      "counts": {
+        "plan": 225,
+        "branches": 181,
+        "summary": 61,
+        "answer": 62,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/1140.json",
+      "valid": true,
+      "correct": false,
+      "total": 2604,
+      "sampled": 2592,
+      "counts": {
+        "plan": 547,
+        "branches": 1191,
+        "summary": 682,
+        "answer": 118,
+        "other_thought": 45,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2251.json",
+      "valid": true,
+      "correct": true,
+      "total": 388,
+      "sampled": 379,
+      "counts": {
+        "plan": 70,
+        "branches": 164,
+        "summary": 67,
+        "answer": 69,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/753.json",
+      "valid": false,
+      "correct": false,
+      "total": 1051,
+      "sampled": 1042,
+      "counts": {
+        "plan": 146,
+        "branches": 392,
+        "summary": 275,
+        "answer": 180,
+        "other_thought": 41,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/159.json",
+      "valid": true,
+      "correct": true,
+      "total": 645,
+      "sampled": 636,
+      "counts": {
+        "plan": 253,
+        "branches": 159,
+        "summary": 145,
+        "answer": 70,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1356.json",
+      "valid": true,
+      "correct": true,
+      "total": 520,
+      "sampled": 505,
+      "counts": {
+        "plan": 172,
+        "branches": 148,
+        "summary": 60,
+        "answer": 61,
+        "other_thought": 54,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/1003.json",
+      "valid": true,
+      "correct": false,
+      "total": 1031,
+      "sampled": 1022,
+      "counts": {
+        "plan": 237,
+        "branches": 373,
+        "summary": 283,
+        "answer": 120,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/802.json",
+      "valid": true,
+      "correct": true,
+      "total": 464,
+      "sampled": 455,
+      "counts": {
+        "plan": 96,
+        "branches": 219,
+        "summary": 79,
+        "answer": 52,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/978.json",
+      "valid": false,
+      "correct": true,
+      "total": 936,
+      "sampled": 936,
+      "counts": {
+        "plan": 672,
+        "branches": 0,
+        "summary": 0,
+        "answer": 262,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/1937.json",
+      "valid": true,
+      "correct": true,
+      "total": 349,
+      "sampled": 337,
+      "counts": {
+        "plan": 79,
+        "branches": 120,
+        "summary": 82,
+        "answer": 46,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/2196.json",
+      "valid": true,
+      "correct": false,
+      "total": 2829,
+      "sampled": 2820,
+      "counts": {
+        "plan": 586,
+        "branches": 1260,
+        "summary": 228,
+        "answer": 174,
+        "other_thought": 564,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/378.json",
+      "valid": true,
+      "correct": false,
+      "total": 472,
+      "sampled": 463,
+      "counts": {
+        "plan": 112,
+        "branches": 192,
+        "summary": 68,
+        "answer": 61,
+        "other_thought": 22,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/591.json",
+      "valid": true,
+      "correct": true,
+      "total": 486,
+      "sampled": 477,
+      "counts": {
+        "plan": 183,
+        "branches": 180,
+        "summary": 64,
+        "answer": 41,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2626.json",
+      "valid": true,
+      "correct": false,
+      "total": 661,
+      "sampled": 649,
+      "counts": {
+        "plan": 112,
+        "branches": 310,
+        "summary": 105,
+        "answer": 112,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1787.json",
+      "valid": true,
+      "correct": true,
+      "total": 722,
+      "sampled": 713,
+      "counts": {
+        "plan": 82,
+        "branches": 323,
+        "summary": 86,
+        "answer": 213,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/874.json",
+      "valid": true,
+      "correct": false,
+      "total": 958,
+      "sampled": 949,
+      "counts": {
+        "plan": 308,
+        "branches": 396,
+        "summary": 68,
+        "answer": 168,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/894.json",
+      "valid": true,
+      "correct": true,
+      "total": 677,
+      "sampled": 665,
+      "counts": {
+        "plan": 342,
+        "branches": 118,
+        "summary": 109,
+        "answer": 86,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1742.json",
+      "valid": true,
+      "correct": true,
+      "total": 428,
+      "sampled": 419,
+      "counts": {
+        "plan": 93,
+        "branches": 128,
+        "summary": 90,
+        "answer": 60,
+        "other_thought": 40,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/913.json",
+      "valid": true,
+      "correct": true,
+      "total": 453,
+      "sampled": 444,
+      "counts": {
+        "plan": 154,
+        "branches": 145,
+        "summary": 53,
+        "answer": 68,
+        "other_thought": 16,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1317.json",
+      "valid": true,
+      "correct": true,
+      "total": 505,
+      "sampled": 496,
+      "counts": {
+        "plan": 98,
+        "branches": 209,
+        "summary": 129,
+        "answer": 51,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1184.json",
+      "valid": true,
+      "correct": false,
+      "total": 934,
+      "sampled": 922,
+      "counts": {
+        "plan": 217,
+        "branches": 461,
+        "summary": 157,
+        "answer": 77,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/488.json",
+      "valid": true,
+      "correct": true,
+      "total": 1733,
+      "sampled": 1724,
+      "counts": {
+        "plan": 194,
+        "branches": 974,
+        "summary": 344,
+        "answer": 203,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1172.json",
+      "valid": true,
+      "correct": false,
+      "total": 572,
+      "sampled": 563,
+      "counts": {
+        "plan": 187,
+        "branches": 217,
+        "summary": 105,
+        "answer": 45,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/2152.json",
+      "valid": false,
+      "correct": false,
+      "total": 1261,
+      "sampled": 1261,
+      "counts": {
+        "plan": 775,
+        "branches": 0,
+        "summary": 0,
+        "answer": 484,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/2257.json",
+      "valid": true,
+      "correct": true,
+      "total": 1054,
+      "sampled": 1042,
+      "counts": {
+        "plan": 146,
+        "branches": 376,
+        "summary": 442,
+        "answer": 68,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1730.json",
+      "valid": true,
+      "correct": true,
+      "total": 454,
+      "sampled": 454,
+      "counts": {
+        "plan": 362,
+        "branches": 0,
+        "summary": 0,
+        "answer": 90,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1405.json",
+      "valid": false,
+      "correct": true,
+      "total": 805,
+      "sampled": 805,
+      "counts": {
+        "plan": 623,
+        "branches": 0,
+        "summary": 0,
+        "answer": 180,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/1529.json",
+      "valid": true,
+      "correct": true,
+      "total": 452,
+      "sampled": 443,
+      "counts": {
+        "plan": 204,
+        "branches": 120,
+        "summary": 72,
+        "answer": 38,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1457.json",
+      "valid": true,
+      "correct": true,
+      "total": 790,
+      "sampled": 778,
+      "counts": {
+        "plan": 135,
+        "branches": 417,
+        "summary": 164,
+        "answer": 52,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/2066.json",
+      "valid": true,
+      "correct": false,
+      "total": 389,
+      "sampled": 380,
+      "counts": {
+        "plan": 107,
+        "branches": 147,
+        "summary": 75,
+        "answer": 42,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/251.json",
+      "valid": true,
+      "correct": true,
+      "total": 604,
+      "sampled": 592,
+      "counts": {
+        "plan": 64,
+        "branches": 327,
+        "summary": 138,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/170.json",
+      "valid": true,
+      "correct": true,
+      "total": 691,
+      "sampled": 679,
+      "counts": {
+        "plan": 211,
+        "branches": 261,
+        "summary": 99,
+        "answer": 98,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/795.json",
+      "valid": true,
+      "correct": true,
+      "total": 984,
+      "sampled": 972,
+      "counts": {
+        "plan": 304,
+        "branches": 315,
+        "summary": 250,
+        "answer": 93,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/977.json",
+      "valid": true,
+      "correct": false,
+      "total": 537,
+      "sampled": 525,
+      "counts": {
+        "plan": 118,
+        "branches": 253,
+        "summary": 90,
+        "answer": 54,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1991.json",
+      "valid": true,
+      "correct": true,
+      "total": 1005,
+      "sampled": 993,
+      "counts": {
+        "plan": 198,
+        "branches": 307,
+        "summary": 243,
+        "answer": 235,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/65.json",
+      "valid": true,
+      "correct": true,
+      "total": 568,
+      "sampled": 559,
+      "counts": {
+        "plan": 287,
+        "branches": 121,
+        "summary": 71,
+        "answer": 71,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/410.json",
+      "valid": true,
+      "correct": true,
+      "total": 765,
+      "sampled": 756,
+      "counts": {
+        "plan": 126,
+        "branches": 388,
+        "summary": 83,
+        "answer": 86,
+        "other_thought": 65,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2080.json",
+      "valid": true,
+      "correct": true,
+      "total": 583,
+      "sampled": 571,
+      "counts": {
+        "plan": 72,
+        "branches": 323,
+        "summary": 119,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/1343.json",
+      "valid": true,
+      "correct": true,
+      "total": 660,
+      "sampled": 645,
+      "counts": {
+        "plan": 131,
+        "branches": 253,
+        "summary": 155,
+        "answer": 95,
+        "other_thought": 1,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/2037.json",
+      "valid": false,
+      "correct": true,
+      "total": 370,
+      "sampled": 361,
+      "counts": {
+        "plan": 64,
+        "branches": 141,
+        "summary": 76,
+        "answer": 71,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1114.json",
+      "valid": false,
+      "correct": true,
+      "total": 382,
+      "sampled": 382,
+      "counts": {
+        "plan": 248,
+        "branches": 0,
+        "summary": 0,
+        "answer": 131,
+        "other_thought": 0,
+        "service": 3
+      }
+    },
+    {
+      "id": "test/algebra/2470.json",
+      "valid": true,
+      "correct": true,
+      "total": 631,
+      "sampled": 622,
+      "counts": {
+        "plan": 139,
+        "branches": 314,
+        "summary": 78,
+        "answer": 82,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1252.json",
+      "valid": true,
+      "correct": true,
+      "total": 424,
+      "sampled": 415,
+      "counts": {
+        "plan": 89,
+        "branches": 204,
+        "summary": 59,
+        "answer": 54,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/1425.json",
+      "valid": true,
+      "correct": true,
+      "total": 379,
+      "sampled": 370,
+      "counts": {
+        "plan": 99,
+        "branches": 137,
+        "summary": 43,
+        "answer": 82,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/1003.json",
+      "valid": true,
+      "correct": false,
+      "total": 5752,
+      "sampled": 5743,
+      "counts": {
+        "plan": 647,
+        "branches": 225,
+        "summary": 4077,
+        "answer": 300,
+        "other_thought": 486,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/1622.json",
+      "valid": true,
+      "correct": true,
+      "total": 578,
+      "sampled": 578,
+      "counts": {
+        "plan": 486,
+        "branches": 0,
+        "summary": 0,
+        "answer": 90,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/807.json",
+      "valid": true,
+      "correct": true,
+      "total": 648,
+      "sampled": 636,
+      "counts": {
+        "plan": 163,
+        "branches": 294,
+        "summary": 77,
+        "answer": 72,
+        "other_thought": 21,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2584.json",
+      "valid": true,
+      "correct": true,
+      "total": 496,
+      "sampled": 484,
+      "counts": {
+        "plan": 102,
+        "branches": 207,
+        "summary": 115,
+        "answer": 50,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/number_theory/572.json",
+      "valid": true,
+      "correct": true,
+      "total": 863,
+      "sampled": 854,
+      "counts": {
+        "plan": 273,
+        "branches": 374,
+        "summary": 151,
+        "answer": 47,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/134.json",
+      "valid": true,
+      "correct": true,
+      "total": 419,
+      "sampled": 410,
+      "counts": {
+        "plan": 114,
+        "branches": 145,
+        "summary": 72,
+        "answer": 70,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1168.json",
+      "valid": true,
+      "correct": true,
+      "total": 490,
+      "sampled": 481,
+      "counts": {
+        "plan": 133,
+        "branches": 184,
+        "summary": 102,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/1060.json",
+      "valid": true,
+      "correct": true,
+      "total": 458,
+      "sampled": 449,
+      "counts": {
+        "plan": 73,
+        "branches": 119,
+        "summary": 95,
+        "answer": 77,
+        "other_thought": 77,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/988.json",
+      "valid": true,
+      "correct": true,
+      "total": 628,
+      "sampled": 616,
+      "counts": {
+        "plan": 205,
+        "branches": 229,
+        "summary": 77,
+        "answer": 95,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/172.json",
+      "valid": true,
+      "correct": false,
+      "total": 3528,
+      "sampled": 3513,
+      "counts": {
+        "plan": 503,
+        "branches": 1091,
+        "summary": 1819,
+        "answer": 68,
+        "other_thought": 22,
+        "service": 25
+      }
+    },
+    {
+      "id": "test/prealgebra/1655.json",
+      "valid": true,
+      "correct": true,
+      "total": 577,
+      "sampled": 568,
+      "counts": {
+        "plan": 164,
+        "branches": 185,
+        "summary": 109,
+        "answer": 101,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/841.json",
+      "valid": true,
+      "correct": true,
+      "total": 809,
+      "sampled": 800,
+      "counts": {
+        "plan": 428,
+        "branches": 198,
+        "summary": 127,
+        "answer": 38,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/389.json",
+      "valid": true,
+      "correct": true,
+      "total": 529,
+      "sampled": 517,
+      "counts": {
+        "plan": 121,
+        "branches": 259,
+        "summary": 65,
+        "answer": 46,
+        "other_thought": 17,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/prealgebra/1436.json",
+      "valid": true,
+      "correct": true,
+      "total": 436,
+      "sampled": 427,
+      "counts": {
+        "plan": 102,
+        "branches": 152,
+        "summary": 85,
+        "answer": 79,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/1837.json",
+      "valid": true,
+      "correct": true,
+      "total": 447,
+      "sampled": 447,
+      "counts": {
+        "plan": 382,
+        "branches": 0,
+        "summary": 0,
+        "answer": 63,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/number_theory/89.json",
+      "valid": true,
+      "correct": true,
+      "total": 690,
+      "sampled": 678,
+      "counts": {
+        "plan": 273,
+        "branches": 170,
+        "summary": 147,
+        "answer": 78,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/819.json",
+      "valid": true,
+      "correct": true,
+      "total": 861,
+      "sampled": 852,
+      "counts": {
+        "plan": 235,
+        "branches": 436,
+        "summary": 76,
+        "answer": 96,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/2064.json",
+      "valid": true,
+      "correct": true,
+      "total": 689,
+      "sampled": 680,
+      "counts": {
+        "plan": 120,
+        "branches": 407,
+        "summary": 88,
+        "answer": 56,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/precalculus/452.json",
+      "valid": true,
+      "correct": true,
+      "total": 811,
+      "sampled": 802,
+      "counts": {
+        "plan": 287,
+        "branches": 357,
+        "summary": 84,
+        "answer": 65,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/counting_and_probability/1009.json",
+      "valid": true,
+      "correct": true,
+      "total": 571,
+      "sampled": 562,
+      "counts": {
+        "plan": 164,
+        "branches": 250,
+        "summary": 62,
+        "answer": 77,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/prealgebra/993.json",
+      "valid": true,
+      "correct": true,
+      "total": 651,
+      "sampled": 642,
+      "counts": {
+        "plan": 235,
+        "branches": 229,
+        "summary": 89,
+        "answer": 80,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/149.json",
+      "valid": true,
+      "correct": true,
+      "total": 457,
+      "sampled": 448,
+      "counts": {
+        "plan": 135,
+        "branches": 217,
+        "summary": 55,
+        "answer": 32,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/686.json",
+      "valid": true,
+      "correct": true,
+      "total": 801,
+      "sampled": 789,
+      "counts": {
+        "plan": 454,
+        "branches": 186,
+        "summary": 86,
+        "answer": 53,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/711.json",
+      "valid": true,
+      "correct": false,
+      "total": 3429,
+      "sampled": 3429,
+      "counts": {
+        "plan": 3231,
+        "branches": 0,
+        "summary": 0,
+        "answer": 196,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/754.json",
+      "valid": true,
+      "correct": false,
+      "total": 2021,
+      "sampled": 2003,
+      "counts": {
+        "plan": 262,
+        "branches": 1312,
+        "summary": 309,
+        "answer": 108,
+        "other_thought": 1,
+        "service": 29
+      }
+    },
+    {
+      "id": "test/counting_and_probability/238.json",
+      "valid": true,
+      "correct": false,
+      "total": 1956,
+      "sampled": 1944,
+      "counts": {
+        "plan": 124,
+        "branches": 1571,
+        "summary": 136,
+        "answer": 103,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/counting_and_probability/14.json",
+      "valid": true,
+      "correct": true,
+      "total": 493,
+      "sampled": 484,
+      "counts": {
+        "plan": 110,
+        "branches": 239,
+        "summary": 70,
+        "answer": 56,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/geometry/106.json",
+      "valid": true,
+      "correct": true,
+      "total": 747,
+      "sampled": 735,
+      "counts": {
+        "plan": 89,
+        "branches": 281,
+        "summary": 49,
+        "answer": 70,
+        "other_thought": 237,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/geometry/817.json",
+      "valid": true,
+      "correct": false,
+      "total": 616,
+      "sampled": 616,
+      "counts": {
+        "plan": 527,
+        "branches": 0,
+        "summary": 0,
+        "answer": 87,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/algebra/114.json",
+      "valid": true,
+      "correct": true,
+      "total": 897,
+      "sampled": 885,
+      "counts": {
+        "plan": 88,
+        "branches": 397,
+        "summary": 258,
+        "answer": 132,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/algebra/2043.json",
+      "valid": true,
+      "correct": true,
+      "total": 748,
+      "sampled": 748,
+      "counts": {
+        "plan": 279,
+        "branches": 0,
+        "summary": 0,
+        "answer": 467,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/intermediate_algebra/199.json",
+      "valid": true,
+      "correct": true,
+      "total": 666,
+      "sampled": 666,
+      "counts": {
+        "plan": 523,
+        "branches": 0,
+        "summary": 0,
+        "answer": 141,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/precalculus/703.json",
+      "valid": true,
+      "correct": false,
+      "total": 842,
+      "sampled": 842,
+      "counts": {
+        "plan": 742,
+        "branches": 0,
+        "summary": 0,
+        "answer": 98,
+        "other_thought": 0,
+        "service": 2
+      }
+    },
+    {
+      "id": "test/prealgebra/1784.json",
+      "valid": true,
+      "correct": true,
+      "total": 265,
+      "sampled": 256,
+      "counts": {
+        "plan": 70,
+        "branches": 92,
+        "summary": 49,
+        "answer": 36,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/459.json",
+      "valid": true,
+      "correct": true,
+      "total": 715,
+      "sampled": 706,
+      "counts": {
+        "plan": 152,
+        "branches": 287,
+        "summary": 104,
+        "answer": 43,
+        "other_thought": 112,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/algebra/435.json",
+      "valid": true,
+      "correct": true,
+      "total": 536,
+      "sampled": 524,
+      "counts": {
+        "plan": 106,
+        "branches": 286,
+        "summary": 85,
+        "answer": 37,
+        "other_thought": 1,
+        "service": 21
+      }
+    },
+    {
+      "id": "test/precalculus/1252.json",
+      "valid": true,
+      "correct": true,
+      "total": 860,
+      "sampled": 851,
+      "counts": {
+        "plan": 160,
+        "branches": 459,
+        "summary": 103,
+        "answer": 120,
+        "other_thought": 1,
+        "service": 17
+      }
+    },
+    {
+      "id": "test/number_theory/1090.json",
+      "valid": true,
+      "correct": false,
+      "total": 1022,
+      "sampled": 1013,
+      "counts": {
+        "plan": 591,
+        "branches": 199,
+        "summary": 114,
+        "answer": 100,
+        "other_thought": 1,
+        "service": 17
+      }
+    }
+  ],
+  "reference_sources": [
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-0.jsonl",
+      "sha256": "b3ba88ba401ea01b6052cda6f0f7c3686e787bcc76da5ec443a18d2f420dd312",
+      "rows": 17
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-1.jsonl",
+      "sha256": "1ad2fc1df9a6f969dba58ffd13f293e4d180d12a301125a189fdd1a1706d8e21",
+      "rows": 21
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-10.jsonl",
+      "sha256": "ee2938a5673065df69b77671b718de1555e53bb6a4411e9613f4eae0e811c900",
+      "rows": 29
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-11.jsonl",
+      "sha256": "e227a48988f4768ddf61fb82b919ff821acdeef2a00d2b8b056f36d5a4562708",
+      "rows": 25
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-12.jsonl",
+      "sha256": "06b97967216d2b396777d279836e7fb46d72924dd13d81f14074fce79064c7ce",
+      "rows": 5
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-13.jsonl",
+      "sha256": "a4ae1b78f87183b1667486f53151bf8636e78f8321384d51cc145792873bb947",
+      "rows": 13
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-14.jsonl",
+      "sha256": "774073a3a0b42ac1dfa280ce7a1eb64f8e365e3cdef5cb72482f567ed46ea16f",
+      "rows": 1
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-15.jsonl",
+      "sha256": "48eac98c86da83e59e76817d29381845f60f0104d44d477c95920c192392d7cb",
+      "rows": 4
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-16.jsonl",
+      "sha256": "fd883d851e50e14a0b618992505ac5b2f79c5091c35b11489c39513aeae455b8",
+      "rows": 22
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-17.jsonl",
+      "sha256": "61ef21ae4ec3e845aea8442802055f13e7f3c5a9de6ef61811d2215f92fa9490",
+      "rows": 30
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-18.jsonl",
+      "sha256": "e7b11432d266bf4e47022133516cfe687d726b0ee88338f892cb6aaab5cb1467",
+      "rows": 33
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-19.jsonl",
+      "sha256": "b382ae7ef9bc309d045b1a8b5b7244ee696acfb15850dff0cd17630f3fcd3fd9",
+      "rows": 29
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-2.jsonl",
+      "sha256": "fd50d4f03f5caedeb1b31d9142dbc9384d2428c9dca6443c6fce7ae5d12d1136",
+      "rows": 21
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-20.jsonl",
+      "sha256": "b0ab6f9db52c167f49aa216e8f09a4d20df055d54f39e455ffcfa98e8b462029",
+      "rows": 21
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-21.jsonl",
+      "sha256": "189afa29d14da76532389402a10eacd1c068a98ca93e859494b21c0357b6590c",
+      "rows": 10
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-22.jsonl",
+      "sha256": "4b54ae295d8625e1218fb807aab0a588e98663e75da197003f320f017e836dc8",
+      "rows": 26
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-23.jsonl",
+      "sha256": "d91aba74998e1688dec37baf0ce65bc000075e0e36ab8aeb7eaeed9b2f1f8f7c",
+      "rows": 17
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-24.jsonl",
+      "sha256": "8e18239b4a2e0b8547905c72ef570c7bf12827e23082b37d4557f93aa9d5b137",
+      "rows": 5
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-25.jsonl",
+      "sha256": "d70fce540c3d8a11bc27223e902b4df25f777e1b9d7e7520995ef1bf189b24d3",
+      "rows": 1
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-26.jsonl",
+      "sha256": "3aedc0c97d25eb43670033e1c9d05c7b6b2181829dda977908459854a21989db",
+      "rows": 1
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-28.jsonl",
+      "sha256": "bc41d2c2608fbe3925ccb076f9e9cbfc722baf056c64d1e52bc5a9c66e4aa8d8",
+      "rows": 5
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-3.jsonl",
+      "sha256": "d00e27219dbc080699e15997ffcb8b416b3513701638301b9be084ff284eb5b0",
+      "rows": 5
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-30.jsonl",
+      "sha256": "3632b76e702d58e813555fd6b99c9076e9a0aab3024ea2f156caee746dee0762",
+      "rows": 20
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-4.jsonl",
+      "sha256": "f3f02f021e7cfd3afc637e59bbb1545188eebb55b71ce60de67459f068367e1c",
+      "rows": 9
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-5.jsonl",
+      "sha256": "70472804134bc1dfaec04c6f3f5d195622151541fa629017ef1488979b783dba",
+      "rows": 17
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-6.jsonl",
+      "sha256": "ad8239c519873c62ed035a812316721ea99dd7e10e4b0ad7fcc4e05a03fe294e",
+      "rows": 38
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-7.jsonl",
+      "sha256": "0c6ac23f046de21b0ec25782d17dbf7af646d3f1af33dc21caa94ad4d89fb7a4",
+      "rows": 25
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-8.jsonl",
+      "sha256": "2eefd361227e34043763f98357788dfc6eda82f3b8698cdf0c72f39c3bf7f6a1",
+      "rows": 25
+    },
+    {
+      "path": "work/experiments/eval-rl300-vllm-rolling-32k-20261013/runs/MATH500/rank-9.jsonl",
+      "sha256": "87f3f2b337bbbbd79f2cb9d6488436a1741d2f3d9653f1e9e0581e48fdffb0ae",
+      "rows": 25
+    }
+  ],
+  "reference_validation": {
+    "matched_all_500_rows": true,
+    "matched_fields": [
+      "counts",
+      "total",
+      "sampled",
+      "valid",
+      "correct"
+    ],
+    "reference_source_sha256": "9bb63376e5f717ead646291ec44a131b57768417d5219a0ad291b39ef0a4b373"
+  }
+}

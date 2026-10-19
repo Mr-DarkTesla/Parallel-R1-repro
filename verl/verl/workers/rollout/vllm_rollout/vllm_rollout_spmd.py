@@ -423,10 +423,10 @@ class vLLMAsyncRollout:
         socket_type = "ipc" if tensor_parallel_size <= local_world_size else "tcp"
 
         # File lock to prevent multiple workers listen to same port
-        with FileLock("/tmp/verl_vllm_zmq.lock"):
+        with FileLock(os.path.join(os.environ.get("TMPDIR", "/tmp"), "verl_vllm_zmq.lock")):
             if socket_type == "ipc":
                 pid = os.getpid()
-                address = f"ipc:///tmp/verl_vllm_zmq_{pid}.ipc"
+                address = "ipc://" + os.path.join(os.environ.get("TMPDIR", "/tmp"), f"verl_vllm_zmq_{pid}.ipc")
             else:
                 ip, port = self._get_free_port()
                 address = f"tcp://{ip}:{port}"
@@ -462,6 +462,10 @@ class vLLMAsyncRollout:
         all_kwargs[0]["local_rank"] = 0
 
         self.vllm_config = all_kwargs[0]["vllm_config"]
+        from verl.parallel_thinking_generation_v3.repro_trace import install_forward_probe
+        install_forward_probe()
+        from verl.workers.rollout.vllm_rollout.decode_graph import install_decode_graph
+        install_decode_graph()
         self.inference_engine = WorkerWrapperBase(vllm_config=self.vllm_config)
         self.inference_engine.init_worker(all_kwargs)
 

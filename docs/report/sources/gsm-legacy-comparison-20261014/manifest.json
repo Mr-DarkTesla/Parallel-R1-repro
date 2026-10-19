@@ -1,0 +1,118 @@
+{
+  "sources": [
+    {
+      "path": "exps/gsm-unseen-two-rewards-20261008/monitoring-20261008-0839-msk.json",
+      "sha256": "a914965a51cdc549e41c421d20475100521967d7f1a72034c4395093e8f52e86"
+    },
+    {
+      "path": "exps/gsm-unseen-two-rewards-20261008/reward-analysis.json",
+      "sha256": "ab52d5d215ce5376fe98d3f6e813d9e5749f2b0084e463d0e6807c85956a8e0e"
+    },
+    {
+      "path": "exps/gsm-unseen-split-rewards-400-20261008/completed-snapshot-20261008.json",
+      "sha256": "3f9ba7fd66058ffc1f89e347778be2b816eb023cc4157089fcc6c3b8a4d4f861"
+    }
+  ],
+  "palette": {
+    "blue": "#397CC1",
+    "yellow": "#D7A522",
+    "sand": "#B9674D",
+    "background": "#ffffff",
+    "text": "#33332f",
+    "grid": "#e8e6df"
+  },
+  "formula_renderer": "LaTeX with Computer Modern and amsmath",
+  "training_smoothing": {
+    "method": "trailing arithmetic mean, plotted at last step",
+    "windows": {
+      "parallel/critical_depth_mean": 40,
+      "parallel/forks_mean": 30
+    }
+  },
+  "validation": "one stochastic answer per task; MATH n=316, GSM-Infinite n=256",
+  "forwards": "logical critical path: sum main/summary generated tokens + sum(max generated path tokens per fork); excludes prefill and runtime-inserted tokens",
+  "blocks": "mean executed fork count over all 256 training answers; width fixed at 2",
+  "runs": [
+    {
+      "key": "s2",
+      "label": "S2",
+      "color": "#397CC1",
+      "style": "-",
+      "reward": "8/10 steps: 2c-1; 2/10: +1 correct plain, +1.2 correct valid parallel, -1 otherwise",
+      "advantage": "(R-mean_group(R))/(sample_std_group(R)+1e-6)"
+    },
+    {
+      "key": "depth",
+      "label": "$R = c - 10^{-4} F$",
+      "color": "#D7A522",
+      "style": "-",
+      "reward": "c-0.0001*D",
+      "advantage": "(R-mean_group(R))/(sample_std_group(R)+1e-6)"
+    },
+    {
+      "key": "gated_depth",
+      "label": "$R = c\\bigl(1 - 10^{-4} F\\bigr)$",
+      "color": "#B9674D",
+      "style": "-",
+      "reward": "c-0.0001*c*D",
+      "advantage": "(c-mean_group(c))/(sample_std_group(c)+1e-6)-0.0001*(c*D-mean_group(c*D))"
+    }
+  ],
+  "endpoints": {
+    "s2": {
+      "APO_MATH300": {
+        "iteration": 800,
+        "value": 39.24050632911392
+      },
+      "parallel/critical_depth_mean": {
+        "iteration": 800,
+        "value": 359.3115234375
+      },
+      "gsm_infinite_heldout": {
+        "iteration": 800,
+        "value": 91.796875
+      },
+      "parallel/forks_mean": {
+        "iteration": 800,
+        "value": 0.9734375
+      }
+    },
+    "depth": {
+      "APO_MATH300": {
+        "iteration": 800,
+        "value": 10.443037974683545
+      },
+      "parallel/critical_depth_mean": {
+        "iteration": 800,
+        "value": 5.07333984375
+      },
+      "gsm_infinite_heldout": {
+        "iteration": 800,
+        "value": 83.984375
+      },
+      "parallel/forks_mean": {
+        "iteration": 800,
+        "value": 0.0
+      }
+    },
+    "gated_depth": {
+      "APO_MATH300": {
+        "iteration": 400,
+        "value": 37.0253164556962
+      },
+      "parallel/critical_depth_mean": {
+        "iteration": 400,
+        "value": 377.65312500000005
+      },
+      "gsm_infinite_heldout": {
+        "iteration": 400,
+        "value": 87.5
+      },
+      "parallel/forks_mean": {
+        "iteration": 400,
+        "value": 0.03138020833333333
+      }
+    }
+  },
+  "physical_gpu_forward_measurement": false
+}

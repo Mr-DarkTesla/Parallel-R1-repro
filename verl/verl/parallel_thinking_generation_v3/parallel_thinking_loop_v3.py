@@ -25,6 +25,7 @@ from contextlib import contextmanager
 from typing import Dict, Optional, Type
 from codetiming import Timer
 import torch
+from verl.parallel_thinking_generation_v3.repro_trace import Trace, TOKENS
 logger = logging.getLogger(__file__)
 logger.setLevel(os.getenv("VERL_LOGGING_LEVEL", "WARN"))
 
@@ -68,6 +69,9 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
 
         # Initialize tools from config file
         cls.tokenizer = tokenizer
+        encoded = [tokenizer.encode(t, add_special_tokens=False) for t in TOKENS]
+        if any(len(ids) != 1 for ids in encoded) or len({ids[0] for ids in encoded}) != 6:
+            raise ValueError('SFT tokenizer must contain all six distinct single-token Parallel-R1 tags')
         cls.add_diverse_prefix = config.actor_rollout_ref.rollout.agent.add_diverse_prefix
         cls.max_iterations_for_parallel_thinking = config.actor_rollout_ref.rollout.agent.max_iterations_for_parallel_thinking
         cls.num_paths = config.actor_rollout_ref.rollout.agent.num_paths
@@ -84,7 +88,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
 
         cls.prompt_length = config.actor_rollout_ref.rollout.prompt_length
         cls.response_length = config.actor_rollout_ref.rollout.response_length
-        cls.system_prompt = tokenizer.apply_chat_template([{}], add_generation_prompt=False, tokenize=True)
+        cls.system_prompt = []
 
     @rollout_trace_op
     async def run(
@@ -100,7 +104,12 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
                 messages, add_generation_prompt=True, tokenize=True
             ),
         )
-        init_len      = len(prompt_ids)                         
+        init_len      = len(prompt_ids)
+        if init_len > self.prompt_length:
+            raise ValueError(f'Prompt has {init_len} tokens; limit is {self.prompt_length}. Filter data before rollout.')
+        self.trace = Trace(getattr(self, 'trajectory', {}), init_len)
+        self.trace.record['messages'] = messages
+        self.trace.record['prompt_ids'] = list(prompt_ids)
         position_ids  = torch.arange(init_len, dtype=torch.long)
 
         response_mask = []                                     
@@ -187,7 +196,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             #     p_rel = new_ids.index(self.end_parallel_token)   # first find relative pos of </Parallel> in  new_ids 
             # except ValueError:
             #     raise RuntimeError("append_tokens(is_parallel=True) 找不到 </Parallel> 标记")
-            s2, e2 = path_spans[1]
+            s2, e2 = path_spans[-1]
 
             p_end_abs   = start + e2
             
@@ -253,8 +262,11 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
 
         
         while True:
-            sp_main = {**sampling_params, "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
-            ids = await self.server_manager.generate(
+            request_id = uuid4().hex
+            remaining = self.response_length - (len(prompt_ids) - init_len)
+            sp_main = {**sampling_params, "max_tokens": remaining,
+                       "stop_token_ids": [self.start_parallel_token, self.eos_token_id]}
+            ids = await self.trace.generate(self.server_manager, 'main',
                 request_id=request_id,
                 prompt_ids=prompt_ids,
                 sampling_params=sp_main,
@@ -265,12 +277,19 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
 
             assert ids[-1] != self.eos_token_id
 
+            remaining = self.response_length - (len(prompt_ids) - init_len)
+            # Reserve the injected path/parallel/summary tags and newline.
+            if remaining < 2 * self.num_paths + 3 + len(self.new_line_token):
+                break
+
+            self.trace.fork(len(response_mask) - 1)
+
             # elict parallel thinking 
             base_pos = position_ids[-1].item() + 1 # the position of the <Path> token
             parallel_stack.append({"base": base_pos, "longest": 0})
 
             parallel_ids, path_spans, manual_mask_positions = await self._call_parallel_thinking(
-                prompt_ids, sampling_params
+                prompt_ids, sampling_params, remaining
             )
             append_tokens(parallel_ids, is_parallel=True, path_spans=path_spans, manual_mask_positions=manual_mask_positions)
 
@@ -278,8 +297,9 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             if should_stop():
                 break
 
-        response_ids = prompt_ids[-len(response_mask) :]
-        prompt_ids = prompt_ids[: len(prompt_ids) - len(response_mask)]
+        untruncated_length = len(response_mask)
+        response_ids = prompt_ids[init_len:]
+        prompt_ids = prompt_ids[:init_len]
         assert init_len == (len(prompt_ids))
         
         if left_pad_len > 0:
@@ -298,6 +318,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             response_ids = response_ids[: self.response_length]
             response_mask = response_mask[: self.response_length]
 
+        self.trace.finish(self.tokenizer, response_ids, response_mask, position_ids, position_required_masks, untruncated_length)
         return AgentLoopOutput(
             prompt_ids          = prompt_ids,
             response_ids        = response_ids,
@@ -306,6 +327,14 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             multiverse_pos_ids  = position_ids.cpu(),        # 1-D
             num_turns           = iterations + 1,
             metrics             = {},
+            repro_stats         = {
+                'forks': self.trace.record['executed_fork_count'],
+                'positions': self.trace.record['parallel_relative_positions'],
+                'generation_calls': self.trace.record['generation_calls'],
+                'generated_tokens': self.trace.record['generated_tokens_total'],
+                'critical_depth': self.trace.record['critical_depth'],
+                'truncated': self.trace.record['truncated'],
+            },
         )
 
 
@@ -314,7 +343,7 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         """
         check whether need to conduct parallel thinking
         """
-        if response_ids[-1] == self.start_parallel_token:
+        if response_ids and response_ids[-1] == self.start_parallel_token:
             return True
         else:
             return False
@@ -323,10 +352,13 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         self,
         prompt_ids: list[int],
         sampling_params: dict[str, Any],
+        remaining: int,
     ):
         print("Conducting parallel thinking...")
         num_paths = self.num_paths
-        max_len   = self.max_path_response_length
+        overhead = 2 * num_paths + 3 + len(self.new_line_token)
+        path_budget = (remaining - overhead) // num_paths
+        max_len = min(self.max_path_response_length or path_budget, path_budget)
         PATH_OPEN, PATH_CLOSE = self.start_path_token, self.end_path_token
         manual_mask_positions = []
 
@@ -334,11 +366,11 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         async def _gen_single_path(seed_i: int, prompt_i: list[int]):
             sp = copy.deepcopy(sampling_params)
             sp.update({"seed": seed_i, "n": 1, "stop_token_ids": [PATH_CLOSE, self.eos_token_id],
-                    "temperature": 1.0})
+                    "temperature": 1.0, "max_tokens": max_len})
             # sp.update({"n": 1, "stop_token_ids": [PATH_CLOSE, self.eos_token_id],
             #         "temperature": 1.0})
             manual_append = False
-            ids = await self.server_manager.generate(
+            ids = await self.trace.generate(self.server_manager, 'path',
                 request_id=uuid4().hex,
                 prompt_ids=prompt_i + [PATH_OPEN],
                 sampling_params=sp,
@@ -346,8 +378,8 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             if max_len and len(ids) > max_len:
                 ids = ids[:max_len]
             
-            if ids[-1] != PATH_CLOSE:
-                if ids[-1] == self.eos_token_id:
+            if not ids or ids[-1] != PATH_CLOSE:
+                if ids and ids[-1] == self.eos_token_id:
                     ids[-1] = PATH_CLOSE
                 else:
                     ids.append(PATH_CLOSE)
@@ -397,18 +429,19 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
         cursor += 1
         
         # if exploration stage alos superass the max length, we will not generate summary
-        if len(prompt_ids) + 2 + len(parallel_ids) + 1 < self.prompt_length + self.response_length:
+        if len(parallel_ids) < remaining:
             print("Conducting Summary...")
             manual_append_summary = False
             sp_sum = copy.deepcopy(sampling_params)
-            sp_sum.update({"n": 1, "stop_token_ids": [self.end_summary_token, self.eos_token_id]})
-            summary_ids = await self.server_manager.generate(
+            sp_sum.update({"n": 1, "max_tokens": remaining - len(parallel_ids) - 1,
+                           "stop_token_ids": [self.end_summary_token, self.eos_token_id]})
+            summary_ids = await self.trace.generate(self.server_manager, 'summary',
                 request_id=uuid4().hex,
                 prompt_ids=prompt_ids + parallel_ids,   # 现在的完整 prompt
                 sampling_params=sp_sum,
             )
-            if summary_ids[-1] != self.end_summary_token:
-                if summary_ids[-1] == self.eos_token_id:
+            if not summary_ids or summary_ids[-1] != self.end_summary_token:
+                if summary_ids and summary_ids[-1] == self.eos_token_id:
                     summary_ids[-1] = self.end_summary_token
                 else:
                     summary_ids.append(self.end_summary_token)
@@ -422,6 +455,4 @@ class ParallelThinkingAgentLoopV3(AgentLoopBase):
             assert parallel_ids[-1] == self.end_summary_token, \
                 f"Parallel thinking did not end with {self.end_summary_token}, got {parallel_ids[-1]}"
         # print(self.tokenizer.decode(parallel_ids, skip_special_tokens=False))
-        return parallel_ids, path_spans, manual_mask_positions        # path_spans 已是相对 parallel_ids       
-        
-
+        return parallel_ids, path_spans, manual_mask_positions        # path_spans 已是相对 parallel_ids

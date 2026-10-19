@@ -1,0 +1,71 @@
+{
+  "checkpoint": 150,
+  "model_sha256": "a15058092190e857c6f68a337d69e0c149602e1ab50f8384a92d2c04007ef28f",
+  "definition": "Number of sibling branches per recorded fork, each fork weighted equally; includes wrong and format-invalid answers. No-fork questions do not contribute a zero.",
+  "datasets": [
+    {
+      "dataset": "MATH500",
+      "questions": 500,
+      "questions_with_fork": 417,
+      "forks": 419,
+      "width_all": 2.6992840095465396,
+      "valid_forks": 399,
+      "width_valid": 2.7167919799498748,
+      "histogram": {
+        "2": 220,
+        "3": 131,
+        "4": 54,
+        "5": 8,
+        "6": 3,
+        "8": 3
+      }
+    },
+    {
+      "dataset": "AIME2024",
+      "questions": 30,
+      "questions_with_fork": 24,
+      "forks": 24,
+      "width_all": 2.9583333333333335,
+      "valid_forks": 18,
+      "width_valid": 2.7777777777777777,
+      "histogram": {
+        "2": 12,
+        "3": 5,
+        "4": 6,
+        "8": 1
+      }
+    },
+    {
+      "dataset": "AIME2025",
+      "questions": 30,
+      "questions_with_fork": 21,
+      "forks": 22,
+      "width_all": 2.772727272727273,
+      "valid_forks": 16,
+      "width_valid": 2.6875,
+      "histogram": {
+        "2": 8,
+        "3": 11,
+        "4": 3
+      }
+    },
+    {
+      "dataset": "AIME2026",
+      "questions": 30,
+      "questions_with_fork": 22,
+      "forks": 24,
+      "width_all": 2.9583333333333335,
+      "valid_forks": 20,
+      "width_valid": 3.05,
+      "histogram": {
+        "2": 8,
+        "3": 10,
+        "4": 5,
+        "5": 1
+      }
+    }
+  ],
+  "total_forks": 489,
+  "width_all": 2.7280163599182004,
+  "trace_root": "work/experiments/rl-r4-posteval-20261013/sft/checkpoint-0150"
+}

@@ -90,8 +90,13 @@ def create_device_mesh(world_size, fsdp_size):
     return device_mesh
 
 
-def get_sharding_strategy(device_mesh):
+def get_sharding_strategy(device_mesh, strategy="auto"):
     from torch.distributed.fsdp import ShardingStrategy
+
+    if strategy != "auto":
+        if device_mesh.ndim != 1 or strategy not in ("FULL_SHARD", "SHARD_GRAD_OP", "NO_SHARD"):
+            raise ValueError(f"Unsupported FSDP strategy {strategy!r} for {device_mesh.ndim}-D mesh")
+        return ShardingStrategy[strategy]
 
     if device_mesh.ndim == 1:
         sharding_strategy = ShardingStrategy.FULL_SHARD
@@ -366,7 +371,7 @@ class ActorRolloutRefWorker(Worker, DistProfilerExtension):
             print(f"wrap_policy: {auto_wrap_policy}")
 
         fsdp_mesh = self.device_mesh
-        sharding_strategy = get_sharding_strategy(fsdp_mesh)
+        sharding_strategy = get_sharding_strategy(fsdp_mesh, fsdp_config.get("sharding_strategy", "auto"))
 
         # TODO: add transformer policy
         # We force reference policy to use CPUOffload to save memory.
@@ -797,7 +802,9 @@ class ActorRolloutRefWorker(Worker, DistProfilerExtension):
         # https://pytorch.org/docs/stable/notes/fsdp.html#fsdp-notes
         # unshard the root FSDP module
         if self.world_size > 1 and fsdp_version(self.actor.actor_module) == 1:
-            self.actor.actor_module._handle.reshard(True)
+            handle = self.actor.actor_module._handle
+            if handle is not None and handle.uses_sharded_strategy:
+                handle.reshard(True)
 
         if self._is_offload_param:
             offload_fsdp_model_to_cpu(self.actor_module_fsdp)
@@ -837,7 +844,9 @@ class ActorRolloutRefWorker(Worker, DistProfilerExtension):
         # https://pytorch.org/docs/stable/notes/fsdp.html#fsdp-notes
         # unshard the root FSDP module
         if self.world_size > 1 and fsdp_version(self.ref_policy.actor_module) == 1:
-            self.ref_policy.actor_module._handle.reshard(True)
+            handle = self.ref_policy.actor_module._handle
+            if handle is not None and handle.uses_sharded_strategy:
+                handle.reshard(True)
 
         return output
 
@@ -1641,7 +1650,9 @@ class RewardModelWorker(Worker, DistProfilerExtension):
         # https://pytorch.org/docs/stable/notes/fsdp.html#fsdp-notes
         # unshard the root FSDP module
         if self.world_size > 1 and fsdp_version(self.reward_module) == 1:
-            self.reward_module._handle.reshard(True)
+            handle = self.reward_module._handle
+            if handle is not None and handle.uses_sharded_strategy:
+                handle.reshard(True)
 
         output = output.to("cpu")
         return output

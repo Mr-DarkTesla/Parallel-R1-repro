@@ -1,0 +1,51 @@
+{
+  "sources": [
+    {
+      "path": "${PROJECT_ROOT}/work/experiments/token-composition-restyle-20261014/manifest.json",
+      "sha256": "8a7bb312a91c96e984a908523ec080c179a2f765cd4aa48c738200d01c19bd4b"
+    },
+    {
+      "path": "${PROJECT_ROOT}/work/experiments/rl150-new-reward-token-composition-20261014/manifest.json",
+      "sha256": "bda7140773e88a73884169ccd78b0fe7071e807d25426ad7ea554a4a1f8da49b"
+    }
+  ],
+  "panel_order": [
+    "RL300 old reward",
+    "SFT -> RL150 new R4 reward"
+  ],
+  "dataset": "MATH500",
+  "n_each": 500,
+  "groups": "all answers",
+  "panel_titles": [
+    "Было",
+    "Стало"
+  ],
+  "percentages": [
+    [
+      13.84577858950098,
+      51.85651692772765,
+      26.79346342897072,
+      5.713451712965878,
+      0.5284198088451838,
+      1.2623695319895916
+    ],
+    [
+      28.32786506691811,
+      38.50750002405396,
+      18.81965625290652,
+      8.540437910320431,
+      4.4397191780602245,
+      1.364821567740756
+    ]
+  ],
+  "palette": {
+    "plan": "#D7A522",
+    "branches": "#397CC1",
+    "summary": "#B9674D",
+    "answer": "#6D8884",
+    "other_thought": "#89949D",
+    "service": "#C5C5C5"
+  },
+  "confidence": "95% task-bootstrap CI",
+  "caveat": "Different checkpoints and response/path budgets; descriptive token composition, not a reward-only controlled comparison"
+}

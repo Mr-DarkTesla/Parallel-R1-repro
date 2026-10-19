@@ -1,0 +1,24 @@
+{
+  "approved": true,
+  "config_sha256": "3cf4c3013f905462ed77a9e38ce980f5f4b023553bb205f6ba24176f470a2a02",
+  "sha256": {
+    "train": "6bcab08da6bc6b22ddacc58ac5aeb5a18abcc509c4f68d7457cd79d8acb4e317",
+    "val": "cb02ef017baff97bed5568e60a53f9673c04f657f59d81349f1a6484e3f30a6a",
+    "system": "82fb35db3d24b2865b9ac195943d93803a9404b2936fc8e83c996169486af59e",
+    "scorer": "3aa6d7bea31716a17a9de12c8ca63fe36e3e0eabe41474f414ce21d29bd08119",
+    "format_validator": "3aa6d7bea31716a17a9de12c8ca63fe36e3e0eabe41474f414ce21d29bd08119",
+    "replay": "ce1726fde79b0ac4617190357bff41c12efeb0524f64f40c40ae5d01a7cf91d4",
+    "reward": "b3e755aa880f0cc0bea0234e5b9fbc6f9378c0ef3b0c12b3ee168fe87df68fce",
+    "train_code": "4f3290cdb5cbd53ed0d746bf815fa12877e6bc74f99dc25162ae8a7f279f0665",
+    "actor_code": "ba5b276346aa04ebbd43160b3a1687e1ddbacfa7bca753aee9681a5c049c0057",
+    "batching_code": "b3d9d7fa33d951d49754f4d9a701fbc18dd560bbcabc75388dce647e2bb72f01"
+  },
+  "distributed_smoke": {
+    "path": "${PROJECT_ROOT}/work/experiments/rl-acceleration-20261012/research/vllm-structured-prototype/learner-attempt1/proof.json",
+    "sha256": "fcdee507dbb50f3e83ad5b647b48f11f97edaf2ffd93ef87f459f52ed60cf29c"
+  },
+  "qualification_scope": "Existing actual8GPU two-update proof; fresh32GPU smoke explicitly waived by direct user; this is NOT a32GPU smoke result",
+  "authorization": "Direct user: launch production32 without fresh tests/subagents, immediately switch to batch64. Standing autonomous confirmed-failure repair. Retry from durable cp50; new Adam; logical51..500.",
+  "source_ready_sha256": "dfb7673409d42992effc47363810020a9523af66cb357ed4ce0ab8f3c372ac86",
+  "time": 1791836865.9787304
+}
